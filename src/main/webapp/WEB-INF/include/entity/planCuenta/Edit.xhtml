@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PlanCuentaEditDlg" widgetVar="PlanCuentaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPlanCuentaTitle}" closeOnEscape="true">
+
+            <h:form id="PlanCuentaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{planCuentaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPlanCuentaLabel_planCuentaId}" for="planCuentaId" />
+                        <h:outputText id="planCuentaId" value="#{planCuentaController.selected.planCuentaId}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanCuentaLabel_planCuentaIdClasificacion}" for="planCuentaIdClasificacion" />
+                        <p:inputText id="planCuentaIdClasificacion" value="#{planCuentaController.selected.planCuentaIdClasificacion}" title="#{myBundle.EditPlanCuentaTitle_planCuentaIdClasificacion}" required="true" requiredMessage="#{myBundle.EditPlanCuentaRequiredMessage_planCuentaIdClasificacion}"/>
+
+                        <p:outputLabel value="#{myBundle.EditPlanCuentaLabel_planCuentaIdEmpresa}" for="planCuentaIdEmpresa" />
+                        <p:inputText id="planCuentaIdEmpresa" value="#{planCuentaController.selected.planCuentaIdEmpresa}" title="#{myBundle.EditPlanCuentaTitle_planCuentaIdEmpresa}" required="true" requiredMessage="#{myBundle.EditPlanCuentaRequiredMessage_planCuentaIdEmpresa}"/>
+
+                        <p:outputLabel value="#{myBundle.EditPlanCuentaLabel_planCuentaNombre}" for="planCuentaNombre" />
+                        <p:inputText id="planCuentaNombre" value="#{planCuentaController.selected.planCuentaNombre}" title="#{myBundle.EditPlanCuentaTitle_planCuentaNombre}" required="true" requiredMessage="#{myBundle.EditPlanCuentaRequiredMessage_planCuentaNombre}" size="100" maxlength="100"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planCuentaController.save}" value="#{myBundle.Save}" update="display,:PlanCuentaListForm:datalist,:PlanCuentaListForm:PlanCuentaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlanCuentaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PlanCuentaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

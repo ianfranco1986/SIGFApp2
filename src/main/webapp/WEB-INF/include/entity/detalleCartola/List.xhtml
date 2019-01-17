@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="Selector">
+        <p:panel style="width: 100%;margin-bottom: 20px;" >
+            <h3 style="text-align: center;">Seleccionar cuenta banco</h3>
+            <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
+                <p:outputLabel value="Empresa" for="empresa" />
+                <p:selectOneMenu id="empresa" value="#{detalleCartolaController.empresa}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{detalleCartolaController.empresaItems}"
+                                   var="busIdEmpresaItem"
+                                   itemValue="#{busIdEmpresaItem}"
+                                   itemLabel="#{busIdEmpresaItem.empresaNombre}"
+                                   />
+                    <p:ajax event="valueChange" listener="#{detalleCartolaController.handleEmpresaChange()}" update="cuentaIdEmpresa"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Cuentas: " for="cuentaIdEmpresa" />
+                <p:selectOneMenu id="cuentaIdEmpresa" value="#{detalleCartolaController.cuentaBancaria}" required="true" requiredMessage="Debe seleccionar la Cuenta" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{detalleCartolaController.cuentaItems}"
+                                   var="cuentaBancariaItem"
+                                   itemValue="#{cuentaBancariaItem}"
+                                   itemLabel="#{cuentaBancariaItem.cuentaBancariaNumero} - #{cuentaBancariaItem.cuentaBancariaIdEmpresa.empresaNombre}"
+                                   />
+                    <p:ajax event="valueChange" listener="#{detalleCartolaController.handleCuentaChange()}" update="cartolaIdEmpresa"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Cartola: " for="cartolaIdEmpresa" />
+                <h:panelGroup>
+                    <p:selectOneMenu id="cartolaIdEmpresa" style="width: 50%;" value="#{detalleCartolaController.cartolaBanco}" required="true" requiredMessage="Debe seleccionar la Cartola" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{detalleCartolaController.cartolaItems}"
+                                       var="cartolaItem"
+                                       itemValue="#{cartolaItem}"
+                                       itemLabel="#{cartolaItem.cartolaBancoNumero} - #{detalleCartolaController.formatDate(cartolaItem.cartolaBancoFechaInicial)}"
+                                       />
+                        <p:ajax event="valueChange" listener="#{detalleCartolaController.handleCartolaChange()}" update="DetalleCartolaCreateForm2:registro,DetalleCartolaListForm:detalleCartola, :growl"/>
+                    </p:selectOneMenu>
+
+                </h:panelGroup>
+
+                <p:outputLabel/>
+
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+    <h:form id="DetalleCartolaCreateForm2">
+        <p:panel id="registro">
+            <h3 style="text-align: center;">Registro de Documentos</h3>
+            <p:focus context="detalleCartolaNumeroDocumento"/>
+            <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                <p:outputLabel value="Fecha" for="detalleCartolaFechaMovimiento" />
+                <p:calendar id="detalleCartolaFechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{detalleCartolaController.selected.detalleCartolaFechaMovimiento}" required="true" requiredMessage="Debe ingresar la fecha del movimiento" />
+
+                <p:outputLabel value="N° Dcto: " for="detalleCartolaNumeroDocumento" />
+                <p:inputText id="detalleCartolaNumeroDocumento" value="#{detalleCartolaController.selected.detalleCartolaNumeroDocumento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="10" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)"/>
+
+                <p:outputLabel value="Descripción:" for="detalleCartolaDescripcion" />
+                <p:inputText id="detalleCartolaDescripcion" value="#{detalleCartolaController.selected.detalleCartolaDescripcion}" required="true" requiredMessage="Debe ingresar la descripción del movimiento" size="30" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)"/>
+
+                <p:outputLabel value="Cargo:" for="detalleCartolaCargo" />
+                <p:inputText id="detalleCartolaCargo" value="#{detalleCartolaController.selected.detalleCartolaCargo}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                    <p:ajax event="blur" update="detalleCartolaAbono" listener="#{detalleCartolaController.setCargo}"/>
+                </p:inputText>
+
+                <p:outputLabel value="Abono:" for="detalleCartolaAbono" />
+                <p:inputText id="detalleCartolaAbono" value="#{detalleCartolaController.selected.detalleCartolaAbono}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                    <p:ajax event="blur" update="detalleCartolaCargo" listener="#{detalleCartolaController.setAbono}"/>
+                </p:inputText>
+
+                <p:commandButton value="Agregar" actionListener="#{detalleCartolaController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+    <h:form id="DetalleCartolaListForm">
+        <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola">
+            <h3>Saldo Inicial: 
+                <h:outputText value="#{detalleCartolaController.cartolaBanco.cartolaBancoSaldoInicial}">
+                    <f:convertNumber type="currency" currencySymbol="$"/>
+                </h:outputText></h3>
+            <p:dataTable id="datalist"
+                         value="#{detalleCartolaController.model}"
+                         lazy="false"
+                         rowKey="#{item.detalleCartolaId}"
+                         var="item"                         
+                         selectionMode="single"
+                         selection="#{detalleCartolaController.selected}"
+                         filteredValue="#{detalleCartolaController.filteredItems}"
+                         widgetVar="datalistWidget"
+                         rowIndexVar="rowIndex" 
+                         emptyMessage="No se han encontrado registros" 
+                         reflow="true" >
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{detalleCartolaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.detalleCartolaId}"  <<< Remove this line
+                -->
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.detalleCartolaFechaMovimiento}" filterBy="#{item.detalleCartolaFechaMovimiento}">
+                    <f:facet name="header">
+                        <h:outputText value="Fecha"/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalleCartolaFechaMovimiento}">
+                        <f:convertDateTime pattern="dd/MM/yy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.detalleCartolaNumeroDocumento}" filterBy="#{item.detalleCartolaNumeroDocumento}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="N° Documento "/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalleCartolaNumeroDocumento}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.detalleCartolaDescripcion}" filterBy="#{item.detalleCartolaDescripcion}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Descripción"/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalleCartolaDescripcion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.detalleCartolaCargo}" filterBy="#{item.detalleCartolaCargo}">
+                    <f:facet name="header">
+                        <h:outputText value="Cargos"/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalleCartolaCargo}">
+                        <f:convertNumber type="currency" currencySymbol="$"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.detalleCartolaAbono}" filterBy="#{item.detalleCartolaAbono}">
+                    <f:facet name="header">
+                        <h:outputText value="Abonos"/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalleCartolaAbono}">
+                        <f:convertNumber type="currency" currencySymbol="$"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Saldo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.saldo}">
+                        <f:convertNumber type="currency" currencySymbol="$"/>
+                    </h:outputText>
+                </p:column>
+
+            </p:dataTable>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+            <h3 id="saldoFinal" style="text-align: right;">Saldo Final: 
+                <h:outputText value="#{detalleCartolaController.cartolaBanco.cartolaBancoSaldoFinal}">
+                    <f:convertNumber type="currency" currencySymbol="$"/>
+                </h:outputText></h3>
+        </p:panel>
+    </h:form>
+
+
+
+
+
+</ui:composition>

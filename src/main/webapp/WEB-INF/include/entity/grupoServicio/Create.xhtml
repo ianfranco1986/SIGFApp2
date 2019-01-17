@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GrupoServicioCreateDlg" widgetVar="GrupoServicioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateGrupoServicioTitle}" closeOnEscape="true">
+
+            <h:form id="GrupoServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{grupoServicioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateGrupoServicioLabel_grupoServicioIdentificador}" for="grupoServicioIdentificador" />
+                        <p:inputText id="grupoServicioIdentificador" value="#{grupoServicioController.selected.grupoServicioIdentificador}" title="#{myBundle.CreateGrupoServicioTitle_grupoServicioIdentificador}" required="true" requiredMessage="#{myBundle.CreateGrupoServicioRequiredMessage_grupoServicioIdentificador}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateGrupoServicioLabel_grupoServicioAccesoInspector}" for="grupoServicioAccesoInspector" />
+                        <p:selectBooleanCheckbox id="grupoServicioAccesoInspector" value="#{grupoServicioController.selected.grupoServicioAccesoInspector}" required="true" requiredMessage="#{myBundle.CreateGrupoServicioRequiredMessage_grupoServicioAccesoInspector}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateGrupoServicioLabel_grupoServicioIdTerminal}" for="grupoServicioIdTerminal" />
+                        <p:selectOneMenu id="grupoServicioIdTerminal" value="#{grupoServicioController.selected.grupoServicioIdTerminal}" required="true" requiredMessage="#{myBundle.CreateGrupoServicioRequiredMessage_grupoServicioIdTerminal}" converter="terminalConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{terminalController.items}"
+                                           var="grupoServicioIdTerminalItem"
+                                           itemValue="#{grupoServicioIdTerminalItem}"
+                                           itemLabel="#{grupoServicioIdTerminalItem.terminalNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{grupoServicioController.saveNew}" value="#{myBundle.Save}" update="display,:GrupoServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GrupoServicioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('GrupoServicioCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

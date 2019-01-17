@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CuentaBancoProcesoListForm">
+
+        <p:panel header="#{myBundle.ListCuentaBancoProcesoTitle}">
+            <p:contextMenu id="CuentaBancoProcesoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CuentaBancoProcesoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CuentaBancoProcesoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CuentaBancoProcesoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CuentaBancoProcesoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CuentaBancoProcesoMenuItem_cuentaBancoProcesoIdBanco}" icon="ui-icon-search"  actionListener="#{cuentaBancoProcesoController.prepareCuentaBancoProcesoIdBanco}" update=":CuentaBancariaViewForm" oncomplete="PF('CuentaBancariaViewDialog').show()" disabled="#{empty cuentaBancoProcesoController.selected.cuentaBancoProcesoIdBanco}"/>  
+                <p:menuitem value="#{myBundle.CuentaBancoProcesoMenuItem_cuentaBancoProcesoIdProceso}" icon="ui-icon-search"  actionListener="#{cuentaBancoProcesoController.prepareCuentaBancoProcesoIdProceso}" update=":ProcesoRecaudacionViewForm" oncomplete="PF('ProcesoRecaudacionViewDialog').show()" disabled="#{empty cuentaBancoProcesoController.selected.cuentaBancoProcesoIdProceso}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{cuentaBancoProcesoController.items}"
+                         lazy="false"
+                         rowKey="#{item.cuentaBancoProcesoId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{cuentaBancoProcesoController.selected}"
+                         filteredValue="#{cuentaBancoProcesoController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{cuentaBancoProcesoController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.cuentaBancoProcesoId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CuentaBancoProcesoDataTableContextMenu" listener="#{cuentaBancoProcesoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CuentaBancoProcesoDataTableContextMenu" listener="#{cuentaBancoProcesoController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{cuentaBancoProcesoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CuentaBancoProcesoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.cuentaBancoProcesoId}" filterBy="#{item.cuentaBancoProcesoId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCuentaBancoProcesoTitle_cuentaBancoProcesoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaBancoProcesoId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaBancoProcesoIdBanco.cuentaBancariaId}" filterBy="#{item.cuentaBancoProcesoIdBanco.cuentaBancariaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCuentaBancoProcesoTitle_cuentaBancoProcesoIdBanco}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaBancoProcesoIdBanco.cuentaBancariaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaBancoProcesoIdProceso.procesoRecaudacionId}" filterBy="#{item.cuentaBancoProcesoIdProceso.procesoRecaudacionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCuentaBancoProcesoTitle_cuentaBancoProcesoIdProceso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaBancoProcesoIdProceso.procesoRecaudacionId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{cuentaBancoProcesoController.prepareCreate}" update=":CuentaBancoProcesoCreateForm" oncomplete="PF('CuentaBancoProcesoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":CuentaBancoProcesoViewForm" oncomplete="PF('CuentaBancoProcesoViewDialog').show()" disabled="#{empty cuentaBancoProcesoController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CuentaBancoProcesoEditForm" oncomplete="PF('CuentaBancoProcesoEditDialog').show()" disabled="#{empty cuentaBancoProcesoController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{cuentaBancoProcesoController.delete}" update=":growl,datalist" disabled="#{empty cuentaBancoProcesoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

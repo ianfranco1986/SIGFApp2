@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RolMenuViewDlg" widgetVar="RolMenuViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewRolMenuTitle}" closeOnEscape="true">
+
+            <h:form id="RolMenuViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{rolMenuController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewRolMenuLabel_rolMenuId}"/>
+                        <h:outputText value="#{rolMenuController.selected.rolMenuId}" title="#{myBundle.ViewRolMenuTitle_rolMenuId}"/>
+
+                        <h:outputText value="#{myBundle.ViewRolMenuLabel_rolMenuIdMenu}"/>
+                        <h:outputText value="#{rolMenuController.selected.rolMenuIdMenu.menuId}"/>
+
+                        <h:outputText value="#{myBundle.ViewRolMenuLabel_rolMenuIdRol}"/>
+                        <h:outputText value="#{rolMenuController.selected.rolMenuIdRol.rolDescripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('RolMenuViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

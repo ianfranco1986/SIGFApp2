@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RecaudacionExtraCreateDlg" widgetVar="RecaudacionExtraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateRecaudacionExtraTitle}" closeOnEscape="true">
+
+            <h:form id="RecaudacionExtraCreateForm">
+
+                <h:panelGroup id="display" rendered="#{recaudacionExtraController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionExtraLabel_recaudacionExtraMonto}" for="recaudacionExtraMonto" />
+                        <p:inputText id="recaudacionExtraMonto" value="#{recaudacionExtraController.selected.recaudacionExtraMonto}" title="#{myBundle.CreateRecaudacionExtraTitle_recaudacionExtraMonto}" required="true" requiredMessage="#{myBundle.CreateRecaudacionExtraRequiredMessage_recaudacionExtraMonto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionExtraLabel_recaudacionExtraDescripcion}" for="recaudacionExtraDescripcion" />
+                        <p:inputText id="recaudacionExtraDescripcion" value="#{recaudacionExtraController.selected.recaudacionExtraDescripcion}" title="#{myBundle.CreateRecaudacionExtraTitle_recaudacionExtraDescripcion}" required="true" requiredMessage="#{myBundle.CreateRecaudacionExtraRequiredMessage_recaudacionExtraDescripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionExtraLabel_recaudacionExtraUsuario}" for="recaudacionExtraUsuario" />
+                        <p:inputText id="recaudacionExtraUsuario" value="#{recaudacionExtraController.selected.recaudacionExtraUsuario}" title="#{myBundle.CreateRecaudacionExtraTitle_recaudacionExtraUsuario}" required="true" requiredMessage="#{myBundle.CreateRecaudacionExtraRequiredMessage_recaudacionExtraUsuario}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionExtraLabel_recaudacionExtraIdRecaudacion}" for="recaudacionExtraIdRecaudacion" />
+                        <p:selectOneMenu id="recaudacionExtraIdRecaudacion" value="#{recaudacionExtraController.selected.recaudacionExtraIdRecaudacion}" required="true" requiredMessage="#{myBundle.CreateRecaudacionExtraRequiredMessage_recaudacionExtraIdRecaudacion}" converter="recaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recaudacionController.items}"
+                                           var="recaudacionExtraIdRecaudacionItem"
+                                           itemValue="#{recaudacionExtraIdRecaudacionItem}"
+                                           itemLabel="#{recaudacionExtraIdRecaudacionItem.recaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{recaudacionExtraController.saveNew}" value="#{myBundle.Save}" update="display,:RecaudacionExtraListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RecaudacionExtraCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RecaudacionExtraCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EgresoProcesoRecaudacionViewDlg" widgetVar="EgresoProcesoRecaudacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEgresoProcesoRecaudacionTitle}" closeOnEscape="true">
+
+            <h:form id="EgresoProcesoRecaudacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{egresoProcesoRecaudacionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEgresoProcesoRecaudacionLabel_egresoProcesoRecaudacionId}"/>
+                        <h:outputText value="#{egresoProcesoRecaudacionController.selected.egresoProcesoRecaudacionId}" title="#{myBundle.ViewEgresoProcesoRecaudacionTitle_egresoProcesoRecaudacionId}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoProcesoRecaudacionLabel_egresoProcesoRecaudacionValorDefecto}"/>
+                        <h:outputText value="#{egresoProcesoRecaudacionController.selected.egresoProcesoRecaudacionValorDefecto}" title="#{myBundle.ViewEgresoProcesoRecaudacionTitle_egresoProcesoRecaudacionValorDefecto}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoProcesoRecaudacionLabel_egresoProcesoRecaudacionPorcentaje}"/>
+                        <h:outputText value="#{egresoProcesoRecaudacionController.selected.egresoProcesoRecaudacionPorcentaje}" title="#{myBundle.ViewEgresoProcesoRecaudacionTitle_egresoProcesoRecaudacionPorcentaje}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoProcesoRecaudacionLabel_egresoProcesoRecaudacionNumeroOrden}"/>
+                        <h:outputText value="#{egresoProcesoRecaudacionController.selected.egresoProcesoRecaudacionNumeroOrden}" title="#{myBundle.ViewEgresoProcesoRecaudacionTitle_egresoProcesoRecaudacionNumeroOrden}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoProcesoRecaudacionLabel_egresoProcesoRecaudacionActivo}"/>
+                        <p:selectBooleanCheckbox id="egresoProcesoRecaudacionActivo" value="#{egresoProcesoRecaudacionController.selected.egresoProcesoRecaudacionActivo}" title="#{myBundle.EditEgresoProcesoRecaudacionTitle_egresoProcesoRecaudacionActivo}" required="true" requiredMessage="#{myBundle.EditEgresoProcesoRecaudacionRequiredMessage_egresoProcesoRecaudacionActivo}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoProcesoRecaudacionLabel_egresoProcesoRecaudacionIdEgreso}"/>
+                        <h:outputText value="#{egresoProcesoRecaudacionController.selected.egresoProcesoRecaudacionIdEgreso.egresoId}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoProcesoRecaudacionLabel_egresoProcesoRecaudacionIdProceso}"/>
+                        <h:outputText value="#{egresoProcesoRecaudacionController.selected.egresoProcesoRecaudacionIdProceso.procesoRecaudacionId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EgresoProcesoRecaudacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

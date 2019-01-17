@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0636735f-73b4-4c7b-9ec2-5cdf0835af58">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="caja" class="java.lang.Integer"/>
+	<parameter name="fecha" class="java.util.Date"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\Documents\\NetBeansProjects\\SIGF\\src\\main\\webapp\\resources\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 1 AS hoja1, 
+2 AS hoja2, 
+3 AS hoja3]]>
+	</queryString>
+	<field name="hoja1" class="java.lang.Long"/>
+	<field name="hoja2" class="java.lang.Long"/>
+	<field name="hoja3" class="java.lang.Long"/>
+	<group name="hoja1">
+		<groupExpression><![CDATA[$F{hoja1}]]></groupExpression>
+		<groupHeader>
+			<band height="82">
+				<subreport>
+					<reportElement x="2" y="0" width="610" height="78" uuid="80f8fcf7-f208-472d-b3fb-d3dd75d1ab97"/>
+					<subreportParameter name="fecha">
+						<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="caja">
+						<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["inf-recaudacion_caja_fecha.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="hoja2">
+		<groupExpression><![CDATA[$F{hoja2}]]></groupExpression>
+		<groupHeader>
+			<band height="137">
+				<break>
+					<reportElement x="0" y="20" width="100" height="1" uuid="70b316ff-f10b-47eb-a61c-42cd87443d72"/>
+				</break>
+				<subreport>
+					<reportElement x="2" y="37" width="610" height="100" uuid="ed0530dd-3cd4-4578-a362-3f17a9c96618"/>
+					<subreportParameter name="fecha">
+						<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="caja">
+						<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["inf-recaudacion_minuto_caja_fecha.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="3">
+		<groupExpression><![CDATA[$F{hoja3}]]></groupExpression>
+		<groupHeader>
+			<band height="122">
+				<subreport>
+					<reportElement x="2" y="22" width="610" height="100" uuid="87926248-4542-4591-8650-151bbaf73a98"/>
+					<subreportParameter name="fecha">
+						<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="caja">
+						<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["inf-recaudacion_petroleo_caja_fecha.jasper"]]></subreportExpression>
+				</subreport>
+				<break>
+					<reportElement x="0" y="13" width="100" height="1" uuid="87910c9f-ef3b-40aa-9c89-765cae9dafb2"/>
+				</break>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

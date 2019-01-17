@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RecaudacionDescuentoExtraListForm">
+
+        <p:panel header="#{myBundle.ListRecaudacionDescuentoExtraTitle}">
+            <p:contextMenu id="RecaudacionDescuentoExtraDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('RecaudacionDescuentoExtraListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('RecaudacionDescuentoExtraListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('RecaudacionDescuentoExtraListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('RecaudacionDescuentoExtraListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.RecaudacionDescuentoExtraMenuItem_recaudacionDescuentoExtraIdDcto}" icon="ui-icon-search"  actionListener="#{recaudacionDescuentoExtraController.prepareRecaudacionDescuentoExtraIdDcto}" update=":DescuentoExtraBusViewForm" oncomplete="PF('DescuentoExtraBusViewDialog').show()" disabled="#{empty recaudacionDescuentoExtraController.selected.recaudacionDescuentoExtraIdDcto}"/>  
+                <p:menuitem value="#{myBundle.RecaudacionDescuentoExtraMenuItem_recaudacionDescuentoExtraIdRecaudacion}" icon="ui-icon-search"  actionListener="#{recaudacionDescuentoExtraController.prepareRecaudacionDescuentoExtraIdRecaudacion}" update=":RecaudacionViewForm" oncomplete="PF('RecaudacionViewDialog').show()" disabled="#{empty recaudacionDescuentoExtraController.selected.recaudacionDescuentoExtraIdRecaudacion}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{recaudacionDescuentoExtraController.items}"
+                         lazy="false"
+                         rowKey="#{item.recaudacionDescuentoExtraId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{recaudacionDescuentoExtraController.selected}"
+                         filteredValue="#{recaudacionDescuentoExtraController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{recaudacionDescuentoExtraController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.recaudacionDescuentoExtraId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RecaudacionDescuentoExtraDataTableContextMenu" listener="#{recaudacionDescuentoExtraController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RecaudacionDescuentoExtraDataTableContextMenu" listener="#{recaudacionDescuentoExtraController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{recaudacionDescuentoExtraController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('RecaudacionDescuentoExtraListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.recaudacionDescuentoExtraId}" filterBy="#{item.recaudacionDescuentoExtraId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionDescuentoExtraTitle_recaudacionDescuentoExtraId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionDescuentoExtraId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.recaudacionDescuentoExtraIdDcto.descuentoExtraBusId}" filterBy="#{item.recaudacionDescuentoExtraIdDcto.descuentoExtraBusId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionDescuentoExtraTitle_recaudacionDescuentoExtraIdDcto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionDescuentoExtraIdDcto.descuentoExtraBusId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.recaudacionDescuentoExtraIdRecaudacion.recaudacionId}" filterBy="#{item.recaudacionDescuentoExtraIdRecaudacion.recaudacionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionDescuentoExtraTitle_recaudacionDescuentoExtraIdRecaudacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionDescuentoExtraIdRecaudacion.recaudacionId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{recaudacionDescuentoExtraController.prepareCreate}" update=":RecaudacionDescuentoExtraCreateForm" oncomplete="PF('RecaudacionDescuentoExtraCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":RecaudacionDescuentoExtraViewForm" oncomplete="PF('RecaudacionDescuentoExtraViewDialog').show()" disabled="#{empty recaudacionDescuentoExtraController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RecaudacionDescuentoExtraEditForm" oncomplete="PF('RecaudacionDescuentoExtraEditDialog').show()" disabled="#{empty recaudacionDescuentoExtraController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{recaudacionDescuentoExtraController.delete}" update=":growl,datalist" disabled="#{empty recaudacionDescuentoExtraController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

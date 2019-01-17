@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PrivilegioEditDlg" widgetVar="PrivilegioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPrivilegioTitle}" closeOnEscape="true">
+
+            <h:form id="PrivilegioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{privilegioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioId}" for="privilegioId" />
+                        <h:outputText id="privilegioId" value="#{privilegioController.selected.privilegioId}" />
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioNombre}" for="privilegioNombre" />
+                        <p:inputText id="privilegioNombre" value="#{privilegioController.selected.privilegioNombre}" title="#{myBundle.EditPrivilegioTitle_privilegioNombre}" required="true" requiredMessage="#{myBundle.EditPrivilegioRequiredMessage_privilegioNombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioDescripcion}" for="privilegioDescripcion" />
+                        <p:inputText id="privilegioDescripcion" value="#{privilegioController.selected.privilegioDescripcion}" title="#{myBundle.EditPrivilegioTitle_privilegioDescripcion}" required="true" requiredMessage="#{myBundle.EditPrivilegioRequiredMessage_privilegioDescripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioMenuLink}" for="privilegioMenuLink" />
+                        <p:inputText id="privilegioMenuLink" value="#{privilegioController.selected.privilegioMenuLink}" title="#{myBundle.EditPrivilegioTitle_privilegioMenuLink}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioTabla}" for="privilegioTabla" />
+                        <p:inputText id="privilegioTabla" value="#{privilegioController.selected.privilegioTabla}" title="#{myBundle.EditPrivilegioTitle_privilegioTabla}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioIcon}" for="privilegioIcon" />
+                        <p:inputText id="privilegioIcon" value="#{privilegioController.selected.privilegioIcon}" title="#{myBundle.EditPrivilegioTitle_privilegioIcon}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioNumeroOrden}" for="privilegioNumeroOrden" />
+                        <p:inputText id="privilegioNumeroOrden" value="#{privilegioController.selected.privilegioNumeroOrden}" title="#{myBundle.EditPrivilegioTitle_privilegioNumeroOrden}" required="true" requiredMessage="#{myBundle.EditPrivilegioRequiredMessage_privilegioNumeroOrden}"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioColor}" for="privilegioColor" />
+                        <p:inputText id="privilegioColor" value="#{privilegioController.selected.privilegioColor}" title="#{myBundle.EditPrivilegioTitle_privilegioColor}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioTipoMenu}" for="privilegioTipoMenu" />
+                        <p:inputText id="privilegioTipoMenu" value="#{privilegioController.selected.privilegioTipoMenu}" title="#{myBundle.EditPrivilegioTitle_privilegioTipoMenu}" required="true" requiredMessage="#{myBundle.EditPrivilegioRequiredMessage_privilegioTipoMenu}"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrivilegioLabel_privilegioIdMenu}" for="privilegioIdMenu" />
+                        <p:selectOneMenu id="privilegioIdMenu" value="#{privilegioController.selected.privilegioIdMenu}" required="true" requiredMessage="#{myBundle.EditPrivilegioRequiredMessage_privilegioIdMenu}" converter="menuConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{menuController.items}"
+                                           var="privilegioIdMenuItem"
+                                           itemValue="#{privilegioIdMenuItem}"
+                                           itemLabel="#{privilegioIdMenuItem.menuId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{privilegioController.save}" value="#{myBundle.Save}" update="display,:PrivilegioListForm:datalist,:PrivilegioListForm:PrivilegioDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PrivilegioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PrivilegioEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

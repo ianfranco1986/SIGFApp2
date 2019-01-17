@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProgramacionTrabajadorListForm">
+
+        <p:panel header="#{myBundle.ListProgramacionTrabajadorTitle}">
+            <p:contextMenu id="ProgramacionTrabajadorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ProgramacionTrabajadorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ProgramacionTrabajadorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ProgramacionTrabajadorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ProgramacionTrabajadorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ProgramacionTrabajadorMenuItem_programacionTrabajadorIdAdministrador}" icon="ui-icon-search"  actionListener="#{programacionTrabajadorController.prepareProgramacionTrabajadorIdAdministrador}" update=":AdministradorViewForm" oncomplete="PF('AdministradorViewDialog').show()" disabled="#{empty programacionTrabajadorController.selected.programacionTrabajadorIdAdministrador}"/>  
+                <p:menuitem value="#{myBundle.ProgramacionTrabajadorMenuItem_programacionTrabajadorIdTrabajador}" icon="ui-icon-search"  actionListener="#{programacionTrabajadorController.prepareProgramacionTrabajadorIdTrabajador}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty programacionTrabajadorController.selected.programacionTrabajadorIdTrabajador}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{programacionTrabajadorController.items}"
+                         lazy="false"
+                         rowKey="#{item.programacionTrabajadorId}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{programacionTrabajadorController.selected}"
+                         filteredValue="#{programacionTrabajadorController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{programacionTrabajadorController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.programacionTrabajadorId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProgramacionTrabajadorDataTableContextMenu" listener="#{programacionTrabajadorController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProgramacionTrabajadorDataTableContextMenu" listener="#{programacionTrabajadorController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{programacionTrabajadorController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProgramacionTrabajadorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.programacionTrabajadorId}" filterBy="#{item.programacionTrabajadorId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProgramacionTrabajadorTitle_programacionTrabajadorId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.programacionTrabajadorId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.programacionTrabajadorDesde}" filterBy="#{item.programacionTrabajadorDesde}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProgramacionTrabajadorTitle_programacionTrabajadorDesde}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.programacionTrabajadorDesde}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.programacionTrabajadorHasta}" filterBy="#{item.programacionTrabajadorHasta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProgramacionTrabajadorTitle_programacionTrabajadorHasta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.programacionTrabajadorHasta}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.programacionTrabajadorIdAdministrador.administradorId}" filterBy="#{item.programacionTrabajadorIdAdministrador.administradorId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProgramacionTrabajadorTitle_programacionTrabajadorIdAdministrador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.programacionTrabajadorIdAdministrador.administradorId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.programacionTrabajadorIdTrabajador.trabajadorId}" filterBy="#{item.programacionTrabajadorIdTrabajador.trabajadorId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProgramacionTrabajadorTitle_programacionTrabajadorIdTrabajador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.programacionTrabajadorIdTrabajador.trabajadorId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{programacionTrabajadorController.prepareCreate}" update=":ProgramacionTrabajadorCreateForm" oncomplete="PF('ProgramacionTrabajadorCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":ProgramacionTrabajadorViewForm" oncomplete="PF('ProgramacionTrabajadorViewDialog').show()" disabled="#{empty programacionTrabajadorController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ProgramacionTrabajadorEditForm" oncomplete="PF('ProgramacionTrabajadorEditDialog').show()" disabled="#{empty programacionTrabajadorController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{programacionTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty programacionTrabajadorController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

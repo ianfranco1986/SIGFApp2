@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="InstitucionApvEditDlg" widgetVar="InstitucionApvEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditInstitucionApvTitle}" closeOnEscape="true">
+
+            <h:form id="InstitucionApvEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{institucionApvController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditInstitucionApvLabel_institucionApvId}" for="institucionApvId" />
+                        <h:outputText id="institucionApvId" value="#{institucionApvController.selected.institucionApvId}" />
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionApvLabel_institucionApvNombre}" for="institucionApvNombre" />
+                        <p:inputText id="institucionApvNombre" value="#{institucionApvController.selected.institucionApvNombre}" title="#{myBundle.EditInstitucionApvTitle_institucionApvNombre}" required="true" requiredMessage="#{myBundle.EditInstitucionApvRequiredMessage_institucionApvNombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionApvLabel_institucionApvIdCuenta}" for="institucionApvIdCuenta" />
+                        <p:selectOneMenu id="institucionApvIdCuenta" value="#{institucionApvController.selected.institucionApvIdCuenta}" required="true" requiredMessage="#{myBundle.EditInstitucionApvRequiredMessage_institucionApvIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="institucionApvIdCuentaItem"
+                                           itemValue="#{institucionApvIdCuentaItem}"
+                                           itemLabel="#{institucionApvIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionApvLabel_institucionApvIdTipo}" for="institucionApvIdTipo" />
+                        <p:selectOneMenu id="institucionApvIdTipo" value="#{institucionApvController.selected.institucionApvIdTipo}" required="true" requiredMessage="#{myBundle.EditInstitucionApvRequiredMessage_institucionApvIdTipo}" converter="tipoInstitucionApvConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoInstitucionApvController.items}"
+                                           var="institucionApvIdTipoItem"
+                                           itemValue="#{institucionApvIdTipoItem}"
+                                           itemLabel="#{institucionApvIdTipoItem.tipoInstitucionApvId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{institucionApvController.save}" value="#{myBundle.Save}" update="display,:InstitucionApvListForm:datalist,:InstitucionApvListForm:InstitucionApvDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InstitucionApvEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('InstitucionApvEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

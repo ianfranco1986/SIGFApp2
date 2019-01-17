@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoControlCreateDlg" widgetVar="TipoControlCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTipoControlTitle}" closeOnEscape="true">
+
+            <h:form id="TipoControlCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoControlController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTipoControlLabel_tipoControlNombre}" for="tipoControlNombre" />
+                        <p:inputText id="tipoControlNombre" value="#{tipoControlController.selected.tipoControlNombre}" title="#{myBundle.CreateTipoControlTitle_tipoControlNombre}" required="true" requiredMessage="#{myBundle.CreateTipoControlRequiredMessage_tipoControlNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoControlLabel_tipoControlClasificacion}" for="tipoControlClasificacion" />
+                        <p:inputText id="tipoControlClasificacion" value="#{tipoControlController.selected.tipoControlClasificacion}" title="#{myBundle.CreateTipoControlTitle_tipoControlClasificacion}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoControlLabel_tipoControlIdCuenta}" for="tipoControlIdCuenta" />
+                        <p:selectOneMenu id="tipoControlIdCuenta" value="#{tipoControlController.selected.tipoControlIdCuenta}" required="true" requiredMessage="#{myBundle.CreateTipoControlRequiredMessage_tipoControlIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="tipoControlIdCuentaItem"
+                                           itemValue="#{tipoControlIdCuentaItem}"
+                                           itemLabel="#{tipoControlIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoControlController.saveNew}" value="#{myBundle.Save}" update="display,:TipoControlListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoControlCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoControlCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompraBoletoViewDlg" widgetVar="CompraBoletoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCompraBoletoTitle}" closeOnEscape="true">
+
+            <h:form id="CompraBoletoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{compraBoletoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCompraBoletoLabel_compraBoletoId}"/>
+                        <h:outputText value="#{compraBoletoController.selected.compraBoletoId}" title="#{myBundle.ViewCompraBoletoTitle_compraBoletoId}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraBoletoLabel_compraBoletoFolioFactura}"/>
+                        <h:outputText value="#{compraBoletoController.selected.compraBoletoFolioFactura}" title="#{myBundle.ViewCompraBoletoTitle_compraBoletoFolioFactura}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraBoletoLabel_compraBoletoTotal}"/>
+                        <h:outputText value="#{compraBoletoController.selected.compraBoletoTotal}" title="#{myBundle.ViewCompraBoletoTitle_compraBoletoTotal}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraBoletoLabel_compraBoletoFecha}"/>
+                        <h:outputText value="#{compraBoletoController.selected.compraBoletoFecha}" title="#{myBundle.ViewCompraBoletoTitle_compraBoletoFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCompraBoletoLabel_compraBoletoIdCuenta}"/>
+                        <h:outputText value="#{compraBoletoController.selected.compraBoletoIdCuenta.cuentaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CompraBoletoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ServicioEditDlg" widgetVar="ServicioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditServicioTitle}" closeOnEscape="true">
+
+            <h:form id="ServicioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{servicioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditServicioLabel_servicioId}" for="servicioId" />
+                        <h:outputText id="servicioId" value="#{servicioController.selected.servicioId}" />
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioNumeroServicio}" for="servicioNumeroServicio" />
+                        <p:inputText id="servicioNumeroServicio" value="#{servicioController.selected.servicioNumeroServicio}" title="#{myBundle.EditServicioTitle_servicioNumeroServicio}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_servicioNumeroServicio}"/>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioLongitud}" for="servicioLongitud" />
+                        <p:inputText id="servicioLongitud" value="#{servicioController.selected.servicioLongitud}" title="#{myBundle.EditServicioTitle_servicioLongitud}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_servicioLongitud}"/>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioNombre}" for="servicioNombre" />
+                        <p:inputText id="servicioNombre" value="#{servicioController.selected.servicioNombre}" title="#{myBundle.EditServicioTitle_servicioNombre}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_servicioNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioOrigen}" for="servicioOrigen" />
+                        <p:inputText id="servicioOrigen" value="#{servicioController.selected.servicioOrigen}" title="#{myBundle.EditServicioTitle_servicioOrigen}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_servicioOrigen}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioDestino}" for="servicioDestino" />
+                        <p:inputText id="servicioDestino" value="#{servicioController.selected.servicioDestino}" title="#{myBundle.EditServicioTitle_servicioDestino}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_servicioDestino}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioFolio}" for="servicioFolio" />
+                        <p:inputText id="servicioFolio" value="#{servicioController.selected.servicioFolio}" title="#{myBundle.EditServicioTitle_servicioFolio}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioTieneBusesCompartidos}" for="servicioTieneBusesCompartidos" />
+                        <p:selectBooleanCheckbox id="servicioTieneBusesCompartidos" value="#{servicioController.selected.servicioTieneBusesCompartidos}" />
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioIdGrupoServicio}" for="servicioIdGrupoServicio" />
+                        <p:selectOneMenu id="servicioIdGrupoServicio" value="#{servicioController.selected.servicioIdGrupoServicio}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_servicioIdGrupoServicio}" converter="grupoServicioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{grupoServicioController.items}"
+                                           var="servicioIdGrupoServicioItem"
+                                           itemValue="#{servicioIdGrupoServicioItem}"
+                                           itemLabel="#{servicioIdGrupoServicioItem.grupoServicioIdentificador}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioIdTerminal}" for="servicioIdTerminal" />
+                        <p:selectOneMenu id="servicioIdTerminal" value="#{servicioController.selected.servicioIdTerminal}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_servicioIdTerminal}" converter="terminalConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{terminalController.items}"
+                                           var="servicioIdTerminalItem"
+                                           itemValue="#{servicioIdTerminalItem}"
+                                           itemLabel="#{servicioIdTerminalItem.terminalNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_servicioIdUnidad}" for="servicioIdUnidad" />
+                        <p:selectOneMenu id="servicioIdUnidad" value="#{servicioController.selected.servicioIdUnidad}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_servicioIdUnidad}" converter="unidadNegocioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{unidadNegocioController.items}"
+                                           var="servicioIdUnidadItem"
+                                           itemValue="#{servicioIdUnidadItem}"
+                                           itemLabel="#{servicioIdUnidadItem.unidadNegocioNumero}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{servicioController.save}" value="#{myBundle.Save}" update="display,:ServicioListForm:datalist,:ServicioListForm:ServicioDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ServicioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ServicioEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RecaudacionCombustibleCreateDlg" widgetVar="RecaudacionCombustibleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateRecaudacionCombustibleTitle}" closeOnEscape="true">
+
+            <h:form id="RecaudacionCombustibleCreateForm">
+
+                <h:panelGroup id="display" rendered="#{recaudacionCombustibleController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionCombustibleLabel_recaudacionCombustibleMonto}" for="recaudacionCombustibleMonto" />
+                        <p:inputText id="recaudacionCombustibleMonto" value="#{recaudacionCombustibleController.selected.recaudacionCombustibleMonto}" title="#{myBundle.CreateRecaudacionCombustibleTitle_recaudacionCombustibleMonto}" required="true" requiredMessage="#{myBundle.CreateRecaudacionCombustibleRequiredMessage_recaudacionCombustibleMonto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionCombustibleLabel_recaudacionCombustibleIdRecaudacion}" for="recaudacionCombustibleIdRecaudacion" />
+                        <p:selectOneMenu id="recaudacionCombustibleIdRecaudacion" value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion}" required="true" requiredMessage="#{myBundle.CreateRecaudacionCombustibleRequiredMessage_recaudacionCombustibleIdRecaudacion}" converter="recaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recaudacionController.items}"
+                                           var="recaudacionCombustibleIdRecaudacionItem"
+                                           itemValue="#{recaudacionCombustibleIdRecaudacionItem}"
+                                           itemLabel="#{recaudacionCombustibleIdRecaudacionItem.recaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionCombustibleLabel_recaudacionCombustibleIdVentaCombustible}" for="recaudacionCombustibleIdVentaCombustible" />
+                        <p:selectOneMenu id="recaudacionCombustibleIdVentaCombustible" value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdVentaCombustible}" required="true" requiredMessage="#{myBundle.CreateRecaudacionCombustibleRequiredMessage_recaudacionCombustibleIdVentaCombustible}" converter="ventaCombustibleConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{ventaCombustibleController.items}"
+                                           var="recaudacionCombustibleIdVentaCombustibleItem"
+                                           itemValue="#{recaudacionCombustibleIdVentaCombustibleItem}"
+                                           itemLabel="#{recaudacionCombustibleIdVentaCombustibleItem.ventaCombustibleId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{recaudacionCombustibleController.saveNew}" value="#{myBundle.Save}" update="display,:RecaudacionCombustibleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RecaudacionCombustibleCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RecaudacionCombustibleCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

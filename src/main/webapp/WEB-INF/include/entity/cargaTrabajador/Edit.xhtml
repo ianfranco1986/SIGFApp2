@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CargaTrabajadorEditDlg" widgetVar="CargaTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCargaTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="CargaTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cargaTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorId}" for="cargaTrabajadorId" />
+                        <h:outputText id="cargaTrabajadorId" value="#{cargaTrabajadorController.selected.cargaTrabajadorId}" />
+
+                        <p:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorApellidos}" for="cargaTrabajadorApellidos" />
+                        <p:inputText id="cargaTrabajadorApellidos" value="#{cargaTrabajadorController.selected.cargaTrabajadorApellidos}" title="#{myBundle.EditCargaTrabajadorTitle_cargaTrabajadorApellidos}" required="true" requiredMessage="#{myBundle.EditCargaTrabajadorRequiredMessage_cargaTrabajadorApellidos}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorNombres}" for="cargaTrabajadorNombres" />
+                        <p:inputText id="cargaTrabajadorNombres" value="#{cargaTrabajadorController.selected.cargaTrabajadorNombres}" title="#{myBundle.EditCargaTrabajadorTitle_cargaTrabajadorNombres}" required="true" requiredMessage="#{myBundle.EditCargaTrabajadorRequiredMessage_cargaTrabajadorNombres}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorRut}" for="cargaTrabajadorRut" />
+                        <p:inputText id="cargaTrabajadorRut" value="#{cargaTrabajadorController.selected.cargaTrabajadorRut}" title="#{myBundle.EditCargaTrabajadorTitle_cargaTrabajadorRut}" required="true" requiredMessage="#{myBundle.EditCargaTrabajadorRequiredMessage_cargaTrabajadorRut}" size="9" maxlength="9"/>
+
+                        <p:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorFechaNacimiento}" for="cargaTrabajadorFechaNacimiento" />
+                        <p:calendar id="cargaTrabajadorFechaNacimiento" pattern="MM/dd/yyyy" value="#{cargaTrabajadorController.selected.cargaTrabajadorFechaNacimiento}" title="#{myBundle.EditCargaTrabajadorTitle_cargaTrabajadorFechaNacimiento}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorActiva}" for="cargaTrabajadorActiva" />
+                        <p:selectBooleanCheckbox id="cargaTrabajadorActiva" value="#{cargaTrabajadorController.selected.cargaTrabajadorActiva}" required="true" requiredMessage="#{myBundle.EditCargaTrabajadorRequiredMessage_cargaTrabajadorActiva}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorIdParentesco}" for="cargaTrabajadorIdParentesco" />
+                        <p:selectOneMenu id="cargaTrabajadorIdParentesco" value="#{cargaTrabajadorController.selected.cargaTrabajadorIdParentesco}" required="true" requiredMessage="#{myBundle.EditCargaTrabajadorRequiredMessage_cargaTrabajadorIdParentesco}" converter="parentescoCargaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{parentescoCargaController.items}"
+                                           var="cargaTrabajadorIdParentescoItem"
+                                           itemValue="#{cargaTrabajadorIdParentescoItem}"
+                                           itemLabel="#{cargaTrabajadorIdParentescoItem.parentescoCargaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorIdTipo}" for="cargaTrabajadorIdTipo" />
+                        <p:selectOneMenu id="cargaTrabajadorIdTipo" value="#{cargaTrabajadorController.selected.cargaTrabajadorIdTipo}" required="true" requiredMessage="#{myBundle.EditCargaTrabajadorRequiredMessage_cargaTrabajadorIdTipo}" converter="tipoCargaFamiliarConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoCargaFamiliarController.items}"
+                                           var="cargaTrabajadorIdTipoItem"
+                                           itemValue="#{cargaTrabajadorIdTipoItem}"
+                                           itemLabel="#{cargaTrabajadorIdTipoItem.tipoCargaFamiliarId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditCargaTrabajadorLabel_cargaTrabajadorIdTrabajador}" for="cargaTrabajadorIdTrabajador" />
+                        <p:selectOneMenu id="cargaTrabajadorIdTrabajador" value="#{cargaTrabajadorController.selected.cargaTrabajadorIdTrabajador}" required="true" requiredMessage="#{myBundle.EditCargaTrabajadorRequiredMessage_cargaTrabajadorIdTrabajador}" converter="trabajadorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{trabajadorController.items}"
+                                           var="cargaTrabajadorIdTrabajadorItem"
+                                           itemValue="#{cargaTrabajadorIdTrabajadorItem}"
+                                           itemLabel="#{cargaTrabajadorIdTrabajadorItem.trabajadorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cargaTrabajadorController.save}" value="#{myBundle.Save}" update="display,:CargaTrabajadorListForm:datalist,:CargaTrabajadorListForm:CargaTrabajadorDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CargaTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CargaTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

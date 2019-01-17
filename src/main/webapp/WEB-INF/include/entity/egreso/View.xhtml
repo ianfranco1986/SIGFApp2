@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EgresoViewDlg" widgetVar="EgresoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEgresoTitle}" closeOnEscape="true">
+
+            <h:form id="EgresoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{egresoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEgresoLabel_egresoId}"/>
+                        <h:outputText value="#{egresoController.selected.egresoId}" title="#{myBundle.ViewEgresoTitle_egresoId}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoLabel_egresoNombre}"/>
+                        <h:outputText value="#{egresoController.selected.egresoNombre}" title="#{myBundle.ViewEgresoTitle_egresoNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoLabel_egresoValorDefecto}"/>
+                        <h:outputText value="#{egresoController.selected.egresoValorDefecto}" title="#{myBundle.ViewEgresoTitle_egresoValorDefecto}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoLabel_egresoPorcentaje}"/>
+                        <h:outputText value="#{egresoController.selected.egresoPorcentaje}" title="#{myBundle.ViewEgresoTitle_egresoPorcentaje}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoLabel_egresoNumeroOrden}"/>
+                        <h:outputText value="#{egresoController.selected.egresoNumeroOrden}" title="#{myBundle.ViewEgresoTitle_egresoNumeroOrden}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoLabel_egresoObligatorio}"/>
+                        <p:selectBooleanCheckbox id="egresoObligatorio" value="#{egresoController.selected.egresoObligatorio}" title="#{myBundle.EditEgresoTitle_egresoObligatorio}" />
+
+                        <h:outputText value="#{myBundle.ViewEgresoLabel_egresoActivo}"/>
+                        <p:selectBooleanCheckbox id="egresoActivo" value="#{egresoController.selected.egresoActivo}" title="#{myBundle.EditEgresoTitle_egresoActivo}" required="true" requiredMessage="#{myBundle.EditEgresoRequiredMessage_egresoActivo}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoLabel_egresoIdCuenta}"/>
+                        <h:outputText value="#{egresoController.selected.egresoIdCuenta.cuentaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EgresoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

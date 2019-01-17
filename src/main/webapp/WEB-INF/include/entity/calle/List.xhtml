@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CalleListForm">
+
+        <p:panel header="#{myBundle.ListCalleTitle}">
+            <p:contextMenu id="CalleDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CalleListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CalleListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CalleListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CalleListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CalleMenuItem_calleServicioList}" icon="ui-icon-search"  action="#{calleController.navigateCalleServicioList}" disabled="#{calleController.isCalleServicioListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CalleMenuItem_calleIdComuna}" icon="ui-icon-search"  actionListener="#{calleController.prepareCalleIdComuna}" update=":ComunaViewForm" oncomplete="PF('ComunaViewDialog').show()" disabled="#{empty calleController.selected.calleIdComuna}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{calleController.items}"
+                         lazy="false"
+                         rowKey="#{item.calleId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{calleController.selected}"
+                         filteredValue="#{calleController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{calleController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.calleId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CalleDataTableContextMenu" listener="#{calleController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CalleDataTableContextMenu" listener="#{calleController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{calleController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CalleListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.calleId}" filterBy="#{item.calleId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalleTitle_calleId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.calleId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.calleNombre}" filterBy="#{item.calleNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalleTitle_calleNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.calleNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.calleIdComuna.comunaId}" filterBy="#{item.calleIdComuna.comunaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalleTitle_calleIdComuna}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.calleIdComuna.comunaId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{calleController.prepareCreate}" update=":CalleCreateForm" oncomplete="PF('CalleCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":CalleViewForm" oncomplete="PF('CalleViewDialog').show()" disabled="#{empty calleController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CalleEditForm" oncomplete="PF('CalleEditDialog').show()" disabled="#{empty calleController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{calleController.delete}" update=":growl,datalist" disabled="#{empty calleController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

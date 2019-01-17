@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleResumenChequeCreateDlg" widgetVar="DetalleResumenChequeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateDetalleResumenChequeTitle}" closeOnEscape="true">
+
+            <h:form id="DetalleResumenChequeCreateForm">
+
+                <h:panelGroup id="display" rendered="#{detalleResumenChequeController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleResumenChequeLabel_detalleResumenChequeNumeroCuenta}" for="detalleResumenChequeNumeroCuenta" />
+                        <p:inputText id="detalleResumenChequeNumeroCuenta" value="#{detalleResumenChequeController.selected.detalleResumenChequeNumeroCuenta}" title="#{myBundle.CreateDetalleResumenChequeTitle_detalleResumenChequeNumeroCuenta}" required="true" requiredMessage="#{myBundle.CreateDetalleResumenChequeRequiredMessage_detalleResumenChequeNumeroCuenta}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleResumenChequeLabel_detalleResumenChequeTitular}" for="detalleResumenChequeTitular" />
+                        <p:inputText id="detalleResumenChequeTitular" value="#{detalleResumenChequeController.selected.detalleResumenChequeTitular}" title="#{myBundle.CreateDetalleResumenChequeTitle_detalleResumenChequeTitular}" required="true" requiredMessage="#{myBundle.CreateDetalleResumenChequeRequiredMessage_detalleResumenChequeTitular}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleResumenChequeLabel_detalleResumenChequeMonto}" for="detalleResumenChequeMonto" />
+                        <p:inputText id="detalleResumenChequeMonto" value="#{detalleResumenChequeController.selected.detalleResumenChequeMonto}" title="#{myBundle.CreateDetalleResumenChequeTitle_detalleResumenChequeMonto}" required="true" requiredMessage="#{myBundle.CreateDetalleResumenChequeRequiredMessage_detalleResumenChequeMonto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleResumenChequeLabel_detalleResumenChequeIdBanco}" for="detalleResumenChequeIdBanco" />
+                        <p:selectOneMenu id="detalleResumenChequeIdBanco" value="#{detalleResumenChequeController.selected.detalleResumenChequeIdBanco}" required="true" requiredMessage="#{myBundle.CreateDetalleResumenChequeRequiredMessage_detalleResumenChequeIdBanco}" converter="bancoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bancoController.items}"
+                                           var="detalleResumenChequeIdBancoItem"
+                                           itemValue="#{detalleResumenChequeIdBancoItem}"
+                                           itemLabel="#{detalleResumenChequeIdBancoItem.bancoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleResumenChequeLabel_detalleResumenChequeIdResumen}" for="detalleResumenChequeIdResumen" />
+                        <p:selectOneMenu id="detalleResumenChequeIdResumen" value="#{detalleResumenChequeController.selected.detalleResumenChequeIdResumen}" required="true" requiredMessage="#{myBundle.CreateDetalleResumenChequeRequiredMessage_detalleResumenChequeIdResumen}" converter="resumenRecaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{resumenRecaudacionController.items}"
+                                           var="detalleResumenChequeIdResumenItem"
+                                           itemValue="#{detalleResumenChequeIdResumenItem}"
+                                           itemLabel="#{detalleResumenChequeIdResumenItem.resumenRecaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleResumenChequeController.saveNew}" value="#{myBundle.Save}" update="display,:DetalleResumenChequeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetalleResumenChequeCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DetalleResumenChequeCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

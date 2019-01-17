@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="GuiaEditDlg" widgetVar="GuiaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditGuiaTitle}" closeOnEscape="true">
+
+            <h:form id="GuiaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{guiaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditGuiaLabel_guiaId}" for="guiaId" />
+                        <h:outputText id="guiaId" value="#{guiaController.selected.guiaId}" />
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_guiaFolio}" for="guiaFolio" />
+                        <p:inputText id="guiaFolio" value="#{guiaController.selected.guiaFolio}" title="#{myBundle.EditGuiaTitle_guiaFolio}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_guiaFolio}"/>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_guiaFecha}" for="guiaFecha" />
+                        <p:calendar id="guiaFecha" pattern="MM/dd/yyyy" value="#{guiaController.selected.guiaFecha}" title="#{myBundle.EditGuiaTitle_guiaFecha}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_guiaFecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_guiaTotalIngreso}" for="guiaTotalIngreso" />
+                        <p:inputText id="guiaTotalIngreso" value="#{guiaController.selected.guiaTotalIngreso}" title="#{myBundle.EditGuiaTitle_guiaTotalIngreso}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_guiaTotalIngreso}"/>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_guiaIdBus}" for="guiaIdBus" />
+                        <p:selectOneMenu id="guiaIdBus" value="#{guiaController.selected.guiaIdBus}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_guiaIdBus}" converter="busConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{busController.items}"
+                                           var="guiaIdBusItem"
+                                           itemValue="#{guiaIdBusItem}"
+                                           itemLabel="#{guiaIdBusItem.busId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_guiaIdTrabajador}" for="guiaIdTrabajador" />
+                        <p:selectOneMenu id="guiaIdTrabajador" value="#{guiaController.selected.guiaIdTrabajador}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_guiaIdTrabajador}" converter="trabajadorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{trabajadorController.items}"
+                                           var="guiaIdTrabajadorItem"
+                                           itemValue="#{guiaIdTrabajadorItem}"
+                                           itemLabel="#{guiaIdTrabajadorItem.trabajadorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{guiaController.save}" value="#{myBundle.Save}" update="display,:GuiaListForm:datalist,:GuiaListForm:GuiaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GuiaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('GuiaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

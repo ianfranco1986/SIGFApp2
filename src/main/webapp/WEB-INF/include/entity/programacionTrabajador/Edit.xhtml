@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProgramacionTrabajadorEditDlg" widgetVar="ProgramacionTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditProgramacionTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="ProgramacionTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{programacionTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditProgramacionTrabajadorLabel_programacionTrabajadorId}" for="programacionTrabajadorId" />
+                        <h:outputText id="programacionTrabajadorId" value="#{programacionTrabajadorController.selected.programacionTrabajadorId}" />
+
+                        <p:outputLabel value="#{myBundle.EditProgramacionTrabajadorLabel_programacionTrabajadorDesde}" for="programacionTrabajadorDesde" />
+                        <p:calendar id="programacionTrabajadorDesde" pattern="MM/dd/yyyy" value="#{programacionTrabajadorController.selected.programacionTrabajadorDesde}" title="#{myBundle.EditProgramacionTrabajadorTitle_programacionTrabajadorDesde}" required="true" requiredMessage="#{myBundle.EditProgramacionTrabajadorRequiredMessage_programacionTrabajadorDesde}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditProgramacionTrabajadorLabel_programacionTrabajadorHasta}" for="programacionTrabajadorHasta" />
+                        <p:calendar id="programacionTrabajadorHasta" pattern="MM/dd/yyyy" value="#{programacionTrabajadorController.selected.programacionTrabajadorHasta}" title="#{myBundle.EditProgramacionTrabajadorTitle_programacionTrabajadorHasta}" required="true" requiredMessage="#{myBundle.EditProgramacionTrabajadorRequiredMessage_programacionTrabajadorHasta}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditProgramacionTrabajadorLabel_programacionTrabajadorIdAdministrador}" for="programacionTrabajadorIdAdministrador" />
+                        <p:selectOneMenu id="programacionTrabajadorIdAdministrador" value="#{programacionTrabajadorController.selected.programacionTrabajadorIdAdministrador}" required="true" requiredMessage="#{myBundle.EditProgramacionTrabajadorRequiredMessage_programacionTrabajadorIdAdministrador}" converter="administradorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{administradorController.items}"
+                                           var="programacionTrabajadorIdAdministradorItem"
+                                           itemValue="#{programacionTrabajadorIdAdministradorItem}"
+                                           itemLabel="#{programacionTrabajadorIdAdministradorItem.administradorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditProgramacionTrabajadorLabel_programacionTrabajadorIdTrabajador}" for="programacionTrabajadorIdTrabajador" />
+                        <p:selectOneMenu id="programacionTrabajadorIdTrabajador" value="#{programacionTrabajadorController.selected.programacionTrabajadorIdTrabajador}" required="true" requiredMessage="#{myBundle.EditProgramacionTrabajadorRequiredMessage_programacionTrabajadorIdTrabajador}" converter="trabajadorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{trabajadorController.items}"
+                                           var="programacionTrabajadorIdTrabajadorItem"
+                                           itemValue="#{programacionTrabajadorIdTrabajadorItem}"
+                                           itemLabel="#{programacionTrabajadorIdTrabajadorItem.trabajadorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{programacionTrabajadorController.save}" value="#{myBundle.Save}" update="display,:ProgramacionTrabajadorListForm:datalist,:ProgramacionTrabajadorListForm:ProgramacionTrabajadorDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProgramacionTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ProgramacionTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CargaRetroactivaViewDlg" widgetVar="CargaRetroactivaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCargaRetroactivaTitle}" closeOnEscape="true">
+
+            <h:form id="CargaRetroactivaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{cargaRetroactivaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCargaRetroactivaLabel_cargaRetroactivaId}"/>
+                        <h:outputText value="#{cargaRetroactivaController.selected.cargaRetroactivaId}" title="#{myBundle.ViewCargaRetroactivaTitle_cargaRetroactivaId}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargaRetroactivaLabel_cargaRetroactivaMonto}"/>
+                        <h:outputText value="#{cargaRetroactivaController.selected.cargaRetroactivaMonto}" title="#{myBundle.ViewCargaRetroactivaTitle_cargaRetroactivaMonto}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargaRetroactivaLabel_cargaRetroactivaFecha}"/>
+                        <h:outputText value="#{cargaRetroactivaController.selected.cargaRetroactivaFecha}" title="#{myBundle.ViewCargaRetroactivaTitle_cargaRetroactivaFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCargaRetroactivaLabel_cargaRetroactivaIdCargaTrabajador}"/>
+                        <h:outputText value="#{cargaRetroactivaController.selected.cargaRetroactivaIdCargaTrabajador.cargaTrabajadorId}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargaRetroactivaLabel_cargaRetroactivaIdTrabajador}"/>
+                        <h:outputText value="#{cargaRetroactivaController.selected.cargaRetroactivaIdTrabajador.trabajadorId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CargaRetroactivaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

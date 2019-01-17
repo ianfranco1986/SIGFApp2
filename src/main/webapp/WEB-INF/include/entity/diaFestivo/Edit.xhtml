@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DiaFestivoEditDlg" widgetVar="DiaFestivoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDiaFestivoTitle}" closeOnEscape="true">
+
+            <h:form id="DiaFestivoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{diaFestivoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditDiaFestivoLabel_diaFestivoId}" for="diaFestivoId" />
+                        <h:outputText id="diaFestivoId" value="#{diaFestivoController.selected.diaFestivoId}" />
+
+                        <p:outputLabel value="#{myBundle.EditDiaFestivoLabel_diaFestivoNombre}" for="diaFestivoNombre" />
+                        <p:inputText id="diaFestivoNombre" value="#{diaFestivoController.selected.diaFestivoNombre}" title="#{myBundle.EditDiaFestivoTitle_diaFestivoNombre}" required="true" requiredMessage="#{myBundle.EditDiaFestivoRequiredMessage_diaFestivoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditDiaFestivoLabel_diaFestivoFecha}" for="diaFestivoFecha" />
+                        <p:calendar id="diaFestivoFecha" pattern="MM/dd/yyyy" value="#{diaFestivoController.selected.diaFestivoFecha}" title="#{myBundle.EditDiaFestivoTitle_diaFestivoFecha}" required="true" requiredMessage="#{myBundle.EditDiaFestivoRequiredMessage_diaFestivoFecha}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{diaFestivoController.save}" value="#{myBundle.Save}" update="display,:DiaFestivoListForm:datalist,:DiaFestivoListForm:DiaFestivoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DiaFestivoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DiaFestivoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

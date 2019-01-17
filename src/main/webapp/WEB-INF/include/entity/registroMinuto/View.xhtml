@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroMinutoViewDlg" widgetVar="RegistroMinutoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewRegistroMinutoTitle}" closeOnEscape="true">
+
+            <h:form id="RegistroMinutoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{registroMinutoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewRegistroMinutoLabel_registroMinutoId}"/>
+                        <h:outputText value="#{registroMinutoController.selected.registroMinutoId}" title="#{myBundle.ViewRegistroMinutoTitle_registroMinutoId}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroMinutoLabel_registroMinutoFechaMinuto}"/>
+                        <h:outputText value="#{registroMinutoController.selected.registroMinutoFechaMinuto}" title="#{myBundle.ViewRegistroMinutoTitle_registroMinutoFechaMinuto}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewRegistroMinutoLabel_registroMinutoCantidad}"/>
+                        <h:outputText value="#{registroMinutoController.selected.registroMinutoCantidad}" title="#{myBundle.ViewRegistroMinutoTitle_registroMinutoCantidad}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroMinutoLabel_registroMinutoMonto}"/>
+                        <h:outputText value="#{registroMinutoController.selected.registroMinutoMonto}" title="#{myBundle.ViewRegistroMinutoTitle_registroMinutoMonto}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroMinutoLabel_registroMinutoFechaIngreso}"/>
+                        <h:outputText value="#{registroMinutoController.selected.registroMinutoFechaIngreso}" title="#{myBundle.ViewRegistroMinutoTitle_registroMinutoFechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewRegistroMinutoLabel_registroMinutoRecaudado}"/>
+                        <p:selectBooleanCheckbox id="registroMinutoRecaudado" value="#{registroMinutoController.selected.registroMinutoRecaudado}" title="#{myBundle.EditRegistroMinutoTitle_registroMinutoRecaudado}" required="true" requiredMessage="#{myBundle.EditRegistroMinutoRequiredMessage_registroMinutoRecaudado}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroMinutoLabel_registroMinutoDesdeIdBus}"/>
+                        <h:outputText value="#{registroMinutoController.selected.registroMinutoDesdeIdBus.busId}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroMinutoLabel_registroMinutoHastaIdBus}"/>
+                        <h:outputText value="#{registroMinutoController.selected.registroMinutoHastaIdBus.busId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('RegistroMinutoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

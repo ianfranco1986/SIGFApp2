@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresaViewDlg" widgetVar="EmpresaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEmpresaTitle}" closeOnEscape="true">
+
+            <h:form id="EmpresaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{informeEmpresaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaId}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaId}" title="#{myBundle.ViewEmpresaTitle_empresaId}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaRut}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaRut}" title="#{myBundle.ViewEmpresaTitle_empresaRut}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaNombre}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaNombre}" title="#{myBundle.ViewEmpresaTitle_empresaNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaGiro}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaGiro}" title="#{myBundle.ViewEmpresaTitle_empresaGiro}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaDireccion}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaDireccion}" title="#{myBundle.ViewEmpresaTitle_empresaDireccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaTelefono}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaTelefono}" title="#{myBundle.ViewEmpresaTitle_empresaTelefono}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaCelular}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaCelular}" title="#{myBundle.ViewEmpresaTitle_empresaCelular}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaEmail}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaEmail}" title="#{myBundle.ViewEmpresaTitle_empresaEmail}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaPorcentajeMutual}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaPorcentajeMutual}" title="#{myBundle.ViewEmpresaTitle_empresaPorcentajeMutual}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaIdCajaCompensacion}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaIdCajaCompensacion.cajaCompensacionId}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaIdCuenta}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaIdCuenta.cuentaId}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaIdMutual}"/>
+                        <h:outputText value="#{informeEmpresaController.selected.empresaIdMutual.mutualId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EmpresaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

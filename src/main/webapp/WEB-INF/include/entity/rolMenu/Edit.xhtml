@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="RolMenuEditDlg" widgetVar="RolMenuEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditRolMenuTitle}" closeOnEscape="true">
+
+            <h:form id="RolMenuEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{rolMenuController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditRolMenuLabel_rolMenuId}" for="rolMenuId" />
+                        <h:outputText id="rolMenuId" value="#{rolMenuController.selected.rolMenuId}" />
+
+                        <p:outputLabel value="#{myBundle.EditRolMenuLabel_rolMenuIdMenu}" for="rolMenuIdMenu" />
+                        <p:selectOneMenu id="rolMenuIdMenu" value="#{rolMenuController.selected.rolMenuIdMenu}" required="true" requiredMessage="#{myBundle.EditRolMenuRequiredMessage_rolMenuIdMenu}" converter="menuConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{menuController.items}"
+                                           var="rolMenuIdMenuItem"
+                                           itemValue="#{rolMenuIdMenuItem}"
+                                           itemLabel="#{rolMenuIdMenuItem.menuId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditRolMenuLabel_rolMenuIdRol}" for="rolMenuIdRol" />
+                        <p:selectOneMenu id="rolMenuIdRol" value="#{rolMenuController.selected.rolMenuIdRol}" required="true" requiredMessage="#{myBundle.EditRolMenuRequiredMessage_rolMenuIdRol}" converter="rolConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{rolController.items}"
+                                           var="rolMenuIdRolItem"
+                                           itemValue="#{rolMenuIdRolItem}"
+                                           itemLabel="#{rolMenuIdRolItem.rolDescripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{rolMenuController.save}" value="#{myBundle.Save}" update="display,:RolMenuListForm:datalist,:RolMenuListForm:RolMenuDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RolMenuEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RolMenuEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

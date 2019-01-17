@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:panel>
+        <h3 style="text-align: center;">Registo de Descuento Extra x Bus</h3>
+        <h:form id="DescuentoExtraBusCreateForm">
+
+            <h:panelGroup id="display" rendered="#{descuentoExtraBusController.selected != null}">
+                <p:panelGrid columns="2"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" style="width: 100%; ">
+
+                    <p:outputLabel value="Flota" for="busIdFlota" />
+                    <p:selectOneMenu id="busIdFlota" value="#{descuentoExtraBusController.flota}" required="true" requiredMessage="Debe selecconar la Flota" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{descuentoExtraBusController.flotaItems}"
+                                       var="busIdFlotaItem"
+                                       itemValue="#{busIdFlotaItem}"
+                                       itemLabel="#{busIdFlotaItem.flotaNombre}"
+                                       />
+                        <p:ajax event="valueChange" listener="#{descuentoExtraBusController.handleFlotaChange()}" update="descuentoExtraBusIdBus"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="N° Bus" for="descuentoExtraBusIdBus" />
+                    <p:selectCheckboxMenu id="descuentoExtraBusIdBus" value="#{descuentoExtraBusController.selectedBusItems}" multiple="true" required="true" requiredMessage="Debe seleccionar al menos un bus" converter="omnifaces.SelectItemsConverter">                        
+                        <f:selectItems value="#{descuentoExtraBusController.busItems}"
+                                       var="descuentoExtraBusIdBusItem"
+                                       itemValue="#{descuentoExtraBusIdBusItem}"
+                                       itemLabel="#{descuentoExtraBusIdBusItem.busNumero} - #{descuentoExtraBusIdBusItem.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
+                                       />
+
+                    </p:selectCheckboxMenu>
+
+                    <p:outputLabel value="Descuento" for="descuentoExtraBusIdDescuento" />
+                    <p:selectOneMenu id="descuentoExtraBusIdDescuento" value="#{descuentoExtraBusController.descuentoExtra}" required="true" requiredMessage="Debe seleccionar un Descuento" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{descuentoExtraController.items}"
+                                       var="descuentoExtraBusIdDescuentoItem"
+                                       itemValue="#{descuentoExtraBusIdDescuentoItem}"
+                                       itemLabel="#{descuentoExtraBusIdDescuentoItem.descuentoExtraDescripcion.toString()}"
+                                       />
+                        <p:ajax event="valueChange" listener="#{descuentoExtraBusController.handleDescuentoChange()}" update="descuentoExtraBusMonto"/>
+                    </p:selectOneMenu>
+
+
+                    <p:outputLabel value="Monto:" for="descuentoExtraBusMonto" />
+                    <p:inputText id="descuentoExtraBusMonto" value="#{descuentoExtraBusController.selected.descuentoExtraBusMonto}" required="true" requiredMessage="Debe ingresar un monto"/>
+
+                    <p:outputLabel/>
+                    <h:panelGroup >
+                        <p:commandButton actionListener="#{descuentoExtraBusController.saveNew}" value="#{myBundle.Save}" update="display,:DescuentoExtraBusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DescuentoExtraBusCreateDialog'));" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                            <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DescuentoExtraBusCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                    </h:panelGroup>
+
+                </p:panelGrid>
+
+            </h:panelGroup>
+
+        </h:form>
+    </p:panel>
+
+    <h:form id="DescuentoExtraBusListForm">
+
+        <p:panel style="margin-top: 10px;">
+            <p:contextMenu id="DescuentoExtraBusDataTableContextMenu" for="datalist">                  
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('DescuentoExtraBusListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('DescuentoExtraBusListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('DescuentoExtraBusListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{descuentoExtraBusController.model}"
+                         lazy="false"
+                         rowKey="#{item.descuentoExtraBusId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{descuentoExtraBusController.selectedRow}"
+                         filteredValue="#{descuentoExtraBusController.filteredItems}"
+                         widgetVar="datalistWidget"
+                         reflow="true"
+                         emptyMessage="No se han encontrado registros"
+                         rowIndexVar="rowIndex">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{descuentoExtraBusController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.descuentoExtraBusId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:DescuentoExtraBusDataTableContextMenu" listener="#{descuentoExtraBusController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:DescuentoExtraBusDataTableContextMenu" listener="#{descuentoExtraBusController.resetParents}"/>
+                <p:ajax event="contextMenu" update="datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{descuentoExtraBusController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DescuentoExtraBusListForm:viewButton').click();"/>
+
+                <f:facet name="header">
+                    <div class="row row-nomargin">
+                        <div class="col-lg-3">
+                            <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                        </div>
+                        <div class="col-lg-5">
+
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="pull-right">
+
+                                <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":DescuentoExtraBusViewForm" oncomplete="PF('DescuentoExtraBusViewDialog').show()" disabled="#{empty descuentoExtraBusController.selectedRow}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DescuentoExtraBusEditForm" oncomplete="PF('DescuentoExtraBusEditDialog').show()" disabled="#{empty descuentoExtraBusController.selectedRow}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{descuentoExtraBusController.delete}" update=":growl,datalist" disabled="#{empty descuentoExtraBusController.selectedRow}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                                </p:commandButton>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descuentoExtraBusMonto}" filterBy="#{item.descuentoExtraBusMonto}">
+                    <f:facet name="header">
+                        <h:outputText value="Monto"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descuentoExtraBusMonto}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.descuentoExtraBusIdBus.busNumero}" filterBy="#{item.descuentoExtraBusIdBus.busNumero}">
+                    <f:facet name="header">
+                        <h:outputText value="N° Bus"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descuentoExtraBusIdBus.busNumero} - #{item.descuentoExtraBusIdBus.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.descuentoExtraBusIdBus.busIdFlota.flotaNombre}" filterBy="#{item.descuentoExtraBusIdBus.busIdFlota.flotaNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Flota"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descuentoExtraBusIdBus.busIdFlota.flotaNombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.descuentoExtraBusIdDescuento.descuentoExtraDescripcion}" filterBy="#{item.descuentoExtraBusIdDescuento.descuentoExtraDescripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="Descuento"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descuentoExtraBusIdDescuento.descuentoExtraDescripcion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.descuentoExtraBusRecaudado}" filterBy="#{item.descuentoExtraBusRecaudado}">
+                    <f:facet name="header">
+                        <h:outputText value="Recaudado"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="descuentoExtraBusRecaudado" value="#{item.descuentoExtraBusRecaudado}" title="#{myBundle.EditDescuentoExtraBusTitle_descuentoExtraBusRecaudado}"  disabled="true"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+    <p:dialog id="DescuentoExtraBusEditDlg" widgetVar="DescuentoExtraBusEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDescuentoExtraBusTitle}" closeOnEscape="true">
+
+        <h:form id="DescuentoExtraBusEditForm">
+
+            <h:panelGroup id="display">
+                <p:panelGrid  columns="2" columnClasses="column" rendered="#{descuentoExtraBusController.selectedRow != null}">
+
+
+                    <h:outputLabel value="#{myBundle.EditDescuentoExtraBusLabel_descuentoExtraBusId}" for="descuentoExtraBusId" />
+                    <h:outputText id="descuentoExtraBusId" value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusId}" />
+
+                    <p:outputLabel value="#{myBundle.EditDescuentoExtraBusLabel_descuentoExtraBusMonto}" for="descuentoExtraBusMonto" />
+                    <p:inputText id="descuentoExtraBusMonto" value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusMonto}" title="#{myBundle.EditDescuentoExtraBusTitle_descuentoExtraBusMonto}" required="true" requiredMessage="#{myBundle.EditDescuentoExtraBusRequiredMessage_descuentoExtraBusMonto}"/>
+
+                    <p:outputLabel value="#{myBundle.EditDescuentoExtraBusLabel_descuentoExtraBusRecaudado}" for="descuentoExtraBusRecaudado" />
+                    <p:selectBooleanCheckbox id="descuentoExtraBusRecaudado" value="#{selectedRow.selected.descuentoExtraBusRecaudado}" />
+
+                    <p:outputLabel value="#{myBundle.EditDescuentoExtraBusLabel_descuentoExtraBusIdBus}" for="descuentoExtraBusIdBus" />
+                    <p:selectOneMenu id="descuentoExtraBusIdBus" value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusIdBus}" required="true" requiredMessage="#{myBundle.EditDescuentoExtraBusRequiredMessage_descuentoExtraBusIdBus}" converter="busConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{busController.items}"
+                                       var="descuentoExtraBusIdBusItem"
+                                       itemValue="#{descuentoExtraBusIdBusItem}"
+                                       itemLabel="#{descuentoExtraBusIdBusItem.busId.toString()}"
+                                       />
+
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="#{myBundle.EditDescuentoExtraBusLabel_descuentoExtraBusIdDescuento}" for="descuentoExtraBusIdDescuento" />
+                    <p:selectOneMenu id="descuentoExtraBusIdDescuento" value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusIdDescuento}" required="true" requiredMessage="#{myBundle.EditDescuentoExtraBusRequiredMessage_descuentoExtraBusIdDescuento}" converter="descuentoExtraConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{descuentoExtraController.items}"
+                                       var="descuentoExtraBusIdDescuentoItem"
+                                       itemValue="#{descuentoExtraBusIdDescuentoItem}"
+                                       itemLabel="#{descuentoExtraBusIdDescuentoItem.descuentoExtraDescripcion.toString()}"
+                                       />
+
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <p:commandButton actionListener="#{descuentoExtraBusController.save}" value="#{myBundle.Save}" update="display,:DescuentoExtraBusListForm:datalist,:DescuentoExtraBusListForm:DescuentoExtraBusDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DescuentoExtraBusEditDialog'));">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DescuentoExtraBusEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+    <p:dialog id="DescuentoExtraBusViewDlg" widgetVar="DescuentoExtraBusViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewDescuentoExtraBusTitle}" closeOnEscape="true">
+
+        <h:form id="DescuentoExtraBusViewForm">
+
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" columnClasses="column" rendered="#{descuentoExtraBusController.selectedRow != null}">
+
+                    <h:outputText value="#{myBundle.ViewDescuentoExtraBusLabel_descuentoExtraBusId}"/>
+                    <h:outputText value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusId}" title="#{myBundle.ViewDescuentoExtraBusTitle_descuentoExtraBusId}"/>
+
+                    <h:outputText value="#{myBundle.ViewDescuentoExtraBusLabel_descuentoExtraBusMonto}"/>
+                    <h:outputText value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusMonto}" title="#{myBundle.ViewDescuentoExtraBusTitle_descuentoExtraBusMonto}"/>
+
+                    <h:outputText value="#{myBundle.ViewDescuentoExtraBusLabel_descuentoExtraBusRecaudado}"/>
+                    <p:selectBooleanCheckbox id="descuentoExtraBusRecaudado" value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusRecaudado}" title="#{myBundle.EditDescuentoExtraBusTitle_descuentoExtraBusRecaudado}" />
+
+                    <h:outputText value="#{myBundle.ViewDescuentoExtraBusLabel_descuentoExtraBusIdBus}"/>
+                    <h:outputText value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusIdBus.busId}"/>
+
+                    <h:outputText value="#{myBundle.ViewDescuentoExtraBusLabel_descuentoExtraBusIdDescuento}"/>
+                    <h:outputText value="#{descuentoExtraBusController.selectedRow.descuentoExtraBusIdDescuento.descuentoExtraDescripcion}"/>
+                </p:panelGrid>
+                <p:commandButton value="#{myBundle.Close}" onclick="PF('DescuentoExtraBusViewDialog').hide()"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>

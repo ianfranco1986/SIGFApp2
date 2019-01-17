@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroBoletoViewDlg" widgetVar="RegistroBoletoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewRegistroBoletoTitle}" closeOnEscape="true">
+
+            <h:form id="RegistroBoletoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{registroBoletoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoId}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoId}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoId}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoNumeroVuelta}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoNumeroVuelta}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoNumeroVuelta}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoSerie}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoSerie}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoSerie}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoValor}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoValor}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoValor}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoInicio}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoInicio}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoInicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoTermino}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoTermino}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoTermino}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoCantidad}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoCantidad}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoCantidad}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoTotal}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoTotal}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoTotal}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoEsNuevo}"/>
+                        <p:selectBooleanCheckbox id="registroBoletoEsNuevo" value="#{registroBoletoController.selected.registroBoletoEsNuevo}" title="#{myBundle.EditRegistroBoletoTitle_registroBoletoEsNuevo}" />
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoObservacion}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoObservacion}" title="#{myBundle.ViewRegistroBoletoTitle_registroBoletoObservacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoIdBoleto}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoIdBoleto.boletoId}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoIdGuia}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoIdGuia.guiaId}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroBoletoLabel_registroBoletoIdServicio}"/>
+                        <h:outputText value="#{registroBoletoController.selected.registroBoletoIdServicio.servicioId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('RegistroBoletoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

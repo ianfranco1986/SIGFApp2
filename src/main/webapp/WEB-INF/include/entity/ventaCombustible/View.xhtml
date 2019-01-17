@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VentaCombustibleViewDlg" widgetVar="VentaCombustibleViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewVentaCombustibleTitle}" closeOnEscape="true">
+
+            <h:form id="VentaCombustibleViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{ventaCombustibleController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleId}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustibleId}" title="#{myBundle.ViewVentaCombustibleTitle_ventaCombustibleId}"/>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleFecha}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustibleFecha}" title="#{myBundle.ViewVentaCombustibleTitle_ventaCombustibleFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleHora}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustibleHora}" title="#{myBundle.ViewVentaCombustibleTitle_ventaCombustibleHora}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustiblePrecio}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustiblePrecio}" title="#{myBundle.ViewVentaCombustibleTitle_ventaCombustiblePrecio}"/>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleCantidad}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustibleCantidad}" title="#{myBundle.ViewVentaCombustibleTitle_ventaCombustibleCantidad}"/>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleTotal}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustibleTotal}" title="#{myBundle.ViewVentaCombustibleTitle_ventaCombustibleTotal}"/>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleNumeroBoleta}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustibleNumeroBoleta}" title="#{myBundle.ViewVentaCombustibleTitle_ventaCombustibleNumeroBoleta}"/>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleRecaudado}"/>
+                        <p:selectBooleanCheckbox id="ventaCombustibleRecaudado" value="#{ventaCombustibleController.selected.ventaCombustibleRecaudado}" title="#{myBundle.EditVentaCombustibleTitle_ventaCombustibleRecaudado}" required="true" requiredMessage="#{myBundle.EditVentaCombustibleRequiredMessage_ventaCombustibleRecaudado}"/>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleIdBus}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustibleIdBus.busId}"/>
+
+                        <h:outputText value="#{myBundle.ViewVentaCombustibleLabel_ventaCombustibleIdSurtidor}"/>
+                        <h:outputText value="#{ventaCombustibleController.selected.ventaCombustibleIdSurtidor.surtidorId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('VentaCombustibleViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

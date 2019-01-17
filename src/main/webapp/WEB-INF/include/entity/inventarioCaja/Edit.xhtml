@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="InventarioCajaEditDlg" widgetVar="InventarioCajaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditInventarioCajaTitle}" closeOnEscape="true">
+
+            <h:form id="InventarioCajaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{inventarioCajaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditInventarioCajaLabel_inventarioCajaId}" for="inventarioCajaId" />
+                        <h:outputText id="inventarioCajaId" value="#{inventarioCajaController.selected.inventarioCajaId}" />
+
+                        <p:outputLabel value="#{myBundle.EditInventarioCajaLabel_inventarioCajaEstado}" for="inventarioCajaEstado" />
+                        <p:selectBooleanCheckbox id="inventarioCajaEstado" value="#{inventarioCajaController.selected.inventarioCajaEstado}" required="true" requiredMessage="#{myBundle.EditInventarioCajaRequiredMessage_inventarioCajaEstado}"/>
+
+                        <p:outputLabel value="#{myBundle.EditInventarioCajaLabel_inventarioCajaSerie}" for="inventarioCajaSerie" />
+                        <p:inputText id="inventarioCajaSerie" value="#{inventarioCajaController.selected.inventarioCajaSerie}" title="#{myBundle.EditInventarioCajaTitle_inventarioCajaSerie}" required="true" requiredMessage="#{myBundle.EditInventarioCajaRequiredMessage_inventarioCajaSerie}"/>
+
+                        <p:outputLabel value="#{myBundle.EditInventarioCajaLabel_inventarioCajaIdentificador}" for="inventarioCajaIdentificador" />
+                        <p:inputText id="inventarioCajaIdentificador" value="#{inventarioCajaController.selected.inventarioCajaIdentificador}" title="#{myBundle.EditInventarioCajaTitle_inventarioCajaIdentificador}" required="true" requiredMessage="#{myBundle.EditInventarioCajaRequiredMessage_inventarioCajaIdentificador}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.EditInventarioCajaLabel_inventarioCajaIdInventarioInterno}" for="inventarioCajaIdInventarioInterno" />
+                        <p:selectOneMenu id="inventarioCajaIdInventarioInterno" value="#{inventarioCajaController.selected.inventarioCajaIdInventarioInterno}" required="true" requiredMessage="#{myBundle.EditInventarioCajaRequiredMessage_inventarioCajaIdInventarioInterno}" converter="inventarioInternoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{inventarioInternoController.items}"
+                                           var="inventarioCajaIdInventarioInternoItem"
+                                           itemValue="#{inventarioCajaIdInventarioInternoItem}"
+                                           itemLabel="#{inventarioCajaIdInventarioInternoItem.inventarioInternoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditInventarioCajaLabel_inventarioCajaIdCaja}" for="inventarioCajaIdCaja" />
+                        <p:selectOneMenu id="inventarioCajaIdCaja" value="#{inventarioCajaController.selected.inventarioCajaIdCaja}" required="true" requiredMessage="#{myBundle.EditInventarioCajaRequiredMessage_inventarioCajaIdCaja}" converter="cajaRecaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cajaRecaudacionController.items}"
+                                           var="inventarioCajaIdCajaItem"
+                                           itemValue="#{inventarioCajaIdCajaItem}"
+                                           itemLabel="#{inventarioCajaIdCajaItem.cajaRecaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{inventarioCajaController.save}" value="#{myBundle.Save}" update="display,:InventarioCajaListForm:datalist,:InventarioCajaListForm:InventarioCajaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InventarioCajaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('InventarioCajaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

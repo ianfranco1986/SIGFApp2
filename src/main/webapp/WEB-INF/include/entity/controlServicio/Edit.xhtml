@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ControlServicioEditDlg" widgetVar="ControlServicioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditControlServicioTitle}" closeOnEscape="true">
+
+            <h:form id="ControlServicioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{controlServicioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditControlServicioLabel_controlServicioIdControlServicio}" for="controlServicioIdControlServicio" />
+                        <h:outputText id="controlServicioIdControlServicio" value="#{controlServicioController.selected.controlServicioIdControlServicio}" />
+
+                        <p:outputLabel value="#{myBundle.EditControlServicioLabel_controlServicioTiempo}" for="controlServicioTiempo" />
+                        <p:calendar id="controlServicioTiempo" pattern="HH:mm:ss" value="#{controlServicioController.selected.controlServicioTiempo}" title="#{myBundle.EditControlServicioTitle_controlServicioTiempo}" required="true" requiredMessage="#{myBundle.EditControlServicioRequiredMessage_controlServicioTiempo}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditControlServicioLabel_controlServicioNumeroOrden}" for="controlServicioNumeroOrden" />
+                        <p:inputText id="controlServicioNumeroOrden" value="#{controlServicioController.selected.controlServicioNumeroOrden}" title="#{myBundle.EditControlServicioTitle_controlServicioNumeroOrden}" required="true" requiredMessage="#{myBundle.EditControlServicioRequiredMessage_controlServicioNumeroOrden}"/>
+
+                        <p:outputLabel value="#{myBundle.EditControlServicioLabel_controlServicioIdControl}" for="controlServicioIdControl" />
+                        <p:selectOneMenu id="controlServicioIdControl" value="#{controlServicioController.selected.controlServicioIdControl}" required="true" requiredMessage="#{myBundle.EditControlServicioRequiredMessage_controlServicioIdControl}" converter="controlConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{controlController.items}"
+                                           var="controlServicioIdControlItem"
+                                           itemValue="#{controlServicioIdControlItem}"
+                                           itemLabel="#{controlServicioIdControlItem.controlId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditControlServicioLabel_controlServicioIdServicio}" for="controlServicioIdServicio" />
+                        <p:selectOneMenu id="controlServicioIdServicio" value="#{controlServicioController.selected.controlServicioIdServicio}" required="true" requiredMessage="#{myBundle.EditControlServicioRequiredMessage_controlServicioIdServicio}" converter="servicioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{servicioController.items}"
+                                           var="controlServicioIdServicioItem"
+                                           itemValue="#{controlServicioIdServicioItem}"
+                                           itemLabel="#{controlServicioIdServicioItem.servicioId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{controlServicioController.save}" value="#{myBundle.Save}" update="display,:ControlServicioListForm:datalist,:ControlServicioListForm:ControlServicioDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ControlServicioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ControlServicioEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

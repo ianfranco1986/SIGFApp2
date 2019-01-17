@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OperadorTransporteCreateDlg" widgetVar="OperadorTransporteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateOperadorTransporteTitle}" closeOnEscape="true">
+
+            <h:form id="OperadorTransporteCreateForm">
+
+                <h:panelGroup id="display" rendered="#{operadorTransporteController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateOperadorTransporteLabel_operadorTransporteRut}" for="operadorTransporteRut" />
+                        <p:inputText id="operadorTransporteRut" value="#{operadorTransporteController.selected.operadorTransporteRut}" title="#{myBundle.CreateOperadorTransporteTitle_operadorTransporteRut}" required="true" requiredMessage="#{myBundle.CreateOperadorTransporteRequiredMessage_operadorTransporteRut}" size="9" maxlength="9"/>
+
+                        <p:outputLabel value="#{myBundle.CreateOperadorTransporteLabel_operadorTransporteNombre}" for="operadorTransporteNombre" />
+                        <p:inputText id="operadorTransporteNombre" value="#{operadorTransporteController.selected.operadorTransporteNombre}" title="#{myBundle.CreateOperadorTransporteTitle_operadorTransporteNombre}" required="true" requiredMessage="#{myBundle.CreateOperadorTransporteRequiredMessage_operadorTransporteNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateOperadorTransporteLabel_operadorTransporteRecaudaBoleto}" for="operadorTransporteRecaudaBoleto" />
+                        <p:selectBooleanCheckbox id="operadorTransporteRecaudaBoleto" value="#{operadorTransporteController.selected.operadorTransporteRecaudaBoleto}" required="true" requiredMessage="#{myBundle.CreateOperadorTransporteRequiredMessage_operadorTransporteRecaudaBoleto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateOperadorTransporteLabel_operadorTransporteRecaudaCombustible}" for="operadorTransporteRecaudaCombustible" />
+                        <p:selectBooleanCheckbox id="operadorTransporteRecaudaCombustible" value="#{operadorTransporteController.selected.operadorTransporteRecaudaCombustible}" required="true" requiredMessage="#{myBundle.CreateOperadorTransporteRequiredMessage_operadorTransporteRecaudaCombustible}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateOperadorTransporteLabel_operadorTransporteRecaudaGuias}" for="operadorTransporteRecaudaGuias" />
+                        <p:selectBooleanCheckbox id="operadorTransporteRecaudaGuias" value="#{operadorTransporteController.selected.operadorTransporteRecaudaGuias}" required="true" requiredMessage="#{myBundle.CreateOperadorTransporteRequiredMessage_operadorTransporteRecaudaGuias}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateOperadorTransporteLabel_operadorTransporteRecaudaMinuto}" for="operadorTransporteRecaudaMinuto" />
+                        <p:selectBooleanCheckbox id="operadorTransporteRecaudaMinuto" value="#{operadorTransporteController.selected.operadorTransporteRecaudaMinuto}" required="true" requiredMessage="#{myBundle.CreateOperadorTransporteRequiredMessage_operadorTransporteRecaudaMinuto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateOperadorTransporteLabel_operadorTransporteIdRepresentante}" for="operadorTransporteIdRepresentante" />
+                        <p:selectOneMenu id="operadorTransporteIdRepresentante" value="#{operadorTransporteController.selected.operadorTransporteIdRepresentante}" required="true" requiredMessage="#{myBundle.CreateOperadorTransporteRequiredMessage_operadorTransporteIdRepresentante}" converter="representanteLegalConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{representanteLegalController.items}"
+                                           var="operadorTransporteIdRepresentanteItem"
+                                           itemValue="#{operadorTransporteIdRepresentanteItem}"
+                                           itemLabel="#{operadorTransporteIdRepresentanteItem.representanteLegalId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{operadorTransporteController.saveNew}" value="#{myBundle.Save}" update="display,:OperadorTransporteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('OperadorTransporteCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('OperadorTransporteCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

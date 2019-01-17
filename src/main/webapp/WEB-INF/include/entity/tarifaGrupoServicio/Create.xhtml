@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TarifaGrupoServicioCreateDlg" widgetVar="TarifaGrupoServicioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTarifaGrupoServicioTitle}" closeOnEscape="true">
+
+            <h:form id="TarifaGrupoServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tarifaGrupoServicioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaGrupoServicioLabel_tarifaGrupoServicioValor}" for="tarifaGrupoServicioValor" />
+                        <p:inputText id="tarifaGrupoServicioValor" value="#{tarifaGrupoServicioController.selected.tarifaGrupoServicioValor}" title="#{myBundle.CreateTarifaGrupoServicioTitle_tarifaGrupoServicioValor}" required="true" requiredMessage="#{myBundle.CreateTarifaGrupoServicioRequiredMessage_tarifaGrupoServicioValor}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaGrupoServicioLabel_tarifaGrupoServicioFecha}" for="tarifaGrupoServicioFecha" />
+                        <p:calendar id="tarifaGrupoServicioFecha" pattern="MM/dd/yyyy" value="#{tarifaGrupoServicioController.selected.tarifaGrupoServicioFecha}" title="#{myBundle.CreateTarifaGrupoServicioTitle_tarifaGrupoServicioFecha}" required="true" requiredMessage="#{myBundle.CreateTarifaGrupoServicioRequiredMessage_tarifaGrupoServicioFecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaGrupoServicioLabel_tarifaGrupoServicioActiva}" for="tarifaGrupoServicioActiva" />
+                        <p:selectBooleanCheckbox id="tarifaGrupoServicioActiva" value="#{tarifaGrupoServicioController.selected.tarifaGrupoServicioActiva}" required="true" requiredMessage="#{myBundle.CreateTarifaGrupoServicioRequiredMessage_tarifaGrupoServicioActiva}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaGrupoServicioLabel_tarifaGrupoServicioIdBoleto}" for="tarifaGrupoServicioIdBoleto" />
+                        <p:selectOneMenu id="tarifaGrupoServicioIdBoleto" value="#{tarifaGrupoServicioController.selected.tarifaGrupoServicioIdBoleto}" required="true" requiredMessage="#{myBundle.CreateTarifaGrupoServicioRequiredMessage_tarifaGrupoServicioIdBoleto}" converter="boletoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{boletoController.items}"
+                                           var="tarifaGrupoServicioIdBoletoItem"
+                                           itemValue="#{tarifaGrupoServicioIdBoletoItem}"
+                                           itemLabel="#{tarifaGrupoServicioIdBoletoItem.boletoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaGrupoServicioLabel_tarifaGrupoServicioIdGrupo}" for="tarifaGrupoServicioIdGrupo" />
+                        <p:selectOneMenu id="tarifaGrupoServicioIdGrupo" value="#{tarifaGrupoServicioController.selected.tarifaGrupoServicioIdGrupo}" required="true" requiredMessage="#{myBundle.CreateTarifaGrupoServicioRequiredMessage_tarifaGrupoServicioIdGrupo}" converter="grupoServicioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{grupoServicioController.items}"
+                                           var="tarifaGrupoServicioIdGrupoItem"
+                                           itemValue="#{tarifaGrupoServicioIdGrupoItem}"
+                                           itemLabel="#{tarifaGrupoServicioIdGrupoItem.grupoServicioId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tarifaGrupoServicioController.saveNew}" value="#{myBundle.Save}" update="display,:TarifaGrupoServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TarifaGrupoServicioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TarifaGrupoServicioCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="JornadaLaboralEditDlg" widgetVar="JornadaLaboralEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditJornadaLaboralTitle}" closeOnEscape="true">
+
+            <h:form id="JornadaLaboralEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{jornadaLaboralController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralId}" for="jornadaLaboralId" />
+                        <h:outputText id="jornadaLaboralId" value="#{jornadaLaboralController.selected.jornadaLaboralId}" />
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralNombre}" for="jornadaLaboralNombre" />
+                        <p:inputText id="jornadaLaboralNombre" value="#{jornadaLaboralController.selected.jornadaLaboralNombre}" title="#{myBundle.EditJornadaLaboralTitle_jornadaLaboralNombre}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralNombre}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralLunes}" for="jornadaLaboralLunes" />
+                        <p:selectBooleanCheckbox id="jornadaLaboralLunes" value="#{jornadaLaboralController.selected.jornadaLaboralLunes}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralLunes}"/>
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralMartes}" for="jornadaLaboralMartes" />
+                        <p:selectBooleanCheckbox id="jornadaLaboralMartes" value="#{jornadaLaboralController.selected.jornadaLaboralMartes}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralMartes}"/>
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralMiercoles}" for="jornadaLaboralMiercoles" />
+                        <p:selectBooleanCheckbox id="jornadaLaboralMiercoles" value="#{jornadaLaboralController.selected.jornadaLaboralMiercoles}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralMiercoles}"/>
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralJueves}" for="jornadaLaboralJueves" />
+                        <p:selectBooleanCheckbox id="jornadaLaboralJueves" value="#{jornadaLaboralController.selected.jornadaLaboralJueves}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralJueves}"/>
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralViernes}" for="jornadaLaboralViernes" />
+                        <p:selectBooleanCheckbox id="jornadaLaboralViernes" value="#{jornadaLaboralController.selected.jornadaLaboralViernes}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralViernes}"/>
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralSabado}" for="jornadaLaboralSabado" />
+                        <p:selectBooleanCheckbox id="jornadaLaboralSabado" value="#{jornadaLaboralController.selected.jornadaLaboralSabado}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralSabado}"/>
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralDomingo}" for="jornadaLaboralDomingo" />
+                        <p:selectBooleanCheckbox id="jornadaLaboralDomingo" value="#{jornadaLaboralController.selected.jornadaLaboralDomingo}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralDomingo}"/>
+
+                        <p:outputLabel value="#{myBundle.EditJornadaLaboralLabel_jornadaLaboralIdHorarioJornada}" for="jornadaLaboralIdHorarioJornada" />
+                        <p:selectOneMenu id="jornadaLaboralIdHorarioJornada" value="#{jornadaLaboralController.selected.jornadaLaboralIdHorarioJornada}" required="true" requiredMessage="#{myBundle.EditJornadaLaboralRequiredMessage_jornadaLaboralIdHorarioJornada}" converter="horarioJornadaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{horarioJornadaController.items}"
+                                           var="jornadaLaboralIdHorarioJornadaItem"
+                                           itemValue="#{jornadaLaboralIdHorarioJornadaItem}"
+                                           itemLabel="#{jornadaLaboralIdHorarioJornadaItem.horarioJornadaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{jornadaLaboralController.save}" value="#{myBundle.Save}" update="display,:JornadaLaboralListForm:datalist,:JornadaLaboralListForm:JornadaLaboralDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JornadaLaboralEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('JornadaLaboralEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

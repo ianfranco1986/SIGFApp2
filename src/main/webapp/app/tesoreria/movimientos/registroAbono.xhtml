@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <p:panel id="AbonoBusCreateDlg" widgetVar="AbonoBusCreateDialog" header="Registro de Abonos x Bus">
+        <h:form id="AbonoBusCreateForm">
+            <h:panelGroup id="display" style="width: 100%; margin-bottom: 10px;">
+                <p:focus context="tipoAbono"/>
+                <p:panelGrid columns="4" columnClasses="column" style="width: 100%; " >
+
+                    <p:outputLabel value="Fecha:" for="fechaInicioAbonoBus" />
+                    <h:panelGroup>
+                        <p:calendar id="fechaInicioAbonoBus" pattern="dd/MM/yyyy" value="#{abonoBusController.fecha}"  required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_fechaInicioAbonoBus}" onfocus="this.setSelectionRange(0, 2)" autocomplete="off"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="Unidad" for="unidadItems" />
+                    <p:selectOneMenu id="unidadItems" value="#{abonoBusController.unidadNegocio}" required="true" requiredMessage="Debe seleccionar la unidad" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{abonoBusController.unidadItems}"
+                                       var="unidadItem"
+                                       itemValue="#{unidadItem}"
+                                       itemLabel="#{unidadItem.unidadNegocioNumero} - #{unidadItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
+                                       />
+                        <p:ajax event="valueChange" listener="#{abonoBusController.handleUnidadChange()}" update="bus" global="false"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" />
+
+                    <p:outputLabel value="NºBus" for="bus" />
+                    <p:selectOneMenu id="bus" value="#{abonoBusController.selected.abonoBusIdBus}" required="true" requiredMessage="Debe seleccionar el bus" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{abonoBusController.busItems}"
+                                       var="busItem"
+                                       itemValue="#{busItem}"
+                                       itemLabel="#{busItem.busNumero}"
+                                       />
+                        <p:ajax event="valueChange" update="patente, flota, empresa, unidad" global="false"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Patente:" for="patente" />
+                    <p:outputLabel id="patente" value="#{abonoBusController.selected.abonoBusIdBus.busNumero}"/>
+
+                    <p:outputLabel value="Abono: " for="tipoAbono" />
+                    <h:panelGroup>
+                        <p:selectOneMenu id="tipoAbono" value="#{abonoBusController.selected.abonoBusIdTipoAbono}" required="true" requiredMessage="Debe seleccionar el Abono" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccionar..."/>
+                            <f:selectItems value="#{tipoAbonoController.items}"
+                                           var="tipoAbonoItem"
+                                           itemValue="#{tipoAbonoItem}"
+                                           itemLabel="#{tipoAbonoItem.tipoAbonoNombre}"
+                                           />
+                            <p:ajax event="valueChange" listener="#{abonoBusController.setMontoXDefecto}" update="montoAbonoBus" global="false"/>
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+
+
+
+                    <p:outputLabel value="Flota:" for="flota" />
+                    <p:outputLabel id="flota" value="#{abonoBusController.selected.abonoBusIdBus.busIdFlota.flotaNombre}"/>
+
+
+                    <p:outputLabel value="Monto" for="montoAbonoBus" />
+                    <h:panelGroup>
+                        <p:inputText id="montoAbonoBus" autocomplete="off" value="#{abonoBusController.selected.abonoBusMontoFijo}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_montoAbonoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Empresa:" for="empresa" />
+                    <p:outputLabel id="empresa" value="#{abonoBusController.selected.abonoBusIdBus.busIdEmpresa.empresaNombre}"/>
+
+                    <p:outputLabel value="Descripción:" for="descripcion" />
+                    <h:panelGroup>
+                        <p:inputText id="descripcion" autocomplete="off" value="#{abonoBusController.selected.abonoBusDescripcion}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}"  onfocus="this.setSelectionRange(0, this.value.length)" size="30" />                            
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Unidad:" for="unidad" />
+                    <p:outputLabel id="unidad" value="#{abonoBusController.selected.abonoBusIdBus.busIdUnidadNegocio.unidadNegocioNumero}   "/>
+
+                    <h:panelGroup>
+                        <p:outputLabel value="Cuotas" for="numeroCuotasAbonoBus" />
+                        <p:selectBooleanCheckbox value="#{abonoBusController.cuotas}" style="margin-left: 5px;">
+                            <p:ajax event="valueChange" update="totalCuotasAbonoBus"/>
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel value="?:" style="margin-left: 5px;"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:inputText id="numeroCuotasAbonoBus" autocomplete="off"  size="8" value="#{abonoBusController.selected.abonoBusCuotaActual}" title="#{myBundle.CreateAbonoBusTitle_numeroCuotasAbonoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
+                        <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
+                        <p:inputText id="totalCuotasAbonoBus" autocomplete="off"  size="8" disabled="#{!abonoBusController.cuotas}" value="#{abonoBusController.selected.abonoBusTotalCuotas}" title="#{myBundle.CreateAbonoBusTitle_numeroCuotasAbonoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="" />
+                    <p:commandButton styleClass="btn btn-primary"  actionListener="#{abonoBusController.saveNew}" value="#{myBundle.Save}" update="display,:AbonoBusListForm:datalist,:growl"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" >
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </p:panelGrid>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:panel>
+
+    <h:form id="AbonoBusListForm">
+        <p:contextMenu id="AbonoBusDataTableContextMenu" for="datalist">                    
+            <p:menuitem value="Editar" onclick="document.getElementById('AbonoBusListForm:editButton').click();" icon="ui-icon-pencil"/>                    
+            <p:menuitem value="Eliminar" onclick="document.getElementById('AbonoBusListForm:deleteButton').click();" icon="ui-icon-trash"/>                    
+            <p:separator/>                   
+        </p:contextMenu>
+        <p:dataTable id="datalist"
+                     value="#{abonoBusController.model}"
+                     lazy="false"
+                     rowKey="#{item.abonoBusId}"
+                     var="item"
+                     rowIndexVar="rowIndex" 
+                     selectionMode="single"
+                     selection="#{abonoBusController.rowSelected}" 
+                     emptyMessage="No se han encontrado registros"
+                     tableStyle="table-layout: auto" 
+                     reflow="true" 
+                     widgetVar="datalistWidget"
+                     style="margin-top: 10px;">
+            <!--
+                     To enable Lazy Loading, please copy/replace the following lines above,
+                     and be sure to replace the word HASH with the # symbol:
+            
+                     value="HASH{abonoBusController.lazyItems}"
+                     lazy="true"
+                     rowKey="HASH{item.idAbonoBus}"  <<< Remove this line
+            -->
+
+
+            <p:ajax event="rowSelect"   update="datalist:editButton,datalist:deleteButton,@form:AbonoBusDataTableContextMenu" listener="#{abonoBusController.resetParents}" global="false"/>
+            <p:ajax event="rowUnselect" update="datalist:editButton,datalist:deleteButton,@form:AbonoBusDataTableContextMenu" listener="#{abonoBusController.resetParents}" global="false"/>
+
+            <f:facet name="header">
+                <div class="row row-nomargin">
+                    <div class="col-lg-3">
+                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                    </div>
+                    <div class="col-lg-5">
+                        <h:outputText value="Empresas"/>   
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="pull-right">
+                            <p:commandButton styleClass="btn btn-primary"  id="editButton" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":AbonoBusEditForm" oncomplete="PF('AbonoBusEditDialog').show()" disabled="#{empty abonoBusController.rowSelected}"/>
+
+                            <p:commandButton styleClass="btn btn-primary"  id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{abonoBusController.delete}" update=":growl,datalist" disabled="#{empty abonoBusController.rowSelected}" global="false">
+                                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                            </p:commandButton>
+
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="N°"/>
+                </f:facet>
+                <h:outputText value="#{rowIndex+1}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.abonoBusIdBus.busNumero}" filterStyle="width:20px;">
+                <f:facet name="header">
+                    <h:outputText value="Nº Bus"/>
+                </f:facet>
+                <h:outputText value="#{item.abonoBusIdBus.busNumero}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.abonoBusIdBus.busIdFlota.flotaNombre}" >
+                <f:facet name="header">
+                    <h:outputText value="Flota"/>
+                </f:facet>
+                <h:outputText value="#{item.abonoBusIdBus.busIdFlota.flotaNombre}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.abonoBusIdBus.busIdEmpresa.empresaNombre}" >
+                <f:facet name="header">
+                    <h:outputText value="Empresa"/>
+                </f:facet>
+                <h:outputText value="#{item.abonoBusIdBus.busIdEmpresa.empresaNombre}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.abonoBusIdTipoAbono.tipoAbonoNombre}" >
+                <f:facet name="header">
+                    <h:outputText value="Abono"/>
+                </f:facet>
+                <h:outputText value="#{item.abonoBusIdTipoAbono.tipoAbonoNombre}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.abonoBusDescripcion}" filterBy="#{item.abonoBusDescripcion}">
+                <f:facet name="header">
+                    <h:outputText value="Descripción"/>
+                </f:facet>
+                <h:outputText value="#{item.abonoBusDescripcion}"/>
+            </p:column>
+            
+            <p:column sortBy="#{item.abonoBusCuotaActual}" filterBy="#{item.abonoBusCuotaActual}" >
+                <f:facet name="header">
+                    <h:outputText value="Cuotas"/>
+                </f:facet>
+                <h:outputText value="#{item.abonoBusCuotaActual} - #{item.abonoBusCuotaActual}">
+                    
+                </h:outputText>
+            </p:column>
+            
+            <p:column sortBy="#{item.abonoBusFechaInicio}" filterBy="#{item.abonoBusFechaInicio}" >
+                <f:facet name="header">
+                    <h:outputText value="Fecha"/>
+                </f:facet>
+                <h:outputText value="#{item.abonoBusFechaInicio}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+
+            <p:column sortBy="#{item.abonoBusMontoFijo}" filterBy="#{item.abonoBusMontoFijo}" >
+                <f:facet name="header">
+                    <h:outputText value="Monto"/>
+                </f:facet>
+                <h:outputText value="#{item.abonoBusMontoFijo}">
+                    <f:convertNumber type="currency" currencySymbol="$ "/>
+                </h:outputText>
+            </p:column>
+        </p:dataTable>
+
+
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+    <p:dialog id="AbonoBusEditDlg" widgetVar="AbonoBusEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="Edición de Abono x Bus" closeOnEscape="true">
+
+        <h:form id="AbonoBusEditForm">
+
+            <h:panelGroup id="display">
+                <p:focus context="descripcion"/>
+                <p:panelGrid columns="4" columnClasses="column" style="width: 100%; " rendered="#{abonoBusController.rowSelected != null}">
+
+                    <p:outputLabel value="Fecha:" for="fechaInicioAbonoBus" />
+                    <h:panelGroup>
+                        <p:calendar id="fechaInicioAbonoBus" pattern="dd/MM/yyyy" value="#{abonoBusController.rowSelected.abonoBusFechaInicio}"  required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_fechaInicioAbonoBus}" onfocus="this.setSelectionRange(0, 2)" autocomplete="off"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="Unidad" />
+                    <p:outputLabel value="#{abonoBusController.rowSelected.abonoBusIdBus.busIdUnidadNegocio.unidadNegocioNumero}"/>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" />
+
+                    <p:outputLabel value="NºBus" for="bus" />
+                    <p:outputLabel id="bus" value="#{abonoBusController.rowSelected.abonoBusIdBus.busNumero}" />
+
+                    <p:outputLabel value="Patente:" for="patente" />
+                    <p:outputLabel id="patente" value="#{abonoBusController.rowSelected.abonoBusIdBus.busPatente}"/>
+
+                    <p:outputLabel value="Abono: " for="tipoAbono" />
+                    <h:panelGroup>
+                        <p:selectOneMenu id="tipoAbono" value="#{abonoBusController.rowSelected.abonoBusIdTipoAbono}" required="true" requiredMessage="Debe seleccionar el Abono" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccionar..."/>
+                            <f:selectItems value="#{tipoAbonoController.items}"
+                                           var="tipoAbonoItem"
+                                           itemValue="#{tipoAbonoItem}"
+                                           itemLabel="#{tipoAbonoItem.tipoAbonoNombre}"
+                                           />
+                            <p:ajax event="valueChange" listener="#{abonoBusController.setMontoXDefecto}" update="montoAbonoBus" global="false"/>
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+
+
+
+                    <p:outputLabel value="Flota:" for="flota" />
+                    <p:outputLabel id="flota" value="#{abonoBusController.rowSelected.abonoBusIdBus.busIdFlota.flotaNombre}"/>
+
+
+                    <p:outputLabel value="Monto" for="montoAbonoBus" />
+                    <h:panelGroup>
+                        <p:inputText id="montoAbonoBus" autocomplete="off" value="#{abonoBusController.rowSelected.abonoBusMontoFijo}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_montoAbonoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Empresa:" for="empresa" />
+                    <p:outputLabel id="empresa" value="#{abonoBusController.rowSelected.abonoBusIdBus.busIdEmpresa.empresaNombre}"/>
+
+                    <p:outputLabel value="Descripción:" for="descripcion" />
+                    <h:panelGroup>
+                        <p:inputText id="descripcion" autocomplete="off" value="#{abonoBusController.rowSelected.abonoBusDescripcion}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}"  onfocus="this.setSelectionRange(0, this.value.length)" size="30" />                            
+                    </h:panelGroup>
+
+                    <p:outputLabel />
+                    <p:outputLabel />
+
+                    <h:panelGroup>
+                        <p:outputLabel value="Cuotas" for="numeroCuotasAbonoBus" />
+
+                        <p:outputLabel value="?:" style="margin-left: 5px;"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:inputText id="numeroCuotasAbonoBus" autocomplete="off"  size="8" value="#{abonoBusController.rowSelected.abonoBusCuotaActual}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
+                        <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
+                        <p:inputText id="totalCuotasAbonoBus" autocomplete="off"  size="8" disabled="#{abonoBusController.rowSelected.abonoBusCuotaActual gt 0}" value="#{abonoBusController.rowSelected.abonoBusTotalCuotas}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="" />
+                    <h:panelGroup>
+                        <p:commandButton actionListener="#{abonoBusController.save}" value="#{myBundle.Save}" update="display,:AbonoBusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AbonoBusEditDialog'));">
+                            <p:confirm header="#{myBundle.ConfirmationHeader}" message="Editar" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AbonoBusEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                    </h:panelGroup>
+                </p:panelGrid>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>
+
+

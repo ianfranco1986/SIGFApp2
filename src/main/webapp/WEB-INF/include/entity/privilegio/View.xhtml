@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PrivilegioViewDlg" widgetVar="PrivilegioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPrivilegioTitle}" closeOnEscape="true">
+
+            <h:form id="PrivilegioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{privilegioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioId}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioId}" title="#{myBundle.ViewPrivilegioTitle_privilegioId}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioNombre}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioNombre}" title="#{myBundle.ViewPrivilegioTitle_privilegioNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioDescripcion}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioDescripcion}" title="#{myBundle.ViewPrivilegioTitle_privilegioDescripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioMenuLink}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioMenuLink}" title="#{myBundle.ViewPrivilegioTitle_privilegioMenuLink}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioTabla}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioTabla}" title="#{myBundle.ViewPrivilegioTitle_privilegioTabla}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioIcon}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioIcon}" title="#{myBundle.ViewPrivilegioTitle_privilegioIcon}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioNumeroOrden}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioNumeroOrden}" title="#{myBundle.ViewPrivilegioTitle_privilegioNumeroOrden}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioColor}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioColor}" title="#{myBundle.ViewPrivilegioTitle_privilegioColor}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioTipoMenu}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioTipoMenu}" title="#{myBundle.ViewPrivilegioTitle_privilegioTipoMenu}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrivilegioLabel_privilegioIdMenu}"/>
+                        <h:outputText value="#{privilegioController.selected.privilegioIdMenu.menuId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('PrivilegioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

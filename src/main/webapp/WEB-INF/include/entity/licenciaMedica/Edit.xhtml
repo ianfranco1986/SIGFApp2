@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="LicenciaMedicaEditDlg" widgetVar="LicenciaMedicaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditLicenciaMedicaTitle}" closeOnEscape="true">
+
+            <h:form id="LicenciaMedicaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{licenciaMedicaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditLicenciaMedicaLabel_licenciaMedicaId}" for="licenciaMedicaId" />
+                        <h:outputText id="licenciaMedicaId" value="#{licenciaMedicaController.selected.licenciaMedicaId}" />
+
+                        <p:outputLabel value="#{myBundle.EditLicenciaMedicaLabel_licenciaMedicaNumero}" for="licenciaMedicaNumero" />
+                        <p:inputText id="licenciaMedicaNumero" value="#{licenciaMedicaController.selected.licenciaMedicaNumero}" title="#{myBundle.EditLicenciaMedicaTitle_licenciaMedicaNumero}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditLicenciaMedicaLabel_licenciaMedicaFechaRecepcion}" for="licenciaMedicaFechaRecepcion" />
+                        <p:calendar id="licenciaMedicaFechaRecepcion" pattern="MM/dd/yyyy" value="#{licenciaMedicaController.selected.licenciaMedicaFechaRecepcion}" title="#{myBundle.EditLicenciaMedicaTitle_licenciaMedicaFechaRecepcion}" required="true" requiredMessage="#{myBundle.EditLicenciaMedicaRequiredMessage_licenciaMedicaFechaRecepcion}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditLicenciaMedicaLabel_licenciaMedicaFechaEmision}" for="licenciaMedicaFechaEmision" />
+                        <p:calendar id="licenciaMedicaFechaEmision" pattern="MM/dd/yyyy" value="#{licenciaMedicaController.selected.licenciaMedicaFechaEmision}" title="#{myBundle.EditLicenciaMedicaTitle_licenciaMedicaFechaEmision}" required="true" requiredMessage="#{myBundle.EditLicenciaMedicaRequiredMessage_licenciaMedicaFechaEmision}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditLicenciaMedicaLabel_licenciaMedicaFechaDesdeReposo}" for="licenciaMedicaFechaDesdeReposo" />
+                        <p:calendar id="licenciaMedicaFechaDesdeReposo" pattern="MM/dd/yyyy" value="#{licenciaMedicaController.selected.licenciaMedicaFechaDesdeReposo}" title="#{myBundle.EditLicenciaMedicaTitle_licenciaMedicaFechaDesdeReposo}" required="true" requiredMessage="#{myBundle.EditLicenciaMedicaRequiredMessage_licenciaMedicaFechaDesdeReposo}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditLicenciaMedicaLabel_licenciaMedicaFechaHastaReposo}" for="licenciaMedicaFechaHastaReposo" />
+                        <p:calendar id="licenciaMedicaFechaHastaReposo" pattern="MM/dd/yyyy" value="#{licenciaMedicaController.selected.licenciaMedicaFechaHastaReposo}" title="#{myBundle.EditLicenciaMedicaTitle_licenciaMedicaFechaHastaReposo}" required="true" requiredMessage="#{myBundle.EditLicenciaMedicaRequiredMessage_licenciaMedicaFechaHastaReposo}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditLicenciaMedicaLabel_licenciaMedicaDiagnosticoLicencia}" for="licenciaMedicaDiagnosticoLicencia" />
+                        <p:inputText id="licenciaMedicaDiagnosticoLicencia" value="#{licenciaMedicaController.selected.licenciaMedicaDiagnosticoLicencia}" title="#{myBundle.EditLicenciaMedicaTitle_licenciaMedicaDiagnosticoLicencia}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditLicenciaMedicaLabel_licenciaMedicaIdTrabajador}" for="licenciaMedicaIdTrabajador" />
+                        <p:selectOneMenu id="licenciaMedicaIdTrabajador" value="#{licenciaMedicaController.selected.licenciaMedicaIdTrabajador}" required="true" requiredMessage="#{myBundle.EditLicenciaMedicaRequiredMessage_licenciaMedicaIdTrabajador}" converter="trabajadorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{trabajadorController.items}"
+                                           var="licenciaMedicaIdTrabajadorItem"
+                                           itemValue="#{licenciaMedicaIdTrabajadorItem}"
+                                           itemLabel="#{licenciaMedicaIdTrabajadorItem.trabajadorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{licenciaMedicaController.save}" value="#{myBundle.Save}" update="display,:LicenciaMedicaListForm:datalist,:LicenciaMedicaListForm:LicenciaMedicaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('LicenciaMedicaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('LicenciaMedicaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BoletoCreateDlg" widgetVar="BoletoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateBoletoTitle}" closeOnEscape="true">
+
+            <h:form id="BoletoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{boletoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateBoletoLabel_boletoNombre}" for="boletoNombre" />
+                        <p:inputText id="boletoNombre" value="#{boletoController.selected.boletoNombre}" title="#{myBundle.CreateBoletoTitle_boletoNombre}" required="true" requiredMessage="#{myBundle.CreateBoletoRequiredMessage_boletoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateBoletoLabel_boletoOrden}" for="boletoOrden" />
+                        <p:inputText id="boletoOrden" value="#{boletoController.selected.boletoOrden}" title="#{myBundle.CreateBoletoTitle_boletoOrden}" required="true" requiredMessage="#{myBundle.CreateBoletoRequiredMessage_boletoOrden}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateBoletoLabel_boletoActivo}" for="boletoActivo" />
+                        <p:selectBooleanCheckbox id="boletoActivo" value="#{boletoController.selected.boletoActivo}" required="true" requiredMessage="#{myBundle.CreateBoletoRequiredMessage_boletoActivo}"/>
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{boletoController.saveNew}" value="#{myBundle.Save}" update="display,:BoletoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BoletoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BoletoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

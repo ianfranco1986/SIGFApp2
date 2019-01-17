@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TicketListForm">
+        <p:panel>
+            <h3 style="text-align: center;">Estado de Tickets</h3>
+            <p:contextMenu id="TicketDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TicketListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TicketListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TicketListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>                
+                <p:separator/>
+
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{ticketController.items}"
+                         lazy="false"
+                         rowKey="#{item.ticketId}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{ticketController.selected}"
+                         filteredValue="#{ticketController.filteredItems}"
+                         widgetVar="datalistWidget"
+                         emptyMessage="No se han encontrado registros"
+                         rowIndexVar="rowIndex" rowStyleClass="">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{ticketController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.ticketId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,@form:TicketDataTableContextMenu" listener="#{ticketController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,@form:TicketDataTableContextMenu" listener="#{ticketController.resetParents}"/>
+                <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton " listener="#{ticketController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TicketListForm:viewButton').click();"/>
+
+                <f:facet name="header">
+                    <div class="row row-nomargin">
+                        <div class="col-lg-3">
+                            <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                        </div>
+                        <div class="col-lg-5">
+                            <h:outputText value=""/>   
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="pull-right">
+
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{ticketController.prepareCreate}" update=":TicketCreateForm" oncomplete="PF('TicketCreateDialog').show()" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":TicketViewForm" oncomplete="PF('TicketViewDialog').show()" disabled="#{empty ticketController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TicketEditForm" oncomplete="PF('TicketEditDialog').show()" disabled="#{empty ticketController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                                
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ticketModulo}" filterBy="#{item.ticketModulo}">
+                    <f:facet name="header">
+                        <h:outputText value="Modulo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ticketModulo}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ticketAsunto}" filterBy="#{item.ticketAsunto}">
+                    <f:facet name="header">
+                        <h:outputText value="Asunto"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ticketAsunto}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ticketDescripcion}" filterBy="#{item.ticketDescripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="Descripción"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ticketDescripcion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ticketFechaIngreso}" filterBy="#{item.ticketFechaIngreso}">
+                    <f:facet name="header">
+                        <h:outputText value="Fecha Ingreso"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ticketFechaIngreso}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ticketFechaRespuesta}" filterBy="#{item.ticketFechaRespuesta}">
+                    <f:facet name="header">
+                        <h:outputText value="Última Actualización"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ticketFechaRespuesta}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ticketEstado}" filterBy="#{item.ticketEstado}">
+                    <f:facet name="header">
+                        <h:outputText value="Estado"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ticketEstado == 0?'Abierto':'Cerrado'}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.ticketIdUsuario.usuarioId}" filterBy="#{item.ticketIdUsuario.usuarioId}">
+                        <f:facet name="header">
+                            <h:outputText value="Usuario"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ticketIdUsuario.usuarioId}"/>
+                    </p:column>
+                </ui:remove>
+
+            </p:dataTable>
+
+
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

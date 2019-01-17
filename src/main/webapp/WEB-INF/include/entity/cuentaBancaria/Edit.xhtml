@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CuentaBancariaEditDlg" widgetVar="CuentaBancariaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCuentaBancariaTitle}" closeOnEscape="true">
+
+            <h:form id="CuentaBancariaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cuentaBancariaController.selected != null}">
+                        <h:outputLabel value="#" for="cuentaBancariaId" />
+                        <h:outputText id="cuentaBancariaId" value="#{cuentaBancariaController.selected.cuentaBancariaId}" />
+
+                        <p:outputLabel value="N°:" for="cuentaBancariaNumero" />
+                        <p:inputText id="cuentaBancariaNumero" value="#{cuentaBancariaController.selected.cuentaBancariaNumero}" required="true" requiredMessage="Debe ingresar el N° de la Cuenta" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off"/>
+
+                        <p:outputLabel value="Titular: " for="cuentaBancariaNombreTitular" />
+                        <p:inputText id="cuentaBancariaNombreTitular" value="#{cuentaBancariaController.selected.cuentaBancariaNombreTitular}" required="true" requiredMessage="Debe ingresar el Titular de la cuenta" size="30" maxlength="30" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off"/>
+
+                        <p:outputLabel value="Rut: " for="cuentaBancariaRutTitular" />
+                        <p:inputText id="cuentaBancariaRutTitular" value="#{cuentaBancariaController.selected.cuentaBancariaRutTitular}" required="true" requiredMessage="Debe ingresar el Rut del Titular" size="12" maxlength="12" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off"/>
+
+                        <p:outputLabel value="Empresa: " for="busIdEmpresa" />
+                        <p:selectOneMenu id="busIdEmpresa" value="#{cuentaBancariaController.selected.cuentaBancariaIdEmpresa}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empresaController.items}"
+                                           var="busIdEmpresaItem"
+                                           itemValue="#{busIdEmpresaItem}"
+                                           itemLabel="#{busIdEmpresaItem.empresaNombre}"
+                                           />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Banco: " for="cuentaBancariaIdBanco" />
+                        <p:selectOneMenu id="cuentaBancariaIdBanco" value="#{cuentaBancariaController.selected.cuentaBancariaIdBanco}" required="true" requiredMessage="Debe seleccionar el Banco" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bancoController.items}"
+                                           var="cuentaBancariaIdBancoItem"
+                                           itemValue="#{cuentaBancariaIdBancoItem}"
+                                           itemLabel="#{cuentaBancariaIdBancoItem.bancoNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Tipo Cuenta: " for="cuentaBancariaIdTipoCuenta" />
+                        <p:selectOneMenu id="cuentaBancariaIdTipoCuenta" value="#{cuentaBancariaController.selected.cuentaBancariaIdTipoCuenta}" required="true" requiredMessage="Debe seleccionar el Tipo de Cuenta" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoCuentaBancoController.items}"
+                                           var="cuentaBancariaIdTipoCuentaItem"
+                                           itemValue="#{cuentaBancariaIdTipoCuentaItem}"
+                                           itemLabel="#{cuentaBancariaIdTipoCuentaItem.tipoCuentaBancoNombre}"
+                                           />
+                        </p:selectOneMenu>
+
+
+                        <p:outputLabel value="Activa: " for="cuentaBancariaActiva" />
+                        <p:selectBooleanCheckbox id="cuentaBancariaActiva" value="#{cuentaBancariaController.selected.cuentaBancariaActiva}" required="true" requiredMessage="#{myBundle.EditCuentaBancariaRequiredMessage_cuentaBancariaActiva}"/>
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cuentaBancariaController.save}" value="#{myBundle.Save}" update="display,:CuentaBancariaListForm:datalist,:CuentaBancariaListForm:CuentaBancariaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CuentaBancariaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CuentaBancariaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

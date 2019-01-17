@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AsignacionFamiliarViewDlg" widgetVar="AsignacionFamiliarViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewAsignacionFamiliarTitle}" closeOnEscape="true">
+
+            <h:form id="AsignacionFamiliarViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{asignacionFamiliarController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_asignacionFamiliarId}"/>
+                        <h:outputText value="#{asignacionFamiliarController.selected.asignacionFamiliarId}" title="#{myBundle.ViewAsignacionFamiliarTitle_asignacionFamiliarId}"/>
+
+                        <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_asignacionFamiliarCodigo}"/>
+                        <h:outputText value="#{asignacionFamiliarController.selected.asignacionFamiliarCodigo}" title="#{myBundle.ViewAsignacionFamiliarTitle_asignacionFamiliarCodigo}"/>
+
+                        <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_asignacionFamiliarTramo}"/>
+                        <h:outputText value="#{asignacionFamiliarController.selected.asignacionFamiliarTramo}" title="#{myBundle.ViewAsignacionFamiliarTitle_asignacionFamiliarTramo}"/>
+
+                        <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_asignacionFamiliarMonto}"/>
+                        <h:outputText value="#{asignacionFamiliarController.selected.asignacionFamiliarMonto}" title="#{myBundle.ViewAsignacionFamiliarTitle_asignacionFamiliarMonto}"/>
+
+                        <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_asignacionFamiliarDesde}"/>
+                        <h:outputText value="#{asignacionFamiliarController.selected.asignacionFamiliarDesde}" title="#{myBundle.ViewAsignacionFamiliarTitle_asignacionFamiliarDesde}"/>
+
+                        <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_asignacionFamiliarHasta}"/>
+                        <h:outputText value="#{asignacionFamiliarController.selected.asignacionFamiliarHasta}" title="#{myBundle.ViewAsignacionFamiliarTitle_asignacionFamiliarHasta}"/>
+
+                        <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_asignacionFamiliarIdCuenta}"/>
+                        <h:outputText value="#{asignacionFamiliarController.selected.asignacionFamiliarIdCuenta.cuentaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('AsignacionFamiliarViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

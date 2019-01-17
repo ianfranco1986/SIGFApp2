@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../templateTesoreria.xhtml">
+
+    <ui:define name="content" class="ui-corner-all" >
+
+        <p:panel id="CargoBusCreateDlg" widgetVar="CargoBusCreateDialog" header="Registro de Cargos x Terminal">
+
+            <h:form id="CargoBusCreateForm">
+
+                <h:panelGroup id="display" >
+                    <p:focus context="tipoCargo"/>
+                    <h:panelGrid columns="2" columnClasses="column">
+
+                                                
+                        
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_tipoCargo}" for="tipoCargo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoCargo" value="#{registroCargoTerminalController.selected.tipoCargo}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_tipoCargo}" converter="tipoCargoConverter">
+                                <f:selectItem itemLabel=""/>
+                                <f:selectItems value="#{registroCargoFlotaController.tipoCargoItems}"
+                                               var="tipoCargoItem"
+                                               itemValue="#{tipoCargoItem}"
+                                               itemLabel="#{tipoCargoItem}"
+                                               />
+                                <p:ajax event="valueChange" update="montoCargoBus,terminal,:CargoBusListForm:datalist" listener="#{registroCargoTerminalController.setMontoXDefectoTipoCargo}" global="false"/>
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="Terminal:" for="terminal" />
+                        <h:panelGrid columns="8">
+                            <p:selectOneMenu id="terminal" value="#{registroCargoTerminalController.terminal}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_bus}" converter="terminalConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{registroCargoTerminalController.terminalItems}"
+                                               var="terminalItem"
+                                               itemValue="#{terminalItem}"
+                                               itemLabel="#{terminalItem}"
+                                               />
+                                <p:ajax event="valueChange" update=":CargoBusListForm:datalist, growl" listener="#{registroCargoTerminalController.handleTerminal}"/>
+                            </p:selectOneMenu>                           
+                        </h:panelGrid>
+
+                        <p:outputLabel value="F. Cargo" for="fechaInicioCargoBus" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaInicioCargoBus" pattern="dd/MM/yyyy" value="#{registroCargoTerminalController.fecha}" title="#{myBundle.CreateCargoBusTitle_fechaInicioCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_fechaInicioCargoBus}" onfocus="this.setSelectionRange(0, 2)"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="Descripcion:" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{registroCargoTerminalController.selected.descripcion}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}"  onfocus="this.setSelectionRange(0, this.value.length)" >
+                                <p:ajax event="blur" update=":CargoBusListForm:datalist" listener="#{registroCargoTerminalController.loadDescripcion}" global="false"/>
+                            </p:inputText>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="N° Cuotas" for="numeroCuotasCargoBus" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroCuotasCargoBus" value="#{registroCargoTerminalController.numeroCuotas}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
+                        </h:panelGroup>
+
+                        <p:outputLabel value="Monto" for="montoCargoBus" />
+                        <h:panelGroup>
+                            <p:inputText id="montoCargoBus" value="#{registroCargoTerminalController.monto}" title="#{myBundle.CreateCargoBusTitle_montoCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_montoCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)">
+                                <p:ajax event="blur" update=":CargoBusListForm:datalist" listener="#{registroCargoTerminalController.setMontoXDefecto}" global="false"/>
+                            </p:inputText>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="Cod. Fina:" for="idFina" />
+                        <h:panelGroup>
+                            <p:inputText id="idFina" value="#{registroCargoTerminalController.idFina}" title="#{myBundle.CreateCargoBusTitle_montoCargoBus}"  onfocus="this.setSelectionRange(0, this.value.length)">
+                                
+                            </p:inputText>
+                        </h:panelGroup>
+                        
+                    </h:panelGrid>
+                    <p:commandButton actionListener="#{registroCargoTerminalController.saveNew}" value="#{myBundle.Save}" update="display,:CargoBusListForm:datalist,:growl" >
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="Registrar?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:panel>
+
+        <h:form id="CargoBusListForm">
+
+            <p:panel style="margin-top: 10px;" >
+                <p:dataTable id="datalist"
+                             value="#{registroCargoTerminalController.registroCargoItems}"
+                             lazy="false"                             
+                             var="item"                             
+                             rowKey="#{not empty item.idCargoBus ? item.idCargoBus : item.hashCode()}"                             
+                             rowIndexVar="rowIndex"                              
+                             emptyMessage="No se han encontrado registros" 
+                             tableStyle="table-layout: auto" >
+                    <!--
+                             To enable Lazy Loading, please copy/replace the following lines above,
+                             and be sure to replace the word HASH with the # symbol:
+                    
+                             value="HASH{cargoBusController.lazyItems}"
+                             lazy="true"
+                             rowKey="HASH{item.idCargoBus}"  <<< Remove this line
+                    -->
+
+                    <f:facet name="header">
+                        Buses en Terminal
+                    </f:facet>
+
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="N°"/>
+                        </f:facet>
+                        <h:outputText value="#{rowIndex+1}"/>
+                    </p:column>
+
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListCargoBusTitle_bus}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.numeroBus}"/>
+                    </p:column>
+                    
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Unidad"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.unidadNegocio.numeroUnidadNegocio}"/>
+                    </p:column>
+                    
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Patente"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.patente}"/>
+                    </p:column>
+                    
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Flota"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.flota}"/>
+                    </p:column>
+                    
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Empresa"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.empresa}"/>
+                    </p:column>
+
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Cargo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.tipoCargo}"/>
+                    </p:column>                    
+
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Descripción"/>
+                        </f:facet>
+                        <p:inputText value="#{item.descripcion}">
+                            <p:ajax event="blur" listener="#{registroCargoFlotaController.showMessage(item.descripcion)}" global="false"/>
+                        </p:inputText>
+                    </p:column>
+
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Monto"/>
+                        </f:facet>
+                        <p:inputNumber value="#{item.montoCargoBus}" decimalPlaces="0">
+                            <p:ajax event="blur" listener="#{registroCargoFlotaController.showMessage(item.montoCargoBus)}" global="false"/>
+                        </p:inputNumber>
+                        
+                    </p:column>
+
+                    <!--
+                                        
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.activoCargoBus}" filterBy="#{item.activoCargoBus}">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{myBundle.ListCargoBusTitle_activoCargoBus}"/>
+                                            </f:facet>
+                                            <h:selectBooleanCheckbox id="activoCargoBus" value="#{item.activoCargoBus}" title="#{myBundle.EditCargoBusTitle_activoCargoBus}" required="true" requiredMessage="#{myBundle.EditCargoBusRequiredMessage_activoCargoBus}" disabled="true"/>
+                                        </p:column>
+                    -->
+
+                </p:dataTable>
+            </p:panel>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

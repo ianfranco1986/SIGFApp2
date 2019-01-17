@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DescuentoExtraEditDlg" widgetVar="DescuentoExtraEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDescuentoExtraTitle}" closeOnEscape="true">
+
+            <h:form id="DescuentoExtraEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{descuentoExtraController.selected != null}">
+
+
+                        <h:outputLabel value="#" for="descuentoExtraId" />
+                        <h:outputText id="descuentoExtraId" value="#{descuentoExtraController.selected.descuentoExtraId}" />
+
+                        <p:outputLabel value="Descripción" for="descuentoExtraDescripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descuentoExtraDescripcion" value="#{descuentoExtraController.selected.descuentoExtraDescripcion}" required="true" requiredMessage="#{myBundle.EditDescuentoExtraRequiredMessage_descuentoExtraDescripcion}"/>
+
+                        <p:outputLabel value="Fecha" for="descuentoExtraFecha" />
+                        <p:calendar id="descuentoExtraFecha" pattern="dd/MM/yyyy" value="#{descuentoExtraController.selected.descuentoExtraFecha}" required="true" requiredMessage="#{myBundle.EditDescuentoExtraRequiredMessage_descuentoExtraFecha}" showOn="button"/>
+
+                        <p:outputLabel value="Monto" for="descuentoExtraMonto" />
+                        <p:inputText id="descuentoExtraMonto" value="#{descuentoExtraController.selected.descuentoExtraMonto}" required="true" requiredMessage="#{myBundle.EditDescuentoExtraRequiredMessage_descuentoExtraMonto}"/>
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{descuentoExtraController.save}" value="#{myBundle.Save}" update="display,:DescuentoExtraListForm:datalist,:DescuentoExtraListForm:DescuentoExtraDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DescuentoExtraEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DescuentoExtraEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

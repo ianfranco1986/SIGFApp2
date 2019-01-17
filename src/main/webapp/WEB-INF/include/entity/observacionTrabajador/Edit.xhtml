@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ObservacionTrabajadorEditDlg" widgetVar="ObservacionTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditObservacionTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="ObservacionTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{observacionTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditObservacionTrabajadorLabel_observacionTrabajadorId}" for="observacionTrabajadorId" />
+                        <h:outputText id="observacionTrabajadorId" value="#{observacionTrabajadorController.selected.observacionTrabajadorId}" />
+
+                        <p:outputLabel value="#{myBundle.EditObservacionTrabajadorLabel_observacionTrabajadorFecha}" for="observacionTrabajadorFecha" />
+                        <p:calendar id="observacionTrabajadorFecha" pattern="MM/dd/yyyy" value="#{observacionTrabajadorController.selected.observacionTrabajadorFecha}" title="#{myBundle.EditObservacionTrabajadorTitle_observacionTrabajadorFecha}" required="true" requiredMessage="#{myBundle.EditObservacionTrabajadorRequiredMessage_observacionTrabajadorFecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditObservacionTrabajadorLabel_observacionTrabajadorDescripcion}" for="observacionTrabajadorDescripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="observacionTrabajadorDescripcion" value="#{observacionTrabajadorController.selected.observacionTrabajadorDescripcion}" title="#{myBundle.EditObservacionTrabajadorTitle_observacionTrabajadorDescripcion}" required="true" requiredMessage="#{myBundle.EditObservacionTrabajadorRequiredMessage_observacionTrabajadorDescripcion}"/>
+
+                        <p:outputLabel value="#{myBundle.EditObservacionTrabajadorLabel_observacionTrabajadorDetalle}" for="observacionTrabajadorDetalle" />
+                        <p:inputText id="observacionTrabajadorDetalle" value="#{observacionTrabajadorController.selected.observacionTrabajadorDetalle}" title="#{myBundle.EditObservacionTrabajadorTitle_observacionTrabajadorDetalle}" required="true" requiredMessage="#{myBundle.EditObservacionTrabajadorRequiredMessage_observacionTrabajadorDetalle}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditObservacionTrabajadorLabel_observacionTrabajadorIdTipoObservacion}" for="observacionTrabajadorIdTipoObservacion" />
+                        <p:selectOneMenu id="observacionTrabajadorIdTipoObservacion" value="#{observacionTrabajadorController.selected.observacionTrabajadorIdTipoObservacion}" required="true" requiredMessage="#{myBundle.EditObservacionTrabajadorRequiredMessage_observacionTrabajadorIdTipoObservacion}" converter="tipoObservacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoObservacionController.items}"
+                                           var="observacionTrabajadorIdTipoObservacionItem"
+                                           itemValue="#{observacionTrabajadorIdTipoObservacionItem}"
+                                           itemLabel="#{observacionTrabajadorIdTipoObservacionItem.tipoObservacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditObservacionTrabajadorLabel_observacionTrabajadorIdTrabajador}" for="observacionTrabajadorIdTrabajador" />
+                        <p:selectOneMenu id="observacionTrabajadorIdTrabajador" value="#{observacionTrabajadorController.selected.observacionTrabajadorIdTrabajador}" required="true" requiredMessage="#{myBundle.EditObservacionTrabajadorRequiredMessage_observacionTrabajadorIdTrabajador}" converter="trabajadorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{trabajadorController.items}"
+                                           var="observacionTrabajadorIdTrabajadorItem"
+                                           itemValue="#{observacionTrabajadorIdTrabajadorItem}"
+                                           itemLabel="#{observacionTrabajadorIdTrabajadorItem.trabajadorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{observacionTrabajadorController.save}" value="#{myBundle.Save}" update="display,:ObservacionTrabajadorListForm:datalist,:ObservacionTrabajadorListForm:ObservacionTrabajadorDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ObservacionTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ObservacionTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

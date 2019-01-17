@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CuentaListForm">
+
+        <p:panel header="#{myBundle.ListCuentaTitle}">
+            <p:contextMenu id="CuentaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CuentaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CuentaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CuentaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CuentaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CuentaMenuItem_horarioJornadaList}" icon="ui-icon-search"  action="#{cuentaController.navigateHorarioJornadaList}" disabled="#{cuentaController.isHorarioJornadaListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_boletoList}" icon="ui-icon-search"  action="#{cuentaController.navigateBoletoList}" disabled="#{cuentaController.isBoletoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_periodoFrecuenciaList}" icon="ui-icon-search"  action="#{cuentaController.navigatePeriodoFrecuenciaList}" disabled="#{cuentaController.isPeriodoFrecuenciaListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_valorMinutoList}" icon="ui-icon-search"  action="#{cuentaController.navigateValorMinutoList}" disabled="#{cuentaController.isValorMinutoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_representanteLegalList}" icon="ui-icon-search"  action="#{cuentaController.navigateRepresentanteLegalList}" disabled="#{cuentaController.isRepresentanteLegalListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_bancoList}" icon="ui-icon-search"  action="#{cuentaController.navigateBancoList}" disabled="#{cuentaController.isBancoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_tipoControlList}" icon="ui-icon-search"  action="#{cuentaController.navigateTipoControlList}" disabled="#{cuentaController.isTipoControlListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_centroCostoList}" icon="ui-icon-search"  action="#{cuentaController.navigateCentroCostoList}" disabled="#{cuentaController.isCentroCostoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_usuarioList}" icon="ui-icon-search"  action="#{cuentaController.navigateUsuarioList}" disabled="#{cuentaController.isUsuarioListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_asignacionFamiliarList}" icon="ui-icon-search"  action="#{cuentaController.navigateAsignacionFamiliarList}" disabled="#{cuentaController.isAsignacionFamiliarListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_institucionSaludList}" icon="ui-icon-search"  action="#{cuentaController.navigateInstitucionSaludList}" disabled="#{cuentaController.isInstitucionSaludListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_flotaList}" icon="ui-icon-search"  action="#{cuentaController.navigateFlotaList}" disabled="#{cuentaController.isFlotaListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_egresoList}" icon="ui-icon-search"  action="#{cuentaController.navigateEgresoList}" disabled="#{cuentaController.isEgresoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_tipoObservacionList}" icon="ui-icon-search"  action="#{cuentaController.navigateTipoObservacionList}" disabled="#{cuentaController.isTipoObservacionListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_administracionMensualList}" icon="ui-icon-search"  action="#{cuentaController.navigateAdministracionMensualList}" disabled="#{cuentaController.isAdministracionMensualListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_intervalosAdministracionList}" icon="ui-icon-search"  action="#{cuentaController.navigateIntervalosAdministracionList}" disabled="#{cuentaController.isIntervalosAdministracionListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_tipoHaberTrabajadorList}" icon="ui-icon-search"  action="#{cuentaController.navigateTipoHaberTrabajadorList}" disabled="#{cuentaController.isTipoHaberTrabajadorListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_trabajadorList}" icon="ui-icon-search"  action="#{cuentaController.navigateTrabajadorList}" disabled="#{cuentaController.isTrabajadorListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_precioCombustibleList}" icon="ui-icon-search"  action="#{cuentaController.navigatePrecioCombustibleList}" disabled="#{cuentaController.isPrecioCombustibleListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_institucionApvList}" icon="ui-icon-search"  action="#{cuentaController.navigateInstitucionApvList}" disabled="#{cuentaController.isInstitucionApvListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_tipoContratoList}" icon="ui-icon-search"  action="#{cuentaController.navigateTipoContratoList}" disabled="#{cuentaController.isTipoContratoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_descuentoExtraList}" icon="ui-icon-search"  action="#{cuentaController.navigateDescuentoExtraList}" disabled="#{cuentaController.isDescuentoExtraListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_sindicatoList}" icon="ui-icon-search"  action="#{cuentaController.navigateSindicatoList}" disabled="#{cuentaController.isSindicatoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_compraBoletoList}" icon="ui-icon-search"  action="#{cuentaController.navigateCompraBoletoList}" disabled="#{cuentaController.isCompraBoletoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_tipoCargoList}" icon="ui-icon-search"  action="#{cuentaController.navigateTipoCargoList}" disabled="#{cuentaController.isTipoCargoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_tipoDescuentoTrabajadorList}" icon="ui-icon-search"  action="#{cuentaController.navigateTipoDescuentoTrabajadorList}" disabled="#{cuentaController.isTipoDescuentoTrabajadorListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_institucionPrevisionList}" icon="ui-icon-search"  action="#{cuentaController.navigateInstitucionPrevisionList}" disabled="#{cuentaController.isInstitucionPrevisionListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_grupoServicioList}" icon="ui-icon-search"  action="#{cuentaController.navigateGrupoServicioList}" disabled="#{cuentaController.isGrupoServicioListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_cajaRecaudacionList}" icon="ui-icon-search"  action="#{cuentaController.navigateCajaRecaudacionList}" disabled="#{cuentaController.isCajaRecaudacionListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_compraCombustibleList}" icon="ui-icon-search"  action="#{cuentaController.navigateCompraCombustibleList}" disabled="#{cuentaController.isCompraCombustibleListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_mutualList}" icon="ui-icon-search"  action="#{cuentaController.navigateMutualList}" disabled="#{cuentaController.isMutualListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_tipoAbonoList}" icon="ui-icon-search"  action="#{cuentaController.navigateTipoAbonoList}" disabled="#{cuentaController.isTipoAbonoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_empresaList}" icon="ui-icon-search"  action="#{cuentaController.navigateEmpresaList}" disabled="#{cuentaController.isEmpresaListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_unidadNegocioList}" icon="ui-icon-search"  action="#{cuentaController.navigateUnidadNegocioList}" disabled="#{cuentaController.isUnidadNegocioListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_procesoRecaudacionList}" icon="ui-icon-search"  action="#{cuentaController.navigateProcesoRecaudacionList}" disabled="#{cuentaController.isProcesoRecaudacionListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_cuentaIdTipo}" icon="ui-icon-search"  actionListener="#{cuentaController.prepareCuentaIdTipo}" update=":TipoCuentaViewForm" oncomplete="PF('TipoCuentaViewDialog').show()" disabled="#{empty cuentaController.selected.cuentaIdTipo}"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_servicioList}" icon="ui-icon-search"  action="#{cuentaController.navigateServicioList}" disabled="#{cuentaController.isServicioListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_tipoTrabajadorList}" icon="ui-icon-search"  action="#{cuentaController.navigateTipoTrabajadorList}" disabled="#{cuentaController.isTipoTrabajadorListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_cajaCompensacionList}" icon="ui-icon-search"  action="#{cuentaController.navigateCajaCompensacionList}" disabled="#{cuentaController.isCajaCompensacionListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_controlList}" icon="ui-icon-search"  action="#{cuentaController.navigateControlList}" disabled="#{cuentaController.isControlListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_terminalList}" icon="ui-icon-search"  action="#{cuentaController.navigateTerminalList}" disabled="#{cuentaController.isTerminalListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CuentaMenuItem_departamentoList}" icon="ui-icon-search"  action="#{cuentaController.navigateDepartamentoList}" disabled="#{cuentaController.isDepartamentoListEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{cuentaController.items}"
+                         lazy="false"
+                         rowKey="#{item.cuentaId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{cuentaController.selected}"
+                         filteredValue="#{cuentaController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{cuentaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.cuentaId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CuentaDataTableContextMenu" listener="#{cuentaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CuentaDataTableContextMenu" listener="#{cuentaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{cuentaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CuentaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.cuentaId}" filterBy="#{item.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCuentaTitle_cuentaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaAdministrador}" filterBy="#{item.cuentaAdministrador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCuentaTitle_cuentaAdministrador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaAdministrador}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaRut}" filterBy="#{item.cuentaRut}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCuentaTitle_cuentaRut}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaRut}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaActiva}" filterBy="#{item.cuentaActiva}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCuentaTitle_cuentaActiva}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="cuentaActiva" value="#{item.cuentaActiva}" title="#{myBundle.EditCuentaTitle_cuentaActiva}" required="true" requiredMessage="#{myBundle.EditCuentaRequiredMessage_cuentaActiva}" disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaIdTipo.tipoCuentaId}" filterBy="#{item.cuentaIdTipo.tipoCuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCuentaTitle_cuentaIdTipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaIdTipo.tipoCuentaId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{cuentaController.prepareCreate}" update=":CuentaCreateForm" oncomplete="PF('CuentaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":CuentaViewForm" oncomplete="PF('CuentaViewDialog').show()" disabled="#{empty cuentaController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CuentaEditForm" oncomplete="PF('CuentaEditDialog').show()" disabled="#{empty cuentaController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{cuentaController.delete}" update=":growl,datalist" disabled="#{empty cuentaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RecaudacionListForm">
+
+        <p:panel header="#{myBundle.ListRecaudacionTitle}">
+            <p:contextMenu id="RecaudacionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('RecaudacionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('RecaudacionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('RecaudacionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('RecaudacionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.RecaudacionMenuItem_recaudacionBoletoList}" icon="ui-icon-search"  action="#{recaudacionController.navigateRecaudacionBoletoList}" disabled="#{recaudacionController.isRecaudacionBoletoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.RecaudacionMenuItem_recaudacionMinutoList}" icon="ui-icon-search"  action="#{recaudacionController.navigateRecaudacionMinutoList}" disabled="#{recaudacionController.isRecaudacionMinutoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.RecaudacionMenuItem_recaudacionCombustibleList}" icon="ui-icon-search"  action="#{recaudacionController.navigateRecaudacionCombustibleList}" disabled="#{recaudacionController.isRecaudacionCombustibleListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.RecaudacionMenuItem_recaudacionIdCaja}" icon="ui-icon-search"  actionListener="#{recaudacionController.prepareRecaudacionIdCaja}" update=":CajaRecaudacionViewForm" oncomplete="PF('CajaRecaudacionViewDialog').show()" disabled="#{empty recaudacionController.selected.recaudacionIdCaja}"/>  
+                <p:menuitem value="#{myBundle.RecaudacionMenuItem_recaudacionDescuentoExtraList}" icon="ui-icon-search"  action="#{recaudacionController.navigateRecaudacionDescuentoExtraList}" disabled="#{recaudacionController.isRecaudacionDescuentoExtraListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.RecaudacionMenuItem_recaudacionGuiaList}" icon="ui-icon-search"  action="#{recaudacionController.navigateRecaudacionGuiaList}" disabled="#{recaudacionController.isRecaudacionGuiaListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.RecaudacionMenuItem_recaudacionExtraList}" icon="ui-icon-search"  action="#{recaudacionController.navigateRecaudacionExtraList}" disabled="#{recaudacionController.isRecaudacionExtraListEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{recaudacionController.items}"
+                         lazy="false"
+                         rowKey="#{item.recaudacionId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{recaudacionController.selected}"
+                         filteredValue="#{recaudacionController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{recaudacionController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.recaudacionId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RecaudacionDataTableContextMenu" listener="#{recaudacionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RecaudacionDataTableContextMenu" listener="#{recaudacionController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{recaudacionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('RecaudacionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.recaudacionId}" filterBy="#{item.recaudacionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionTitle_recaudacionId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.recaudacionIdentificador}" filterBy="#{item.recaudacionIdentificador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionTitle_recaudacionIdentificador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionIdentificador}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.recaudacionTotal}" filterBy="#{item.recaudacionTotal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionTitle_recaudacionTotal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionTotal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.recaudacionFecha}" filterBy="#{item.recaudacionFecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionTitle_recaudacionFecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionFecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.recaudacionHora}" filterBy="#{item.recaudacionHora}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionTitle_recaudacionHora}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionHora}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.recaudacionIdCaja.cajaRecaudacionId}" filterBy="#{item.recaudacionIdCaja.cajaRecaudacionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRecaudacionTitle_recaudacionIdCaja}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.recaudacionIdCaja.cajaRecaudacionId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{recaudacionController.prepareCreate}" update=":RecaudacionCreateForm" oncomplete="PF('RecaudacionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":RecaudacionViewForm" oncomplete="PF('RecaudacionViewDialog').show()" disabled="#{empty recaudacionController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RecaudacionEditForm" oncomplete="PF('RecaudacionEditDialog').show()" disabled="#{empty recaudacionController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{recaudacionController.delete}" update=":growl,datalist" disabled="#{empty recaudacionController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

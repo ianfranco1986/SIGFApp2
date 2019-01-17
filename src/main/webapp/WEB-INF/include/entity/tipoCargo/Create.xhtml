@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoCargoCreateDlg" widgetVar="TipoCargoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTipoCargoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoCargoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoCargoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="Nombre" for="tipoCargoNombre" />
+                        <p:inputText id="tipoCargoNombre" value="#{tipoCargoController.selected.tipoCargoNombre}" title="#{myBundle.CreateTipoCargoTitle_tipoCargoNombre}" required="true" requiredMessage="#{myBundle.CreateTipoCargoRequiredMessage_tipoCargoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Monto x Defecto" for="tipoCargoMontoDefecto" />
+                        <p:inputText id="tipoCargoMontoDefecto" value="#{tipoCargoController.selected.tipoCargoMontoDefecto}" title="#{myBundle.CreateTipoCargoTitle_tipoCargoMontoDefecto}"/>
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoCargoController.saveNew}" value="#{myBundle.Save}" update="display,:TipoCargoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoCargoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoCargoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

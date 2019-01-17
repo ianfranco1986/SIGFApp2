@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CuentaBancoTrabajadorEditDlg" widgetVar="CuentaBancoTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCuentaBancoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="CuentaBancoTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cuentaBancoTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCuentaBancoTrabajadorLabel_cuentaBancoTrabajadorId}" for="cuentaBancoTrabajadorId" />
+                        <h:outputText id="cuentaBancoTrabajadorId" value="#{cuentaBancoTrabajadorController.selected.cuentaBancoTrabajadorId}" />
+
+                        <p:outputLabel value="#{myBundle.EditCuentaBancoTrabajadorLabel_cuentaBancoTrabajadorCuenta}" for="cuentaBancoTrabajadorCuenta" />
+                        <p:selectOneMenu id="cuentaBancoTrabajadorCuenta" value="#{cuentaBancoTrabajadorController.selected.cuentaBancoTrabajadorCuenta}" required="true" requiredMessage="#{myBundle.EditCuentaBancoTrabajadorRequiredMessage_cuentaBancoTrabajadorCuenta}" converter="cuentaBancariaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaBancariaController.items}"
+                                           var="cuentaBancoTrabajadorCuentaItem"
+                                           itemValue="#{cuentaBancoTrabajadorCuentaItem}"
+                                           itemLabel="#{cuentaBancoTrabajadorCuentaItem.cuentaBancariaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditCuentaBancoTrabajadorLabel_cuentaBancoTrabajadorTrabajador}" for="cuentaBancoTrabajadorTrabajador" />
+                        <p:selectOneMenu id="cuentaBancoTrabajadorTrabajador" value="#{cuentaBancoTrabajadorController.selected.cuentaBancoTrabajadorTrabajador}" required="true" requiredMessage="#{myBundle.EditCuentaBancoTrabajadorRequiredMessage_cuentaBancoTrabajadorTrabajador}" converter="trabajadorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{trabajadorController.items}"
+                                           var="cuentaBancoTrabajadorTrabajadorItem"
+                                           itemValue="#{cuentaBancoTrabajadorTrabajadorItem}"
+                                           itemLabel="#{cuentaBancoTrabajadorTrabajadorItem.trabajadorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cuentaBancoTrabajadorController.save}" value="#{myBundle.Save}" update="display,:CuentaBancoTrabajadorListForm:datalist,:CuentaBancoTrabajadorListForm:CuentaBancoTrabajadorDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CuentaBancoTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CuentaBancoTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

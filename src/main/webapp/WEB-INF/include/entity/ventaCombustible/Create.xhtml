@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VentaCombustibleCreateDlg" widgetVar="VentaCombustibleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateVentaCombustibleTitle}" closeOnEscape="true">
+
+            <h:form id="VentaCombustibleCreateForm">
+
+                <h:panelGroup id="display" rendered="#{ventaCombustibleController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleFecha}" for="ventaCombustibleFecha" />
+                        <p:calendar id="ventaCombustibleFecha" pattern="MM/dd/yyyy" value="#{ventaCombustibleController.selected.ventaCombustibleFecha}" title="#{myBundle.CreateVentaCombustibleTitle_ventaCombustibleFecha}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleFecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleHora}" for="ventaCombustibleHora" />
+                        <p:calendar id="ventaCombustibleHora" pattern="HH:mm:ss" value="#{ventaCombustibleController.selected.ventaCombustibleHora}" title="#{myBundle.CreateVentaCombustibleTitle_ventaCombustibleHora}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleHora}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustiblePrecio}" for="ventaCombustiblePrecio" />
+                        <p:inputText id="ventaCombustiblePrecio" value="#{ventaCombustibleController.selected.ventaCombustiblePrecio}" title="#{myBundle.CreateVentaCombustibleTitle_ventaCombustiblePrecio}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustiblePrecio}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleCantidad}" for="ventaCombustibleCantidad" />
+                        <p:inputText id="ventaCombustibleCantidad" value="#{ventaCombustibleController.selected.ventaCombustibleCantidad}" title="#{myBundle.CreateVentaCombustibleTitle_ventaCombustibleCantidad}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleCantidad}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleTotal}" for="ventaCombustibleTotal" />
+                        <p:inputText id="ventaCombustibleTotal" value="#{ventaCombustibleController.selected.ventaCombustibleTotal}" title="#{myBundle.CreateVentaCombustibleTitle_ventaCombustibleTotal}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleTotal}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleNumeroBoleta}" for="ventaCombustibleNumeroBoleta" />
+                        <p:inputText id="ventaCombustibleNumeroBoleta" value="#{ventaCombustibleController.selected.ventaCombustibleNumeroBoleta}" title="#{myBundle.CreateVentaCombustibleTitle_ventaCombustibleNumeroBoleta}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleNumeroBoleta}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleRecaudado}" for="ventaCombustibleRecaudado" />
+                        <p:selectBooleanCheckbox id="ventaCombustibleRecaudado" value="#{ventaCombustibleController.selected.ventaCombustibleRecaudado}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleRecaudado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleIdBus}" for="ventaCombustibleIdBus" />
+                        <p:selectOneMenu id="ventaCombustibleIdBus" value="#{ventaCombustibleController.selected.ventaCombustibleIdBus}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleIdBus}" converter="busConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{busController.items}"
+                                           var="ventaCombustibleIdBusItem"
+                                           itemValue="#{ventaCombustibleIdBusItem}"
+                                           itemLabel="#{ventaCombustibleIdBusItem.busId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleIdSurtidor}" for="ventaCombustibleIdSurtidor" />
+                        <p:selectOneMenu id="ventaCombustibleIdSurtidor" value="#{ventaCombustibleController.selected.ventaCombustibleIdSurtidor}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleIdSurtidor}" converter="surtidorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{surtidorController.items}"
+                                           var="ventaCombustibleIdSurtidorItem"
+                                           itemValue="#{ventaCombustibleIdSurtidorItem}"
+                                           itemLabel="#{ventaCombustibleIdSurtidorItem.surtidorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ventaCombustibleController.saveNew}" value="#{myBundle.Save}" update="display,:VentaCombustibleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaCombustibleCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('VentaCombustibleCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

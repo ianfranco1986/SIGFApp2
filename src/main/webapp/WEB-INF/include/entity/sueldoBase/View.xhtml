@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SueldoBaseViewDlg" widgetVar="SueldoBaseViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewSueldoBaseTitle}" closeOnEscape="true">
+
+            <h:form id="SueldoBaseViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{sueldoBaseController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewSueldoBaseLabel_sueldoBaseId}"/>
+                        <h:outputText value="#{sueldoBaseController.selected.sueldoBaseId}" title="#{myBundle.ViewSueldoBaseTitle_sueldoBaseId}"/>
+
+                        <h:outputText value="#{myBundle.ViewSueldoBaseLabel_sueldoBaseBaseNormal}"/>
+                        <h:outputText value="#{sueldoBaseController.selected.sueldoBaseBaseNormal}" title="#{myBundle.ViewSueldoBaseTitle_sueldoBaseBaseNormal}"/>
+
+                        <h:outputText value="#{myBundle.ViewSueldoBaseLabel_sueldoBaseBasePartime}"/>
+                        <h:outputText value="#{sueldoBaseController.selected.sueldoBaseBasePartime}" title="#{myBundle.ViewSueldoBaseTitle_sueldoBaseBasePartime}"/>
+
+                        <h:outputText value="#{myBundle.ViewSueldoBaseLabel_sueldoBaseDesde}"/>
+                        <h:outputText value="#{sueldoBaseController.selected.sueldoBaseDesde}" title="#{myBundle.ViewSueldoBaseTitle_sueldoBaseDesde}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewSueldoBaseLabel_sueldoBaseHasta}"/>
+                        <h:outputText value="#{sueldoBaseController.selected.sueldoBaseHasta}" title="#{myBundle.ViewSueldoBaseTitle_sueldoBaseHasta}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('SueldoBaseViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

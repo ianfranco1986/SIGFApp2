@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoAbonoViewDlg" widgetVar="TipoAbonoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTipoAbonoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoAbonoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tipoAbonoController.selected != null}">
+
+                        <h:outputText value="#"/>
+                        <h:outputText value="#{tipoAbonoController.selected.tipoAbonoId}" title="#{myBundle.ViewTipoAbonoTitle_tipoAbonoId}"/>
+
+                        <h:outputText value="Nombre"/>
+                        <h:outputText value="#{tipoAbonoController.selected.tipoAbonoNombre}" title="#{myBundle.ViewTipoAbonoTitle_tipoAbonoNombre}"/>
+
+                        <h:outputText value="Monto x Defecto"/>
+                        <h:outputText value="#{tipoAbonoController.selected.tipoAbonoMontoDefecto}" title="#{myBundle.ViewTipoAbonoTitle_tipoAbonoMontoDefecto}"/>
+
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('TipoAbonoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

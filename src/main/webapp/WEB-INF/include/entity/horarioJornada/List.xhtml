@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="HorarioJornadaListForm">
+
+        <p:panel header="#{myBundle.ListHorarioJornadaTitle}">
+            <p:contextMenu id="HorarioJornadaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('HorarioJornadaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('HorarioJornadaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('HorarioJornadaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('HorarioJornadaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.HorarioJornadaMenuItem_horarioJornadaIdCuenta}" icon="ui-icon-search"  actionListener="#{horarioJornadaController.prepareHorarioJornadaIdCuenta}" update=":CuentaViewForm" oncomplete="PF('CuentaViewDialog').show()" disabled="#{empty horarioJornadaController.selected.horarioJornadaIdCuenta}"/>  
+                <p:menuitem value="#{myBundle.HorarioJornadaMenuItem_jornadaLaboralList}" icon="ui-icon-search"  action="#{horarioJornadaController.navigateJornadaLaboralList}" disabled="#{horarioJornadaController.isJornadaLaboralListEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{horarioJornadaController.items}"
+                         lazy="false"
+                         rowKey="#{item.horarioJornadaId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{horarioJornadaController.selected}"
+                         filteredValue="#{horarioJornadaController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{horarioJornadaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.horarioJornadaId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:HorarioJornadaDataTableContextMenu" listener="#{horarioJornadaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:HorarioJornadaDataTableContextMenu" listener="#{horarioJornadaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{horarioJornadaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('HorarioJornadaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.horarioJornadaId}" filterBy="#{item.horarioJornadaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorarioJornadaTitle_horarioJornadaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioJornadaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horarioJornadaInicioHorario}" filterBy="#{item.horarioJornadaInicioHorario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorarioJornadaTitle_horarioJornadaInicioHorario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioJornadaInicioHorario}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horarioJornadaTerminoHorario}" filterBy="#{item.horarioJornadaTerminoHorario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorarioJornadaTitle_horarioJornadaTerminoHorario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioJornadaTerminoHorario}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horarioJornadaHorarioVariable}" filterBy="#{item.horarioJornadaHorarioVariable}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorarioJornadaTitle_horarioJornadaHorarioVariable}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="horarioJornadaHorarioVariable" value="#{item.horarioJornadaHorarioVariable}" title="#{myBundle.EditHorarioJornadaTitle_horarioJornadaHorarioVariable}"  disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horarioJornadaIdCuenta.cuentaId}" filterBy="#{item.horarioJornadaIdCuenta.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorarioJornadaTitle_horarioJornadaIdCuenta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioJornadaIdCuenta.cuentaId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{horarioJornadaController.prepareCreate}" update=":HorarioJornadaCreateForm" oncomplete="PF('HorarioJornadaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":HorarioJornadaViewForm" oncomplete="PF('HorarioJornadaViewDialog').show()" disabled="#{empty horarioJornadaController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":HorarioJornadaEditForm" oncomplete="PF('HorarioJornadaEditDialog').show()" disabled="#{empty horarioJornadaController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{horarioJornadaController.delete}" update=":growl,datalist" disabled="#{empty horarioJornadaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

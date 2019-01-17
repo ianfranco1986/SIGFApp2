@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CargoBusCreateDlg" widgetVar="CargoBusCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCargoBusTitle}" closeOnEscape="true">
+
+            <h:form id="CargoBusCreateForm">
+
+                <h:panelGroup id="display" rendered="#{registroLiquidacionBusController.cargoBus != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusFechaInicio}" for="cargoBusFechaInicio" />
+                        <p:calendar id="cargoBusFechaInicio" pattern="MM/dd/yyyy" value="#{registroLiquidacionBusController.cargoBus.cargoBusFechaInicio}" title="#{myBundle.CreateCargoBusTitle_cargoBusFechaInicio}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_cargoBusFechaInicio}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusFechaTermino}" for="cargoBusFechaTermino" />
+                        <p:calendar id="cargoBusFechaTermino" pattern="MM/dd/yyyy" value="#{registroLiquidacionBusController.cargoBus.cargoBusFechaTermino}" title="#{myBundle.CreateCargoBusTitle_cargoBusFechaTermino}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_cargoBusFechaTermino}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusCuotaActual}" for="cargoBusCuotaActual" />
+                        <p:inputText id="cargoBusCuotaActual" value="#{registroLiquidacionBusController.cargoBus.cargoBusCuotaActual}" title="#{myBundle.CreateCargoBusTitle_cargoBusCuotaActual}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusTotalCuotas}" for="cargoBusTotalCuotas" />
+                        <p:inputText id="cargoBusTotalCuotas" value="#{registroLiquidacionBusController.cargoBus.cargoBusTotalCuotas}" title="#{myBundle.CreateCargoBusTitle_cargoBusTotalCuotas}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusMontoFijo}" for="cargoBusMontoFijo" />
+                        <p:inputText id="cargoBusMontoFijo" value="#{registroLiquidacionBusController.cargoBus.cargoBusMontoFijo}" title="#{myBundle.CreateCargoBusTitle_cargoBusMontoFijo}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_cargoBusMontoFijo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusDescripcion}" for="cargoBusDescripcion" />
+                        <p:inputText id="cargoBusDescripcion" value="#{registroLiquidacionBusController.cargoBus.cargoBusDescripcion}" title="#{myBundle.CreateCargoBusTitle_cargoBusDescripcion}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusActivo}" for="cargoBusActivo" />
+                        <p:selectBooleanCheckbox id="cargoBusActivo" value="#{registroLiquidacionBusController.cargoBus.cargoBusActivo}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_cargoBusActivo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusIdBus}" for="cargoBusIdBus" />
+                        <p:selectOneMenu id="cargoBusIdBus" value="#{registroLiquidacionBusController.cargoBus.cargoBusIdBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_cargoBusIdBus}" converter="busConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{busController.items}"
+                                           var="cargoBusIdBusItem"
+                                           itemValue="#{cargoBusIdBusItem}"
+                                           itemLabel="#{cargoBusIdBusItem.busId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_cargoBusIdTipo}" for="cargoBusIdTipo" />
+                        <p:selectOneMenu id="cargoBusIdTipo" value="#{registroLiquidacionBusController.cargoBus.cargoBusIdTipo}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_cargoBusIdTipo}" converter="tipoCargoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoCargoController.items}"
+                                           var="cargoBusIdTipoItem"
+                                           itemValue="#{cargoBusIdTipoItem}"
+                                           itemLabel="#{cargoBusIdTipoItem.tipoCargoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{registroLiquidacionBusController.saveNew}" value="#{myBundle.Save}" update="display,:CargoBusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CargoBusCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CargoBusCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

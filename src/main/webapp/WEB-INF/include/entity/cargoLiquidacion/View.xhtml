@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CargoLiquidacionViewDlg" widgetVar="CargoLiquidacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCargoLiquidacionTitle}" closeOnEscape="true">
+
+            <h:form id="CargoLiquidacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{cargoLiquidacionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCargoLiquidacionLabel_cargoLiquidacionId}"/>
+                        <h:outputText value="#{cargoLiquidacionController.selected.cargoLiquidacionId}" title="#{myBundle.ViewCargoLiquidacionTitle_cargoLiquidacionId}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargoLiquidacionLabel_cargoLiquidacionMonto}"/>
+                        <h:outputText value="#{cargoLiquidacionController.selected.cargoLiquidacionMonto}" title="#{myBundle.ViewCargoLiquidacionTitle_cargoLiquidacionMonto}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargoLiquidacionLabel_cargoLiquidacionDescripcion}"/>
+                        <h:outputText value="#{cargoLiquidacionController.selected.cargoLiquidacionDescripcion}" title="#{myBundle.ViewCargoLiquidacionTitle_cargoLiquidacionDescripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargoLiquidacionLabel_cargoLiquidacionIdCargo}"/>
+                        <h:outputText value="#{cargoLiquidacionController.selected.cargoLiquidacionIdCargo.cargoBusDescripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargoLiquidacionLabel_cargoLiquidacionIdLiquidacion}"/>
+                        <h:outputText value="#{cargoLiquidacionController.selected.cargoLiquidacionIdLiquidacion.liquidacionEmpresaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CargoLiquidacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

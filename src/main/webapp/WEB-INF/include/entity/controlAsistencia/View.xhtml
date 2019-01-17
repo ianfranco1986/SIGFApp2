@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ControlAsistenciaViewDlg" widgetVar="ControlAsistenciaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewControlAsistenciaTitle}" closeOnEscape="true">
+
+            <h:form id="ControlAsistenciaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{controlAsistenciaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewControlAsistenciaLabel_controlAsistenciaId}"/>
+                        <h:outputText value="#{controlAsistenciaController.selected.controlAsistenciaId}" title="#{myBundle.ViewControlAsistenciaTitle_controlAsistenciaId}"/>
+
+                        <h:outputText value="#{myBundle.ViewControlAsistenciaLabel_controlAsistenciaHorarioSalida}"/>
+                        <h:outputText value="#{controlAsistenciaController.selected.controlAsistenciaHorarioSalida}" title="#{myBundle.ViewControlAsistenciaTitle_controlAsistenciaHorarioSalida}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewControlAsistenciaLabel_controlAsistenciaHorarioEntrada}"/>
+                        <h:outputText value="#{controlAsistenciaController.selected.controlAsistenciaHorarioEntrada}" title="#{myBundle.ViewControlAsistenciaTitle_controlAsistenciaHorarioEntrada}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewControlAsistenciaLabel_controlAsistenciaIdTrabajador}"/>
+                        <h:outputText value="#{controlAsistenciaController.selected.controlAsistenciaIdTrabajador.trabajadorId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ControlAsistenciaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <h:form id="selectProcesoForm">
+
+        <p:panel  style="margin-bottom: 10px;">
+            <h3 style="text-align: center;">Liquidación x Bus</h3>
+            <p:focus for="unidad"/>  
+            <p:panelGrid columns="10" style="width: 100%;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                <p:outputLabel value="Unidad:" for="unidad"/>
+                <p:selectOneMenu id="unidad" value="#{registroLiquidacionBusController.unidadNegocio}" required="true" requiredMessage="Debe seleccionar la Unidad " converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{unidadNegocioController.items}"
+                                   var="unidadItem"
+                                   itemValue="#{unidadItem}"
+                                   itemLabel="#{unidadItem.unidadNegocioNumero} - #{unidadItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
+                                   />
+                    <p:ajax update="numeroBus" listener="#{registroLiquidacionBusController.handleUnidadChange}" global="false"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="N° Bus:" for="numeroBus"/>
+                <p:selectOneMenu id="numeroBus" value="#{registroLiquidacionBusController.bus}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{registroLiquidacionBusController.busItems}"
+                                   var="busItem"
+                                   itemValue="#{busItem}"
+                                   itemLabel="#{busItem.busNumero}"
+                                   />
+                </p:selectOneMenu>
+
+                <p:outputLabel for="mes" value="Mes:" />
+                <p:selectOneMenu id="mes" value="#{registroLiquidacionBusController.mes}" style="width:125px">
+                    <f:selectItem itemLabel="Enero" itemValue="1" />
+                    <f:selectItem itemLabel="Febrero" itemValue="2" />
+                    <f:selectItem itemLabel="Marzo" itemValue="3" />
+                    <f:selectItem itemLabel="Abril" itemValue="4" />
+                    <f:selectItem itemLabel="Mayo" itemValue="5" />
+                    <f:selectItem itemLabel="Junio" itemValue="6" />
+                    <f:selectItem itemLabel="Julio" itemValue="7" />
+                    <f:selectItem itemLabel="Agosto" itemValue="8" />
+                    <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                    <f:selectItem itemLabel="Octubre" itemValue="10" />
+                    <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                    <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                </p:selectOneMenu>
+
+                <p:outputLabel for="anio" value="Año:" />
+                <p:inputText id="anio" value="#{registroLiquidacionBusController.anio}" size="5" />
+                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Liquidación" update="resultado,AbonoBusListForm:datalist, CargoBusListForm:datalist, :GuiaListForm:tabla, growl"  styleClass="btn btn-primary" actionListener="#{registroLiquidacionBusController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                </p:commandButton>
+            </p:panelGrid>
+
+        </p:panel>
+    </h:form>
+
+    <p:panelGrid columns="1" style="width: 100%;">
+        <h:form id="CargoBusListForm">
+            <h3 style="text-align: center;">Cargos</h3>
+            <p:contextMenu id="CargoBusDataTableContextMenu" for="datalist">                    
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CargoBusListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>                   
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{registroLiquidacionBusController.cargoBusItems}"
+                         lazy="false"
+                         rowKey="#{item.cargoBusId}"
+                         var="item"                                     
+                         paginator="false"
+                         rowIndexVar="rowIndex"                                      
+                         selectionMode="single"
+                         selection="#{registroLiquidacionBusController.cargoBus}" 
+                         emptyMessage="No se han encontrado registros"
+                         reflow="true"
+                         style="padding-bottom: 5px;padding-top: 5px;">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{cargoBusController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idCargoBus}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="datalist:deleteButton,@form:CargoBusDataTableContextMenu" listener="#{registroLiquidacionBusController.resetParents}" global="false"/>
+                <p:ajax event="rowUnselect" update="datalist:deleteButton,@form:CargoBusDataTableContextMenu" listener="#{registroLiquidacionBusController.resetParents}" global="false"/>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="N°"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.cargoBusIdTipo.tipoCargoNombre}" >
+                    <f:facet name="header">
+                        <h:outputText value="Cargo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cargoBusIdTipo.tipoCargoNombre}"/>
+                </p:column>                            
+
+                <p:column sortBy="#{item.cargoBusDescripcion}" >
+                    <f:facet name="header">
+                        <h:outputText value="Descripción"/>
+                    </f:facet>
+                    <p:inputText value="#{item.cargoBusDescripcion}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="N° Cuota"/>
+                    </f:facet>
+                    <p:inputText value="#{item.cargoBusCuotaActual}" size="3"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Total Cuotas"/>
+                    </f:facet>
+                    <p:inputText value="#{item.cargoBusTotalCuotas}" size="3"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Monto"/>
+                    </f:facet>
+                    <p:inputText value="#{item.cargoBusMontoFijo}" size="10"/>
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton id="createButton"  styleClass="btn btn-primary"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroLiquidacionBusController.prepareCreateCargo}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" update=":CargoBusCreateForm" oncomplete="PF('CargoBusCreateDialog').show()"/>
+                    <p:commandButton id="editButton"   styleClass="btn btn-primary"  icon="ui-icon-pencil" value="Guardar Cambios" update="resultado, :growl"  actionListener="#{registroLiquidacionBusController.saveCargo}" >
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="Actualizar?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton id="deleteButton"  styleClass="btn btn-primary"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{registroLiquidacionBusController.deleteCargo}" update=":growl,datalist, resultado" disabled="#{empty registroLiquidacionBusController.cargoBus}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </f:facet>
+
+            </p:dataTable>
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+
+        <h:form id="AbonoBusListForm" >
+            <h3 style="text-align: center;">Abonos</h3>
+            <p:contextMenu id="AbonoBusDataTableContextMenu" for="datalist">                                                              
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('AbonoBusListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>                    
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{registroLiquidacionBusController.abonoBusItems}"
+                         lazy="false"
+                         rowKey="#{item3.abonoBusId}"
+                         var="item3"                                     
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         rowIndexVar="rowIndex"
+                         selection="#{registroLiquidacionBusController.abonoBus}" 
+                         emptyMessage="No se han encontrado registros"
+                         reflow="true"
+                         style="padding-bottom: 5px;padding-top: 5px;margin-top: 10px;">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with2 the # symbol:
+                
+                         value="HASH{abonoBusController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idAbonoBus}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="datalist:deleteButton" listener="#{registroLiquidacionBusController.resetParents}" global="false"/>
+                <p:ajax event="rowUnselect" update="datalist:deleteButton" listener="#{registroLiquidacionBusController.resetParents}" global="false"/>                    
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="N°"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+                <p:column sortBy="#{item3.abonoBusIdTipoAbono.tipoAbonoNombre}" >
+                    <f:facet name="header">
+                        <h:outputText value="Abono"/>
+                    </f:facet>
+                    <h:outputText value="#{item3.abonoBusIdTipoAbono.tipoAbonoNombre}"/>
+                </p:column>   
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Descripción"/>
+                    </f:facet>
+                    <p:inputText value="#{item3.abonoBusDescripcion}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="N° Cuota"/>
+                    </f:facet>
+                    <p:inputText value="#{item3.abonoBusCuotaActual}" size="3"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Total Cuotas"/>
+                    </f:facet>
+                    <p:inputText value="#{item3.abonoBusTotalCuotas}" size="3"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Monto"/>
+                    </f:facet>
+                    <p:inputText value="#{item3.abonoBusMontoFijo}" size="10"/>
+                </p:column>
+
+                <f:facet name="footer" >
+                    <p:commandButton id="createButton"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" styleClass="btn btn-primary"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroLiquidacionBusController.prepareCreateAbono}"  update=":AbonoBusCreateForm" oncomplete="PF('AbonoBusCreateDialog').show()"/>                        
+                    <p:commandButton id="editButton"   styleClass="btn btn-primary"  icon="ui-icon-pencil" value="Guardar Cambios" update="resultado, :growl"  actionListener="#{registroLiquidacionBusController.saveAbono}" >
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="Actualizar?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton id="deleteButton"  styleClass="btn btn-primary"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{registroLiquidacionBusController.deleteAbono}" update=":growl,datalist, resultado" disabled="#{empty registroLiquidacionBusController.abonoBus}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </f:facet>
+
+            </p:dataTable>
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+
+        </h:form>
+    </p:panelGrid>
+
+    <h:panelGrid columns="1"  columnClasses="alignTop" style="width: 100%;margin-top: 10px;">
+        <h:form id="GuiaListForm">            
+            <p:panel id="tabla">
+                <h3 style="text-align: center;">Recaudación</h3>
+                <p:dataTable id="datalist" 
+                             value="#{registroLiquidacionBusController.recaudacionItems}"
+                             lazy="false"
+                             var="item"
+                             rowKey="#{item.recaudacionId}"
+                             rowIndexVar="rowIndex"
+                             selectionMode="single"
+                             selection="#{registroLiquidacionBusController.recaudacion}"
+                             emptyMessage="No se han encontrado registros"
+                             reflow="true">
+                    <!--
+                             To enable Lazy Loading, please copy/replace the following lines above,
+                             and be sure to replace the word HASH with the # symbol:
+                    
+                             value="HASH{guiaController.lazyItems}"
+                             lazy="true"
+                             rowKey="HASH{item.idGuia}"  <<< Remove this line
+                    -->
+                    <p:ajax event="rowSelect" update="growl" listener="#{registroLiquidacionBusController.resetParents()}" global="false"/>
+
+                    <f:facet name="header">
+                        Recaudación
+                    </f:facet>
+
+                    <p:column style="width: 20px; text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="N°"/>
+                        </f:facet>
+                        <h:outputText value="#{rowIndex+1}" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <f:facet name="footer" class="">
+                    <p:commandButton value="Imprimir" icon="ui-icon-print"  class="no-print"  styleClass="btn btn-primary"> 
+                        <p:printer target="tabla"/>
+                    </p:commandButton>
+                    <p:commandButton value="Excel" ajax="false" icon="fa fa-file-excel-o" class="no-print"  styleClass="btn btn-primary">                        
+                        <p:dataExporter type="xls" target="datalist" fileName="Producción Bus" />
+                    </p:commandButton>
+                    <p:commandButton value="Pdf" ajax="false" icon="fa fa-file-pdf-o" class="no-print"  styleClass="btn btn-primary">                        
+                        <p:dataExporter type="pdf" target="datalist" fileName="Producción Bus" preProcessor="#{customizedDocumentsView.preProcessPDF}"/>
+                    </p:commandButton>
+                </f:facet>
+            </p:panel>
+        </h:form>
+
+        <p:panel id="resultado" header="Resultado:" style="margin-top: 10px;" >
+            <p:panelGrid columns="2" style="text-align: left;">
+
+
+            </p:panelGrid>
+        </p:panel>
+
+    </h:panelGrid>
+
+    <p:dialog id="AbonoBusCreateDlg" widgetVar="AbonoBusCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateAbonoBusTitle}" closeOnEscape="true">
+
+        <h:form id="AbonoBusCreateForm">
+
+            <h:panelGroup id="display" rendered="#{registroLiquidacionBusController.abonoBus != null}">
+                <p:panelGrid columns="2" columnClasses="column">
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusFechaInicio}" for="abonoBusFechaInicio" />
+                    <p:calendar id="abonoBusFechaInicio" pattern="MM/dd/yyyy" value="#{registroLiquidacionBusController.abonoBus.abonoBusFechaInicio}" title="#{myBundle.CreateAbonoBusTitle_abonoBusFechaInicio}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusFechaInicio}" showOn="button"/>
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusFechaTermino}" for="abonoBusFechaTermino" />
+                    <p:calendar id="abonoBusFechaTermino" pattern="MM/dd/yyyy" value="#{registroLiquidacionBusController.abonoBus.abonoBusFechaTermino}" title="#{myBundle.CreateAbonoBusTitle_abonoBusFechaTermino}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusFechaTermino}" showOn="button"/>
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusCuotaActual}" for="abonoBusCuotaActual" />
+                    <p:inputText id="abonoBusCuotaActual" value="#{registroLiquidacionBusController.abonoBus.abonoBusCuotaActual}" title="#{myBundle.CreateAbonoBusTitle_abonoBusCuotaActual}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusCuotaActual}"/>
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusTotalCuotas}" for="abonoBusTotalCuotas" />
+                    <p:inputText id="abonoBusTotalCuotas" value="#{registroLiquidacionBusController.abonoBus.abonoBusTotalCuotas}" title="#{myBundle.CreateAbonoBusTitle_abonoBusTotalCuotas}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusTotalCuotas}"/>
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusMontoFijo}" for="abonoBusMontoFijo" />
+                    <p:inputText id="abonoBusMontoFijo" value="#{registroLiquidacionBusController.abonoBus.abonoBusMontoFijo}" title="#{myBundle.CreateAbonoBusTitle_abonoBusMontoFijo}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusMontoFijo}"/>
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusDescripcion}" for="abonoBusDescripcion" />
+                    <p:inputText id="abonoBusDescripcion" value="#{registroLiquidacionBusController.abonoBus.abonoBusDescripcion}" title="#{myBundle.CreateAbonoBusTitle_abonoBusDescripcion}" size="100" maxlength="100"/>
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusActivo}" for="abonoBusActivo" />
+                    <p:selectBooleanCheckbox id="abonoBusActivo" value="#{registroLiquidacionBusController.abonoBus.abonoBusActivo}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusActivo}"/>
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusIdBus}" for="abonoBusIdBus" />
+                    <p:selectOneMenu id="abonoBusIdBus" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdBus}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusIdBus}" converter="busConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{busController.items}"
+                                       var="abonoBusIdBusItem"
+                                       itemValue="#{abonoBusIdBusItem}"
+                                       itemLabel="#{abonoBusIdBusItem.busId.toString()}"
+                                       />
+
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusIdTipoAbono}" for="abonoBusIdTipoAbono" />
+                    <p:selectOneMenu id="abonoBusIdTipoAbono" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdTipoAbono}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusIdTipoAbono}" converter="tipoAbonoConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{tipoAbonoController.items}"
+                                       var="abonoBusIdTipoAbonoItem"
+                                       itemValue="#{abonoBusIdTipoAbonoItem}"
+                                       itemLabel="#{abonoBusIdTipoAbonoItem.tipoAbonoId.toString()}"
+                                       />
+
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <p:commandButton actionListener="#{registroLiquidacionBusController.saveNew}" value="#{myBundle.Save}" update="display,:AbonoBusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AbonoBusCreateDialog'));">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+
+                <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AbonoBusCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+    <p:dialog id="CargoBusCreateDlg" widgetVar="CargoBusCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCargoBusTitle}" closeOnEscape="true">
+
+        <h:form id="CargoBusCreateForm">
+            <h:panelGroup id="display" style="width: 100%; margin-bottom: 10px;">
+                <p:focus context="tipoCargo"/>
+                <p:panelGrid columns="4" columnClasses="column" style="width: 100%; " >
+
+                    <p:outputLabel value="Fecha:" for="fechaInicioCargoBus" />
+                    <h:panelGroup>
+                        <p:calendar id="fechaInicioCargoBus" pattern="dd/MM/yyyy" value="#{registroLiquidacionBusController.fecha}"  required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_fechaInicioCargoBus}" autocomplete="off"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Patente:" for="patente" />
+                    <p:outputLabel id="patente" value="#{registroLiquidacionBusController.cargoBus.cargoBusIdBus.busNumero}"/>
+
+                    <p:outputLabel value="Cargo: " for="tipoCargo" />
+                    <h:panelGroup>
+                        <p:selectOneMenu id="tipoCargo" value="#{cargoBusController.selected.cargoBusIdTipo}" required="true" requiredMessage="Debe seleccionar el Cargo" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccionar..."/>
+                            <f:selectItems value="#{tipoCargoController.items}"
+                                           var="tipoCargoItem"
+                                           itemValue="#{tipoCargoItem}"
+                                           itemLabel="#{tipoCargoItem.tipoCargoNombre}"
+                                           />
+                            <p:ajax event="valueChange" listener="#{cargoBusController.setMontoXDefecto}" update="montoCargoBus" global="false"/>
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+
+
+
+                    <p:outputLabel value="Flota:" for="flota" />
+                    <p:outputLabel id="flota" value="#{registroLiquidacionBusController.cargoBus.cargoBusIdBus.busIdFlota.flotaNombre}"/>
+
+
+                    <p:outputLabel value="Monto" for="montoCargoBus" />
+                    <h:panelGroup>
+                        <p:inputText id="montoCargoBus" autocomplete="off" value="#{cargoBusController.selected.cargoBusMontoFijo}" title="#{myBundle.CreateCargoBusTitle_montoCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_montoCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Empresa:" for="empresa" />
+                    <p:outputLabel id="empresa" value="#{registroLiquidacionBusController.cargoBus.cargoBusIdBus.busIdEmpresa.empresaNombre}"/>
+
+                    <p:outputLabel value="Descripción:" for="descripcion" />
+                    <h:panelGroup>
+                        <p:inputText id="descripcion" autocomplete="off" value="#{cargoBusController.selected.cargoBusDescripcion}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}"  onfocus="this.setSelectionRange(0, this.value.length)" size="30" />                            
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Unidad:" for="unidad" />
+                    <p:outputLabel id="unidad" value="#{registroLiquidacionBusController.cargoBus.cargoBusIdBus.busIdUnidadNegocio.unidadNegocioNumero}   "/>
+
+                    <h:panelGroup>
+                        <p:outputLabel value="Cuotas" for="numeroCuotasCargoBus" />
+                        <p:selectBooleanCheckbox value="#{cargoBusController.cuotas}" style="margin-left: 5px;">
+                            <p:ajax event="valueChange" update="totalCuotasCargoBus"/>
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel value="?:" style="margin-left: 5px;"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:inputText id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{cargoBusController.selected.cargoBusCuotaActual}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
+                        <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
+                        <p:inputText id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{!cargoBusController.cuotas}" value="#{cargoBusController.selected.cargoBusTotalCuotas}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="" />
+                    <p:commandButton styleClass="btn btn-primary"  actionListener="#{cargoBusController.saveNew}" value="#{myBundle.Save}" update="display,:CargoBusListForm:datalist,:growl" >
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </p:panelGrid>
+            </h:panelGroup>
+
+        </h:form>
+
+
+    </p:dialog>
+
+</ui:composition>
+
+

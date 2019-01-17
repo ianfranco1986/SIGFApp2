@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="caja" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    r.registro_minuto_id, 
+    rr.recaudacion_id, 
+    rr.recaudacion_hora, 
+    b.bus_numero AS numeroPaga,
+    b.bus_patente AS patentePaga,
+    f1.flota_nombre AS flotaPaga, 
+    c.bus_numero AS numeroRecibe,
+    c.bus_patente AS patenteRecibe,
+    f2.flota_nombre AS flotaRecibe, 
+    r.registro_minuto_monto, 
+    caja_recaudacion.caja_recaudacion_nombre
+FROM
+	recaudacion_minuto rm
+		LEFT JOIN 
+    recaudacion rr ON rm.recaudacion_minuto_id_recaudacion = rr.recaudacion_id 
+		LEFT JOIN 
+    registro_minuto r ON rm.recaudacion_minuto_id_registro_minuto = r.registro_minuto_id
+        LEFT JOIN
+    bus b ON r.registro_minuto_desde_id_bus = b.bus_id
+        LEFT JOIN
+    bus c ON r.registro_minuto_hasta_id_bus = c.bus_id
+		LEFT JOIN 
+	flota f1 ON b.bus_id_flota = f1.flota_id 
+		LEFT JOIN 
+	flota f2 ON c.bus_id_flota = f2.flota_id 
+		LEFT JOIN 
+	caja_recaudacion ON rr.recaudacion_id_caja = caja_recaudacion.caja_recaudacion_id 
+WHERE
+    rr.recaudacion_fecha = $P{fecha} AND rr.recaudacion_id_caja = $P{caja} ORDER BY rr.recaudacion_hora ASC]]>
+	</queryString>
+	<field name="registro_minuto_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_hora" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroPaga" class="java.lang.Long"/>
+	<field name="patentePaga" class="java.lang.String"/>
+	<field name="flotaPaga" class="java.lang.String"/>
+	<field name="numeroRecibe" class="java.lang.Long"/>
+	<field name="patenteRecibe" class="java.lang.String"/>
+	<field name="flotaRecibe" class="java.lang.String"/>
+	<field name="registro_minuto_monto" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="caja_recaudacion_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="registro_minuto_monto1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="147" y="75" width="63" height="15" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Bus Paga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="75" width="80" height="15" uuid="7cd9e24b-1df9-4c23-be74-a815a2fc1b21"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Flota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="75" width="74" height="15" uuid="048f827c-5999-477d-8ca3-6db440ee295f"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Bus Recibe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="75" width="80" height="15" uuid="1f03e831-85f3-4e0c-8ed0-2be7e90bc4fc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fdd663f5-ad02-4f9e-a11f-3eba5e870473"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Flota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="75" width="70" height="15" uuid="a7cab6f6-2844-407a-a8fa-bf0a1177c313">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="75" width="91" height="15" uuid="576d712d-3574-4893-a8ef-bf08febd0296"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Recaudación]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="90" width="550" height="1" uuid="d1eb089d-71b6-45f6-9c2f-b9d4ac82ac3f"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="75" width="49" height="15" uuid="0bfe8164-e4ce-4239-9026-f78c1c5b5c2b"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Folio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="114" height="19" uuid="eb16f354-83f9-4866-bee6-7643bfa4df65"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="0" width="180" height="34" uuid="1ffc6c85-5341-42a5-9f05-a0eafd4341c6"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recaudación Minutos ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="39" width="100" height="20" uuid="0596e993-5962-46da-8a85-5f59d10d2804"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caja_recaudacion_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="19" width="100" height="20" uuid="dea5f329-a024-4af8-aa6d-5af7b79e444a"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="55" width="155" height="20" uuid="7f054929-1d1f-4344-a8eb-1349b45f3f99"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="526" y="55" width="45" height="20" uuid="1aa8f8ea-91ed-4209-8fc3-f47ff86aaefe"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="147" y="0" width="63" height="15" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="0" width="80" height="15" uuid="21636e15-e673-4bc2-aea0-715105e5d3c3"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{flotaPaga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="0" width="74" height="15" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="0" width="80" height="15" uuid="c063a3c3-2072-46a5-9338-1a4d419f9ac3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fdd663f5-ad02-4f9e-a11f-3eba5e870473"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{flotaRecibe}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.###">
+				<reportElement x="480" y="0" width="70" height="15" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{registro_minuto_monto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="49" y="0" width="91" height="15" uuid="064237db-3dc6-40a9-8e40-8878d96953d1"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion_hora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="49" height="15" uuid="7f521725-7e58-41b2-b219-0122469d5c97"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{registro_minuto_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField pattern="hh:mm dd/MM/yyyy">
+				<reportElement x="64" y="0" width="116" height="20" uuid="cf15cbc4-98aa-41bb-bddd-ed6ad6f2ed6f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="62" height="20" uuid="bc27bb0c-8d29-474e-ba35-ab6d37cc5bcd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fecha impresión:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="15" splitType="Stretch">
+			<textField pattern="$ #,###.###">
+				<reportElement x="480" y="0" width="70" height="15" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{registro_minuto_monto1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="0" width="100" height="15" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

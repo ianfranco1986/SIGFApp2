@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DetalleResumenRecaudacionEditDlg" widgetVar="DetalleResumenRecaudacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDetalleResumenRecaudacionTitle}" closeOnEscape="true">
+
+            <h:form id="DetalleResumenRecaudacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{detalleResumenRecaudacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacionId}" for="detalleResumenRecaudacionId" />
+                        <h:outputText id="detalleResumenRecaudacionId" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacionId}" />
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion20000}" for="detalleResumenRecaudacion20000" />
+                        <p:inputText id="detalleResumenRecaudacion20000" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion20000}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion20000}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion20000}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion10000}" for="detalleResumenRecaudacion10000" />
+                        <p:inputText id="detalleResumenRecaudacion10000" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion10000}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion10000}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion10000}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion5000}" for="detalleResumenRecaudacion5000" />
+                        <p:inputText id="detalleResumenRecaudacion5000" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion5000}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion5000}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion5000}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion2000}" for="detalleResumenRecaudacion2000" />
+                        <p:inputText id="detalleResumenRecaudacion2000" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion2000}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion2000}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion2000}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion1000}" for="detalleResumenRecaudacion1000" />
+                        <p:inputText id="detalleResumenRecaudacion1000" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion1000}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion1000}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion1000}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion500}" for="detalleResumenRecaudacion500" />
+                        <p:inputText id="detalleResumenRecaudacion500" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion500}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion500}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion500}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion100}" for="detalleResumenRecaudacion100" />
+                        <p:inputText id="detalleResumenRecaudacion100" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion100}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion100}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion100}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion50}" for="detalleResumenRecaudacion50" />
+                        <p:inputText id="detalleResumenRecaudacion50" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion50}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion50}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion50}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacion10}" for="detalleResumenRecaudacion10" />
+                        <p:inputText id="detalleResumenRecaudacion10" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacion10}" title="#{myBundle.EditDetalleResumenRecaudacionTitle_detalleResumenRecaudacion10}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacion10}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleResumenRecaudacionLabel_detalleResumenRecaudacionIdResumen}" for="detalleResumenRecaudacionIdResumen" />
+                        <p:selectOneMenu id="detalleResumenRecaudacionIdResumen" value="#{detalleResumenRecaudacionController.selected.detalleResumenRecaudacionIdResumen}" required="true" requiredMessage="#{myBundle.EditDetalleResumenRecaudacionRequiredMessage_detalleResumenRecaudacionIdResumen}" converter="resumenRecaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{resumenRecaudacionController.items}"
+                                           var="detalleResumenRecaudacionIdResumenItem"
+                                           itemValue="#{detalleResumenRecaudacionIdResumenItem}"
+                                           itemLabel="#{detalleResumenRecaudacionIdResumenItem.resumenRecaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleResumenRecaudacionController.save}" value="#{myBundle.Save}" update="display,:DetalleResumenRecaudacionListForm:datalist,:DetalleResumenRecaudacionListForm:DetalleResumenRecaudacionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetalleResumenRecaudacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DetalleResumenRecaudacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

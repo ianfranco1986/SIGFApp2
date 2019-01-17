@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                >
+
+    <p:panel id="CargoBusCreateDlg" widgetVar="CargoBusCreateDialog" >
+        <h3 style="text-align: center;">Registro de Cargos x Bus</h3>
+        <h:form id="CargoBusCreateForm">
+            <h:panelGroup id="display" style="width: 100%; margin-bottom: 10px;">
+                <p:focus context="tipoCargo"/>
+                <p:panelGrid columns="4" columnClasses="column" style="width: 100%; " >
+
+                    <p:outputLabel value="Fecha:" for="fechaInicioCargoBus" />
+                    <h:panelGroup>
+                        <p:calendar id="fechaInicioCargoBus" pattern="dd/MM/yyyy" value="#{cargoBusController.fecha}"  required="true" requiredMessage="Debe ingresar la fecha del cargo" onfocus="this.setSelectionRange(0, 2)" autocomplete="off"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="Unidad" for="unidadItems" />
+                    <p:selectOneMenu id="unidadItems" value="#{cargoBusController.unidadNegocio}" required="true" requiredMessage="Debe seleccionar la unidad" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{cargoBusController.unidadItems}"
+                                       var="unidadItem"
+                                       itemValue="#{unidadItem}"
+                                       itemLabel="#{unidadItem.unidadNegocioNumero} - #{unidadItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
+                                       />
+                        <p:ajax event="valueChange" listener="#{cargoBusController.handleUnidadChange()}" update="bus" global="false"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" />
+
+                    <p:outputLabel value="NºBus" for="bus" />
+                    <p:selectOneMenu id="bus" value="#{cargoBusController.selected.cargoBusIdBus}" required="true" requiredMessage="Debe seleccionar el bus" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{cargoBusController.busItems}"
+                                       var="busItem"
+                                       itemValue="#{busItem}"
+                                       itemLabel="#{busItem.busNumero}"
+                                       />
+                        <p:ajax event="valueChange" update="patente, flota, empresa, unidad" global="false"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Patente:" for="patente" />
+                    <p:outputLabel id="patente" value="#{cargoBusController.selected.cargoBusIdBus.busPatente}"/>
+
+                    <p:outputLabel value="Cargo: " for="tipoCargo" />
+                    <h:panelGroup>
+                        <p:selectOneMenu id="tipoCargo" value="#{cargoBusController.selected.cargoBusIdTipo}" required="true" requiredMessage="Debe seleccionar el Cargo" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccionar..."/>
+                            <f:selectItems value="#{tipoCargoController.items}"
+                                           var="tipoCargoItem"
+                                           itemValue="#{tipoCargoItem}"
+                                           itemLabel="#{tipoCargoItem.tipoCargoNombre}"
+                                           />
+                            <p:ajax event="valueChange" listener="#{cargoBusController.setMontoXDefecto}" update="montoCargoBus" global="false"/>
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+
+
+
+                    <p:outputLabel value="Flota:" for="flota" />
+                    <p:outputLabel id="flota" value="#{cargoBusController.selected.cargoBusIdBus.busIdFlota.flotaNombre}"/>
+
+
+                    <p:outputLabel value="Monto" for="montoCargoBus" />
+                    <h:panelGroup>
+                        <p:inputText id="montoCargoBus" autocomplete="off" value="#{cargoBusController.selected.cargoBusMontoFijo}"  required="true" requiredMessage="Debe ingresar el monto del cargo" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Empresa:" for="empresa" />
+                    <p:outputLabel id="empresa" value="#{cargoBusController.selected.cargoBusIdBus.busIdEmpresa.empresaNombre}"/>
+
+                    <p:outputLabel value="Descripción:" for="descripcion" />
+                    <h:panelGroup>
+                        <p:inputText id="descripcion" autocomplete="off" value="#{cargoBusController.selected.cargoBusDescripcion}"  onfocus="this.setSelectionRange(0, this.value.length)" size="30" />                            
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Unidad:" for="unidad" />
+                    <p:outputLabel id="unidad" value="#{cargoBusController.selected.cargoBusIdBus.busIdUnidadNegocio.unidadNegocioNumero}   "/>
+
+                    <h:panelGroup>
+                        <p:outputLabel value="Cuotas" for="numeroCuotasCargoBus" />
+                        <p:selectBooleanCheckbox value="#{cargoBusController.cuotas}" style="margin-left: 5px;">
+                            <p:ajax event="valueChange" update="totalCuotasCargoBus"/>
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel value="?:" style="margin-left: 5px;"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:inputText id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{cargoBusController.selected.cargoBusCuotaActual}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
+                        <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
+                        <p:inputText id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{!cargoBusController.cuotas}" value="#{cargoBusController.selected.cargoBusTotalCuotas}"  onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="" />
+                    <p:commandButton styleClass="btn btn-primary"  actionListener="#{cargoBusController.saveNew}" value="#{myBundle.Save}" update="display,:CargoBusListForm:datalist,:growl"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" >
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </p:panelGrid>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:panel>
+
+    <h:form id="CargoBusListForm">
+        <p:contextMenu id="CargoBusDataTableContextMenu" for="datalist">                    
+            <p:menuitem value="Editar" onclick="document.getElementById('CargoBusListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>                    
+            <p:menuitem value="Eliminar" onclick="document.getElementById('CargoBusListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>                    
+            <p:separator/>                   
+        </p:contextMenu>
+        <p:dataTable id="datalist"
+                     value="#{cargoBusController.model}"
+                     lazy="false"
+                     rowKey="#{item.cargoBusId}"
+                     var="item"
+                     rowIndexVar="rowIndex" 
+                     selectionMode="single"
+                     selection="#{cargoBusController.rowSelected}" 
+                     emptyMessage="No se han encontrado registros"
+                     tableStyle="table-layout: auto" 
+                     reflow="true" 
+                     widgetVar="datalistWidget"
+                     style="margin-top: 10px;">
+            <!--
+                     To enable Lazy Loading, please copy/replace the following lines above,
+                     and be sure to replace the word HASH with the # symbol:
+            
+                     value="HASH{cargoBusController.lazyItems}"
+                     lazy="true"
+                     rowKey="HASH{item.idCargoBus}"  <<< Remove this line
+            -->
+
+
+            <p:ajax event="rowSelect"   update="datalist:editButton,datalist:deleteButton,@form:CargoBusDataTableContextMenu" listener="#{cargoBusController.resetParents}" global="false"/>
+            <p:ajax event="rowUnselect" update="datalist:editButton,datalist:deleteButton,@form:CargoBusDataTableContextMenu" listener="#{cargoBusController.resetParents}" global="false"/>
+
+            <f:facet name="header">
+                <div class="row row-nomargin">
+                    <div class="col-lg-3">
+                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                    </div>
+                    <div class="col-lg-5">
+                        <h:outputText value="Empresas"/>   
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="pull-right">
+                            <p:commandButton styleClass="btn btn-primary"  id="editButton" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CargoBusEditForm" oncomplete="PF('CargoBusEditDialog').show()" disabled="#{empty cargoBusController.rowSelected}"/>
+
+                            <p:commandButton styleClass="btn btn-primary"  id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{cargoBusController.delete}" update=":growl,datalist" disabled="#{empty cargoBusController.rowSelected}" global="false">
+                                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                            </p:commandButton>
+
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="N°"/>
+                </f:facet>
+                <h:outputText value="#{rowIndex+1}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.cargoBusIdBus.busNumero}" filterStyle="width:20px;">
+                <f:facet name="header">
+                    <h:outputText value="Nº Bus"/>
+                </f:facet>
+                <h:outputText value="#{item.cargoBusIdBus.busNumero}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.cargoBusIdBus.busIdFlota.flotaNombre}">
+                <f:facet name="header">
+                    <h:outputText value="Flota"/>
+                </f:facet>
+                <h:outputText value="#{item.cargoBusIdBus.busIdFlota.flotaNombre}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.cargoBusIdBus.busIdEmpresa.empresaNombre}">
+                <f:facet name="header">
+                    <h:outputText value="Empresa"/>
+                </f:facet>
+                <h:outputText value="#{item.cargoBusIdBus.busIdEmpresa.empresaNombre}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.cargoBusIdTipo.tipoCargoNombre}">
+                <f:facet name="header">
+                    <h:outputText value="Cargo"/>
+                </f:facet>
+                <h:outputText value="#{item.cargoBusIdTipo.tipoCargoNombre}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.cargoBusDescripcion}" filterBy="#{item.cargoBusDescripcion}">
+                <f:facet name="header">
+                    <h:outputText value="Descripción"/>
+                </f:facet>
+                <h:outputText value="#{item.cargoBusDescripcion}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.cargoBusCuotaActual}" filterBy="#{item.cargoBusCuotaActual}">
+                <f:facet name="header">
+                    <h:outputText value="Cuotas"/>
+                </f:facet>
+                <h:outputText value="#{item.cargoBusCuotaActual} - #{item.cargoBusTotalCuotas}">
+                    
+                </h:outputText>
+            </p:column>
+            
+            <p:column sortBy="#{item.cargoBusFechaInicio}" filterBy="#{item.cargoBusFechaInicio}">
+                <f:facet name="header">
+                    <h:outputText value="Fecha"/>
+                </f:facet>
+                <h:outputText value="#{item.cargoBusFechaInicio}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+
+            <p:column sortBy="#{item.cargoBusMontoFijo}" filterBy="#{item.cargoBusMontoFijo}">
+                <f:facet name="header">
+                    <h:outputText value="Monto"/>
+                </f:facet>
+                <h:outputText value="#{item.cargoBusMontoFijo}">
+                    <f:convertNumber type="currency" currencySymbol="$ "/>
+                </h:outputText>
+            </p:column>
+        </p:dataTable>
+
+
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+    <p:dialog id="CargoBusEditDlg" widgetVar="CargoBusEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="Edición de Cargo x Bus" closeOnEscape="true">
+
+        <h:form id="CargoBusEditForm">
+
+            <h:panelGroup id="display">
+                <p:focus context="descripcion"/>
+                <p:panelGrid columns="4" columnClasses="column" style="width: 100%; " rendered="#{cargoBusController.rowSelected != null}">
+
+                    <p:outputLabel value="Fecha:" for="fechaInicioCargoBus" />
+                    <h:panelGroup>
+                        <p:calendar id="fechaInicioCargoBus" pattern="dd/MM/yyyy" value="#{cargoBusController.rowSelected.cargoBusFechaInicio}"  required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_fechaInicioCargoBus}" onfocus="this.setSelectionRange(0, 2)" autocomplete="off"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="Unidad" />
+                    <p:outputLabel value="#{cargoBusController.rowSelected.cargoBusIdBus.busIdUnidadNegocio.unidadNegocioNumero}"/>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" />
+
+                    <p:outputLabel value="NºBus" for="bus" />
+                    <p:outputLabel id="bus" value="#{cargoBusController.rowSelected.cargoBusIdBus.busNumero}" />
+
+                    <p:outputLabel value="Patente:" for="patente" />
+                    <p:outputLabel id="patente" value="#{cargoBusController.rowSelected.cargoBusIdBus.busPatente}"/>
+
+                    <p:outputLabel value="Cargo: " for="tipoCargo" />
+                    <h:panelGroup>
+                        <p:selectOneMenu id="tipoCargo" value="#{cargoBusController.rowSelected.cargoBusIdTipo}" required="true" requiredMessage="Debe seleccionar el Cargo" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Seleccionar..."/>
+                            <f:selectItems value="#{tipoCargoController.items}"
+                                           var="tipoCargoItem"
+                                           itemValue="#{tipoCargoItem}"
+                                           itemLabel="#{tipoCargoItem.tipoCargoNombre}"
+                                           />
+                            <p:ajax event="valueChange" listener="#{cargoBusController.setMontoXDefecto}" update="montoCargoBus" global="false"/>
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+
+
+
+                    <p:outputLabel value="Flota:" for="flota" />
+                    <p:outputLabel id="flota" value="#{cargoBusController.rowSelected.cargoBusIdBus.busIdFlota.flotaNombre}"/>
+
+
+                    <p:outputLabel value="Monto" for="montoCargoBus" />
+                    <h:panelGroup>
+                        <p:inputText id="montoCargoBus" autocomplete="off" value="#{cargoBusController.rowSelected.cargoBusMontoFijo}"  required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_montoCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Empresa:" for="empresa" />
+                    <p:outputLabel id="empresa" value="#{cargoBusController.rowSelected.cargoBusIdBus.busIdEmpresa.empresaNombre}"/>
+
+                    <p:outputLabel value="Descripción:" for="descripcion" />
+                    <h:panelGroup>
+                        <p:inputText id="descripcion" autocomplete="off" value="#{cargoBusController.rowSelected.cargoBusDescripcion}" onfocus="this.setSelectionRange(0, this.value.length)" size="30" />                            
+                    </h:panelGroup>
+
+                    <p:outputLabel />
+                    <p:outputLabel />
+
+                    <h:panelGroup>
+                        <p:outputLabel value="Cuotas" for="numeroCuotasCargoBus" />
+
+                        <p:outputLabel value="?:" style="margin-left: 5px;"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:inputText id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{cargoBusController.rowSelected.cargoBusCuotaActual}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
+                        <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
+                        <p:inputText id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{cargoBusController.rowSelected.cargoBusCuotaActual gt 0}" value="#{cargoBusController.rowSelected.cargoBusTotalCuotas}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                    </h:panelGroup>
+
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" style="width: 200px;"/>
+
+                    <p:outputLabel value="" />
+                    <h:panelGroup>
+                        <p:commandButton actionListener="#{cargoBusController.save}" value="#{myBundle.Save}" update="display,:CargoBusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CargoBusEditDialog'));">
+                            <p:confirm header="#{myBundle.ConfirmationHeader}" message="Editar" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CargoBusEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                    </h:panelGroup>
+                </p:panelGrid>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>
+
+

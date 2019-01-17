@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="RecaudacionEditDlg" widgetVar="RecaudacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditRecaudacionTitle}" closeOnEscape="true">
+
+            <h:form id="RecaudacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{recaudacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditRecaudacionLabel_recaudacionId}" for="recaudacionId" />
+                        <h:outputText id="recaudacionId" value="#{recaudacionController.selected.recaudacionId}" />
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionLabel_recaudacionIdentificador}" for="recaudacionIdentificador" />
+                        <p:inputText id="recaudacionIdentificador" value="#{recaudacionController.selected.recaudacionIdentificador}" title="#{myBundle.EditRecaudacionTitle_recaudacionIdentificador}" required="true" requiredMessage="#{myBundle.EditRecaudacionRequiredMessage_recaudacionIdentificador}"/>
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionLabel_recaudacionTotal}" for="recaudacionTotal" />
+                        <p:inputText id="recaudacionTotal" value="#{recaudacionController.selected.recaudacionTotal}" title="#{myBundle.EditRecaudacionTitle_recaudacionTotal}" required="true" requiredMessage="#{myBundle.EditRecaudacionRequiredMessage_recaudacionTotal}"/>
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionLabel_recaudacionFecha}" for="recaudacionFecha" />
+                        <p:calendar id="recaudacionFecha" pattern="MM/dd/yyyy" value="#{recaudacionController.selected.recaudacionFecha}" title="#{myBundle.EditRecaudacionTitle_recaudacionFecha}" required="true" requiredMessage="#{myBundle.EditRecaudacionRequiredMessage_recaudacionFecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionLabel_recaudacionHora}" for="recaudacionHora" />
+                        <p:calendar id="recaudacionHora" pattern="HH:mm:ss" value="#{recaudacionController.selected.recaudacionHora}" title="#{myBundle.EditRecaudacionTitle_recaudacionHora}" required="true" requiredMessage="#{myBundle.EditRecaudacionRequiredMessage_recaudacionHora}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionLabel_recaudacionIdCaja}" for="recaudacionIdCaja" />
+                        <p:selectOneMenu id="recaudacionIdCaja" value="#{recaudacionController.selected.recaudacionIdCaja}" required="true" requiredMessage="#{myBundle.EditRecaudacionRequiredMessage_recaudacionIdCaja}" converter="cajaRecaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cajaRecaudacionController.items}"
+                                           var="recaudacionIdCajaItem"
+                                           itemValue="#{recaudacionIdCajaItem}"
+                                           itemLabel="#{recaudacionIdCajaItem.cajaRecaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{recaudacionController.save}" value="#{myBundle.Save}" update="display,:RecaudacionListForm:datalist,:RecaudacionListForm:RecaudacionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RecaudacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RecaudacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

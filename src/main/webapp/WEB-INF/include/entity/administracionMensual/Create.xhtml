@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AdministracionMensualCreateDlg" widgetVar="AdministracionMensualCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateAdministracionMensualTitle}" closeOnEscape="true">
+
+            <h:form id="AdministracionMensualCreateForm">
+
+                <h:panelGroup id="display" rendered="#{administracionMensualController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateAdministracionMensualLabel_administracionMensualFecha}" for="administracionMensualFecha" />
+                        <p:calendar id="administracionMensualFecha" pattern="MM/dd/yyyy" value="#{administracionMensualController.selected.administracionMensualFecha}" title="#{myBundle.CreateAdministracionMensualTitle_administracionMensualFecha}" required="true" requiredMessage="#{myBundle.CreateAdministracionMensualRequiredMessage_administracionMensualFecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateAdministracionMensualLabel_administracionMensualValor}" for="administracionMensualValor" />
+                        <p:inputText id="administracionMensualValor" value="#{administracionMensualController.selected.administracionMensualValor}" title="#{myBundle.CreateAdministracionMensualTitle_administracionMensualValor}" required="true" requiredMessage="#{myBundle.CreateAdministracionMensualRequiredMessage_administracionMensualValor}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateAdministracionMensualLabel_administracionMensualIdCuenta}" for="administracionMensualIdCuenta" />
+                        <p:selectOneMenu id="administracionMensualIdCuenta" value="#{administracionMensualController.selected.administracionMensualIdCuenta}" required="true" requiredMessage="#{myBundle.CreateAdministracionMensualRequiredMessage_administracionMensualIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="administracionMensualIdCuentaItem"
+                                           itemValue="#{administracionMensualIdCuentaItem}"
+                                           itemLabel="#{administracionMensualIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{administracionMensualController.saveNew}" value="#{myBundle.Save}" update="display,:AdministracionMensualListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AdministracionMensualCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AdministracionMensualCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

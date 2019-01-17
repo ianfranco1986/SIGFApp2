@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CajaProcesoListForm">
+
+        <p:panel header="#{myBundle.ListCajaProcesoTitle}">
+            <p:contextMenu id="CajaProcesoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CajaProcesoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CajaProcesoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CajaProcesoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CajaProcesoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CajaProcesoMenuItem_cajaProcesoIdCaja}" icon="ui-icon-search"  actionListener="#{cajaProcesoController.prepareCajaProcesoIdCaja}" update=":CajaRecaudacionViewForm" oncomplete="PF('CajaRecaudacionViewDialog').show()" disabled="#{empty cajaProcesoController.selected.cajaProcesoIdCaja}"/>  
+                <p:menuitem value="#{myBundle.CajaProcesoMenuItem_cajaProcesoIdProceso}" icon="ui-icon-search"  actionListener="#{cajaProcesoController.prepareCajaProcesoIdProceso}" update=":ProcesoRecaudacionViewForm" oncomplete="PF('ProcesoRecaudacionViewDialog').show()" disabled="#{empty cajaProcesoController.selected.cajaProcesoIdProceso}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{cajaProcesoController.items}"
+                         lazy="false"
+                         rowKey="#{item.cajaProcesoId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{cajaProcesoController.selected}"
+                         filteredValue="#{cajaProcesoController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{cajaProcesoController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.cajaProcesoId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CajaProcesoDataTableContextMenu" listener="#{cajaProcesoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CajaProcesoDataTableContextMenu" listener="#{cajaProcesoController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{cajaProcesoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CajaProcesoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.cajaProcesoId}" filterBy="#{item.cajaProcesoId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCajaProcesoTitle_cajaProcesoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cajaProcesoId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cajaProcesoActivo}" filterBy="#{item.cajaProcesoActivo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCajaProcesoTitle_cajaProcesoActivo}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="cajaProcesoActivo" value="#{item.cajaProcesoActivo}" title="#{myBundle.EditCajaProcesoTitle_cajaProcesoActivo}"  disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cajaProcesoIdCaja.cajaRecaudacionId}" filterBy="#{item.cajaProcesoIdCaja.cajaRecaudacionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCajaProcesoTitle_cajaProcesoIdCaja}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cajaProcesoIdCaja.cajaRecaudacionId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cajaProcesoIdProceso.procesoRecaudacionId}" filterBy="#{item.cajaProcesoIdProceso.procesoRecaudacionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCajaProcesoTitle_cajaProcesoIdProceso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cajaProcesoIdProceso.procesoRecaudacionId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{cajaProcesoController.prepareCreate}" update=":CajaProcesoCreateForm" oncomplete="PF('CajaProcesoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":CajaProcesoViewForm" oncomplete="PF('CajaProcesoViewDialog').show()" disabled="#{empty cajaProcesoController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CajaProcesoEditForm" oncomplete="PF('CajaProcesoEditDialog').show()" disabled="#{empty cajaProcesoController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{cajaProcesoController.delete}" update=":growl,datalist" disabled="#{empty cajaProcesoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

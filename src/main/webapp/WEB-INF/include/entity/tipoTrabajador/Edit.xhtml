@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TipoTrabajadorEditDlg" widgetVar="TipoTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTipoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="TipoTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tipoTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTipoTrabajadorLabel_tipoTrabajadorId}" for="tipoTrabajadorId" />
+                        <h:outputText id="tipoTrabajadorId" value="#{tipoTrabajadorController.selected.tipoTrabajadorId}" />
+
+                        <p:outputLabel value="#{myBundle.EditTipoTrabajadorLabel_tipoTrabajadorNombre}" for="tipoTrabajadorNombre" />
+                        <p:inputText id="tipoTrabajadorNombre" value="#{tipoTrabajadorController.selected.tipoTrabajadorNombre}" title="#{myBundle.EditTipoTrabajadorTitle_tipoTrabajadorNombre}" required="true" requiredMessage="#{myBundle.EditTipoTrabajadorRequiredMessage_tipoTrabajadorNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditTipoTrabajadorLabel_tipoTrabajadorIdCuenta}" for="tipoTrabajadorIdCuenta" />
+                        <p:selectOneMenu id="tipoTrabajadorIdCuenta" value="#{tipoTrabajadorController.selected.tipoTrabajadorIdCuenta}" required="true" requiredMessage="#{myBundle.EditTipoTrabajadorRequiredMessage_tipoTrabajadorIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="tipoTrabajadorIdCuentaItem"
+                                           itemValue="#{tipoTrabajadorIdCuentaItem}"
+                                           itemLabel="#{tipoTrabajadorIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoTrabajadorController.save}" value="#{myBundle.Save}" update="display,:TipoTrabajadorListForm:datalist,:TipoTrabajadorListForm:TipoTrabajadorDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

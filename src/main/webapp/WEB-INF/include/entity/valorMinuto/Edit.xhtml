@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ValorMinutoEditDlg" widgetVar="ValorMinutoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditValorMinutoTitle}" closeOnEscape="true">
+
+            <h:form id="ValorMinutoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{valorMinutoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditValorMinutoLabel_valorMinutoId}" for="valorMinutoId" />
+                        <h:outputText id="valorMinutoId" value="#{valorMinutoController.selected.valorMinutoId}" />
+
+                        <p:outputLabel value="#{myBundle.EditValorMinutoLabel_valorMinutoNombre}" for="valorMinutoNombre" />
+                        <p:inputText id="valorMinutoNombre" value="#{valorMinutoController.selected.valorMinutoNombre}" title="#{myBundle.EditValorMinutoTitle_valorMinutoNombre}" required="true" requiredMessage="#{myBundle.EditValorMinutoRequiredMessage_valorMinutoNombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditValorMinutoLabel_valorMinutoPrecio}" for="valorMinutoPrecio" />
+                        <p:inputText id="valorMinutoPrecio" value="#{valorMinutoController.selected.valorMinutoPrecio}" title="#{myBundle.EditValorMinutoTitle_valorMinutoPrecio}" required="true" requiredMessage="#{myBundle.EditValorMinutoRequiredMessage_valorMinutoPrecio}"/>
+
+                        <p:outputLabel value="#{myBundle.EditValorMinutoLabel_valorMinutoIdCuenta}" for="valorMinutoIdCuenta" />
+                        <p:selectOneMenu id="valorMinutoIdCuenta" value="#{valorMinutoController.selected.valorMinutoIdCuenta}" required="true" requiredMessage="#{myBundle.EditValorMinutoRequiredMessage_valorMinutoIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="valorMinutoIdCuentaItem"
+                                           itemValue="#{valorMinutoIdCuentaItem}"
+                                           itemLabel="#{valorMinutoIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{valorMinutoController.save}" value="#{myBundle.Save}" update="display,:ValorMinutoListForm:datalist,:ValorMinutoListForm:ValorMinutoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ValorMinutoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ValorMinutoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

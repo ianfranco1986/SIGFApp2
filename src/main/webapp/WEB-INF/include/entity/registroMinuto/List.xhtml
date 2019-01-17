@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RegistroMinutoListForm">
+
+        <p:panel>
+            <h3 style="text-align: center;">Registro de Minutos</h3>
+            <p:panelGrid columns="2" style="width: 100%; margin-bottom: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+                <p:outputLabel value="Fecha: "/>
+                <p:calendar id="detalleCartolaFechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{registroMinutoController.fecha}" required="true" requiredMessage="Debe ingresar la fecha del registro" />
+
+                <p:outputLabel value=""/>
+                <p:commandButton value="Buscar" actionListener="#{registroMinutoController.load()}" styleClass="btn btn-primary" update="datalist, panel, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" ajax="true" >
+                </p:commandButton>
+
+            </p:panelGrid>
+        </p:panel>
+
+        <p:panel id="panel" style="margin-top: 20px;">
+            <h3 style="text-align: center;">Detalle al <h:outputText value="#{registroMinutoController.fecha}"><f:convertDateTime pattern="dd/MM/yy"/></h:outputText></h3>
+            <p:dataTable id="datalist"
+                         value="#{registroMinutoController.items}"
+                         lazy="false"
+                         rowKey="#{item.registroMinutoId}"
+                         var="item"                         
+                         selectionMode="single"
+                         selection="#{registroMinutoController.selected}"
+                         filteredValue="#{registroMinutoController.filteredItems}"
+                         rowIndexVar="rowIndex"
+                         reflow="true"
+                         widgetVar="datalistWidget"
+                         emptyMessage="No se han encontrado registros">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{registroMinutoController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.registroMinutoId}"  <<< Remove this line
+                -->
+
+                <f:facet name="header">
+                    <div class="row row-nomargin">
+                        <div class="col-lg-3">
+                            <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                        </div>
+                        <div class="col-lg-5">
+                            <h:outputText value=""/>   
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="pull-right">
+                                <p:commandButton id="createButton" style="visibility: hidden"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroMinutoController.prepareCreate}" update=":RegistroMinutoCreateForm" oncomplete="PF('RegistroMinutoCreateDialog').show()" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="viewButton"   style="visibility: hidden" icon="ui-icon-search" value="#{myBundle.View}" update=":RegistroMinutoViewForm" oncomplete="PF('RegistroMinutoViewDialog').show()" disabled="#{empty registroMinutoController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="editButton"   style="visibility: hidden" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RegistroMinutoEditForm" oncomplete="PF('RegistroMinutoEditDialog').show()" disabled="#{empty registroMinutoController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="deleteButton" style="visibility: hidden" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{registroMinutoController.delete}" update=":growl,datalist" disabled="#{empty registroMinutoController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.registroMinutoId}" filterBy="#{item.registroMinutoId}">
+                    <f:facet name="header">
+                        <h:outputText value="Folio"/>
+                    </f:facet>
+                    <h:outputText value="#{item.registroMinutoId}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.registroMinutoDesdeIdBus.busNumero}" filterBy="#{item.registroMinutoDesdeIdBus.busNumero}">
+                    <f:facet name="header">
+                        <h:outputText value="Paga"/>
+                    </f:facet>
+                    <h:outputText value="#{item.registroMinutoDesdeIdBus.busNumero}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.registroMinutoDesdeIdBus.busPatente}" filterBy="#{item.registroMinutoDesdeIdBus.busPatente}">
+                    <f:facet name="header">
+                        <h:outputText value="PPU"/>
+                    </f:facet>
+                    <h:outputText value="#{item.registroMinutoDesdeIdBus.busPatente}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.registroMinutoHastaIdBus.busNumero}" filterBy="#{item.registroMinutoHastaIdBus.busNumero}">
+                    <f:facet name="header">
+                        <h:outputText value="Recibe"/>
+                    </f:facet>
+                    <h:outputText value="#{item.registroMinutoHastaIdBus.busNumero}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.registroMinutoHastaIdBus.busPatente}" filterBy="#{item.registroMinutoHastaIdBus.busPatente}">
+                    <f:facet name="header">
+                        <h:outputText value="PPU"/>
+                    </f:facet>
+                    <h:outputText value="#{item.registroMinutoHastaIdBus.busPatente}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.registroMinutoRecaudado}" filterBy="#{item.registroMinutoRecaudado}">
+                    <f:facet name="header">
+                        <h:outputText value="Recaudado?"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="registroMinutoRecaudado" value="#{item.registroMinutoRecaudado}" title="#{myBundle.EditRegistroMinutoTitle_registroMinutoRecaudado}" required="true" requiredMessage="#{myBundle.EditRegistroMinutoRequiredMessage_registroMinutoRecaudado}" disabled="true"/>
+                </p:column>
+
+                <p:column sortBy="#{item.registroMinutoMonto}" filterBy="#{item.registroMinutoMonto}">
+                    <f:facet name="header">
+                        <h:outputText value="Monto"/>
+                    </f:facet>
+                    <h:outputText value="#{item.registroMinutoMonto}">
+                        <f:convertNumber type="currency" currencySymbol="$"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:summaryRow>
+                    <p:column colspan="6" style="text-align:right">
+                        <h:outputText value="Total:" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{registroMinutoController.total}">
+                            <f:convertNumber type="currency" currencySymbol="$" />
+                        </h:outputText>
+                    </p:column>
+                </p:summaryRow>
+
+            </p:dataTable>
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

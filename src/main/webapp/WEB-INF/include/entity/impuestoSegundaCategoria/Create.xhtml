@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ImpuestoSegundaCategoriaCreateDlg" widgetVar="ImpuestoSegundaCategoriaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateImpuestoSegundaCategoriaTitle}" closeOnEscape="true">
+
+            <h:form id="ImpuestoSegundaCategoriaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{impuestoSegundaCategoriaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateImpuestoSegundaCategoriaLabel_impuestoSegundaCategoriaDesde}" for="impuestoSegundaCategoriaDesde" />
+                        <p:inputText id="impuestoSegundaCategoriaDesde" value="#{impuestoSegundaCategoriaController.selected.impuestoSegundaCategoriaDesde}" title="#{myBundle.CreateImpuestoSegundaCategoriaTitle_impuestoSegundaCategoriaDesde}" required="true" requiredMessage="#{myBundle.CreateImpuestoSegundaCategoriaRequiredMessage_impuestoSegundaCategoriaDesde}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateImpuestoSegundaCategoriaLabel_impuestoSegundaCategoriaHasta}" for="impuestoSegundaCategoriaHasta" />
+                        <p:inputText id="impuestoSegundaCategoriaHasta" value="#{impuestoSegundaCategoriaController.selected.impuestoSegundaCategoriaHasta}" title="#{myBundle.CreateImpuestoSegundaCategoriaTitle_impuestoSegundaCategoriaHasta}" required="true" requiredMessage="#{myBundle.CreateImpuestoSegundaCategoriaRequiredMessage_impuestoSegundaCategoriaHasta}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateImpuestoSegundaCategoriaLabel_impuestoSegundaCategoriaFactor}" for="impuestoSegundaCategoriaFactor" />
+                        <p:inputText id="impuestoSegundaCategoriaFactor" value="#{impuestoSegundaCategoriaController.selected.impuestoSegundaCategoriaFactor}" title="#{myBundle.CreateImpuestoSegundaCategoriaTitle_impuestoSegundaCategoriaFactor}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateImpuestoSegundaCategoriaLabel_impuestoSegundaCategoriaRebaja}" for="impuestoSegundaCategoriaRebaja" />
+                        <p:inputText id="impuestoSegundaCategoriaRebaja" value="#{impuestoSegundaCategoriaController.selected.impuestoSegundaCategoriaRebaja}" title="#{myBundle.CreateImpuestoSegundaCategoriaTitle_impuestoSegundaCategoriaRebaja}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{impuestoSegundaCategoriaController.saveNew}" value="#{myBundle.Save}" update="display,:ImpuestoSegundaCategoriaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ImpuestoSegundaCategoriaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ImpuestoSegundaCategoriaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

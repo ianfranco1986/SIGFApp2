@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RegistroMinutoListForm">
+
+        <p:panel>
+            <h3 style="text-align: center;">Informes de Minutos x Bus</h3>
+            <p:panelGrid columns="2" style="width: 100%; margin-bottom: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+                <p:outputLabel for="anio" value="Año :" />
+                <p:inputText id="anio" value="#{reportControllerBusMes.anio}" size="5" required="true" requiredMessage="Debe ingresar el año"/>
+
+                <p:outputLabel for="mes" value="Seleccionar :" />
+                <p:selectOneMenu id="mes" value="#{reportControllerBusMes.mes}" style="width:125px" required="true" requiredMessage="Debe seleccionar un mes">
+                    <f:selectItem itemLabel="Enero" itemValue="1" />
+                    <f:selectItem itemLabel="Febrero" itemValue="2" />
+                    <f:selectItem itemLabel="Marzo" itemValue="3" />
+                    <f:selectItem itemLabel="Abril" itemValue="4" />
+                    <f:selectItem itemLabel="Mayo" itemValue="5" />
+                    <f:selectItem itemLabel="Junio" itemValue="6" />
+                    <f:selectItem itemLabel="Julio" itemValue="7" />
+                    <f:selectItem itemLabel="Agosto" itemValue="8" />
+                    <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                    <f:selectItem itemLabel="Octubre" itemValue="10" />
+                    <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                    <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                </p:selectOneMenu>
+
+                <p:outputLabel for="tipo" value="Tipo :" />
+                <p:selectOneMenu id='tipo' value="#{reportControllerBusMes.informe}">                    
+                    <f:selectItem itemLabel="Pagados" itemValue="inf-registro_minuto_bus_pagados" />
+                    <f:selectItem itemLabel="Recibidos" itemValue="inf-registro_minuto_bus_recibidos" />
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Nº Bus :" for="bus" />
+                <p:selectOneMenu id="bus" value="#{reportControllerBusMes.selected}" required="true" requiredMessage="Debe seleccionar un bus" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{reportControllerBusMes.items}"
+                                   var="busItem"
+                                   itemValue="#{busItem}"
+                                   itemLabel="#{busItem.busNumero}"
+                                   />
+                    <p:ajax event="valueChange" update="patente, flota, empresa" global="false"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Patente :" for="patente" />
+                <p:outputLabel id="patente" value="#{reportControllerBusMes.selected.busPatente}"/>
+
+                <p:outputLabel value="Empresa :" for="empresa" />
+                <p:outputLabel id="empresa" value="#{reportControllerBusMes.selected.busIdEmpresa.empresaNombre}"/>
+
+                <p:outputLabel value="Flota :" for="flota" />
+                <p:outputLabel id="flota" value="#{reportControllerBusMes.selected.busIdFlota.flotaNombre}"/>
+
+                <p:outputLabel value=""/>
+                <h:commandLink value="Generar Reporte" 
+                                 actionListener="#{reportController.downloadFile(reportControllerBusMes.informe, reportControllerBusMes.map)}" target="blank"  styleClass="btn btn-primary" />
+
+            </p:panelGrid>
+            <div class="column-center">
+                <p:media cache="false" rendered="#{reportControllerBusMes.selected ne null}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
+            </div>
+        </p:panel>
+
+
+
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ObservacionTipoCuentaCreateDlg" widgetVar="ObservacionTipoCuentaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateObservacionTipoCuentaTitle}" closeOnEscape="true">
+
+            <h:form id="ObservacionTipoCuentaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{observacionTipoCuentaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateObservacionTipoCuentaLabel_observacionTipoCuentaDescripcion}" for="observacionTipoCuentaDescripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="observacionTipoCuentaDescripcion" value="#{observacionTipoCuentaController.selected.observacionTipoCuentaDescripcion}" title="#{myBundle.CreateObservacionTipoCuentaTitle_observacionTipoCuentaDescripcion}" required="true" requiredMessage="#{myBundle.CreateObservacionTipoCuentaRequiredMessage_observacionTipoCuentaDescripcion}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateObservacionTipoCuentaLabel_observacionTipoCuentaResumen}" for="observacionTipoCuentaResumen" />
+                        <p:inputText id="observacionTipoCuentaResumen" value="#{observacionTipoCuentaController.selected.observacionTipoCuentaResumen}" title="#{myBundle.CreateObservacionTipoCuentaTitle_observacionTipoCuentaResumen}" required="true" requiredMessage="#{myBundle.CreateObservacionTipoCuentaRequiredMessage_observacionTipoCuentaResumen}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateObservacionTipoCuentaLabel_observacionTipoCuentaIdTipo}" for="observacionTipoCuentaIdTipo" />
+                        <p:selectOneMenu id="observacionTipoCuentaIdTipo" value="#{observacionTipoCuentaController.selected.observacionTipoCuentaIdTipo}" required="true" requiredMessage="#{myBundle.CreateObservacionTipoCuentaRequiredMessage_observacionTipoCuentaIdTipo}" converter="tipoCuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoCuentaController.items}"
+                                           var="observacionTipoCuentaIdTipoItem"
+                                           itemValue="#{observacionTipoCuentaIdTipoItem}"
+                                           itemLabel="#{observacionTipoCuentaIdTipoItem.tipoCuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{observacionTipoCuentaController.saveNew}" value="#{myBundle.Save}" update="display,:ObservacionTipoCuentaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ObservacionTipoCuentaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ObservacionTipoCuentaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

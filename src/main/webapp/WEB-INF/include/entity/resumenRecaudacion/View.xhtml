@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResumenRecaudacionViewDlg" widgetVar="ResumenRecaudacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewResumenRecaudacionTitle}" closeOnEscape="true">
+
+            <h:form id="ResumenRecaudacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{resumenRecaudacionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewResumenRecaudacionLabel_resumenRecaudacionId}"/>
+                        <h:outputText value="#{resumenRecaudacionController.selected.resumenRecaudacionId}" title="#{myBundle.ViewResumenRecaudacionTitle_resumenRecaudacionId}"/>
+
+                        <h:outputText value="#{myBundle.ViewResumenRecaudacionLabel_resumenRecaudacionFecha}"/>
+                        <h:outputText value="#{resumenRecaudacionController.selected.resumenRecaudacionFecha}" title="#{myBundle.ViewResumenRecaudacionTitle_resumenRecaudacionFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewResumenRecaudacionLabel_resumenRecaudacionTotal}"/>
+                        <h:outputText value="#{resumenRecaudacionController.selected.resumenRecaudacionTotal}" title="#{myBundle.ViewResumenRecaudacionTitle_resumenRecaudacionTotal}"/>
+
+                        <h:outputText value="#{myBundle.ViewResumenRecaudacionLabel_resumenRecaudacionTieneTransporte}"/>
+                        <h:outputText value="#{resumenRecaudacionController.selected.resumenRecaudacionTieneTransporte}" title="#{myBundle.ViewResumenRecaudacionTitle_resumenRecaudacionTieneTransporte}"/>
+
+                        <h:outputText value="#{myBundle.ViewResumenRecaudacionLabel_resumenRecaudacionCerrado}"/>
+                        <p:selectBooleanCheckbox id="resumenRecaudacionCerrado" value="#{resumenRecaudacionController.selected.resumenRecaudacionCerrado}" title="#{myBundle.EditResumenRecaudacionTitle_resumenRecaudacionCerrado}" required="true" requiredMessage="#{myBundle.EditResumenRecaudacionRequiredMessage_resumenRecaudacionCerrado}"/>
+
+                        <h:outputText value="#{myBundle.ViewResumenRecaudacionLabel_resumenRecaudacionIdCaja}"/>
+                        <h:outputText value="#{resumenRecaudacionController.selected.resumenRecaudacionIdCaja.cajaRecaudacionId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ResumenRecaudacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

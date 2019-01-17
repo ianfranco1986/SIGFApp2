@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DescuentoTrabajadorViewDlg" widgetVar="DescuentoTrabajadorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewDescuentoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="DescuentoTrabajadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{descuentoTrabajadorController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorId}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorId}" title="#{myBundle.ViewDescuentoTrabajadorTitle_descuentoTrabajadorId}"/>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorFechaInicio}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorFechaInicio}" title="#{myBundle.ViewDescuentoTrabajadorTitle_descuentoTrabajadorFechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorFechaTermino}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorFechaTermino}" title="#{myBundle.ViewDescuentoTrabajadorTitle_descuentoTrabajadorFechaTermino}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorCuotaActual}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorCuotaActual}" title="#{myBundle.ViewDescuentoTrabajadorTitle_descuentoTrabajadorCuotaActual}"/>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorTotalCuotas}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorTotalCuotas}" title="#{myBundle.ViewDescuentoTrabajadorTitle_descuentoTrabajadorTotalCuotas}"/>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorMontoFijo}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorMontoFijo}" title="#{myBundle.ViewDescuentoTrabajadorTitle_descuentoTrabajadorMontoFijo}"/>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorDescripcion}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorDescripcion}" title="#{myBundle.ViewDescuentoTrabajadorTitle_descuentoTrabajadorDescripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorActivo}"/>
+                        <p:selectBooleanCheckbox id="descuentoTrabajadorActivo" value="#{descuentoTrabajadorController.selected.descuentoTrabajadorActivo}" title="#{myBundle.EditDescuentoTrabajadorTitle_descuentoTrabajadorActivo}" required="true" requiredMessage="#{myBundle.EditDescuentoTrabajadorRequiredMessage_descuentoTrabajadorActivo}"/>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorIdDescuento}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorIdDescuento.tipoDescuentoTrabajadorId}"/>
+
+                        <h:outputText value="#{myBundle.ViewDescuentoTrabajadorLabel_descuentoTrabajadorIdTrabajador}"/>
+                        <h:outputText value="#{descuentoTrabajadorController.selected.descuentoTrabajadorIdTrabajador.trabajadorId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('DescuentoTrabajadorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

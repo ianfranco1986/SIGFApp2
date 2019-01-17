@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                >
+
+    <h:form id="EgresoBusListForm" class="form-height">
+        <p:panel>
+            <f:facet name="header">
+                Consumo de Combustible x Bus
+            </f:facet>
+            <p:panelGrid columns="10" style="margin-bottom: 10px;width: 100%;">
+
+                <p:outputLabel value="Bus" for="busNumero" />
+                <p:selectOneMenu id="busNumero" value="#{informeConsumoCombustibleoController.selected}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{informeConsumoCombustibleoController.items}"
+                                   var="busItem"
+                                   itemValue="#{busItem}"
+                                   itemLabel="#{busItem.busNumero}"
+
+                                   />
+                    <p:ajax event="valueChange" listener="#{informeConsumoCombustibleoController.handleBusChange()}" update="datalist, chart" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                </p:selectOneMenu>
+
+                <h:outputLabel for="mes" value="Mes:" />
+                <p:selectOneMenu id="mes" value="#{informeConsumoCombustibleoController.mes}" style="width:125px">
+                    <f:selectItem itemLabel="Enero" itemValue="1" />
+                    <f:selectItem itemLabel="Febrero" itemValue="2" />
+                    <f:selectItem itemLabel="Marzo" itemValue="3" />
+                    <f:selectItem itemLabel="Abril" itemValue="4" />
+                    <f:selectItem itemLabel="Mayo" itemValue="5" />
+                    <f:selectItem itemLabel="Junio" itemValue="6" />
+                    <f:selectItem itemLabel="Julio" itemValue="7" />
+                    <f:selectItem itemLabel="Agosto" itemValue="8" />
+                    <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                    <f:selectItem itemLabel="Octubre" itemValue="10" />
+                    <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                    <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                    <p:ajax event="valueChange" listener="#{informeConsumoCombustibleoController.setFecha()}" update="datalist, chart" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                </p:selectOneMenu>
+
+                <h:outputLabel for="anio" value="Año:" />
+                <p:inputText id="anio" value="#{informeConsumoCombustibleoController.anio}" size="5" />
+
+            </p:panelGrid>
+            <p:dataTable id="datalist"
+                         value="#{informeConsumoCombustibleoController.ventasItems}"
+                         widgetVar="datalist"
+                         var="item"
+                         rowKey="#{item.ventaCombustibleId}"
+                         rowIndexVar="rowIndex"
+                         draggableRows="true" 
+                         emptyMessage="No se han encontrado registros"
+                         reflow="true"
+                         rowStyleClass="#{item.ventaCombustibleTotal gt 45000 ? 'red' : null}">
+
+
+                <f:facet name="header">
+                    Detalle x Bus N°: #{informeConsumoCombustibleoController.selected.busNumero}   Unidad:#{informeConsumoCombustibleoController.selected.busIdUnidadNegocio.unidadNegocioNumero}   PPU:#{informeConsumoCombustibleoController.selected.busPatente}
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <p:outputLabel value="#{rowIndex+1}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fecha"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.ventaCombustibleFecha}">
+                        <f:convertDateTime pattern="dd/MM/yy"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Hora"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.ventaCombustibleHora}">
+                        <f:convertDateTime pattern="HH:mm"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="N° Boleta"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.ventaCombustibleNumeroBoleta}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Litros"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.ventaCombustibleCantidad}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Precio"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.ventaCombustiblePrecio}">
+
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Total"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.ventaCombustibleTotal}">
+                        <f:convertNumber currencyCode="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Recaudado"/>
+                    </f:facet>
+                    <p:selectBooleanCheckbox value="#{item.ventaCombustibleRecaudado}">
+                    </p:selectBooleanCheckbox>
+                </p:column>
+
+            </p:dataTable>
+            <p:separator />
+            <p:chart id="chart" type="line" model="#{informeConsumoCombustibleoController.chartModel}" style="height:300px;" responsive="true"/>
+
+        </p:panel>
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

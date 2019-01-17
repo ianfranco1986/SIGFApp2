@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="LogListForm">
+
+        <p:panel header="#{myBundle.ListLogTitle}">
+            <p:contextMenu id="LogDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('LogListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('LogListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('LogListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('LogListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.LogMenuItem_logIdPrivilegio}" icon="ui-icon-search"  actionListener="#{logController.prepareLogIdPrivilegio}" update=":PrivilegioViewForm" oncomplete="PF('PrivilegioViewDialog').show()" disabled="#{empty logController.selected.logIdPrivilegio}"/>  
+                <p:menuitem value="#{myBundle.LogMenuItem_logIdUsuario}" icon="ui-icon-search"  actionListener="#{logController.prepareLogIdUsuario}" update=":UsuarioViewForm" oncomplete="PF('UsuarioViewDialog').show()" disabled="#{empty logController.selected.logIdUsuario}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{logController.items}"
+                         lazy="false"
+                         rowKey="#{item.logId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{logController.selected}"
+                         filteredValue="#{logController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{logController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.logId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:LogDataTableContextMenu" listener="#{logController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:LogDataTableContextMenu" listener="#{logController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{logController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('LogListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.logId}" filterBy="#{item.logId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLogTitle_logId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.logId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.logTipoAccion}" filterBy="#{item.logTipoAccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLogTitle_logTipoAccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.logTipoAccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.logDescripcion}" filterBy="#{item.logDescripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLogTitle_logDescripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.logDescripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.logIdPrivilegio.privilegioDescripcion}" filterBy="#{item.logIdPrivilegio.privilegioDescripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLogTitle_logIdPrivilegio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.logIdPrivilegio.privilegioDescripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.logIdUsuario.usuarioId}" filterBy="#{item.logIdUsuario.usuarioId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLogTitle_logIdUsuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.logIdUsuario.usuarioId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{logController.prepareCreate}" update=":LogCreateForm" oncomplete="PF('LogCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":LogViewForm" oncomplete="PF('LogViewDialog').show()" disabled="#{empty logController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":LogEditForm" oncomplete="PF('LogEditDialog').show()" disabled="#{empty logController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{logController.delete}" update=":growl,datalist" disabled="#{empty logController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CajaRecaudacionEditDlg" widgetVar="CajaRecaudacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCajaRecaudacionTitle}" closeOnEscape="true">
+
+            <h:form id="CajaRecaudacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cajaRecaudacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCajaRecaudacionLabel_cajaRecaudacionId}" for="cajaRecaudacionId" />
+                        <h:outputText id="cajaRecaudacionId" value="#{cajaRecaudacionController.selected.cajaRecaudacionId}" />
+
+                        <p:outputLabel value="#{myBundle.EditCajaRecaudacionLabel_cajaRecaudacionNombre}" for="cajaRecaudacionNombre" />
+                        <p:inputText id="cajaRecaudacionNombre" value="#{cajaRecaudacionController.selected.cajaRecaudacionNombre}" title="#{myBundle.EditCajaRecaudacionTitle_cajaRecaudacionNombre}" required="true" requiredMessage="#{myBundle.EditCajaRecaudacionRequiredMessage_cajaRecaudacionNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditCajaRecaudacionLabel_cajaRecaudacionTieneEgresos}" for="cajaRecaudacionTieneEgresos" />
+                        <p:selectBooleanCheckbox id="cajaRecaudacionTieneEgresos" value="#{cajaRecaudacionController.selected.cajaRecaudacionTieneEgresos}" required="true" requiredMessage="#{myBundle.EditCajaRecaudacionRequiredMessage_cajaRecaudacionTieneEgresos}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCajaRecaudacionLabel_cajaRecaudacionActiva}" for="cajaRecaudacionActiva" />
+                        <p:selectBooleanCheckbox id="cajaRecaudacionActiva" value="#{cajaRecaudacionController.selected.cajaRecaudacionActiva}" required="true" requiredMessage="#{myBundle.EditCajaRecaudacionRequiredMessage_cajaRecaudacionActiva}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCajaRecaudacionLabel_cajaRecaudacionIdCuenta}" for="cajaRecaudacionIdCuenta" />
+                        <p:selectOneMenu id="cajaRecaudacionIdCuenta" value="#{cajaRecaudacionController.selected.cajaRecaudacionIdCuenta}" required="true" requiredMessage="#{myBundle.EditCajaRecaudacionRequiredMessage_cajaRecaudacionIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="cajaRecaudacionIdCuentaItem"
+                                           itemValue="#{cajaRecaudacionIdCuentaItem}"
+                                           itemLabel="#{cajaRecaudacionIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditCajaRecaudacionLabel_cajaRecaudacionIdTerminal}" for="cajaRecaudacionIdTerminal" />
+                        <p:selectOneMenu id="cajaRecaudacionIdTerminal" value="#{cajaRecaudacionController.selected.cajaRecaudacionIdTerminal}" required="true" requiredMessage="#{myBundle.EditCajaRecaudacionRequiredMessage_cajaRecaudacionIdTerminal}" converter="terminalConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{terminalController.items}"
+                                           var="cajaRecaudacionIdTerminalItem"
+                                           itemValue="#{cajaRecaudacionIdTerminalItem}"
+                                           itemLabel="#{cajaRecaudacionIdTerminalItem.terminalId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditCajaRecaudacionLabel_cajaRecaudacionIdUsuario}" for="cajaRecaudacionIdUsuario" />
+                        <p:selectOneMenu id="cajaRecaudacionIdUsuario" value="#{cajaRecaudacionController.selected.cajaRecaudacionIdUsuario}" required="true" requiredMessage="#{myBundle.EditCajaRecaudacionRequiredMessage_cajaRecaudacionIdUsuario}" converter="usuarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="cajaRecaudacionIdUsuarioItem"
+                                           itemValue="#{cajaRecaudacionIdUsuarioItem}"
+                                           itemLabel="#{cajaRecaudacionIdUsuarioItem.usuarioId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cajaRecaudacionController.save}" value="#{myBundle.Save}" update="display,:CajaRecaudacionListForm:datalist,:CajaRecaudacionListForm:CajaRecaudacionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CajaRecaudacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CajaRecaudacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

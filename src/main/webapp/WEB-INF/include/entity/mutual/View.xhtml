@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MutualViewDlg" widgetVar="MutualViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewMutualTitle}" closeOnEscape="true">
+
+            <h:form id="MutualViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{mutualController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewMutualLabel_mutualId}"/>
+                        <h:outputText value="#{mutualController.selected.mutualId}" title="#{myBundle.ViewMutualTitle_mutualId}"/>
+
+                        <h:outputText value="#{myBundle.ViewMutualLabel_mutualNombre}"/>
+                        <h:outputText value="#{mutualController.selected.mutualNombre}" title="#{myBundle.ViewMutualTitle_mutualNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewMutualLabel_mutualComision}"/>
+                        <h:outputText value="#{mutualController.selected.mutualComision}" title="#{myBundle.ViewMutualTitle_mutualComision}"/>
+
+                        <h:outputText value="#{myBundle.ViewMutualLabel_mutualPorcentajeDescuento}"/>
+                        <h:outputText value="#{mutualController.selected.mutualPorcentajeDescuento}" title="#{myBundle.ViewMutualTitle_mutualPorcentajeDescuento}"/>
+
+                        <h:outputText value="#{myBundle.ViewMutualLabel_mutualIdCuenta}"/>
+                        <h:outputText value="#{mutualController.selected.mutualIdCuenta.cuentaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('MutualViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

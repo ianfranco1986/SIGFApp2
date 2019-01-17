@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClasificacionCuentaViewDlg" widgetVar="ClasificacionCuentaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewClasificacionCuentaTitle}" closeOnEscape="true">
+
+            <h:form id="ClasificacionCuentaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{clasificacionCuentaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewClasificacionCuentaLabel_clasificacionCuentaContable}"/>
+                        <h:outputText value="#{clasificacionCuentaController.selected.clasificacionCuentaContable}" title="#{myBundle.ViewClasificacionCuentaTitle_clasificacionCuentaContable}"/>
+
+                        <h:outputText value="#{myBundle.ViewClasificacionCuentaLabel_clasificacionCuentaNombre}"/>
+                        <h:outputText value="#{clasificacionCuentaController.selected.clasificacionCuentaNombre}" title="#{myBundle.ViewClasificacionCuentaTitle_clasificacionCuentaNombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ClasificacionCuentaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

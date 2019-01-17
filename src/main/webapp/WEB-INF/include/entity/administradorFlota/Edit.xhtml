@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AdministradorFlotaEditDlg" widgetVar="AdministradorFlotaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditAdministradorFlotaTitle}" closeOnEscape="true">
+
+            <h:form id="AdministradorFlotaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{administradorFlotaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditAdministradorFlotaLabel_administradorFlotaId}" for="administradorFlotaId" />
+                        <h:outputText id="administradorFlotaId" value="#{administradorFlotaController.selected.administradorFlotaId}" />
+
+                        <p:outputLabel value="#{myBundle.EditAdministradorFlotaLabel_administradorFlotaIdAdmin}" for="administradorFlotaIdAdmin" />
+                        <p:selectOneMenu id="administradorFlotaIdAdmin" value="#{administradorFlotaController.selected.administradorFlotaIdAdmin}" required="true" requiredMessage="#{myBundle.EditAdministradorFlotaRequiredMessage_administradorFlotaIdAdmin}" converter="administradorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{administradorController.items}"
+                                           var="administradorFlotaIdAdminItem"
+                                           itemValue="#{administradorFlotaIdAdminItem}"
+                                           itemLabel="#{administradorFlotaIdAdminItem.administradorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditAdministradorFlotaLabel_administradorFlotaIdFlota}" for="administradorFlotaIdFlota" />
+                        <p:selectOneMenu id="administradorFlotaIdFlota" value="#{administradorFlotaController.selected.administradorFlotaIdFlota}" required="true" requiredMessage="#{myBundle.EditAdministradorFlotaRequiredMessage_administradorFlotaIdFlota}" converter="flotaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{flotaController.items}"
+                                           var="administradorFlotaIdFlotaItem"
+                                           itemValue="#{administradorFlotaIdFlotaItem}"
+                                           itemLabel="#{administradorFlotaIdFlotaItem.flotaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{administradorFlotaController.save}" value="#{myBundle.Save}" update="display,:AdministradorFlotaListForm:datalist,:AdministradorFlotaListForm:AdministradorFlotaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AdministradorFlotaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AdministradorFlotaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EgresoCajaRecaudacionEditDlg" widgetVar="EgresoCajaRecaudacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEgresoCajaRecaudacionTitle}" closeOnEscape="true">
+
+            <h:form id="EgresoCajaRecaudacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{egresoCajaRecaudacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEgresoCajaRecaudacionLabel_egresoCajaRecaudacionId}" for="egresoCajaRecaudacionId" />
+                        <h:outputText id="egresoCajaRecaudacionId" value="#{egresoCajaRecaudacionController.selected.egresoCajaRecaudacionId}" />
+
+                        <p:outputLabel value="#{myBundle.EditEgresoCajaRecaudacionLabel_egresoCajaRecaudacionValorDefecto}" for="egresoCajaRecaudacionValorDefecto" />
+                        <p:inputText id="egresoCajaRecaudacionValorDefecto" value="#{egresoCajaRecaudacionController.selected.egresoCajaRecaudacionValorDefecto}" title="#{myBundle.EditEgresoCajaRecaudacionTitle_egresoCajaRecaudacionValorDefecto}" required="true" requiredMessage="#{myBundle.EditEgresoCajaRecaudacionRequiredMessage_egresoCajaRecaudacionValorDefecto}"/>
+
+                        <p:outputLabel value="#{myBundle.EditEgresoCajaRecaudacionLabel_egresoCajaRecaudacionPorcentaje}" for="egresoCajaRecaudacionPorcentaje" />
+                        <p:inputText id="egresoCajaRecaudacionPorcentaje" value="#{egresoCajaRecaudacionController.selected.egresoCajaRecaudacionPorcentaje}" title="#{myBundle.EditEgresoCajaRecaudacionTitle_egresoCajaRecaudacionPorcentaje}" required="true" requiredMessage="#{myBundle.EditEgresoCajaRecaudacionRequiredMessage_egresoCajaRecaudacionPorcentaje}"/>
+
+                        <p:outputLabel value="#{myBundle.EditEgresoCajaRecaudacionLabel_egresoCajaRecaudacionNumeroOrden}" for="egresoCajaRecaudacionNumeroOrden" />
+                        <p:inputText id="egresoCajaRecaudacionNumeroOrden" value="#{egresoCajaRecaudacionController.selected.egresoCajaRecaudacionNumeroOrden}" title="#{myBundle.EditEgresoCajaRecaudacionTitle_egresoCajaRecaudacionNumeroOrden}" required="true" requiredMessage="#{myBundle.EditEgresoCajaRecaudacionRequiredMessage_egresoCajaRecaudacionNumeroOrden}"/>
+
+                        <p:outputLabel value="#{myBundle.EditEgresoCajaRecaudacionLabel_egresoCajaRecaudacionActivo}" for="egresoCajaRecaudacionActivo" />
+                        <p:selectBooleanCheckbox id="egresoCajaRecaudacionActivo" value="#{egresoCajaRecaudacionController.selected.egresoCajaRecaudacionActivo}" required="true" requiredMessage="#{myBundle.EditEgresoCajaRecaudacionRequiredMessage_egresoCajaRecaudacionActivo}"/>
+
+                        <p:outputLabel value="#{myBundle.EditEgresoCajaRecaudacionLabel_egresoCajaRecaudacionIdEgreso}" for="egresoCajaRecaudacionIdEgreso" />
+                        <p:selectOneMenu id="egresoCajaRecaudacionIdEgreso" value="#{egresoCajaRecaudacionController.selected.egresoCajaRecaudacionIdEgreso}" required="true" requiredMessage="#{myBundle.EditEgresoCajaRecaudacionRequiredMessage_egresoCajaRecaudacionIdEgreso}" converter="egresoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{egresoController.items}"
+                                           var="egresoCajaRecaudacionIdEgresoItem"
+                                           itemValue="#{egresoCajaRecaudacionIdEgresoItem}"
+                                           itemLabel="#{egresoCajaRecaudacionIdEgresoItem.egresoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditEgresoCajaRecaudacionLabel_egresoCajaRecaudacionIdCaja}" for="egresoCajaRecaudacionIdCaja" />
+                        <p:selectOneMenu id="egresoCajaRecaudacionIdCaja" value="#{egresoCajaRecaudacionController.selected.egresoCajaRecaudacionIdCaja}" required="true" requiredMessage="#{myBundle.EditEgresoCajaRecaudacionRequiredMessage_egresoCajaRecaudacionIdCaja}" converter="cajaRecaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cajaRecaudacionController.items}"
+                                           var="egresoCajaRecaudacionIdCajaItem"
+                                           itemValue="#{egresoCajaRecaudacionIdCajaItem}"
+                                           itemLabel="#{egresoCajaRecaudacionIdCajaItem.cajaRecaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{egresoCajaRecaudacionController.save}" value="#{myBundle.Save}" update="display,:EgresoCajaRecaudacionListForm:datalist,:EgresoCajaRecaudacionListForm:EgresoCajaRecaudacionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EgresoCajaRecaudacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EgresoCajaRecaudacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

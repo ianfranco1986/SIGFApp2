@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoDemandaCreateDlg" widgetVar="TipoDemandaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTipoDemandaTitle}" closeOnEscape="true">
+
+            <h:form id="TipoDemandaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoDemandaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTipoDemandaLabel_tipoDemandaNombre}" for="tipoDemandaNombre" />
+                        <p:inputText id="tipoDemandaNombre" value="#{tipoDemandaController.selected.tipoDemandaNombre}" title="#{myBundle.CreateTipoDemandaTitle_tipoDemandaNombre}" required="true" requiredMessage="#{myBundle.CreateTipoDemandaRequiredMessage_tipoDemandaNombre}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoDemandaController.saveNew}" value="#{myBundle.Save}" update="display,:TipoDemandaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoDemandaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoDemandaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

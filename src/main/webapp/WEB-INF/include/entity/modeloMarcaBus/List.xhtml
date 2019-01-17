@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ModeloMarcaBusListForm">
+
+        <p:panel style="padding-bottom: 20px;" >
+            <h3 style="text-align: center;">Modelos de Buses</h3>
+            <p:contextMenu id="ModeloMarcaBusDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ModeloMarcaBusListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ModeloMarcaBusListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ModeloMarcaBusListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ModeloMarcaBusListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{modeloMarcaBusController.items}"
+                         lazy="false"
+                         rowKey="#{item.modeloMarcaBusId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{modeloMarcaBusController.selected}"
+                         filteredValue="#{modeloMarcaBusController.filteredItems}" widgetVar="datalistWidget">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{modeloMarcaBusController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.modeloMarcaBusId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ModeloMarcaBusDataTableContextMenu" listener="#{modeloMarcaBusController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ModeloMarcaBusDataTableContextMenu" listener="#{modeloMarcaBusController.resetParents}"/>
+                <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{modeloMarcaBusController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ModeloMarcaBusListForm:viewButton').click();"/>
+
+
+                <f:facet name="header">
+                    <div class="row row-nomargin">
+                        <div class="col-lg-3">
+                            <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                        </div>
+                        <div class="col-lg-5">
+                            <h:outputText value=""/>   
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="pull-right">
+                                <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{modeloMarcaBusController.prepareCreate}" update=":ModeloMarcaBusCreateForm" oncomplete="PF('ModeloMarcaBusCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"  styleClass="btn btn-primary"/>
+                                <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":ModeloMarcaBusViewForm" oncomplete="PF('ModeloMarcaBusViewDialog').show()" disabled="#{empty modeloMarcaBusController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"  styleClass="btn btn-primary"/>
+                                <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ModeloMarcaBusEditForm" oncomplete="PF('ModeloMarcaBusEditDialog').show()" disabled="#{empty modeloMarcaBusController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"  styleClass="btn btn-primary"/>
+                                <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{modeloMarcaBusController.delete}" update=":growl,datalist" disabled="#{empty modeloMarcaBusController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"  styleClass="btn btn-primary">
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                                </p:commandButton>    
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modeloMarcaBusId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modeloMarcaBusNombre}" filterBy="#{item.modeloMarcaBusNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modeloMarcaBusNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.modeloMarcaBusIdMarca.marcaBusNombre}" filterBy="#{item.modeloMarcaBusIdMarca.marcaBusNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Marca"/>
+                    </f:facet>
+                    <h:outputText value="#{item.modeloMarcaBusIdMarca.marcaBusNombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TipoDescuentoTrabajadorEditDlg" widgetVar="TipoDescuentoTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTipoDescuentoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="TipoDescuentoTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tipoDescuentoTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTipoDescuentoTrabajadorLabel_tipoDescuentoTrabajadorId}" for="tipoDescuentoTrabajadorId" />
+                        <h:outputText id="tipoDescuentoTrabajadorId" value="#{tipoDescuentoTrabajadorController.selected.tipoDescuentoTrabajadorId}" />
+
+                        <p:outputLabel value="#{myBundle.EditTipoDescuentoTrabajadorLabel_tipoDescuentoTrabajadorNombre}" for="tipoDescuentoTrabajadorNombre" />
+                        <p:inputText id="tipoDescuentoTrabajadorNombre" value="#{tipoDescuentoTrabajadorController.selected.tipoDescuentoTrabajadorNombre}" title="#{myBundle.EditTipoDescuentoTrabajadorTitle_tipoDescuentoTrabajadorNombre}" required="true" requiredMessage="#{myBundle.EditTipoDescuentoTrabajadorRequiredMessage_tipoDescuentoTrabajadorNombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditTipoDescuentoTrabajadorLabel_tipoDescuentoTrabajadorMontoDefecto}" for="tipoDescuentoTrabajadorMontoDefecto" />
+                        <p:inputText id="tipoDescuentoTrabajadorMontoDefecto" value="#{tipoDescuentoTrabajadorController.selected.tipoDescuentoTrabajadorMontoDefecto}" title="#{myBundle.EditTipoDescuentoTrabajadorTitle_tipoDescuentoTrabajadorMontoDefecto}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTipoDescuentoTrabajadorLabel_tipoDescuentoTrabajadorIdCuenta}" for="tipoDescuentoTrabajadorIdCuenta" />
+                        <p:selectOneMenu id="tipoDescuentoTrabajadorIdCuenta" value="#{tipoDescuentoTrabajadorController.selected.tipoDescuentoTrabajadorIdCuenta}" required="true" requiredMessage="#{myBundle.EditTipoDescuentoTrabajadorRequiredMessage_tipoDescuentoTrabajadorIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="tipoDescuentoTrabajadorIdCuentaItem"
+                                           itemValue="#{tipoDescuentoTrabajadorIdCuentaItem}"
+                                           itemLabel="#{tipoDescuentoTrabajadorIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoDescuentoTrabajadorController.save}" value="#{myBundle.Save}" update="display,:TipoDescuentoTrabajadorListForm:datalist,:TipoDescuentoTrabajadorListForm:TipoDescuentoTrabajadorDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoDescuentoTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoDescuentoTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UsuarioSessionEditDlg" widgetVar="UsuarioSessionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditUsuarioSessionTitle}" closeOnEscape="true">
+
+            <h:form id="UsuarioSessionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{usuarioSessionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditUsuarioSessionLabel_usuarioSessionId}" for="usuarioSessionId" />
+                        <h:outputText id="usuarioSessionId" value="#{usuarioSessionController.selected.usuarioSessionId}" />
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioSessionLabel_usuarioSessionFechaIngreso}" for="usuarioSessionFechaIngreso" />
+                        <p:calendar id="usuarioSessionFechaIngreso" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuarioSessionController.selected.usuarioSessionFechaIngreso}" title="#{myBundle.EditUsuarioSessionTitle_usuarioSessionFechaIngreso}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioSessionLabel_usuarioSessionIpAddress}" for="usuarioSessionIpAddress" />
+                        <p:inputText id="usuarioSessionIpAddress" value="#{usuarioSessionController.selected.usuarioSessionIpAddress}" title="#{myBundle.EditUsuarioSessionTitle_usuarioSessionIpAddress}" required="true" requiredMessage="#{myBundle.EditUsuarioSessionRequiredMessage_usuarioSessionIpAddress}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioSessionLabel_usuarioSessionIdUsuario}" for="usuarioSessionIdUsuario" />
+                        <p:selectOneMenu id="usuarioSessionIdUsuario" value="#{usuarioSessionController.selected.usuarioSessionIdUsuario}" required="true" requiredMessage="#{myBundle.EditUsuarioSessionRequiredMessage_usuarioSessionIdUsuario}" converter="usuarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioSessionIdUsuarioItem"
+                                           itemValue="#{usuarioSessionIdUsuarioItem}"
+                                           itemLabel="#{usuarioSessionIdUsuarioItem.usuarioId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioSessionController.save}" value="#{myBundle.Save}" update="display,:UsuarioSessionListForm:datalist,:UsuarioSessionListForm:UsuarioSessionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuarioSessionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('UsuarioSessionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

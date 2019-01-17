@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ControlEditDlg" widgetVar="ControlEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditControlTitle}" closeOnEscape="true">
+
+            <h:form id="ControlEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{controlController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditControlLabel_controlId}" for="controlId" />
+                        <h:outputText id="controlId" value="#{controlController.selected.controlId}" />
+
+                        <p:outputLabel value="#{myBundle.EditControlLabel_controlNombre}" for="controlNombre" />
+                        <p:inputText id="controlNombre" value="#{controlController.selected.controlNombre}" title="#{myBundle.EditControlTitle_controlNombre}" required="true" requiredMessage="#{myBundle.EditControlRequiredMessage_controlNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditControlLabel_controlLatitud}" for="controlLatitud" />
+                        <p:inputText id="controlLatitud" value="#{controlController.selected.controlLatitud}" title="#{myBundle.EditControlTitle_controlLatitud}" required="true" requiredMessage="#{myBundle.EditControlRequiredMessage_controlLatitud}"/>
+
+                        <p:outputLabel value="#{myBundle.EditControlLabel_controlLongitud}" for="controlLongitud" />
+                        <p:inputText id="controlLongitud" value="#{controlController.selected.controlLongitud}" title="#{myBundle.EditControlTitle_controlLongitud}" required="true" requiredMessage="#{myBundle.EditControlRequiredMessage_controlLongitud}"/>
+
+                        <p:outputLabel value="#{myBundle.EditControlLabel_controlRadio}" for="controlRadio" />
+                        <p:inputText id="controlRadio" value="#{controlController.selected.controlRadio}" title="#{myBundle.EditControlTitle_controlRadio}" required="true" requiredMessage="#{myBundle.EditControlRequiredMessage_controlRadio}"/>
+
+                        <p:outputLabel value="#{myBundle.EditControlLabel_controlIdCuenta}" for="controlIdCuenta" />
+                        <p:selectOneMenu id="controlIdCuenta" value="#{controlController.selected.controlIdCuenta}" required="true" requiredMessage="#{myBundle.EditControlRequiredMessage_controlIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="controlIdCuentaItem"
+                                           itemValue="#{controlIdCuentaItem}"
+                                           itemLabel="#{controlIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditControlLabel_controlIdTipo}" for="controlIdTipo" />
+                        <p:selectOneMenu id="controlIdTipo" value="#{controlController.selected.controlIdTipo}" required="true" requiredMessage="#{myBundle.EditControlRequiredMessage_controlIdTipo}" converter="tipoControlConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoControlController.items}"
+                                           var="controlIdTipoItem"
+                                           itemValue="#{controlIdTipoItem}"
+                                           itemLabel="#{controlIdTipoItem.tipoControlId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{controlController.save}" value="#{myBundle.Save}" update="display,:ControlListForm:datalist,:ControlListForm:ControlDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ControlEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ControlEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

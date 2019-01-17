@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LiquidacionSueldoViewDlg" widgetVar="LiquidacionSueldoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewLiquidacionSueldoTitle}" closeOnEscape="true">
+
+            <h:form id="LiquidacionSueldoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="LiquidacionSueldoTabView">
+
+                        <p:tab id="LiquidacionSueldoTab1" title="#{myBundle.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{liquidacionSueldoController.selected != null}">
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoId}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoId}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoId}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoNombreTerminal}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoNombreTerminal}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoNombreTerminal}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoFecha}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoFecha}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoFecha}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoBruto}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoBruto}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoBruto}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoSueldoBase}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoSueldoBase}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoSueldoBase}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoHorasExtras}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoHorasExtras}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoHorasExtras}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoImponible}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoImponible}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoImponible}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoImponibleAjustado}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoImponibleAjustado}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoImponibleAjustado}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoCincoTotal}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoCincoTotal}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoCincoTotal}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoCincoFiltrado}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoCincoFiltrado}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoCincoFiltrado}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoAhorro}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoAhorro}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoAhorro}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoAbono}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoAbono}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoAbono}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoFeriado}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoFeriado}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoFeriado}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoNoImponible}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoNoImponible}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoNoImponible}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoNumeroCarga}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoNumeroCarga}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoNumeroCarga}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoCarga}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoCarga}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoCarga}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoRetroactivo}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoRetroactivo}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoRetroactivo}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoFechaContrato}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoFechaContrato}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoFechaContrato}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoFechaFiniquito}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoFechaFiniquito}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoFechaFiniquito}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoFechaDesdeFeriado}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoFechaDesdeFeriado}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoFechaDesdeFeriado}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="LiquidacionSueldoTab2" title="#{myBundle.TabHeaderPrefix} 2">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{liquidacionSueldoController.selected != null}">
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoFechaHastaFeriado}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoFechaHastaFeriado}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoFechaHastaFeriado}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoDiasFeriado}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoDiasFeriado}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoDiasFeriado}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoDiasLicencias}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoDiasLicencias}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoDiasLicencias}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoDiasDescanso}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoDiasDescanso}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoDiasDescanso}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoDiasGuias}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoDiasGuias}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoDiasGuias}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoDiasTrabajados}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoDiasTrabajados}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoDiasTrabajados}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoNombrePrevision}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoNombrePrevision}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoNombrePrevision}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoPorcentajePrevision}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoPorcentajePrevision}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoPorcentajePrevision}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoPrevision}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoPrevision}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoPrevision}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoApv}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoApv}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoApv}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoCesantiaTrabajador}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoCesantiaTrabajador}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoCesantiaTrabajador}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoCesantiaEmpresa}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoCesantiaEmpresa}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoCesantiaEmpresa}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoCesantiaTotal}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoCesantiaTotal}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoCesantiaTotal}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoSis}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoSis}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoSis}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoInp}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoInp}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoInp}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoCajaCompensacion}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoCajaCompensacion}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoCajaCompensacion}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoNombreIsapre}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoNombreIsapre}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoNombreIsapre}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoIsapre}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoIsapre}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoIsapre}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoSindicato}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoSindicato}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoSindicato}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoSaldoAnterior}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoSaldoAnterior}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoSaldoAnterior}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoRetencionJudicial}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoRetencionJudicial}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoRetencionJudicial}"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="LiquidacionSueldoTab3" title="#{myBundle.TabHeaderPrefix} 3">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{liquidacionSueldoController.selected != null}">
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoCreditoSalud}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoCreditoSalud}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoCreditoSalud}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoSeguro}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoSeguro}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoSeguro}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoTotalDescuentos}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoTotalDescuentos}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoTotalDescuentos}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoAlcanceLiquido}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoAlcanceLiquido}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoAlcanceLiquido}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoAnticipo}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoAnticipo}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoAnticipo}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoMontoSaldo}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoMontoSaldo}" title="#{myBundle.ViewLiquidacionSueldoTitle_liquidacionSueldoMontoSaldo}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoIdEmpresa}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoIdEmpresa.empresaId}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoIdMovimientoPersonal}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoIdMovimientoPersonal.tipoMovimientoPersonalId}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoIdTerminal}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoIdTerminal.terminalId}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoIdTipoContrato}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoIdTipoContrato.tipoContratoId}"/>
+
+                                <h:outputText value="#{myBundle.ViewLiquidacionSueldoLabel_liquidacionSueldoIdTrabajador}"/>
+                                <h:outputText value="#{liquidacionSueldoController.selected.liquidacionSueldoIdTrabajador.trabajadorId}"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('LiquidacionSueldoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

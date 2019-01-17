@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProcesoRecaudacionListForm">
+
+        <p:panel id="panel" style="margin-top: 20px;">
+            <h3 style="text-align: center;">Procesos de Recaudación</h3>
+            <p:contextMenu id="ProcesoRecaudacionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ProcesoRecaudacionListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ProcesoRecaudacionListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ProcesoRecaudacionListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ProcesoRecaudacionListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{procesoRecaudacionController.items}"
+                         lazy="false"
+                         rowKey="#{item.procesoRecaudacionId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{procesoRecaudacionController.selected}"
+                         filteredValue="#{procesoRecaudacionController.filteredItems}"
+                         reflow="true"
+                         emptyMessage="No se han encontrado registros"
+                         rowIndexVar="rowIndex"
+                         widgetVar="datalistWidget">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{procesoRecaudacionController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.procesoRecaudacionId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ProcesoRecaudacionDataTableContextMenu" listener="#{procesoRecaudacionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ProcesoRecaudacionDataTableContextMenu" listener="#{procesoRecaudacionController.resetParents}"/>
+                <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{procesoRecaudacionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProcesoRecaudacionListForm:viewButton').click();"/>
+
+                <f:facet name="header">
+                    <div class="row row-nomargin">
+                        <div class="col-lg-3">
+                            <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                        </div>
+                        <div class="col-lg-5">
+                            <h:outputText value=""/>   
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="pull-right">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{procesoRecaudacionController.prepareCreate}" update=":ProcesoRecaudacionCreateForm" oncomplete="PF('ProcesoRecaudacionCreateDialog').show()" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":ProcesoRecaudacionViewForm" oncomplete="PF('ProcesoRecaudacionViewDialog').show()" disabled="#{empty procesoRecaudacionController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ProcesoRecaudacionEditForm" oncomplete="PF('ProcesoRecaudacionEditDialog').show()" disabled="#{empty procesoRecaudacionController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{procesoRecaudacionController.delete}" update=":growl,datalist" disabled="#{empty procesoRecaudacionController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.procesoRecaudacionNombre}" filterBy="#{item.procesoRecaudacionNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoRecaudacionTitle_procesoRecaudacionNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.procesoRecaudacionNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.procesoRecaudacionTieneCuenta}" filterBy="#{item.procesoRecaudacionTieneCuenta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoRecaudacionTitle_procesoRecaudacionTieneCuenta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.procesoRecaudacionTieneCuenta}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.procesoRecaudacionTieneEgresos}" filterBy="#{item.procesoRecaudacionTieneEgresos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoRecaudacionTitle_procesoRecaudacionTieneEgresos}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="procesoRecaudacionTieneEgresos" value="#{item.procesoRecaudacionTieneEgresos}" title="#{myBundle.EditProcesoRecaudacionTitle_procesoRecaudacionTieneEgresos}"  disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.procesoRecaudacionActivo}" filterBy="#{item.procesoRecaudacionActivo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoRecaudacionTitle_procesoRecaudacionActivo}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="procesoRecaudacionActivo" value="#{item.procesoRecaudacionActivo}" title="#{myBundle.EditProcesoRecaudacionTitle_procesoRecaudacionActivo}" required="true" requiredMessage="#{myBundle.EditProcesoRecaudacionRequiredMessage_procesoRecaudacionActivo}" disabled="true"/>
+                </p:column>
+
+
+            </p:dataTable>
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

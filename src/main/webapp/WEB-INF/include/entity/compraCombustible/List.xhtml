@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CompraCombustibleListForm">
+
+        <p:contextMenu id="CompraCombustibleDataTableContextMenu" for="datalist">  
+            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CompraCombustibleListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CompraCombustibleListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CompraCombustibleListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CompraCombustibleListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+        </p:contextMenu>
+        <p:dataTable id="datalist"
+                     value="#{compraCombustibleController.items}"
+                     lazy="false"
+                     rowKey="#{item.compraCombustibleId}"
+                     var="item"
+                     paginator="true"
+                     rows="100"
+                     rowsPerPageTemplate="100, 200, 500"
+                     selectionMode="single"
+                     selection="#{compraCombustibleController.selected}"
+                     filteredValue="#{compraCombustibleController.filteredItems}" 
+                     widgetVar="datalistWidget"
+                     reflow="true"
+                     emptyMessage="No se han encontrado registros">
+            <!--
+                     To enable Lazy Loading, please copy/replace the following lines above,
+                     and be sure to replace the word HASH with the # symbol:
+            
+                     value="HASH{compraCombustibleController.lazyItems}"
+                     lazy="true"
+                     rowKey="HASH{item.compraCombustibleId}"  <<< Remove this line
+            -->
+
+
+            <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:CompraCombustibleDataTableContextMenu" listener="#{compraCombustibleController.resetParents}"/>
+            <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:CompraCombustibleDataTableContextMenu" listener="#{compraCombustibleController.resetParents}"/>
+            <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{compraCombustibleController.resetParents}"/>
+            <p:ajax event="rowDblselect" onsuccess="document.getElementById('CompraCombustibleListForm:viewButton').click();"/>
+
+            <f:facet name="header">
+                <div class="row row-nomargin">
+                    <div class="col-lg-3">
+                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                    </div>
+                    <div class="col-lg-5">
+                        <h:outputText value="Compras de Combustible"/>   
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="pull-right">
+                            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{compraCombustibleController.prepareCreate}" update=":CompraCombustibleCreateForm" oncomplete="PF('CompraCombustibleCreateDialog').show()" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":CompraCombustibleViewForm" oncomplete="PF('CompraCombustibleViewDialog').show()" disabled="#{empty compraCombustibleController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CompraCombustibleEditForm" oncomplete="PF('CompraCombustibleEditDialog').show()" disabled="#{empty compraCombustibleController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{compraCombustibleController.delete}" update=":growl,datalist" disabled="#{empty compraCombustibleController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                            </p:commandButton>
+
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="#"/>
+                </f:facet>
+                <h:outputText value="#{item.compraCombustibleId}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.compraCombustibleFolio}" filterBy="#{item.compraCombustibleFolio}">
+                <f:facet name="header">
+                    <h:outputText value="Folio"/>
+                </f:facet>
+                <h:outputText value="#{item.compraCombustibleFolio}">
+                    
+                </h:outputText>
+            </p:column>
+
+            <p:column sortBy="#{item.compraCombustibleFechaEmisionFactura}" filterBy="#{item.compraCombustibleFechaEmisionFactura}">
+                <f:facet name="header">
+                    <h:outputText value="F.Factura"/>
+                </f:facet>
+                <h:outputText value="#{item.compraCombustibleFechaEmisionFactura}">
+                    <f:convertDateTime pattern="dd/MM/yy" />
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.compraCombustibleFechaPago}" filterBy="#{item.compraCombustibleFechaPago}">
+                <f:facet name="header">
+                    <h:outputText value="F.Pago"/>
+                </f:facet>
+                <h:outputText value="#{item.compraCombustibleFechaPago}">
+                    <f:convertDateTime pattern="dd/MM/yy" />
+                </h:outputText>
+            </p:column>
+
+
+            <p:column sortBy="#{item.compraCombustibleCantidadLitros}" filterBy="#{item.compraCombustibleCantidadLitros}">
+                <f:facet name="header">
+                    <h:outputText value="N° Litros"/>
+                </f:facet>
+                <h:outputText value="#{item.compraCombustibleCantidadLitros}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.compraCombustiblePbaseSiu}" filterBy="#{item.compraCombustiblePbaseSiu}">
+                <f:facet name="header">
+                    <h:outputText value="P. Base SIU"/>
+                </f:facet>
+                <h:outputText value="#{item.compraCombustiblePbaseSiu}"/>
+            </p:column>
+
+            <ui:remove>
+                <p:column sortBy="#{item.compraCombustibleIevU}" filterBy="#{item.compraCombustibleIevU}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCompraCombustibleTitle_compraCombustibleIevU}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.compraCombustibleIevU}"/>
+                </p:column>
+            </ui:remove>
+
+            <ui:remove>
+                <p:column sortBy="#{item.compraCombustibleIefU}" filterBy="#{item.compraCombustibleIefU}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCompraCombustibleTitle_compraCombustibleIefU}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.compraCombustibleIefU}"/>
+                </p:column>
+            </ui:remove>
+            <ui:remove>
+                <p:column sortBy="#{item.compraCombustibleDiaVigIe}" filterBy="#{item.compraCombustibleDiaVigIe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCompraCombustibleTitle_compraCombustibleDiaVigIe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.compraCombustibleDiaVigIe}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+            </ui:remove>
+            <ui:remove>
+                <p:column sortBy="#{item.compraCombustibleBaseAfecta}" filterBy="#{item.compraCombustibleBaseAfecta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCompraCombustibleTitle_compraCombustibleBaseAfecta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.compraCombustibleBaseAfecta}"/>
+                </p:column>
+            </ui:remove>
+            <ui:remove>
+                <p:column sortBy="#{item.compraCombustibleFeep}" filterBy="#{item.compraCombustibleFeep}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCompraCombustibleTitle_compraCombustibleFeep}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.compraCombustibleFeep}"/>
+                </p:column>
+            </ui:remove>
+            <ui:remove>
+                <p:column sortBy="#{item.compraCombustibleIev}" filterBy="#{item.compraCombustibleIev}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCompraCombustibleTitle_compraCombustibleIev}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.compraCombustibleIev}"/>
+                </p:column>
+            </ui:remove>
+            <ui:remove>
+                <p:column sortBy="#{item.compraCombustibleIef}" filterBy="#{item.compraCombustibleIef}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCompraCombustibleTitle_compraCombustibleIef}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.compraCombustibleIef}"/>
+                </p:column>
+            </ui:remove>
+
+            <p:column sortBy="#{item.compraCombustibleIva}" filterBy="#{item.compraCombustibleIva}">
+                <f:facet name="header">
+                    <h:outputText value="IVA"/>
+                </f:facet>
+                <h:outputText value="#{item.compraCombustibleIva}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.compraCombustibleTotalCompra}" filterBy="#{item.compraCombustibleTotalCompra}">
+                <f:facet name="header">
+                    <h:outputText value="Total Compra"/>
+                </f:facet>
+                <h:outputText value="#{item.compraCombustibleTotalCompra}"/>
+            </p:column>
+
+        </p:dataTable>
+
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

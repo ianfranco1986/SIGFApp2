@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresaCreateDlg" widgetVar="EmpresaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEmpresaTitle}" closeOnEscape="true">
+
+            <h:form id="EmpresaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{empresaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaRut}" for="empresaRut" />
+                        <p:inputText id="empresaRut" value="#{empresaController.selected.empresaRut}" title="#{myBundle.CreateEmpresaTitle_empresaRut}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaRut}" size="12" maxlength="9"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaNombre}" for="empresaNombre" />
+                        <p:inputText id="empresaNombre" value="#{empresaController.selected.empresaNombre}" title="#{myBundle.CreateEmpresaTitle_empresaNombre}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaNombre}" size="60" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaGiro}" for="empresaGiro" />
+                        <p:inputText id="empresaGiro" value="#{empresaController.selected.empresaGiro}" title="#{myBundle.CreateEmpresaTitle_empresaGiro}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaGiro}" size="30" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaDireccion}" for="empresaDireccion" />
+                        <p:inputText id="empresaDireccion" value="#{empresaController.selected.empresaDireccion}" title="#{myBundle.CreateEmpresaTitle_empresaDireccion}" size="30" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaTelefono}" for="empresaTelefono" />
+                        <p:inputText id="empresaTelefono" value="#{empresaController.selected.empresaTelefono}" title="#{myBundle.CreateEmpresaTitle_empresaTelefono}" size="30" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaCelular}" for="empresaCelular" />
+                        <p:inputText id="empresaCelular" value="#{empresaController.selected.empresaCelular}" title="#{myBundle.CreateEmpresaTitle_empresaCelular}" size="20" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaEmail}" for="empresaEmail" />
+                        <p:inputText id="empresaEmail" value="#{empresaController.selected.empresaEmail}" title="#{myBundle.CreateEmpresaTitle_empresaEmail}" size="20" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaPorcentajeMutual}" for="empresaPorcentajeMutual" />
+                        <p:inputText id="empresaPorcentajeMutual" value="#{empresaController.selected.empresaPorcentajeMutual}" title="#{myBundle.CreateEmpresaTitle_empresaPorcentajeMutual}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaPorcentajeMutual}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaIdCajaCompensacion}" for="empresaIdCajaCompensacion" />
+                        <p:selectOneMenu id="empresaIdCajaCompensacion" value="#{empresaController.selected.empresaIdCajaCompensacion}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaIdCajaCompensacion}" converter="cajaCompensacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cajaCompensacionController.items}"
+                                           var="empresaIdCajaCompensacionItem"
+                                           itemValue="#{empresaIdCajaCompensacionItem}"
+                                           itemLabel="#{empresaIdCajaCompensacionItem.cajaCompensacionNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaIdMutual}" for="empresaIdMutual" />
+                        <p:selectOneMenu id="empresaIdMutual" value="#{empresaController.selected.empresaIdMutual}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaIdMutual}" converter="mutualConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{mutualController.items}"
+                                           var="empresaIdMutualItem"
+                                           itemValue="#{empresaIdMutualItem}"
+                                           itemLabel="#{empresaIdMutualItem.mutualNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empresaController.saveNew}" value="#{myBundle.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpresaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EmpresaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

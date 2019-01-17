@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                >
+
+    <h:form id="EgresoBusListForm" class="form-height">
+        <p:panel>
+            <f:facet name="header">
+                Producción x Conductor
+            </f:facet>
+            <p:panelGrid columns="10" style="margin-bottom: 10px;width: 100%;">
+
+                <h:outputLabel for="mes" value="Mes:" />
+                <p:selectOneMenu id="mes" value="#{informeProduccionConductorController.mes}" style="width:125px">
+                    <f:selectItem itemLabel="Enero" itemValue="1" />
+                    <f:selectItem itemLabel="Febrero" itemValue="2" />
+                    <f:selectItem itemLabel="Marzo" itemValue="3" />
+                    <f:selectItem itemLabel="Abril" itemValue="4" />
+                    <f:selectItem itemLabel="Mayo" itemValue="5" />
+                    <f:selectItem itemLabel="Junio" itemValue="6" />
+                    <f:selectItem itemLabel="Julio" itemValue="7" />
+                    <f:selectItem itemLabel="Agosto" itemValue="8" />
+                    <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                    <f:selectItem itemLabel="Octubre" itemValue="10" />
+                    <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                    <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                    <p:ajax event="valueChange" listener="#{informeProduccionConductorController.setFecha()}" update="datalist" />
+                </p:selectOneMenu>
+
+                <h:outputLabel for="anio" value="Año:" />
+                <p:inputText id="anio" value="#{informeProduccionConductorController.anio}" size="5" />
+
+            </p:panelGrid>
+            <p:dataTable id="datalist"
+                         value="#{informeProduccionConductorController.data}"
+                         widgetVar="datalist"
+                         var="item"
+                         rowKey="#{item.recaudacion}"
+                         rowIndexVar="rowIndex"
+                         draggableRows="true" 
+                         emptyMessage="No se han encontrado registros"
+                         reflow="true" 
+                         expandableRowGroups="true">
+
+
+                <f:facet name="header">
+                    Resumen Producción x Conductores 
+                </f:facet>
+
+                <p:headerRow>
+                    <p:column colspan="5" >
+                        <h:outputText value="#{item.trabajador}" />
+                    </p:column>
+                </p:headerRow>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <p:outputLabel value="#{rowIndex+1}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Administracion"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.administracion}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cuota Extra"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.cuotaextra}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Boletos"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.boletos}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Imposiciones"/>
+                    </f:facet>
+                    <p:outputLabel value="#{item.imposicion}">
+                        <f:convertNumber currencyCode="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+            </p:dataTable>
+            <p:separator />
+        </p:panel>
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RepresentanteLegalListForm">
+
+
+        <p:contextMenu id="RepresentanteLegalDataTableContextMenu" for="datalist">  
+            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('RepresentanteLegalListForm:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('RepresentanteLegalListForm:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('RepresentanteLegalListForm:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('RepresentanteLegalListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+            <p:menuitem value="#{myBundle.RepresentanteLegalMenuItem_representanteLegalIdCuenta}" icon="ui-icon-search"  actionListener="#{representanteLegalController.prepareRepresentanteLegalIdCuenta}" update=":CuentaViewForm" oncomplete="PF('CuentaViewDialog').show()" disabled="#{empty representanteLegalController.selected.representanteLegalIdCuenta}"/>  
+            <p:menuitem value="#{myBundle.RepresentanteLegalMenuItem_representanteEmpresaList}" icon="ui-icon-search"  action="#{representanteLegalController.navigateRepresentanteEmpresaList}" disabled="#{representanteLegalController.isRepresentanteEmpresaListEmpty}" ajax="false"/>  
+            <p:menuitem value="#{myBundle.RepresentanteLegalMenuItem_operadorTransporteList}" icon="ui-icon-search"  action="#{representanteLegalController.navigateOperadorTransporteList}" disabled="#{representanteLegalController.isOperadorTransporteListEmpty}" ajax="false"/>  
+        </p:contextMenu>
+        <p:dataTable id="datalist"
+                     value="#{representanteLegalController.items}"
+                     lazy="false"
+                     rowKey="#{item.representanteLegalId}"
+                     var="item"
+                     paginator="true"
+                     rows="100"
+                     rowsPerPageTemplate="100, 200, 500"
+                     selectionMode="single"
+                     selection="#{representanteLegalController.selected}"
+                     filteredValue="#{representanteLegalController.filteredItems}" 
+                     reflow="true"
+                     rowIndexVar="rowIndex"
+                     emptyMessage="No se han encontrado registros"
+                     widgetVar="datalistWidget">
+            <!--
+                     To enable Lazy Loading, please copy/replace the following lines above,
+                     and be sure to replace the word HASH with the # symbol:
+            
+                     value="HASH{representanteLegalController.lazyItems}"
+                     lazy="true"
+                     rowKey="HASH{item.representanteLegalId}"  <<< Remove this line
+            -->
+
+
+            <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:RepresentanteLegalDataTableContextMenu" listener="#{representanteLegalController.resetParents}"/>
+            <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:RepresentanteLegalDataTableContextMenu" listener="#{representanteLegalController.resetParents}"/>
+            <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{representanteLegalController.resetParents}"/>
+            <p:ajax event="rowDblselect" onsuccess="document.getElementById('RepresentanteLegalListForm:viewButton').click();"/>
+
+            <f:facet name="header">
+                <div class="row row-nomargin">
+                    <div class="col-lg-3">
+                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                    </div>
+                    <div class="col-lg-5">
+                        <h:outputText value="Representantes Legales"/>   
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="pull-right">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{representanteLegalController.prepareCreate}" update=":RepresentanteLegalCreateForm" oncomplete="PF('RepresentanteLegalCreateDialog').show()" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":RepresentanteLegalViewForm" oncomplete="PF('RepresentanteLegalViewDialog').show()" disabled="#{empty representanteLegalController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RepresentanteLegalEditForm" oncomplete="PF('RepresentanteLegalEditDialog').show()" disabled="#{empty representanteLegalController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{representanteLegalController.delete}" update=":growl,datalist" disabled="#{empty representanteLegalController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                            </p:commandButton>
+
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column >
+                <f:facet name="header">
+                    <h:outputText value="#"/>
+                </f:facet>
+                <h:outputText value="#{rowIndex+1}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.representanteLegalNombre}" filterBy="#{item.representanteLegalNombre}">
+                <f:facet name="header">
+                    <h:outputText value="Nombre"/>
+                </f:facet>
+                <h:outputText value="#{item.representanteLegalNombre}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.representanteLegalRut}" filterBy="#{item.representanteLegalRut}">
+                <f:facet name="header">
+                    <h:outputText value="Rut"/>
+                </f:facet>
+                <h:outputText value="#{item.representanteLegalRut}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.representanteLegalDireccion}" filterBy="#{item.representanteLegalDireccion}">
+                <f:facet name="header">
+                    <h:outputText value="Dirección"/>
+                </f:facet>
+                <h:outputText value="#{item.representanteLegalDireccion}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.representanteLegalTelefono}" filterBy="#{item.representanteLegalTelefono}">
+                <f:facet name="header">
+                    <h:outputText value="Teléfono"/>
+                </f:facet>
+                <h:outputText value="#{item.representanteLegalTelefono}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.representanteLegalEmail}" filterBy="#{item.representanteLegalEmail}">
+                <f:facet name="header">
+                    <h:outputText value="Email"/>
+                </f:facet>
+                <h:outputText value="#{item.representanteLegalEmail}"/>
+            </p:column>
+
+            <ui:remove>
+                <p:column sortBy="#{item.representanteLegalIdCuenta.cuentaId}" filterBy="#{item.representanteLegalIdCuenta.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRepresentanteLegalTitle_representanteLegalIdCuenta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.representanteLegalIdCuenta.cuentaId}"/>
+                </p:column>
+            </ui:remove>
+
+        </p:dataTable>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

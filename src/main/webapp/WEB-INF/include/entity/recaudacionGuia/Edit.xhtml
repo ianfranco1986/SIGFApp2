@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="RecaudacionGuiaEditDlg" widgetVar="RecaudacionGuiaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditRecaudacionGuiaTitle}" closeOnEscape="true">
+
+            <h:form id="RecaudacionGuiaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{recaudacionGuiaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditRecaudacionGuiaLabel_recaudacionGuiaId}" for="recaudacionGuiaId" />
+                        <h:outputText id="recaudacionGuiaId" value="#{recaudacionGuiaController.selected.recaudacionGuiaId}" />
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionGuiaLabel_recaudacionGuiaMonto}" for="recaudacionGuiaMonto" />
+                        <p:inputText id="recaudacionGuiaMonto" value="#{recaudacionGuiaController.selected.recaudacionGuiaMonto}" title="#{myBundle.EditRecaudacionGuiaTitle_recaudacionGuiaMonto}" required="true" requiredMessage="#{myBundle.EditRecaudacionGuiaRequiredMessage_recaudacionGuiaMonto}"/>
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionGuiaLabel_recaudacionGuiaIdEgreso}" for="recaudacionGuiaIdEgreso" />
+                        <p:selectOneMenu id="recaudacionGuiaIdEgreso" value="#{recaudacionGuiaController.selected.recaudacionGuiaIdEgreso}" required="true" requiredMessage="#{myBundle.EditRecaudacionGuiaRequiredMessage_recaudacionGuiaIdEgreso}" converter="egresoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{egresoController.items}"
+                                           var="recaudacionGuiaIdEgresoItem"
+                                           itemValue="#{recaudacionGuiaIdEgresoItem}"
+                                           itemLabel="#{recaudacionGuiaIdEgresoItem.egresoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionGuiaLabel_recaudacionGuiaIdGuia}" for="recaudacionGuiaIdGuia" />
+                        <p:selectOneMenu id="recaudacionGuiaIdGuia" value="#{recaudacionGuiaController.selected.recaudacionGuiaIdGuia}" required="true" requiredMessage="#{myBundle.EditRecaudacionGuiaRequiredMessage_recaudacionGuiaIdGuia}" converter="guiaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{guiaController.items}"
+                                           var="recaudacionGuiaIdGuiaItem"
+                                           itemValue="#{recaudacionGuiaIdGuiaItem}"
+                                           itemLabel="#{recaudacionGuiaIdGuiaItem.guiaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditRecaudacionGuiaLabel_recaudacionGuiaIdRecaudacion}" for="recaudacionGuiaIdRecaudacion" />
+                        <p:selectOneMenu id="recaudacionGuiaIdRecaudacion" value="#{recaudacionGuiaController.selected.recaudacionGuiaIdRecaudacion}" required="true" requiredMessage="#{myBundle.EditRecaudacionGuiaRequiredMessage_recaudacionGuiaIdRecaudacion}" converter="recaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recaudacionController.items}"
+                                           var="recaudacionGuiaIdRecaudacionItem"
+                                           itemValue="#{recaudacionGuiaIdRecaudacionItem}"
+                                           itemLabel="#{recaudacionGuiaIdRecaudacionItem.recaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{recaudacionGuiaController.save}" value="#{myBundle.Save}" update="display,:RecaudacionGuiaListForm:datalist,:RecaudacionGuiaListForm:RecaudacionGuiaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RecaudacionGuiaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RecaudacionGuiaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

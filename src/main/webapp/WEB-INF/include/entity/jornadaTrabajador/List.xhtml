@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="JornadaTrabajadorListForm">
+
+        <p:panel header="#{myBundle.ListJornadaTrabajadorTitle}">
+            <p:contextMenu id="JornadaTrabajadorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('JornadaTrabajadorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('JornadaTrabajadorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('JornadaTrabajadorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('JornadaTrabajadorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.JornadaTrabajadorMenuItem_jornadaTrabajadorIdJornadaLaboral}" icon="ui-icon-search"  actionListener="#{jornadaTrabajadorController.prepareJornadaTrabajadorIdJornadaLaboral}" update=":JornadaLaboralViewForm" oncomplete="PF('JornadaLaboralViewDialog').show()" disabled="#{empty jornadaTrabajadorController.selected.jornadaTrabajadorIdJornadaLaboral}"/>  
+                <p:menuitem value="#{myBundle.JornadaTrabajadorMenuItem_jornadaTrabajadorIdTrabajador}" icon="ui-icon-search"  actionListener="#{jornadaTrabajadorController.prepareJornadaTrabajadorIdTrabajador}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty jornadaTrabajadorController.selected.jornadaTrabajadorIdTrabajador}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{jornadaTrabajadorController.items}"
+                         lazy="false"
+                         rowKey="#{item.jornadaTrabajadorId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{jornadaTrabajadorController.selected}"
+                         filteredValue="#{jornadaTrabajadorController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{jornadaTrabajadorController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.jornadaTrabajadorId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:JornadaTrabajadorDataTableContextMenu" listener="#{jornadaTrabajadorController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:JornadaTrabajadorDataTableContextMenu" listener="#{jornadaTrabajadorController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{jornadaTrabajadorController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('JornadaTrabajadorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.jornadaTrabajadorId}" filterBy="#{item.jornadaTrabajadorId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTrabajadorTitle_jornadaTrabajadorId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.jornadaTrabajadorId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.jornadaTrabajadorIdJornadaLaboral.jornadaLaboralId}" filterBy="#{item.jornadaTrabajadorIdJornadaLaboral.jornadaLaboralId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTrabajadorTitle_jornadaTrabajadorIdJornadaLaboral}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.jornadaTrabajadorIdJornadaLaboral.jornadaLaboralId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.jornadaTrabajadorIdTrabajador.trabajadorId}" filterBy="#{item.jornadaTrabajadorIdTrabajador.trabajadorId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTrabajadorTitle_jornadaTrabajadorIdTrabajador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.jornadaTrabajadorIdTrabajador.trabajadorId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{jornadaTrabajadorController.prepareCreate}" update=":JornadaTrabajadorCreateForm" oncomplete="PF('JornadaTrabajadorCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":JornadaTrabajadorViewForm" oncomplete="PF('JornadaTrabajadorViewDialog').show()" disabled="#{empty jornadaTrabajadorController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":JornadaTrabajadorEditForm" oncomplete="PF('JornadaTrabajadorEditDialog').show()" disabled="#{empty jornadaTrabajadorController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{jornadaTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty jornadaTrabajadorController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InstitucionPrevisionCreateDlg" widgetVar="InstitucionPrevisionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateInstitucionPrevisionTitle}" closeOnEscape="true">
+
+            <h:form id="InstitucionPrevisionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{institucionPrevisionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionPrevisionLabel_institucionPrevisionNombre}" for="institucionPrevisionNombre" />
+                        <p:inputText id="institucionPrevisionNombre" value="#{institucionPrevisionController.selected.institucionPrevisionNombre}" title="#{myBundle.CreateInstitucionPrevisionTitle_institucionPrevisionNombre}" required="true" requiredMessage="#{myBundle.CreateInstitucionPrevisionRequiredMessage_institucionPrevisionNombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionPrevisionLabel_institucionPrevisionComision}" for="institucionPrevisionComision" />
+                        <p:inputText id="institucionPrevisionComision" value="#{institucionPrevisionController.selected.institucionPrevisionComision}" title="#{myBundle.CreateInstitucionPrevisionTitle_institucionPrevisionComision}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionPrevisionLabel_institucionPrevisionPorcentajeDescuento}" for="institucionPrevisionPorcentajeDescuento" />
+                        <p:inputText id="institucionPrevisionPorcentajeDescuento" value="#{institucionPrevisionController.selected.institucionPrevisionPorcentajeDescuento}" title="#{myBundle.CreateInstitucionPrevisionTitle_institucionPrevisionPorcentajeDescuento}" required="true" requiredMessage="#{myBundle.CreateInstitucionPrevisionRequiredMessage_institucionPrevisionPorcentajeDescuento}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionPrevisionLabel_institucionPrevisionIdCuenta}" for="institucionPrevisionIdCuenta" />
+                        <p:selectOneMenu id="institucionPrevisionIdCuenta" value="#{institucionPrevisionController.selected.institucionPrevisionIdCuenta}" required="true" requiredMessage="#{myBundle.CreateInstitucionPrevisionRequiredMessage_institucionPrevisionIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="institucionPrevisionIdCuentaItem"
+                                           itemValue="#{institucionPrevisionIdCuentaItem}"
+                                           itemLabel="#{institucionPrevisionIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{institucionPrevisionController.saveNew}" value="#{myBundle.Save}" update="display,:InstitucionPrevisionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InstitucionPrevisionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('InstitucionPrevisionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

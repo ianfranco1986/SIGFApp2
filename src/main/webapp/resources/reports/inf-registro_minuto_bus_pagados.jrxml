@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="bus" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    r.registro_minuto_id, 
+    b.bus_numero AS numeroPaga,
+    b.bus_patente AS patentePaga,
+    f1.flota_nombre AS flotaPaga, 
+    c.bus_numero AS numeroRecibe,
+    c.bus_patente AS patenteRecibe,
+    f2.flota_nombre AS flotaRecibe, 
+    r.registro_minuto_monto, 
+    r.registro_minuto_fecha_minuto, 
+    YEAR($P{fecha}) AS anio, 
+    ELT(MONTH($P{fecha}), "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE") AS Mes
+   
+FROM
+    registro_minuto r
+        LEFT JOIN
+    bus b ON r.registro_minuto_desde_id_bus = b.bus_id
+        LEFT JOIN
+    bus c ON r.registro_minuto_hasta_id_bus = c.bus_id
+		LEFT JOIN 
+	flota f1 ON b.bus_id_flota = f1.flota_id 
+		LEFT JOIN 
+	flota f2 ON c.bus_id_flota = f2.flota_id 
+WHERE
+    r.registro_minuto_fecha_minuto BETWEEN $P{fecha} AND LAST_DAY($P{fecha}) AND 	b.bus_id = $P{bus} ORDER BY r.registro_minuto_fecha_minuto ASC, numeroRecibe ASC]]>
+	</queryString>
+	<field name="registro_minuto_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroPaga" class="java.lang.Long"/>
+	<field name="patentePaga" class="java.lang.String"/>
+	<field name="flotaPaga" class="java.lang.String"/>
+	<field name="numeroRecibe" class="java.lang.Long"/>
+	<field name="patenteRecibe" class="java.lang.String"/>
+	<field name="flotaRecibe" class="java.lang.String"/>
+	<field name="registro_minuto_monto" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="registro_minuto_fecha_minuto" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="anio" class="java.lang.Long"/>
+	<field name="Mes" class="java.lang.String"/>
+	<variable name="registro_minuto_monto1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
+	</variable>
+	<variable name="registro_minuto_monto_1" class="java.lang.Long" resetType="Group" resetGroup="Fecha" calculation="Sum">
+		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
+	</variable>
+	<variable name="registro_minuto_monto_2" class="java.lang.Long" resetType="Group" resetGroup="Fecha" calculation="Sum">
+		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
+	</variable>
+	<group name="Fecha">
+		<groupExpression><![CDATA[$F{registro_minuto_fecha_minuto}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement x="79" y="30" width="63" height="20" uuid="940c0525-b7c6-4f0f-b8e0-38c6c6987f32"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° Bus Recibe]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="238" y="30" width="133" height="20" uuid="144eebd2-b453-4ba9-88e2-b4124894a53f"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Flota]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="452" y="30" width="70" height="20" uuid="8ce82345-7f1d-401f-8146-2bc794c9e8c5"/>
+					<textElement textAlignment="Right" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Monto]]></text>
+				</staticText>
+				<textField pattern="EEEEE dd MMMMM ">
+					<reportElement x="43" y="6" width="108" height="20" uuid="b11c7345-82ad-47cb-9cef-6b38fe5afab3"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{registro_minuto_fecha_minuto}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="6" width="43" height="20" uuid="19ea20cd-9bc4-47f0-9d3b-d81d27741113"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="164" y="30" width="63" height="20" uuid="a8004928-88ae-4370-9857-16d48185f399"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Patente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="30" width="63" height="20" uuid="c07a6c2c-df65-46c2-939f-97395d87ddfc"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Folio]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField pattern="$ #,##0.###">
+					<reportElement x="450" y="0" width="72" height="20" uuid="c888d57d-a642-4b2c-9ffd-3dccfd8466d4"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{registro_minuto_monto_2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="350" y="0" width="100" height="20" uuid="52134926-ddd0-43b1-af00-fbce1716ed33"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Subtotal : ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="114" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="19" width="208" height="15" uuid="09f63724-548c-4a46-8844-a59ea8b995d4"/>
+				<text><![CDATA[Registro de Minutos Pagados x Bus]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="371" y="0" width="151" height="20" uuid="f230d77d-5981-49a7-9356-fc24ced358e3"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Mes}+" "+$F{anio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="45" width="43" height="19" uuid="ad2d5c2c-60ec-497c-adee-7301ad062713"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bus: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="45" width="137" height="19" uuid="b6c88149-c184-49d5-b447-04e6f98cac61"/>
+				<textElement markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="197" y="45" width="60" height="20" uuid="3f62fee5-047e-4de9-8e2c-0596a61175d0"/>
+				<textElement markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="257" y="45" width="62" height="20" uuid="c11c13c1-6103-422a-82aa-3ab156ef6eed"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{patentePaga}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="329" y="45" width="42" height="20" uuid="7502c66f-8cb6-4d97-bfba-23ea5add6526"/>
+				<textElement markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Flota:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="371" y="45" width="184" height="20" uuid="c9bbdff5-a422-4162-bb4f-69bbda777c54"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{flotaPaga}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="79" y="0" width="74" height="20" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="238" y="0" width="133" height="20" uuid="fa049b89-ed88-4f0e-ac95-2efd388740c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{flotaRecibe}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.###">
+				<reportElement x="452" y="0" width="70" height="20" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{registro_minuto_monto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="0" width="74" height="20" uuid="e6023763-75cb-41f8-8f0c-a8c1ed2691d8"/>
+				<textFieldExpression><![CDATA[$F{patenteRecibe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="74" height="20" uuid="a0b945f1-a590-4c9b-8fab-a24544594dd5"/>
+				<textFieldExpression><![CDATA[$F{registro_minuto_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="0" width="180" height="20" uuid="cf15cbc4-98aa-41bb-bddd-ed6ad6f2ed6f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="0" width="100" height="20" uuid="7f054929-1d1f-4344-a8eb-1349b45f3f99"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="450" y="0" width="100" height="20" uuid="1aa8f8ea-91ed-4209-8fc3-f47ff86aaefe"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="$ #,###.###">
+				<reportElement x="450" y="0" width="70" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{registro_minuto_monto1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="0" width="100" height="20" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total : ]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

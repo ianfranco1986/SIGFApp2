@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AsignacionFamiliarEditDlg" widgetVar="AsignacionFamiliarEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditAsignacionFamiliarTitle}" closeOnEscape="true">
+
+            <h:form id="AsignacionFamiliarEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{asignacionFamiliarController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditAsignacionFamiliarLabel_asignacionFamiliarId}" for="asignacionFamiliarId" />
+                        <h:outputText id="asignacionFamiliarId" value="#{asignacionFamiliarController.selected.asignacionFamiliarId}" />
+
+                        <p:outputLabel value="#{myBundle.EditAsignacionFamiliarLabel_asignacionFamiliarCodigo}" for="asignacionFamiliarCodigo" />
+                        <p:inputText id="asignacionFamiliarCodigo" value="#{asignacionFamiliarController.selected.asignacionFamiliarCodigo}" title="#{myBundle.EditAsignacionFamiliarTitle_asignacionFamiliarCodigo}" required="true" requiredMessage="#{myBundle.EditAsignacionFamiliarRequiredMessage_asignacionFamiliarCodigo}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditAsignacionFamiliarLabel_asignacionFamiliarTramo}" for="asignacionFamiliarTramo" />
+                        <p:inputText id="asignacionFamiliarTramo" value="#{asignacionFamiliarController.selected.asignacionFamiliarTramo}" title="#{myBundle.EditAsignacionFamiliarTitle_asignacionFamiliarTramo}" required="true" requiredMessage="#{myBundle.EditAsignacionFamiliarRequiredMessage_asignacionFamiliarTramo}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditAsignacionFamiliarLabel_asignacionFamiliarMonto}" for="asignacionFamiliarMonto" />
+                        <p:inputText id="asignacionFamiliarMonto" value="#{asignacionFamiliarController.selected.asignacionFamiliarMonto}" title="#{myBundle.EditAsignacionFamiliarTitle_asignacionFamiliarMonto}" required="true" requiredMessage="#{myBundle.EditAsignacionFamiliarRequiredMessage_asignacionFamiliarMonto}"/>
+
+                        <p:outputLabel value="#{myBundle.EditAsignacionFamiliarLabel_asignacionFamiliarDesde}" for="asignacionFamiliarDesde" />
+                        <p:inputText id="asignacionFamiliarDesde" value="#{asignacionFamiliarController.selected.asignacionFamiliarDesde}" title="#{myBundle.EditAsignacionFamiliarTitle_asignacionFamiliarDesde}" required="true" requiredMessage="#{myBundle.EditAsignacionFamiliarRequiredMessage_asignacionFamiliarDesde}"/>
+
+                        <p:outputLabel value="#{myBundle.EditAsignacionFamiliarLabel_asignacionFamiliarHasta}" for="asignacionFamiliarHasta" />
+                        <p:inputText id="asignacionFamiliarHasta" value="#{asignacionFamiliarController.selected.asignacionFamiliarHasta}" title="#{myBundle.EditAsignacionFamiliarTitle_asignacionFamiliarHasta}" required="true" requiredMessage="#{myBundle.EditAsignacionFamiliarRequiredMessage_asignacionFamiliarHasta}"/>
+
+                        <p:outputLabel value="#{myBundle.EditAsignacionFamiliarLabel_asignacionFamiliarIdCuenta}" for="asignacionFamiliarIdCuenta" />
+                        <p:selectOneMenu id="asignacionFamiliarIdCuenta" value="#{asignacionFamiliarController.selected.asignacionFamiliarIdCuenta}" required="true" requiredMessage="#{myBundle.EditAsignacionFamiliarRequiredMessage_asignacionFamiliarIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="asignacionFamiliarIdCuentaItem"
+                                           itemValue="#{asignacionFamiliarIdCuentaItem}"
+                                           itemLabel="#{asignacionFamiliarIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{asignacionFamiliarController.save}" value="#{myBundle.Save}" update="display,:AsignacionFamiliarListForm:datalist,:AsignacionFamiliarListForm:AsignacionFamiliarDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AsignacionFamiliarEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AsignacionFamiliarEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

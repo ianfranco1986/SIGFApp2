@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CartolaBancoCreateDlg" widgetVar="CartolaBancoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Ingreso Cuenta Bancaria" closeOnEscape="true">
+
+            <h:form id="CartolaBancoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{cartolaBancoController.selected != null}">
+                    <p:panelGrid columns="4" columnClasses="column">
+
+                        <p:outputLabel value="Cuenta: "/>
+                        <p:outputLabel value="#{cartolaBancoController.cuentaBancaria.cuentaBancariaNumero} - #{cartolaBancoController.cuentaBancaria.cuentaBancariaIdEmpresa.empresaNombre}"/>
+
+                        <p:outputLabel/>
+                        <p:outputLabel/>
+                        
+                        <p:outputLabel value="Folio:" for="cartolaBancoNumero" />
+                        <p:inputText id="cartolaBancoNumero" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" value="#{cartolaBancoController.selected.cartolaBancoNumero}" required="true" requiredMessage="Debe ingresar un folio"/>
+
+                        <p:outputLabel/>
+                        <p:outputLabel/>
+                        
+                        <p:outputLabel value="Inicio" for="cartolaBancoFechaInicial" />
+                        <p:calendar id="cartolaBancoFechaInicial" pattern="dd/MM/yyyy" value="#{cartolaBancoController.selected.cartolaBancoFechaInicial}" required="true" requiredMessage="Debe ingresar la fecha de inicio" showOn="button"/>
+
+                        <p:outputLabel value="Termino" for="cartolaBancoFechaFinal" />
+                        <p:calendar id="cartolaBancoFechaFinal" pattern="dd/MM/yyyy" value="#{cartolaBancoController.selected.cartolaBancoFechaFinal}" required="true" requiredMessage="Debe ingresar la fecha de termino" showOn="button"/>
+
+                        <p:outputLabel value="Saldo Inicial" for="cartolaBancoSaldoInicial" />
+                        <p:inputText id="cartolaBancoSaldoInicial" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" value="#{cartolaBancoController.selected.cartolaBancoSaldoInicial}" required="true" requiredMessage="Debe ingresar el Saldo inicial "/>
+
+                        <p:outputLabel value="Saldo Final" for="cartolaBancoSaldoFinal" />
+                        <p:inputText id="cartolaBancoSaldoFinal" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" value="#{cartolaBancoController.selected.cartolaBancoSaldoFinal}" required="true" requiredMessage="Debe ingresar el saldo final"/>
+
+
+                    </p:panelGrid>
+                    <p:commandButton styleClass="btn btn-primary"  actionListener="#{cartolaBancoController.saveNew}" value="#{myBundle.Save}" update="display,:CartolaBancoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CartolaBancoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton styleClass="btn btn-primary" value="#{myBundle.Cancel}" oncomplete="PF('CartolaBancoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ControlViewDlg" widgetVar="ControlViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewControlTitle}" closeOnEscape="true">
+
+            <h:form id="ControlViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{controlController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewControlLabel_controlId}"/>
+                        <h:outputText value="#{controlController.selected.controlId}" title="#{myBundle.ViewControlTitle_controlId}"/>
+
+                        <h:outputText value="#{myBundle.ViewControlLabel_controlNombre}"/>
+                        <h:outputText value="#{controlController.selected.controlNombre}" title="#{myBundle.ViewControlTitle_controlNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewControlLabel_controlLatitud}"/>
+                        <h:outputText value="#{controlController.selected.controlLatitud}" title="#{myBundle.ViewControlTitle_controlLatitud}"/>
+
+                        <h:outputText value="#{myBundle.ViewControlLabel_controlLongitud}"/>
+                        <h:outputText value="#{controlController.selected.controlLongitud}" title="#{myBundle.ViewControlTitle_controlLongitud}"/>
+
+                        <h:outputText value="#{myBundle.ViewControlLabel_controlRadio}"/>
+                        <h:outputText value="#{controlController.selected.controlRadio}" title="#{myBundle.ViewControlTitle_controlRadio}"/>
+
+                        <h:outputText value="#{myBundle.ViewControlLabel_controlIdCuenta}"/>
+                        <h:outputText value="#{controlController.selected.controlIdCuenta.cuentaId}"/>
+
+                        <h:outputText value="#{myBundle.ViewControlLabel_controlIdTipo}"/>
+                        <h:outputText value="#{controlController.selected.controlIdTipo.tipoControlId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ControlViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

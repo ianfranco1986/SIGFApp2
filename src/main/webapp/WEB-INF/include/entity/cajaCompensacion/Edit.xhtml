@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CajaCompensacionEditDlg" widgetVar="CajaCompensacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCajaCompensacionTitle}" closeOnEscape="true">
+
+            <h:form id="CajaCompensacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cajaCompensacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCajaCompensacionLabel_cajaCompensacionId}" for="cajaCompensacionId" />
+                        <h:outputText id="cajaCompensacionId" value="#{cajaCompensacionController.selected.cajaCompensacionId}" />
+
+                        <p:outputLabel value="#{myBundle.EditCajaCompensacionLabel_cajaCompensacionNombre}" for="cajaCompensacionNombre" />
+                        <p:inputText id="cajaCompensacionNombre" value="#{cajaCompensacionController.selected.cajaCompensacionNombre}" title="#{myBundle.EditCajaCompensacionTitle_cajaCompensacionNombre}" required="true" requiredMessage="#{myBundle.EditCajaCompensacionRequiredMessage_cajaCompensacionNombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditCajaCompensacionLabel_cajaCompensacionIdCuenta}" for="cajaCompensacionIdCuenta" />
+                        <p:selectOneMenu id="cajaCompensacionIdCuenta" value="#{cajaCompensacionController.selected.cajaCompensacionIdCuenta}" required="true" requiredMessage="#{myBundle.EditCajaCompensacionRequiredMessage_cajaCompensacionIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="cajaCompensacionIdCuentaItem"
+                                           itemValue="#{cajaCompensacionIdCuentaItem}"
+                                           itemLabel="#{cajaCompensacionIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cajaCompensacionController.save}" value="#{myBundle.Save}" update="display,:CajaCompensacionListForm:datalist,:CajaCompensacionListForm:CajaCompensacionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CajaCompensacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CajaCompensacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

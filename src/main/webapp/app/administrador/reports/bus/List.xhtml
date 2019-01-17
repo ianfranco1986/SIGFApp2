@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                >
+
+    <h:form id="EgresoBusListForm" class="form-height">
+        <p:panel>
+            <f:facet name="header">
+                Registro de Boletos x Bus
+            </f:facet>
+            <p:panelGrid columns="10" style="margin-bottom: 10px;width: 100%;">
+
+                <p:outputLabel value="Bus" for="busNumero" />
+                <p:selectOneMenu id="busNumero" value="#{informeRegistroBoletoController.selected}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{informeRegistroBoletoController.items}"
+                                   var="busItem"
+                                   itemValue="#{busItem}"
+                                   itemLabel="#{busItem.busNumero}"
+
+                                   />
+                    <p:ajax event="valueChange" listener="#{informeRegistroBoletoController.handleBusChange()}" update="guiaFolio, datalist"/>
+                </p:selectOneMenu>
+
+                <h:outputLabel for="mes" value="Mes:" />
+                <p:selectOneMenu id="mes" value="#{informeRegistroBoletoController.mes}" style="width:125px">
+                    <f:selectItem itemLabel="Enero" itemValue="1" />
+                    <f:selectItem itemLabel="Febrero" itemValue="2" />
+                    <f:selectItem itemLabel="Marzo" itemValue="3" />
+                    <f:selectItem itemLabel="Abril" itemValue="4" />
+                    <f:selectItem itemLabel="Mayo" itemValue="5" />
+                    <f:selectItem itemLabel="Junio" itemValue="6" />
+                    <f:selectItem itemLabel="Julio" itemValue="7" />
+                    <f:selectItem itemLabel="Agosto" itemValue="8" />
+                    <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                    <f:selectItem itemLabel="Octubre" itemValue="10" />
+                    <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                    <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                    <p:ajax event="valueChange" listener="#{informeRegistroBoletoController.setFecha()}" update="guiaFolio, datalist"/>
+                </p:selectOneMenu>
+
+                <h:outputLabel for="anio" value="Año:" />
+                <p:inputText id="anio" value="#{informeRegistroBoletoController.anio}" size="5" />
+
+                <p:outputLabel value="Guía" for="guiaFolio" />
+                <p:selectOneMenu id="guiaFolio" value="#{informeRegistroBoletoController.guia}" required="true" requiredMessage="Debe seleccionar la Guía" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{informeRegistroBoletoController.guiaItems}"
+                                   var="guiaItem"
+                                   itemValue="#{guiaItem}"
+                                   itemLabel="#{guiaItem.guiaFolio} - #{informeRegistroBoletoController.sdf.format(guiaItem.guiaFecha)} "
+
+                                   />
+                    <p:ajax event="valueChange" listener="#{informeRegistroBoletoController.load()}" update="datalist" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:dataTable id="datalist"
+                         value="#{informeRegistroBoletoController.boletosItems}"
+                         widgetVar="datalist"
+                         var="item"
+                         rowKey="#{item.numero}"
+                         rowIndexVar="rowIndex"
+                         draggableRows="true" 
+                         emptyMessage="No se han encontrado registros"
+                         reflow="true"
+                         rowStyleClass="#{item.totalVuelta lt 25000 ? 'red' : null}">
+
+
+                <f:facet name="header">
+                    Detalle x Bus N°: #{informeRegistroBoletoController.selected.busNumero}   Unidad:#{informeRegistroBoletoController.selected.busIdUnidadNegocio.unidadNegocioNumero}   PPU:#{informeRegistroBoletoController.selected.busPatente}
+                </f:facet>
+
+                <p:columnGroup type="header" id="dir">
+                    <p:row>
+                        <p:column rowspan="3" headerText="N° Vuelta" />
+                        <p:column rowspan="3" headerText="Total Vuelta" />
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2" headerText="Directo #{item.directo.registroBoletoValor}"/>
+                        <p:column colspan="2" headerText="Plan Cerro" />
+                        <p:column colspan="2" headerText="Local" />
+                        <p:column colspan="2" headerText="Esc.Directo" />
+                        <p:column colspan="2" headerText="Esc.Local" />
+                    </p:row>
+                    <p:row>
+                        <p:column headerText="Total" />
+                        <p:column headerText="Cantidad" />
+                        <p:column headerText="Total" />
+                        <p:column headerText="Cantidad" />
+                        <p:column headerText="Total" />
+                        <p:column headerText="Cantidad" />
+                        <p:column headerText="Total" />
+                        <p:column headerText="Cantidad" />
+                        <p:column headerText="Total" />
+                        <p:column headerText="Cantidad" />
+                    </p:row>
+                </p:columnGroup>
+
+                <p:column>
+                    <p:outputLabel value="#{rowIndex+1}"/>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.directo.registroBoletoTotal+item.planVina.registroBoletoTotal+item.local.registroBoletoTotal+item.escolarDirecto.registroBoletoTotal+item.escolarLocal.registroBoletoTotal}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+
+                <p:column>
+                    <p:outputLabel value="#{item.directo.registroBoletoTotal}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.directo.registroBoletoCantidad}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.planVina.registroBoletoTotal}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.planVina.registroBoletoCantidad}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.local.registroBoletoTotal}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.local.registroBoletoCantidad}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.escolarDirecto.registroBoletoTotal}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.escolarDirecto.registroBoletoCantidad}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.escolarLocal.registroBoletoTotal}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel value="#{item.escolarLocal.registroBoletoCantidad}">
+                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                    </p:outputLabel>
+                </p:column>
+
+
+
+            </p:dataTable>
+        </p:panel>
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

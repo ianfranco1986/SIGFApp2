@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ServicioListForm">
+
+        <p:panel style="padding-bottom: 20px;" >
+            <h3 style="text-align: center;">Servicios</h3>
+            <p:contextMenu id="ServicioDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ServicioListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ServicioListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ServicioListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ServicioListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{servicioController.items}"
+                         lazy="false"
+                         rowKey="#{item.servicioId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{servicioController.selected}"
+                         filteredValue="#{servicioController.filteredItems}"
+                         reflow="true"
+                         rowIndexVar="rowIndex"
+                         widgetVar="datalistWidget">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{servicioController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.servicioId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ServicioDataTableContextMenu" listener="#{servicioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ServicioDataTableContextMenu" listener="#{servicioController.resetParents}"/>
+                <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{servicioController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ServicioListForm:viewButton').click();"/>
+
+                <f:facet name="header">
+                    <div class="row row-nomargin">
+                        <div class="col-lg-3">
+                            <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                        </div>
+                        <div class="col-lg-5">
+                            <h:outputText value=""/>   
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="pull-right">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{servicioController.prepareCreate}" update=":ServicioCreateForm" oncomplete="PF('ServicioCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"  styleClass="btn btn-primary"/>
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":ServicioViewForm" oncomplete="PF('ServicioViewDialog').show()" disabled="#{empty servicioController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"  styleClass="btn btn-primary"/>
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ServicioEditForm" oncomplete="PF('ServicioEditDialog').show()" disabled="#{empty servicioController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"  styleClass="btn btn-primary"/>
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{servicioController.delete}" update=":growl,datalist" disabled="#{empty servicioController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"  styleClass="btn btn-primary">
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.servicioNumeroServicio}" filterBy="#{item.servicioNumeroServicio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListServicioTitle_servicioNumeroServicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioNumeroServicio}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.servicioLongitud}" filterBy="#{item.servicioLongitud}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListServicioTitle_servicioLongitud}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioLongitud}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.servicioNombre}" filterBy="#{item.servicioNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListServicioTitle_servicioNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.servicioOrigen}" filterBy="#{item.servicioOrigen}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListServicioTitle_servicioOrigen}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioOrigen}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.servicioDestino}" filterBy="#{item.servicioDestino}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListServicioTitle_servicioDestino}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioDestino}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.servicioFolio}" filterBy="#{item.servicioFolio}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListServicioTitle_servicioFolio}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.servicioFolio}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.servicioTieneBusesCompartidos}" filterBy="#{item.servicioTieneBusesCompartidos}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListServicioTitle_servicioTieneBusesCompartidos}"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox id="servicioTieneBusesCompartidos" value="#{item.servicioTieneBusesCompartidos}" title="#{myBundle.EditServicioTitle_servicioTieneBusesCompartidos}"  disabled="true"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.servicioIdCuenta.cuentaId}" filterBy="#{item.servicioIdCuenta.cuentaId}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListServicioTitle_servicioIdCuenta}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.servicioIdCuenta.cuentaId}"/>
+                    </p:column>
+                </ui:remove>
+
+                <p:column sortBy="#{item.servicioIdGrupoServicio.grupoServicioIdentificador}" filterBy="#{item.servicioIdGrupoServicio.grupoServicioIdentificador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListServicioTitle_servicioIdGrupoServicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioIdGrupoServicio.grupoServicioIdentificador}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.servicioIdTerminal.terminalNombre}" filterBy="#{item.servicioIdTerminal.terminalNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListServicioTitle_servicioIdTerminal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioIdTerminal.terminalNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.servicioIdUnidad.unidadNegocioNumero}" filterBy="#{item.servicioIdUnidad.unidadNegocioNumero}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListServicioTitle_servicioIdUnidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioIdUnidad.unidadNegocioNumero}"/>
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

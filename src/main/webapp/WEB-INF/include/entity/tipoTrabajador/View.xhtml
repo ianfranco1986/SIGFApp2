@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoTrabajadorViewDlg" widgetVar="TipoTrabajadorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTipoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="TipoTrabajadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tipoTrabajadorController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTipoTrabajadorLabel_tipoTrabajadorId}"/>
+                        <h:outputText value="#{tipoTrabajadorController.selected.tipoTrabajadorId}" title="#{myBundle.ViewTipoTrabajadorTitle_tipoTrabajadorId}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoTrabajadorLabel_tipoTrabajadorNombre}"/>
+                        <h:outputText value="#{tipoTrabajadorController.selected.tipoTrabajadorNombre}" title="#{myBundle.ViewTipoTrabajadorTitle_tipoTrabajadorNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoTrabajadorLabel_tipoTrabajadorIdCuenta}"/>
+                        <h:outputText value="#{tipoTrabajadorController.selected.tipoTrabajadorIdCuenta.cuentaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('TipoTrabajadorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

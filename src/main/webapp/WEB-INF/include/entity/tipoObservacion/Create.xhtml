@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoObservacionCreateDlg" widgetVar="TipoObservacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTipoObservacionTitle}" closeOnEscape="true">
+
+            <h:form id="TipoObservacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoObservacionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTipoObservacionLabel_tipoObservacionNombre}" for="tipoObservacionNombre" />
+                        <p:inputText id="tipoObservacionNombre" value="#{tipoObservacionController.selected.tipoObservacionNombre}" title="#{myBundle.CreateTipoObservacionTitle_tipoObservacionNombre}" required="true" requiredMessage="#{myBundle.CreateTipoObservacionRequiredMessage_tipoObservacionNombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoObservacionLabel_tipoObservacionIdCuenta}" for="tipoObservacionIdCuenta" />
+                        <p:selectOneMenu id="tipoObservacionIdCuenta" value="#{tipoObservacionController.selected.tipoObservacionIdCuenta}" required="true" requiredMessage="#{myBundle.CreateTipoObservacionRequiredMessage_tipoObservacionIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="tipoObservacionIdCuentaItem"
+                                           itemValue="#{tipoObservacionIdCuentaItem}"
+                                           itemLabel="#{tipoObservacionIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoObservacionController.saveNew}" value="#{myBundle.Save}" update="display,:TipoObservacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoObservacionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoObservacionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

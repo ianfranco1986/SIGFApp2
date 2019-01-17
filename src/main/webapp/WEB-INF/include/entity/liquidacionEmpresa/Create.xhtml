@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LiquidacionEmpresaCreateDlg" widgetVar="LiquidacionEmpresaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateLiquidacionEmpresaTitle}" closeOnEscape="true">
+
+            <h:form id="LiquidacionEmpresaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{liquidacionEmpresaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateLiquidacionEmpresaLabel_liquidacionEmpresaFechaLiquidacion}" for="liquidacionEmpresaFechaLiquidacion" />
+                        <p:calendar id="liquidacionEmpresaFechaLiquidacion" pattern="MM/dd/yyyy" value="#{liquidacionEmpresaController.selected.liquidacionEmpresaFechaLiquidacion}" title="#{myBundle.CreateLiquidacionEmpresaTitle_liquidacionEmpresaFechaLiquidacion}" required="true" requiredMessage="#{myBundle.CreateLiquidacionEmpresaRequiredMessage_liquidacionEmpresaFechaLiquidacion}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLiquidacionEmpresaLabel_liquidacionEmpresaFechaPago}" for="liquidacionEmpresaFechaPago" />
+                        <p:calendar id="liquidacionEmpresaFechaPago" pattern="MM/dd/yyyy" value="#{liquidacionEmpresaController.selected.liquidacionEmpresaFechaPago}" title="#{myBundle.CreateLiquidacionEmpresaTitle_liquidacionEmpresaFechaPago}" required="true" requiredMessage="#{myBundle.CreateLiquidacionEmpresaRequiredMessage_liquidacionEmpresaFechaPago}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLiquidacionEmpresaLabel_liquidacionEmpresaTotalAbonos}" for="liquidacionEmpresaTotalAbonos" />
+                        <p:inputText id="liquidacionEmpresaTotalAbonos" value="#{liquidacionEmpresaController.selected.liquidacionEmpresaTotalAbonos}" title="#{myBundle.CreateLiquidacionEmpresaTitle_liquidacionEmpresaTotalAbonos}" required="true" requiredMessage="#{myBundle.CreateLiquidacionEmpresaRequiredMessage_liquidacionEmpresaTotalAbonos}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLiquidacionEmpresaLabel_liquidacionEmpresaTotalCargos}" for="liquidacionEmpresaTotalCargos" />
+                        <p:inputText id="liquidacionEmpresaTotalCargos" value="#{liquidacionEmpresaController.selected.liquidacionEmpresaTotalCargos}" title="#{myBundle.CreateLiquidacionEmpresaTitle_liquidacionEmpresaTotalCargos}" required="true" requiredMessage="#{myBundle.CreateLiquidacionEmpresaRequiredMessage_liquidacionEmpresaTotalCargos}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLiquidacionEmpresaLabel_liquidacionEmpresaSaldo}" for="liquidacionEmpresaSaldo" />
+                        <p:inputText id="liquidacionEmpresaSaldo" value="#{liquidacionEmpresaController.selected.liquidacionEmpresaSaldo}" title="#{myBundle.CreateLiquidacionEmpresaTitle_liquidacionEmpresaSaldo}" required="true" requiredMessage="#{myBundle.CreateLiquidacionEmpresaRequiredMessage_liquidacionEmpresaSaldo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLiquidacionEmpresaLabel_liquidacionEmpresaIdEmpresa}" for="liquidacionEmpresaIdEmpresa" />
+                        <p:selectOneMenu id="liquidacionEmpresaIdEmpresa" value="#{liquidacionEmpresaController.selected.liquidacionEmpresaIdEmpresa}" required="true" requiredMessage="#{myBundle.CreateLiquidacionEmpresaRequiredMessage_liquidacionEmpresaIdEmpresa}" converter="empresaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empresaController.items}"
+                                           var="liquidacionEmpresaIdEmpresaItem"
+                                           itemValue="#{liquidacionEmpresaIdEmpresaItem}"
+                                           itemLabel="#{liquidacionEmpresaIdEmpresaItem.empresaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{liquidacionEmpresaController.saveNew}" value="#{myBundle.Save}" update="display,:LiquidacionEmpresaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('LiquidacionEmpresaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('LiquidacionEmpresaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

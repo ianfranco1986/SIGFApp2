@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TipoCuentaBancoListForm">
+
+
+        <p:contextMenu id="TipoCuentaBancoDataTableContextMenu" for="datalist">  
+            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TipoCuentaBancoListForm:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TipoCuentaBancoListForm:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TipoCuentaBancoListForm:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TipoCuentaBancoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+        </p:contextMenu>
+        <p:dataTable id="datalist"
+                     value="#{tipoCuentaBancoController.items}"
+                     lazy="false"
+                     rowKey="#{item.tipoCuentaBancoId}"
+                     var="item"
+                     paginator="true"
+                     rows="100"
+                     rowsPerPageTemplate="100, 200, 500"
+                     selectionMode="single"
+                     selection="#{tipoCuentaBancoController.selected}"
+                     filteredValue="#{tipoCuentaBancoController.filteredItems}"
+                     reflow="true"
+                     emptyMessage="No se han encontrado registros"
+                     widgetVar="datalistWidget">
+            <!--
+                     To enable Lazy Loading, please copy/replace the following lines above,
+                     and be sure to replace the word HASH with the # symbol:
+            
+                     value="HASH{tipoCuentaBancoController.lazyItems}"
+                     lazy="true"
+                     rowKey="HASH{item.tipoCuentaBancoId}"  <<< Remove this line
+            -->
+
+
+            <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:TipoCuentaBancoDataTableContextMenu"/>
+            <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:TipoCuentaBancoDataTableContextMenu"/>
+            <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton"/>
+            <p:ajax event="rowDblselect" onsuccess="document.getElementById('TipoCuentaBancoListForm:viewButton').click();"/>
+
+            <f:facet name="header">
+                <div class="row row-nomargin">
+                    <div class="col-lg-3">
+                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
+                    </div>
+                    <div class="col-lg-5">
+                        <h:outputText value="Tipos de Cuentas"/>   
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="pull-right">
+                            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tipoCuentaBancoController.prepareCreate}" update=":TipoCuentaBancoCreateForm" oncomplete="PF('TipoCuentaBancoCreateDialog').show()" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":TipoCuentaBancoViewForm" oncomplete="PF('TipoCuentaBancoViewDialog').show()" disabled="#{empty tipoCuentaBancoController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoCuentaBancoEditForm" oncomplete="PF('TipoCuentaBancoEditDialog').show()" disabled="#{empty tipoCuentaBancoController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoCuentaBancoController.delete}" update=":growl,datalist" disabled="#{empty tipoCuentaBancoController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                            </p:commandButton>
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="#"/>
+                </f:facet>
+                <h:outputText value="#{item.tipoCuentaBancoId}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.tipoCuentaBancoNombre}" filterBy="#{item.tipoCuentaBancoNombre}">
+                <f:facet name="header">
+                    <h:outputText value="#{myBundle.ListTipoCuentaBancoTitle_tipoCuentaBancoNombre}"/>
+                </f:facet>
+                <h:outputText value="#{item.tipoCuentaBancoNombre}"/>
+            </p:column>
+        </p:dataTable>
+
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

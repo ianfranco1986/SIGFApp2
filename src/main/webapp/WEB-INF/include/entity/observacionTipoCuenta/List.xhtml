@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ObservacionTipoCuentaListForm">
+
+        <p:panel header="#{myBundle.ListObservacionTipoCuentaTitle}">
+            <p:contextMenu id="ObservacionTipoCuentaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ObservacionTipoCuentaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ObservacionTipoCuentaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ObservacionTipoCuentaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ObservacionTipoCuentaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ObservacionTipoCuentaMenuItem_observacionTipoCuentaIdTipo}" icon="ui-icon-search"  actionListener="#{observacionTipoCuentaController.prepareObservacionTipoCuentaIdTipo}" update=":TipoCuentaViewForm" oncomplete="PF('TipoCuentaViewDialog').show()" disabled="#{empty observacionTipoCuentaController.selected.observacionTipoCuentaIdTipo}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{observacionTipoCuentaController.items}"
+                         lazy="false"
+                         rowKey="#{item.observacionTipoCuentaId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{observacionTipoCuentaController.selected}"
+                         filteredValue="#{observacionTipoCuentaController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{observacionTipoCuentaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.observacionTipoCuentaId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ObservacionTipoCuentaDataTableContextMenu" listener="#{observacionTipoCuentaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ObservacionTipoCuentaDataTableContextMenu" listener="#{observacionTipoCuentaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{observacionTipoCuentaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ObservacionTipoCuentaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.observacionTipoCuentaId}" filterBy="#{item.observacionTipoCuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListObservacionTipoCuentaTitle_observacionTipoCuentaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.observacionTipoCuentaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.observacionTipoCuentaDescripcion}" filterBy="#{item.observacionTipoCuentaDescripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListObservacionTipoCuentaTitle_observacionTipoCuentaDescripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.observacionTipoCuentaDescripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.observacionTipoCuentaResumen}" filterBy="#{item.observacionTipoCuentaResumen}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListObservacionTipoCuentaTitle_observacionTipoCuentaResumen}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.observacionTipoCuentaResumen}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.observacionTipoCuentaIdTipo.tipoCuentaId}" filterBy="#{item.observacionTipoCuentaIdTipo.tipoCuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListObservacionTipoCuentaTitle_observacionTipoCuentaIdTipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.observacionTipoCuentaIdTipo.tipoCuentaId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{observacionTipoCuentaController.prepareCreate}" update=":ObservacionTipoCuentaCreateForm" oncomplete="PF('ObservacionTipoCuentaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":ObservacionTipoCuentaViewForm" oncomplete="PF('ObservacionTipoCuentaViewDialog').show()" disabled="#{empty observacionTipoCuentaController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ObservacionTipoCuentaEditForm" oncomplete="PF('ObservacionTipoCuentaEditDialog').show()" disabled="#{empty observacionTipoCuentaController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{observacionTipoCuentaController.delete}" update=":growl,datalist" disabled="#{empty observacionTipoCuentaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

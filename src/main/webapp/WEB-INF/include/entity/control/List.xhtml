@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ControlListForm">
+
+        <p:panel header="#{myBundle.ListControlTitle}">
+            <p:contextMenu id="ControlDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ControlListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ControlListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ControlListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ControlListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ControlMenuItem_controlServicioList}" icon="ui-icon-search"  action="#{controlController.navigateControlServicioList}" disabled="#{controlController.isControlServicioListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ControlMenuItem_controlHorarioServicioList}" icon="ui-icon-search"  action="#{controlController.navigateControlHorarioServicioList}" disabled="#{controlController.isControlHorarioServicioListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ControlMenuItem_controlIdCuenta}" icon="ui-icon-search"  actionListener="#{controlController.prepareControlIdCuenta}" update=":CuentaViewForm" oncomplete="PF('CuentaViewDialog').show()" disabled="#{empty controlController.selected.controlIdCuenta}"/>  
+                <p:menuitem value="#{myBundle.ControlMenuItem_controlIdTipo}" icon="ui-icon-search"  actionListener="#{controlController.prepareControlIdTipo}" update=":TipoControlViewForm" oncomplete="PF('TipoControlViewDialog').show()" disabled="#{empty controlController.selected.controlIdTipo}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{controlController.items}"
+                         lazy="false"
+                         rowKey="#{item.controlId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{controlController.selected}"
+                         filteredValue="#{controlController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{controlController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.controlId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ControlDataTableContextMenu" listener="#{controlController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ControlDataTableContextMenu" listener="#{controlController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{controlController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ControlListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.controlId}" filterBy="#{item.controlId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListControlTitle_controlId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.controlId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.controlNombre}" filterBy="#{item.controlNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListControlTitle_controlNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.controlNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.controlLatitud}" filterBy="#{item.controlLatitud}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListControlTitle_controlLatitud}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.controlLatitud}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.controlLongitud}" filterBy="#{item.controlLongitud}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListControlTitle_controlLongitud}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.controlLongitud}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.controlRadio}" filterBy="#{item.controlRadio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListControlTitle_controlRadio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.controlRadio}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.controlIdCuenta.cuentaId}" filterBy="#{item.controlIdCuenta.cuentaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListControlTitle_controlIdCuenta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.controlIdCuenta.cuentaId}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.controlIdTipo.tipoControlId}" filterBy="#{item.controlIdTipo.tipoControlId}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListControlTitle_controlIdTipo}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.controlIdTipo.tipoControlId}"/>
+                    </p:column>
+                </ui:remove>
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{controlController.prepareCreate}" update=":ControlCreateForm" oncomplete="PF('ControlCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":ControlViewForm" oncomplete="PF('ControlViewDialog').show()" disabled="#{empty controlController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ControlEditForm" oncomplete="PF('ControlEditDialog').show()" disabled="#{empty controlController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{controlController.delete}" update=":growl,datalist" disabled="#{empty controlController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

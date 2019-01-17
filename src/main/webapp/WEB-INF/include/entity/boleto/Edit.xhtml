@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="BoletoEditDlg" widgetVar="BoletoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditBoletoTitle}" closeOnEscape="true">
+
+            <h:form id="BoletoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{boletoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditBoletoLabel_boletoId}" for="boletoId" />
+                        <h:outputText id="boletoId" value="#{boletoController.selected.boletoId}" />
+
+                        <p:outputLabel value="#{myBundle.EditBoletoLabel_boletoNombre}" for="boletoNombre" />
+                        <p:inputText id="boletoNombre" value="#{boletoController.selected.boletoNombre}" title="#{myBundle.EditBoletoTitle_boletoNombre}" required="true" requiredMessage="#{myBundle.EditBoletoRequiredMessage_boletoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditBoletoLabel_boletoOrden}" for="boletoOrden" />
+                        <p:inputText id="boletoOrden" value="#{boletoController.selected.boletoOrden}" title="#{myBundle.EditBoletoTitle_boletoOrden}" required="true" requiredMessage="#{myBundle.EditBoletoRequiredMessage_boletoOrden}"/>
+
+                        <p:outputLabel value="#{myBundle.EditBoletoLabel_boletoActivo}" for="boletoActivo" />
+                        <p:selectBooleanCheckbox id="boletoActivo" value="#{boletoController.selected.boletoActivo}" required="true" requiredMessage="#{myBundle.EditBoletoRequiredMessage_boletoActivo}"/>
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{boletoController.save}" value="#{myBundle.Save}" update="display,:BoletoListForm:datalist,:BoletoListForm:BoletoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BoletoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BoletoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

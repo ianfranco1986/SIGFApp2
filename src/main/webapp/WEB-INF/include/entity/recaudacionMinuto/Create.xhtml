@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RecaudacionMinutoCreateDlg" widgetVar="RecaudacionMinutoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateRecaudacionMinutoTitle}" closeOnEscape="true">
+
+            <h:form id="RecaudacionMinutoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{recaudacionMinutoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionMinutoLabel_recaudacionMinutoMonto}" for="recaudacionMinutoMonto" />
+                        <p:inputText id="recaudacionMinutoMonto" value="#{recaudacionMinutoController.selected.recaudacionMinutoMonto}" title="#{myBundle.CreateRecaudacionMinutoTitle_recaudacionMinutoMonto}" required="true" requiredMessage="#{myBundle.CreateRecaudacionMinutoRequiredMessage_recaudacionMinutoMonto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionMinutoLabel_recaudacionMinutoIdRecaudacion}" for="recaudacionMinutoIdRecaudacion" />
+                        <p:selectOneMenu id="recaudacionMinutoIdRecaudacion" value="#{recaudacionMinutoController.selected.recaudacionMinutoIdRecaudacion}" required="true" requiredMessage="#{myBundle.CreateRecaudacionMinutoRequiredMessage_recaudacionMinutoIdRecaudacion}" converter="recaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recaudacionController.items}"
+                                           var="recaudacionMinutoIdRecaudacionItem"
+                                           itemValue="#{recaudacionMinutoIdRecaudacionItem}"
+                                           itemLabel="#{recaudacionMinutoIdRecaudacionItem.recaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateRecaudacionMinutoLabel_recaudacionMinutoIdRegistroMinuto}" for="recaudacionMinutoIdRegistroMinuto" />
+                        <p:selectOneMenu id="recaudacionMinutoIdRegistroMinuto" value="#{recaudacionMinutoController.selected.recaudacionMinutoIdRegistroMinuto}" required="true" requiredMessage="#{myBundle.CreateRecaudacionMinutoRequiredMessage_recaudacionMinutoIdRegistroMinuto}" converter="registroMinutoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{registroMinutoController.items}"
+                                           var="recaudacionMinutoIdRegistroMinutoItem"
+                                           itemValue="#{recaudacionMinutoIdRegistroMinutoItem}"
+                                           itemLabel="#{recaudacionMinutoIdRegistroMinutoItem.registroMinutoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{recaudacionMinutoController.saveNew}" value="#{myBundle.Save}" update="display,:RecaudacionMinutoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RecaudacionMinutoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RecaudacionMinutoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

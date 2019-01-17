@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResumenRecaudacionCreateDlg" widgetVar="ResumenRecaudacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateResumenRecaudacionTitle}" closeOnEscape="true">
+
+            <h:form id="ResumenRecaudacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{resumenRecaudacionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateResumenRecaudacionLabel_resumenRecaudacionFecha}" for="resumenRecaudacionFecha" />
+                        <p:calendar id="resumenRecaudacionFecha" pattern="MM/dd/yyyy" value="#{resumenRecaudacionController.selected.resumenRecaudacionFecha}" title="#{myBundle.CreateResumenRecaudacionTitle_resumenRecaudacionFecha}" required="true" requiredMessage="#{myBundle.CreateResumenRecaudacionRequiredMessage_resumenRecaudacionFecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateResumenRecaudacionLabel_resumenRecaudacionTotal}" for="resumenRecaudacionTotal" />
+                        <p:inputText id="resumenRecaudacionTotal" value="#{resumenRecaudacionController.selected.resumenRecaudacionTotal}" title="#{myBundle.CreateResumenRecaudacionTitle_resumenRecaudacionTotal}" required="true" requiredMessage="#{myBundle.CreateResumenRecaudacionRequiredMessage_resumenRecaudacionTotal}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateResumenRecaudacionLabel_resumenRecaudacionTieneTransporte}" for="resumenRecaudacionTieneTransporte" />
+                        <p:inputText id="resumenRecaudacionTieneTransporte" value="#{resumenRecaudacionController.selected.resumenRecaudacionTieneTransporte}" title="#{myBundle.CreateResumenRecaudacionTitle_resumenRecaudacionTieneTransporte}" required="true" requiredMessage="#{myBundle.CreateResumenRecaudacionRequiredMessage_resumenRecaudacionTieneTransporte}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateResumenRecaudacionLabel_resumenRecaudacionCerrado}" for="resumenRecaudacionCerrado" />
+                        <p:selectBooleanCheckbox id="resumenRecaudacionCerrado" value="#{resumenRecaudacionController.selected.resumenRecaudacionCerrado}" required="true" requiredMessage="#{myBundle.CreateResumenRecaudacionRequiredMessage_resumenRecaudacionCerrado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateResumenRecaudacionLabel_resumenRecaudacionIdCaja}" for="resumenRecaudacionIdCaja" />
+                        <p:selectOneMenu id="resumenRecaudacionIdCaja" value="#{resumenRecaudacionController.selected.resumenRecaudacionIdCaja}" required="true" requiredMessage="#{myBundle.CreateResumenRecaudacionRequiredMessage_resumenRecaudacionIdCaja}" converter="cajaRecaudacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cajaRecaudacionController.items}"
+                                           var="resumenRecaudacionIdCajaItem"
+                                           itemValue="#{resumenRecaudacionIdCajaItem}"
+                                           itemLabel="#{resumenRecaudacionIdCajaItem.cajaRecaudacionId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{resumenRecaudacionController.saveNew}" value="#{myBundle.Save}" update="display,:ResumenRecaudacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ResumenRecaudacionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ResumenRecaudacionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

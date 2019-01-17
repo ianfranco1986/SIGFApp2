@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartamentoCreateDlg" widgetVar="DepartamentoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateDepartamentoTitle}" closeOnEscape="true">
+
+            <h:form id="DepartamentoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{departamentoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentoLabel_departamentoNombre}" for="departamentoNombre" />
+                        <p:inputText id="departamentoNombre" value="#{departamentoController.selected.departamentoNombre}" title="#{myBundle.CreateDepartamentoTitle_departamentoNombre}" required="true" requiredMessage="#{myBundle.CreateDepartamentoRequiredMessage_departamentoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentoLabel_departamentoActivo}" for="departamentoActivo" />
+                        <p:selectBooleanCheckbox id="departamentoActivo" value="#{departamentoController.selected.departamentoActivo}" required="true" requiredMessage="#{myBundle.CreateDepartamentoRequiredMessage_departamentoActivo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentoLabel_departamentoIdCuenta}" for="departamentoIdCuenta" />
+                        <p:selectOneMenu id="departamentoIdCuenta" value="#{departamentoController.selected.departamentoIdCuenta}" required="true" requiredMessage="#{myBundle.CreateDepartamentoRequiredMessage_departamentoIdCuenta}" converter="cuentaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaController.items}"
+                                           var="departamentoIdCuentaItem"
+                                           itemValue="#{departamentoIdCuentaItem}"
+                                           itemLabel="#{departamentoIdCuentaItem.cuentaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{departamentoController.saveNew}" value="#{myBundle.Save}" update="display,:DepartamentoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DepartamentoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DepartamentoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
