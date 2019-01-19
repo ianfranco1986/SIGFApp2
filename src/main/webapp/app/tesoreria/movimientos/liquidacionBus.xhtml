@@ -68,7 +68,7 @@
                 <p:separator/>                   
             </p:contextMenu>
             <p:dataTable id="datalist"
-                         value="#{registroLiquidacionBusController.cargoBusItems}"
+                         value="#{registroLiquidacionBusController.cargoDataModel}"
                          lazy="false"
                          rowKey="#{item.cargoBusId}"
                          var="item"                                     
@@ -117,25 +117,25 @@
                     <f:facet name="header">
                         <h:outputText value="N° Cuota"/>
                     </f:facet>
-                    <p:inputText value="#{item.cargoBusCuotaActual}" size="3"/>
+                    <p:inputNumber value="#{item.cargoBusCuotaActual}" size="3" decimalPlaces="0"/>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Total Cuotas"/>
                     </f:facet>
-                    <p:inputText value="#{item.cargoBusTotalCuotas}" size="3"/>
+                    <p:inputNumber value="#{item.cargoBusTotalCuotas}" size="3" decimalPlaces="0"/>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Monto"/>
                     </f:facet>
-                    <p:inputText value="#{item.cargoBusMontoFijo}" size="10"/>
+                    <p:inputNumber value="#{item.cargoBusMontoFijo}" size="10" decimalPlaces="0"/>
                 </p:column>
 
                 <f:facet name="footer">
-                    <p:commandButton id="createButton"  styleClass="btn btn-primary"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroLiquidacionBusController.prepareCreateCargo}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" update=":CargoBusCreateForm" oncomplete="PF('CargoBusCreateDialog').show()"/>
+                    <p:commandButton id="createButton"  styleClass="btn btn-primary"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroLiquidacionBusController.prepareCreateCargo}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" update=":CargoBusCreateForm, :CargoBusCreateForm:display" oncomplete="PF('CargoBusCreateDialog').show()"/>
                     <p:commandButton id="editButton"   styleClass="btn btn-primary"  icon="ui-icon-pencil" value="Guardar Cambios" update="resultado, :growl"  actionListener="#{registroLiquidacionBusController.saveCargo}" >
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="Actualizar?" icon="ui-icon-alert"/>
                     </p:commandButton>
@@ -156,7 +156,7 @@
                 <p:separator/>                    
             </p:contextMenu>
             <p:dataTable id="datalist"
-                         value="#{registroLiquidacionBusController.abonoBusItems}"
+                         value="#{registroLiquidacionBusController.abonoDataModel}"
                          lazy="false"
                          rowKey="#{item3.abonoBusId}"
                          var="item3"                                     
@@ -205,21 +205,21 @@
                     <f:facet name="header">
                         <h:outputText value="N° Cuota"/>
                     </f:facet>
-                    <p:inputText value="#{item3.abonoBusCuotaActual}" size="3"/>
+                    <p:inputNumber value="#{item3.abonoBusCuotaActual}" size="3" decimalPlaces="0"/>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Total Cuotas"/>
                     </f:facet>
-                    <p:inputText value="#{item3.abonoBusTotalCuotas}" size="3"/>
+                    <p:inputNumber value="#{item3.abonoBusTotalCuotas}" size="3" decimalPlaces="0"/>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Monto"/>
                     </f:facet>
-                    <p:inputText value="#{item3.abonoBusMontoFijo}" size="10"/>
+                    <p:inputNumber value="#{item3.abonoBusMontoFijo}" size="10" decimalPlaces="0"/>
                 </p:column>
 
                 <f:facet name="footer" >
@@ -273,6 +273,22 @@
                         </f:facet>
                         <h:outputText value="#{rowIndex+1}" />
                     </p:column>
+                    
+                    <p:column style="width: 20px; text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Fecha"/>
+                        </f:facet>
+                        <h:outputText value="#{item.recaudacionFecha}" >
+                            <f:convertDateTime pattern="dd/MM/yy"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column style="width: 20px; text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Total"/>
+                        </f:facet>
+                        <h:outputText value="#{item.recaudacionTotal}" />
+                    </p:column>
 
                 </p:dataTable>
 
@@ -292,8 +308,6 @@
 
         <p:panel id="resultado" header="Resultado:" style="margin-top: 10px;" >
             <p:panelGrid columns="2" style="text-align: left;">
-
-
             </p:panelGrid>
         </p:panel>
 
@@ -304,53 +318,54 @@
         <h:form id="AbonoBusCreateForm">
 
             <h:panelGroup id="display" rendered="#{registroLiquidacionBusController.abonoBus != null}">
-                <p:panelGrid columns="2" columnClasses="column">
+                <p:panelGrid columns="4" columnClasses="column">
 
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusFechaInicio}" for="abonoBusFechaInicio" />
-                    <p:calendar id="abonoBusFechaInicio" pattern="MM/dd/yyyy" value="#{registroLiquidacionBusController.abonoBus.abonoBusFechaInicio}" title="#{myBundle.CreateAbonoBusTitle_abonoBusFechaInicio}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusFechaInicio}" showOn="button"/>
+                    <p:outputLabel value="Fecha:" for="abonoBusFechaInicio" />
+                    <p:calendar id="abonoBusFechaInicio" pattern="dd/MM/yyyy" value="#{registroLiquidacionBusController.abonoBus.abonoBusFechaInicio}" title="#{myBundle.CreateAbonoBusTitle_abonoBusFechaInicio}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusFechaInicio}" showOn="button"/>
 
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusFechaTermino}" for="abonoBusFechaTermino" />
-                    <p:calendar id="abonoBusFechaTermino" pattern="MM/dd/yyyy" value="#{registroLiquidacionBusController.abonoBus.abonoBusFechaTermino}" title="#{myBundle.CreateAbonoBusTitle_abonoBusFechaTermino}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusFechaTermino}" showOn="button"/>
+                    <p:outputLabel value="Patente:" for="patente" />
+                    <p:outputLabel id="patente" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdBus.busNumero}"/>
 
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusCuotaActual}" for="abonoBusCuotaActual" />
-                    <p:inputText id="abonoBusCuotaActual" value="#{registroLiquidacionBusController.abonoBus.abonoBusCuotaActual}" title="#{myBundle.CreateAbonoBusTitle_abonoBusCuotaActual}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusCuotaActual}"/>
-
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusTotalCuotas}" for="abonoBusTotalCuotas" />
-                    <p:inputText id="abonoBusTotalCuotas" value="#{registroLiquidacionBusController.abonoBus.abonoBusTotalCuotas}" title="#{myBundle.CreateAbonoBusTitle_abonoBusTotalCuotas}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusTotalCuotas}"/>
-
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusMontoFijo}" for="abonoBusMontoFijo" />
-                    <p:inputText id="abonoBusMontoFijo" value="#{registroLiquidacionBusController.abonoBus.abonoBusMontoFijo}" title="#{myBundle.CreateAbonoBusTitle_abonoBusMontoFijo}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusMontoFijo}"/>
-
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusDescripcion}" for="abonoBusDescripcion" />
-                    <p:inputText id="abonoBusDescripcion" value="#{registroLiquidacionBusController.abonoBus.abonoBusDescripcion}" title="#{myBundle.CreateAbonoBusTitle_abonoBusDescripcion}" size="100" maxlength="100"/>
-
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusActivo}" for="abonoBusActivo" />
-                    <p:selectBooleanCheckbox id="abonoBusActivo" value="#{registroLiquidacionBusController.abonoBus.abonoBusActivo}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusActivo}"/>
-
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusIdBus}" for="abonoBusIdBus" />
-                    <p:selectOneMenu id="abonoBusIdBus" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdBus}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusIdBus}" converter="busConverter">
-                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                        <f:selectItems value="#{busController.items}"
-                                       var="abonoBusIdBusItem"
-                                       itemValue="#{abonoBusIdBusItem}"
-                                       itemLabel="#{abonoBusIdBusItem.busId.toString()}"
-                                       />
-
-                    </p:selectOneMenu>
-
-                    <p:outputLabel value="#{myBundle.CreateAbonoBusLabel_abonoBusIdTipoAbono}" for="abonoBusIdTipoAbono" />
+                    <p:outputLabel value="Abono:" for="abonoBusIdTipoAbono" />
                     <p:selectOneMenu id="abonoBusIdTipoAbono" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdTipoAbono}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusIdTipoAbono}" converter="tipoAbonoConverter">
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                         <f:selectItems value="#{tipoAbonoController.items}"
                                        var="abonoBusIdTipoAbonoItem"
                                        itemValue="#{abonoBusIdTipoAbonoItem}"
-                                       itemLabel="#{abonoBusIdTipoAbonoItem.tipoAbonoId.toString()}"
+                                       itemLabel="#{abonoBusIdTipoAbonoItem.tipoAbonoNombre}"
                                        />
 
                     </p:selectOneMenu>
+
+                    <p:outputLabel value="Flota:" for="flota" />
+                    <p:outputLabel id="flota" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdBus.busIdFlota.flotaNombre}"/>
+
+                    <p:outputLabel value="Monto" for="abonoBusMontoFijo" />
+                    <p:inputNumber id="abonoBusMontoFijo" value="#{registroLiquidacionBusController.abonoBus.abonoBusMontoFijo}" decimalPlaces="0" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusMontoFijo}"/>
+
+                    <p:outputLabel value="Empresa:" for="empresa" />
+                    <p:outputLabel id="empresa" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdBus.busIdEmpresa.empresaNombre}"/>
+
+                    <p:outputLabel value="Descripción" for="abonoBusDescripcion" />
+                    <p:inputText id="abonoBusDescripcion" value="#{registroLiquidacionBusController.abonoBus.abonoBusDescripcion}" title="#{myBundle.CreateAbonoBusTitle_abonoBusDescripcion}" size="30" maxlength="100"/>           
+
+                    <p:outputLabel value="Unidad:" for="unidad" />
+                    <p:outputLabel id="unidad" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdBus.busIdUnidadNegocio.unidadNegocioNumero}   "/>
+
+                    <h:panelGroup>
+                        <p:outputLabel value="Cuotas" for="abonoBusCuotaActual" />
+                        <p:selectBooleanCheckbox value="#{registroLiquidacionBusController.cuotasAbono}" style="margin-left: 5px;">
+                            <p:ajax event="valueChange" update="totalCuotasAbonoBus"/>
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel value="?:" style="margin-left: 5px;"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:inputNumber id="abonoBusCuotaActual" decimalPlaces="0" size="8" value="#{registroLiquidacionBusController.abonoBus.abonoBusCuotaActual}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusCuotaActual}"/>
+                        <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
+                        <p:inputNumber id="totalCuotasAbonoBus" decimalPlaces="0" size="8" value="#{registroLiquidacionBusController.abonoBus.abonoBusTotalCuotas}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusTotalCuotas}"/>
+                    </h:panelGroup>
                 </p:panelGrid>
-                <p:commandButton actionListener="#{registroLiquidacionBusController.saveNew}" value="#{myBundle.Save}" update="display,:AbonoBusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AbonoBusCreateDialog'));">
-                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                <p:commandButton actionListener="#{registroLiquidacionBusController.addAbono()}" value="#{myBundle.Save}" update=":AbonoBusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AbonoBusCreateDialog'));">
                 </p:commandButton>
 
                 <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AbonoBusCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
@@ -369,7 +384,7 @@
 
                     <p:outputLabel value="Fecha:" for="fechaInicioCargoBus" />
                     <h:panelGroup>
-                        <p:calendar id="fechaInicioCargoBus" pattern="dd/MM/yyyy" value="#{registroLiquidacionBusController.fecha}"  required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_fechaInicioCargoBus}" autocomplete="off"/>
+                        <p:calendar id="fechaInicioCargoBus" pattern="dd/MM/yyyy" value="#{registroLiquidacionBusController.fecha}"  required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_fechaInicioCargoBus}" autocomplete="off" locale="es"/>
                     </h:panelGroup>
 
                     <p:outputLabel value="Patente:" for="patente" />
@@ -377,18 +392,15 @@
 
                     <p:outputLabel value="Cargo: " for="tipoCargo" />
                     <h:panelGroup>
-                        <p:selectOneMenu id="tipoCargo" value="#{cargoBusController.selected.cargoBusIdTipo}" required="true" requiredMessage="Debe seleccionar el Cargo" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="tipoCargo" value="#{registroLiquidacionBusController.cargoBus.cargoBusIdTipo}" required="true" requiredMessage="Debe seleccionar el Cargo" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="Seleccionar..."/>
-                            <f:selectItems value="#{tipoCargoController.items}"
+                            <f:selectItems value="#{registroLiquidacionBusController.tipoCargoItems}"
                                            var="tipoCargoItem"
                                            itemValue="#{tipoCargoItem}"
                                            itemLabel="#{tipoCargoItem.tipoCargoNombre}"
                                            />
-                            <p:ajax event="valueChange" listener="#{cargoBusController.setMontoXDefecto}" update="montoCargoBus" global="false"/>
                         </p:selectOneMenu>
                     </h:panelGroup>
-
-
 
                     <p:outputLabel value="Flota:" for="flota" />
                     <p:outputLabel id="flota" value="#{registroLiquidacionBusController.cargoBus.cargoBusIdBus.busIdFlota.flotaNombre}"/>
@@ -396,7 +408,7 @@
 
                     <p:outputLabel value="Monto" for="montoCargoBus" />
                     <h:panelGroup>
-                        <p:inputText id="montoCargoBus" autocomplete="off" value="#{cargoBusController.selected.cargoBusMontoFijo}" title="#{myBundle.CreateCargoBusTitle_montoCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_montoCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                        <p:inputText id="montoCargoBus" autocomplete="off" value="#{registroLiquidacionBusController.cargoBus.cargoBusMontoFijo}" title="#{myBundle.CreateCargoBusTitle_montoCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_montoCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
                     </h:panelGroup>
 
                     <p:outputLabel value="Empresa:" for="empresa" />
@@ -404,7 +416,7 @@
 
                     <p:outputLabel value="Descripción:" for="descripcion" />
                     <h:panelGroup>
-                        <p:inputText id="descripcion" autocomplete="off" value="#{cargoBusController.selected.cargoBusDescripcion}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}"  onfocus="this.setSelectionRange(0, this.value.length)" size="30" />                            
+                        <p:inputText id="descripcion" autocomplete="off" value="#{registroLiquidacionBusController.cargoBus.cargoBusDescripcion}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}"  onfocus="this.setSelectionRange(0, this.value.length)" size="30" />                            
                     </h:panelGroup>
 
                     <p:outputLabel value="Unidad:" for="unidad" />
@@ -412,23 +424,22 @@
 
                     <h:panelGroup>
                         <p:outputLabel value="Cuotas" for="numeroCuotasCargoBus" />
-                        <p:selectBooleanCheckbox value="#{cargoBusController.cuotas}" style="margin-left: 5px;">
+                        <p:selectBooleanCheckbox value="#{registroLiquidacionBusController.cuotasCargo}" style="margin-left: 5px;">
                             <p:ajax event="valueChange" update="totalCuotasCargoBus"/>
                         </p:selectBooleanCheckbox>
                         <p:outputLabel value="?:" style="margin-left: 5px;"/>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <p:inputText id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{cargoBusController.selected.cargoBusCuotaActual}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
+                        <p:inputText id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{registroLiquidacionBusController.cargoBus.cargoBusCuotaActual}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
                         <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
-                        <p:inputText id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{!cargoBusController.cuotas}" value="#{cargoBusController.selected.cargoBusTotalCuotas}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                        <p:inputText id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{!registroLiquidacionBusController.cuotasCargo}" value="#{registroLiquidacionBusController.cargoBus.cargoBusTotalCuotas}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)"/>
                     </h:panelGroup>
 
                     <p:outputLabel value="" />
                     <p:outputLabel value="" style="width: 200px;"/>
 
                     <p:outputLabel value="" />
-                    <p:commandButton styleClass="btn btn-primary"  actionListener="#{cargoBusController.saveNew}" value="#{myBundle.Save}" update="display,:CargoBusListForm:datalist,:growl" >
-                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton styleClass="btn btn-primary"  actionListener="#{registroLiquidacionBusController.addCargo()}" value="#{myBundle.Save}" update=":CargoBusListForm:datalist, :growl" oncomplete="handleSubmit(xhr,status,args,PF('CargoBusCreateDialog'));" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                     </p:commandButton>
 
                 </p:panelGrid>
