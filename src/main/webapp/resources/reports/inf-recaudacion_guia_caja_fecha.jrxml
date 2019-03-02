@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
-	<property name="ireport.zoom" value="5.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="337"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="fecha" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -47,7 +47,7 @@ WHERE
         AND recaudacion.recaudacion_id_caja = $P{caja}
 GROUP BY recaudacion.recaudacion_id, bus.bus_numero, bus.bus_patente, guia.guia_folio, flota.flota_nombre, trabajador.trabajador_codigo 
 HAVING (administracion+cuotaextra+imposiciones+boletos)>0
-ORDER BY recaudacion.recaudacion_id ASC ]]>
+ORDER BY recaudacion.recaudacion_id ASC]]>
 	</queryString>
 	<field name="numero" class="java.lang.Double"/>
 	<field name="recaudacion_id" class="java.lang.Long">
@@ -348,4 +348,22 @@ ORDER BY recaudacion.recaudacion_id ASC ]]>
 			</staticText>
 		</band>
 	</summary>
+	<noData>
+		<band height="50">
+			<textField>
+				<reportElement x="10" y="10" width="385" height="34" uuid="82b8ac74-3d8c-415e-a310-a6c92348c1a5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sin Recaudación de Guías en la Caja N°:"+$P{caja}+" el día: "]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="395" y="10" width="100" height="34" uuid="7c5c3dea-8a02-4bc8-8fee-84578a5b8244"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
 </jasperReport>
