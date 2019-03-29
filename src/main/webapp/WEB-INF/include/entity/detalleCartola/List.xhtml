@@ -67,14 +67,14 @@
                 <p:inputText id="detalleCartolaDescripcion" value="#{detalleCartolaController.selected.detalleCartolaDescripcion}" required="true" requiredMessage="Debe ingresar la descripción del movimiento" size="30" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)"/>
 
                 <p:outputLabel value="Cargo:" for="detalleCartolaCargo" />
-                <p:inputText id="detalleCartolaCargo" value="#{detalleCartolaController.selected.detalleCartolaCargo}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                <p:inputNumber id="detalleCartolaCargo" decimalPlaces="0" value="#{detalleCartolaController.selected.detalleCartolaCargo}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                     <p:ajax event="blur" update="detalleCartolaAbono" listener="#{detalleCartolaController.setCargo}"/>
-                </p:inputText>
+                </p:inputNumber>
 
                 <p:outputLabel value="Abono:" for="detalleCartolaAbono" />
-                <p:inputText id="detalleCartolaAbono" value="#{detalleCartolaController.selected.detalleCartolaAbono}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                <p:inputNumber id="detalleCartolaAbono" decimalPlaces="0" value="#{detalleCartolaController.selected.detalleCartolaAbono}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                     <p:ajax event="blur" update="detalleCartolaCargo" listener="#{detalleCartolaController.setAbono}"/>
-                </p:inputText>
+                </p:inputNumber>
 
                 <p:commandButton value="Agregar" actionListener="#{detalleCartolaController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>

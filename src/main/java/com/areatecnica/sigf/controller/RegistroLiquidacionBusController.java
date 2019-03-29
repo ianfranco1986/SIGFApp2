@@ -12,13 +12,14 @@ import com.areatecnica.sigf.dao.ICargoBusDao;
 import com.areatecnica.sigf.dao.impl.AbonoBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.CargoBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.ITipoAbonoDaoImpl;
 import com.areatecnica.sigf.dao.impl.ITipoCargoDaoImpl;
 import com.areatecnica.sigf.entities.AbonoBus;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CargoBus;
 import com.areatecnica.sigf.entities.Recaudacion;
+import com.areatecnica.sigf.entities.RecaudacionGuia;
 import com.areatecnica.sigf.entities.TipoAbono;
 import com.areatecnica.sigf.entities.TipoCargo;
 import com.areatecnica.sigf.entities.UnidadNegocio;
@@ -28,10 +29,11 @@ import com.areatecnica.sigf.util.CurrentDate;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -52,11 +54,11 @@ public class RegistroLiquidacionBusController implements Serializable {
     private Recaudacion recaudacion;
     private List<CargoBus> cargoBusItems;
     private List<AbonoBus> abonoBusItems;
-    private List<Recaudacion> recaudacionItems;
+    private List<RecaudacionGuia> recaudacionItems;
     private List<Bus> busItems;
     private List<TipoCargo> tipoCargoItems;
-    private List<TipoAbono> tipoAbonoItems; 
-    
+    private List<TipoAbono> tipoAbonoItems;
+
     private CargoBus cargoBus;
     private AbonoBus abonoBus;
     private CargoBusDataModel cargoDataModel;
@@ -73,6 +75,8 @@ public class RegistroLiquidacionBusController implements Serializable {
     private Boolean cuotasCargo;
     private Boolean cuotasAbono;
     private DateTime dateTime;
+
+    private String informe;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 
@@ -91,7 +95,18 @@ public class RegistroLiquidacionBusController implements Serializable {
 
         this.anio = calendar.get(Calendar.YEAR);
         this.mes = calendar.get(Calendar.MONTH) + 1;
+        
+        this.informe = "inf-resumen_ingresos_bus";
 
+    }
+
+    public Map<String, Object> getMap() {
+        Map<String, Object> map = new HashMap();
+
+        map.put("fecha", fecha);
+        map.put("bus", this.bus.getBusId());
+
+        return map;
     }
 
     public Recaudacion getRecaudacion() {
@@ -142,11 +157,11 @@ public class RegistroLiquidacionBusController implements Serializable {
         this.abonoBusItems = abonoBusItems;
     }
 
-    public List<Recaudacion> getRecaudacionItems() {
+    public List<RecaudacionGuia> getRecaudacionItems() {
         return recaudacionItems;
     }
 
-    public void setRecaudacionItems(List<Recaudacion> recaudacionItems) {
+    public void setRecaudacionItems(List<RecaudacionGuia> recaudacionItems) {
         this.recaudacionItems = recaudacionItems;
     }
 
@@ -220,7 +235,7 @@ public class RegistroLiquidacionBusController implements Serializable {
     public void prepareCreateAbono() {
         if (this.bus != null) {
 
-            this.tipoAbonoItems = new ITipoAbonoDaoImpl().findAll(); 
+            this.tipoAbonoItems = new ITipoAbonoDaoImpl().findAll();
 
             this.abonoBus = new AbonoBus();
             this.abonoBus.setAbonoBusFechaInicio(fecha);
@@ -235,7 +250,7 @@ public class RegistroLiquidacionBusController implements Serializable {
     public void prepareCreateCargo() {
         if (this.bus != null) {
             this.tipoCargoItems = new ITipoCargoDaoImpl().findAll();
-            
+
             this.cargoBus = new CargoBus();
             this.cargoBus.setCargoBusIdBus(bus);
             this.cargoBus.setCargoBusFechaInicio(fecha);
@@ -328,10 +343,8 @@ public class RegistroLiquidacionBusController implements Serializable {
             this.cargoDataModel = new CargoBusDataModel(cargoBusItems);
             this.abonoDataModel = new AbonoBusDataModel(abonoBusItems);
 
-            this.recaudacionItems = new IRecaudacionDaoImpl().findByBusBetweenFechaRecaudacion(bus, fecha, _maxDate.toDate());
-            
-            
-            
+            this.recaudacionItems = new IRecaudacionGuiaDaoImpl().findByBusBetweenFechaRecaudacion(bus, fecha, _maxDate.toDate());
+
             JsfUtil.addSuccessMessage("Liquidación Bus N°: " + this.bus.getBusNumero() + " ");
         } else {
             JsfUtil.addErrorMessage("Error en validación");
@@ -374,6 +387,4 @@ public class RegistroLiquidacionBusController implements Serializable {
         this.tipoAbonoItems = tipoAbonoItems;
     }
 
-    
-    
 }

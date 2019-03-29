@@ -61,7 +61,7 @@
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{ventaCombustibleController.save}" value="#{myBundle.Save}" update="display,:VentaCombustibleListForm:datalist,:VentaCombustibleListForm:VentaCombustibleDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaCombustibleEditDialog'));">
+                    <p:commandButton actionListener="#{ventaCombustibleController.save}" value="#{myBundle.Save}" update="display,:VentaCombustibleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaCombustibleEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('VentaCombustibleEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

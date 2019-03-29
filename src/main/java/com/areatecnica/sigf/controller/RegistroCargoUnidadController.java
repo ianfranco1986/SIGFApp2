@@ -112,6 +112,9 @@ public class RegistroCargoUnidadController implements Serializable {
                 if (c.getCargoBusMontoFijo() > 0) {
                     c.setCargoBusActivo(Boolean.TRUE);
                     c.setCargoBusFechaInicio(fecha);
+                    c.setCargoBusDescripcion(this.selected.getCargoBusDescripcion());
+                    c.setCargoBusIdTipo(this.selected.getCargoBusIdTipo());
+                    
 
                     if (c.getCargoBusTotalCuotas() == 0) {
                         c.setCargoBusFechaTermino(fecha);
@@ -130,7 +133,7 @@ public class RegistroCargoUnidadController implements Serializable {
                             c.setCargoBusFechaTermino(fecha);
                         }
                     }
-                    this.cargoBusDaoImpl.create(c);
+                    this.cargoBusDaoImpl.update(c);
                 } else {
                 }
             }
@@ -406,7 +409,7 @@ public class RegistroCargoUnidadController implements Serializable {
         if (this.selected != null) {
             this.selected.setCargoBusMontoFijo(monto);
             System.err.println("monto:" + monto);
-            if (this.flota != null) {
+            if (this.unidadNegocio != null) {
                 for (CargoBus r : registroCargoItems) {
                     r.setCargoBusMontoFijo(monto);
                 }

@@ -8,14 +8,21 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\Documents\\NetBeansProjects\\SIGF\\src\\main\\webapp\\resources\\reports\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="nombreCaja" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreUsuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT 1 AS hoja1, 
 2 AS hoja2, 
-3 AS hoja3]]>
+3 AS hoja3, 4 AS hoja4]]>
 	</queryString>
 	<field name="hoja1" class="java.lang.Long"/>
 	<field name="hoja2" class="java.lang.Long"/>
 	<field name="hoja3" class="java.lang.Long"/>
+	<field name="hoja4" class="java.lang.Long"/>
 	<group name="hoja1">
 		<groupExpression><![CDATA[$F{hoja1}]]></groupExpression>
 		<groupHeader>
@@ -73,6 +80,31 @@
 				<break>
 					<reportElement x="0" y="13" width="100" height="1" uuid="87910c9f-ef3b-40aa-9c89-765cae9dafb2"/>
 				</break>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="hoja4">
+		<groupExpression><![CDATA[$F{hoja4}]]></groupExpression>
+		<groupHeader>
+			<band height="119">
+				<subreport>
+					<reportElement x="2" y="19" width="610" height="100" uuid="e14861ec-bd9a-4cdf-a9c4-3f4201d0ec83"/>
+					<subreportParameter name="fecha">
+						<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SUBREPORT_DIR"/>
+					<subreportParameter name="caja">
+						<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="nombreCaja">
+						<subreportParameterExpression><![CDATA[$P{nombreCaja}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="nombreUsuario">
+						<subreportParameterExpression><![CDATA[$P{nombreUsuario}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["inf-recaudacion_arqueo_caja.jasper"]]></subreportExpression>
+				</subreport>
 			</band>
 		</groupHeader>
 	</group>

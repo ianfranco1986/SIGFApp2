@@ -12,6 +12,7 @@ import com.areatecnica.sigf.entities.CargoBus;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.util.List;
 import com.areatecnica.sigf.models.CargoBusDataModel;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +25,7 @@ import org.joda.time.DateTime;
 
 @Named(value = "cargoBusController")
 @ViewScoped
-public class CargoBusController extends AbstractController<CargoBus> {
+public class CargoBusController implements Serializable {
 
     @Inject
     private BusController cargoBusIdBusController;
@@ -36,6 +37,7 @@ public class CargoBusController extends AbstractController<CargoBus> {
 
     private CargoBusDataModel model;
     private CargoBus rowSelected;
+    private CargoBus selected;
 
     private List<CargoBus> items;
     private List<UnidadNegocio> unidadItems;
@@ -50,33 +52,38 @@ public class CargoBusController extends AbstractController<CargoBus> {
 
     public CargoBusController() {
         // Inform the Abstract parent controller of the concrete CargoBus Entity
-        super(CargoBus.class);
-        this.setSelected(prepareCreate(null));
+
     }
 
     @PostConstruct
-    @Override
     public void initParams() {
-        super.initParams(); //To change body of generated methods, choose Tools | Templates.
         this.fecha = new Date();
         this.unidadNegocioDao = new IUnidadNegocioDaoImpl();
         this.dao = new CargoBusDaoImpl();
         this.items = this.dao.findLast();
         this.model = new CargoBusDataModel(items);
-        this.unidadItems = this.unidadNegocioDao.findByCuenta(this.getUserCount());
-        this.getSelected().setCargoBusCuotaActual(0);
-        this.getSelected().setCargoBusTotalCuotas(0);
+        this.unidadItems = this.unidadNegocioDao.findByCuenta(cargoBusIdBusController.getUserCount());
+        this.selected = prepareCreate();
+        this.selected.setCargoBusCuotaActual(0);
+        this.selected.setCargoBusTotalCuotas(0);
     }
 
-    /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
-        cargoBusIdBusController.setSelected(null);
-        cargoBusIdTipoController.setSelected(null);
+    public void setSelected(CargoBus selected) {
+        this.selected = selected;
     }
 
-    @Override
+    public CargoBus getSelected() {
+        return selected;
+    }
+
+    public CargoBus prepareCreate() {
+        CargoBus newCargoBus;
+        newCargoBus = new CargoBus();
+        newCargoBus.setCargoBusMontoFijo(0);
+        newCargoBus.setCargoBusTotalCuotas(0);
+        return newCargoBus;
+    }
+
     public void saveNew(ActionEvent event) {
         //super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
         if (this.getSelected() != null) {
@@ -86,11 +93,17 @@ public class CargoBusController extends AbstractController<CargoBus> {
 
             if (this.getSelected().getCargoBusTotalCuotas() == 0) {
                 this.getSelected().setCargoBusFechaTermino(fecha);
+                this.getSelected().setCargoBusCuotaActual(0);
+                this.getSelected().setCargoBusTotalCuotas(0);
+                this.getSelected().setCargoBusFechaTermino(fecha);
+                //this.getSelected().set
+                dao.update(this.getSelected());
+                this.items.add(0, this.getSelected());
             } else {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(fecha);
 
-                int cuotasRestantes = (this.getSelected().getCargoBusTotalCuotas() - this.getSelected().getCargoBusCuotaActual())+1;
+                int cuotasRestantes = (this.getSelected().getCargoBusTotalCuotas() - this.getSelected().getCargoBusCuotaActual()) + 1;
 
                 if (cuotasRestantes > 0) {
 
@@ -124,12 +137,6 @@ public class CargoBusController extends AbstractController<CargoBus> {
                         JsfUtil.addSuccessMessage("Se ha generado un cargo con fecha: " + sdf.format(dateTime.toDate()) + " al Bus N°: " + cargoBus.getCargoBusIdBus().getBusNumero());
                     }
 
-                } else {
-                    this.getSelected().setCargoBusCuotaActual(0);
-                    this.getSelected().setCargoBusTotalCuotas(0);
-                    this.getSelected().setCargoBusFechaTermino(fecha);
-                    super.saveNew(event);
-                    this.items.add(0, this.getSelected());
                 }
 
             }
@@ -141,19 +148,18 @@ public class CargoBusController extends AbstractController<CargoBus> {
             this.getSelected().setCargoBusMontoFijo(this.getSelected().getCargoBusMontoFijo());
             this.getSelected().setCargoBusCuotaActual(this.getSelected().getCargoBusCuotaActual());
             this.getSelected().setCargoBusTotalCuotas(this.getSelected().getCargoBusTotalCuotas());
-            this.setSelected(prepareCreate(event));
+            this.setSelected(prepareCreate());
         } else {
             JsfUtil.addErrorMessage("Error al validar el cargo");
         }
     }
 
-    @Override
     public void save(ActionEvent event) {
         if (rowSelected != null) {
             this.dao.update(this.rowSelected);
             this.rowSelected = null;
             JsfUtil.addSuccessMessage("Se ha actualizado el cargo");
-            this.setSelected(prepareCreate(event));
+            this.setSelected(prepareCreate());
             this.getSelected().setCargoBusFechaInicio(this.rowSelected.getCargoBusFechaInicio());
             this.getSelected().setCargoBusIdTipo(this.rowSelected.getCargoBusIdTipo());
             this.getSelected().setCargoBusMontoFijo(this.rowSelected.getCargoBusMontoFijo());
@@ -165,14 +171,13 @@ public class CargoBusController extends AbstractController<CargoBus> {
         }
     }
 
-    @Override
     public void delete(ActionEvent event) {
         if (rowSelected != null) {
             this.dao.delete(this.rowSelected);
             this.items.remove(this.rowSelected);
 
             JsfUtil.addSuccessMessage("Se ha eliminado el cargo");
-            this.setSelected(prepareCreate(event));
+            this.setSelected(prepareCreate());
             this.getSelected().setCargoBusFechaInicio(this.rowSelected.getCargoBusFechaInicio());
             this.getSelected().setCargoBusIdTipo(this.rowSelected.getCargoBusIdTipo());
             this.getSelected().setCargoBusMontoFijo(this.rowSelected.getCargoBusMontoFijo());

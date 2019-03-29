@@ -68,7 +68,7 @@ public class ReportControllerDetalleIngresosBus implements Serializable {
         
         this.items = this.unidadNegocio.getBusList();
         
-        this.informe = "inf-resumen_ingresos_bus";
+        this.informe = "inf-detalle_ingresos_bus";
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
 

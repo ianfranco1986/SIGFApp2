@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "cartola_banco", catalog = "sigfdb", schema = "")
 @XmlRootElement
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "CartolaBanco.findAll", query = "SELECT c FROM CartolaBanco c")
     , @NamedQuery(name = "CartolaBanco.findByCartolaBancoId", query = "SELECT c FROM CartolaBanco c WHERE c.cartolaBancoId = :cartolaBancoId")

@@ -23,7 +23,7 @@
                 <h:outputLabel value="Grupo/Servicio" for="busIdGrupoServicio" />
                 <p:selectOneMenu id="busIdGrupoServicio" value="#{guiaGrupalController.grupoServicio}" required="true" requiredMessage="Debe seleccionar el Grupo/Servicio" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                    <f:selectItems value="#{guiaGrupalController.grupoServicioList}"
+                    <f:selectItems value="#{guiaGrupalController.grupoServicioItems}"
                                    var="busIdGrupoServicioItem"
                                    itemValue="#{busIdGrupoServicioItem}"
                                    itemLabel="#{busIdGrupoServicioItem.grupoServicioIdentificador}"
@@ -62,10 +62,10 @@
                          rowIndexVar="rowIndex">
 
                 <f:facet name="header">
-                    Guías a la Fecha: #{guiaGrupalController.formatFecha}
+                        Guías a la Fecha: #{guiaGrupalController.formatFecha}
                 </f:facet>
 
-                <p:column style="width: 30px">
+                <p:column style="width: 50px">
                     <f:facet name="header">
                         <h:outputText value="#"/>
                     </f:facet>
@@ -129,26 +129,7 @@
                     <h:outputLabel id="guiaIdTrabajadorNombre" value="#{item.guiaIdTrabajador.trabajadorApellidoPaterno} #{item.guiaIdTrabajador.trabajadorNombres}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.guiaIdEstado}" filterBy="#{item.guiaIdEstado}">
-                    <f:facet name="header">
-                        <h:outputText value="Tipo"/>
-                    </f:facet>
-                    <p:selectOneMenu id="guiaIdEstado" value="#{item.guiaIdEstado}" required="true" requiredMessage="Debe seleccionar el Estado" converter="omnifaces.SelectItemsConverter">
-                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                        <f:selectItems value="#{estadoGuiaController.items}"
-                                       var="guiaIdEstado"
-                                       itemValue="#{guiaIdEstado}"
-                                       itemLabel="#{guiaIdEstado.estadoGuiaNombre}"
-                                       />
-                    </p:selectOneMenu>
-                </p:column>
                 
-                <p:column sortBy="#{item.guiaObservacion}" filterBy="#{item.guiaObservacion}">
-                    <f:facet name="header">
-                        <h:outputText value="Observación"/>
-                    </f:facet>
-                    <h:outputLabel id="guiaObservacion" value="#{item.guiaObservacion}"/>
-                </p:column>
 
                 <f:facet name="footer">
                     <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="Guardar" actionListener="#{guiaGrupalController.saveNew}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" disabled="#{empty guiaGrupalController.grupoServicio}" update="datalist, growl">

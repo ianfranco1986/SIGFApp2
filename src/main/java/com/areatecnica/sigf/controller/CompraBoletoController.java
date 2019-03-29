@@ -9,6 +9,8 @@ import com.areatecnica.sigf.entities.InventarioInterno;
 import java.util.List;
 import com.areatecnica.sigf.facade.CompraBoletoFacade;
 import com.areatecnica.sigf.facade.InventarioInternoFacade;
+import com.areatecnica.sigf.models.DetalleCompraBoletosDataModel;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.annotation.PostConstruct;
@@ -29,8 +31,15 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     private InventarioInternoFacade inventarioInternoFacade;
 
     private DetalleCompraBoleto detalleCompraBoleto;
+    private DetalleCompraBoleto selectedDetalleCompraBoleto;
     private List<DetalleCompraBoleto> itemsDetalleCompraBoleto;
     private ICompraBoletoDao compraBoletoDao;
+    private DetalleCompraBoletosDataModel model;
+    private int totalCompra;
+    private String totalFormatted;
+
+    private static final String pattern = "###,###.###";
+    private static final DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
     // Flags to indicate if child collections are empty
     private boolean isDetalleCompraBoletoListEmpty;
@@ -38,15 +47,6 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     public CompraBoletoController() {
         // Inform the Abstract parent controller of the concrete CompraBoleto Entity
         super(CompraBoleto.class);
-        this.setSelected(super.prepareCreate(null));
-        this.getSelected().setCompraBoletoIdCuenta(this.getUserCount());
-
-        this.detalleCompraBoleto = new DetalleCompraBoleto();
-        this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
-        this.getSelected().setCompraBoletoFecha(new Date());
-        this.getSelected().setCompraBoletoTotal(0);
-        this.getSelected().setDetalleCompraBoletoList(new ArrayList<DetalleCompraBoleto>());
-
     }
 
     @PostConstruct
@@ -54,14 +54,18 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     public void initParams() {
         super.initParams(); //To change body of generated methods, choose Tools | Templates.
         if (this.getSelected() == null) {
-            this.setSelected(new CompraBoleto());
+            this.setSelected(prepareCreate(null));
             this.getSelected().setCompraBoletoFecha(new Date());
+            this.getSelected().setCompraBoletoTotal(0);
+
+            this.detalleCompraBoleto = new DetalleCompraBoleto();
+            this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
+
+            this.itemsDetalleCompraBoleto = new ArrayList<DetalleCompraBoleto>();
+            this.model = new DetalleCompraBoletosDataModel(itemsDetalleCompraBoleto);
+            this.totalCompra = 0;
         }
 
-        if (this.detalleCompraBoleto == null) {
-            this.detalleCompraBoleto = new DetalleCompraBoleto();
-        }
-        System.err.println("CARGADO POST CONSTRUCCIÓN");
     }
 
     @Override
@@ -82,11 +86,14 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     public void saveNew(ActionEvent event) {
         super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
 
+//                            this.getSelected().setCompraBoletoTotal(this.getSelected().getCompraBoletoTotal() + total);
+        int totalCompra = 0;
+
         List<InventarioInterno> inventarioInterno = new ArrayList<>();
         for (DetalleCompraBoleto d : this.getSelected().getDetalleCompraBoletoList()) {
 
             int serieInicial = Integer.parseInt(d.getDetalleCompraBoletoSerie());
-
+            totalCompra = totalCompra + d.getDetalleCompraBoletoTotal();
             for (int i = 0; i < d.getDetalleCompraBoletoCantidadRollos(); i++) {
 
                 InventarioInterno ii = new InventarioInterno();
@@ -205,22 +212,51 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     }
 
     public void addDetalleCompra(ActionEvent event) {
-        int valorRollo = this.detalleCompraBoleto.getDetalleCompraBoletoTotal();
-        int cantidad = this.detalleCompraBoleto.getDetalleCompraBoletoCantidadRollos();
-        int total = valorRollo * cantidad;
-        this.detalleCompraBoleto.setDetalleCompraBoletoTotal(total);
-        this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
+        if (this.detalleCompraBoleto != null) {
+            int valorRollo = 0;
+            int cantidad = 0;
+            if (this.detalleCompraBoleto.getDetalleCompraBoletoIdBoleto() != null) {
+                if (!this.detalleCompraBoleto.getDetalleCompraBoletoIdentificador().equals("")) {
+                    if (!this.detalleCompraBoleto.getDetalleCompraBoletoSerie().equals("")) {
+                        if (this.detalleCompraBoleto.getDetalleCompraBoletoCantidadRollos() > 0 || this.detalleCompraBoleto.getDetalleCompraBoletoTotal() > 0) {
+                            valorRollo = this.detalleCompraBoleto.getDetalleCompraBoletoTotal();
+                            cantidad = this.detalleCompraBoleto.getDetalleCompraBoletoCantidadRollos();
+                            int total = valorRollo * cantidad;
 
-        this.getSelected().setCompraBoletoTotal(this.getSelected().getCompraBoletoTotal() + total);
+                            this.detalleCompraBoleto.setDetalleCompraBoletoTotal(total);
+                            this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
 
-        this.getSelected().getDetalleCompraBoletoList().add(detalleCompraBoleto);
+                            this.itemsDetalleCompraBoleto.add(detalleCompraBoleto);
+                            this.totalCompra = this.totalCompra + total;
+                        } else {
+                            JsfUtil.addErrorMessage("Debe ingresar un valor Mayor que cero");
+                        }
+                    } else {
+                        JsfUtil.addErrorMessage("Debe ingresar la Serie");
+                    }
+                } else {
+                    JsfUtil.addErrorMessage("Debe ingresar el Identificador");
+                }
+            } else {
+                JsfUtil.addErrorMessage("Debe Seleccionar el Boleto");
+            }
 
-        this.detalleCompraBoleto = null;
-        this.detalleCompraBoleto = new DetalleCompraBoleto();
-        this.detalleCompraBoleto.setDetalleCompraBoletoIdBoleto(null);
-        this.detalleCompraBoleto.setDetalleCompraBoletoSerie("0");
-        this.detalleCompraBoleto.setDetalleCompraBoletoTotal(valorRollo);
-        this.detalleCompraBoleto.setDetalleCompraBoletoCantidadRollos(cantidad);
+            this.detalleCompraBoleto = null;
+            this.detalleCompraBoleto = new DetalleCompraBoleto();
+            this.detalleCompraBoleto.setDetalleCompraBoletoIdBoleto(null);
+            this.detalleCompraBoleto.setDetalleCompraBoletoSerie("0");
+            this.detalleCompraBoleto.setDetalleCompraBoletoTotal(valorRollo);
+            this.detalleCompraBoleto.setDetalleCompraBoletoCantidadRollos(cantidad);
+        } else {
+        }
+    }
+
+    public void deleteDetalle() {
+        if (this.selectedDetalleCompraBoleto != null) {
+            this.itemsDetalleCompraBoleto.remove(this.selectedDetalleCompraBoleto);
+            this.selectedDetalleCompraBoleto = null;
+            JsfUtil.addSuccessMessage("Se ha eliminado la fila");
+        }
     }
 
     public void findFolio() {
@@ -229,6 +265,43 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
         if (compraBoleto != null) {
             JsfUtil.addErrorMessage("La factura N° " + this.getSelected().getCompraBoletoFolioFactura() + " ya se encuentra ingresada");
         }
+    }
+
+    public void load() {
+        JsfUtil.addErrorMessage("Boleto:"+this.selectedDetalleCompraBoleto.getDetalleCompraBoletoSerie());
+    }
+
+    public void setModel(DetalleCompraBoletosDataModel model) {
+        this.model = model;
+    }
+
+    public DetalleCompraBoletosDataModel getModel() {
+        return model;
+    }
+
+    public int getTotalCompra() {
+        return totalCompra;
+    }
+
+    public void setTotalCompra(int totalCompra) {
+        this.totalCompra = totalCompra;
+    }
+
+    public void setSelectedDetalleCompraBoleto(DetalleCompraBoleto selectedDetalleCompraBoleto) {
+        this.selectedDetalleCompraBoleto = selectedDetalleCompraBoleto;
+    }
+
+    public DetalleCompraBoleto getSelectedDetalleCompraBoleto() {
+        return selectedDetalleCompraBoleto;
+    }
+
+    public void setTotalFormatted(String totalFormatted) {
+        this.totalFormatted = totalFormatted;
+    }
+
+    public String getTotalFormatted() {
+        this.totalFormatted = "$ " + decimalFormat.format(this.totalCompra);
+        return totalFormatted;
     }
 
 }

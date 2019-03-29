@@ -8,7 +8,7 @@
             <base-name>/MyBundle</base-name>
             <var>myBundle</var>
         </resource-bundle>
-        <navigation-handler>org.primefaces.mobile.application.MobileNavigationHandler</navigation-handler>
+        
     </application>
     <application>
         <el-resolver>

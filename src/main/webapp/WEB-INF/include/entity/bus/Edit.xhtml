@@ -15,18 +15,11 @@
 
                     <p:panelGrid columns="4" columnClasses="column, , column, " >
 
+                        <p:outputLabel value="Unidad" for="busIdUnidadNegocio" />
+                        <p:outputLabel  id="busIdUnidadNegocio" value="#{busController.selected.busIdUnidadNegocio.unidadNegocioNumero} - #{busController.selected.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}" />
+
                         <p:outputLabel value="N°" for="busNumero" />
                         <p:outputLabel id="busNumero" value="#{busController.selected.busNumero}" title="#{myBundle.CreateBusTitle_busNumero}" />
-
-                        <p:outputLabel value="Unidad" for="busIdUnidadNegocio" />
-                        <p:selectOneMenu id="busIdUnidadNegocio" value="#{busController.selected.busIdUnidadNegocio}" required="true" requiredMessage="Debe seleccionar la Unidad de Negocio" converter="omnifaces.SelectItemsConverter">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{unidadNegocioController.items}"
-                                           var="busIdUnidadNegocioItem"
-                                           itemValue="#{busIdUnidadNegocioItem}"
-                                           itemLabel="#{busIdUnidadNegocioItem.unidadNegocioNumero} - #{busIdUnidadNegocioItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
-                                           />                            
-                        </p:selectOneMenu>
 
                         <p:outputLabel value="PPU" for="busPatente" />
                         <p:inputText id="busPatente" value="#{busController.selected.busPatente}" title="#{myBundle.CreateBusTitle_busPatente}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busPatente}" size="20" maxlength="45" onfocus="this.setSelectionRange(0, this.value.length)">
@@ -34,10 +27,10 @@
                         </p:inputText>
 
                         <p:outputLabel value="Año" for="busAnio" />
-                        <p:inputNumber id="busAnio" decimalPlaces="0" value="#{busController.selected.busAnio}" title="#{myBundle.CreateBusTitle_busAnio}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busAnio}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                        <p:inputText id="busAnio" value="#{busController.selected.busAnio}" title="#{myBundle.CreateBusTitle_busAnio}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busAnio}" onfocus="this.setSelectionRange(0, this.value.length)"/>
 
                         <p:outputLabel value="Empresa" for="busIdEmpresa" />
-                        <p:selectOneMenu id="busIdEmpresa" value="#{busController.selected.busIdEmpresa}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="busIdEmpresa" value="#{busController.selected.busIdEmpresa}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdEmpresa}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{empresaController.items}"
                                            var="busIdEmpresaItem"
@@ -47,7 +40,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Flota" for="busIdFlota" />
-                        <p:selectOneMenu id="busIdFlota" value="#{busController.selected.busIdFlota}" required="true" requiredMessage="Debe seleccionar la Flota" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="busIdFlota" value="#{busController.selected.busIdFlota}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdFlota}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{flotaController.items}"
                                            var="busIdFlotaItem"
@@ -60,7 +53,7 @@
                         <p:inputText id="busAdministrador" value="#{busController.selected.busAdministrador}" title="#{myBundle.CreateBusTitle_busAdministrador}" size="40" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)"/>
 
                         <p:outputLabel value="Terminal" for="busIdTerminal" />
-                        <p:selectOneMenu id="busIdTerminal" value="#{busController.selected.busIdTerminal}" required="true" requiredMessage="Debe seleccionar el Terminal" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="busIdTerminal" value="#{busController.selected.busIdTerminal}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdTerminal}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{terminalController.items}"
                                            var="busIdTerminalItem"
@@ -70,7 +63,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Grupo/Servicio" for="busIdGrupoServicio" />
-                        <p:selectOneMenu id="busIdGrupoServicio" value="#{busController.selected.busIdGrupoServicio}" required="true" requiredMessage="Debe seleccionar el Grupo/Servicio" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="busIdGrupoServicio" value="#{busController.selected.busIdGrupoServicio}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdGrupoServicio}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{grupoServicioController.items}"
                                            var="busIdGrupoServicioItem"
@@ -81,7 +74,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Proceso Recaudación" for="busIdProcesoRecaudacion" />
-                        <p:selectOneMenu id="busIdProcesoRecaudacion" value="#{busController.selected.busIdProcesoRecaudacion}" required="true" requiredMessage="Debe seleccionar el Proceso Recaudacion" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="busIdProcesoRecaudacion" value="#{busController.selected.busIdProcesoRecaudacion}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdProcesoRecaudacion}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{procesoRecaudacionController.items}"
                                            var="busIdProcesoRecaudacionItem"
@@ -91,7 +84,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Modelo" for="busIdModelo" />
-                        <p:selectOneMenu id="busIdModelo" value="#{busController.selected.busIdModelo}" required="true" requiredMessage="Debe seleccionar el Modelo" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="busIdModelo" value="#{busController.selected.busIdModelo}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdModelo}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{modeloMarcaBusController.items}"
                                            var="busIdModeloItem"
@@ -110,10 +103,10 @@
                         <p:inputText id="busCarroceria" value="#{busController.selected.busCarroceria}" title="#{myBundle.CreateBusTitle_busCarroceria}" size="25" maxlength="45" onfocus="this.setSelectionRange(0, this.value.length)"/>
 
                         <p:outputLabel value="R.Técnica" for="busFechaRevisionTecnica" />
-                        <p:calendar id="busFechaRevisionTecnica" pattern="dd/MM/yyyy" value="#{busController.selected.busFechaRevisionTecnica}" title="#{myBundle.CreateBusTitle_busFechaRevisionTecnica}" />
+                        <p:calendar id="busFechaRevisionTecnica" pattern="dd/MM/yyyy" value="#{busController.selected.busFechaRevisionTecnica}" title="#{myBundle.CreateBusTitle_busFechaRevisionTecnica}"  showOn="button"/>
 
                         <p:outputLabel value="Estado" for="busIdEstadoBus" />
-                        <p:selectOneMenu id="busIdEstadoBus" value="#{busController.selected.busIdEstadoBus}" required="true" requiredMessage="Debe seleccionar el Estado del Bus" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="busIdEstadoBus" value="#{busController.selected.busIdEstadoBus}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdEstadoBus}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{estadoBusController.items}"
                                            var="busIdEstadoBusItem"
@@ -133,9 +126,10 @@
 
                     <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BusEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                 </h:panelGroup>
-            </h:form>
 
+            </h:form>
         </p:dialog>
+
 
     </ui:composition>
 

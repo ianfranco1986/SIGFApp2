@@ -87,7 +87,7 @@ public class ReportDeudaVigenteController implements Serializable {
                 this.informe = "inf-deudas_vigentes_petroleo";
                 break;
             case "Minutos":
-                this.informe = "inf-deudas_vigentes_minutos";
+                this.informe = "inf-registro_minutos_pendientes";
                 break;
             case "Extras":
                 this.informe = "inf-recaudacion_general_caja";

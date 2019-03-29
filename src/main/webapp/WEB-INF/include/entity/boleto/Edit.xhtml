@@ -28,7 +28,7 @@
                         <p:selectBooleanCheckbox id="boletoActivo" value="#{boletoController.selected.boletoActivo}" required="true" requiredMessage="#{myBundle.EditBoletoRequiredMessage_boletoActivo}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{boletoController.save}" value="#{myBundle.Save}" update="display,:BoletoListForm:datalist,:BoletoListForm:BoletoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BoletoEditDialog'));">
+                    <p:commandButton actionListener="#{boletoController.save}" value="#{myBundle.Save}" update="display,:BoletoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BoletoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BoletoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

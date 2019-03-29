@@ -18,6 +18,10 @@ import javax.persistence.NoResultException;
  */
 public class ICuentaBancariaDaoImpl extends GenericDAOImpl<CuentaBancaria> implements ICuentaBancariaDao<CuentaBancaria> {
 
+    public ICuentaBancariaDaoImpl() {
+        super(CuentaBancaria.class);
+    }
+
     @Override
     public List<CartolaBanco> findByCuenta(Cuenta cuenta) {
         try {

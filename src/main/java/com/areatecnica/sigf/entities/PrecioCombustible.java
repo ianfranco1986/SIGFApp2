@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,6 +54,7 @@ public class PrecioCombustible implements Serializable {
     @NotNull
     @Column(name = "precio_combustible_fecha_precio_combustible", nullable = false)
     @Temporal(TemporalType.DATE)
+    @OrderBy("precioCombustibleFechaPrecioCombustible DESC")
     private Date precioCombustibleFechaPrecioCombustible;
     @JoinColumn(name = "precio_combustible_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
     @ManyToOne(optional = false)

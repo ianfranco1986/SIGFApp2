@@ -49,6 +49,8 @@ public class ReportControllerRecaudacionAIO implements Serializable {
 
         map.put("fecha", fecha);
         map.put("caja", selected.getCajaRecaudacionId());
+        map.put("nombreCaja", selected.getCajaRecaudacionNombre());
+        map.put("nombreUsuario", "");
 
         return map;
     }

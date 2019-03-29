@@ -123,6 +123,20 @@ public class CompraCombustible implements Serializable {
     private TipoCombustible compraCombustibleIdTipo;
 
     public CompraCombustible() {
+        this.compraCombustibleFolio = 0;
+        this.compraCombustibleFechaEmisionFactura = new Date();
+        this.compraCombustibleFechaPago = new Date();
+        this.compraCombustibleCantidadLitros = 0;
+        this.compraCombustiblePbaseSiu = 0;
+        this.compraCombustibleIevU = 0;
+        this.compraCombustibleIefU = 0;
+        this.compraCombustibleDiaVigIe = new Date();
+        this.compraCombustibleBaseAfecta = 0;
+        this.compraCombustibleFeep = 0;
+        this.compraCombustibleIev = 0;
+        this.compraCombustibleIef = 0;
+        this.compraCombustibleIva = 0;
+        this.compraCombustibleTotalCompra = 0;
     }
 
     public CompraCombustible(Integer compraCombustibleId) {

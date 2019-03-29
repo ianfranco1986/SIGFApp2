@@ -79,8 +79,10 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
 
             if (_aux != null) {
                 this.getSelected().setCartolaBancoSaldoInicial(_aux.getCartolaBancoSaldoFinal());
+                this.getSelected().setCartolaBancoSaldoFinal(_aux.getCartolaBancoSaldoFinal());
                 this.getSelected().setCartolaBancoNumero(_aux.getCartolaBancoNumero() + 1);
                 this.getSelected().setCartolaBancoFechaInicial(_aux.getCartolaBancoFechaFinal());
+                this.getSelected().setCartolaBancoFechaFinal(this.getSelected().getCartolaBancoFechaInicial());
             }
 
             this.getSelected().setCartolaBancoIdCuentaBancaria(cuentaBancaria);
@@ -141,10 +143,9 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
 
         this.items = this.dao.findByCuentaBancariaBetweenDates(cuentaBancaria, fecha, _maxDate.toDate());
 
-        System.err.println("RANGOS DE FECHA:" + this.fecha + " " + _maxDate.toDate());
-
         if (this.items.isEmpty()) {
             JsfUtil.addErrorMessage("No se han encontrado cartolas");
+            this.model = new CartolaBancoDataModel(new ArrayList<>());
         } else {
             this.model = new CartolaBancoDataModel(this.items);
         }

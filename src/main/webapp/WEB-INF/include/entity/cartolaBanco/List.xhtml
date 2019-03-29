@@ -48,7 +48,7 @@
                      lazy="false"
                      rowKey="#{item.cartolaBancoId}"
                      var="item"
-                     rows="10"
+                     rows="100"
                      rowsPerPageTemplate="100, 200, 500"
                      selectionMode="single"
                      selection="#{cartolaBancoController.selected}"
@@ -65,7 +65,7 @@
                      lazy="true"
                      rowKey="HASH{item.cartolaBancoId}"  <<< Remove this line
             -->
-            <p:ajax event="rowSelect" update="datalist:viewButton"/>
+            <p:ajax event="rowSelect" update="datalist:viewButton, datalist:createButton"/>
 
             <f:facet name="header">
                 <div class="row row-nomargin">
@@ -78,7 +78,7 @@
                     <div class="col-lg-4">
                         <div class="pull-right">
                             <p:commandButton id="viewButton" styleClass="btn btn-primary" actionListener="#{cartolaBancoController.loadDetalle}" icon="fa fa-search" value="Ver Documentos" update=":DetalleCartolaListForm" oncomplete="PF('DetalleCartolaListDialog').show()" disabled="#{empty cartolaBancoController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                            <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{myBundle.Create}" actionListener="#{cartolaBancoController.prepareCreate}" update=":CartolaBancoCreateForm" oncomplete="PF('CartolaBancoCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{myBundle.Create}" actionListener="#{cartolaBancoController.prepareCreate}" update=":CartolaBancoCreateForm" oncomplete="PF('CartolaBancoCreateDialog').show()" disabled="#{empty cartolaBancoController.selected}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                                 
                         </div>
                     </div>
@@ -151,9 +151,6 @@
                          lazy="false"
                          rowKey="#{item.detalleCartolaId}"
                          var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="100, 200, 500"
                          selectionMode="single"
                          selection="#{cartolaBancoController.detalleCartola}"
                          reflow="true"
@@ -228,7 +225,7 @@
                         <h:outputText value="Saldo"/>
                     </f:facet>
                     <h:outputText value="#{item.saldo}">
-                        <f:convertNumber currencySymbol="$" currencyCode="$"/>
+                        <f:convertNumber currencySymbol="$" currencyCode="$" integerOnly="true"/>
                     </h:outputText>
                 </p:column>
 

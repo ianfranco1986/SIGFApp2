@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="219"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="from" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -165,7 +165,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="57" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="114" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
 				<textElement>
@@ -173,20 +173,16 @@ WHERE
 				</textElement>
 				<text><![CDATA[Ñandu Tur S.A.]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="19" width="129" height="15" uuid="09f63724-548c-4a46-8844-a59ea8b995d4"/>
-				<text><![CDATA[Deudas Vigentes a la Fecha:]]></text>
-			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="129" y="19" width="107" height="15" uuid="d9b08373-a6c2-4400-86ca-970b48fe20dc"/>
+				<reportElement x="0" y="19" width="107" height="15" uuid="d9b08373-a6c2-4400-86ca-970b48fe20dc"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="34" width="129" height="15" uuid="bfe0ef0d-0794-489d-ab79-a8544f372004"/>
-				<textElement>
-					<font isBold="true"/>
+				<reportElement x="337" y="0" width="235" height="19" uuid="bfe0ef0d-0794-489d-ab79-a8544f372004"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Registro de Minutos]]></text>
+				<text><![CDATA[Deudas Minutos Vigentes]]></text>
 			</staticText>
 		</band>
 	</title>

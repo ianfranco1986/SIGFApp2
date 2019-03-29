@@ -9,12 +9,15 @@ import com.areatecnica.sigf.entities.RecaudacionCombustible;
 import java.util.List;
 import com.areatecnica.sigf.facade.VentaCombustibleFacade;
 import com.areatecnica.sigf.util.CurrentDate;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -42,8 +45,14 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
     private CurrentDate currentDate;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+    private static final String pattern = "###,###";
+    private static final DecimalFormat decimalFormat = new DecimalFormat(pattern);
     private List<VentaCombustible> items;
     private IVentaCombustibleDao dao;
+
+    private String informe = "inf-venta_petroleo";
+
+    private int total = 0;
 
     public VentaCombustibleController() {
         // Inform the Abstract parent controller of the concrete VentaCombustible Entity
@@ -67,20 +76,20 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         }
     }
 
+    public Map<String, Object> getMap() {
+        Map<String, Object> map = new HashMap();
+
+        map.put("fecha", fecha);
+
+        return map;
+    }
+
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
         ventaCombustibleIdBusController.setSelected(null);
         ventaCombustibleIdSurtidorController.setSelected(null);
-    }
-
-    /**
-     * Set the "is[ChildCollection]Empty" property for OneToMany fields.
-     */
-    @Override
-    protected void setChildrenEmptyFlags() {
-        this.setIsRecaudacionCombustibleListEmpty();
     }
 
     public boolean getIsRecaudacionCombustibleListEmpty() {
@@ -104,14 +113,16 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         this.items = items;
     }
 
-    private void setIsRecaudacionCombustibleListEmpty() {
-        VentaCombustible selected = this.getSelected();
-        if (selected != null) {
-            VentaCombustibleFacade ejbFacade = (VentaCombustibleFacade) this.getFacade();
-            this.isRecaudacionCombustibleListEmpty = ejbFacade.isRecaudacionCombustibleListEmpty(selected);
-        } else {
-            this.isRecaudacionCombustibleListEmpty = true;
-        }
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public String totalCombustible() {
+        return "$ " + decimalFormat.format(this.total);
     }
 
     public void load() {
@@ -123,9 +134,23 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
 
             this.items = this.dao.findByDate(fecha);
 
+            if (!this.items.isEmpty()) {
+                for (VentaCombustible v : this.items) {
+                    this.total = this.total + v.getVentaCombustibleTotal();
+                }
+            }
+
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar la fecha");
         }
+    }
+
+    public void setInforme(String informe) {
+        this.informe = informe;
+    }
+
+    public String getInforme() {
+        return informe;
     }
 
     /**

@@ -36,13 +36,7 @@ public class VentaCombustibleFacade extends AbstractFacade<VentaCombustible> {
         super(VentaCombustible.class);
     }
 
-    public boolean isRecaudacionCombustibleListEmpty(VentaCombustible entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<VentaCombustible> ventaCombustible = cq.from(VentaCombustible.class);
-        //cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaCombustible, entity), cb.isNotEmpty(ventaCombustible.get(VentaCombustible_.recaudacionCombustibleList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
+   
 
     public List<RecaudacionCombustible> findRecaudacionCombustibleList(VentaCombustible entity) {
         VentaCombustible mergedEntity = this.getMergedEntity(entity);
@@ -51,24 +45,9 @@ public class VentaCombustibleFacade extends AbstractFacade<VentaCombustible> {
         return recaudacionCombustibleList;
     }
 
-    public boolean isVentaCombustibleIdBusEmpty(VentaCombustible entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<VentaCombustible> ventaCombustible = cq.from(VentaCombustible.class);
-        //cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaCombustible, entity), cb.isNotNull(ventaCombustible.get(VentaCombustible_.ventaCombustibleIdBus)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public Bus findVentaCombustibleIdBus(VentaCombustible entity) {
         return this.getMergedEntity(entity).getVentaCombustibleIdBus();
-    }
-
-    public boolean isVentaCombustibleIdSurtidorEmpty(VentaCombustible entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<VentaCombustible> ventaCombustible = cq.from(VentaCombustible.class);
-        //cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaCombustible, entity), cb.isNotNull(ventaCombustible.get(VentaCombustible_.ventaCombustibleIdSurtidor)));
-        return em.createQuery(cq).getResultList().isEmpty();
     }
 
     public Surtidor findVentaCombustibleIdSurtidor(VentaCombustible entity) {

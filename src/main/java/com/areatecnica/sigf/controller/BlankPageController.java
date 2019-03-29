@@ -5,7 +5,6 @@
  */
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
 import com.areatecnica.sigf.entities.Recaudacion;
 import com.areatecnica.sigf.entities.VentaCombustible;
 import com.areatecnica.sigf.util.Name2DateValuePOJO;
@@ -21,19 +20,15 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.json.JsonArray;
-import javax.json.JsonValue;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import org.chartistjsf.model.chart.PieChartModel;
 import org.joda.time.DateTime;
-import org.primefaces.json.JSONObject;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -95,7 +90,7 @@ public class BlankPageController implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.nombreMes = "Septiembre 2018";
+        this.nombreMes = "Marzo 2019";
         this.list = new ArrayList<>();
         
         pieModel = new PieChartModel();
@@ -224,9 +219,9 @@ public class BlankPageController implements Serializable {
         target = client.target(ultimaRecaudacionURL);
         this.ultimaRecaudacion = target.request(MediaType.APPLICATION_JSON).get(Recaudacion.class);
 
-        this.animatedModel1 = initLinearModel();
-        createAnimatedModels();
-        this.ventaCombustibleItems = new IVentaCombustibleDaoImpl().findByDate(from);
+        //this.animatedModel1 = initLinearModel();
+        //createAnimatedModels();
+        //this.ventaCombustibleItems = new IVentaCombustibleDaoImpl().findByDate(from);
     }
 
     public int getTotalRecaudacion() {
@@ -463,37 +458,37 @@ public class BlankPageController implements Serializable {
         pieModel.set(value);
     }
 
-    private LineChartModel initLinearModel() {
-        LineChartModel model = new LineChartModel();
-
-        LineChartSeries serie = new LineChartSeries();
-        serie.setLabel("Recaudación");
-        model.setAnimate(true);
-        model.setMouseoverHighlight(true);
-
-        //Total Recaudación Diaria x Mes
-        String totalRecaudacionDiariaURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacion/totalRecaudacionDiaria/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
-
-        target = client.target(totalRecaudacionDiariaURL);
-
-        JsonArray response = target.request(MediaType.APPLICATION_JSON).get(JsonArray.class);
-
-        for (JsonValue j : response) {
-
-            JSONObject o = new JSONObject(j.toString());
-            Name2DateValuePOJO n = new Name2DateValuePOJO(new Date((Long) o.get("name")), o.get("value"));
-
-            serie.set(n.getDayPart(), Integer.parseInt(n.getValue()));
-            System.err.println("DIA: " + n.getDayPart() + " Valor: " + n.getValue());
-            list.add(n);
-        }
-
-        model.addSeries(serie);
-        return model;
-    }
+//    private LineChartModel initLinearModel() {
+//        LineChartModel model = new LineChartModel();
+//
+//        LineChartSeries serie = new LineChartSeries();
+//        serie.setLabel("Recaudación");
+//        model.setAnimate(true);
+//        model.setMouseoverHighlight(true);
+//
+//        //Total Recaudación Diaria x Mes
+//        String totalRecaudacionDiariaURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacion/totalRecaudacionDiaria/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
+//
+//        target = client.target(totalRecaudacionDiariaURL);
+//
+//        JsonArray response = target.request(MediaType.APPLICATION_JSON).get(JsonArray.class);
+//
+//        for (JsonValue j : response) {
+//
+//            JSONObject o = new JSONObject(j.toString());
+//            Name2DateValuePOJO n = new Name2DateValuePOJO(new Date((Long) o.get("name")), o.get("value"));
+//
+//            serie.set(n.getDayPart(), Integer.parseInt(n.getValue()));
+//            System.err.println("DIA: " + n.getDayPart() + " Valor: " + n.getValue());
+//            list.add(n);
+//        }
+//
+//        model.addSeries(serie);
+//        return model;
+//    }
 
     private void createAnimatedModels() {
-        animatedModel1 = initLinearModel();
+        //animatedModel1 = initLinearModel();
         animatedModel1.setTitle("Recaudación Diaria");
         animatedModel1.setAnimate(true);
         animatedModel1.setShadow(true);

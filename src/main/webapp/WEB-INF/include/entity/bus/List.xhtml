@@ -48,8 +48,7 @@
                 <f:facet name="header">
                     <div class="row row-nomargin">
                         <div class="col-lg-3">
-                            <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{myBundle.enterKeyword}"/>
-                        </div>
+                                  </div>
                         <div class="col-lg-5">
                             <h:outputText value=""/>   
                         </div>
@@ -210,14 +209,12 @@
                         <h:outputText value="#{item.busIdProcesoRecaudacion.procesoRecaudacionId}"/>
                     </p:column>
                 </ui:remove>
-                <ui:remove>
-                    <p:column sortBy="#{item.busIdTerminal.terminalId}" filterBy="#{item.busIdTerminal.terminalId}">
-                        <f:facet name="header">
-                            <h:outputText value="#{myBundle.ListBusTitle_busIdTerminal}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.busIdTerminal.terminalId}"/>
-                    </p:column>
-                </ui:remove>
+                <p:column sortBy="#{item.busIdEstadoBus.estadoBusNombre}" filterBy="#{item.busIdEstadoBus.estadoBusNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Estado"/>
+                    </f:facet>
+                    <h:outputText value="#{item.busIdEstadoBus.estadoBusNombre}"/>
+                </p:column>
                 <ui:remove>
                     <p:column sortBy="#{item.busIdUnidadNegocio.unidadNegocioId}" filterBy="#{item.busIdUnidadNegocio.unidadNegocioId}">
                         <f:facet name="header">

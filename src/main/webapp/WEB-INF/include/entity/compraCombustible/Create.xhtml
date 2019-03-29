@@ -18,43 +18,35 @@
                         <p:inputText id="compraCombustibleFolio" value="#{compraCombustibleController.selected.compraCombustibleFolio}" required="true" requiredMessage="Debe ingresar el folio"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleFechaEmisionFactura}" for="compraCombustibleFechaEmisionFactura" />
-                        <p:calendar id="compraCombustibleFechaEmisionFactura" pattern="dd/MM/yy" value="#{compraCombustibleController.selected.compraCombustibleFechaEmisionFactura}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleFechaEmisionFactura}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleFechaEmisionFactura}" showOn="button"/>
+                        <p:calendar id="compraCombustibleFechaEmisionFactura" lang="es" pattern="dd/MM/yy" value="#{compraCombustibleController.selected.compraCombustibleFechaEmisionFactura}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleFechaEmisionFactura}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleFechaEmisionFactura}" showOn="button"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleFechaPago}" for="compraCombustibleFechaPago" />
-                        <p:calendar id="compraCombustibleFechaPago" pattern="dd/MM/yy" value="#{compraCombustibleController.selected.compraCombustibleFechaPago}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleFechaPago}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleFechaPago}" showOn="button"/>
+                        <p:calendar id="compraCombustibleFechaPago" pattern="dd/MM/yy" lang="es" value="#{compraCombustibleController.selected.compraCombustibleFechaPago}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleFechaPago}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleFechaPago}" showOn="button"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleCantidadLitros}" for="compraCombustibleCantidadLitros" />
-                        <p:inputText id="compraCombustibleCantidadLitros" value="#{compraCombustibleController.selected.compraCombustibleCantidadLitros}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleCantidadLitros}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleCantidadLitros}"/>
+                        <p:inputNumber id="compraCombustibleCantidadLitros" decimalPlaces="0" value="#{compraCombustibleController.selected.compraCombustibleCantidadLitros}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleCantidadLitros}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleCantidadLitros}"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustiblePbaseSiu}" for="compraCombustiblePbaseSiu" />
-                        <p:inputText id="compraCombustiblePbaseSiu" value="#{compraCombustibleController.selected.compraCombustiblePbaseSiu}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustiblePbaseSiu}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustiblePbaseSiu}"/>
-
-                        <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleIevU}" for="compraCombustibleIevU" />
-                        <p:inputText id="compraCombustibleIevU" value="#{compraCombustibleController.selected.compraCombustibleIevU}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleIevU}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleIevU}"/>
-
-                        <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleIefU}" for="compraCombustibleIefU" />
-                        <p:inputText id="compraCombustibleIefU" value="#{compraCombustibleController.selected.compraCombustibleIefU}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleIefU}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleIefU}"/>
-
-                        <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleDiaVigIe}" for="compraCombustibleDiaVigIe" />
-                        <p:calendar id="compraCombustibleDiaVigIe" pattern="dd/MM/yy" value="#{compraCombustibleController.selected.compraCombustibleDiaVigIe}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleDiaVigIe}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleDiaVigIe}" showOn="button"/>
+                        <p:inputNumber id="compraCombustiblePbaseSiu" decimalPlaces="0" value="#{compraCombustibleController.selected.compraCombustiblePbaseSiu}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustiblePbaseSiu}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustiblePbaseSiu}"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleBaseAfecta}" for="compraCombustibleBaseAfecta" />
-                        <p:inputText id="compraCombustibleBaseAfecta" value="#{compraCombustibleController.selected.compraCombustibleBaseAfecta}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleBaseAfecta}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleBaseAfecta}"/>
-
-                        <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleFeep}" for="compraCombustibleFeep" />
-                        <p:inputText id="compraCombustibleFeep" value="#{compraCombustibleController.selected.compraCombustibleFeep}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleFeep}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleFeep}"/>
-
-                        <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleIev}" for="compraCombustibleIev" />
-                        <p:inputText id="compraCombustibleIev" value="#{compraCombustibleController.selected.compraCombustibleIev}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleIev}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleIev}"/>
-
-                        <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleIef}" for="compraCombustibleIef" />
-                        <p:inputText id="compraCombustibleIef" value="#{compraCombustibleController.selected.compraCombustibleIef}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleIef}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleIef}"/>
+                        <p:inputNumber id="compraCombustibleBaseAfecta" decimalPlaces="0" value="#{compraCombustibleController.selected.compraCombustibleBaseAfecta}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleBaseAfecta}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleBaseAfecta}"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleIva}" for="compraCombustibleIva" />
-                        <p:inputText id="compraCombustibleIva" value="#{compraCombustibleController.selected.compraCombustibleIva}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleIva}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleIva}"/>
+                        <p:inputNumber id="compraCombustibleIva" decimalPlaces="0" value="#{compraCombustibleController.selected.compraCombustibleIva}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleIva}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleIva}"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraCombustibleLabel_compraCombustibleTotalCompra}" for="compraCombustibleTotalCompra" />
-                        <p:inputText id="compraCombustibleTotalCompra" value="#{compraCombustibleController.selected.compraCombustibleTotalCompra}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleTotalCompra}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleTotalCompra}"/>
+                        <p:inputNumber id="compraCombustibleTotalCompra" decimalPlaces="0" value="#{compraCombustibleController.selected.compraCombustibleTotalCompra}" title="#{myBundle.EditCompraCombustibleTitle_compraCombustibleTotalCompra}" required="true" requiredMessage="#{myBundle.EditCompraCombustibleRequiredMessage_compraCombustibleTotalCompra}"/>
+
+                        <p:outputLabel value="Cuenta: " for="cuentaIdEmpresa" />
+                        <p:selectOneMenu id="cuentaIdEmpresa" value="#{compraCombustibleController.cuenta}" required="true" requiredMessage="Debe seleccionar la Cuenta" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{compraCombustibleController.cuentaBancariaItems}"
+                                           var="cuentaBancariaItem"
+                                           itemValue="#{cuentaBancariaItem}"
+                                           itemLabel="#{cuentaBancariaItem.cuentaBancariaNumero} - #{cuentaBancariaItem.cuentaBancariaIdEmpresa.empresaNombre}"
+                                           />
+                        </p:selectOneMenu>
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{compraCombustibleController.saveNew}" value="#{myBundle.Save}" update="display,:CompraCombustibleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CompraCombustibleCreateDialog'));">

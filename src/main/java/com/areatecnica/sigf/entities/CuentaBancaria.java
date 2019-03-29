@@ -8,6 +8,7 @@ package com.areatecnica.sigf.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "cuenta_bancaria", catalog = "sigfdb", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"cuenta_bancaria_numero"})})
 @XmlRootElement
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "CuentaBancaria.findAll", query = "SELECT c FROM CuentaBancaria c")
     , @NamedQuery(name = "CuentaBancaria.findByCuenta", query = "SELECT c FROM CuentaBancaria c WHERE c.cuentaBancariaIdEmpresa.empresaIdCuenta = :empresaIdCuenta ORDER BY c.cuentaBancariaIdEmpresa.empresaNombre ASC")
@@ -83,6 +85,8 @@ public class CuentaBancaria implements Serializable {
     private List<CuentaBancoTrabajador> cuentaBancoTrabajadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartolaBancoIdCuentaBancaria")
     private List<CartolaBanco> cartolaBancoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleDepositoRecaudacionIdCuenta")
+    private List<DetalleDepositoRecaudacion> detalleDepositoRecaudacionList;
 
     public CuentaBancaria() {
     }
@@ -188,6 +192,15 @@ public class CuentaBancaria implements Serializable {
 
     public void setCuentaBancoTrabajadorList(List<CuentaBancoTrabajador> cuentaBancoTrabajadorList) {
         this.cuentaBancoTrabajadorList = cuentaBancoTrabajadorList;
+    }
+
+    @XmlTransient
+    public List<DetalleDepositoRecaudacion> getDetalleDepositoRecaudacionList() {
+        return detalleDepositoRecaudacionList;
+    }
+
+    public void setDetalleDepositoRecaudacionList(List<DetalleDepositoRecaudacion> detalleDepositoRecaudacionList) {
+        this.detalleDepositoRecaudacionList = detalleDepositoRecaudacionList;
     }
 
     @Override

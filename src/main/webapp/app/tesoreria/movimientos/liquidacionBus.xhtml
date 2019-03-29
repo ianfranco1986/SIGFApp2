@@ -247,7 +247,7 @@
                              value="#{registroLiquidacionBusController.recaudacionItems}"
                              lazy="false"
                              var="item"
-                             rowKey="#{item.recaudacionId}"
+                             rowKey="#{item.recaudacionGuiaId}"
                              rowIndexVar="rowIndex"
                              selectionMode="single"
                              selection="#{registroLiquidacionBusController.recaudacion}"
@@ -273,35 +273,28 @@
                         </f:facet>
                         <h:outputText value="#{rowIndex+1}" />
                     </p:column>
-                    
+
                     <p:column style="width: 20px; text-align: center;">
                         <f:facet name="header">
                             <h:outputText value="Fecha"/>
                         </f:facet>
-                        <h:outputText value="#{item.recaudacionFecha}" >
+                        <h:outputText value="#{item.recaudacionGuiaIdRecaudacion.recaudacionFecha}" >
                             <f:convertDateTime pattern="dd/MM/yy"/>
                         </h:outputText>
                     </p:column>
-                    
+
                     <p:column style="width: 20px; text-align: center;">
                         <f:facet name="header">
                             <h:outputText value="Total"/>
                         </f:facet>
-                        <h:outputText value="#{item.recaudacionTotal}" />
+                        <h:outputText value="#{item.recaudacionGuiaIdRecaudacion.recaudacionTotal}" />
                     </p:column>
 
                 </p:dataTable>
 
                 <f:facet name="footer" class="">
-                    <p:commandButton value="Imprimir" icon="ui-icon-print"  class="no-print"  styleClass="btn btn-primary"> 
-                        <p:printer target="tabla"/>
-                    </p:commandButton>
-                    <p:commandButton value="Excel" ajax="false" icon="fa fa-file-excel-o" class="no-print"  styleClass="btn btn-primary">                        
-                        <p:dataExporter type="xls" target="datalist" fileName="Producción Bus" />
-                    </p:commandButton>
-                    <p:commandButton value="Pdf" ajax="false" icon="fa fa-file-pdf-o" class="no-print"  styleClass="btn btn-primary">                        
-                        <p:dataExporter type="pdf" target="datalist" fileName="Producción Bus" preProcessor="#{customizedDocumentsView.preProcessPDF}"/>
-                    </p:commandButton>
+                    <h:commandLink value="Generar Reporte" 
+                                   actionListener="#{reportController.downloadFile(registroLiquidacionBusController.informe, registroLiquidacionBusController.map)}" target="blank"  styleClass="btn btn-primary" />
                 </f:facet>
             </p:panel>
         </h:form>

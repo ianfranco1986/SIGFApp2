@@ -1,7 +1,6 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.ResumenRecaudacion;
-import com.areatecnica.sigf.entities.DetalleResumenRecaudacion;
 import com.areatecnica.sigf.entities.DetalleResumenCheque;
 import com.areatecnica.sigf.entities.CtvResumen;
 import java.util.List;
@@ -41,24 +40,9 @@ public class ResumenRecaudacionController extends AbstractController<ResumenReca
      */
     @Override
     protected void setChildrenEmptyFlags() {
-        this.setIsDetalleResumenRecaudacionListEmpty();
-        this.setIsDetalleResumenChequeListEmpty();
-        this.setIsCtvResumenListEmpty();
+        
     }
 
-    public boolean getIsDetalleResumenRecaudacionListEmpty() {
-        return this.isDetalleResumenRecaudacionListEmpty;
-    }
-
-    private void setIsDetalleResumenRecaudacionListEmpty() {
-        ResumenRecaudacion selected = this.getSelected();
-        if (selected != null) {
-            ResumenRecaudacionFacade ejbFacade = (ResumenRecaudacionFacade) this.getFacade();
-            this.isDetalleResumenRecaudacionListEmpty = ejbFacade.isDetalleResumenRecaudacionListEmpty(selected);
-        } else {
-            this.isDetalleResumenRecaudacionListEmpty = true;
-        }
-    }
 
     /**
      * Sets the "items" attribute with a collection of DetalleResumenRecaudacion
@@ -67,15 +51,15 @@ public class ResumenRecaudacionController extends AbstractController<ResumenReca
      *
      * @return navigation outcome for DetalleResumenRecaudacion page
      */
-    public String navigateDetalleResumenRecaudacionList() {
-        ResumenRecaudacion selected = this.getSelected();
-        if (selected != null) {
-            ResumenRecaudacionFacade ejbFacade = (ResumenRecaudacionFacade) this.getFacade();
-            List<DetalleResumenRecaudacion> selectedDetalleResumenRecaudacionList = ejbFacade.findDetalleResumenRecaudacionList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleResumenRecaudacion_items", selectedDetalleResumenRecaudacionList);
-        }
-        return "/app/detalleResumenRecaudacion/index";
-    }
+//    public String navigateDetalleResumenRecaudacionList() {
+//        ResumenRecaudacion selected = this.getSelected();
+//        if (selected != null) {
+//            ResumenRecaudacionFacade ejbFacade = (ResumenRecaudacionFacade) this.getFacade();
+//            List<DetalleResumenRecaudacion> selectedDetalleResumenRecaudacionList = ejbFacade.findDetalleResumenRecaudacionList(selected);
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleResumenRecaudacion_items", selectedDetalleResumenRecaudacionList);
+//        }
+//        return "/app/detalleResumenRecaudacion/index";
+//    }
 
     /**
      * Sets the "selected" attribute of the CajaRecaudacion controller in order
@@ -98,7 +82,7 @@ public class ResumenRecaudacionController extends AbstractController<ResumenReca
         ResumenRecaudacion selected = this.getSelected();
         if (selected != null) {
             ResumenRecaudacionFacade ejbFacade = (ResumenRecaudacionFacade) this.getFacade();
-            this.isDetalleResumenChequeListEmpty = ejbFacade.isDetalleResumenChequeListEmpty(selected);
+//            this.isDetalleResumenChequeListEmpty = ejbFacade.isDetalleResumenChequeListEmpty(selected);
         } else {
             this.isDetalleResumenChequeListEmpty = true;
         }
@@ -115,8 +99,8 @@ public class ResumenRecaudacionController extends AbstractController<ResumenReca
         ResumenRecaudacion selected = this.getSelected();
         if (selected != null) {
             ResumenRecaudacionFacade ejbFacade = (ResumenRecaudacionFacade) this.getFacade();
-            List<DetalleResumenCheque> selectedDetalleResumenChequeList = ejbFacade.findDetalleResumenChequeList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleResumenCheque_items", selectedDetalleResumenChequeList);
+//            List<DetalleResumenCheque> selectedDetalleResumenChequeList = ejbFacade.findDetalleResumenChequeList(selected);
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleResumenCheque_items", selectedDetalleResumenChequeList);
         }
         return "/app/detalleResumenCheque/index";
     }

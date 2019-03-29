@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    b.bus_numero AS numeroPaga,
+    b.bus_patente AS patentePaga,
+    f1.flota_nombre AS flotaPaga, 
+    c.bus_numero AS numeroRecibe,
+    c.bus_patente AS patenteRecibe,
+    f2.flota_nombre AS flotaRecibe, 
+    SUM(r.registro_minuto_monto) AS registro_minuto_monto, 
+    registro_minuto_id
+FROM
+    registro_minuto r
+        LEFT JOIN
+    bus b ON r.registro_minuto_desde_id_bus = b.bus_id
+        LEFT JOIN
+    bus c ON r.registro_minuto_hasta_id_bus = c.bus_id
+		LEFT JOIN 
+	flota f1 ON b.bus_id_flota = f1.flota_id 
+		LEFT JOIN 
+	flota f2 ON c.bus_id_flota = f2.flota_id 
+WHERE
+    r.registro_minuto_fecha_minuto BETWEEN $P{desde} AND $P{hasta} AND   $X{IN, registro_minuto_desde_id_bus, list}  GROUP BY b.bus_numero ORDER BY registro_minuto_monto DESC]]>
+	</queryString>
+	<field name="numeroPaga" class="java.lang.Long"/>
+	<field name="patentePaga" class="java.lang.String"/>
+	<field name="flotaPaga" class="java.lang.String"/>
+	<field name="numeroRecibe" class="java.lang.Long"/>
+	<field name="patenteRecibe" class="java.lang.String"/>
+	<field name="flotaRecibe" class="java.lang.String"/>
+	<field name="registro_minuto_monto" class="java.math.BigDecimal"/>
+	<field name="registro_minuto_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="registro_minuto_monto1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="221" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="0" width="287" height="19" uuid="09f63724-548c-4a46-8844-a59ea8b995d4"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registro de Minutos Pagados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="30" width="16" height="15" uuid="9509ae6d-23b2-4f2f-9696-b2db6a221e44"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="100" height="15" uuid="41d24009-f8e9-4486-b421-02d5718337e9"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="100" y="30" width="46" height="15" uuid="b8258413-aa6b-4d41-a711-59bfc9db82df"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="167" y="30" width="60" height="15" uuid="fb8f1aa2-740e-4754-abbc-8cd8bd6c541e"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="0" width="63" height="20" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Bus Paga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="62" height="20" uuid="98b9d738-a9e9-4ba8-b17b-57795cbd97a3"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PPU]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="7cd9e24b-1df9-4c23-be74-a815a2fc1b21"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Flota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="70" height="20" uuid="a7cab6f6-2844-407a-a8fa-bf0a1177c313">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto ($)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="25" y="0" width="63" height="15" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="62" height="15" uuid="c11c13c1-6103-422a-82aa-3ab156ef6eed"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{patentePaga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="15" uuid="21636e15-e673-4bc2-aea0-715105e5d3c3"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{flotaPaga}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="300" y="0" width="70" height="15" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{registro_minuto_monto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="370" y="7" width="152" height="15" uuid="5e10b687-9c64-42bd-b646-3dbebb1a24d2"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="522" y="7" width="34" height="15" uuid="aa6163c1-bb8e-436a-9010-2919e931335c"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="7" width="80" height="15" uuid="1d3584a2-706f-4921-ad45-7e8e638d4105">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="80" y="7" width="165" height="15" uuid="f74368eb-5f9d-4831-9385-6b210f5b8e62"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,###.###">
+				<reportElement x="300" y="0" width="70" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{registro_minuto_monto1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="19" uuid="227680a1-b7fb-4dae-b2fb-495a0d38ef26"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sin Registro de Minutos ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="19" width="555" height="15" uuid="dde5bf72-3197-44c5-a6c3-f3d03e7e7572"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

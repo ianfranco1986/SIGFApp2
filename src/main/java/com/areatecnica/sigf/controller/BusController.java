@@ -1,5 +1,6 @@
 package com.areatecnica.sigf.controller;
 
+import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.AbonoBus;
 import com.areatecnica.sigf.entities.CargoBus;
@@ -10,6 +11,7 @@ import com.areatecnica.sigf.entities.VentaCombustible;
 import com.areatecnica.sigf.entities.EgresoBus;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.RegistroMinuto;
+import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.util.List;
 import com.areatecnica.sigf.facade.BusFacade;
 import javax.inject.Named;
@@ -491,6 +493,11 @@ public class BusController extends AbstractController<Bus> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("RegistroMinuto_items", selectedRegistroMinutoList1);
         }
         return "/app/registroMinuto/index";
+    }
+
+    public void findMaxByUnidad() {
+        UnidadNegocio unidad = this.getSelected().getBusIdUnidadNegocio();
+        this.getSelected().setBusNumero(new IBusDaoImpl().findMaxNumeroUnidad(unidad));
     }
 
 }

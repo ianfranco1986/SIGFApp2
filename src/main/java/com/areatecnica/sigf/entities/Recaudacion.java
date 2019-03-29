@@ -40,8 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Recaudacion.findAll", query = "SELECT r FROM Recaudacion r")
     , @NamedQuery(name = "Recaudacion.findByRecaudacionId", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionId = :recaudacionId")
     , @NamedQuery(name = "Recaudacion.findByRecaudacionIdentificador", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdentificador = :recaudacionIdentificador")
-        , @NamedQuery(name = "RecaudacionGuia.findByBusBetweenFechaRecaudacion", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaIdGuia.guiaIdBus = :guiaIdBus AND r.recaudacionGuiaIdRecaudacion.recaudacionFecha BETWEEN :from AND :to")
-        , @NamedQuery(name = "Recaudacion.findByRecaudacionTotal", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionTotal = :recaudacionTotal")
+    , @NamedQuery(name = "Recaudacion.findByRecaudacionTotal", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionTotal = :recaudacionTotal")
     , @NamedQuery(name = "Recaudacion.findByRecaudacionFecha", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionFecha = :recaudacionFecha")
     , @NamedQuery(name = "Recaudacion.findByRecaudacionHora", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionHora = :recaudacionHora")})
 public class Recaudacion implements Serializable {

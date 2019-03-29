@@ -40,39 +40,67 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionFecha", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionFecha = :resumenRecaudacionFecha")
     , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionTotal", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionTotal = :resumenRecaudacionTotal")
     , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionTieneTransporte", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionTieneTransporte = :resumenRecaudacionTieneTransporte")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionCerrado", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionCerrado = :resumenRecaudacionCerrado")})
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionCerrado", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionCerrado = :resumenRecaudacionCerrado")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion20000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion20000 = :resumenRecaudacion20000")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion10000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion10000 = :resumenRecaudacion10000")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion5000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion5000 = :resumenRecaudacion5000")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion2000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion2000 = :resumenRecaudacion2000")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion1000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion1000 = :resumenRecaudacion1000")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion500", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion500 = :resumenRecaudacion500")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion100", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion100 = :resumenRecaudacion100")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion50", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion50 = :resumenRecaudacion50")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion10", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion10 = :resumenRecaudacion10")
+    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionCheques", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionCheques = :resumenRecaudacionCheques")})
 public class ResumenRecaudacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "resumen_recaudacion_id", nullable = false)
+    @Column(name = "resumen_recaudacion_id")
     private Integer resumenRecaudacionId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "resumen_recaudacion_fecha", nullable = false)
+    @Column(name = "resumen_recaudacion_fecha")
     @Temporal(TemporalType.DATE)
     private Date resumenRecaudacionFecha;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "resumen_recaudacion_total", nullable = false)
+    @Column(name = "resumen_recaudacion_total")
     private int resumenRecaudacionTotal;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "resumen_recaudacion_tiene_transporte", nullable = false)
+    @Column(name = "resumen_recaudacion_tiene_transporte")
     private int resumenRecaudacionTieneTransporte;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "resumen_recaudacion_cerrado", nullable = false)
+    @Column(name = "resumen_recaudacion_cerrado")
     private boolean resumenRecaudacionCerrado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleResumenRecaudacionIdResumen")
-    private List<DetalleResumenRecaudacion> detalleResumenRecaudacionList;
-    @JoinColumn(name = "resumen_recaudacion_id_caja", referencedColumnName = "caja_recaudacion_id", nullable = false)
+    @Column(name = "resumen_recaudacion_20000")
+    private Integer resumenRecaudacion20000;
+    @Column(name = "resumen_recaudacion_10000")
+    private Integer resumenRecaudacion10000;
+    @Column(name = "resumen_recaudacion_5000")
+    private Integer resumenRecaudacion5000;
+    @Column(name = "resumen_recaudacion_2000")
+    private Integer resumenRecaudacion2000;
+    @Column(name = "resumen_recaudacion_1000")
+    private Integer resumenRecaudacion1000;
+    @Column(name = "resumen_recaudacion_500")
+    private Integer resumenRecaudacion500;
+    @Column(name = "resumen_recaudacion_100")
+    private Integer resumenRecaudacion100;
+    @Column(name = "resumen_recaudacion_50")
+    private Integer resumenRecaudacion50;
+    @Column(name = "resumen_recaudacion_10")
+    private Integer resumenRecaudacion10;
+    @Column(name = "resumen_recaudacion_cheques")
+    private Integer resumenRecaudacionCheques;
+    @JoinColumn(name = "resumen_recaudacion_id_caja", referencedColumnName = "caja_recaudacion_id")
     @ManyToOne(optional = false)
     private CajaRecaudacion resumenRecaudacionIdCaja;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleResumenChequeIdResumen")
-    private List<DetalleResumenCheque> detalleResumenChequeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleDepositoRecaudacionIdResumen")
+    private List<DetalleDepositoRecaudacion> detalleDepositoRecaudacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ctvResumenIdResumenRecaudacion")
     private List<CtvResumen> ctvResumenList;
 
@@ -131,13 +159,84 @@ public class ResumenRecaudacion implements Serializable {
         this.resumenRecaudacionCerrado = resumenRecaudacionCerrado;
     }
 
-    @XmlTransient
-    public List<DetalleResumenRecaudacion> getDetalleResumenRecaudacionList() {
-        return detalleResumenRecaudacionList;
+    public Integer getResumenRecaudacion20000() {
+        return resumenRecaudacion20000;
     }
 
-    public void setDetalleResumenRecaudacionList(List<DetalleResumenRecaudacion> detalleResumenRecaudacionList) {
-        this.detalleResumenRecaudacionList = detalleResumenRecaudacionList;
+    public void setResumenRecaudacion20000(Integer resumenRecaudacion20000) {
+        this.resumenRecaudacion20000 = resumenRecaudacion20000;
+    }
+
+    public Integer getResumenRecaudacion10000() {
+        return resumenRecaudacion10000;
+    }
+
+    public void setResumenRecaudacion10000(Integer resumenRecaudacion10000) {
+        this.resumenRecaudacion10000 = resumenRecaudacion10000;
+    }
+
+    public Integer getResumenRecaudacion5000() {
+        return resumenRecaudacion5000;
+    }
+
+    public void setResumenRecaudacion5000(Integer resumenRecaudacion5000) {
+        this.resumenRecaudacion5000 = resumenRecaudacion5000;
+    }
+
+    public Integer getResumenRecaudacion2000() {
+        return resumenRecaudacion2000;
+    }
+
+    public void setResumenRecaudacion2000(Integer resumenRecaudacion2000) {
+        this.resumenRecaudacion2000 = resumenRecaudacion2000;
+    }
+
+    public Integer getResumenRecaudacion1000() {
+        return resumenRecaudacion1000;
+    }
+
+    public void setResumenRecaudacion1000(Integer resumenRecaudacion1000) {
+        this.resumenRecaudacion1000 = resumenRecaudacion1000;
+    }
+
+    public Integer getResumenRecaudacion500() {
+        return resumenRecaudacion500;
+    }
+
+    public void setResumenRecaudacion500(Integer resumenRecaudacion500) {
+        this.resumenRecaudacion500 = resumenRecaudacion500;
+    }
+
+    public Integer getResumenRecaudacion100() {
+        return resumenRecaudacion100;
+    }
+
+    public void setResumenRecaudacion100(Integer resumenRecaudacion100) {
+        this.resumenRecaudacion100 = resumenRecaudacion100;
+    }
+
+    public Integer getResumenRecaudacion50() {
+        return resumenRecaudacion50;
+    }
+
+    public void setResumenRecaudacion50(Integer resumenRecaudacion50) {
+        this.resumenRecaudacion50 = resumenRecaudacion50;
+    }
+
+    public Integer getResumenRecaudacion10() {
+        return resumenRecaudacion10;
+    }
+
+    public void setResumenRecaudacion10(Integer resumenRecaudacion10) {
+        this.resumenRecaudacion10 = resumenRecaudacion10;
+    }
+
+    public Integer getResumenRecaudacionCheques() {
+        return resumenRecaudacionCheques;
+    }
+
+    public void setResumenRecaudacionCheques(Integer resumenRecaudacionCheques) {
+        this.resumenRecaudacionCheques = resumenRecaudacionCheques;
     }
 
     public CajaRecaudacion getResumenRecaudacionIdCaja() {
@@ -149,12 +248,12 @@ public class ResumenRecaudacion implements Serializable {
     }
 
     @XmlTransient
-    public List<DetalleResumenCheque> getDetalleResumenChequeList() {
-        return detalleResumenChequeList;
+    public List<DetalleDepositoRecaudacion> getDetalleDepositoRecaudacionList() {
+        return detalleDepositoRecaudacionList;
     }
 
-    public void setDetalleResumenChequeList(List<DetalleResumenCheque> detalleResumenChequeList) {
-        this.detalleResumenChequeList = detalleResumenChequeList;
+    public void setDetalleDepositoRecaudacionList(List<DetalleDepositoRecaudacion> detalleDepositoRecaudacionList) {
+        this.detalleDepositoRecaudacionList = detalleDepositoRecaudacionList;
     }
 
     @XmlTransient

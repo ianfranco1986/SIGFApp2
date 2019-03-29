@@ -166,6 +166,7 @@
     <class>com.areatecnica.sigf.entities.CartolaBanco</class>
     <class>com.areatecnica.sigf.entities.DetalleCartola</class>
     <class>com.areatecnica.sigf.entities.Ticket</class>
+    <class>com.areatecnica.sigf.entities.DetalleDepositoRecaudacion</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.jdbc.native-sql" value="true"/>

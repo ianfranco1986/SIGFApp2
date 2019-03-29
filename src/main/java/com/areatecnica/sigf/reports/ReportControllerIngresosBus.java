@@ -40,7 +40,9 @@ public class ReportControllerIngresosBus implements Serializable {
     private List<UnidadNegocio> unidadItems;
     private Bus selected;
     private Date fecha;
-    private String informe;
+    private Date desde;
+    private Date hasta;
+    private String informe = "inf-resumen_ingresos_bus";
     private Flota flota;
     private UnidadNegocio unidadNegocio;
     private int mes;
@@ -65,10 +67,9 @@ public class ReportControllerIngresosBus implements Serializable {
         this.unidadItems = new IUnidadNegocioDaoImpl().findAll();
         this.unidadItems.remove(0);
         this.unidadNegocio = this.unidadItems.get(0);
-        
+
         this.items = this.unidadNegocio.getBusList();
-        
-        this.informe = "inf-resumen_ingresos_bus";
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
 
@@ -76,6 +77,8 @@ public class ReportControllerIngresosBus implements Serializable {
         this.anio = calendar.get(Calendar.YEAR);
         setFecha();
         System.err.println("primera fecha: " + this.fecha);
+        this.desde = this.fecha;
+        this.hasta = this.fecha;
     }
 
     public Map<String, Object> getMap() {
@@ -83,25 +86,51 @@ public class ReportControllerIngresosBus implements Serializable {
 
         Bus bus = null;
         if (!selectedItems.isEmpty()) {
+            System.err.println("TAMAÑO DE LOS ITEMS SELECTOS: " + selectedItems.size());
             bus = selectedItems.get(0);
-        }
-        list = String.valueOf(bus.getBusId());
-        array = new ArrayList<>();
+            list = String.valueOf(bus.getBusId());
+            array = new ArrayList<>();
 
-        for (Bus b : selectedItems) {
-            list = list + "," + b.getBusId();
-            array.add(b.getBusId());
-        }
+            for (Bus b : selectedItems) {
+                list = list + "," + b.getBusId();
+                array.add(b.getBusId());
+            }
+        } else {
+            bus = items.get(0);
 
-        System.err.println("IMPRIMIENDO LISTADO DE BUSES: " + list);
+            list = String.valueOf(bus.getBusId());
+            array = new ArrayList<>();
+
+            for (Bus b : items) {
+                list = list + "," + b.getBusId();
+                array.add(b.getBusId());
+            }
+        }
 
         map.put("fechaCompleta", getFechaCompleta());
-        map.put("fecha", fecha);
+        map.put("desde", desde);
+        map.put("hasta", hasta);
         map.put("list", array);
 
         return map;
     }
 
+    public Date getDesde() {
+        return desde;
+    }
+
+    public void setDesde(Date desde) {
+        this.desde = desde;
+    }
+
+    public Date getHasta() {
+        return hasta;
+    }
+
+    public void setHasta(Date hasta) {
+        this.hasta = hasta;
+    }
+    
     public Date getFecha() {
         return fecha;
     }
@@ -249,19 +278,26 @@ public class ReportControllerIngresosBus implements Serializable {
                 this.items = new IBusDaoImpl().findAllByFlota(flota);
             }
         } else {
-            this.items = new IBusDaoImpl().findAll();
+            if (this.unidadNegocio != null) {
+                this.items = new IBusDaoImpl().findByUnidad(unidadNegocio);
+            } else {
+                this.items = new IBusDaoImpl().findAll();
+            }
         }
     }
 
     public void handleUnidadChange() {
+        this.selectedItems = new ArrayList<>();
         if (this.unidadNegocio != null) {
             if (this.flota != null) {
                 this.items = new IBusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findAllByFlota(flota);
+                this.items = new IBusDaoImpl().findByUnidad(unidadNegocio);
             }
         } else if (this.flota != null) {
             this.items = new IBusDaoImpl().findAllByFlota(flota);
+        } else {
+            this.items = new IBusDaoImpl().findAll();
         }
     }
 
@@ -269,7 +305,6 @@ public class ReportControllerIngresosBus implements Serializable {
         try {
 
             this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
-            System.err.println("NUEVA FECHA:" + this.fecha);
         } catch (ParseException ex) {
             Logger.getLogger(InformeConsumoCombustibleController.class.getName()).log(Level.SEVERE, null, ex);
         }
