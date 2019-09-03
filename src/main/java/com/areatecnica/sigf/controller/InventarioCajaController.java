@@ -1,5 +1,9 @@
 package com.areatecnica.sigf.controller;
 
+import com.areatecnica.sigf.dao.impl.IBoletoDaoImpl;
+import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.entities.Boleto;
+import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.InventarioCaja;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import java.util.List;
@@ -19,12 +23,17 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
     @Inject
     private CajaRecaudacionController inventarioCajaIdCajaController;
 
+    private List<Boleto> itemsBoletos;
+    private List<CajaRecaudacion> itemsCajaRecaudacion;
+    
     // Flags to indicate if child collections are empty
     private boolean isVentaBoletoListEmpty;
 
     public InventarioCajaController() {
         // Inform the Abstract parent controller of the concrete InventarioCaja Entity
         super(InventarioCaja.class);
+        this.itemsBoletos = new IBoletoDaoImpl().findByCuenta(this.getUserCount());
+        this.itemsCajaRecaudacion = new ICajaRecaudacionDaoImpl().findAll();
     }
 
     /**
@@ -97,6 +106,22 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
         if (selected != null && inventarioCajaIdCajaController.getSelected() == null) {
             inventarioCajaIdCajaController.setSelected(selected.getInventarioCajaIdCaja());
         }
+    }
+
+    public List<Boleto> getItemsBoletos() {
+        return itemsBoletos;
+    }
+
+    public void setItemsBoletos(List<Boleto> itemsBoletos) {
+        this.itemsBoletos = itemsBoletos;
+    }
+
+    public List<CajaRecaudacion> getItemsCajaRecaudacion() {
+        return itemsCajaRecaudacion;
+    }
+
+    public void setItemsCajaRecaudacion(List<CajaRecaudacion> itemsCajaRecaudacion) {
+        this.itemsCajaRecaudacion = itemsCajaRecaudacion;
     }
 
 }

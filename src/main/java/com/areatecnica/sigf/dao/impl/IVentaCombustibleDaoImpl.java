@@ -15,11 +15,8 @@ import com.areatecnica.sigf.entities.VentaCombustible;
 import com.areatecnica.sigf.util.DatePlusValueHelper;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.SqlResultSetMapping;
 
 /**
  *
@@ -154,9 +151,8 @@ public class IVentaCombustibleDaoImpl extends GenericDAOImpl<VentaCombustible> i
     @Override
     public List<VentaCombustible> findByTerminalSinRecaudar(Terminal terminal, Boolean recaudado) {
         try {
-            return this.entityManager.createNamedQuery("VentaCombustible.findByVentaCombustibleTerminalRecaudado").
+            return this.entityManager.createNamedQuery("VentaCombustible.findByVentaCombustibleTerminalSinRecaudar").
                     setParameter("surtidorIdTerminal", terminal).
-                    setParameter("ventaCombustibleRecaudado", Boolean.FALSE).
                     getResultList();
         } catch (NoResultException ne) {
             return null;

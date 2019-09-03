@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0636735f-73b4-4c7b-9ec2-5cdf0835af58">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="193"/>
 	<parameter name="caja" class="java.lang.Integer"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -17,12 +17,16 @@
 	<queryString>
 		<![CDATA[SELECT 1 AS hoja1, 
 2 AS hoja2, 
-3 AS hoja3, 4 AS hoja4]]>
+3 AS hoja3, 4 AS hoja4, 
+5 as hoja5, 
+6 as hoja6]]>
 	</queryString>
 	<field name="hoja1" class="java.lang.Long"/>
 	<field name="hoja2" class="java.lang.Long"/>
 	<field name="hoja3" class="java.lang.Long"/>
 	<field name="hoja4" class="java.lang.Long"/>
+	<field name="hoja5" class="java.lang.Long"/>
+	<field name="hoja6" class="java.lang.Long"/>
 	<group name="hoja1">
 		<groupExpression><![CDATA[$F{hoja1}]]></groupExpression>
 		<groupHeader>
@@ -62,7 +66,7 @@
 			</band>
 		</groupHeader>
 	</group>
-	<group name="3">
+	<group name="3" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{hoja3}]]></groupExpression>
 		<groupHeader>
 			<band height="122">
@@ -83,7 +87,58 @@
 			</band>
 		</groupHeader>
 	</group>
-	<group name="hoja4">
+	<group name="5" isStartNewPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{hoja5}]]></groupExpression>
+		<groupHeader>
+			<band height="105">
+				<subreport>
+					<reportElement x="2" y="19" width="610" height="86" uuid="90fce2fa-52e4-4890-9547-379c6ce3cb4a"/>
+					<subreportParameter name="fecha">
+						<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="caja">
+						<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["inf-recaudacion_extra_caja_fecha.jasper"]]></subreportExpression>
+				</subreport>
+				<break>
+					<reportElement x="0" y="10" width="100" height="1" uuid="b917d815-cab1-4017-b1fa-d0bf2407f7e5"/>
+				</break>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="6" isStartNewPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{hoja6}]]></groupExpression>
+		<groupHeader>
+			<band height="107">
+				<subreport>
+					<reportElement x="2" y="21" width="610" height="86" uuid="af1189c1-b9f7-4f86-b513-b9e565f31804"/>
+					<subreportParameter name="fecha">
+						<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="caja">
+						<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="nombreCaja">
+						<subreportParameterExpression><![CDATA[$P{nombreCaja}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="nombreUsuario">
+						<subreportParameterExpression><![CDATA[$P{nombreUsuario}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["inf-recaudacion_boleto_caja.jasper"]]></subreportExpression>
+				</subreport>
+				<break>
+					<reportElement x="0" y="13" width="100" height="1" uuid="78db350d-2d75-45d7-a711-f595d79ddecf"/>
+				</break>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="hoja4" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{hoja4}]]></groupExpression>
 		<groupHeader>
 			<band height="119">
@@ -105,6 +160,9 @@
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["inf-recaudacion_arqueo_caja.jasper"]]></subreportExpression>
 				</subreport>
+				<break>
+					<reportElement x="0" y="13" width="100" height="1" uuid="ba2d8d72-d308-43e3-bf28-01495330195b"/>
+				</break>
 			</band>
 		</groupHeader>
 	</group>

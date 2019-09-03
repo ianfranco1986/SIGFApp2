@@ -25,5 +25,10 @@ public class IProcesoRecaudacionDaoImpl extends GenericDAOImpl<ProcesoRecaudacio
             return null;
         }
     }
-    
+
+    @Override
+    public ProcesoRecaudacion findById(int id) {
+        return (ProcesoRecaudacion) this.entityManager.createNamedQuery("ProcesoRecaudacion.findByProcesoRecaudacionId").setParameter("procesoRecaudacionId", id).getSingleResult();
+    }
+
 }

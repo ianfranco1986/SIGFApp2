@@ -30,7 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RecaudacionGuia.findAll", query = "SELECT r FROM RecaudacionGuia r")
     , @NamedQuery(name = "RecaudacionGuia.findByRecaudacionGuiaId", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaId = :recaudacionGuiaId")
-    , @NamedQuery(name = "RecaudacionGuia.findByBusBetweenFechaRecaudacion", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaIdGuia.guiaIdBus = :guiaIdBus AND r.recaudacionGuiaIdRecaudacion.recaudacionFecha BETWEEN :from AND :to")
+    , @NamedQuery(name = "RecaudacionGuia.findByRecaudacionGuiaIdRecaudacionEgreso", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaIdRecaudacion.recaudacionId =:recaudacionId AND r.recaudacionGuiaIdEgreso = :recaudacionGuiaIdEgreso")
+    , @NamedQuery(name = "RecaudacionGuia.findByCajaFecha", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaIdRecaudacion.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionGuiaIdRecaudacion.recaudacionFecha = :recaudacionFecha ORDER BY r.recaudacionGuiaIdRecaudacion.recaudacionId")
+    , @NamedQuery(name = "RecaudacionGuia.findByBusBetweenFechaRecaudacion", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaIdGuia.guiaIdBus = :guiaIdBus AND r.recaudacionGuiaIdRecaudacion.recaudacionFecha BETWEEN :from AND :to ")
     , @NamedQuery(name = "RecaudacionGuia.findByRecaudacionGuiaMonto", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaMonto = :recaudacionGuiaMonto")})
 public class RecaudacionGuia implements Serializable {
 

@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "VentaCombustible.findAll", query = "SELECT v FROM VentaCombustible v")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleId", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleId = :ventaCombustibleId")
+    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleTerminalSinRecaudar", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleIdSurtidor.surtidorIdTerminal = :surtidorIdTerminal AND v.ventaCombustibleRecaudado = 0 ORDER BY v.ventaCombustibleNumeroBoleta ASC")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleFecha", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha = :ventaCombustibleFecha ORDER BY v.ventaCombustibleNumeroBoleta DESC")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleFechaBus", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha = :ventaCombustibleFecha AND v.ventaCombustibleIdBus = :ventaCombustibleIdBus")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleBetweenDates", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha BETWEEN :from AND :to ORDER BY v.ventaCombustibleFecha ASC")        

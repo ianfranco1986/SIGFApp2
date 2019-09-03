@@ -90,7 +90,7 @@ public class BlankPageController implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.nombreMes = "Marzo 2019";
+        this.nombreMes = "Julio 2019";
         this.list = new ArrayList<>();
         
         pieModel = new PieChartModel();
@@ -107,7 +107,7 @@ public class BlankPageController implements Serializable {
         Name2ValuePOJO pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
         this.totalRecaudacion = Integer.parseInt(pp.getValue());
 
-        //Total Recaudación Administración
+          //Total Recaudación Administración
         String totalRecaudacionAdministracionURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionAdministracion/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
         target = client.target(totalRecaudacionAdministracionURL);
         pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);

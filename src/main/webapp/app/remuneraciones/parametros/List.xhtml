@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:panel style="text-align: center">
+        <h3>Parámetros</h3>
+        <p:tabView dynamic="true" cache="true" effect="fold" >
+            <p:tab title="Tipos de Trabajador" >
+                <h:form id="TipoTrabajadorListForm">
+                    <p:dataTable id="datalist"
+                                 value="#{tipoTrabajadorController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.tipoTrabajadorId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{tipoTrabajadorController.selected}" 
+                                 editable="true" emptyMessage="No se han encontrado registros">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{tipoTrabajadorController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.tipoTrabajadorId}"  <<< Remove this line
+                        -->
+
+                        <p:column sortBy="#{item.tipoTrabajadorId}" filterBy="#{item.tipoTrabajadorId}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListTipoTrabajadorTitle_tipoTrabajadorId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tipoTrabajadorId}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.tipoTrabajadorNombre}" filterBy="#{item.tipoTrabajadorNombre}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListTipoTrabajadorTitle_tipoTrabajadorNombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tipoTrabajadorNombre}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.tipoTrabajadorIdCuenta.cuentaId}" filterBy="#{item.tipoTrabajadorIdCuenta.cuentaId}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListTipoTrabajadorTitle_tipoTrabajadorIdCuenta}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tipoTrabajadorIdCuenta.cuentaId}"/>
+                        </p:column>
+
+                        <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="Parámetro Cesantía">
+                <h:form id="ParametroCesantiaListForm">
+
+                    <p:dataTable id="datalist"
+                                 value="#{parametroCesantiaController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.parametroCesantiaId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{parametroCesantiaController.selected}"
+                                 editable="true" emptyMessage="No se han encontrado registros">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{parametroCesantiaController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.parametroCesantiaId}"  <<< Remove this line
+                        -->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="% Empleador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.parametroCesantiaEmpleador}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="% Trabajador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.parametroCesantiaTrabajador}"/>
+                        </p:column>
+
+                        <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+                    </p:dataTable>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </h:form>
+
+            </p:tab>
+            <p:tab title="Asignación Familiar">
+                <h:form id="AsignacionFamiliarListForm">
+                    <p:dataTable id="datalist"
+                                 value="#{asignacionFamiliarController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.asignacionFamiliarId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{asignacionFamiliarController.selected}" 
+                                 editable="true" emptyMessage="No se han encontrado registros">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{asignacionFamiliarController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.asignacionFamiliarId}"  <<< Remove this line
+                        -->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{item.asignacionFamiliarId}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.asignacionFamiliarTramo}" filterBy="#{item.asignacionFamiliarTramo}">
+                            <f:facet name="header">
+                                <h:outputText value="Tramo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.asignacionFamiliarTramo}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.asignacionFamiliarMonto}" filterBy="#{item.asignacionFamiliarMonto}">
+                            <f:facet name="header">
+                                <h:outputText value="Monto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.asignacionFamiliarMonto}">
+                                <f:convertNumber/>
+                            </h:outputText>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.asignacionFamiliarDesde}" filterBy="#{item.asignacionFamiliarDesde}">
+                            <f:facet name="header">
+                                <h:outputText value="Desde"/>
+                            </f:facet>
+                            <h:outputText value="#{item.asignacionFamiliarDesde}">
+                                <f:convertNumber/>
+                            </h:outputText>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.asignacionFamiliarHasta}" filterBy="#{item.asignacionFamiliarHasta}">
+                            <f:facet name="header">
+                                <h:outputText value="Hasta"/>
+                            </f:facet>
+                            <h:outputText value="#{item.asignacionFamiliarHasta}">
+                                <f:convertNumber/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+
+                    </p:dataTable>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="AFP">
+                <h:form id="InstitucionPrevisionListForm">
+                    <p:dataTable id="datalist"
+                                 value="#{institucionPrevisionController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.institucionPrevisionId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{institucionPrevisionController.selected}" 
+                                 editable="true" emptyMessage="No se han encontrado registros">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{institucionPrevisionController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.institucionPrevisionId}"  <<< Remove this line
+                        -->
+
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="# Previred"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionPrevisionId}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.institucionPrevisionNombre}" filterBy="#{item.institucionPrevisionNombre}">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionPrevisionNombre}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.institucionPrevisionComision}" filterBy="#{item.institucionPrevisionComision}">
+                            <f:facet name="header">
+                                <h:outputText value="Comisión"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionPrevisionComision}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.institucionPrevisionPorcentajeDescuento}" filterBy="#{item.institucionPrevisionPorcentajeDescuento}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListInstitucionPrevisionTitle_institucionPrevisionPorcentajeDescuento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionPrevisionPorcentajeDescuento}"/>
+                        </p:column>
+
+                        <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+
+                    </p:dataTable>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="APV">
+                <h:form id="InstitucionApvListForm">
+
+                    <p:dataTable id="datalist"
+                                 value="#{institucionApvController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.institucionApvId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{institucionApvController.selected}"
+                                 editable="true"
+                                 emptyMessage="No se han encontrado registros"
+                                 >
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{institucionApvController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.institucionApvId}"  <<< Remove this line
+                        -->
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="# Previred"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionApvId}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.institucionApvNombre}" filterBy="#{item.institucionApvNombre}">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionApvNombre}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.institucionApvIdTipo.tipoInstitucionApvNombre}" filterBy="#{item.institucionApvIdTipo.tipoInstitucionApvNombre}">
+                            <f:facet name="header">
+                                <h:outputText value="Tipo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionApvIdTipo.tipoInstitucionApvNombre}"/>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </h:form>
+            </p:tab>
+            <p:tab title="Salud">
+                <h:form id="InstitucionSaludListForm">
+
+                    <p:dataTable id="datalist"
+                                 value="#{institucionSaludController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.institucionSaludId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{institucionSaludController.selected}"
+                                 editable="true" emptyMessage="No se han encontrado registros">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{institucionSaludController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.institucionSaludId}"  <<< Remove this line
+                        -->
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="# Previred"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionSaludId}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.institucionSaludNombre}" filterBy="#{item.institucionSaludNombre}">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.institucionSaludNombre}"/>
+                        </p:column>
+
+                        <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="UF">
+                <h:form id="ValorUfListForm">
+
+                    <p:dataTable id="datalist"
+                                 value="#{valorUfController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.valorUfId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{valorUfController.selected}"
+                                 editable="true"
+                                 rowIndexVar="rowIndex" emptyMessage="No se han encontrado registros">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{valorUfController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.valorUfId}"  <<< Remove this line
+                        -->
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.valorUfFecha}" filterBy="#{item.valorUfFecha}">
+                            <f:facet name="header">
+                                <h:outputText value="Mes"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorUfFecha}">
+                                <f:convertDateTime pattern="MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.valorUfMonto}" filterBy="#{item.valorUfMonto}">
+                            <f:facet name="header">
+                                <h:outputText value="Valor"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorUfMonto}">
+                                <f:convertNumber/>
+                            </h:outputText>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="Causal Finiquito">
+                <h:form id="CausalFiniquitoListForm">
+
+                    <p:dataTable id="datalist"
+                                 value="#{causalFiniquitoController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.causalFiniquitoId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{causalFiniquitoController.selected}"
+                                 emptyMessage="No se han encontrado registros"
+                                 rowIndexVar="rowIndex"
+                                 editable="true">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{causalFiniquitoController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.causalFiniquitoId}"  <<< Remove this line
+                        -->
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.causalFiniquitoCodigo}" filterBy="#{item.causalFiniquitoCodigo}">
+                            <f:facet name="header">
+                                <h:outputText value="Código"/>
+                            </f:facet>
+                            <h:outputText value="#{item.causalFiniquitoCodigo}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.causalFiniquitoDescripcion}" filterBy="#{item.causalFiniquitoDescripcion}">
+                            <f:facet name="header">
+                                <h:outputText value="Descripción"/>
+                            </f:facet>
+                            <h:outputText value="#{item.causalFiniquitoDescripcion}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+            <p:tab title="Sindicatos">
+                <h:form id="SindicatoListForm">
+
+                    <p:dataTable id="datalist"
+                                 value="#{sindicatoController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.sindicatoId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{sindicatoController.selected}" 
+                                 rowIndexVar="rowIndex"
+                                 editable="true"
+                                 emptyMessage="No se han encontrado registros">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{sindicatoController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.sindicatoId}"  <<< Remove this line
+                        -->
+
+                        <p:column sortBy="#{item.sindicatoId}" filterBy="#{item.sindicatoId}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListSindicatoTitle_sindicatoId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sindicatoId}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.sindicatoNombre}" filterBy="#{item.sindicatoNombre}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListSindicatoTitle_sindicatoNombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sindicatoNombre}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.sindicatoCuota}" filterBy="#{item.sindicatoCuota}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListSindicatoTitle_sindicatoCuota}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sindicatoCuota}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.sindicatoIdCuenta.cuentaId}" filterBy="#{item.sindicatoIdCuenta.cuentaId}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListSindicatoTitle_sindicatoIdCuenta}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sindicatoIdCuenta.cuentaId}"/>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </h:form>
+            </p:tab>
+            <p:tab title="Sueldo Base">
+                <h:form id="SueldoBaseListForm">
+
+                    <p:contextMenu id="SueldoBaseDataTableContextMenu" for="datalist">  
+                        <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('SueldoBaseListForm:createButton').click();" icon="ui-icon-plus"/>
+                        <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('SueldoBaseListForm:viewButton').click();" icon="ui-icon-search"/>
+                        <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('SueldoBaseListForm:editButton').click();" icon="ui-icon-pencil"/>
+                        <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('SueldoBaseListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                    </p:contextMenu>
+                    <p:dataTable id="datalist"
+                                 value="#{sueldoBaseController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.sueldoBaseId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{sueldoBaseController.selected}"
+                                 editable="true" 
+                                 rowIndexVar="rowIndex"
+                                 emptyMessage="No se han encontrado registros">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{sueldoBaseController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.sueldoBaseId}"  <<< Remove this line
+                        -->
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.sueldoBaseBaseNormal}" filterBy="#{item.sueldoBaseBaseNormal}">
+                            <f:facet name="header">
+                                <h:outputText value="Normal"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sueldoBaseBaseNormal}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.sueldoBaseBasePartime}" filterBy="#{item.sueldoBaseBasePartime}">
+                            <f:facet name="header">
+                                <h:outputText value="Partime"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sueldoBaseBasePartime}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.sueldoBaseDesde}" filterBy="#{item.sueldoBaseDesde}">
+                            <f:facet name="header">
+                                <h:outputText value="F.Desde"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sueldoBaseDesde}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.sueldoBaseHasta}" filterBy="#{item.sueldoBaseHasta}">
+                            <f:facet name="header">
+                                <h:outputText value="F.Hasta"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sueldoBaseHasta}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </h:form>
+            </p:tab>
+
+        </p:tabView>
+    </p:panel>
+
+</ui:composition>

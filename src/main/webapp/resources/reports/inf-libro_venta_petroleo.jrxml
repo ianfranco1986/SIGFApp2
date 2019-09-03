@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-VentasFecha" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="806aa414-a9dc-4e5d-b0b0-705f3270152d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="318"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="670"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.util.Date"/>
+	<parameter name="fechaCompleta" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+    fecha.fecha,
+    DAYNAME(fecha.fecha) as dia, 
+    venta_combustible.venta_combustible_precio,
+    COUNT(*) AS numero_venta, 
+    SUM(venta_combustible.venta_combustible_cantidad) AS litros,
+    MIN(venta_combustible.venta_combustible_numero_boleta) AS boleta_inferior,
+    MAX(venta_combustible.venta_combustible_numero_boleta) AS boleta_superior,
+    SUM(venta_combustible.venta_combustible_total) AS total
+FROM
+    venta_combustible
+        RIGHT JOIN
+    fecha ON venta_combustible.venta_combustible_fecha = fecha.fecha
+WHERE
+    fecha.fecha BETWEEN '2019-04-01' AND LAST_DAY('2019-04-01')
+    GROUP BY fecha.fecha 
+ORDER BY fecha.fecha ASC]]>
+	</queryString>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dia" class="java.lang.String"/>
+	<field name="venta_combustible_precio" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_venta" class="java.lang.Long"/>
+	<field name="litros" class="java.lang.Double"/>
+	<field name="boleta_inferior" class="java.lang.Integer"/>
+	<field name="boleta_superior" class="java.lang.Integer"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<variable name="total_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="litros_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{litros}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="165" height="19" uuid="d1158167-453c-427f-9708-7a3255b758b3"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="0" width="248" height="19" uuid="8464c4a2-4cb0-43a2-93bc-9bd398e2b13e"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Libro Venta Petroleo]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="19" width="153" height="15" uuid="3ba599f1-041c-41d6-91aa-a6a9071510b7"/>
+				<textFieldExpression><![CDATA[$P{fechaCompleta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="34" width="171" height="12" uuid="a5e455d1-ce72-479b-8429-ddea15581128">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Boletas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="462" y="0" width="77" height="16" uuid="96d49f3f-0fdb-4983-8afc-060852e8b6f4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="0" width="54" height="16" uuid="f63a40ce-8dcd-457f-b48b-832f49d51670">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0898e8-417d-41e3-956f-ff94ab609893"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="0" width="101" height="16" uuid="7ebdf130-acf8-4d88-b7dc-e2d6bfc7cf73">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="0" width="50" height="16" uuid="0a0cc9fa-cba6-4c50-acde-85db286be4b9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Litros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="0" width="70" height="16" uuid="56fbd0b8-2a48-4bd9-943e-23a754dde080">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="50" height="16" uuid="f91c444b-a718-4640-a82d-f8280794f466">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Ventas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="0" width="61" height="16" uuid="2d45dd84-f4fb-4190-ac39-c1fdf2048d8f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField pattern="dd">
+				<reportElement x="10" y="0" width="54" height="12" uuid="4883fddc-429c-4cc7-9146-279a2763323e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0898e8-417d-41e3-956f-ff94ab609893"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="291" y="0" width="101" height="12" uuid="cbddf3b4-6346-471d-9f1b-a7f3dbaf5177">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{boleta_inferior}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="148" y="0" width="50" height="12" uuid="92747415-169a-4cb2-a742-23e9758090d0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{litros}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="462" y="0" width="77" height="12" uuid="83378703-be8f-447d-a709-08e64a771750">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="392" y="0" width="70" height="12" uuid="6aeadae6-beff-4fb8-a603-44092fd21b03">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{boleta_superior}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="210" y="0" width="50" height="12" uuid="1f5989bc-b853-4e16-8a14-0c886bc9be42">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_venta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="81" y="0" width="61" height="12" uuid="2d6feecc-c3d7-46c0-8692-80b173ba0eb1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{venta_combustible_precio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="386" y="5" width="152" height="15" uuid="4f7bcdbe-1108-48c3-b7d5-814fede24983"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="538" y="5" width="34" height="15" uuid="db9157a3-a89b-455c-bba8-3f403b485f2b"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="80" y="5" width="165" height="15" uuid="58efa77c-ac2d-46a8-bc13-7b0b181b7140"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="5" width="80" height="15" uuid="036fd688-d9b5-41eb-a667-1f57940a0502">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="31" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="462" y="1" width="77" height="15" uuid="b1c1c7b8-b0bb-418c-acd5-6e55c97b5000"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="462" y="16" width="77" height="15" uuid="3a6e4278-13b7-4000-afd3-ca7ef9019ca9"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{litros_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="385" y="1" width="77" height="15" uuid="e74fc68a-cb41-43da-ab62-f8b16748ef45">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Venta :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="16" width="77" height="15" uuid="3a64e19b-5cb3-443d-818c-a28e76ee8fbd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Litros :]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

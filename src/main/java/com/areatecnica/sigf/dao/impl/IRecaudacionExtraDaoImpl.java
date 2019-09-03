@@ -9,6 +9,7 @@ import com.areatecnica.sigf.dao.IRecaudacionExtraDao;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.RecaudacionExtra;
 import com.areatecnica.sigf.entities.Terminal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -19,6 +20,10 @@ import javax.persistence.NoResultException;
  */
 public class IRecaudacionExtraDaoImpl extends GenericDAOImpl<RecaudacionExtra> implements IRecaudacionExtraDao<RecaudacionExtra> {
 
+    public IRecaudacionExtraDaoImpl() {
+        super(RecaudacionExtra.class);
+    }
+
     @Override
     public List<RecaudacionExtra> findByDate(Date fecha) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -27,12 +32,12 @@ public class IRecaudacionExtraDaoImpl extends GenericDAOImpl<RecaudacionExtra> i
     @Override
     public List<RecaudacionExtra> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta) {
         try {
-            return this.entityManager.createNamedQuery("RecaudacionExtra.findByFechaRecaudacion").
+            return this.entityManager.createNamedQuery("RecaudacionExtra.findByFechaRecaudacionCaja").
                     setParameter("recaudacionIdCaja", cajaRecaudacion).
                     setParameter("recaudacionFecha", fechaVenta).
                     getResultList();
         } catch (NoResultException ne) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -40,6 +45,5 @@ public class IRecaudacionExtraDaoImpl extends GenericDAOImpl<RecaudacionExtra> i
     public List<RecaudacionExtra> findByTerminalDate(Terminal terminal, Date fecha) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-  
 
 }

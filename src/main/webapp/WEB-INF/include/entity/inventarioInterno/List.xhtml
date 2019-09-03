@@ -26,7 +26,11 @@
                      rowsPerPageTemplate="100, 200, 500"
                      selectionMode="single"
                      selection="#{inventarioInternoController.selected}"
-                     filteredValue="#{inventarioInternoController.filteredItems}" widgetVar="datalistWidget" reflow="true" emptyMessage="No se han encontrado registros">
+                     filteredValue="#{inventarioInternoController.filteredItems}" 
+                     widgetVar="datalistWidget" 
+                     reflow="true" 
+                     emptyMessage="No se han encontrado registros"
+                     rowIndexVar="rowIndex">
             <!--
                      To enable Lazy Loading, please copy/replace the following lines above,
                      and be sure to replace the word HASH with the # symbol:
@@ -66,7 +70,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <h:outputText value="#{item.inventarioInternoId}"/>
+                <h:outputText value="#{rowIndex+1}"/>
             </p:column>
 
 
@@ -85,14 +89,7 @@
                 <h:outputText value="#{item.inventarioInternoIdentificador}"/>
             </p:column>
 
-            <p:column sortBy="#{item.inventarioInternoIdBoleto.boletoNombre}" filterBy="#{item.inventarioInternoIdBoleto.boletoNombre}">
-                <f:facet name="header">
-                    <h:outputText value="Boleto"/>
-                </f:facet>
-                <h:outputText value="#{item.inventarioInternoIdBoleto.boletoNombre}"/>
-            </p:column>
-
-            <p:column filterBy="#{item.inventarioInternoIdBoleto.boletoNombre}" headerText="Boleto" filterMatchMode="exact">
+            <p:column filterBy="#{item.inventarioInternoIdBoleto.boletoNombre}" headerText="Boleto" >
                 <f:facet name="filter">
                     <p:selectOneMenu onchange="PF('datalistWidget').filter()" >
                         <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" noSelectionOption="true" />

@@ -114,7 +114,7 @@ ORDER BY recaudacion.recaudacion_id ASC]]>
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="114" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<reportElement x="0" y="0" width="180" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
 				<textElement>
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>

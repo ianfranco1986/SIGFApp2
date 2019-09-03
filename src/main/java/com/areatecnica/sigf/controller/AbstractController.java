@@ -313,7 +313,7 @@ public abstract class AbstractController<T> implements Serializable {
                         if (msg.length() > 0) {
                             JsfUtil.addErrorMessage(msg);
                         } else {
-                            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
                         }
                     }
                 }

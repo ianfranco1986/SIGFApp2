@@ -40,7 +40,7 @@
                                                itemValue="#{boletoItem}"
                                                itemLabel="#{boletoItem.boletoNombre}"
                                                />
-                                <p:ajax event="valueChange" update="inventarioCajaIdInventarioInterno" listener="#{traspasoBoletoCajaController.handleBoletoChange(event)}" global="false"/>
+                                <p:ajax event="valueChange" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" update="inventarioCajaIdInventarioInterno" listener="#{traspasoBoletoCajaController.handleBoletoChange(event)}" global="false"/>
                             </p:selectOneMenu>
 
                             <p:selectCheckboxMenu label="Seleccionar..." id="inventarioCajaIdInventarioInterno" value="#{traspasoBoletoCajaController.inventarioCajaSelectedItems}" required="true" requiredMessage="Debe seleccionar el boleto del inventario" style="margin-left: 5px;" converter="omnifaces.SelectItemsConverter" panelStyle="width:250px" multiple="true">
@@ -50,7 +50,7 @@
                                                itemLabel="#{inventarioCajaIdInventarioInternoItem.inventarioInternoIdentificador}#{inventarioCajaIdInventarioInternoItem.inventarioInternoSerie}"
                                                />
                             </p:selectCheckboxMenu>
-                            
+
                             <p:commandButton  styleClass="btn btn-primary"  style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{traspasoBoletoCajaController.addInventarioCaja(event)}" update="DetalleCompraBoletoCreateForm:datalist, :growl, detalleTraspasoPanel, inventarioCajaIdInventarioInterno, DetalleCompraBoletoCreateForm:saveButton">
 
                             </p:commandButton>                        
@@ -78,35 +78,42 @@
                                     <f:facet name="header">
                                         <h:outputText value="N°"/>
                                     </f:facet>
-                                    <h:outputLabel value="#{rowIndex+1}"/>
+                                    <h:outputText value="#{rowIndex+1}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Tipo Boleto"/>
                                     </f:facet>
-                                    <h:outputLabel value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
+                                    <h:outputText value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Identificador"/>
                                     </f:facet>
-                                    <h:outputLabel value="#{item.inventarioCajaIdentificador}"/>
+                                    <h:outputText value="#{item.inventarioCajaIdentificador}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Serie"/>
                                     </f:facet>
-                                    <h:outputLabel value="#{item.inventarioCajaSerie}"/>
+                                    <h:outputText value="#{item.inventarioCajaSerie}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Caja"/>
                                     </f:facet>
-                                    <h:outputLabel value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}"/>
+                                    <h:outputText value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}"/>
+                                </p:column>
+
+                                <p:column style="width:32px;text-align: center">
+                                    <p:commandButton update="datalist" icon="fa fa-close" actionListener="#{traspasoBoletoCajaController.deleteInventario()}">
+                                        <f:setPropertyActionListener value="#{item}" target="#{traspasoBoletoCajaController.selectedInventario}" />
+
+                                    </p:commandButton>
                                 </p:column>
 
                             </p:dataTable>

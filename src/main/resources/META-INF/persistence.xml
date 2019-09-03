@@ -24,7 +24,6 @@
     <class>com.areatecnica.sigf.entities.CausalFiniquito</class>
     <class>com.areatecnica.sigf.entities.CentroCosto</class>
     <class>com.areatecnica.sigf.entities.Ciudad</class>
-    <class>com.areatecnica.sigf.entities.ClasificacionCuenta</class>
     <class>com.areatecnica.sigf.entities.CompraBoleto</class>
     <class>com.areatecnica.sigf.entities.CompraCombustible</class>
     <class>com.areatecnica.sigf.entities.Comuna</class>
@@ -57,6 +56,7 @@
     <class>com.areatecnica.sigf.entities.Empresa</class>
     <class>com.areatecnica.sigf.entities.EstadoBus</class>
     <class>com.areatecnica.sigf.entities.EstadoCivil</class>
+    <class>com.areatecnica.sigf.entities.Factura</class>
     <class>com.areatecnica.sigf.entities.Fecha</class>
     <class>com.areatecnica.sigf.entities.FeriadoLegal</class>
     <class>com.areatecnica.sigf.entities.FiniquitoRelacionLaboral</class>
@@ -86,6 +86,7 @@
     <class>com.areatecnica.sigf.entities.Log</class>
     <class>com.areatecnica.sigf.entities.MarcaBus</class>
     <class>com.areatecnica.sigf.entities.Menu</class>
+    <class>com.areatecnica.sigf.entities.MovimientoMes</class>
     <class>com.areatecnica.sigf.entities.MetodoPago</class>
     <class>com.areatecnica.sigf.entities.ModeloMarcaBus</class>
     <class>com.areatecnica.sigf.entities.MonedaPactadaInstitucionSalud</class>
@@ -142,6 +143,7 @@
     <class>com.areatecnica.sigf.entities.TipoInstitucionApv</class>
     <class>com.areatecnica.sigf.entities.TipoLinea</class>
     <class>com.areatecnica.sigf.entities.TipoMovimientoPersonal</class>
+    <class>com.areatecnica.sigf.entities.TipoMovimiento</class>
     <class>com.areatecnica.sigf.entities.TipoNomina</class>
     <class>com.areatecnica.sigf.entities.TipoObservacion</class>
     <class>com.areatecnica.sigf.entities.TipoTrabajador</class>
@@ -166,6 +168,13 @@
     <class>com.areatecnica.sigf.entities.CartolaBanco</class>
     <class>com.areatecnica.sigf.entities.DetalleCartola</class>
     <class>com.areatecnica.sigf.entities.Ticket</class>
+    <class>com.areatecnica.sigf.entities.Compra</class>
+    <class>com.areatecnica.sigf.entities.PlanCuentaSubTipo</class>
+    <class>com.areatecnica.sigf.entities.CuentaMayor</class>
+    <class>com.areatecnica.sigf.entities.PlanCuenta</class>
+    <class>com.areatecnica.sigf.entities.Proveedor</class>
+    <class>com.areatecnica.sigf.entities.TipoDocumento</class>
+    <class>com.areatecnica.sigf.entities.TipoPlanCuenta</class>
     <class>com.areatecnica.sigf.entities.DetalleDepositoRecaudacion</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PlanCuentaSubTipoEditDlg" widgetVar="PlanCuentaSubTipoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPlanCuentaSubTipoTitle}" closeOnEscape="true">
+
+            <h:form id="PlanCuentaSubTipoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{planCuentaSubTipoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPlanCuentaSubTipoLabel_planCuentaSubTipoId}" for="planCuentaSubTipoId" />
+                        <h:outputText id="planCuentaSubTipoId" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoId}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanCuentaSubTipoLabel_planCuentaSubTipoNombre}" for="planCuentaSubTipoNombre" />
+                        <p:inputText id="planCuentaSubTipoNombre" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoNombre}" title="#{myBundle.EditPlanCuentaSubTipoTitle_planCuentaSubTipoNombre}" required="true" requiredMessage="#{myBundle.EditPlanCuentaSubTipoRequiredMessage_planCuentaSubTipoNombre}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planCuentaSubTipoController.save}" value="#{myBundle.Save}" update="display,:PlanCuentaSubTipoListForm:datalist,:PlanCuentaSubTipoListForm:PlanCuentaSubTipoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlanCuentaSubTipoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PlanCuentaSubTipoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -15,25 +15,22 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{inventarioInternoController.selected != null}">
 
 
-                        <h:outputLabel value="#{myBundle.EditInventarioInternoLabel_inventarioInternoId}" for="inventarioInternoId" />
+                        <h:outputLabel value="#" for="inventarioInternoId" />
                         <h:outputText id="inventarioInternoId" value="#{inventarioInternoController.selected.inventarioInternoId}" />
 
-                        <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_inventarioInternoSerie}" for="inventarioInternoSerie" />
+                        <p:outputLabel value="Serie:" for="inventarioInternoSerie" />
                         <p:inputText id="inventarioInternoSerie" value="#{inventarioInternoController.selected.inventarioInternoSerie}" title="#{myBundle.EditInventarioInternoTitle_inventarioInternoSerie}" required="true" requiredMessage="#{myBundle.EditInventarioInternoRequiredMessage_inventarioInternoSerie}"/>
 
-                        <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_inventarioInternoIdentificador}" for="inventarioInternoIdentificador" />
+                        <p:outputLabel value="Identificador:" for="inventarioInternoIdentificador" />
                         <p:inputText id="inventarioInternoIdentificador" value="#{inventarioInternoController.selected.inventarioInternoIdentificador}" title="#{myBundle.EditInventarioInternoTitle_inventarioInternoIdentificador}" required="true" requiredMessage="#{myBundle.EditInventarioInternoRequiredMessage_inventarioInternoIdentificador}" size="45" maxlength="45"/>
 
-                        <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_inventarioInternoEstado}" for="inventarioInternoEstado" />
-                        <p:selectBooleanCheckbox id="inventarioInternoEstado" value="#{inventarioInternoController.selected.inventarioInternoEstado}" required="true" requiredMessage="#{myBundle.EditInventarioInternoRequiredMessage_inventarioInternoEstado}"/>
-
-                        <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_inventarioInternoIdBoleto}" for="inventarioInternoIdBoleto" />
+                        <p:outputLabel value="Boleto:" for="inventarioInternoIdBoleto" />
                         <p:selectOneMenu id="inventarioInternoIdBoleto" value="#{inventarioInternoController.selected.inventarioInternoIdBoleto}" required="true" requiredMessage="#{myBundle.EditInventarioInternoRequiredMessage_inventarioInternoIdBoleto}" converter="boletoConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{boletoController.items}"
                                            var="inventarioInternoIdBoletoItem"
                                            itemValue="#{inventarioInternoIdBoletoItem}"
-                                           itemLabel="#{inventarioInternoIdBoletoItem.boletoId.toString()}"
+                                           itemLabel="#{inventarioInternoIdBoletoItem.boletoNombre}"
                                            />
 
                         </p:selectOneMenu>

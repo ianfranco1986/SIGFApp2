@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "RecaudacionMinuto.findAll", query = "SELECT r FROM RecaudacionMinuto r")
+    , @NamedQuery(name = "RecaudacionMinuto.findByFechaRecaudacionMinutoCaja", query = "SELECT r FROM RecaudacionMinuto r WHERE r.recaudacionMinutoIdRecaudacion.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionMinutoIdRecaudacion.recaudacionFecha = :recaudacionFecha ORDER BY r.recaudacionMinutoIdRecaudacion.recaudacionId ASC")
+    , @NamedQuery(name = "RecaudacionMinuto.findRecibidosBusFechas", query = "SELECT r FROM RecaudacionMinuto r WHERE r.recaudacionMinutoIdRegistroMinuto.registroMinutoHastaIdBus = :registroMinutoHastaIdBus AND r.recaudacionMinutoIdRecaudacion.recaudacionFecha BETWEEN :from AND :to ORDER BY r.recaudacionMinutoIdRecaudacion.recaudacionId ASC")
     , @NamedQuery(name = "RecaudacionMinuto.findByRecaudacionMinutoId", query = "SELECT r FROM RecaudacionMinuto r WHERE r.recaudacionMinutoId = :recaudacionMinutoId")
     , @NamedQuery(name = "RecaudacionMinuto.findByRecaudacionMinutoMonto", query = "SELECT r FROM RecaudacionMinuto r WHERE r.recaudacionMinutoMonto = :recaudacionMinutoMonto")})
 public class RecaudacionMinuto implements Serializable {

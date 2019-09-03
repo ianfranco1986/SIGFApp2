@@ -67,7 +67,7 @@ public class AbonoBusController extends AbstractController<AbonoBus> {
         this.dao = new AbonoBusDaoImpl();
         this.items = this.dao.findLast();
         this.model = new AbonoBusDataModel(items);
-        this.unidadItems = this.unidadNegocioDao.findByCuenta(this.getUserCount());
+        this.unidadItems = this.unidadNegocioDao.findNandu();
         this.getSelected().setAbonoBusCuotaActual(0);
         this.getSelected().setAbonoBusTotalCuotas(0);
     }
@@ -89,19 +89,26 @@ public class AbonoBusController extends AbstractController<AbonoBus> {
             this.getSelected().setAbonoBusActivo(true);
 
             if (this.getSelected().getAbonoBusTotalCuotas() == 0) {
+
+                this.getSelected().setAbonoBusCuotaActual(0);
+                this.getSelected().setAbonoBusTotalCuotas(0);
                 this.getSelected().setAbonoBusFechaTermino(fecha);
+
+                dao.update(this.getSelected());
+                this.items.add(0, this.getSelected());
+
             } else {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(fecha);
 
-                int cuotasRestantes = (this.getSelected().getAbonoBusTotalCuotas() - this.getSelected().getAbonoBusCuotaActual())+1;;
+                int cuotasRestantes = (this.getSelected().getAbonoBusTotalCuotas() - this.getSelected().getAbonoBusCuotaActual()) + 1;;
 
                 if (cuotasRestantes > 0) {
                     DateTime dateTime = new DateTime(fecha);
-                    
+
                     calendar.add(calendar.get(Calendar.MONTH), cuotasRestantes);
                     this.getSelected().setAbonoBusFechaTermino(dateTime.plusMonths(cuotasRestantes).toDate());
-                    
+
                     int i = this.getSelected().getAbonoBusCuotaActual();
 
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
@@ -126,19 +133,18 @@ public class AbonoBusController extends AbstractController<AbonoBus> {
 
                         JsfUtil.addSuccessMessage("Se ha generado un abono con fecha: " + sdf.format(dateTime.toDate()) + " al Bus N°: " + abonoBus.getAbonoBusIdBus().getBusNumero());
                     }
-
-                    
-                } else {
-                    this.getSelected().setAbonoBusCuotaActual(0);
-                    this.getSelected().setAbonoBusTotalCuotas(0);
-                    this.getSelected().setAbonoBusFechaTermino(fecha);
-                    super.saveNew(event);
-                    this.items.add(0, this.getSelected());
                 }
+//                } else {
+//                    this.getSelected().setAbonoBusCuotaActual(0);
+//                    this.getSelected().setAbonoBusTotalCuotas(0);
+//                    this.getSelected().setAbonoBusFechaTermino(fecha);
+//                    super.saveNew(event);
+//                    this.items.add(0, this.getSelected());
+//                }
 
             }
 
-            JsfUtil.addSuccessMessage("Se ha registrado un nuevo abono");
+            JsfUtil.addSuccessMessage("Se ha registrado un nuevo Abono");
 
             this.getSelected().setAbonoBusFechaInicio(this.getSelected().getAbonoBusFechaInicio());
             this.getSelected().setAbonoBusIdTipoAbono(this.getSelected().getAbonoBusIdTipoAbono());
@@ -146,6 +152,8 @@ public class AbonoBusController extends AbstractController<AbonoBus> {
             this.getSelected().setAbonoBusCuotaActual(this.getSelected().getAbonoBusCuotaActual());
             this.getSelected().setAbonoBusTotalCuotas(this.getSelected().getAbonoBusTotalCuotas());
             this.setSelected(prepareCreate(event));
+        } else {
+            JsfUtil.addErrorMessage("Error al validar el Abono");
         }
     }
 
@@ -153,8 +161,7 @@ public class AbonoBusController extends AbstractController<AbonoBus> {
     public void save(ActionEvent event) {
         if (rowSelected != null) {
             this.dao.update(this.rowSelected);
-            
-            this.rowSelected = null;
+
             JsfUtil.addSuccessMessage("Se ha actualizado el abono");
             this.setSelected(prepareCreate(event));
             this.getSelected().setAbonoBusFechaInicio(this.rowSelected.getAbonoBusFechaInicio());
@@ -163,7 +170,7 @@ public class AbonoBusController extends AbstractController<AbonoBus> {
             this.getSelected().setAbonoBusCuotaActual(this.rowSelected.getAbonoBusCuotaActual());
             this.getSelected().setAbonoBusTotalCuotas(this.rowSelected.getAbonoBusTotalCuotas());
             this.rowSelected = null;
-        }else{
+        } else {
             JsfUtil.addErrorMessage("Debe seleccionar un abono");
         }
     }
@@ -186,7 +193,7 @@ public class AbonoBusController extends AbstractController<AbonoBus> {
             JsfUtil.addErrorMessage("Debe seleccionar un abono");
         }
     }
-    
+
     /**
      * Set the "is[ChildCollection]Empty" property for OneToMany fields.
      */
@@ -329,7 +336,7 @@ public class AbonoBusController extends AbstractController<AbonoBus> {
     }
 
     public void setMontoXDefecto() {
-        if (this.getSelected().getAbonoBusIdTipoAbono()!= null) {
+        if (this.getSelected().getAbonoBusIdTipoAbono() != null) {
             this.getSelected().setAbonoBusMontoFijo(this.getSelected().getAbonoBusIdTipoAbono().getTipoAbonoMontoDefecto());
         }
     }

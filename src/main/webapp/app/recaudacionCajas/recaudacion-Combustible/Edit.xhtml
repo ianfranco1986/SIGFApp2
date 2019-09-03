@@ -20,7 +20,7 @@
 
                             <p:column style="font-weight: bold;text-align: right;">N° Boleta:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:outputLabel value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion.recaudacionIdentificador}" />                                
+                                <p:outputLabel value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdVentaCombustible.ventaCombustibleNumeroBoleta}" />                                
                             </p:column>
                             <p:column rowspan="1" style="font-weight: bold;"></p:column>
                             <p:column rowspan="1" style="font-weight: bold;width: 250px;"></p:column>
@@ -29,28 +29,20 @@
                         <p:row>
                             <p:column style="font-weight: bold;text-align: right;">N° Conductor:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:selectOneMenu id="guiaIdTrabajador" value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion.recaudacionIdTrabajador}" required="true" requiredMessage="Debe seleccionar al Conductor" converter="omnifaces.SelectItemsConverter">
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{trabajadorController.items}"
-                                                   var="guiaIdTrabajadorItem"
-                                                   itemValue="#{guiaIdTrabajadorItem}"
-                                                   itemLabel="#{guiaIdTrabajadorItem.trabajadorCodigo}"
-                                                   />
-                                    <p:ajax event="valueChange" update="guiaIdTrabajadorNombre, okButton" global="false"/>
-                                </p:selectOneMenu>
+                                
                             </p:column>
 
                             <p:column style="font-weight: bold;" rowspan="1">Conductor:</p:column>
-                            <p:column rowspan="1"><p:outputLabel  value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion.recaudacionIdTrabajador.trabajadorApellidoPaterno} #{recaudacionCombustibleController.recaudacion.recaudacionIdTrabajador.trabajadorApellidoMaterno} #{recaudacionCombustibleController.recaudacion.recaudacionIdTrabajador.trabajadorNombres.charAt(0)}." id="guiaIdTrabajadorNombre" /></p:column>
+                            <p:column rowspan="1"></p:column>
                         </p:row>
 
                         <!-- SEGUNDA FILA -->
                         <p:row>
                             <p:column style="font-weight: bold;text-align: right;">N° Bus:</p:column>
-                            <p:column><p:outputLabel id="guiaIdBus" value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion.recaudacionIdBus.busNumero}"/>
+                            <p:column><p:outputLabel id="guiaIdBus" value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdVentaCombustible.ventaCombustibleIdBus.busNumero}"/>
                             </p:column>
                             <p:column rowspan="1" style="font-weight: bold;text-align: right;">PPU:</p:column>
-                            <p:column rowspan="1"><p:outputLabel value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion.recaudacionIdBus.busPatente}" id="guiaIdBusPatente" /></p:column>
+                            <p:column rowspan="1"><p:outputLabel value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdVentaCombustible.ventaCombustibleIdBus.busPatente}" id="guiaIdBusPatente" /></p:column>
                         </p:row>
 
                         <!-- PRIMERA FILA -->

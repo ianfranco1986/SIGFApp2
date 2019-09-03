@@ -16,5 +16,6 @@ import java.util.List;
 public interface IEmpresaDao<T> extends IGenericDAO<T> {
     
     public List<Empresa> findByCuenta(Cuenta cuenta);
-        
+    
+    public Empresa findById(int id);
 }

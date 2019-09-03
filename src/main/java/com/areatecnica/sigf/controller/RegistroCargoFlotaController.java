@@ -14,6 +14,7 @@ import com.areatecnica.sigf.dao.IUnidadNegocioDao;
 import com.areatecnica.sigf.dao.impl.CargoBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
+import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CargoBus;
 import com.areatecnica.sigf.entities.Flota;
@@ -97,6 +98,7 @@ public class RegistroCargoFlotaController implements Serializable {
             Logger.getLogger(RegistroCargoFlotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        this.unidadNegocioItems = new IUnidadNegocioDaoImpl().findNandu();
     }
 
     public CargoBus prepareCreate() {

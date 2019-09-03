@@ -7,8 +7,11 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IRecaudacionGuiaDao;
 import com.areatecnica.sigf.entities.Bus;
+import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Cuenta;
+import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.RecaudacionGuia;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -29,6 +32,18 @@ public class IRecaudacionGuiaDaoImpl extends GenericDAOImpl<RecaudacionGuia> imp
     }
 
     @Override
+    public RecaudacionGuia findByRecaudacionEgreso(int recaudacion, Egreso egreso) {
+        try {
+            return (RecaudacionGuia) this.entityManager.createNamedQuery("RecaudacionGuia.findByRecaudacionGuiaIdRecaudacionEgreso").
+                    setParameter("recaudacionId", recaudacion).
+                    setParameter("recaudacionGuiaIdEgreso", egreso).
+                    getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
     public List<RecaudacionGuia> findByBusBetweenFechaRecaudacion(Bus bus, Date inicio, Date termino) {
         try {
             return this.entityManager.createNamedQuery("RecaudacionGuia.findByBusBetweenFechaRecaudacion").
@@ -36,9 +51,20 @@ public class IRecaudacionGuiaDaoImpl extends GenericDAOImpl<RecaudacionGuia> imp
                     setParameter("from", inicio).
                     setParameter("to", termino).getResultList();
         } catch (NoResultException ne) {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<RecaudacionGuia> findByCajaFecha(CajaRecaudacion caja, Date fecha) {
+        try {
+            return this.entityManager.createNamedQuery("RecaudacionGuia.findByBusBetweenFechaRecaudacion").
+                    setParameter("recaudacionIdCaja", caja).
+                    setParameter("recaudacionFecha", fecha).
+                    getResultList();
+        } catch (NoResultException ne) {
             return null;
         }
     }
 
-    
 }

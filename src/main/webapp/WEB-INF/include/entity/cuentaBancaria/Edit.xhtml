@@ -19,6 +19,9 @@
                         <p:outputLabel value="N°:" for="cuentaBancariaNumero" />
                         <p:inputText id="cuentaBancariaNumero" value="#{cuentaBancariaController.selected.cuentaBancariaNumero}" required="true" requiredMessage="Debe ingresar el N° de la Cuenta" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off"/>
 
+                        <p:outputLabel value="Descripción"/>
+                        <p:inputText id="descripcion" value="#{cuentaBancariaController.selected.cuentaBancariaDescripcion}" />
+
                         <p:outputLabel value="Titular: " for="cuentaBancariaNombreTitular" />
                         <p:inputText id="cuentaBancariaNombreTitular" value="#{cuentaBancariaController.selected.cuentaBancariaNombreTitular}" required="true" requiredMessage="Debe ingresar el Titular de la cuenta" size="30" maxlength="30" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off"/>
 

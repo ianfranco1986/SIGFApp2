@@ -5,7 +5,7 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="670"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="295"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="caja" class="java.lang.Integer">
@@ -105,15 +105,6 @@ ORDER BY venta_combustible_numero_boleta ASC]]>
 	</pageHeader>
 	<columnHeader>
 		<band height="95" splitType="Stretch">
-			<staticText>
-				<reportElement x="300" y="75" width="60" height="15" uuid="f7e3a917-622d-4bd5-a6cb-ac57b0fbe08b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5424feb8-2a35-42a5-877e-e32a56a5b9fd"/>
-				</reportElement>
-				<textElement>
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PPU]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="240" y="75" width="60" height="15" uuid="96d49f3f-0fdb-4983-8afc-060852e8b6f4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
@@ -229,15 +220,6 @@ ORDER BY venta_combustible_numero_boleta ASC]]>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{venta_combustible_total}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="300" y="0" width="60" height="15" uuid="447424db-4500-4589-adf1-0cce0828023f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5424feb8-2a35-42a5-877e-e32a56a5b9fd"/>
-				</reportElement>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bus_patente}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="360" y="0" width="130" height="15" uuid="ac81a329-0dbd-4eea-ad61-0ec1e2a5c7f2">

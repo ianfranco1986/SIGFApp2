@@ -22,17 +22,13 @@ public class InventarioInternoController extends AbstractController<InventarioIn
 
     private List<Boleto> itemsBoletos;
 
-    private IBoletoDao boletoDao;
-
     // Flags to indicate if child collections are empty
     private boolean isInventarioCajaListEmpty;
 
     public InventarioInternoController() {
         // Inform the Abstract parent controller of the concrete InventarioInterno Entity
         super(InventarioInterno.class);
-        this.boletoDao = new IBoletoDaoImpl();
-
-        this.itemsBoletos = this.boletoDao.findByCuenta(this.getUserCount());
+        this.itemsBoletos = new IBoletoDaoImpl().findByCuenta(this.getUserCount());
     }
 
     public void setItemsBoletos(List<Boleto> itemsBoletos) {

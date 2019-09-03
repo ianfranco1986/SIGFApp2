@@ -51,7 +51,7 @@
                     <h:panelGrid columns="2">
                         <p:selectOneMenu id="unidad" value="#{registroCargoFlotaController.unidadNegocio}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="Todas"/>
-                            <f:selectItems value="#{unidadNegocioController.items}"
+                            <f:selectItems value="#{registroCargoFlotaController.unidadNegocioItems}"
                                            var="unidadItem"
                                            itemValue="#{unidadItem}"
                                            itemLabel="#{unidadItem.unidadNegocioNumero} - #{unidadItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
@@ -75,20 +75,20 @@
                         <p:outputLabel value="?:" style="margin-left: 5px;"/>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <p:inputText id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{registroCargoFlotaController.selected.cargoBusCuotaActual}" onfocus="this.setSelectionRange(0, this.value.length)">
+                        <p:inputNumber decimalPlaces="0" id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{registroCargoFlotaController.selected.cargoBusCuotaActual}" onfocus="this.setSelectionRange(0, this.value.length)">
                             <p:ajax event="blur" update=":CargoBusListForm:datalist" listener="#{registroCargoFlotaController.setCuotaActual}" global="false"/>
-                        </p:inputText>                            
+                        </p:inputNumber>                            
                         <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
-                        <p:inputText id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{!registroCargoFlotaController.cuotas}" value="#{registroCargoFlotaController.selected.cargoBusTotalCuotas}" onfocus="this.setSelectionRange(0, this.value.length)">
+                        <p:inputNumber decimalPlaces="0" id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{!registroCargoFlotaController.cuotas}" value="#{registroCargoFlotaController.selected.cargoBusTotalCuotas}" onfocus="this.setSelectionRange(0, this.value.length)">
                             <p:ajax event="blur" update=":CargoBusListForm:datalist" listener="#{registroCargoFlotaController.setTotalCuota}" global="false"/>
-                        </p:inputText>
+                        </p:inputNumber>
                     </h:panelGroup>
 
                     <p:outputLabel value="Monto" for="montoCargoBus" />
                     <h:panelGroup>
-                        <p:inputText id="montoCargoBus" autocomplete="off" value="#{registroCargoFlotaController.monto}" required="true" requiredMessage="Debe ingresar el monto del cargo" onfocus="this.setSelectionRange(0, this.value.length)">
+                        <p:inputNumber decimalPlaces="0" id="montoCargoBus" autocomplete="off" value="#{registroCargoFlotaController.monto}" required="true" requiredMessage="Debe ingresar el monto del cargo" onfocus="this.setSelectionRange(0, this.value.length)">
                             <p:ajax event="blur" update=":CargoBusListForm:datalist" listener="#{registroCargoFlotaController.setMontoXDefecto}" global="false"/>
-                        </p:inputText>
+                        </p:inputNumber>
                     </h:panelGroup>
 
                     <p:outputLabel />

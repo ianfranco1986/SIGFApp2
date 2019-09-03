@@ -51,7 +51,7 @@ public class RecaudacionBoletoController extends AbstractController<RecaudacionB
     public void prepareRecaudacionBoletoIdVentaBoleto(ActionEvent event) {
         RecaudacionBoleto selected = this.getSelected();
         if (selected != null && recaudacionBoletoIdVentaBoletoController.getSelected() == null) {
-            recaudacionBoletoIdVentaBoletoController.setSelected(selected.getRecaudacionBoletoIdVentaBoleto());
+//            recaudacionBoletoIdVentaBoletoController.setSelected(selected.getRecaudacionBoletoIdVentaBoleto());
         }
     }
 

@@ -186,7 +186,7 @@ public class LoginController implements java.io.Serializable {
                 usuarioSessionFacade.create(usuarioSession);
 
             } else {
-                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("alertUsername"));
+                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/MyBundle").getString("alertUsername"));
             }
 
         } catch (IOException ex) {

@@ -40,7 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Bus.findAll", query = "SELECT b FROM Bus b WHERE b.busNumero>1 ORDER BY b.busIdUnidadNegocio.unidadNegocioNumero DESC, b.busNumero ASC")
     , @NamedQuery(name = "Bus.findByBusUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio AND b.busIdFlota = :busIdFlota ORDER BY b.busIdUnidadNegocio.unidadNegocioNumero DESC, b.busNumero ASC")
+    , @NamedQuery(name = "Bus.findByProcesoRecaudacion", query = "SELECT b FROM Bus b WHERE b.busIdProcesoRecaudacion = :busIdProcesoRecaudacion ORDER BY b.busNumero ASC")
     , @NamedQuery(name = "Bus.findByFlota", query = "SELECT b FROM Bus b WHERE b.busIdFlota = :busIdFlota ORDER BY b.busNumero")
+    , @NamedQuery(name = "Bus.findByEmpresa", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa AND b.busActivo = 1 ORDER BY b.busNumero")
+    , @NamedQuery(name = "Bus.findByEmpresaUnidad", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa and b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero")
     , @NamedQuery(name = "Bus.findByBusIdUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero ASC")
     , @NamedQuery(name = "Bus.findAllByCuenta", query = "SELECT b FROM Bus b WHERE b.busIdTerminal.terminalIdCuenta = :idCuenta ORDER BY b.busNumero ASC")
     , @NamedQuery(name = "Bus.findByBusId", query = "SELECT b FROM Bus b WHERE b.busId = :busId")

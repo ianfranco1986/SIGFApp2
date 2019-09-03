@@ -37,7 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "VentaBoleto.findAll", query = "SELECT v FROM VentaBoleto v")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoId", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoId = :ventaBoletoId")
+    , @NamedQuery(name = "VentaBoleto.findBySerie", query = "SELECT v FROM VentaBoleto v WHERE :inventarioCajaSerie BETWEEN v.ventaBoletoIdInventarioCaja.inventarioCajaSerie AND (v.ventaBoletoIdInventarioCaja.inventarioCajaSerie+1000) ")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoFecha", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoFecha = :ventaBoletoFecha")
+    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoFecha = :ventaBoletoFecha AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja ORDER BY v.ventaBoletoNumeroBoleta ASC")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoNumeroBoleta", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoNumeroBoleta = :ventaBoletoNumeroBoleta")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoValor", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoValor = :ventaBoletoValor")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoRecaudado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoRecaudado = :ventaBoletoRecaudado")
@@ -67,6 +69,10 @@ public class VentaBoleto implements Serializable {
     @NotNull
     @Column(name = "venta_boleto_recaudado", nullable = false)
     private boolean ventaBoletoRecaudado;
+    @Column(name = "venta_boleto_folio_recaudacion")
+    private int ventaBoletoFolioRecaudacion;
+    @Column(name = "venta_boleto_folio_solymar")
+    private int ventaBoletoFolioSolyMar;
     @Column(name = "venta_boleto_utilizado")
     private Boolean ventaBoletoUtilizado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionBoletoIdVentaBoleto")
@@ -88,12 +94,14 @@ public class VentaBoleto implements Serializable {
         this.ventaBoletoId = ventaBoletoId;
     }
 
-    public VentaBoleto(Integer ventaBoletoId, Date ventaBoletoFecha, int ventaBoletoNumeroBoleta, int ventaBoletoValor, boolean ventaBoletoRecaudado) {
+    public VentaBoleto(Integer ventaBoletoId, Date ventaBoletoFecha, int ventaBoletoNumeroBoleta, int ventaBoletoValor, boolean ventaBoletoRecaudado, int ventaBoletoFolioRecaudacion, int ventaBoletoFolioSolyMar) {
         this.ventaBoletoId = ventaBoletoId;
         this.ventaBoletoFecha = ventaBoletoFecha;
         this.ventaBoletoNumeroBoleta = ventaBoletoNumeroBoleta;
         this.ventaBoletoValor = ventaBoletoValor;
         this.ventaBoletoRecaudado = ventaBoletoRecaudado;
+        this.ventaBoletoFolioRecaudacion = ventaBoletoFolioRecaudacion;
+        this.ventaBoletoFolioSolyMar = ventaBoletoFolioSolyMar;
     }
 
     public Integer getVentaBoletoId() {
@@ -142,6 +150,22 @@ public class VentaBoleto implements Serializable {
 
     public void setVentaBoletoUtilizado(Boolean ventaBoletoUtilizado) {
         this.ventaBoletoUtilizado = ventaBoletoUtilizado;
+    }
+
+    public int getVentaBoletoFolioRecaudacion() {
+        return ventaBoletoFolioRecaudacion;
+    }
+
+    public int getVentaBoletoFolioSolyMar() {
+        return ventaBoletoFolioSolyMar;
+    }
+
+    public void setVentaBoletoFolioSolyMar(int ventaBoletoFolioSolyMar) {
+        this.ventaBoletoFolioSolyMar = ventaBoletoFolioSolyMar;
+    }
+
+    public void setVentaBoletoFolioRecaudacion(int ventaBoletoFolioRecaudacion) {
+        this.ventaBoletoFolioRecaudacion = ventaBoletoFolioRecaudacion;
     }
 
     @XmlTransient
@@ -201,5 +225,5 @@ public class VentaBoleto implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.VentaBoleto[ ventaBoletoId=" + ventaBoletoId + " ]";
     }
-    
+
 }

@@ -27,6 +27,8 @@ public interface IRecaudacionMinutoDao<T> extends IGenericDAO<T> {
     public List<RecaudacionMinuto> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta);
 
     public List<RecaudacionMinuto> findByBusAndDate(Bus bus, Date from, Date to);
+    
+    public List<RecaudacionMinuto> findRecibidosBusAndDate(Bus bus, Date from, Date to);
 
     public List<RecaudacionMinuto> findByDefaultBus();
 

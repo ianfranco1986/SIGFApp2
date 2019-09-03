@@ -14,7 +14,9 @@ import java.util.List;
  * @author ianfr
  */
 public interface IEgresoDao<T> extends IGenericDAO<T> {
-    
+
     public List<Egreso> findAllByCuenta(Cuenta cuenta);
-    
+
+    public Egreso getBoleto();
+
 }

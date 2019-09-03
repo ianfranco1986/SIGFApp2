@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e")
     , @NamedQuery(name = "Empresa.findAllByCuenta", query = "SELECT e FROM Empresa e WHERE e.empresaIdCuenta = :idCuenta ORDER BY e.empresaNombre ASC")
+    , @NamedQuery(name = "Empresa.findByNandu", query = "SELECT e FROM Empresa e WHERE e.empresaIdCuenta.cuentaId = 1 AND e.empresaId <> 1 AND e.empresaActiva = 1 ORDER BY e.empresaNombre ASC")
     , @NamedQuery(name = "Empresa.findByEmpresaId", query = "SELECT e FROM Empresa e WHERE e.empresaId = :empresaId")
     , @NamedQuery(name = "Empresa.findByEmpresaRut", query = "SELECT e FROM Empresa e WHERE e.empresaRut = :empresaRut")
     , @NamedQuery(name = "Empresa.findByEmpresaNombre", query = "SELECT e FROM Empresa e WHERE e.empresaNombre = :empresaNombre")
@@ -87,6 +88,12 @@ public class Empresa implements Serializable {
     @NotNull
     @Column(name = "empresa_porcentaje_mutual", nullable = false)
     private float empresaPorcentajeMutual;
+    @Column(name = "empresa_activa")
+    private Boolean empresaActiva;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaEmpresaId")
+    private List<PlanCuenta> planCuentaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimientoMesEmpresaId")
+    private List<MovimientoMes> movimientoMesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "liquidacionEmpresaIdEmpresa")
     private List<LiquidacionEmpresa> liquidacionEmpresaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "representanteEmpresaIdEmpresa")
@@ -198,6 +205,14 @@ public class Empresa implements Serializable {
         this.empresaPorcentajeMutual = empresaPorcentajeMutual;
     }
 
+    public Boolean getEmpresaActiva() {
+        return empresaActiva;
+    }
+
+    public void setEmpresaActiva(Boolean empresaActiva) {
+        this.empresaActiva = empresaActiva;
+    }
+
     @XmlTransient
     public List<LiquidacionEmpresa> getLiquidacionEmpresaList() {
         return liquidacionEmpresaList;
@@ -244,6 +259,15 @@ public class Empresa implements Serializable {
     }
 
     @XmlTransient
+    public List<MovimientoMes> getMovimientoMesList() {
+        return movimientoMesList;
+    }
+
+    public void setMovimientoMesList(List<MovimientoMes> movimientoMesList) {
+        this.movimientoMesList = movimientoMesList;
+    }
+
+    @XmlTransient
     public List<Bus> getBusList() {
         return busList;
     }
@@ -267,6 +291,15 @@ public class Empresa implements Serializable {
 
     public void setEmpresaIdCajaCompensacion(CajaCompensacion empresaIdCajaCompensacion) {
         this.empresaIdCajaCompensacion = empresaIdCajaCompensacion;
+    }
+
+    @XmlTransient
+    public List<PlanCuenta> getPlanCuentaList() {
+        return planCuentaList;
+    }
+
+    public void setPlanCuentaList(List<PlanCuenta> planCuentaList) {
+        this.planCuentaList = planCuentaList;
     }
 
     public Cuenta getEmpresaIdCuenta() {

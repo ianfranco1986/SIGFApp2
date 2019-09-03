@@ -10,7 +10,7 @@
 
 
         <p:dataTable id="datalist"
-                     value="#{compraBoletoController.items}"
+                     value="#{compraBoletoDetalleController.items}"
                      lazy="false"
                      rowKey="#{item.compraBoletoId}"
                      var="item"
@@ -19,7 +19,7 @@
                      rows="100"
                      rowsPerPageTemplate="50, 100, 200, 500"
                      selectionMode="single"
-                     selection="#{compraBoletoController.selected}">
+                     selection="#{compraBoletoDetalleController.selected}">
 
             <f:facet name="header">
                 Compras de Boletos 

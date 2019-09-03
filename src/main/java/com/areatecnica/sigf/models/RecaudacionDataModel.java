@@ -5,7 +5,7 @@
  */
 package com.areatecnica.sigf.models;
 
-import com.areatecnica.sigf.entities.Recaudacion;
+import com.areatecnica.sigf.controller.RecaudacionGuiaController;
 import java.util.List;
 import javax.faces.model.ListDataModel;
 import org.primefaces.model.SelectableDataModel;
@@ -14,26 +14,26 @@ import org.primefaces.model.SelectableDataModel;
  *
  * @author ianfr
  */
-public class RecaudacionDataModel extends ListDataModel<Recaudacion> implements SelectableDataModel<Recaudacion> {
+public class RecaudacionDataModel extends ListDataModel<RecaudacionGuiaController.RecaudacionGuiaHelper> implements SelectableDataModel<RecaudacionGuiaController.RecaudacionGuiaHelper> {
 
     public RecaudacionDataModel() {
     }
 
-    public RecaudacionDataModel(List<Recaudacion> list) {
+    public RecaudacionDataModel(List<RecaudacionGuiaController.RecaudacionGuiaHelper> list) {
         super(list);
     }
 
     @Override
-    public Object getRowKey(Recaudacion object) {
-        return object.getRecaudacionId();
+    public Object getRowKey(RecaudacionGuiaController.RecaudacionGuiaHelper object) {
+        return object.getId();
     }
 
     @Override
-    public Recaudacion getRowData(String rowKey) {
-        List<Recaudacion> items = (List<Recaudacion>) getWrappedData();
+    public RecaudacionGuiaController.RecaudacionGuiaHelper getRowData(String rowKey) {
+        List<RecaudacionGuiaController.RecaudacionGuiaHelper> items = (List<RecaudacionGuiaController.RecaudacionGuiaHelper>) getWrappedData();
 
-        for (Recaudacion e : items) {
-            if (e.getRecaudacionId().equals(rowKey)) {
+        for (RecaudacionGuiaController.RecaudacionGuiaHelper e : items) {
+            if (e.getId().equals(rowKey)) {
                 return e;
             }
         }

@@ -5,24 +5,23 @@
  */
 package com.areatecnica.sigf.reports;
 
-import com.areatecnica.sigf.controller.reports.InformeConsumoCombustibleController;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Flota;
+import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -38,12 +37,13 @@ public class ReportControllerIngresosBus implements Serializable {
     private List<Bus> items;
     private List<Bus> selectedItems;
     private List<UnidadNegocio> unidadItems;
+    private List<Empresa> empresaItems;
     private Bus selected;
     private Date fecha;
     private Date desde;
     private Date hasta;
     private String informe = "inf-resumen_ingresos_bus";
-    private Flota flota;
+    private Empresa empresa;
     private UnidadNegocio unidadNegocio;
     private int mes;
     private int anio;
@@ -72,6 +72,15 @@ public class ReportControllerIngresosBus implements Serializable {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
+        this.empresaItems = new ArrayList<>();
+
+        for (Empresa ee : new IEmpresaDaoImpl().findAll()) {
+            if (!ee.getBusList().isEmpty()) {
+                this.empresaItems.add(ee);
+            }
+        }
+
+        empresaItems.sort(Comparator.comparing(Empresa::getEmpresaNombre));
 
         this.mes = calendar.get(Calendar.MONTH) + 1;
         this.anio = calendar.get(Calendar.YEAR);
@@ -96,14 +105,19 @@ public class ReportControllerIngresosBus implements Serializable {
                 array.add(b.getBusId());
             }
         } else {
-            bus = items.get(0);
+            if (!this.items.isEmpty()) {
+                bus = items.get(0);
 
-            list = String.valueOf(bus.getBusId());
-            array = new ArrayList<>();
+                list = String.valueOf(bus.getBusId());
+                array = new ArrayList<>();
 
-            for (Bus b : items) {
-                list = list + "," + b.getBusId();
-                array.add(b.getBusId());
+                for (Bus b : items) {
+                    list = list + "," + b.getBusId();
+                    array.add(b.getBusId());
+                }
+            } else {
+                array = new ArrayList<>();
+                array.add(-1);
             }
         }
 
@@ -130,7 +144,7 @@ public class ReportControllerIngresosBus implements Serializable {
     public void setHasta(Date hasta) {
         this.hasta = hasta;
     }
-    
+
     public Date getFecha() {
         return fecha;
     }
@@ -236,12 +250,12 @@ public class ReportControllerIngresosBus implements Serializable {
         return unidadItems;
     }
 
-    public void setFlota(Flota flota) {
-        this.flota = flota;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
-    public Flota getFlota() {
-        return flota;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
     public void setUnidadNegocio(UnidadNegocio unidadNegocio) {
@@ -260,6 +274,14 @@ public class ReportControllerIngresosBus implements Serializable {
         this.anio = anio;
     }
 
+    public void setEmpresaItems(List<Empresa> empresaItems) {
+        this.empresaItems = empresaItems;
+    }
+
+    public List<Empresa> getEmpresaItems() {
+        return empresaItems;
+    }
+
     public int getMes() {
         return mes;
     }
@@ -268,14 +290,14 @@ public class ReportControllerIngresosBus implements Serializable {
         this.mes = mes;
     }
 
-    public void handleFlotaChange() {
+    public void handleEmpresaChange() {
         this.items = new ArrayList<>();
         this.selectedItems = new ArrayList<>();
-        if (this.flota != null) {
+        if (this.empresa != null) {
             if (this.unidadNegocio != null) {
-                this.items = new IBusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
+                this.items = new IBusDaoImpl().findByEmpresaUnidad(empresa, unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findAllByFlota(flota);
+                this.items = new IBusDaoImpl().findByEmpresa(empresa);
             }
         } else {
             if (this.unidadNegocio != null) {
@@ -289,13 +311,13 @@ public class ReportControllerIngresosBus implements Serializable {
     public void handleUnidadChange() {
         this.selectedItems = new ArrayList<>();
         if (this.unidadNegocio != null) {
-            if (this.flota != null) {
-                this.items = new IBusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
+            if (this.empresa != null) {
+                this.items = new IBusDaoImpl().findByEmpresaUnidad(empresa, unidadNegocio);
             } else {
                 this.items = new IBusDaoImpl().findByUnidad(unidadNegocio);
             }
-        } else if (this.flota != null) {
-            this.items = new IBusDaoImpl().findAllByFlota(flota);
+        } else if (this.empresa != null) {
+            this.items = new IBusDaoImpl().findByEmpresa(empresa);
         } else {
             this.items = new IBusDaoImpl().findAll();
         }
@@ -306,7 +328,6 @@ public class ReportControllerIngresosBus implements Serializable {
 
             this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
         } catch (ParseException ex) {
-            Logger.getLogger(InformeConsumoCombustibleController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

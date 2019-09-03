@@ -30,7 +30,7 @@
                                        itemValue="#{unidadItem}"
                                        itemLabel="#{unidadItem.unidadNegocioNumero} - #{unidadItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
                                        />
-                        <p:ajax event="valueChange" listener="#{cargoBusController.handleUnidadChange()}" update="bus" global="false"/>
+                        <p:ajax event="valueChange" listener="#{cargoBusController.handleUnidadChange()}" update="bus" global="false" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="" />
@@ -44,7 +44,7 @@
                                        itemValue="#{busItem}"
                                        itemLabel="#{busItem.busNumero}"
                                        />
-                        <p:ajax event="valueChange" update="patente, flota, empresa, unidad" global="false"/>
+                        <p:ajax event="valueChange" update="patente, flota, empresa, unidad" global="false" />
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Patente:" for="patente" />
@@ -71,7 +71,7 @@
 
                     <p:outputLabel value="Monto" for="montoCargoBus" />
                     <h:panelGroup>
-                        <p:inputText id="montoCargoBus" autocomplete="off" value="#{cargoBusController.selected.cargoBusMontoFijo}"  required="true" requiredMessage="Debe ingresar el monto del cargo" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                        <p:inputNumber decimalPlaces="0" id="montoCargoBus" autocomplete="off" value="#{cargoBusController.selected.cargoBusMontoFijo}"  required="true" requiredMessage="Debe ingresar el monto del cargo" onfocus="this.setSelectionRange(0, this.value.length)"/>
                     </h:panelGroup>
 
                     <p:outputLabel value="Empresa:" for="empresa" />
@@ -93,9 +93,9 @@
                         <p:outputLabel value="?:" style="margin-left: 5px;"/>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <p:inputText id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{cargoBusController.selected.cargoBusCuotaActual}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
+                        <p:inputNumber decimalPlaces="0" id="numeroCuotasCargoBus" autocomplete="off"  size="8" value="#{cargoBusController.selected.cargoBusCuotaActual}" onfocus="this.setSelectionRange(0, this.value.length)"/>                            
                         <p:outputLabel value="de" style="margin-left: 10px;margin-right: 10px;"/>
-                        <p:inputText id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{!cargoBusController.cuotas}" value="#{cargoBusController.selected.cargoBusTotalCuotas}"  onfocus="this.setSelectionRange(0, this.value.length)"/>
+                        <p:inputNumber decimalPlaces="0" id="totalCuotasCargoBus" autocomplete="off"  size="8" disabled="#{!cargoBusController.cuotas}" value="#{cargoBusController.selected.cargoBusTotalCuotas}"  onfocus="this.setSelectionRange(0, this.value.length)"/>
                     </h:panelGroup>
 
                     <p:outputLabel value="" />
@@ -142,8 +142,8 @@
             -->
 
 
-            <p:ajax event="rowSelect"   update="datalist:editButton,datalist:deleteButton,@form:CargoBusDataTableContextMenu" listener="#{cargoBusController.resetParents}" global="false"/>
-            <p:ajax event="rowUnselect" update="datalist:editButton,datalist:deleteButton,@form:CargoBusDataTableContextMenu" listener="#{cargoBusController.resetParents}" global="false"/>
+            <p:ajax event="rowSelect"   update="datalist:editButton,datalist:deleteButton,@form:CargoBusDataTableContextMenu" global="false"/>
+            <p:ajax event="rowUnselect" update="datalist:editButton,datalist:deleteButton,@form:CargoBusDataTableContextMenu"  global="false"/>
 
             <f:facet name="header">
                 <div class="row row-nomargin">

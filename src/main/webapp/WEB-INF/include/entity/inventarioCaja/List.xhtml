@@ -12,7 +12,6 @@
         <p:contextMenu id="InventarioCajaDataTableContextMenu" for="datalist">  
             <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('InventarioCajaListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
             <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('InventarioCajaListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('InventarioCajaListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
             <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('InventarioCajaListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
             <p:separator/>                
         </p:contextMenu>
@@ -29,7 +28,8 @@
                      filteredValue="#{inventarioCajaController.filteredItems}"
                      widgetVar="datalistWidget"
                      emptyMessage="No se han encontrado registros" 
-                     reflow="true">
+                     reflow="true"
+                     rowIndexVar="rowIndex">
             <!--
                      To enable Lazy Loading, please copy/replace the following lines above,
                      and be sure to replace the word HASH with the # symbol:
@@ -40,9 +40,9 @@
             -->
 
 
-            <p:ajax event="rowSelect"   update="datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:InventarioCajaDataTableContextMenu" listener="#{inventarioCajaController.resetParents}"/>
-            <p:ajax event="rowUnselect" update="datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:InventarioCajaDataTableContextMenu" listener="#{inventarioCajaController.resetParents}"/>
-            <p:ajax event="contextMenu" update="datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{inventarioCajaController.resetParents}"/>
+            <p:ajax event="rowSelect"   update="datalist:viewButton,datalist:deleteButton,@form:InventarioCajaDataTableContextMenu" listener="#{inventarioCajaController.resetParents}"/>
+            <p:ajax event="rowUnselect" update="datalist:viewButton,datalist:deleteButton,@form:InventarioCajaDataTableContextMenu" listener="#{inventarioCajaController.resetParents}"/>
+            <p:ajax event="contextMenu" update="datalist:viewButton datalist:deleteButton" listener="#{inventarioCajaController.resetParents}"/>
             <p:ajax event="rowDblselect" onsuccess="document.getElementById('InventarioCajaListForm:viewButton').click();"/>
 
             <f:facet name="header">
@@ -56,7 +56,6 @@
                     <div class="col-lg-4">
                         <div class="pull-right">                                
                             <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":InventarioCajaViewForm" oncomplete="PF('InventarioCajaViewDialog').show()" disabled="#{empty inventarioCajaController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":InventarioCajaEditForm" oncomplete="PF('InventarioCajaEditDialog').show()" disabled="#{empty inventarioCajaController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                             <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{inventarioCajaController.delete}" update=":growl,datalist" disabled="#{empty inventarioCajaController.selected}" styleClass="btn btn-primary" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
                             </p:commandButton>
@@ -65,11 +64,11 @@
                 </div>
             </f:facet>
 
-            <p:column sortBy="#{item.inventarioCajaId}" filterBy="#{item.inventarioCajaId}">
+            <p:column >
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <h:outputText value="#{item.inventarioCajaId}"/>
+                <h:outputText value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.inventarioCajaSerie}" filterBy="#{item.inventarioCajaSerie}">
@@ -88,17 +87,23 @@
             </p:column>
 
 
-            <p:column sortBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoId}" filterBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoId}">
-                <f:facet name="header">
-                    <h:outputText value="#{myBundle.ListInventarioCajaTitle_inventarioCajaIdInventarioInterno}"/>
+            <p:column sortBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" headerText="Boleto" filterBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('datalistWidget').filter()" >
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItems value="#{inventarioCajaController.itemsBoletos}" />
+                    </p:selectOneMenu>
                 </f:facet>
-                <h:outputText value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoId}"/>
+                <h:outputText value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
             </p:column>
 
 
-            <p:column sortBy="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}" filterBy="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}">
-                <f:facet name="header">
-                    <h:outputText value="Caja"/>
+            <p:column sortBy="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}" filterBy="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}" headerText="Caja" >
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('datalistWidget').filter()" >
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItems value="#{inventarioCajaController.itemsCajaRecaudacion}" />
+                    </p:selectOneMenu>
                 </f:facet>
                 <h:outputText value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}"/>
             </p:column>

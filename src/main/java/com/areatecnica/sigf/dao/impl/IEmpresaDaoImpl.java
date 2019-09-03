@@ -17,11 +17,33 @@ import javax.persistence.NoResultException;
  */
 public class IEmpresaDaoImpl extends GenericDAOImpl<Empresa> implements IEmpresaDao<Empresa> {
 
+    public IEmpresaDaoImpl() {
+        super(Empresa.class);
+    }
+
+    @Override
+    public Empresa findById(int id) {
+        try {
+            return (Empresa) this.entityManager.createNamedQuery("Empresa.findByEmpresaId").setParameter("empresaId", id).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+    }
+
     @Override
     public List<Empresa> findByCuenta(Cuenta cuenta) {
         try {
             return this.entityManager.createNamedQuery("Empresa.findAllByCuenta").setParameter("idCuenta", cuenta).getResultList();
-        } catch (NoResultException ne) {            
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    public List<Empresa> findByNandu() {
+        try {
+            return this.entityManager.createNamedQuery("Empresa.findByNandu").getResultList();
+        } catch (NoResultException ne) {
             return null;
         }
     }

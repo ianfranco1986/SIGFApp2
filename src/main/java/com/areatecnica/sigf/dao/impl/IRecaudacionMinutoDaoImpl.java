@@ -57,6 +57,19 @@ public class IRecaudacionMinutoDaoImpl extends GenericDAOImpl<RecaudacionMinuto>
     }
 
     @Override
+    public List<RecaudacionMinuto> findRecibidosBusAndDate(Bus bus, Date from, Date to) {
+        try {
+            return this.entityManager.createNamedQuery("RecaudacionMinuto.findRecibidosBusFechas").
+                    setParameter("from", from).
+                    setParameter("to", to).
+                    setParameter("registroMinutoHastaIdBus", bus).
+                    getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
     public List<RecaudacionMinuto> findByDefaultBus() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RecaudacionExtra.findAll", query = "SELECT r FROM RecaudacionExtra r")
     , @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraId", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraId = :recaudacionExtraId")
+    , @NamedQuery(name = "RecaudacionExtra.findByFechaRecaudacionCaja", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraIdRecaudacion.recaudacionFecha = :recaudacionFecha AND r.recaudacionExtraIdRecaudacion.recaudacionIdCaja = :recaudacionIdCaja ORDER BY r.recaudacionExtraId")
     , @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraMonto", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraMonto = :recaudacionExtraMonto")
     , @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraDescripcion", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraDescripcion = :recaudacionExtraDescripcion")
     , @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraUsuario", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraUsuario = :recaudacionExtraUsuario")})

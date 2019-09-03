@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.FeriadoLegal;
-import com.areatecnica.sigf.facade.FeriadoLegalFacade;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -17,6 +17,26 @@ public class FeriadoLegalController extends AbstractController<FeriadoLegal> {
     public FeriadoLegalController() {
         // Inform the Abstract parent controller of the concrete FeriadoLegal Entity
         super(FeriadoLegal.class);
+    }
+
+    @PostConstruct
+    public void init() {
+        prepareCreate(null);
+    }
+
+    @Override
+    public void save(ActionEvent event) {
+        super.save(event); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(ActionEvent event) {
+        super.delete(event); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+        super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

@@ -14,6 +14,7 @@ import com.areatecnica.sigf.dao.IUnidadNegocioDao;
 import com.areatecnica.sigf.dao.impl.AbonoBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
+import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.AbonoBus;
 import com.areatecnica.sigf.entities.Flota;
@@ -96,6 +97,7 @@ public class RegistroAbonoFlotaController implements Serializable {
         } catch (ParseException ex) {
             Logger.getLogger(RegistroAbonoFlotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.unidadNegocioItems = new IUnidadNegocioDaoImpl().findNandu();
 
     }
 

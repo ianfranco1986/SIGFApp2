@@ -15,20 +15,17 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{inventarioInternoController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewInventarioInternoLabel_inventarioInternoId}"/>
+                        <h:outputText value="#"/>
                         <h:outputText value="#{inventarioInternoController.selected.inventarioInternoId}" title="#{myBundle.ViewInventarioInternoTitle_inventarioInternoId}"/>
 
-                        <h:outputText value="#{myBundle.ViewInventarioInternoLabel_inventarioInternoSerie}"/>
+                        <h:outputText value="Serie:"/>
                         <h:outputText value="#{inventarioInternoController.selected.inventarioInternoSerie}" title="#{myBundle.ViewInventarioInternoTitle_inventarioInternoSerie}"/>
 
-                        <h:outputText value="#{myBundle.ViewInventarioInternoLabel_inventarioInternoIdentificador}"/>
+                        <h:outputText value="Identificador:"/>
                         <h:outputText value="#{inventarioInternoController.selected.inventarioInternoIdentificador}" title="#{myBundle.ViewInventarioInternoTitle_inventarioInternoIdentificador}"/>
 
-                        <h:outputText value="#{myBundle.ViewInventarioInternoLabel_inventarioInternoEstado}"/>
-                        <p:selectBooleanCheckbox id="inventarioInternoEstado" value="#{inventarioInternoController.selected.inventarioInternoEstado}" title="#{myBundle.EditInventarioInternoTitle_inventarioInternoEstado}" required="true" requiredMessage="#{myBundle.EditInventarioInternoRequiredMessage_inventarioInternoEstado}"/>
-
-                        <h:outputText value="#{myBundle.ViewInventarioInternoLabel_inventarioInternoIdBoleto}"/>
-                        <h:outputText value="#{inventarioInternoController.selected.inventarioInternoIdBoleto.boletoId}"/>
+                        <h:outputText value="Boleto:"/>
+                        <h:outputText value="#{inventarioInternoController.selected.inventarioInternoIdBoleto.boletoNombre}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('InventarioInternoViewDialog').hide()"/>
                 </h:panelGroup>

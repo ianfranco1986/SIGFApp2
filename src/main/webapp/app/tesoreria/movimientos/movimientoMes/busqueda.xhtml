@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="Selector">
+        <p:panel style="width: 100%;margin-bottom: 20px;" >
+            <h3 style="text-align: center;">Búsqueda x N° de Cheque</h3>
+            <p:panelGrid columns="7" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
+                <h:outputLabel for="documento" value="Documento:" />
+                <p:inputNumber decimalPlaces="0" id="documento" value="#{movimientoMesViewController.documento}" required="true" requiredMessage="Debe ingresar un número válido" minValue="1" onfocus="this.setSelectionRange(0, this.value.length)"/>
+
+                <p:commandButton value="Buscar" actionListener="#{movimientoMesViewController.loadDocumento()}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                </p:commandButton>
+
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+    <h:form id="DetalleCartolaListForm">
+        <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola">
+            <h3>Detalle</h3>
+            <p:dataTable id="datalist"
+                         value="#{movimientoMesViewController.model}"
+                         lazy="false"
+                         rowKey="#{item.movimientoMesId}"
+                         var="item"                         
+                         selectionMode="single"
+                         selection="#{movimientoMesViewController.selected}"
+                         filteredValue="#{movimientoMesViewController.filteredItems}"
+                         widgetVar="datalistWidget"
+                         rowIndexVar="rowIndex" 
+                         emptyMessage="No se han encontrado registros" 
+                         reflow="true" >
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{movimientoMesViewController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.detalleCartolaId}"  <<< Remove this line
+                -->
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{item.movimientoMesId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.movimientoMesFechaMvto}" filterBy="#{item.movimientoMesFechaMvto}">
+                    <f:facet name="header">
+                        <h:outputText value="Fecha"/>
+                    </f:facet>
+                    <h:outputText value="#{item.movimientoMesFechaMvto}">
+                        <f:convertDateTime pattern="dd/MM/yy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.liquidacion}" filterBy="#{item.liquidacion}">
+                    <f:facet name="header">
+                        <h:outputText value="Liquidación"/>
+                    </f:facet>
+                    <h:outputText value="#{item.liquidacion}">
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.movimientoMesCuentaId.cuentaBancariaNumero}" filterBy="#{item.movimientoMesCuentaId.cuentaBancariaNumero}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="N° Cuenta "/>
+                    </f:facet>
+                    <h:outputText value="#{item.movimientoMesCuentaId.cuentaBancariaNumero}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.movimientoMesDocumento}" filterBy="#{item.movimientoMesDocumento}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="N° Documento "/>
+                    </f:facet>
+                    <h:outputText value="#{item.movimientoMesDocumento}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.movimientoMesMvtoId.tipoMovimientoNombre}" filterBy="#{item.movimientoMesMvtoId.tipoMovimientoNombre}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Movimiento"/>
+                    </f:facet>
+                    <h:outputText value="#{item.movimientoMesMvtoId.tipoMovimientoNombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.movimientoMesDetalle}" filterBy="#{item.movimientoMesDetalle}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Detalle"/>
+                    </f:facet>
+                    <h:outputText value="#{item.movimientoMesDetalle}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.movimientoMesMonto}" style="text-align: center;" filterBy="#{item.movimientoMesMonto}" >
+                    <f:facet name="header">
+                        <h:outputText value="Cargo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.movimientoMesMvtoId.tipoMovimientoDescuento==true?item.movimientoMesMonto:0}">
+                        <f:convertNumber type="number"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.movimientoMesMonto}" style="text-align: center;"  filterBy="#{item.movimientoMesMonto}" >
+                    <f:facet name="header">
+                        <h:outputText value="Abono"/>
+                    </f:facet>
+                    <h:outputText value="#{item.movimientoMesMvtoId.tipoMovimientoAbono == true?item.movimientoMesMonto:0}">
+                        <f:convertNumber type="number"/>
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+
+        </p:panel>
+    </h:form>
+</ui:composition>

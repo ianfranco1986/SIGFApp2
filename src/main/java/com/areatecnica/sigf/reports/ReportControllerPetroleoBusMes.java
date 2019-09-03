@@ -5,29 +5,21 @@
  */
 package com.areatecnica.sigf.reports;
 
-import com.areatecnica.sigf.controller.reports.InformeConsumoCombustibleController;
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.IBusDao;
-import com.areatecnica.sigf.dao.IUnidadNegocioDao;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Flota;
 import com.areatecnica.sigf.entities.UnidadNegocio;
-import com.areatecnica.sigf.util.CurrentDate;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -311,7 +303,6 @@ public class ReportControllerPetroleoBusMes implements Serializable {
             this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
             System.err.println("NUEVA FECHA:" + this.fecha);
         } catch (ParseException ex) {
-            Logger.getLogger(InformeConsumoCombustibleController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -20,6 +20,8 @@ public interface ITrabajadorDao<T> extends IGenericDAO<T> {
     
     public List<Trabajador> findByTerminal(Terminal terminal);
     
+    public List<Trabajador> findNandu();
+    
     public Trabajador findByTrabajadorRutAndCuenta(String rut, Cuenta cuenta);
     
     public Trabajador findByDefaultTrabajador(Integer id, Cuenta cuenta);

@@ -1,6 +1,5 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.controller.reports.InformeConsumoCombustibleControllerFlota;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IVentaCombustibleDao;
 import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
@@ -18,8 +17,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -72,7 +69,6 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
             this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
             this.currentDate = new CurrentDate(1, mes, anio);
         } catch (ParseException ex) {
-            Logger.getLogger(InformeConsumoCombustibleControllerFlota.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -201,7 +197,6 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
 //            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
 //            this.currentDate = new CurrentDate(1, mes, anio);
 //        } catch (ParseException ex) {
-//            Logger.getLogger(InformeConsumoCombustibleControllerFlota.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
 }

@@ -20,4 +20,6 @@ public interface IUnidadNegocioDao<T> extends IGenericDAO<T> {
     
     public List<UnidadNegocio> findByCuenta(Cuenta cuenta);
     
+    public List<UnidadNegocio> findNandu();
+    
 }

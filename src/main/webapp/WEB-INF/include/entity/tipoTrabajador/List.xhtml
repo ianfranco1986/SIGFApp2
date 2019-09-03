@@ -8,7 +8,6 @@
 
     <h:form id="TipoTrabajadorListForm">
 
-        <p:panel header="#{myBundle.ListTipoTrabajadorTitle}">
             <p:contextMenu id="TipoTrabajadorDataTableContextMenu" for="datalist">  
                 <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TipoTrabajadorListForm:createButton').click();" icon="ui-icon-plus"/>
                 <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TipoTrabajadorListForm:viewButton').click();" icon="ui-icon-search"/>
@@ -77,7 +76,6 @@
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
-        </p:panel>
         <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
     </h:form>
 

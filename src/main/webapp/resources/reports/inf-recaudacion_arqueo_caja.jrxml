@@ -39,10 +39,11 @@
     DINEROS_RECAUDADOS_BOLETOS_NANDU_CAJA($P{fecha}, 4, $P{caja}) AS boletos,
     DINEROS_RECAUDADOS_COMBUSTIBLE_CAJA($P{fecha}, $P{caja}) AS combustible,
     DINEROS_RECAUDADOS_MINUTOS_CAJA($P{fecha}, $P{caja}) AS minutos,
-    DINEROS_RECAUDADOS_EXTRAS_CAJA($P{fecha}, 1, $P{caja}) AS varios,
+    (DINEROS_RECAUDADOS_EXTRAS_CAJA($P{fecha}, 1, $P{caja})+DINEROS_RECAUDADOS_EXTRAS_CAJA($P{fecha}, 6, $P{caja})) AS varios,
     DINEROS_RECAUDADOS_EXTRAS_CAJA($P{fecha}, 4, $P{caja}) AS arriendos,
     DINEROS_RECAUDADOS_EXTRAS_CAJA($P{fecha}, 5, $P{caja}) AS aseadores,
-    CASE MONTH($P{fecha})
+	DINEROS_RECAUDADOS_EXTRAS_CAJA($P{fecha}, 2, $P{caja}) AS minutosFenur,     
+CASE MONTH($P{fecha})
         WHEN '01' THEN 'ENERO'
         WHEN '02' THEN 'FEBRERO'
         WHEN '03' THEN 'MARZO'
@@ -61,7 +62,7 @@ FROM
     caja_recaudacion  
     LEFT JOIN
     resumen_recaudacion ON caja_recaudacion.caja_recaudacion_id = resumen_recaudacion.resumen_recaudacion_id_caja
-WHERE resumen_recaudacion.resumen_recaudacion_id_caja = $P{caja}
+WHERE resumen_recaudacion.resumen_recaudacion_id_caja = $P{caja} AND resumen_recaudacion.resumen_recaudacion_fecha = $P{fecha}
 GROUP BY resumen_recaudacion_id]]>
 	</queryString>
 	<field name="resumen_recaudacion_id" class="java.lang.Long">
@@ -119,9 +120,10 @@ GROUP BY resumen_recaudacion_id]]>
 	<field name="boletos" class="java.lang.Integer"/>
 	<field name="combustible" class="java.lang.Integer"/>
 	<field name="minutos" class="java.lang.Integer"/>
-	<field name="varios" class="java.lang.Integer"/>
+	<field name="varios" class="java.lang.Long"/>
 	<field name="arriendos" class="java.lang.Integer"/>
 	<field name="aseadores" class="java.lang.Integer"/>
+	<field name="minutosFenur" class="java.lang.Integer"/>
 	<field name="mes" class="java.lang.String"/>
 	<field name="anio" class="java.lang.Long"/>
 	<variable name="variable1" class="java.lang.Integer">
@@ -202,14 +204,14 @@ GROUP BY resumen_recaudacion_id]]>
 				<textFieldExpression><![CDATA[$F{varios}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="311" y="169" width="104" height="16" uuid="6dcc4d80-1aed-4de0-94b4-4554cbc082b0"/>
+				<reportElement x="311" y="162" width="104" height="16" uuid="6dcc4d80-1aed-4de0-94b4-4554cbc082b0"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Empresarios]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="326" y="185" width="89" height="16" uuid="40b1bab9-a852-4f7e-9a7f-71481a3b9112">
+				<reportElement x="326" y="178" width="89" height="16" uuid="40b1bab9-a852-4f7e-9a7f-71481a3b9112">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -218,7 +220,7 @@ GROUP BY resumen_recaudacion_id]]>
 				<text><![CDATA[Ahorro Boletos]]></text>
 			</staticText>
 			<textField pattern="$ #,##0;-#,##0" isBlankWhenNull="true">
-				<reportElement x="420" y="185" width="88" height="16" uuid="c05aee86-4b05-4e1a-ab4b-adf2ada1b5a7">
+				<reportElement x="420" y="178" width="88" height="16" uuid="c05aee86-4b05-4e1a-ab4b-adf2ada1b5a7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -227,7 +229,7 @@ GROUP BY resumen_recaudacion_id]]>
 				<textFieldExpression><![CDATA[$F{ahorroboletos}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="326" y="201" width="89" height="16" uuid="123a34cf-974a-4abf-9dae-8d79544a53f2">
+				<reportElement x="326" y="194" width="89" height="16" uuid="123a34cf-974a-4abf-9dae-8d79544a53f2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -236,7 +238,7 @@ GROUP BY resumen_recaudacion_id]]>
 				<text><![CDATA[Administración]]></text>
 			</staticText>
 			<textField pattern="$ #,##0;-#,##0" isBlankWhenNull="true">
-				<reportElement x="420" y="201" width="88" height="16" uuid="83a43489-9706-4bc7-a80a-3ee90934fe81">
+				<reportElement x="420" y="194" width="88" height="16" uuid="83a43489-9706-4bc7-a80a-3ee90934fe81">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -245,7 +247,7 @@ GROUP BY resumen_recaudacion_id]]>
 				<textFieldExpression><![CDATA[$F{administracion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="326" y="217" width="89" height="16" uuid="3611328b-32e5-4ee9-bccc-4556ee83007d">
+				<reportElement x="326" y="210" width="89" height="16" uuid="3611328b-32e5-4ee9-bccc-4556ee83007d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -254,7 +256,7 @@ GROUP BY resumen_recaudacion_id]]>
 				<text><![CDATA[Cuotas Extras]]></text>
 			</staticText>
 			<textField pattern="$ #,##0;-#,##0" isBlankWhenNull="true">
-				<reportElement x="420" y="217" width="88" height="16" uuid="b4bcdba3-06b0-4b0d-b248-2a31e7b06274">
+				<reportElement x="420" y="210" width="88" height="16" uuid="b4bcdba3-06b0-4b0d-b248-2a31e7b06274">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -263,7 +265,7 @@ GROUP BY resumen_recaudacion_id]]>
 				<textFieldExpression><![CDATA[$F{cuotaextra}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="301" y="255" width="114" height="16" uuid="d449bbec-c377-4697-b49a-8a74623a9d70">
+				<reportElement x="301" y="248" width="114" height="16" uuid="d449bbec-c377-4697-b49a-8a74623a9d70">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -272,7 +274,7 @@ GROUP BY resumen_recaudacion_id]]>
 				<text><![CDATA[Minutos Sol y Mar]]></text>
 			</staticText>
 			<textField pattern="$ #,##0;-#,##0" isBlankWhenNull="true">
-				<reportElement x="420" y="255" width="88" height="16" uuid="14a5f858-c120-454b-83ac-c8d631f7ba30">
+				<reportElement x="420" y="248" width="88" height="16" uuid="14a5f858-c120-454b-83ac-c8d631f7ba30">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -299,21 +301,21 @@ GROUP BY resumen_recaudacion_id]]>
 				<textFieldExpression><![CDATA[$F{combustible}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="311" y="271" width="104" height="16" uuid="79652687-a09a-4eb9-9523-bf6e63914131"/>
+				<reportElement x="311" y="283" width="104" height="16" uuid="79652687-a09a-4eb9-9523-bf6e63914131"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Ingresos]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
-				<reportElement x="415" y="271" width="93" height="16" uuid="1d8217ca-4a42-49c6-9ef2-4cfa90081863"/>
+				<reportElement x="415" y="283" width="93" height="16" uuid="1d8217ca-4a42-49c6-9ef2-4cfa90081863"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{administracion}+$F{cuotaextra}+$F{imposicion}+$F{ahorroboletos}+$F{boletos}+$F{combustible}+$F{minutos}+$F{varios}+$F{arriendos}+$F{aseadores}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{administracion}+$F{cuotaextra}+$F{imposicion}+$F{ahorroboletos}+$F{boletos}+$F{combustible}+$F{minutos}+$F{varios}+$F{arriendos}+$F{aseadores}+$F{minutosFenur}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="326" y="233" width="89" height="16" uuid="cb2f7040-c153-4dea-a20e-1fdc0e83a1c7">
+				<reportElement x="326" y="226" width="89" height="16" uuid="cb2f7040-c153-4dea-a20e-1fdc0e83a1c7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -322,7 +324,7 @@ GROUP BY resumen_recaudacion_id]]>
 				<text><![CDATA[Imposiciones]]></text>
 			</staticText>
 			<textField pattern="$ #,##0;-#,##0" isBlankWhenNull="true">
-				<reportElement x="420" y="233" width="88" height="16" uuid="c363f33d-d2d4-4167-8117-15efcbab3e12">
+				<reportElement x="420" y="226" width="88" height="16" uuid="c363f33d-d2d4-4167-8117-15efcbab3e12">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -552,19 +554,37 @@ GROUP BY resumen_recaudacion_id]]>
 				<textFieldExpression><![CDATA[$F{resumen_recaudacion_total}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="311" y="295" width="104" height="16" uuid="3cd66c9e-c12b-44e9-9e8c-62243e50c810"/>
+				<reportElement x="311" y="307" width="104" height="16" uuid="3cd66c9e-c12b-44e9-9e8c-62243e50c810"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Diferencia]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
-				<reportElement x="415" y="295" width="93" height="16" uuid="0404e4ac-de2b-49b8-870b-706f334cbe2a"/>
+				<reportElement x="415" y="307" width="93" height="16" uuid="0404e4ac-de2b-49b8-870b-706f334cbe2a"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{resumen_recaudacion_total}-($F{administracion}+$F{cuotaextra}+$F{imposicion}+$F{ahorroboletos}+$F{boletos}+$F{combustible}+$F{minutos}+$F{varios}+$F{arriendos}+$F{aseadores})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{resumen_recaudacion_total}-($F{administracion}+$F{cuotaextra}+$F{imposicion}+$F{ahorroboletos}+$F{boletos}+$F{combustible}+$F{minutos}+$F{varios}+$F{arriendos}+$F{aseadores}+$F{minutosFenur})]]></textFieldExpression>
 			</textField>
+			<textField pattern="$ #,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="420" y="264" width="88" height="16" uuid="a6a433f1-3b5d-4c58-92d4-d8764e9a89bf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{minutosFenur}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="301" y="264" width="114" height="16" uuid="eb3c1d59-e2fb-4250-9486-7b72cf50f6f1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Minutos Fenur]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>

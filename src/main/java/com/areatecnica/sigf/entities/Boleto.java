@@ -184,7 +184,7 @@ public class Boleto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.areatecnica.sigf.entities.Boleto[ boletoId=" + boletoId + " ]";
+        return boletoNombre;
     }
 
 }

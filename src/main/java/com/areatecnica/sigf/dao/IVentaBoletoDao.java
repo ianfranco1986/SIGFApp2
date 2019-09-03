@@ -27,4 +27,6 @@ public interface IVentaBoletoDao<T> extends IGenericDAO<T> {
     public List<VentaBoleto> findByDefaultBus();
     
     public VentaBoleto findByBusBoletoEstado(Bus bus, Boleto boleto);
+    
+    public VentaBoleto findBySerie(int serie);
 }

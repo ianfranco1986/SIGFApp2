@@ -218,7 +218,7 @@ public class CajaRecaudacion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.areatecnica.sigf.entities.CajaRecaudacion[ cajaRecaudacionId=" + cajaRecaudacionId + " ]";
+        return cajaRecaudacionNombre;
     }
     
 }

@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,6 +35,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "PlanCuenta.findByPlanCuentaIdEmpresa", query = "SELECT p FROM PlanCuenta p WHERE p.planCuentaIdEmpresa = :planCuentaIdEmpresa")
     , @NamedQuery(name = "PlanCuenta.findByPlanCuentaNombre", query = "SELECT p FROM PlanCuenta p WHERE p.planCuentaNombre = :planCuentaNombre")})
 public class PlanCuenta implements Serializable {
+
+    @JoinColumn(name = "plan_cuenta_empresa_id", referencedColumnName = "empresa_id")
+    @ManyToOne(optional = false)
+    private Empresa planCuentaEmpresaId;
+    @JoinColumn(name = "plan_cuenta_sub_tipo_id", referencedColumnName = "plan_cuenta_sub_tipo_id")
+    @ManyToOne(optional = false)
+    private PlanCuentaSubTipo planCuentaSubTipoId;
+    @JoinColumn(name = "plan_cuenta_tipo_id", referencedColumnName = "tipo_plan_cuenta_id")
+    @ManyToOne(optional = false)
+    private TipoPlanCuenta planCuentaTipoId;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -123,6 +135,30 @@ public class PlanCuenta implements Serializable {
     @Override
     public String toString() {
         return "com.areatecnica.sigf.entities.PlanCuenta[ planCuentaId=" + planCuentaId + " ]";
+    }
+
+    public Empresa getPlanCuentaEmpresaId() {
+        return planCuentaEmpresaId;
+    }
+
+    public void setPlanCuentaEmpresaId(Empresa planCuentaEmpresaId) {
+        this.planCuentaEmpresaId = planCuentaEmpresaId;
+    }
+
+    public PlanCuentaSubTipo getPlanCuentaSubTipoId() {
+        return planCuentaSubTipoId;
+    }
+
+    public void setPlanCuentaSubTipoId(PlanCuentaSubTipo planCuentaSubTipoId) {
+        this.planCuentaSubTipoId = planCuentaSubTipoId;
+    }
+
+    public TipoPlanCuenta getPlanCuentaTipoId() {
+        return planCuentaTipoId;
+    }
+
+    public void setPlanCuentaTipoId(TipoPlanCuenta planCuentaTipoId) {
+        this.planCuentaTipoId = planCuentaTipoId;
     }
     
 }

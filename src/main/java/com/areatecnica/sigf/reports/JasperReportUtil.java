@@ -17,6 +17,10 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -52,6 +56,39 @@ public class JasperReportUtil {
         JasperPrint jp = JasperFillManager.fillReport(pathJasper, map, connection);
 
         JasperExportManager.exportReportToPdfStream(jp, os);
+        os.flush();
+        os.close();
+        return os;
+    }
+
+    public static ByteArrayOutputStream getOutputStreamFromReportXls(Map map, String pathJasper) throws Exception {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Connection connection = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://www.areatecnica.cl:3306/sigfdb", "root", "NintendO64");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        JasperPrint jp = JasperFillManager.fillReport(pathJasper, map, connection);
+
+        JRXlsExporter exporterXLS = new JRXlsExporter();
+
+        exporterXLS.setExporterInput(new SimpleExporterInput(jp));
+        exporterXLS.setExporterOutput(new SimpleOutputStreamExporterOutput(os));
+
+        SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+        configuration.setOnePagePerSheet(true);
+        configuration.setDetectCellType(true);
+        configuration.setCollapseRowSpan(false);
+        configuration.setWhitePageBackground(false);
+        configuration.setRemoveEmptySpaceBetweenRows(true);
+        exporterXLS.setConfiguration(configuration);
+        
+        exporterXLS.exportReport();
+        
         os.flush();
         os.close();
         return os;

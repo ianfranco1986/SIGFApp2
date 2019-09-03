@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RecaudacionCombustible.findAll", query = "SELECT r FROM RecaudacionCombustible r")
     , @NamedQuery(name = "RecaudacionCombustible.findByRecaudacionCombustibleId", query = "SELECT r FROM RecaudacionCombustible r WHERE r.recaudacionCombustibleId = :recaudacionCombustibleId")
+    , @NamedQuery(name = "RecaudacionCombustible.findByFechaRecaudacion", query = "SELECT r FROM RecaudacionCombustible r WHERE r.recaudacionCombustibleIdRecaudacion.recaudacionFecha = :recaudacionFecha AND r.recaudacionCombustibleIdRecaudacion.recaudacionIdCaja = :recaudacionIdCaja ORDER BY r.recaudacionCombustibleIdRecaudacion.recaudacionId ASC")
     , @NamedQuery(name = "RecaudacionCombustible.findByRecaudacionCombustibleMonto", query = "SELECT r FROM RecaudacionCombustible r WHERE r.recaudacionCombustibleMonto = :recaudacionCombustibleMonto")})
 public class RecaudacionCombustible implements Serializable {
 

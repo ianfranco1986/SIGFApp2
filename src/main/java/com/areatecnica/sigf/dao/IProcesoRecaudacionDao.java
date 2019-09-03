@@ -18,4 +18,6 @@ public interface IProcesoRecaudacionDao<T> extends IGenericDAO<T> {
     
     public List<ProcesoRecaudacion> findAllByCuenta(Cuenta cuenta);
     
+    public ProcesoRecaudacion findById(int id);
+    
 }

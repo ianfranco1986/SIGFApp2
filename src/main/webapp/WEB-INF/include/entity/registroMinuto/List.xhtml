@@ -22,7 +22,7 @@
         </p:panel>
 
         <p:panel id="panel" style="margin-top: 20px;">
-            <h3 style="text-align: center;">Detalle al <h:outputText value="#{registroMinutoController.fecha}"><f:convertDateTime pattern="dd/MM/yy"/></h:outputText></h3>
+            <h3 style="text-align: center;">Detalle al <h:outputText value="#{registroMinutoController.fecha}"><f:convertDateTime pattern="dd/MM/yy"/></h:outputText> Total: <h:outputText value="#{registroMinutoController.total}"><f:convertNumber/></h:outputText></h3>
             <p:dataTable id="datalist"
                          value="#{registroMinutoController.items}"
                          lazy="false"
@@ -34,7 +34,7 @@
                          rowIndexVar="rowIndex"
                          reflow="true"
                          widgetVar="datalistWidget"
-                         emptyMessage="No se han encontrado registros">
+                         emptyMessage="No se han encontrado registros" editable="true">
                 <!--
                          To enable Lazy Loading, please copy/replace the following lines above,
                          and be sure to replace the word HASH with the # symbol:
@@ -65,13 +65,15 @@
                     </div>
                 </f:facet>
 
+                <p:ajax event="rowEdit" listener="#{registroMinutoController.onRowEdit}" update=":growl" />
+
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#"/>
                     </f:facet>
                     <h:outputText value="#{rowIndex+1}"/>
                 </p:column>
-                
+
                 <p:column sortBy="#{item.registroMinutoId}" filterBy="#{item.registroMinutoId}">
                     <f:facet name="header">
                         <h:outputText value="Folio"/>
@@ -83,28 +85,38 @@
                     <f:facet name="header">
                         <h:outputText value="Paga"/>
                     </f:facet>
-                    <h:outputText value="#{item.registroMinutoDesdeIdBus.busNumero}"/>
-                </p:column>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.registroMinutoDesdeIdBus.busNumero}"/></f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu id="bus2" value="#{item.registroMinutoDesdeIdBus}" style="width: 70%;" converter="omnifaces.SelectItemsConverter">
 
-                <p:column sortBy="#{item.registroMinutoDesdeIdBus.busPatente}" filterBy="#{item.registroMinutoDesdeIdBus.busPatente}">
-                    <f:facet name="header">
-                        <h:outputText value="PPU"/>
-                    </f:facet>
-                    <h:outputText value="#{item.registroMinutoDesdeIdBus.busPatente}"/>
+                                <f:selectItems value="#{registroMinutoController.fromBusItems}"
+                                               var="bus"
+                                               itemValue="#{bus}"
+                                               itemLabel="#{bus.busNumero}"
+                                               />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
 
                 <p:column sortBy="#{item.registroMinutoHastaIdBus.busNumero}" filterBy="#{item.registroMinutoHastaIdBus.busNumero}">
                     <f:facet name="header">
                         <h:outputText value="Recibe"/>
                     </f:facet>
-                    <h:outputText value="#{item.registroMinutoHastaIdBus.busNumero}"/>
-                </p:column>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.registroMinutoHastaIdBus.busNumero}"/></f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu id="bus" value="#{item.registroMinutoHastaIdBus}" style="width: 70%;" converter="omnifaces.SelectItemsConverter">
 
-                <p:column sortBy="#{item.registroMinutoHastaIdBus.busPatente}" filterBy="#{item.registroMinutoHastaIdBus.busPatente}">
-                    <f:facet name="header">
-                        <h:outputText value="PPU"/>
-                    </f:facet>
-                    <h:outputText value="#{item.registroMinutoHastaIdBus.busPatente}"/>
+                                <f:selectItems value="#{registroMinutoController.toBusItems}"
+                                               var="bus"
+                                               itemValue="#{bus}"
+                                               itemLabel="#{bus.busNumero}"
+                                               />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
 
                 <p:column sortBy="#{item.registroMinutoRecaudado}" filterBy="#{item.registroMinutoRecaudado}">
@@ -118,21 +130,22 @@
                     <f:facet name="header">
                         <h:outputText value="Monto"/>
                     </f:facet>
-                    <h:outputText value="#{item.registroMinutoMonto}">
-                        <f:convertNumber type="currency" currencySymbol="$"/>
-                    </h:outputText>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.registroMinutoMonto}">
+                                <f:convertNumber integerOnly="true"/>
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="impo" value="#{item.registroMinutoMonto}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/>
+                        </f:facet>
+                    </p:cellEditor>
+
                 </p:column>
 
-                <p:summaryRow>
-                    <p:column colspan="6" style="text-align:right">
-                        <h:outputText value="Total:" />
-                    </p:column>
-                    <p:column>
-                        <h:outputText value="#{registroMinutoController.total}">
-                            <f:convertNumber type="currency" currencySymbol="$" />
-                        </h:outputText>
-                    </p:column>
-                </p:summaryRow>
+                <p:column style="width:35px">
+                    <p:rowEditor />
+                </p:column>
 
             </p:dataTable>
         </p:panel>

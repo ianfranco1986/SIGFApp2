@@ -18,6 +18,10 @@ import javax.persistence.NoResultException;
  */
 public class ITrabajadorDaoImpl extends GenericDAOImpl<Trabajador> implements ITrabajadorDao<Trabajador> {
 
+    public ITrabajadorDaoImpl() {
+        super(Trabajador.class);
+    }
+
     @Override
     public int findMaxCodigoCuenta(Cuenta cuenta) {
         try {
@@ -32,6 +36,15 @@ public class ITrabajadorDaoImpl extends GenericDAOImpl<Trabajador> implements IT
     public List<Trabajador> findByTerminal(Terminal terminal) {
         try {
             return this.entityManager.createNamedQuery("Trabajador.findByTrabajadorIdTerminal").setParameter("trabajadorIdTerminal", terminal).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+    
+    @Override
+    public List<Trabajador> findNandu() {
+        try {
+            return this.entityManager.createNamedQuery("Trabajador.findByNandu").getResultList();
         } catch (NoResultException ne) {
             return null;
         }

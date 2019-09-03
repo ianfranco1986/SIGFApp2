@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+
+    <h:form id="GuiaListForm" class="form-height">
+        <p:panel>
+            <f:facet name="header">
+                Ventas de Boletos
+            </f:facet>
+            <p:panelGrid columns="9" style="width: 100%;margin-bottom: 10px;">
+
+                <h:outputLabel value="F. Recaudación:" for="fecha" style="text-align: right;"/>
+                <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{ventaBoletoController.fecha}" title="#{myBundle.CreateGuiaTitle_guiaFecha}" required="true" requiredMessage="Debe seleccionar la fecha" locale="es"/>
+
+                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
+                <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{ventaBoletoController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{ventaBoletoController.cajaRecaudacionItems}"
+                                   var="cajaId"
+                                   itemValue="#{cajaId}"
+                                   itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                   />
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Total: "/>
+                <p:outputLabel id="formatTotal" value="#{ventaBoletoController.getFormatValue(ventaBoletoController.totalBoletos)}" />
+
+                <p:outputLabel value="N° de Recaudación: "/>
+                <p:outputLabel id="numeroRecaudacion" value="#{ventaBoletoController.totalRecaudacion}"/>
+
+
+                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, formatTotal, numeroRecaudacion" styleClass="btn btn-primary" style="width:120px" actionListener="#{ventaBoletoController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                </p:commandButton>
+
+            </p:panelGrid>
+
+            <p:dataTable id="datalist"
+                         scrollHeight="500" 
+                         scrollable="false"                         
+                         value="#{ventaBoletoController.model}"
+                         selection="#{ventaBoletoController.selectedItem}"
+                         widgetVar="datalist"
+                         selectionMode="single"
+                         var="item"
+                         rowKey="#{item.ventaBoletoId}"
+                         rowIndexVar="rowIndex"
+                         emptyMessage="No se han encontrado registros"                         
+                         >
+
+                <p:ajax event="rowEdit" listener="#{ventaBoletoController.onRowEdit}" update=":growl" />
+                <p:ajax event="rowEditCancel" listener="#{ventaBoletoController.loadGuia()}" update=":growl" />
+
+                <f:facet name="header">
+                    Recaudación al: <h:outputLabel value="#{ventaBoletoController.fecha}">
+                        <f:convertDateTime pattern="dd/MM/yy"/>
+                    </h:outputLabel>
+                </f:facet>
+
+                <p:column style="text-align: center; ">
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoFolioRecaudacion}" style="text-align: center; ">
+                    <f:facet name="header">
+                        <h:outputText value="Folio"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ventaBoletoFolioRecaudacion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoFolioSolyMar}}" style="text-align: center; ">
+                    <f:facet name="header">
+                        <h:outputText value="G.SolyMar"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ventaBoletoFolioSolyMar}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoIdBus.busNumero}" style="text-align: center; ">
+                    <f:facet name="header">
+                        <h:outputText value="N° Bus"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ventaBoletoIdBus.busNumero}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}" style="text-align: center; " footerText="Total">
+                    <f:facet name="header">
+                        <h:outputText value="Trabajador"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoValor}" style="text-align: center; " footerText="#{ventaBoletoController.getFormatValue(ventaBoletoController.totalBoletos)}">
+                    <f:facet name="header">
+                        <h:outputText value="Monto"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ventaBoletoValor}">
+                        <f:convertNumber />
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" style="text-align: center; " >
+                    <f:facet name="header">
+                        <h:outputText value="Tipo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}">
+                        <f:convertNumber />
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" style="text-align: center; " >
+                    <f:facet name="header">
+                        <h:outputText value="Serie"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input"><p:inputText id="impo" value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:45px;text-align: center">
+                    <p:commandButton update="datalist, :GuiaListForm:formatTotal, :GuiaListForm:numeroRecaudacion, :growl" icon="fa fa-trash" actionListener="#{ventaBoletoController.delete()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <f:setPropertyActionListener value="#{item}" target="#{ventaBoletoController.selectedItem}"  />
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

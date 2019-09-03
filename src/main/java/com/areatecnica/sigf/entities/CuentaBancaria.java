@@ -66,6 +66,9 @@ public class CuentaBancaria implements Serializable {
     @Size(min = 1, max = 9)
     @Column(name = "cuenta_bancaria_rut_titular", nullable = false, length = 9)
     private String cuentaBancariaRutTitular;
+    @Size(min = 1, max = 45)
+    @Column(name = "cuenta_bancaria_descripcion")
+    private String cuentaBancariaDescripcion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "cuenta_bancaria_activa", nullable = false)
@@ -83,6 +86,8 @@ public class CuentaBancaria implements Serializable {
     private TipoCuentaBanco cuentaBancariaIdTipoCuenta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoTrabajadorCuenta")
     private List<CuentaBancoTrabajador> cuentaBancoTrabajadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimientoMesCuentaId")
+    private List<MovimientoMes> cuentaBancoMovimientoMes;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartolaBancoIdCuentaBancaria")
     private List<CartolaBanco> cartolaBancoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleDepositoRecaudacionIdCuenta")
@@ -95,8 +100,9 @@ public class CuentaBancaria implements Serializable {
         this.cuentaBancariaId = cuentaBancariaId;
     }
 
-    public CuentaBancaria(Integer cuentaBancariaId, int cuentaBancariaNumero, String cuentaBancariaNombreTitular, String cuentaBancariaRutTitular, boolean cuentaBancariaActiva) {
+    public CuentaBancaria(Integer cuentaBancariaId, String cuentaBancariaDescripcion, int cuentaBancariaNumero, String cuentaBancariaNombreTitular, String cuentaBancariaRutTitular, boolean cuentaBancariaActiva) {
         this.cuentaBancariaId = cuentaBancariaId;
+        this.cuentaBancariaDescripcion = cuentaBancariaDescripcion;
         this.cuentaBancariaNumero = cuentaBancariaNumero;
         this.cuentaBancariaNombreTitular = cuentaBancariaNombreTitular;
         this.cuentaBancariaRutTitular = cuentaBancariaRutTitular;
@@ -141,6 +147,14 @@ public class CuentaBancaria implements Serializable {
 
     public void setCuentaBancariaActiva(boolean cuentaBancariaActiva) {
         this.cuentaBancariaActiva = cuentaBancariaActiva;
+    }
+
+    public void setCuentaBancariaDescripcion(String cuentaBancariaDescripcion) {
+        this.cuentaBancariaDescripcion = cuentaBancariaDescripcion;
+    }
+
+    public String getCuentaBancariaDescripcion() {
+        return cuentaBancariaDescripcion;
     }
 
     @XmlTransient
@@ -192,6 +206,15 @@ public class CuentaBancaria implements Serializable {
 
     public void setCuentaBancoTrabajadorList(List<CuentaBancoTrabajador> cuentaBancoTrabajadorList) {
         this.cuentaBancoTrabajadorList = cuentaBancoTrabajadorList;
+    }
+
+    @XmlTransient
+    public List<MovimientoMes> getCuentaBancoMovimientoMes() {
+        return cuentaBancoMovimientoMes;
+    }
+
+    public void setCuentaBancoMovimientoMes(List<MovimientoMes> cuentaBancoMovimientoMes) {
+        this.cuentaBancoMovimientoMes = cuentaBancoMovimientoMes;
     }
 
     @XmlTransient

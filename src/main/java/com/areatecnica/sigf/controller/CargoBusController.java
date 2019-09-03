@@ -62,7 +62,7 @@ public class CargoBusController implements Serializable {
         this.dao = new CargoBusDaoImpl();
         this.items = this.dao.findLast();
         this.model = new CargoBusDataModel(items);
-        this.unidadItems = this.unidadNegocioDao.findByCuenta(cargoBusIdBusController.getUserCount());
+        this.unidadItems = this.unidadNegocioDao.findNandu();
         this.selected = prepareCreate();
         this.selected.setCargoBusCuotaActual(0);
         this.selected.setCargoBusTotalCuotas(0);
@@ -92,13 +92,13 @@ public class CargoBusController implements Serializable {
             this.getSelected().setCargoBusActivo(true);
 
             if (this.getSelected().getCargoBusTotalCuotas() == 0) {
-                this.getSelected().setCargoBusFechaTermino(fecha);
+                
                 this.getSelected().setCargoBusCuotaActual(0);
                 this.getSelected().setCargoBusTotalCuotas(0);
                 this.getSelected().setCargoBusFechaTermino(fecha);
-                //this.getSelected().set
                 dao.update(this.getSelected());
                 this.items.add(0, this.getSelected());
+            
             } else {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(fecha);
@@ -106,7 +106,6 @@ public class CargoBusController implements Serializable {
                 int cuotasRestantes = (this.getSelected().getCargoBusTotalCuotas() - this.getSelected().getCargoBusCuotaActual()) + 1;
 
                 if (cuotasRestantes > 0) {
-
                     DateTime dateTime = new DateTime(fecha);
 
                     calendar.add(calendar.get(Calendar.MONTH), cuotasRestantes);
@@ -157,7 +156,7 @@ public class CargoBusController implements Serializable {
     public void save(ActionEvent event) {
         if (rowSelected != null) {
             this.dao.update(this.rowSelected);
-            this.rowSelected = null;
+            
             JsfUtil.addSuccessMessage("Se ha actualizado el cargo");
             this.setSelected(prepareCreate());
             this.getSelected().setCargoBusFechaInicio(this.rowSelected.getCargoBusFechaInicio());

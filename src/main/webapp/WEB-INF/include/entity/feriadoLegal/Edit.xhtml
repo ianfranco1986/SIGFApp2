@@ -53,7 +53,7 @@
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{feriadoLegalController.save}" value="#{myBundle.Save}" update="display,:FeriadoLegalListForm:datalist,:FeriadoLegalListForm:FeriadoLegalDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FeriadoLegalEditDialog'));">
+                    <p:commandButton actionListener="#{feriadoLegalController.save}" value="#{myBundle.Save}" update="display,:FeriadoLegalListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FeriadoLegalEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('FeriadoLegalEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

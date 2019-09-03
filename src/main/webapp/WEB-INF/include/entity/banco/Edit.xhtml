@@ -22,7 +22,7 @@
                         <p:inputText id="bancoNombre" value="#{bancoController.selected.bancoNombre}" title="#{myBundle.EditBancoTitle_bancoNombre}" required="true" requiredMessage="#{myBundle.EditBancoRequiredMessage_bancoNombre}" size="45" maxlength="45"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{bancoController.save}" value="#{myBundle.Save}" update="display,:BancoListForm:datalist,:BancoListForm:BancoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BancoEditDialog'));">
+                    <p:commandButton actionListener="#{bancoController.save}" value="#{myBundle.Save}" update="display,:BancoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BancoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BancoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

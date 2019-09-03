@@ -5,7 +5,6 @@
  */
 package com.areatecnica.sigf.reports;
 
-import com.areatecnica.sigf.controller.reports.InformeConsumoCombustibleController;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
@@ -17,8 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -134,7 +131,6 @@ public class ReportControllerGeneralMensual implements Serializable {
             this.fecha = this.sdf.parse(this.anio+"/"+this.mes+"/01");
             System.err.println("NUEVA FECHA: "+this.fecha);
         } catch (ParseException ex) {
-            Logger.getLogger(InformeConsumoCombustibleController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

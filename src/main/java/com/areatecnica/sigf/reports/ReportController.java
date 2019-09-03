@@ -66,6 +66,10 @@ public class ReportController implements Serializable {
         return path + ".pdf";
     }
     
+    public String getNameFileXls() {
+        return path + ".xls";
+    }
+    
     public void downloadFile(String path, Map<String, Object> map) {
         try {
             this.path = path; 
@@ -78,6 +82,31 @@ public class ReportController implements Serializable {
             response.reset();
             response.setContentType("application/pdf");
             response.setHeader("Content-disposition", "inline; filename=" + getNameFilePdf());
+
+            
+            
+            OutputStream output = response.getOutputStream();
+            output.write(outputStream.toByteArray());
+            output.close();
+
+            facesContext.responseComplete();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    public void downloadFileXls(String path, Map<String, Object> map) {
+        try {
+            this.path = path; 
+            outputStream = JasperReportUtil.getOutputStreamFromReportXls(map, getPathFileJasper());
+            //media = JasperReportUtil.getStreamContentFromOutputStream(outputStream, "application/pdf", getNameFilePdf());
+            
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            response.reset();
+            response.setContentType("application/pdf");
+            response.setHeader("Content-disposition", "attachment; filename=" + getNameFileXls());
 
             
             

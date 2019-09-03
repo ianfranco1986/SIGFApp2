@@ -39,4 +39,13 @@ public class IUnidadNegocioDaoImpl extends GenericDAOImpl<UnidadNegocio> impleme
         }
     }
 
+    @Override
+    public List<UnidadNegocio> findNandu() {
+        try {
+            return this.entityManager.createNamedQuery("UnidadNegocio.findNandu").getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
 }

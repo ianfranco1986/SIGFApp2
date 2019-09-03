@@ -25,5 +25,9 @@ public class IEgresoDaoImpl extends GenericDAOImpl<Egreso> implements IEgresoDao
             return null;
         }
     }
-    
+
+    public Egreso getBoleto() {
+        return (Egreso) this.entityManager.createNamedQuery("Egreso.findByEgresoId").setParameter("egresoId", 4).getSingleResult();
+    }
+
 }

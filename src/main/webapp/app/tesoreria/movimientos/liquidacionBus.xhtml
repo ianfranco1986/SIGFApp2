@@ -17,7 +17,7 @@
                 <p:outputLabel value="Unidad:" for="unidad"/>
                 <p:selectOneMenu id="unidad" value="#{registroLiquidacionBusController.unidadNegocio}" required="true" requiredMessage="Debe seleccionar la Unidad " converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                    <f:selectItems value="#{unidadNegocioController.items}"
+                    <f:selectItems value="#{registroLiquidacionBusController.unidadItems}"
                                    var="unidadItem"
                                    itemValue="#{unidadItem}"
                                    itemLabel="#{unidadItem.unidadNegocioNumero} - #{unidadItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
@@ -60,6 +60,44 @@
         </p:panel>
     </h:form>
 
+    <p:panel id="resultado" header="Resultado:" style="margin-top: 10px;" >
+        <p:panelGrid columns="2" style="width: 100%">
+            
+            <p:outputLabel value="(+) Administración:"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalAdministracion)}"/>
+
+            <p:outputLabel value="(+) Cuota Extra:"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalCuotaExtra)}"/>
+            
+            <p:outputLabel value="(+) Imposiciones:"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalImposiciones)}"/>
+            
+            <p:outputLabel value="(+) Ahorro Boletos:"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalBoletos)}"/>
+
+            <p:outputLabel value="Total Guías:" style="text-align: right"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalRecaudacion)}"/>
+
+            
+            
+            <p:outputLabel value="(+) Minutos:"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalMinutos)}"/>
+
+            
+            <p:outputLabel value="(+) Abonos:"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalAbonos)}"/>
+
+            <p:outputLabel value="(-) Cargos:"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalCargos)}"/>
+
+            <p:outputLabel value="Saldo:"/>
+            <p:outputLabel value="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.saldo)}"/>
+
+
+        </p:panelGrid>
+    </p:panel>
+    
+    <p:separator/>
     <p:panelGrid columns="1" style="width: 100%;">
         <h:form id="CargoBusListForm">
             <h3 style="text-align: center;">Cargos</h3>
@@ -240,69 +278,115 @@
     </p:panelGrid>
 
     <h:panelGrid columns="1"  columnClasses="alignTop" style="width: 100%;margin-top: 10px;">
-        <h:form id="GuiaListForm">            
+        <h:form id="GuiaListForm">        
+
             <p:panel id="tabla">
-                <h3 style="text-align: center;">Recaudación</h3>
-                <p:dataTable id="datalist" 
-                             value="#{registroLiquidacionBusController.recaudacionItems}"
-                             lazy="false"
-                             var="item"
-                             rowKey="#{item.recaudacionGuiaId}"
-                             rowIndexVar="rowIndex"
+                <h3 style="text-align: center;">Recaudación Total: $ #{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalRecaudacion)}
+                </h3>
+                <p:dataTable id="datalist"
+                             scrollHeight="500" 
+                             scrollable="false"                         
+                             value="#{registroLiquidacionBusController.model}"
+                             widgetVar="datalist"
                              selectionMode="single"
-                             selection="#{registroLiquidacionBusController.recaudacion}"
-                             emptyMessage="No se han encontrado registros"
-                             reflow="true">
-                    <!--
-                             To enable Lazy Loading, please copy/replace the following lines above,
-                             and be sure to replace the word HASH with the # symbol:
-                    
-                             value="HASH{guiaController.lazyItems}"
-                             lazy="true"
-                             rowKey="HASH{item.idGuia}"  <<< Remove this line
-                    -->
-                    <p:ajax event="rowSelect" update="growl" listener="#{registroLiquidacionBusController.resetParents()}" global="false"/>
+                             var="item"
+                             rowKey="#{item.id}"
+                             rowIndexVar="rowIndex"
+                             emptyMessage="No se han encontrado registros"                         
+                             rowStyleClass="#{item.total eq 0 ? 'old' : null}">
 
                     <f:facet name="header">
-                        Recaudación
+                        Recaudación de Guías :
                     </f:facet>
 
-                    <p:column style="width: 20px; text-align: center;">
+                    <p:column style="text-align: center; ">
                         <f:facet name="header">
-                            <h:outputText value="N°"/>
+                            <h:outputText value="#"/>
                         </f:facet>
-                        <h:outputText value="#{rowIndex+1}" />
+                        <h:outputText value="#{rowIndex+1}"/>
                     </p:column>
 
-                    <p:column style="width: 20px; text-align: center;">
+                    <p:column sortBy="#{item.id}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="Folio"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    
+                                      
+                    <p:column sortBy="#{item.recaudacion.recaudacionFecha}" style="text-align: center; ">
                         <f:facet name="header">
                             <h:outputText value="Fecha"/>
                         </f:facet>
-                        <h:outputText value="#{item.recaudacionGuiaIdRecaudacion.recaudacionFecha}" >
+                        <h:outputText value="#{item.recaudacion.recaudacionFecha}">
                             <f:convertDateTime pattern="dd/MM/yy"/>
                         </h:outputText>
                     </p:column>
+                    
+                    <p:column sortBy="#{item.recaudacion.recaudacionIdCaja.cajaRecaudacionNombre}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="Caja"/>
+                        </f:facet>
+                        <h:outputText value="#{item.recaudacion.recaudacionIdCaja.cajaRecaudacionNombre}"/>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.guia.guiaIdTrabajador.trabajadorCodigo}" style="text-align: center; " footerText="Total">
+                        <f:facet name="header">
+                            <h:outputText value="N° Conductor"/>
+                        </f:facet>
+                        <h:outputText value="#{item.guia.guiaIdTrabajador.trabajadorCodigo}"/>
+                    </p:column>
 
-                    <p:column style="width: 20px; text-align: center;">
+                    <p:column sortBy="#{item.administracion}"  style="text-align: center; " footerText="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalAdministracion)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Administración"/>
+                        </f:facet>
+                        <h:outputText value="#{item.administracion}">
+                            <f:convertNumber />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{item.cuotaExtra}" style="text-align: center; " footerText="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalCuotaExtra)}">
+                        <f:facet name="header">
+                            <h:outputText value="C.Extra"/>
+                        </f:facet>
+                        <h:outputText value="#{item.cuotaExtra}">
+                            <f:convertNumber />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{item.boletos}"  style="text-align: center; " footerText="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalBoletos)}">
+                        <f:facet name="header">
+                            <h:outputText value="Boletos"/>
+                        </f:facet>
+                        <h:outputText value="#{item.boletos}">
+                            <f:convertNumber />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{item.imposiciones}" style="text-align: center; " footerText="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalImposiciones)}">
+                        <f:facet name="header">
+                            <h:outputText value="Imposiciones"/>
+                        </f:facet>
+                        <h:outputText value="#{item.imposiciones}">
+                            <f:convertNumber />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{item.total}"  style="text-align: center; " footerText="#{registroLiquidacionBusController.getFormatValue(registroLiquidacionBusController.totalRecaudacion)}">
                         <f:facet name="header">
                             <h:outputText value="Total"/>
                         </f:facet>
-                        <h:outputText value="#{item.recaudacionGuiaIdRecaudacion.recaudacionTotal}" />
+                        <h:outputText value="#{item.total}">
+                            <f:convertNumber />
+                        </h:outputText>
                     </p:column>
 
                 </p:dataTable>
 
-                <f:facet name="footer" class="">
-                    <h:commandLink value="Generar Reporte" 
-                                   actionListener="#{reportController.downloadFile(registroLiquidacionBusController.informe, registroLiquidacionBusController.map)}" target="blank"  styleClass="btn btn-primary" />
-                </f:facet>
             </p:panel>
         </h:form>
 
-        <p:panel id="resultado" header="Resultado:" style="margin-top: 10px;" >
-            <p:panelGrid columns="2" style="text-align: left;">
-            </p:panelGrid>
-        </p:panel>
 
     </h:panelGrid>
 

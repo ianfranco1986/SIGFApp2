@@ -41,7 +41,7 @@
 
                             <p:inputText style="margin-left: 5px;" id="identificador" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoIdentificador}" required="true" requiredMessage="Debe ingresar el identificador" size="10" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" />
 
-                            <p:inputText style="margin-left: 5px;" id="serie" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoSerie}" required="true" requiredMessage="Debe ingresar la serie " size="10" maxlength="20" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" />
+                            <p:inputNumber decimalPlaces="0" style="margin-left: 5px;" id="serie" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoSerie}" required="true" requiredMessage="Debe ingresar la serie " size="10" maxlength="20" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" />
 
                             <p:inputNumber id="cantidadRollos" decimalPlaces="0"  style="margin-left: 5px;" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoCantidadRollos}" required="true" requiredMessage="Debe ingresar la cantidad de rollos" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" size="10"/>
 
@@ -63,16 +63,13 @@
                                      value="#{compraBoletoController.model}" 
                                      widgetVar="datalist"
                                      var="item"
+                                     selection="#{compraBoletoController.selectedDetalleCompraBoleto}"
+                                     selectionMode="single"
                                      rowKey="#{item.detalleCompraBoletoId}"                                 
                                      rowIndexVar="rowIndex"
-                                     selectionMode="single"
-                                     selection="#{compraBoletoController.selectedDetalleCompraBoleto}"
                                      emptyMessage="No se han encontrado registros" 
                                      style="width: 100%"
                                      tableStyle="table-layout: auto">
-
-                            <p:ajax event="rowSelect"   update=":DetalleCompraBoletoCreateForm:deleteButton, :DetalleCompraBoletoCreateForm:totales" listener="#{compraBoletoController.load()}"/>
-                            <p:ajax event="rowUnselect" update=":DetalleCompraBoletoCreateForm:deleteButton, :DetalleCompraBoletoCreateForm:totales" />
 
 
                             <p:column>
@@ -119,6 +116,13 @@
                                 </h:outputText>
                             </p:column>
 
+                            <p:column style="width:45px;text-align: center">
+                                <p:commandButton update="datalist, :DetalleCompraBoletoCreateForm:totales" icon="fa fa-close" actionListener="#{compraBoletoController.deleteDetalle()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                    <f:setPropertyActionListener value="#{item}" target="#{compraBoletoController.selectedDetalleCompraBoleto}" />
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                                </p:commandButton>
+                            </p:column>
+
                         </p:dataTable>
 
                         <p:panelGrid  id="totales" style="width: 100%;margin-top: 10px;"  columns="2">
@@ -127,16 +131,14 @@
                             </h3>
 
                             <f:facet name="footer">
-                                <p:commandButton id="saveButton" actionListener="#{compraBoletoController.saveNew}" value="#{myBundle.Save}" disabled="#{empty compraBoletoController.selected.detalleCompraBoletoList}" update="display,:growl, :CompraBoletoCreateForm:detalle, datalist" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" >
+                                <p:commandButton id="saveButton" actionListener="#{compraBoletoController.saveNew}" value="#{myBundle.Save}" disabled="#{empty compraBoletoController.selected}" update="display,:growl, :CompraBoletoCreateForm:detalle, datalist" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" >
                                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                                 </p:commandButton>
-                                <p:commandButton id="deleteButton" actionListener="#{compraBoletoController.deleteDetalle}" value="Eliminar Fila" disabled="#{empty compraBoletoController.selectedDetalleCompraBoleto}" update="display,:growl, :CompraBoletoCreateForm:detalle, datalist" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" >
-                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="¿Eliminar fila?" icon="ui-icon-alert"/>
-                                </p:commandButton>
+
                                 <p:commandButton value="#{myBundle.Cancel}" update="display" process="@this" immediate="true" resetValues="true"/>
                             </f:facet>
                         </p:panelGrid>
-                        <ui:include src="/confirmation.xhtml"/>
+                        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
                     </h:form>
                 </h:panelGroup>
             </h:panelGroup>

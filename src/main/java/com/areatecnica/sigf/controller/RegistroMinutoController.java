@@ -2,7 +2,10 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IRegistroMinutoDao;
+import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRegistroMinutoDaoImpl;
+import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.RegistroMinuto;
 import com.areatecnica.sigf.entities.RecaudacionMinuto;
 import java.util.List;
@@ -14,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import org.primefaces.event.RowEditEvent;
 
 @Named(value = "registroMinutoController")
 @ViewScoped
@@ -28,6 +32,8 @@ public class RegistroMinutoController extends AbstractController<RegistroMinuto>
     private boolean isRecaudacionMinutoListEmpty;
 
     private List<RegistroMinuto> items;
+    private List<Bus> fromBusItems;
+    private List<Bus> toBusItems;
 
     private IRegistroMinutoDao dao;
     private Date fecha;
@@ -43,6 +49,8 @@ public class RegistroMinutoController extends AbstractController<RegistroMinuto>
     public void initParams() {
         this.dao = new IRegistroMinutoDaoImpl();
         this.fecha = new Date();
+        this.fromBusItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
+        this.toBusItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
     }
 
     public void load() {
@@ -86,6 +94,33 @@ public class RegistroMinutoController extends AbstractController<RegistroMinuto>
 
     public List<RegistroMinuto> getItems() {
         return items;
+    }
+
+    public void setToBusItems(List<Bus> toBusItems) {
+        this.toBusItems = toBusItems;
+    }
+
+    public List<Bus> getToBusItems() {
+        return toBusItems;
+    }
+
+    public void setFromBusItems(List<Bus> fromBusItems) {
+        this.fromBusItems = fromBusItems;
+    }
+
+    public List<Bus> getFromBusItems() {
+        return fromBusItems;
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        RegistroMinuto temp = (RegistroMinuto) event.getObject();
+
+        try {
+            new IRegistroMinutoDaoImpl().update(temp);
+            JsfUtil.addSuccessMessage("Se ha actualizado el registro");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Ha ocurrido un error al guardar los cambios");
+        }
     }
 
     /**

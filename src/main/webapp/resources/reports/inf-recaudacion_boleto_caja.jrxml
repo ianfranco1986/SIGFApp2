@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="caja" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreCaja" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    venta_boleto.venta_boleto_id,
+    venta_boleto.venta_boleto_id_bus,
+    venta_boleto.venta_boleto_id_trabajador,
+    venta_boleto.venta_boleto_id_inventario_caja,
+    venta_boleto.venta_boleto_fecha,
+    venta_boleto.venta_boleto_numero_boleta,
+    venta_boleto.venta_boleto_valor,
+    venta_boleto.venta_boleto_recaudado,
+    venta_boleto.venta_boleto_utilizado, 
+    bus.bus_numero, 
+    inventario_caja.inventario_caja_identificador, 
+    inventario_caja.inventario_caja_serie, 
+    boleto.boleto_nombre
+FROM
+    venta_boleto
+        LEFT JOIN
+    bus ON venta_boleto.venta_boleto_id_bus = bus.bus_id
+        LEFT JOIN
+    inventario_caja ON venta_boleto.venta_boleto_id_inventario_caja = inventario_caja.inventario_caja_id
+        LEFT JOIN
+    inventario_interno ON inventario_caja.inventario_caja_id_inventario_interno = inventario_interno.inventario_interno_id
+        LEFT JOIN
+    boleto ON inventario_interno.inventario_interno_id_boleto = boleto.boleto_id
+WHERE
+    venta_boleto.venta_boleto_fecha = $P{fecha}
+        AND inventario_caja.inventario_caja_id_caja = $P{caja}
+ORDER BY venta_boleto.venta_boleto_id ASC;]]>
+	</queryString>
+	<field name="venta_boleto_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta_boleto_id_bus" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta_boleto_id_trabajador" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta_boleto_id_inventario_caja" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta_boleto_fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta_boleto_numero_boleta" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta_boleto_valor" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta_boleto_recaudado" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta_boleto_utilizado" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bus_numero" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inventario_caja_identificador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inventario_caja_serie" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="boleto_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="venta_boleto_valor_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{venta_boleto_valor}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="199" y="76" width="81" height="13" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Boleto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="76" width="61" height="13" uuid="98b9d738-a9e9-4ba8-b17b-57795cbd97a3"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificador]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="89" width="550" height="1" uuid="9885b1da-5cf5-4e35-bef5-7a1d7127c829"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="170" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="19" width="100" height="20" uuid="f230d77d-5981-49a7-9356-fc24ced358e3"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="39" width="252" height="20" uuid="1576f955-0363-4053-8e6e-0b781288097f"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreCaja}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="323" y="0" width="249" height="34" uuid="12b2e43a-c6d7-4140-8be8-e2262975641d"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recaudación Boletos x Caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="76" width="85" height="13" uuid="c409c986-abe2-4b05-a82e-76d5199c8479"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="76" width="53" height="13" uuid="aad8b6e5-d347-4e7c-80e6-e1ba44e70aa2"/>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Folio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="76" width="53" height="13" uuid="8a54e699-1614-499b-b42b-d2568960acb7"/>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Bus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="76" width="53" height="13" uuid="c114cda0-b68b-4eef-a998-e2b4f952ac31"/>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Boleta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="76" width="61" height="13" uuid="5bfa01ab-d8c5-4752-b7cb-ac786b6f27cb"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total ($)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="199" y="0" width="81" height="15" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{boleto_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="304" y="0" width="61" height="15" uuid="c11c13c1-6103-422a-82aa-3ab156ef6eed"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inventario_caja_identificador}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="381" y="0" width="85" height="15" uuid="2ab82d65-f505-4b43-8f44-5e7c37549c85"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inventario_caja_serie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="53" height="15" uuid="950c9d55-bebe-4733-8681-8c03b61d4198"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{venta_boleto_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="0" width="53" height="15" uuid="38743556-0a17-429a-8329-d71c199e6187"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bus_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="0" width="53" height="15" uuid="bd4e8b87-feb4-4826-b216-40a6299113e2"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{venta_boleto_numero_boleta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="490" y="0" width="60" height="15" uuid="f3ff54f1-a4f9-4713-8d97-d3130b340bb6"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{venta_boleto_valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="386" y="7" width="152" height="15" uuid="6ab728d9-9927-475a-8cc0-d39c41dc962a"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="538" y="7" width="34" height="15" uuid="030b7bbb-7bb8-4db2-a176-fc1f356439a2"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="7" width="80" height="15" uuid="f8e66622-849a-4996-b9a1-cc0842e560d1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="80" y="7" width="165" height="15" uuid="fb7e9a4f-a58d-4521-bfd0-a5ea98da2955"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="490" y="0" width="60" height="15" uuid="1acf5749-1036-44f3-8f25-e3f7fd50750a"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{venta_boleto_valor_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="429" y="0" width="61" height="15" uuid="81929033-8399-434d-8e48-e88f14189808"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total : ]]></text>
+			</staticText>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="571" height="23" uuid="0a4711cc-3336-4e97-84d9-6ad49226864f"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sin Venta de Boletos ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="23" width="571" height="20" uuid="85c8a6b0-1655-448c-a735-0c557ed0d227"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

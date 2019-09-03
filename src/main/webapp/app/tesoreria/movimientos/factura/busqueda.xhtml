@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="Selector">
+        <p:panel style="width: 100%;margin-bottom: 20px;" >
+            <h3 style="text-align: center;">Búsqueda x Folio Factura</h3>
+            <p:panelGrid columns="7" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
+
+                <h:outputLabel for="documento" value="Folio:" />
+                <p:inputNumber decimalPlaces="0" id="documento" value="#{facturaViewController.folio}" required="true" requiredMessage="Debe ingresar un número válido" minValue="1" onfocus="this.setSelectionRange(0, this.value.length)"/>
+
+
+                <p:commandButton value="Buscar" actionListener="#{facturaViewController.loadDocumento}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+
+                </p:commandButton>
+
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+
+    <h:form id="DetalleCartolaListForm">
+        <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola">
+            <h3>Detalle Movimientos</h3>
+            <p:dataTable id="datalist"
+                         value="#{facturaViewController.model}"
+                         lazy="false"
+                         rowKey="#{item.facturaId}"
+                         var="item"
+                         widgetVar="datalistWidget"
+                         rowIndexVar="rowIndex" 
+                         emptyMessage="No se han encontrado registros" 
+                         reflow="true" 
+                         >
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.facturaFecha}" filterBy="#{item.facturaFecha}">
+                    <f:facet name="header">
+                        <h:outputText value="Fecha"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.facturaFecha}">
+                                <f:convertDateTime pattern="dd/MM/yy" />
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:calendar id="fecha" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{item.facturaFecha}" required="true" requiredMessage="Debe ingresar la fecha de la Factura" />
+                        </f:facet>
+                    </p:cellEditor>
+
+                </p:column>
+
+
+                <p:column sortBy="#{item.facturaFolio}" filterBy="#{item.facturaFolio}">
+                    <f:facet name="header">
+                        <h:outputText value="Folio"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.facturaFolio}">
+                            </h:outputText> 
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputNumber id="folio" decimalPlaces="0" value="#{item.facturaFolio}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            </p:inputNumber>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{item.facturaNombreCliente}" filterBy="#{item.facturaNombreCliente}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Cliente"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.facturaNombreCliente}">
+                            </h:outputText> 
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="cliente" value="#{item.facturaNombreCliente}" required="true" requiredMessage="Debe ingresar un nombre de cliente" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            </p:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{item.facturaRutCliente}" filterBy="#{item.facturaRutCliente}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Rut"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.facturaRutCliente}">
+                            </h:outputText> 
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="rut" value="#{item.facturaRutCliente}" required="true" requiredMessage="Debe ingresar un rut" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            </p:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{item.facturaDetalle}" filterBy="#{item.facturaDetalle}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Detalle"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.facturaDetalle}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="detalle" value="#{item.facturaDetalle}" required="true" requiredMessage="Debe ingresar un detalle" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            </p:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+
+                </p:column>
+
+                <p:column sortBy="#{item.facturaNeto}" style="text-align: center" filterBy="#{item.facturaNeto}"  filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Neto"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.facturaNeto}">
+                                <f:convertNumber type="number" />
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputNumber id="neto" decimalPlaces="0"  value="#{item.facturaNeto}" required="true" requiredMessage="Debe ingresar un detalle" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            </p:inputNumber>
+                        </f:facet>
+                    </p:cellEditor>
+
+                </p:column>
+
+                <p:column sortBy="#{item.facturaIva}" style="text-align: center" filterBy="#{item.facturaIva}"  filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Iva"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.facturaIva}">
+                                <f:convertNumber type="number" />
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputNumber id="iva" decimalPlaces="0"  value="#{item.facturaIva}" required="true" requiredMessage="Debe ingresar un detalle" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            </p:inputNumber>
+                        </f:facet>
+                    </p:cellEditor>
+
+                </p:column>
+
+                <p:column sortBy="#{item.facturaTotal}" style="text-align: center" filterBy="#{item.facturaTotal}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Total"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.facturaTotal}">
+                                <f:convertNumber type="number" />
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputNumber id="total" decimalPlaces="0"  value="#{item.facturaTotal}" required="true" requiredMessage="Debe ingresar un Total" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            </p:inputNumber>
+                        </f:facet>
+                    </p:cellEditor>
+
+                </p:column>
+
+
+
+            </p:dataTable>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+
+        </p:panel>
+    </h:form>
+
+</ui:composition>

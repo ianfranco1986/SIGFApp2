@@ -45,6 +45,7 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
     private List<InventarioInterno> inventarioCajaSelectedItems;
     private IInventarioInternoDao inventarioInternoDao;
     private IInventarioCajaDao dao;
+    private InventarioCaja selectedInventario;
 
     private Date fecha;
 
@@ -178,9 +179,10 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
             ic.setInventarioInternoEstado(Boolean.TRUE);
 
             this.inventarioInternoList.remove(ic);
-
             this.inventarioCajaList.add(i);
         });
+
+        this.inventarioCajaSelectedItems = new ArrayList<>();
 
         this.setSelected(null);
         this.setSelected(new InventarioCaja());
@@ -204,6 +206,20 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
 
         this.inventarioCajaList = null;
 
+    }
+
+    public void deleteInventario() {
+        if (this.selectedInventario != null) {
+            this.inventarioCajaList.remove(this.selectedInventario);
+        }
+    }
+
+    public InventarioCaja getSelectedInventario() {
+        return selectedInventario;
+    }
+
+    public void setSelectedInventario(InventarioCaja selectedInventario) {
+        this.selectedInventario = selectedInventario;
     }
 
 }

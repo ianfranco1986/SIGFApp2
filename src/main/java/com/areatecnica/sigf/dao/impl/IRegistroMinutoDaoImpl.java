@@ -19,6 +19,10 @@ import javax.persistence.NoResultException;
  */
 public class IRegistroMinutoDaoImpl extends GenericDAOImpl<RegistroMinuto> implements IRegistroMinutoDao<RegistroMinuto> {
 
+    public IRegistroMinutoDaoImpl() {
+        super(RegistroMinuto.class);
+    }
+
     @Override
     public List<RegistroMinuto> findByDate(Date fecha) {
         return this.entityManager.createNamedQuery("RegistroMinuto.findByRegistroMinutoFechaMinuto").setParameter("registroMinutoFechaMinuto", fecha).getResultList();

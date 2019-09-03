@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Bus;
+import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.EstadoBus;
 import com.areatecnica.sigf.entities.Flota;
 import com.areatecnica.sigf.entities.GrupoServicio;
@@ -29,6 +30,10 @@ public interface IBusDao<T> extends IGenericDAO<T> {
     public List<Bus> findByGrupoServicio(GrupoServicio grupoServicio);
 
     public List<Bus> findAllByTerminal(Terminal terminal);
+    
+    public List<Bus> findByEmpresa(Empresa empresa);
+    
+    public List<Bus> findByEmpresaUnidad(Empresa empresa, UnidadNegocio unidad);
 
     public List<Bus> findAllByFlota(Flota flota);
 

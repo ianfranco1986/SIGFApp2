@@ -22,8 +22,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -79,7 +77,6 @@ public class InformeConsumoCombustibleController implements Serializable {
             this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
             this.currentDate = new CurrentDate(1, mes, anio);
         } catch (ParseException ex) {
-            Logger.getLogger(InformeConsumoCombustibleController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         this.chartModel = new LineChartModel();
@@ -154,7 +151,6 @@ public class InformeConsumoCombustibleController implements Serializable {
 
             handleBusChange();
         } catch (ParseException ex) {
-            Logger.getLogger(InformeConsumoCombustibleController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

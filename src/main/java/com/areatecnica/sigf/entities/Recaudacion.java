@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Recaudacion.findAll", query = "SELECT r FROM Recaudacion r")
     , @NamedQuery(name = "Recaudacion.findByRecaudacionId", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionId = :recaudacionId")
+    , @NamedQuery(name = "Recaudacion.findByFechaRecaudacionCaja", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionFecha = :recaudacionFecha ORDER BY r.recaudacionId")
     , @NamedQuery(name = "Recaudacion.findByRecaudacionIdentificador", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdentificador = :recaudacionIdentificador")
     , @NamedQuery(name = "Recaudacion.findByRecaudacionTotal", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionTotal = :recaudacionTotal")
     , @NamedQuery(name = "Recaudacion.findByRecaudacionFecha", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionFecha = :recaudacionFecha")
