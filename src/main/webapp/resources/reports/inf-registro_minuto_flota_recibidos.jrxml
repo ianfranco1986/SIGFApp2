@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="217"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="778"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="fecha" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="flota" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="empresaNombre" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT 
 r.registro_minuto_id, 
     b.bus_numero AS numeroPaga,
     b.bus_patente AS patentePaga,
-    f1.flota_nombre AS flotaPaga, 
+    f1.empresa_nombre AS flotaPaga, 
     c.bus_numero AS numeroRecibe,
     c.bus_patente AS patenteRecibe,
-    f2.flota_nombre AS flotaRecibe, 
+    f2.empresa_nombre AS flotaRecibe, 
     r.registro_minuto_monto, 
     r.registro_minuto_fecha_minuto, 
     YEAR($P{fecha}) AS anio, 
@@ -29,29 +34,57 @@ FROM
         LEFT JOIN
     bus c ON r.registro_minuto_hasta_id_bus = c.bus_id
 		LEFT JOIN 
-	flota f1 ON b.bus_id_flota = f1.flota_id 
+	empresa f1 ON b.bus_id_empresa = f1.empresa_id 
 		LEFT JOIN 
-	flota f2 ON c.bus_id_flota = f2.flota_id 
+	empresa f2 ON c.bus_id_empresa = f2.empresa_id 
 WHERE
-    r.registro_minuto_fecha_minuto BETWEEN $P{fecha} AND LAST_DAY($P{fecha}) AND f2.flota_id = $P{flota}  ORDER BY r.registro_minuto_fecha_minuto ASC, numeroPaga ASC]]>
+    r.registro_minuto_fecha_minuto BETWEEN $P{fecha} AND LAST_DAY($P{fecha}) AND f2.empresa_id = $P{flota}  ORDER BY r.registro_minuto_fecha_minuto ASC, numeroPaga ASC]]>
 	</queryString>
 	<field name="registro_minuto_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="registro_minuto_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registro_minuto"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="numeroPaga" class="java.lang.Long"/>
-	<field name="patentePaga" class="java.lang.String"/>
-	<field name="flotaPaga" class="java.lang.String"/>
-	<field name="numeroRecibe" class="java.lang.Long"/>
-	<field name="patenteRecibe" class="java.lang.String"/>
-	<field name="flotaRecibe" class="java.lang.String"/>
+	<field name="numeroPaga" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="numeroPaga"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="patentePaga" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="patentePaga"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="flotaPaga" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="flotaPaga"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
+	<field name="numeroRecibe" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="numeroRecibe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="patenteRecibe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="patenteRecibe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="flotaRecibe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="flotaRecibe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
 	<field name="registro_minuto_monto" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="registro_minuto_monto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registro_minuto"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="registro_minuto_fecha_minuto" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="registro_minuto_fecha_minuto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registro_minuto"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="anio" class="java.lang.Long"/>
-	<field name="Mes" class="java.lang.String"/>
+	<field name="anio" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="anio"/>
+	</field>
+	<field name="Mes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Mes"/>
+	</field>
 	<variable name="registro_minuto_monto1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
 	</variable>
@@ -61,79 +94,67 @@ WHERE
 	<variable name="registro_minuto_monto_2" class="java.lang.Long" resetType="Group" resetGroup="Fecha" calculation="Sum">
 		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
 	</variable>
-	<group name="Fecha" isReprintHeaderOnEachPage="true">
+	<group name="Fecha">
 		<groupExpression><![CDATA[$F{registro_minuto_fecha_minuto}]]></groupExpression>
 		<groupHeader>
-			<band height="50">
+			<band height="30">
 				<staticText>
-					<reportElement x="57" y="30" width="63" height="20" uuid="000ac3f0-80af-4ae2-bdd7-013a4c65ae19"/>
+					<reportElement x="114" y="18" width="89" height="12" uuid="000ac3f0-80af-4ae2-bdd7-013a4c65ae19"/>
 					<textElement markup="none">
-						<font isBold="true"/>
-					</textElement>
-					<text><![CDATA[N° Bus Paga]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="131" y="30" width="63" height="20" uuid="3f62fee5-047e-4de9-8e2c-0596a61175d0"/>
-					<textElement markup="none">
-						<font isBold="true"/>
-					</textElement>
-					<text><![CDATA[Patente]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="357" y="30" width="63" height="20" uuid="940c0525-b7c6-4f0f-b8e0-38c6c6987f32"/>
-					<textElement markup="none">
-						<font isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[N° Bus Recibe]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="208" y="30" width="133" height="20" uuid="144eebd2-b453-4ba9-88e2-b4124894a53f"/>
+					<reportElement x="260" y="18" width="79" height="12" uuid="940c0525-b7c6-4f0f-b8e0-38c6c6987f32"/>
 					<textElement markup="none">
-						<font isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Flota]]></text>
+					<text><![CDATA[N° Bus Paga]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="452" y="30" width="70" height="20" uuid="8ce82345-7f1d-401f-8146-2bc794c9e8c5"/>
+					<reportElement x="452" y="18" width="70" height="12" uuid="8ce82345-7f1d-401f-8146-2bc794c9e8c5"/>
 					<textElement textAlignment="Right" markup="none">
-						<font isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Monto]]></text>
+					<text><![CDATA[Monto ($)]]></text>
 				</staticText>
-				<textField pattern="EEEEE dd MMMMM ">
-					<reportElement x="43" y="6" width="108" height="20" uuid="b11c7345-82ad-47cb-9cef-6b38fe5afab3"/>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="43" y="1" width="108" height="15" uuid="b11c7345-82ad-47cb-9cef-6b38fe5afab3"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{registro_minuto_fecha_minuto}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="6" width="43" height="20" uuid="19ea20cd-9bc4-47f0-9d3b-d81d27741113"/>
+					<reportElement x="0" y="1" width="43" height="15" uuid="19ea20cd-9bc4-47f0-9d3b-d81d27741113"/>
 					<textElement markup="none">
-						<font isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Fecha:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="30" width="57" height="20" uuid="b66b744c-ddeb-4c8e-881a-122e07146b92"/>
+					<reportElement x="-1" y="18" width="63" height="12" uuid="22deb4e4-9a12-44ff-b134-c1fc3548d069"/>
 					<textElement markup="none">
-						<font isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Folio]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="24">
-				<textField pattern="$ #,##0.###">
-					<reportElement x="450" y="0" width="72" height="20" uuid="c888d57d-a642-4b2c-9ffd-3dccfd8466d4"/>
-					<textElement textAlignment="Right"/>
+			<band height="12">
+				<textField pattern="#,##0.###">
+					<reportElement x="450" y="0" width="72" height="12" uuid="c888d57d-a642-4b2c-9ffd-3dccfd8466d4"/>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$V{registro_minuto_monto_2}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="350" y="0" width="100" height="20" uuid="52134926-ddd0-43b1-af00-fbce1716ed33"/>
+					<reportElement x="350" y="0" width="100" height="12" uuid="52134926-ddd0-43b1-af00-fbce1716ed33"/>
 					<textElement textAlignment="Right">
-						<font isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Subtotal : ]]></text>
 				</staticText>
@@ -144,7 +165,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="64" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="114" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
 				<textElement>
@@ -154,7 +175,7 @@ WHERE
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="19" width="208" height="15" uuid="09f63724-548c-4a46-8844-a59ea8b995d4"/>
-				<text><![CDATA[Registro de Minutos Recibidos x Flota]]></text>
+				<text><![CDATA[Registro de Minutos Recibidos x Empresa]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="371" y="0" width="151" height="20" uuid="f230d77d-5981-49a7-9356-fc24ced358e3"/>
@@ -164,18 +185,18 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Mes}+" "+$F{anio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="45" width="43" height="19" uuid="ad2d5c2c-60ec-497c-adee-7301ad062713"/>
+				<reportElement x="0" y="45" width="73" height="19" uuid="ad2d5c2c-60ec-497c-adee-7301ad062713"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Flota: ]]></text>
+				<text><![CDATA[Empresa: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="43" y="45" width="362" height="19" uuid="b6c88149-c184-49d5-b447-04e6f98cac61"/>
+				<reportElement x="73" y="45" width="320" height="19" uuid="b6c88149-c184-49d5-b447-04e6f98cac61"/>
 				<textElement markup="none">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{flotaRecibe}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{empresaNombre}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -186,34 +207,35 @@ WHERE
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="12" splitType="Stretch">
 			<textField>
-				<reportElement x="57" y="0" width="63" height="20" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
-				<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="131" y="0" width="62" height="20" uuid="c11c13c1-6103-422a-82aa-3ab156ef6eed"/>
-				<textFieldExpression><![CDATA[$F{patentePaga}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="357" y="0" width="74" height="20" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<reportElement x="114" y="0" width="89" height="12" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="208" y="0" width="133" height="20" uuid="fa049b89-ed88-4f0e-ac95-2efd388740c9">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{flotaPaga}]]></textFieldExpression>
+				<reportElement x="260" y="0" width="90" height="12" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
 			</textField>
-			<textField pattern="$ #,##0.###">
-				<reportElement x="452" y="0" width="70" height="20" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+			<textField pattern="#,##0.###">
+				<reportElement x="452" y="0" width="70" height="12" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
 				</reportElement>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{registro_minuto_monto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="57" height="20" uuid="277eb15f-349b-4c95-9890-2b0d9fcd94cc"/>
+				<reportElement x="0" y="0" width="63" height="12" uuid="cdd40740-203b-496b-bbb7-a4af4398048e"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{registro_minuto_id}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -223,27 +245,43 @@ WHERE
 	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
-			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="0" y="0" width="180" height="20" uuid="cf15cbc4-98aa-41bb-bddd-ed6ad6f2ed6f"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="350" y="0" width="100" height="20" uuid="7f054929-1d1f-4344-a8eb-1349b45f3f99"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="350" y="9" width="100" height="11" uuid="7f054929-1d1f-4344-a8eb-1349b45f3f99"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="450" y="0" width="100" height="20" uuid="1aa8f8ea-91ed-4209-8fc3-f47ff86aaefe"/>
-				<textElement textAlignment="Left"/>
+				<reportElement x="450" y="9" width="100" height="11" uuid="1aa8f8ea-91ed-4209-8fc3-f47ff86aaefe"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="9" width="67" height="11" uuid="4ebc0f93-607b-4723-a039-c605c804ceb5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fecha impresión:]]></text>
+			</staticText>
+			<textField pattern="hh:mm dd/MM/yyyy">
+				<reportElement x="67" y="9" width="113" height="11" uuid="3b48c909-b1be-458d-80f3-7e4995a31276"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch">
-			<textField pattern="$ #,###.###">
-				<reportElement x="450" y="0" width="70" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
-				<textElement textAlignment="Right"/>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,###.###">
+				<reportElement x="450" y="0" width="72" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{registro_minuto_monto1}]]></textFieldExpression>
 			</textField>
 			<staticText>

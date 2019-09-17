@@ -8,16 +8,12 @@
 
     <ui:composition>
         <p:panel >
-            <h3>Registro Factura/Compra Boletos</h3>
+            <h3>Registro de Boletos Adquiridos</h3>
             <h:panelGroup id="display">
                 <h:form id="CompraBoletoCreateForm">
-                    <p:focus context="compraBoletoFolioFactura"/>
+                    <p:focus context="compraBoletoFecha"/>
                     <p:panelGrid columns="2"  style="width: 100%;margin-bottom: 20px;" id="detalle" >
-                        <h:outputLabel value="Folio" for="compraBoletoFolioFactura" />
-                        <p:inputNumber id="compraBoletoFolioFactura" decimalPlaces="0" value="#{compraBoletoController.selected.compraBoletoFolioFactura}" title="#{myBundle.CreateCompraBoletoTitle_compraBoletoFolioFactura}" required="true" requiredMessage="#{myBundle.CreateCompraBoletoRequiredMessage_compraBoletoFolioFactura}" onfocus="this.setSelectionRange(0, this.value.length)">
-                            <p:ajax event="valueChange" listener="#{compraBoletoController.findFolio}" update="growl"/>
-                        </p:inputNumber>
-
+                        
                         <h:outputLabel value="Fecha" for="compraBoletoFecha" />
                         <p:calendar id="compraBoletoFecha" autocomplete="off" pattern="dd/MM/yyyy" value="#{compraBoletoController.selected.compraBoletoFecha}" title="#{myBundle.CreateCompraBoletoTitle_compraBoletoFecha}" required="true" requiredMessage="#{myBundle.CreateCompraBoletoRequiredMessage_compraBoletoFecha}" locale="es"/>
 

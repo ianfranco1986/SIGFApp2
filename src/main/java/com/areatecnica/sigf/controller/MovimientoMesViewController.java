@@ -16,7 +16,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -52,6 +54,10 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
     private DateTime dateTime;
+
+    private String informeCuenta = "inf-detalle_movimiento_cuenta";
+    private String informeTipo = "inf-detalle_movimiento_tipo";
+    private String informeEmpresa = "inf-detalle_movimiento_empresa";
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     private NumberFormat nf = NumberFormat.getInstance();
@@ -106,7 +112,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
             this.items = new IMovimientoMesDaoImpl().findByDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
             this.model = new MovimientoMesDataModel(items);
             if (this.items.isEmpty()) {
-                JsfUtil.addWarningMessage("No se han encontrado registros ");
+                JsfUtil.addWarningMessage("No se han encontrado registros " + desde + " -- " + hasta);
             } else {
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
 
@@ -133,7 +139,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
 
     public void loadEmpresa() {
         if (this.empresa != null) {
-
+            setFecha();
             if (this.desde != null && this.hasta != null) {
                 this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, desde, hasta);
                 this.model = new MovimientoMesDataModel(items);
@@ -153,6 +159,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
             setFecha();
             if (this.desde != null && this.hasta != null) {
                 this.items = new IMovimientoMesDaoImpl().findByCuentaAndDates(this.cuentaBancaria, desde, hasta);
+
                 this.model = new MovimientoMesDataModel(items);
                 getTotals();
                 if (this.items.isEmpty()) {
@@ -163,6 +170,39 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
                 }
             }
         }
+    }
+
+    public Map<String, Object> getMapCuenta() {
+        Map<String, Object> map = new HashMap();
+
+        map.put("fechaLiquidacion", getFechaCompleta());
+        map.put("fecha", desde);
+        map.put("cuenta_id", this.cuentaBancaria.getCuentaBancariaId());
+        map.put("nombreCuenta", this.cuentaBancaria.getCuentaBancariaNombreTitular() + " - " + this.cuentaBancaria.getCuentaBancariaNumero());
+
+        return map;
+    }
+
+    public Map<String, Object> getMapTipo() {
+        Map<String, Object> map = new HashMap();
+
+        map.put("fechaLiquidacion", getFechaCompleta());
+        map.put("fecha", desde);
+        map.put("tipo_id", this.tipoMovimiento.getTipoMovimientoId());
+        map.put("nombreMovimiento", this.tipoMovimiento.getTipoMovimientoNombre());
+
+        return map;
+    }
+
+    public Map<String, Object> getMapEmpresa() {
+        Map<String, Object> map = new HashMap();
+
+        map.put("fechaLiquidacion", getFechaCompleta());
+        map.put("fecha", desde);
+        map.put("empresa_id", this.empresa.getEmpresaId());
+        map.put("nombreEmpresa", this.empresa.getEmpresaNombre());
+
+        return map;
     }
 
     public void getTotals() {
@@ -241,6 +281,75 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
 
             this.documento = this.movimientoDocumento.getMovimientoMesDocumento() + 1;
         }
+    }
+
+    private String getFechaCompleta() {
+        String fechaCompleta = "";
+        switch (mes) {
+            case 1:
+                fechaCompleta = "Enero ";
+                break;
+            case 2:
+                fechaCompleta = "Febrero ";
+                break;
+            case 3:
+                fechaCompleta = "Marzo ";
+                break;
+            case 4:
+                fechaCompleta = "Abril ";
+                break;
+            case 5:
+                fechaCompleta = "Mayo ";
+                break;
+            case 6:
+                fechaCompleta = "Junio ";
+                break;
+            case 7:
+                fechaCompleta = "Julio ";
+                break;
+            case 8:
+                fechaCompleta = "Agosto ";
+                break;
+            case 9:
+                fechaCompleta = "Septiembre ";
+                break;
+            case 10:
+                fechaCompleta = "Octubre ";
+                break;
+            case 11:
+                fechaCompleta = "Noviembre ";
+                break;
+            case 12:
+                fechaCompleta = "Diciembre ";
+                break;
+
+        }
+
+        return fechaCompleta + " " + anio;
+    }
+
+    public String getInformeCuenta() {
+        return informeCuenta;
+    }
+
+    public void setInformeCuenta(String informeCuenta) {
+        this.informeCuenta = informeCuenta;
+    }
+
+    public String getInformeTipo() {
+        return informeTipo;
+    }
+
+    public void setInformeTipo(String informeTipo) {
+        this.informeTipo = informeTipo;
+    }
+
+    public String getInformeEmpresa() {
+        return informeEmpresa;
+    }
+
+    public void setInformeEmpresa(String informeEmpresa) {
+        this.informeEmpresa = informeEmpresa;
     }
 
     public int getTotalDescuentos() {
@@ -423,7 +532,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
 
         return this.getSelected();
     }
-    
+
     @Override
     public void delete(ActionEvent event) {
         if (this.getSelected() != null) {
@@ -440,7 +549,9 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
         try {
             System.err.println("NUEVA FECHA:");
             this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+            this.desde = this.fecha;
             this.dateTime = new DateTime(this.fecha);
+            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
         } catch (ParseException ex) {
         }
     }

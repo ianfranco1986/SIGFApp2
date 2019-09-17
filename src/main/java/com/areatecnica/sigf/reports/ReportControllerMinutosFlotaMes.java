@@ -6,16 +6,16 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.dao.IFlotaDao;
+import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
+import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.Flota;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import com.areatecnica.sigf.util.CurrentDate;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +33,9 @@ import javax.faces.view.ViewScoped;
 public class ReportControllerMinutosFlotaMes implements Serializable {
 
     private List<Flota> items;
+    private List<Empresa> itemsEmpresa;
     private List<Bus> busItems;
-    private Flota selected;
+    private Empresa selected;
     private IFlotaDao dao;
     private UnidadNegocio unidad;
 
@@ -52,18 +53,8 @@ public class ReportControllerMinutosFlotaMes implements Serializable {
     private void init() {
         this.busItems = new IUnidadNegocioDaoImpl().findById(2).getBusList();
         this.items = new ArrayList<>();
-        for (Bus b : this.busItems) {
-            if (!this.items.contains(b.getBusIdFlota())) {
-                this.items.add(b.getBusIdFlota());
-            }
-        }
 
-        Collections.sort(items, new Comparator<Flota>() {
-            @Override
-            public int compare(Flota o1, Flota o2) {
-                return o1.getFlotaNombre().compareTo(o2.getFlotaNombre());
-            }
-        });
+        this.itemsEmpresa = new IEmpresaDaoImpl().findByNandu();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -73,13 +64,22 @@ public class ReportControllerMinutosFlotaMes implements Serializable {
 
     }
 
+    public List<Empresa> getItemsEmpresa() {
+        return itemsEmpresa;
+    }
+
+    public void setItemsEmpresa(List<Empresa> itemsEmpresa) {
+        this.itemsEmpresa = itemsEmpresa;
+    }
+
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap();
 
         CurrentDate fecha = new CurrentDate(1, mes, anio);
-        
+
         map.put("fecha", fecha.date());
-        map.put("flota", selected.getFlotaId());
+        map.put("flota", selected.getEmpresaId());
+        map.put("empresaNombre", selected.getEmpresaNombre());
 
         return map;
     }
@@ -92,11 +92,11 @@ public class ReportControllerMinutosFlotaMes implements Serializable {
         this.items = items;
     }
 
-    public Flota getSelected() {
+    public Empresa getSelected() {
         return selected;
     }
 
-    public void setSelected(Flota selected) {
+    public void setSelected(Empresa selected) {
         this.selected = selected;
     }
 

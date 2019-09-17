@@ -2,6 +2,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.dao.impl.IBoletoDaoImpl;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.InventarioCaja;
@@ -25,7 +26,8 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
 
     private List<Boleto> itemsBoletos;
     private List<CajaRecaudacion> itemsCajaRecaudacion;
-    
+    private List<InventarioCaja> items2;
+
     // Flags to indicate if child collections are empty
     private boolean isVentaBoletoListEmpty;
 
@@ -34,6 +36,16 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
         super(InventarioCaja.class);
         this.itemsBoletos = new IBoletoDaoImpl().findByCuenta(this.getUserCount());
         this.itemsCajaRecaudacion = new ICajaRecaudacionDaoImpl().findAll();
+
+        this.items2 = new IInventarioCajaDaoImpl().findByEstado(false, this.getUserCount());
+    }
+
+    public List<InventarioCaja> getItems2() {
+        return items2;
+    }
+
+    public void setItems2(List<InventarioCaja> items2) {
+        this.items2 = items2;
     }
 
     /**

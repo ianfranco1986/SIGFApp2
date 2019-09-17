@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
-	<property name="ireport.zoom" value="5.0"/>
-	<property name="ireport.x" value="1763"/>
-	<property name="ireport.y" value="734"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="fecha" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     DINEROS_RECAUDADOS(fecha.fecha,1) AS administracion,
-     DINEROS_RECAUDADOS(fecha.fecha,2) AS cuotaextra,
-     DINEROS_RECAUDADOS(fecha.fecha,3) AS imposicion,
      boletas_caja(fecha.fecha, 1)  AS boleta_caja1, 
      boletas_caja(fecha.fecha, 2)  AS boleta_caja2, 
      boletas_caja(fecha.fecha, 3)  AS boleta_caja3, 
+     boletas_caja(fecha.fecha, 4)  AS boleta_caja4, 
      dineros_recaudados_boletos_nandu_caja(fecha.fecha, 4, 1) AS caja1, 
      dineros_recaudados_boletos_nandu_caja(fecha.fecha, 4, 2) AS caja2, 
      dineros_recaudados_boletos_nandu_caja(fecha.fecha, 4, 3) AS caja3, 
+     dineros_recaudados_boletos_nandu_caja(fecha.fecha, 4, 4) AS caja4, 
      DINEROS_RECAUDADOS_AHORRO_BOLETOS(fecha.fecha,4) AS ahorroboletos, 
      DINEROS_RECAUDADOS_BOLETOS_NANDU(fecha.fecha,4) AS boletos,
      DINEROS_RECAUDADOS_COMBUSTIBLE(fecha.fecha) AS combustible,
-     DINEROS_RECAUDADOS_MINUTOS(fecha.fecha) AS minutos,
-     (DINEROS_RECAUDADOS_EXTRAS(fecha.fecha,1)+DINEROS_RECAUDADOS_EXTRAS(fecha.fecha,6)) AS varios,
-     DINEROS_RECAUDADOS_EXTRAS(fecha.fecha,4) AS arriendos,
      DINEROS_RECAUDADOS_EXTRAS(fecha.fecha,5) AS aseadores,
-     DINEROS_RECAUDADOS_EXTRAS(fecha.fecha,2) AS minutosfenur,
+     DINEROS_RECAUDADOS_MINUTOS(fecha.fecha) AS minutos,
 	CASE MONTH ( fecha.fecha)
 WHEN "01" THEN
 	"ENERO"
@@ -60,15 +58,6 @@ WHERE
 ORDER BY
      fecha.fecha ASC]]>
 	</queryString>
-	<field name="administracion" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="administracion"/>
-	</field>
-	<field name="cuotaextra" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="cuotaextra"/>
-	</field>
-	<field name="imposicion" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="imposicion"/>
-	</field>
 	<field name="boleta_caja1" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="boleta_caja1"/>
 	</field>
@@ -77,6 +66,9 @@ ORDER BY
 	</field>
 	<field name="boleta_caja3" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="boleta_caja3"/>
+	</field>
+	<field name="boleta_caja4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="boleta_caja4"/>
 	</field>
 	<field name="caja1" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="caja1"/>
@@ -87,6 +79,9 @@ ORDER BY
 	<field name="caja3" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="caja3"/>
 	</field>
+	<field name="caja4" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="caja4"/>
+	</field>
 	<field name="ahorroboletos" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="ahorroboletos"/>
 	</field>
@@ -96,20 +91,11 @@ ORDER BY
 	<field name="combustible" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="combustible"/>
 	</field>
-	<field name="minutos" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="minutos"/>
-	</field>
-	<field name="varios" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.label" value="varios"/>
-	</field>
-	<field name="arriendos" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="arriendos"/>
-	</field>
 	<field name="aseadores" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="aseadores"/>
 	</field>
-	<field name="minutosfenur" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="minutosfenur"/>
+	<field name="minutos" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="minutos"/>
 	</field>
 	<field name="mes" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="mes"/>
@@ -123,64 +109,28 @@ ORDER BY
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="variable1" class="java.lang.Integer">
-		<variableExpression><![CDATA[$V{subtotalnandu}+$V{subtotalsolymar}]]></variableExpression>
+		<variableExpression><![CDATA[$V{subtotalnandu}]]></variableExpression>
 	</variable>
 	<variable name="variable2" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$V{variable3}]]></variableExpression>
 	</variable>
-	<variable name="administracion_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{administracion}]]></variableExpression>
-	</variable>
-	<variable name="cuotaextra_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{cuotaextra}]]></variableExpression>
-	</variable>
-	<variable name="imposicion_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{imposicion}]]></variableExpression>
-	</variable>
 	<variable name="boletos_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{boletos}]]></variableExpression>
-	</variable>
-	<variable name="combustible_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{combustible}]]></variableExpression>
 	</variable>
 	<variable name="minutos_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{minutos}]]></variableExpression>
 	</variable>
-	<variable name="varios" class="java.lang.Integer">
-		<variableExpression><![CDATA[$F{varios}.intValue()+$F{arriendos}.intValue()]]></variableExpression>
-	</variable>
-	<variable name="variosSuma" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$V{varios}]]></variableExpression>
-	</variable>
 	<variable name="COLUMN_9_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{aseadores}]]></variableExpression>
 	</variable>
-	<variable name="arriendos_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{arriendos}]]></variableExpression>
-	</variable>
-	<variable name="varios_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{varios}]]></variableExpression>
-	</variable>
 	<variable name="subtotalnandu" class="java.lang.Integer">
-		<variableExpression><![CDATA[$F{caja1}+$F{caja2}+$F{caja3}+$F{aseadores}]]></variableExpression>
-	</variable>
-	<variable name="subtotalnandu_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{boletos}+$F{aseadores}+$F{arriendos}+$F{varios}]]></variableExpression>
+		<variableExpression><![CDATA[$F{caja1}+$F{caja2}+$F{caja3}+$F{caja4}+$F{aseadores}]]></variableExpression>
 	</variable>
 	<variable name="ahorroboletos_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{ahorroboletos}]]></variableExpression>
 	</variable>
-	<variable name="subtotalsolymar" class="java.lang.Integer">
-		<variableExpression><![CDATA[$F{administracion}.intValue()+$F{cuotaextra}.intValue()+$F{ahorroboletos}.intValue()+$F{imposicion}.intValue()+$F{minutos}.intValue()]]></variableExpression>
-	</variable>
-	<variable name="subtotalsolymar_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{administracion}+$F{cuotaextra}+$F{ahorroboletos}+$F{imposicion}+$F{minutos}]]></variableExpression>
-	</variable>
 	<variable name="variable3" class="java.lang.Integer">
-		<variableExpression><![CDATA[$V{subtotalsolymar}+$V{subtotalnandu}+$F{minutosfenur}]]></variableExpression>
-	</variable>
-	<variable name="minutosfenur_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{minutosfenur}]]></variableExpression>
+		<variableExpression><![CDATA[$V{subtotalnandu}]]></variableExpression>
 	</variable>
 	<variable name="caja1_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{caja1}]]></variableExpression>
@@ -190,6 +140,9 @@ ORDER BY
 	</variable>
 	<variable name="caja3_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{caja3}]]></variableExpression>
+	</variable>
+	<variable name="caja41" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{caja4}]]></variableExpression>
 	</variable>
 	<group name="mes" isStartNewPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{mes}]]></groupExpression>
@@ -249,12 +202,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Día]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="18" width="52" height="15" uuid="d0c5353a-4958-4cef-981f-4a76a68aba32">
+				<reportElement x="373" y="18" width="55" height="15" uuid="d0c5353a-4958-4cef-981f-4a76a68aba32">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<box rightPadding="3">
@@ -264,12 +217,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="402" y="18" width="45" height="15" uuid="358bed09-d06c-4443-88ae-f5c95022c6ea">
+				<reportElement x="428" y="18" width="45" height="15" uuid="358bed09-d06c-4443-88ae-f5c95022c6ea">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<box rightPadding="3">
@@ -279,12 +232,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Asead.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="514" y="0" width="58" height="33" uuid="b13e1fe9-b641-428d-aaba-04d6eca6b20a">
+				<reportElement x="527" y="0" width="45" height="33" uuid="b13e1fe9-b641-428d-aaba-04d6eca6b20a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<box rightPadding="0">
@@ -294,12 +247,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Ñandu]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="6" width="130" height="12" uuid="db38db0c-3346-4903-a463-8fa5e2d6f82a"/>
+				<reportElement x="0" y="6" width="109" height="12" uuid="db38db0c-3346-4903-a463-8fa5e2d6f82a"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -307,12 +260,14 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Caja N° 1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="205" y="18" width="35" height="15" uuid="1d301f3e-bd86-4d16-935f-a28599f20de6"/>
+				<reportElement x="172" y="18" width="25" height="15" uuid="1d301f3e-bd86-4d16-935f-a28599f20de6">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -320,12 +275,14 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Monto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="315" y="18" width="35" height="15" uuid="ece09716-321f-435b-8a30-54ed587d5175"/>
+				<reportElement x="260" y="18" width="25" height="15" uuid="ece09716-321f-435b-8a30-54ed587d5175">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -333,12 +290,14 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Monto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="20" y="18" width="75" height="15" uuid="7901eb16-5d7d-4e4c-8b58-0350b91978ed"/>
+				<reportElement x="20" y="18" width="63" height="15" uuid="7901eb16-5d7d-4e4c-8b58-0350b91978ed">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -346,12 +305,14 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° Boletas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="95" y="18" width="35" height="15" uuid="c5a5ee10-861f-46a2-83e7-4027a0a5ce31"/>
+				<reportElement x="83" y="18" width="26" height="15" uuid="c5a5ee10-861f-46a2-83e7-4027a0a5ce31">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -359,12 +320,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Monto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="130" y="6" width="110" height="12" uuid="987b0498-2dd1-46ca-a2f7-5d759f971a8a"/>
+				<reportElement x="109" y="6" width="88" height="12" uuid="987b0498-2dd1-46ca-a2f7-5d759f971a8a"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -372,12 +333,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Caja N° 2]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="240" y="6" width="110" height="12" uuid="3d966f29-8012-458f-a29c-b8f8638e098d"/>
+				<reportElement x="197" y="6" width="88" height="12" uuid="3d966f29-8012-458f-a29c-b8f8638e098d"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -385,12 +346,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Caja N° 3]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="130" y="18" width="75" height="15" uuid="504b2d3d-d656-40c0-a022-007ebe22f18f"/>
+				<reportElement x="109" y="18" width="63" height="15" uuid="504b2d3d-d656-40c0-a022-007ebe22f18f"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -398,12 +359,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° Boletas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="240" y="18" width="75" height="15" uuid="0ca61d56-948e-4146-bf42-f2c24efb9177"/>
+				<reportElement x="197" y="18" width="63" height="15" uuid="0ca61d56-948e-4146-bf42-f2c24efb9177"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -411,12 +372,12 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° Boletas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="447" y="18" width="67" height="15" uuid="0d236f57-adec-4f87-8aa6-07dbcfb47945">
+				<reportElement x="473" y="18" width="54" height="15" uuid="0d236f57-adec-4f87-8aa6-07dbcfb47945">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 				</reportElement>
 				<box rightPadding="3">
@@ -426,9 +387,50 @@ ORDER BY
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° Boletas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="6" width="88" height="12" uuid="2a68ac8f-8c87-4e7d-90b9-98911c492c37"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Caja N° 4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="18" width="63" height="15" uuid="b1bf0213-c09f-4a7b-83d5-2325e72e7cb5"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Boletas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="18" width="25" height="15" uuid="e6c6364d-5547-447c-90d5-90b23c24099f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -445,12 +447,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
-				<reportElement x="350" y="0" width="52" height="15" uuid="fa049b89-ed88-4f0e-ac95-2efd388740c9">
+				<reportElement x="373" y="0" width="55" height="15" uuid="fa049b89-ed88-4f0e-ac95-2efd388740c9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -461,12 +463,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{caja1}+$F{caja2}+$F{caja3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{caja1}+$F{caja2}+$F{caja3}+$F{caja4}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
-				<reportElement x="402" y="0" width="45" height="15" uuid="a077fcca-2435-4e1d-a3c0-0bf5ee77900d">
+				<reportElement x="428" y="0" width="45" height="15" uuid="a077fcca-2435-4e1d-a3c0-0bf5ee77900d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -477,12 +479,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{aseadores}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="514" y="0" width="58" height="15" uuid="92c25e95-8ced-4894-986d-c6de9ac28e71">
+				<reportElement x="527" y="0" width="45" height="15" uuid="92c25e95-8ced-4894-986d-c6de9ac28e71">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box rightPadding="3">
@@ -492,13 +494,14 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{subtotalnandu}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="95" y="0" width="35" height="15" uuid="32b0bd60-32d4-40d6-886e-d12bd208ff7d">
+				<reportElement x="83" y="0" width="26" height="15" uuid="32b0bd60-32d4-40d6-886e-d12bd208ff7d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box rightPadding="3">
 					<topPen lineWidth="0.25"/>
@@ -507,13 +510,14 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{caja1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="205" y="0" width="35" height="15" uuid="fa93b6d0-f7ea-4c00-89fc-79ecc15c18d4">
+				<reportElement x="172" y="0" width="25" height="15" uuid="fa93b6d0-f7ea-4c00-89fc-79ecc15c18d4">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box rightPadding="3">
 					<topPen lineWidth="0.25"/>
@@ -522,13 +526,14 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{caja2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="315" y="0" width="35" height="15" uuid="bee4e967-c6ad-4453-a348-b346e296cc98">
+				<reportElement x="260" y="0" width="25" height="15" uuid="bee4e967-c6ad-4453-a348-b346e296cc98">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box rightPadding="3">
 					<topPen lineWidth="0.25"/>
@@ -537,13 +542,14 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{caja3}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="20" y="0" width="75" height="15" uuid="3060598c-83c3-4fe5-8588-483b49618d52">
+				<reportElement x="20" y="0" width="63" height="15" uuid="3060598c-83c3-4fe5-8588-483b49618d52">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.25"/>
@@ -552,12 +558,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{boleta_caja1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="130" y="0" width="75" height="15" uuid="a715b5a0-ca40-48ba-902d-cf71b1d8c0dd">
+				<reportElement x="109" y="0" width="63" height="15" uuid="a715b5a0-ca40-48ba-902d-cf71b1d8c0dd">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -567,12 +573,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{boleta_caja2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="240" y="0" width="75" height="15" uuid="4b019d4b-70e5-40ce-a503-2a903d33274d">
+				<reportElement x="197" y="0" width="63" height="15" uuid="4b019d4b-70e5-40ce-a503-2a903d33274d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -582,12 +588,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{boleta_caja3}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="447" y="0" width="67" height="15" uuid="bb17f1dc-df29-4f52-9375-a13727698964"/>
+				<reportElement x="473" y="0" width="54" height="15" uuid="bb17f1dc-df29-4f52-9375-a13727698964"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -596,28 +602,59 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<text><![CDATA[ ]]></text>
 			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="348" y="0" width="25" height="15" uuid="65a509d9-9930-44c2-862d-2cda62c1b2c9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caja4}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="285" y="0" width="63" height="15" uuid="2b4bae15-4105-417f-89d8-d2b6ea26335e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{boleta_caja4}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="12" splitType="Stretch"/>
+		<band height="7" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="9" width="67" height="11" uuid="830413f0-e8da-42ee-93a7-cb3ae763a1a6"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Fecha impresión:]]></text>
 			</staticText>
 			<textField pattern="hh:mm dd/MM/yyyy">
 				<reportElement x="67" y="9" width="113" height="11" uuid="266b6ec4-7036-41d5-8532-d194d914f85e"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -637,7 +674,7 @@ ORDER BY
 				<subreportExpression><![CDATA["inf-libro_venta_nandu_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 			<textField pattern="#,##0">
-				<reportElement x="350" y="0" width="52" height="12" uuid="f4addf60-473d-4713-aaa8-c5e05fdb2310"/>
+				<reportElement x="373" y="0" width="55" height="12" uuid="f4addf60-473d-4713-aaa8-c5e05fdb2310"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -645,12 +682,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{caja1_1}+$V{caja2_1}+$V{caja3_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{caja1_1}+$V{caja2_1}+$V{caja3_1}+$V{caja41}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="402" y="0" width="45" height="12" uuid="c32f6e9d-9fe3-4b4c-bbdf-93c2886dca95"/>
+				<reportElement x="428" y="0" width="45" height="12" uuid="c32f6e9d-9fe3-4b4c-bbdf-93c2886dca95"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -658,7 +695,7 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{COLUMN_9_1}]]></textFieldExpression>
 			</textField>
@@ -671,12 +708,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{caja1_1}+$V{caja2_1}+$V{caja3_1}+$V{COLUMN_9_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{caja1_1}+$V{caja2_1}+$V{caja3_1}+$V{COLUMN_9_1}+$V{caja41}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="95" y="0" width="35" height="12" uuid="7862d2ed-c8d4-4320-89e8-2a30349f50f1"/>
+				<reportElement x="20" y="0" width="89" height="12" uuid="7862d2ed-c8d4-4320-89e8-2a30349f50f1"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -684,12 +721,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{caja1_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="205" y="0" width="35" height="12" uuid="070614e9-f933-4043-8960-8f57388db8ae"/>
+				<reportElement x="109" y="0" width="88" height="12" uuid="070614e9-f933-4043-8960-8f57388db8ae"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -697,12 +734,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{caja2_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="315" y="0" width="35" height="12" uuid="05e2dbfe-645b-44c2-91ae-1478b36eb31a"/>
+				<reportElement x="197" y="0" width="88" height="12" uuid="05e2dbfe-645b-44c2-91ae-1478b36eb31a"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -710,12 +747,12 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{caja3_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="447" y="0" width="67" height="12" uuid="d38e3c63-e79f-43e3-b328-984ae518a448"/>
+				<reportElement x="473" y="0" width="41" height="12" uuid="d38e3c63-e79f-43e3-b328-984ae518a448"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -723,18 +760,31 @@ ORDER BY
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right" markup="none">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 				</textElement>
 				<text><![CDATA[ ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="95" height="12" uuid="bd72553c-bc22-4dfa-a206-2fe4c7ad3bfb"/>
+				<reportElement x="0" y="0" width="20" height="12" uuid="bd72553c-bc22-4dfa-a206-2fe4c7ad3bfb"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
-					<font fontName="SansSerif" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Totales]]></text>
 			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="285" y="0" width="88" height="12" uuid="3c839b25-7282-4457-ac93-2b7c04e0a015"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{caja41}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

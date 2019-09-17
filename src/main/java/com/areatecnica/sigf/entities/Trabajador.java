@@ -765,7 +765,7 @@ public class Trabajador implements Serializable {
 
     @Override
     public String toString() {
-        return "com.areatecnica.sigf.entities.Trabajador[ trabajadorId=" + trabajadorId + " ]";
+        return trabajadorApellidoPaterno + " " + trabajadorApellidoMaterno + trabajadorNombres;
     }
 
 }

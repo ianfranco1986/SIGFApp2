@@ -44,16 +44,9 @@
                     <h:outputText value="#{rowIndex+1}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.ventaBoletoFolioRecaudacion}" style="text-align: center; ">
-                    <f:facet name="header">
-                        <h:outputText value="Folio"/>
-                    </f:facet>
-                    <h:outputText value="#{item.ventaBoletoFolioRecaudacion}"/>
-                </p:column>
-
                 <p:column sortBy="#{item.ventaBoletoFolioSolyMar}}" style="text-align: center; ">
                     <f:facet name="header">
-                        <h:outputText value="G.SolyMar"/>
+                        <h:outputText value="Guía SolyMar"/>
                     </f:facet>
                     <h:outputText value="#{item.ventaBoletoFolioSolyMar}"/>
                 </p:column>
@@ -65,20 +58,18 @@
                     <h:outputText value="#{item.ventaBoletoIdBus.busNumero}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}" style="text-align: center; " footerText="Total">
+                <p:column sortBy="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}" style="text-align: center; ">
                     <f:facet name="header">
-                        <h:outputText value="Trabajador"/>
+                        <h:outputText value="Cod.Trabajador"/>
                     </f:facet>
                     <h:outputText value="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.ventaBoletoValor}" style="text-align: center; ">
+                <p:column sortBy="#{item.ventaBoletoIdTrabajador}" style="text-align: center; ">
                     <f:facet name="header">
-                        <h:outputText value="Monto"/>
+                        <h:outputText value="Trabajador"/>
                     </f:facet>
-                    <h:outputText value="#{item.ventaBoletoValor}">
-                        <f:convertNumber />
-                    </h:outputText>
+                    <h:outputText value="#{item.ventaBoletoIdTrabajador}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" style="text-align: center; " >
@@ -102,6 +93,24 @@
                         </f:facet>
                         <f:facet name="input"><p:inputText id="impo" value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
                     </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja.cajaRecaudacionNombre}" style="text-align: center; " >
+                    <f:facet name="header">
+                        <h:outputText value="Caja"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja.cajaRecaudacionNombre}">
+                        <f:convertNumber />
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.ventaBoletoFecha}}" style="text-align: center; ">
+                    <f:facet name="header">
+                        <h:outputText value="Fecha Venta"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ventaBoletoFecha}">
+                        <f:convertDateTime pattern="dd/MM/yy"/>
+                    </h:outputText>
                 </p:column>
 
             </p:dataTable>

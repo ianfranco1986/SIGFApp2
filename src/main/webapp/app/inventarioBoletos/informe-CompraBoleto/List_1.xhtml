@@ -10,7 +10,7 @@
 
 
         <p:dataTable id="datalist"
-                     value="#{compraBoletoDetalleController.items}"
+                     value="#{compraBoletoDetalleController.items2}"
                      lazy="false"
                      rowKey="#{item.compraBoletoId}"
                      var="item"
@@ -33,37 +33,30 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <h:outputLabel value="#{rowIndex+1}"/>
-            </p:column>
-            
-            <p:column>
-                <f:facet name="header">
-                    <h:outputText value="Folio"/>
-                </f:facet>
-                <h:outputLabel value="#{item.compraBoletoFolioFactura}"/>
+                <h:outputText value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column>
                 <f:facet name="header">
                     <h:outputText value="Total"/>
                 </f:facet>
-                <h:outputLabel value="#{item.compraBoletoTotal}"/>
+                <h:outputText value="#{item.compraBoletoTotal}"/>
             </p:column>
 
             <p:column>
                 <f:facet name="header">
                     <h:outputText value="Fecha"/>
                 </f:facet>
-                <h:outputLabel value="#{item.compraBoletoFecha}">
+                <h:outputText value="#{item.compraBoletoFecha}">
                     <f:convertDateTime pattern="dd/MM/yy" />
-                </h:outputLabel>
+                </h:outputText>
             </p:column>
 
             <p:column>
                 <f:facet name="header">
                     <h:outputText value="N° de Paquetes"/>
                 </f:facet>
-                <h:outputLabel value="#{item.detalleCompraBoletoList.size()}"/>
+                <h:outputText value="#{item.detalleCompraBoletoList.size()}"/>
             </p:column>
 
             <p:rowExpansion>
@@ -81,44 +74,44 @@
                         <f:facet name="header">
                             <h:outputText value="N°"/>
                         </f:facet>
-                        <h:outputLabel value="#{rowIndex2+1}"/>
+                        <h:outputText value="#{rowIndex2+1}"/>
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Tipo Boleto"/>
                         </f:facet>
-                        <h:outputLabel value="#{item2.detalleCompraBoletoIdBoleto.boletoNombre}"/>
+                        <h:outputText value="#{item2.detalleCompraBoletoIdBoleto.boletoNombre}"/>
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Identificador"/>
                         </f:facet>
-                        <h:outputLabel value="#{item2.detalleCompraBoletoIdentificador}"/>
+                        <h:outputText value="#{item2.detalleCompraBoletoIdentificador}"/>
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Serie"/>
                         </f:facet>
-                        <h:outputLabel value="#{item2.detalleCompraBoletoSerie}"/>
+                        <h:outputText value="#{item2.detalleCompraBoletoSerie}"/>
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="N° Rollos"/>
                         </f:facet>
-                        <h:outputLabel value="#{item2.detalleCompraBoletoCantidadRollos}"/>
+                        <h:outputText value="#{item2.detalleCompraBoletoCantidadRollos}"/>
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Total"/>
                         </f:facet>
-                        <h:outputLabel value="#{item2.detalleCompraBoletoTotal}">
+                        <h:outputText value="#{item2.detalleCompraBoletoTotal}">
                             <f:convertNumber currencyCode="$"/>
-                        </h:outputLabel>
+                        </h:outputText>
                     </p:column>
 
                 </p:dataTable>

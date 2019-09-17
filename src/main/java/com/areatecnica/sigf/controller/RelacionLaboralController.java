@@ -4,11 +4,18 @@ import com.areatecnica.sigf.entities.RelacionLaboral;
 import com.areatecnica.sigf.entities.FiniquitoRelacionLaboral;
 import java.util.List;
 import com.areatecnica.sigf.facade.RelacionLaboralFacade;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import org.joda.time.DateTime;
 
 @Named(value = "relacionLaboralController")
 @ViewScoped
@@ -30,138 +37,110 @@ public class RelacionLaboralController extends AbstractController<RelacionLabora
     // Flags to indicate if child collections are empty
     private boolean isFiniquitoRelacionLaboralListEmpty;
 
+    private int mes;
+    private int anio;
+    private Date desde;
+    private Date hasta;
+    private DateTime dateTime;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+    private NumberFormat nf = NumberFormat.getInstance();
+
     public RelacionLaboralController() {
         // Inform the Abstract parent controller of the concrete RelacionLaboral Entity
         super(RelacionLaboral.class);
     }
 
-    /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
-        relacionLaboralIdTipoContratoController.setSelected(null);
-        relacionLaboralIdEmpresaController.setSelected(null);
-        relacionLaboralIdOperadorController.setSelected(null);
-        relacionLaboralIdTerminalController.setSelected(null);
-        relacionLaboralIdTrabajadorController.setSelected(null);
-        relacionLaboralIdTipoTrabajadorController.setSelected(null);
+    @PostConstruct
+    public void init() {
+        super.initParams(); //To change body of generated methods, choose Tools | Templates.
+
+        Calendar cal = Calendar.getInstance();
+        this.mes = cal.get(Calendar.MONTH) + 1;
+        this.anio = cal.get(Calendar.YEAR);
+
+        this.desde = new Date();
+        setFecha();
+
+        this.prepareCreate(null);
+        this.getSelected().setRelacionLaboralFechaInicio(desde);
     }
 
-    /**
-     * Set the "is[ChildCollection]Empty" property for OneToMany fields.
-     */
+    public void load() {
+
+    }
+
     @Override
-    protected void setChildrenEmptyFlags() {
-        this.setIsFiniquitoRelacionLaboralListEmpty();
+    public void save(ActionEvent event) {
+        super.save(event); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * Sets the "selected" attribute of the TipoContrato controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareRelacionLaboralIdTipoContrato(ActionEvent event) {
-        RelacionLaboral selected = this.getSelected();
-        if (selected != null && relacionLaboralIdTipoContratoController.getSelected() == null) {
-            relacionLaboralIdTipoContratoController.setSelected(selected.getRelacionLaboralIdTipoContrato());
+    @Override
+    public void delete(ActionEvent event) {
+        super.delete(event); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+        super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public Date getDesde() {
+        return desde;
+    }
+
+    public void setDesde(Date desde) {
+        this.desde = desde;
+    }
+
+    public Date getHasta() {
+        return hasta;
+    }
+
+    public void setHasta(Date hasta) {
+        this.hasta = hasta;
+    }
+
+    public DateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(DateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public NumberFormat getNf() {
+        return nf;
+    }
+
+    public void setNf(NumberFormat nf) {
+        this.nf = nf;
+    }
+
+    public void setFecha() {
+        try {
+            System.err.println("NUEVA FECHA:");
+            this.desde = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+            this.dateTime = new DateTime(this.desde);
+            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
+        } catch (ParseException ex) {
+
         }
-    }
-
-    /**
-     * Sets the "selected" attribute of the Empresa controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareRelacionLaboralIdEmpresa(ActionEvent event) {
-        RelacionLaboral selected = this.getSelected();
-        if (selected != null && relacionLaboralIdEmpresaController.getSelected() == null) {
-            relacionLaboralIdEmpresaController.setSelected(selected.getRelacionLaboralIdEmpresa());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the OperadorTransporte controller in
-     * order to display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareRelacionLaboralIdOperador(ActionEvent event) {
-        RelacionLaboral selected = this.getSelected();
-        if (selected != null && relacionLaboralIdOperadorController.getSelected() == null) {
-            relacionLaboralIdOperadorController.setSelected(selected.getRelacionLaboralIdOperador());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the Terminal controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareRelacionLaboralIdTerminal(ActionEvent event) {
-        RelacionLaboral selected = this.getSelected();
-        if (selected != null && relacionLaboralIdTerminalController.getSelected() == null) {
-            relacionLaboralIdTerminalController.setSelected(selected.getRelacionLaboralIdTerminal());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the Trabajador controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareRelacionLaboralIdTrabajador(ActionEvent event) {
-        RelacionLaboral selected = this.getSelected();
-        if (selected != null && relacionLaboralIdTrabajadorController.getSelected() == null) {
-            relacionLaboralIdTrabajadorController.setSelected(selected.getRelacionLaboralIdTrabajador());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the TipoTrabajador controller in order
-     * to display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareRelacionLaboralIdTipoTrabajador(ActionEvent event) {
-        RelacionLaboral selected = this.getSelected();
-        if (selected != null && relacionLaboralIdTipoTrabajadorController.getSelected() == null) {
-            relacionLaboralIdTipoTrabajadorController.setSelected(selected.getRelacionLaboralIdTipoTrabajador());
-        }
-    }
-
-    public boolean getIsFiniquitoRelacionLaboralListEmpty() {
-        return this.isFiniquitoRelacionLaboralListEmpty;
-    }
-
-    private void setIsFiniquitoRelacionLaboralListEmpty() {
-        RelacionLaboral selected = this.getSelected();
-        if (selected != null) {
-            RelacionLaboralFacade ejbFacade = (RelacionLaboralFacade) this.getFacade();
-            this.isFiniquitoRelacionLaboralListEmpty = ejbFacade.isFiniquitoRelacionLaboralListEmpty(selected);
-        } else {
-            this.isFiniquitoRelacionLaboralListEmpty = true;
-        }
-    }
-
-    /**
-     * Sets the "items" attribute with a collection of FiniquitoRelacionLaboral
-     * entities that are retrieved from RelacionLaboral and returns the
-     * navigation outcome.
-     *
-     * @return navigation outcome for FiniquitoRelacionLaboral page
-     */
-    public String navigateFiniquitoRelacionLaboralList() {
-        RelacionLaboral selected = this.getSelected();
-        if (selected != null) {
-            RelacionLaboralFacade ejbFacade = (RelacionLaboralFacade) this.getFacade();
-            List<FiniquitoRelacionLaboral> selectedFiniquitoRelacionLaboralList = ejbFacade.findFiniquitoRelacionLaboralList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("FiniquitoRelacionLaboral_items", selectedFiniquitoRelacionLaboralList);
-        }
-        return "/app/finiquitoRelacionLaboral/index";
     }
 
 }

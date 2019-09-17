@@ -104,23 +104,23 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 	<group name="caja" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{caja_recaudacion_id}]]></groupExpression>
 		<groupHeader>
-			<band height="60">
+			<band height="80">
 				<staticText>
-					<reportElement x="23" y="0" width="166" height="15" uuid="d9e19610-954d-46f4-9bd8-7009086ec52d"/>
+					<reportElement x="23" y="0" width="166" height="30" uuid="d9e19610-954d-46f4-9bd8-7009086ec52d"/>
 					<textElement>
-						<font fontName="SansSerif" size="10" isBold="true"/>
+						<font fontName="SansSerif" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Ñandu Tur S.A.]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="24" y="15" width="546" height="15" uuid="04bea80b-ff0c-4f69-9dad-186898982658"/>
+					<reportElement x="24" y="30" width="546" height="15" uuid="04bea80b-ff0c-4f69-9dad-186898982658"/>
 					<textElement markup="none">
 						<font fontName="SansSerif" size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Resumen Recaudación Extra "+$F{caja_recaudacion_nombre}+ " Mes:"+$P{nombreMes}+" Año:"+$P{anio}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Resumen Recaudación Extra "+$F{caja_recaudacion_nombre}+ "  Mes: "+$P{nombreMes}+"  Año: "+$P{anio}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="181" y="40" width="99" height="15" uuid="96d49f3f-0fdb-4983-8afc-060852e8b6f4">
+					<reportElement x="181" y="55" width="99" height="15" uuid="96d49f3f-0fdb-4983-8afc-060852e8b6f4">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
 					</reportElement>
 					<textElement>
@@ -129,7 +129,7 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 					<text><![CDATA[Pagador]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="315" y="40" width="175" height="15" uuid="7ebdf130-acf8-4d88-b7dc-e2d6bfc7cf73">
+					<reportElement x="315" y="55" width="175" height="15" uuid="7ebdf130-acf8-4d88-b7dc-e2d6bfc7cf73">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
 					</reportElement>
 					<textElement>
@@ -138,7 +138,7 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 					<text><![CDATA[Detalle]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="101" y="40" width="47" height="15" uuid="0a0cc9fa-cba6-4c50-acde-85db286be4b9">
+					<reportElement x="101" y="55" width="47" height="15" uuid="0a0cc9fa-cba6-4c50-acde-85db286be4b9">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
 					</reportElement>
 					<textElement>
@@ -147,7 +147,7 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 					<text><![CDATA[Fecha]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="490" y="40" width="61" height="15" uuid="b934a72d-ec51-4aa1-a9b1-1671a1e1cf8c">
+					<reportElement x="490" y="55" width="61" height="15" uuid="b934a72d-ec51-4aa1-a9b1-1671a1e1cf8c">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f12e8d8-6764-4fb3-9505-c152154d3811"/>
 					</reportElement>
 					<textElement>
@@ -156,7 +156,7 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 					<text><![CDATA[Monto ($)]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="24" y="40" width="66" height="15" uuid="74c52ba1-df36-4a4e-9242-4375d7340fb6">
+					<reportElement x="24" y="55" width="66" height="15" uuid="74c52ba1-df36-4a4e-9242-4375d7340fb6">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
 					</reportElement>
 					<textElement>
@@ -165,13 +165,13 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 					<text><![CDATA[Tipo]]></text>
 				</staticText>
 				<line>
-					<reportElement x="0" y="55" width="570" height="1" uuid="56ab0f0c-b08c-4c0d-892d-5c375c7b052f"/>
+					<reportElement x="0" y="70" width="570" height="1" uuid="56ab0f0c-b08c-4c0d-892d-5c375c7b052f"/>
 				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="15">
-				<textField>
+				<textField pattern="#,##0">
 					<reportElement x="490" y="0" width="60" height="15" uuid="2175edb9-7c10-45be-9aa7-6d67269b820f"/>
 					<textElement textAlignment="Right">
 						<font size="9"/>

@@ -11,7 +11,7 @@
             <h3 style="text-align: center;">Periodo</h3>
             <p:panelGrid columns="5" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
                 <h:outputLabel for="mes" value="Mes:" />
-                <p:selectOneMenu id="mes" value="#{facturaController.mes}" style="width:125px">
+                <p:selectOneMenu id="mes" value="#{feriadoLegalController.mes}" style="width:125px">
                     <f:selectItem itemLabel="Enero" itemValue="1" />
                     <f:selectItem itemLabel="Febrero" itemValue="2" />
                     <f:selectItem itemLabel="Marzo" itemValue="3" />
@@ -28,9 +28,9 @@
                 </p:selectOneMenu>
 
                 <h:outputLabel for="anio" value="Año:" />
-                <p:inputText id="anio" value="#{facturaController.anio}" size="5" />
+                <p:inputText id="anio" value="#{feriadoLegalController.anio}" size="5" />
 
-                <p:commandButton value="Buscar" actionListener="#{facturaController.load}" styleClass="btn btn-primary" update="FeriadoLegalListForm, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
+                <p:commandButton value="Buscar" actionListener="#{feriadoLegalController.load}" styleClass="btn btn-primary" update="FeriadoLegalListForm, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
 
                 </p:commandButton>
 

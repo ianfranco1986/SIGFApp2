@@ -3,17 +3,13 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.ICompraBoletoDao;
 import com.areatecnica.sigf.dao.impl.ICompraBoletoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
-import com.areatecnica.sigf.entities.InventarioInterno;
 import java.util.List;
 import com.areatecnica.sigf.facade.CompraBoletoFacade;
 import com.areatecnica.sigf.facade.InventarioInternoFacade;
 import com.areatecnica.sigf.models.DetalleCompraBoletosDataModel;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -38,6 +34,7 @@ public class CompraBoletoDetalleController extends AbstractController<CompraBole
     private DetalleCompraBoletosDataModel model;
     private int totalCompra;
     private String totalFormatted;
+    private List<CompraBoleto> items2;
 
     private static final String pattern = "###,###.###";
     private static final DecimalFormat decimalFormat = new DecimalFormat(pattern);
@@ -66,11 +63,15 @@ public class CompraBoletoDetalleController extends AbstractController<CompraBole
 //            this.model = new DetalleCompraBoletosDataModel(itemsDetalleCompraBoleto);
 //            this.totalCompra = 0;
 //        }
+        this.items2 = new ICompraBoletoDaoImpl().findAll();
+    }
 
-        for (CompraBoleto c : this.getItems()) {
-            System.err.println("TAMAÑO DE COMPRAS: " + c.getDetalleCompraBoletoList().size());
-        }
+    public void setItems2(List<CompraBoleto> items2) {
+        this.items2 = items2;
+    }
 
+    public List<CompraBoleto> getItems2() {
+        return items2;
     }
 
     /**
@@ -78,45 +79,6 @@ public class CompraBoletoDetalleController extends AbstractController<CompraBole
      */
     public void resetParents() {
         compraBoletoIdCuentaController.setSelected(null);
-    }
-
-    /**
-     * Set the "is[ChildCollection]Empty" property for OneToMany fields.
-     */
-    @Override
-    protected void setChildrenEmptyFlags() {
-        this.setIsDetalleCompraBoletoListEmpty();
-    }
-
-    public boolean getIsDetalleCompraBoletoListEmpty() {
-        return this.isDetalleCompraBoletoListEmpty;
-    }
-
-    private void setIsDetalleCompraBoletoListEmpty() {
-        CompraBoleto selected = this.getSelected();
-        if (selected != null) {
-            CompraBoletoFacade ejbFacade = (CompraBoletoFacade) this.getFacade();
-            this.isDetalleCompraBoletoListEmpty = ejbFacade.isDetalleCompraBoletoListEmpty(selected);
-        } else {
-            this.isDetalleCompraBoletoListEmpty = true;
-        }
-    }
-
-    /**
-     * Sets the "items" attribute with a collection of DetalleCompraBoleto
-     * entities that are retrieved from CompraBoleto and returns the navigation
-     * outcome.
-     *
-     * @return navigation outcome for DetalleCompraBoleto page
-     */
-    public String navigateDetalleCompraBoletoList() {
-        CompraBoleto selected = this.getSelected();
-        if (selected != null) {
-            CompraBoletoFacade ejbFacade = (CompraBoletoFacade) this.getFacade();
-            List<DetalleCompraBoleto> selectedDetalleCompraBoletoList = ejbFacade.findDetalleCompraBoletoList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleCompraBoleto_items", selectedDetalleCompraBoletoList);
-        }
-        return "/app/detalleCompraBoleto/index";
     }
 
     /**

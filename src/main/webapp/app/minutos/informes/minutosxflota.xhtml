@@ -9,7 +9,7 @@
     <h:form id="RegistroMinutoListForm">
 
         <p:panel>            
-            <h3 style="text-align: center;">Informes de Minutos x Flota</h3>
+            <h3 style="text-align: center;">Informes de Minutos x Empresa</h3>
             <p:panelGrid columns="2" style="width: 100%; margin-bottom: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
                 <p:outputLabel for="anio" value="Año :" />
                 <p:inputText id="anio" value="#{reportControllerMinutosFlotaMes.anio}" size="5" required="true" requiredMessage="Debe ingresar el año"/>
@@ -36,19 +36,19 @@
                     <f:selectItem itemLabel="Recibidos" itemValue="inf-registro_minuto_flota_recibidos" />
                 </p:selectOneMenu>
 
-                <p:outputLabel value="Flota:" for="flota" />
-                <p:selectOneMenu id="flota" value="#{reportControllerMinutosFlotaMes.selected}" required="true" requiredMessage="Debe seleccionar la flota" converter="omnifaces.SelectItemsConverter">
+                <p:outputLabel value="Empresa:" for="flota" />
+                <p:selectOneMenu id="flota" value="#{reportControllerMinutosFlotaMes.selected}" required="true" requiredMessage="Debe seleccionar la empresa" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                    <f:selectItems value="#{flotaController.items}"
+                    <f:selectItems value="#{reportControllerMinutosFlotaMes.itemsEmpresa}"
                                    var="flotaItem"
                                    itemValue="#{flotaItem}"
-                                   itemLabel="#{flotaItem.flotaNombre}"
+                                   itemLabel="#{flotaItem.empresaNombre}"
                                    />
                 </p:selectOneMenu>  
 
                 <p:outputLabel value=""/>
                 <h:commandLink value="Generar Reporte" 
-                                 actionListener="#{reportController.downloadFile(reportControllerMinutosFlotaMes.informe, reportControllerMinutosFlotaMes.map)}" target="blank"  styleClass="btn btn-primary" />
+                               actionListener="#{reportController.downloadFile(reportControllerMinutosFlotaMes.informe, reportControllerMinutosFlotaMes.map)}" target="blank"  styleClass="btn btn-primary" />
 
 
 

@@ -237,14 +237,14 @@ ORDER BY     bus.bus_numero, venta_combustible_numero_boleta ASC]]>
 					<textElement textAlignment="Right">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Flota:]]></text>
+					<text><![CDATA[Empresa:]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="55" y="35" width="193" height="15" uuid="ac81a329-0dbd-4eea-ad61-0ec1e2a5c7f2">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94ef6370-dd21-421b-a9ef-c1b60999751c"/>
 					</reportElement>
 					<box leftPadding="5"/>
-					<textFieldExpression><![CDATA[$F{flota_nombre}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="0" y="50" width="55" height="15" uuid="b934a72d-ec51-4aa1-a9b1-1671a1e1cf8c">

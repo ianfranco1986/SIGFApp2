@@ -47,14 +47,14 @@ WHERE inventario_caja.inventario_caja_id_caja = $P{caja} AND inventario_caja.inv
 	<columnHeader>
 		<band height="90" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="76" width="53" height="13" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+				<reportElement x="0" y="76" width="80" height="13" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
 				<textElement>
 					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Boleto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="69" y="76" width="85" height="13" uuid="98b9d738-a9e9-4ba8-b17b-57795cbd97a3"/>
+				<reportElement x="80" y="76" width="85" height="13" uuid="98b9d738-a9e9-4ba8-b17b-57795cbd97a3"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
@@ -103,14 +103,14 @@ WHERE inventario_caja.inventario_caja_id_caja = $P{caja} AND inventario_caja.inv
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="53" height="12" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<reportElement x="0" y="0" width="80" height="12" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
 				<textElement>
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{boleto_nombre}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="69" y="0" width="82" height="12" uuid="c11c13c1-6103-422a-82aa-3ab156ef6eed"/>
+				<reportElement x="80" y="0" width="82" height="12" uuid="c11c13c1-6103-422a-82aa-3ab156ef6eed"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>

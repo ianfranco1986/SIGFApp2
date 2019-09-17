@@ -18,15 +18,15 @@
                 <h:outputLabel for="hasta" value="Hasta:" />
                 <p:calendar id="hasta" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerPetroleoBusMesResumen.hasta}" required="true" requiredMessage="Debe ingresar la fecha hasta" />
 
-                <p:outputLabel value="Flota" for="busIdFlota" />
-                <p:selectOneMenu id="busIdFlota" value="#{reportControllerPetroleoBusMesResumen.flota}" converter="omnifaces.SelectItemsConverter" >
+                <p:outputLabel value="Empresa" for="busIdFlota" />
+                <p:selectOneMenu id="busIdFlota" value="#{reportControllerPetroleoBusMesResumen.empresa}" converter="omnifaces.SelectItemsConverter" >
                     <f:selectItem itemLabel="Todas"/>
-                    <f:selectItems value="#{flotaController.items}"
+                    <f:selectItems value="#{reportControllerPetroleoBusMesResumen.empresaItems}"
                                    var="busIdFlotaItem"
                                    itemValue="#{busIdFlotaItem}"
-                                   itemLabel="#{busIdFlotaItem.flotaNombre}"
+                                   itemLabel="#{busIdFlotaItem.empresaNombre}"
                                    />
-                    <p:ajax event="valueChange" update="multiple" listener="#{reportControllerPetroleoBusMesResumen.handleFlotaChange}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:ajax event="valueChange" update="multiple" listener="#{reportControllerPetroleoBusMesResumen.handleEmpresaChange}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                 </p:selectOneMenu>
 
                 <p:outputLabel value="Unidad" for="busIdUnidadNegocio" />

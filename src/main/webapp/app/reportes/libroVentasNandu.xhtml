@@ -38,6 +38,11 @@
                 <h:commandLink value="Generar Reporte" 
                                actionListener="#{reportController.downloadFile(reportControllerLibroVentaNandu.informe, reportControllerLibroVentaNandu.map)}" target="blank"  styleClass="btn btn-primary" />
 
+                <p:outputLabel value=""/>
+                <h:commandLink value="Generar XLS" 
+                               actionListener="#{reportController.downloadFileXls(reportControllerLibroVentaNandu.informe, reportControllerLibroVentaNandu.map)}" target="blank" style="background-color: #008200" styleClass="btn btn-primary" />
+
+                
             </p:panelGrid>
 
         </p:panel>

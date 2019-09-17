@@ -49,7 +49,7 @@ public class ReportControllerMinutosBusMesResumen implements Serializable {
     private Boolean tipoInforme;
     //private 3
 
-    private String informe = "inf-liquidacion_empresa_individual";
+    private String informe = "inf-resumen_minutos_bus_1";
 
     /**
      * Creates a new instance of ReportControllerBusMes

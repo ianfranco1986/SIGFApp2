@@ -34,7 +34,7 @@ public class IInventarioInternoDaoImpl extends GenericDAOImpl<InventarioInterno>
     @Override
     public List<InventarioInterno> findByEstado(Boolean estado, Cuenta cuenta) {
         try {
-            return this.entityManager.createNamedQuery("InventarioInterno.findByInventarioInternoEstado").setParameter("inventarioInternoEstado", estado).setParameter("idCuenta", cuenta).getResultList();
+            return this.entityManager.createNamedQuery("InventarioInterno.findByInventarioInternoEstado").setParameter("inventarioInternoEstado", estado).getResultList();
         } catch (NoResultException ne) {
             return null;
         }

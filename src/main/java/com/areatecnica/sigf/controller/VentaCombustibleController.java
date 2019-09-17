@@ -127,7 +127,7 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
             this.currentDate.setDate(fecha);
 
             this.dao = new IVentaCombustibleDaoImpl();
-
+            this.total = 0; 
             this.items = this.dao.findByDate(fecha);
 
             if (!this.items.isEmpty()) {

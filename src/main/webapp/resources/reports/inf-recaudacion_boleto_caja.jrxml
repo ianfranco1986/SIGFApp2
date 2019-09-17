@@ -124,7 +124,7 @@ ORDER BY venta_boleto.venta_boleto_id ASC;]]>
 				<textElement>
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="0" y="39" width="252" height="20" uuid="1576f955-0363-4053-8e6e-0b781288097f"/>
@@ -299,7 +299,7 @@ ORDER BY venta_boleto.venta_boleto_id ASC;]]>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
 			</textField>
 		</band>
 	</noData>

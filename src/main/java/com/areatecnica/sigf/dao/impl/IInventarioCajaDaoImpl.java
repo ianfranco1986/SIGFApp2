@@ -41,7 +41,6 @@ public class IInventarioCajaDaoImpl extends GenericDAOImpl<InventarioCaja> imple
         try {
             return this.entityManager.createNamedQuery("InventarioCaja.findByInventarioCajaEstado").
                     setParameter("inventarioCajaEstado", estado).
-                    setParameter("idCuenta", cuenta).
                     getResultList();
         } catch (NoResultException ne) {
             return null;

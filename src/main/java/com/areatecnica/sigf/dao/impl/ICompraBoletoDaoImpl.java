@@ -23,6 +23,15 @@ public class ICompraBoletoDaoImpl extends GenericDAOImpl<CompraBoleto> implement
     }
 
     @Override
+    public List<CompraBoleto> findAll() {
+        try {
+            return this.entityManager.createNamedQuery("CompraBoleto.findAll").getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
     public List<CompraBoleto> findByFecha(Date fecha, Cuenta cuenta) {
         try {
             return this.entityManager.createNamedQuery("CompraBoleto.findByCompraBoletoFecha").setParameter("compraBoletoIdCuenta", cuenta).setParameter("compraBoletoFecha", fecha).getResultList();

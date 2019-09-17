@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.dao.IBoletoDao;
 import com.areatecnica.sigf.dao.impl.IBoletoDaoImpl;
+import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.InventarioInterno;
 import com.areatecnica.sigf.entities.InventarioCaja;
@@ -22,6 +22,8 @@ public class InventarioInternoController extends AbstractController<InventarioIn
 
     private List<Boleto> itemsBoletos;
 
+    private List<InventarioInterno> items2;
+
     // Flags to indicate if child collections are empty
     private boolean isInventarioCajaListEmpty;
 
@@ -29,6 +31,15 @@ public class InventarioInternoController extends AbstractController<InventarioIn
         // Inform the Abstract parent controller of the concrete InventarioInterno Entity
         super(InventarioInterno.class);
         this.itemsBoletos = new IBoletoDaoImpl().findByCuenta(this.getUserCount());
+        this.items2 = new IInventarioInternoDaoImpl().findByEstado(false, this.getUserCount());
+    }
+
+    public List<InventarioInterno> getItems2() {
+        return items2;
+    }
+
+    public void setItems2(List<InventarioInterno> items) {
+        this.items2 = items;
     }
 
     public void setItemsBoletos(List<Boleto> itemsBoletos) {

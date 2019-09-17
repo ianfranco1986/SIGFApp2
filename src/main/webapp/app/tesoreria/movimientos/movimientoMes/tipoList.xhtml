@@ -9,7 +9,7 @@
     <h:form id="Selector">
         <p:panel style="width: 100%;margin-bottom: 20px;" >
             <h3 style="text-align: center;">Detalle Movimientos x Tipo</h3>
-            <p:panelGrid columns="7" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
+            <p:panelGrid columns="8" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
 
                 <p:outputLabel value="Movimiento" for="movimiento" />
                 <p:selectOneMenu id="movimiento" value="#{movimientoMesViewController.tipoMovimiento}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
@@ -41,17 +41,21 @@
                 <h:outputLabel for="anio" value="Año:" />
                 <p:inputText id="anio" value="#{movimientoMesViewController.anio}" size="5" />
 
-                <p:commandButton value="Buscar" actionListener="#{movimientoMesViewController.loadTipo()}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-
+                <p:commandButton value="Buscar" actionListener="#{movimientoMesViewController.loadTipo()}" styleClass="btn btn-primary" update="DetalleCartolaListForm, DetalleCartolaListForm:detalleCartola, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                 </p:commandButton>
+
+
 
             </p:panelGrid>
         </p:panel>
     </h:form>
 
     <h:form id="DetalleCartolaListForm">
-        <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola">
+        <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola" rendered="#{movimientoMesViewController.tipoMovimiento != null}">
             <h3>Detalle Movimientos</h3>
+            <h:commandLink value="Generar Reporte" 
+                           actionListener="#{reportController.downloadFile(movimientoMesViewController.informeTipo, movimientoMesViewController.mapTipo)}" target="blank"  styleClass="btn btn-primary" />
+
             <p:dataTable id="datalist"
                          value="#{movimientoMesViewController.model}"
                          lazy="false"

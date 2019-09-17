@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "CompraBoleto.findAll", query = "SELECT c FROM CompraBoleto c")
+    @NamedQuery(name = "CompraBoleto.findAll", query = "SELECT c FROM CompraBoleto c ORDER BY c.compraBoletoFecha DESC")
     , @NamedQuery(name = "CompraBoleto.findByCompraBoletoId", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoId = :compraBoletoId")
     , @NamedQuery(name = "CompraBoleto.findByCompraBoletoFolioFactura", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoFolioFactura = :compraBoletoFolioFactura")
     , @NamedQuery(name = "CompraBoleto.findByCompraBoletoTotal", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoTotal = :compraBoletoTotal")
@@ -51,8 +51,7 @@ public class CompraBoleto implements Serializable {
     @Column(name = "compra_boleto_id", nullable = false)
     private Integer compraBoletoId;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "compra_boleto_folio_factura", nullable = false)
+    @Column(name = "compra_boleto_folio_factura")
     private int compraBoletoFolioFactura;
     @Basic(optional = false)
     @NotNull
@@ -156,5 +155,5 @@ public class CompraBoleto implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.CompraBoleto[ compraBoletoId=" + compraBoletoId + " ]";
     }
-    
+
 }

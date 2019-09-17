@@ -6,143 +6,158 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h:form id="RelacionLaboralListForm">
 
-        <p:contextMenu id="RelacionLaboralDataTableContextMenu" for="datalist">  
-            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('RelacionLaboralListForm:createButton').click();" icon="ui-icon-plus"/>
-            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('RelacionLaboralListForm:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('RelacionLaboralListForm:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('RelacionLaboralListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            <p:separator/>
-        </p:contextMenu>
-        <p:dataTable id="datalist"
-                     value="#{relacionLaboralController.items}"
-                     lazy="false"
-                     rowKey="#{item.relacionLaboralId}"
-                     var="item"
-                     paginator="true"
-                     rows="100"
-                     rowsPerPageTemplate="100, 200, 500"
-                     selectionMode="single"
-                     selection="#{relacionLaboralController.selected}"
-                     filteredValue="#{relacionLaboralController.filteredItems}">
-            <!--
-                     To enable Lazy Loading, please copy/replace the following lines above,
-                     and be sure to replace the word HASH with the # symbol:
-            
-                     value="HASH{relacionLaboralController.lazyItems}"
-                     lazy="true"
-                     rowKey="HASH{item.relacionLaboralId}"  <<< Remove this line
-            -->
+    <h:form id="Selector">
+        <p:panel style="width: 100%;margin-bottom: 20px;" >
+            <h3 style="text-align: center;">Periodo</h3>
+            <p:panelGrid columns="5" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
+                <h:outputLabel for="mes" value="Mes:" />
+                <p:selectOneMenu id="mes" value="#{relacionLaboralController.mes}" style="width:125px">
+                    <f:selectItem itemLabel="Enero" itemValue="1" />
+                    <f:selectItem itemLabel="Febrero" itemValue="2" />
+                    <f:selectItem itemLabel="Marzo" itemValue="3" />
+                    <f:selectItem itemLabel="Abril" itemValue="4" />
+                    <f:selectItem itemLabel="Mayo" itemValue="5" />
+                    <f:selectItem itemLabel="Junio" itemValue="6" />
+                    <f:selectItem itemLabel="Julio" itemValue="7" />
+                    <f:selectItem itemLabel="Agosto" itemValue="8" />
+                    <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                    <f:selectItem itemLabel="Octubre" itemValue="10" />
+                    <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                    <f:selectItem itemLabel="Diciembre" itemValue="12" />
 
+                </p:selectOneMenu>
 
-            <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RelacionLaboralDataTableContextMenu" listener="#{relacionLaboralController.resetParents}"/>
-            <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RelacionLaboralDataTableContextMenu" listener="#{relacionLaboralController.resetParents}"/>
-            <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{relacionLaboralController.resetParents}"/>
-            <p:ajax event="rowDblselect" onsuccess="document.getElementById('RelacionLaboralListForm:viewButton').click();"/>
+                <h:outputLabel for="anio" value="Año:" />
+                <p:inputText id="anio" value="#{relacionLaboralController.anio}" size="5" />
 
-            <p:column sortBy="#{item.relacionLaboralId}" filterBy="#{item.relacionLaboralId}">
-                <f:facet name="header">
-                    <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralId}"/>
-                </f:facet>
-                <h:outputText value="#{item.relacionLaboralId}"/>
-            </p:column>
+                <p:commandButton value="Buscar" actionListener="#{relacionLaboralController.load}" styleClass="btn btn-primary" update="FeriadoLegalListForm, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
+
+                </p:commandButton>
+
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+    <p:panel style="padding-bottom: 20px;" >
+        <h3 style="text-align: center;">Relaciones Laborales</h3>
+        <h:form id="RelacionLaboralListForm">
 
 
-            <p:column sortBy="#{item.relacionLaboralFechaInicio}" filterBy="#{item.relacionLaboralFechaInicio}">
-                <f:facet name="header">
-                    <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralFechaInicio}"/>
-                </f:facet>
-                <h:outputText value="#{item.relacionLaboralFechaInicio}">
-                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                </h:outputText>
-            </p:column>
+            <p:dataTable id="datalist"
+                         value="#{relacionLaboralController.items}"
+                         lazy="false"
+                         rowKey="#{item.relacionLaboralId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         rowIndexVar="rowIndex"
+                         selection="#{relacionLaboralController.selected}"
+                         emptyMessage="No se han encontrado registros"
+                         editable="true">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{relacionLaboralController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.relacionLaboralId}"  <<< Remove this line
+                -->
 
-
-            <p:column sortBy="#{item.relacionLaboralFechaFin}" filterBy="#{item.relacionLaboralFechaFin}">
-                <f:facet name="header">
-                    <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralFechaFin}"/>
-                </f:facet>
-                <h:outputText value="#{item.relacionLaboralFechaFin}">
-                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                </h:outputText>
-            </p:column>
-
-
-            <p:column sortBy="#{item.relacionLaboralSueldoBase}" filterBy="#{item.relacionLaboralSueldoBase}">
-                <f:facet name="header">
-                    <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralSueldoBase}"/>
-                </f:facet>
-                <h:outputText value="#{item.relacionLaboralSueldoBase}"/>
-            </p:column>
-
-
-            <p:column sortBy="#{item.relacionLaboralActivo}" filterBy="#{item.relacionLaboralActivo}">
-                <f:facet name="header">
-                    <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralActivo}"/>
-                </f:facet>
-                <h:selectBooleanCheckbox id="relacionLaboralActivo" value="#{item.relacionLaboralActivo}" title="#{myBundle.EditRelacionLaboralTitle_relacionLaboralActivo}" required="true" requiredMessage="#{myBundle.EditRelacionLaboralRequiredMessage_relacionLaboralActivo}" disabled="true"/>
-            </p:column>
-
-
-            <p:column sortBy="#{item.relacionLaboralIdTipoContrato.tipoContratoId}" filterBy="#{item.relacionLaboralIdTipoContrato.tipoContratoId}">
-                <f:facet name="header">
-                    <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralIdTipoContrato}"/>
-                </f:facet>
-                <h:outputText value="#{item.relacionLaboralIdTipoContrato.tipoContratoId}"/>
-            </p:column>
-
-            <ui:remove>
-                <p:column sortBy="#{item.relacionLaboralIdEmpresa.empresaId}" filterBy="#{item.relacionLaboralIdEmpresa.empresaId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralIdEmpresa}"/>
+                        <h:outputText value="#"/>
                     </f:facet>
-                    <h:outputText value="#{item.relacionLaboralIdEmpresa.empresaId}"/>
+                    <h:outputText value="#{rowIndex+1}"/>
                 </p:column>
-            </ui:remove>
-            <ui:remove>
-                <p:column sortBy="#{item.relacionLaboralIdOperador.operadorTransporteId}" filterBy="#{item.relacionLaboralIdOperador.operadorTransporteId}">
+
+                <p:column sortBy="#{item.relacionLaboralIdTrabajador.trabajadorCodigo}" filterBy="#{item.relacionLaboralIdTrabajador.trabajadorCodigo}">
+                    <f:facet name="header">
+                        <h:outputText value="Cód. Trabajador"/>
+                    </f:facet>
+                    <h:outputText value="#{item.relacionLaboralIdTrabajador.trabajadorCodigo}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.relacionLaboralIdTrabajador}" filterBy="#{item.relacionLaboralIdTrabajador}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Trabajador"/>
+                    </f:facet>
+                    <h:outputText value="#{item.relacionLaboralIdTrabajador}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.relacionLaboralFechaInicio}" filterBy="#{item.relacionLaboralFechaInicio}">
+                    <f:facet name="header">
+                        <h:outputText value="F.Inicio"/>
+                    </f:facet>
+                    <h:outputText value="#{item.relacionLaboralFechaInicio}">
+                        <f:convertDateTime pattern="dd/MM/yy" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.relacionLaboralFechaFin}" filterBy="#{item.relacionLaboralFechaFin}">
+                    <f:facet name="header">
+                        <h:outputText value="F.Termino"/>
+                    </f:facet>
+                    <h:outputText value="#{item.relacionLaboralFechaFin}">
+                        <f:convertDateTime pattern="dd/MM/yy" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.relacionLaboralSueldoBase}" filterBy="#{item.relacionLaboralSueldoBase}">
+                    <f:facet name="header">
+                        <h:outputText value="S.Base"/>
+                    </f:facet>
+                    <h:outputText value="#{item.relacionLaboralSueldoBase}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.relacionLaboralActivo}" filterBy="#{item.relacionLaboralActivo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralActivo}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="relacionLaboralActivo" value="#{item.relacionLaboralActivo}" title="#{myBundle.EditRelacionLaboralTitle_relacionLaboralActivo}" required="true" requiredMessage="#{myBundle.EditRelacionLaboralRequiredMessage_relacionLaboralActivo}" disabled="true"/>
+                </p:column>
+
+                <p:column sortBy="#{item.relacionLaboralIdTipoContrato.tipoContratoId}" filterBy="#{item.relacionLaboralIdTipoContrato.tipoContratoId}">
+                    <f:facet name="header">
+                        <h:outputText value="Contrato"/>
+                    </f:facet>
+                    <h:outputText value="#{item.relacionLaboralIdTipoContrato.tipoContratoNombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.relacionLaboralIdEmpresa.empresaNombre}" filterBy="#{item.relacionLaboralIdEmpresa.empresaNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Empresa"/>
+                    </f:facet>
+                    <h:outputText value="#{item.relacionLaboralIdEmpresa.empresaNombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.relacionLaboralIdOperador.operadorTransporteNombre}" filterBy="#{item.relacionLaboralIdOperador.operadorTransporteNombre}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralIdOperador}"/>
                     </f:facet>
-                    <h:outputText value="#{item.relacionLaboralIdOperador.operadorTransporteId}"/>
+                    <h:outputText value="#{item.relacionLaboralIdOperador.operadorTransporteNombre}"/>
                 </p:column>
-            </ui:remove>
-            <ui:remove>
-                <p:column sortBy="#{item.relacionLaboralIdTerminal.terminalId}" filterBy="#{item.relacionLaboralIdTerminal.terminalId}">
+
+                <p:column sortBy="#{item.relacionLaboralIdTerminal.terminalNombre}" filterBy="#{item.relacionLaboralIdTerminal.terminalNombre}">
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralIdTerminal}"/>
+                        <h:outputText value="Terminal"/>
                     </f:facet>
-                    <h:outputText value="#{item.relacionLaboralIdTerminal.terminalId}"/>
+                    <h:outputText value="#{item.relacionLaboralIdTerminal.terminalNombre}"/>
                 </p:column>
-            </ui:remove>
-            <ui:remove>
-                <p:column sortBy="#{item.relacionLaboralIdTrabajador.trabajadorId}" filterBy="#{item.relacionLaboralIdTrabajador.trabajadorId}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralIdTrabajador}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.relacionLaboralIdTrabajador.trabajadorId}"/>
-                </p:column>
-            </ui:remove>
-            <ui:remove>
-                <p:column sortBy="#{item.relacionLaboralIdTipoTrabajador.tipoTrabajadorId}" filterBy="#{item.relacionLaboralIdTipoTrabajador.tipoTrabajadorId}">
+
+                <p:column sortBy="#{item.relacionLaboralIdTipoTrabajador.tipoTrabajadorNombre}" filterBy="#{item.relacionLaboralIdTipoTrabajador.tipoTrabajadorNombre}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRelacionLaboralTitle_relacionLaboralIdTipoTrabajador}"/>
                     </f:facet>
-                    <h:outputText value="#{item.relacionLaboralIdTipoTrabajador.tipoTrabajadorId}"/>
+                    <h:outputText value="#{item.relacionLaboralIdTipoTrabajador.tipoTrabajadorNombre}"/>
                 </p:column>
-            </ui:remove>
 
-        </p:dataTable>
 
-        <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{relacionLaboralController.prepareCreate}" update=":RelacionLaboralCreateForm" oncomplete="PF('RelacionLaboralCreateDialog').show()"/>
-        <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":RelacionLaboralViewForm" oncomplete="PF('RelacionLaboralViewDialog').show()" disabled="#{empty relacionLaboralController.selected}"/>
-        <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RelacionLaboralEditForm" oncomplete="PF('RelacionLaboralEditDialog').show()" disabled="#{empty relacionLaboralController.selected}"/>
-        <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{relacionLaboralController.delete}" update=":growl,datalist" disabled="#{empty relacionLaboralController.selected}">
-            <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-        </p:commandButton>
+            </p:dataTable>
 
-        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
-    </h:form>
-
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </p:panel>
 </ui:composition>

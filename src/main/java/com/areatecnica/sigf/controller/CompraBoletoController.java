@@ -8,7 +8,6 @@ import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
 import com.areatecnica.sigf.entities.InventarioInterno;
 import java.util.List;
-import com.areatecnica.sigf.facade.CompraBoletoFacade;
 import com.areatecnica.sigf.facade.InventarioInternoFacade;
 import com.areatecnica.sigf.models.DetalleCompraBoletosDataModel;
 import java.text.DecimalFormat;
@@ -17,7 +16,6 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
@@ -123,71 +121,12 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
         this.detalleCompraBoleto = new DetalleCompraBoleto();
         this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
         this.getSelected().setCompraBoletoFecha(new Date());
-        this.getSelected().setCompraBoletoTotal(0);
+        this.getSelected().setCompraBoletoTotal(totalCompra);
         this.getSelected().setDetalleCompraBoletoList(new ArrayList<DetalleCompraBoleto>());
 
         this.model = new DetalleCompraBoletosDataModel(this.getSelected().getDetalleCompraBoletoList());
         JsfUtil.addSuccessMessage("Se ha agregado una nueva Compra de Boletos");
         JsfUtil.addSuccessMessage("Se ha actualizado el Inventario Interno");
-    }
-
-    /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
-        compraBoletoIdCuentaController.setSelected(null);
-    }
-
-    /**
-     * Set the "is[ChildCollection]Empty" property for OneToMany fields.
-     */
-    @Override
-    protected void setChildrenEmptyFlags() {
-        this.setIsDetalleCompraBoletoListEmpty();
-    }
-
-    public boolean getIsDetalleCompraBoletoListEmpty() {
-        return this.isDetalleCompraBoletoListEmpty;
-    }
-
-    private void setIsDetalleCompraBoletoListEmpty() {
-        CompraBoleto selected = this.getSelected();
-        if (selected != null) {
-            CompraBoletoFacade ejbFacade = (CompraBoletoFacade) this.getFacade();
-            this.isDetalleCompraBoletoListEmpty = ejbFacade.isDetalleCompraBoletoListEmpty(selected);
-        } else {
-            this.isDetalleCompraBoletoListEmpty = true;
-        }
-    }
-
-    /**
-     * Sets the "items" attribute with a collection of DetalleCompraBoleto
-     * entities that are retrieved from CompraBoleto and returns the navigation
-     * outcome.
-     *
-     * @return navigation outcome for DetalleCompraBoleto page
-     */
-    public String navigateDetalleCompraBoletoList() {
-        CompraBoleto selected = this.getSelected();
-        if (selected != null) {
-            CompraBoletoFacade ejbFacade = (CompraBoletoFacade) this.getFacade();
-            List<DetalleCompraBoleto> selectedDetalleCompraBoletoList = ejbFacade.findDetalleCompraBoletoList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleCompraBoleto_items", selectedDetalleCompraBoletoList);
-        }
-        return "/app/detalleCompraBoleto/index";
-    }
-
-    /**
-     * Sets the "selected" attribute of the Cuenta controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareCompraBoletoIdCuenta(ActionEvent event) {
-        CompraBoleto selected = this.getSelected();
-        if (selected != null && compraBoletoIdCuentaController.getSelected() == null) {
-            compraBoletoIdCuentaController.setSelected(selected.getCompraBoletoIdCuenta());
-        }
     }
 
     /**

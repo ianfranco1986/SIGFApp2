@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="78"/>
-	<style name="Crosstab Data Text" hAlign="Center"/>
-	<parameter name="caja" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="nombreCaja" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Crosstab Data Text"/>
 	<queryString>
 		<![CDATA[SELECT 
-    boleto.boleto_nombre,
+    CONCAT(boleto.boleto_orden, ' -  ', boleto.boleto_nombre) AS boleto_nombre,
     inventario_caja.inventario_caja_id_caja,
     caja_recaudacion.caja_recaudacion_nombre
 FROM
@@ -25,15 +22,20 @@ FROM
     boleto ON inventario_interno.inventario_interno_id_boleto = boleto.boleto_id
 WHERE
     inventario_caja.inventario_caja_estado = 0
-    ORDER BY caja_recaudacion_nombre, boleto_orden]]>
+    ORDER BY  boleto_orden ASC]]>
 	</queryString>
 	<field name="boleto_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="boleto_nombre"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="inventario_caja_id_caja" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="inventario_caja_id_caja"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventario_caja"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="caja_recaudacion_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="caja_recaudacion_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caja_recaudacion"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
@@ -55,7 +57,7 @@ WHERE
 				<textElement>
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ñandu Tur S.A.]]></text>
+				<text><![CDATA[Ñandu Tur S.A. ]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="0" y="19" width="100" height="20" uuid="f230d77d-5981-49a7-9356-fc24ced358e3"/>
@@ -63,13 +65,6 @@ WHERE
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="39" width="252" height="20" uuid="1576f955-0363-4053-8e6e-0b781288097f"/>
-				<textElement>
-					<font fontName="SansSerif" size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{nombreCaja}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="323" y="0" width="249" height="34" uuid="12b2e43a-c6d7-4140-8be8-e2262975641d"/>
@@ -124,17 +119,20 @@ WHERE
 		<band height="44" splitType="Stretch">
 			<crosstab>
 				<reportElement x="0" y="0" width="572" height="44" uuid="16601682-9074-4716-ab03-1f032d986008"/>
-				<rowGroup name="boleto_nombre" width="70" totalPosition="End">
-					<bucket class="java.lang.String">
+				<rowGroup name="boleto_nombre" width="120" totalPosition="End">
+					<bucket order="Descending" class="java.lang.String">
 						<bucketExpression><![CDATA[$F{boleto_nombre}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
 						<cellContents backcolor="#C3CFD9" mode="Opaque">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="2383373c-12cc-4149-b5c2-e7f4d659944b"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="120" height="25" uuid="2383373c-12cc-4149-b5c2-e7f4d659944b"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Left"/>
 								<textFieldExpression><![CDATA[$V{boleto_nombre}]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -145,9 +143,10 @@ WHERE
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="70" height="25" uuid="add32ad8-ae98-4b00-9c34-c8b84f3fb8ef"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Total boleto_nombre]]></text>
+								<reportElement x="0" y="0" width="120" height="25" uuid="add32ad8-ae98-4b00-9c34-c8b84f3fb8ef"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<text><![CDATA[Total x Caja]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
@@ -158,22 +157,25 @@ WHERE
 					</bucket>
 					<crosstabColumnHeader>
 						<cellContents backcolor="#C3CFD9" mode="Opaque">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="30" uuid="b58b9212-b639-456f-ab08-42fd794ddc52"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="30" uuid="b58b9212-b639-456f-ab08-42fd794ddc52"/>
+								<textElement textAlignment="Center"/>
 								<textFieldExpression><![CDATA[$V{caja_recaudacion_nombre}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabColumnHeader>
 					<crosstabTotalColumnHeader>
 						<cellContents backcolor="#E6F3FF" mode="Opaque">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30" uuid="a3ffc7ab-45f4-4c9f-a11c-a0a487e950c1"/>
+								<reportElement x="0" y="0" width="100" height="30" uuid="a3ffc7ab-45f4-4c9f-a11c-a0a487e950c1"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[Total x Tipo]]></text>
 							</staticText>
@@ -183,46 +185,50 @@ WHERE
 				<measure name="boleto_nombreMeasure" class="java.lang.Integer" calculation="Count">
 					<measureExpression><![CDATA[$F{boleto_nombre}]]></measureExpression>
 				</measure>
-				<crosstabCell width="50" height="25">
+				<crosstabCell width="70" height="25">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="5bd93438-8df7-4bb8-b7d7-e0c87b04faa8"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="5bd93438-8df7-4bb8-b7d7-e0c87b04faa8"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$V{boleto_nombreMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell height="25" rowTotalGroup="boleto_nombre">
+				<crosstabCell width="70" height="25" rowTotalGroup="boleto_nombre">
 					<cellContents backcolor="#E6F3FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="75d72680-758a-4ce7-a08c-b846a9e2da55"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="75d72680-758a-4ce7-a08c-b846a9e2da55"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$V{boleto_nombreMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="50" columnTotalGroup="caja_recaudacion_nombre">
+				<crosstabCell width="100" columnTotalGroup="caja_recaudacion_nombre">
 					<cellContents backcolor="#E6F3FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="e2d2649e-1ef4-4870-85c8-d82ccbee9440"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="100" height="25" uuid="e2d2649e-1ef4-4870-85c8-d82ccbee9440"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$V{boleto_nombreMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell rowTotalGroup="boleto_nombre" columnTotalGroup="caja_recaudacion_nombre">
+				<crosstabCell width="100" rowTotalGroup="boleto_nombre" columnTotalGroup="caja_recaudacion_nombre">
 					<cellContents backcolor="#E6F3FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="27d370d6-e747-4b53-a198-3a29e3ead387"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="100" height="25" uuid="27d370d6-e747-4b53-a198-3a29e3ead387"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$V{boleto_nombreMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>

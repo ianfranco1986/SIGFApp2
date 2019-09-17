@@ -8,7 +8,6 @@
 
     <h:form id="InventarioCajaListForm">
 
-
         <p:contextMenu id="InventarioCajaDataTableContextMenu" for="datalist">  
             <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('InventarioCajaListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
             <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('InventarioCajaListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
@@ -16,7 +15,7 @@
             <p:separator/>                
         </p:contextMenu>
         <p:dataTable id="datalist"
-                     value="#{inventarioCajaController.items}"
+                     value="#{inventarioCajaController.items2}"
                      lazy="false"
                      rowKey="#{item.inventarioCajaId}"
                      var="item"

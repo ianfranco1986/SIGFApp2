@@ -24,7 +24,7 @@ FROM
         RIGHT JOIN
     fecha ON venta_combustible.venta_combustible_fecha = fecha.fecha
 WHERE
-    fecha.fecha BETWEEN '2019-04-01' AND LAST_DAY('2019-04-01')
+    fecha.fecha BETWEEN $P{fecha} AND LAST_DAY($P{fecha})
     GROUP BY fecha.fecha 
 ORDER BY fecha.fecha ASC]]>
 	</queryString>
@@ -161,7 +161,7 @@ ORDER BY fecha.fecha ASC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="291" y="0" width="101" height="12" uuid="cbddf3b4-6346-471d-9f1b-a7f3dbaf5177">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
 				</reportElement>
@@ -170,7 +170,7 @@ ORDER BY fecha.fecha ASC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{boleta_inferior}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="148" y="0" width="50" height="12" uuid="92747415-169a-4cb2-a742-23e9758090d0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
 				</reportElement>
@@ -179,7 +179,7 @@ ORDER BY fecha.fecha ASC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{litros}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="462" y="0" width="77" height="12" uuid="83378703-be8f-447d-a709-08e64a771750">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
 				</reportElement>
@@ -188,7 +188,7 @@ ORDER BY fecha.fecha ASC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="392" y="0" width="70" height="12" uuid="6aeadae6-beff-4fb8-a603-44092fd21b03">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
 				</reportElement>
@@ -197,7 +197,7 @@ ORDER BY fecha.fecha ASC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{boleta_superior}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="210" y="0" width="50" height="12" uuid="1f5989bc-b853-4e16-8a14-0c886bc9be42">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
 				</reportElement>
@@ -206,7 +206,7 @@ ORDER BY fecha.fecha ASC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numero_venta}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="81" y="0" width="61" height="12" uuid="2d6feecc-c3d7-46c0-8692-80b173ba0eb1">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
 				</reportElement>

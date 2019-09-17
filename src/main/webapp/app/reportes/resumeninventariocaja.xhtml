@@ -11,17 +11,13 @@
         <p:panel>
             <p:spacer/>
             <h3 style="text-align: center;">Resumen Inventario Boletos x Cajas </h3>
-            <p:panelGrid columns="2" style="width: 100%; margin-bottom: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
-                <h:outputLabel value="Caja" for="inventarioCajaIdCaja" />
-                <p:selectOneMenu id="inventarioCajaIdCaja" value="#{reportControllerResumenInventarioCaja.selected}" required="true" requiredMessage="Debe seleccionar la Caja Recaudación" converter="omnifaces.SelectItemsConverter">
-                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                    <f:selectItems value="#{reportControllerResumenInventarioCaja.items}"
-                                   var="caja"
-                                   itemValue="#{caja}"
-                                   itemLabel="#{caja.cajaRecaudacionNombre}"
-                                   />
-                </p:selectOneMenu>
+            <p:panelGrid columns="4" style="width: 100%; margin-bottom: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
 
+
+                <p:outputLabel value=""/>
+                <p:outputLabel value=""/>
+                <p:outputLabel value=""/>
+                <p:outputLabel value=""/>
                 <p:outputLabel value=""/>
                 <h:commandLink value="Generar Reporte" 
                                actionListener="#{reportController.downloadFile(reportControllerResumenInventarioCaja.informe, reportControllerResumenInventarioCaja.map)}" target="blank"  styleClass="btn btn-primary" />

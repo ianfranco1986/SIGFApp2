@@ -82,7 +82,7 @@ WHERE
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="88" y="0" width="63" height="20" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+				<reportElement x="112" y="0" width="99" height="20" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
 				<textElement>
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -96,30 +96,14 @@ WHERE
 				<text><![CDATA[Folio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="151" y="0" width="100" height="20" uuid="7cd9e24b-1df9-4c23-be74-a815a2fc1b21"/>
-				<textElement>
-					<font fontName="SansSerif" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Flota]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="306" y="0" width="74" height="20" uuid="048f827c-5999-477d-8ca3-6db440ee295f"/>
+				<reportElement x="280" y="0" width="100" height="20" uuid="048f827c-5999-477d-8ca3-6db440ee295f"/>
 				<textElement>
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nº Bus Recibe]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="0" width="100" height="20" uuid="1f03e831-85f3-4e0c-8ed0-2be7e90bc4fc">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fdd663f5-ad02-4f9e-a11f-3eba5e870473"/>
-				</reportElement>
-				<textElement>
-					<font fontName="SansSerif" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Flota]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="480" y="0" width="70" height="20" uuid="a7cab6f6-2844-407a-a8fa-bf0a1177c313">
+				<reportElement x="444" y="0" width="70" height="20" uuid="a7cab6f6-2844-407a-a8fa-bf0a1177c313">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -132,7 +116,7 @@ WHERE
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="88" y="0" width="63" height="15" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<reportElement x="112" y="0" width="99" height="15" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
 				<textElement>
 					<font fontName="SansSerif"/>
 				</textElement>
@@ -146,30 +130,14 @@ WHERE
 				<textFieldExpression><![CDATA[$F{registro_minuto_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="151" y="0" width="100" height="15" uuid="21636e15-e673-4bc2-aea0-715105e5d3c3"/>
-				<textElement>
-					<font fontName="SansSerif"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{flotaPaga}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="306" y="0" width="74" height="15" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<reportElement x="280" y="0" width="100" height="15" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
 				<textElement>
 					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="380" y="0" width="100" height="15" uuid="c063a3c3-2072-46a5-9338-1a4d419f9ac3">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fdd663f5-ad02-4f9e-a11f-3eba5e870473"/>
-				</reportElement>
-				<textElement>
-					<font fontName="SansSerif"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{flotaRecibe}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0.###">
-				<reportElement x="480" y="0" width="70" height="15" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+				<reportElement x="444" y="0" width="70" height="15" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -219,14 +187,14 @@ WHERE
 	<summary>
 		<band height="20" splitType="Stretch">
 			<textField pattern="#,###.###">
-				<reportElement x="480" y="0" width="70" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
+				<reportElement x="444" y="0" width="70" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{registro_minuto_monto1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="380" y="0" width="100" height="20" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
+				<reportElement x="344" y="0" width="100" height="20" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
