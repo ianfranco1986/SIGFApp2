@@ -7,8 +7,6 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h:form id="NumeralSurtidorListForm">
-
-
         <p:panel style="width: 100%; margin-bottom: 10px;">
             <h3 style="text-align: center;">Numerales x Mes</h3>
             <p:panelGrid columns="7" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" style="width: 100%; ">
@@ -53,7 +51,8 @@
                          rowIndexVar="rowIndex"
                          widgetVar="datalistWidget" 
                          expandableRowGroups="true" 
-                         sortBy="#{item.numeralSurtidorFechaMedicion}">
+                         sortBy="#{item.numeralSurtidorIdSurtidor.surtidorIdentificador}"
+                         emptyMessage="No se han encontrado registros">
 
                 <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:NumeralSurtidorDataTableContextMenu" listener="#{numeralSurtidorController.resetParents}"/>
                 <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:NumeralSurtidorDataTableContextMenu" listener="#{numeralSurtidorController.resetParents}"/>
@@ -83,16 +82,17 @@
                 </f:facet>
 
                 <p:headerRow>
-                    <p:column colspan="5">
-                        <h:outputText value="#{item.numeralSurtidorFechaMedicion}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                        </h:outputText>
+                    <p:column headerText="Surtidor"  colspan="5">
+                        <h:outputText value="#{item.numeralSurtidorIdSurtidor.surtidorIdentificador}"/>
                     </p:column>
                 </p:headerRow>
 
-                <p:column headerText="Surtidor">
-                    <h:outputText value="#{item.numeralSurtidorIdSurtidor.surtidorIdentificador}"/>
+                <p:column>
+                    <h:outputText value="#{item.numeralSurtidorFechaMedicion}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
                 </p:column>
+
 
                 <p:column headerText="N° Inicio">
                     <h:outputText value="#{item.numeralSurtidorNumeralInicial}">
@@ -106,11 +106,6 @@
                     </h:outputText>
                 </p:column>
 
-
-                <p:column headerText="Muestra">
-                    <h:outputText value="#{item.numeralSurtidorIndicadorMuestra}"/>
-                </p:column>
-
                 <p:column headerText="N° de Litros x Día">
                     <h:outputText value="#{item.litros}">
                         <f:convertNumber />
@@ -119,7 +114,7 @@
 
 
                 <p:summaryRow>
-                    <p:column colspan="4" style="text-align:right">
+                    <p:column colspan="3" style="text-align:right">
                         <h:outputText value="Total Litros x Día:" />
                     </p:column>
                     <p:column>

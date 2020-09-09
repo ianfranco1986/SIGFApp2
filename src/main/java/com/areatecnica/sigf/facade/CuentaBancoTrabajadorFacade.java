@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CuentaBancoTrabajador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CuentaBancoTrabajador_;
+//import com.areatecnica.sigf.entities.CuentaBancoTrabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class CuentaBancoTrabajadorFacade extends AbstractFacade<CuentaBancoTraba
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CuentaBancoTrabajador> cuentaBancoTrabajador = cq.from(CuentaBancoTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaBancoTrabajador, entity), cb.isNotNull(cuentaBancoTrabajador.get(CuentaBancoTrabajador_.cuentaBancoTrabajadorCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaBancoTrabajador, entity), cb.isNotNull(cuentaBancoTrabajador.get(CuentaBancoTrabajador_.cuentaBancoTrabajadorCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class CuentaBancoTrabajadorFacade extends AbstractFacade<CuentaBancoTraba
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CuentaBancoTrabajador> cuentaBancoTrabajador = cq.from(CuentaBancoTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaBancoTrabajador, entity), cb.isNotNull(cuentaBancoTrabajador.get(CuentaBancoTrabajador_.cuentaBancoTrabajadorTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaBancoTrabajador, entity), cb.isNotNull(cuentaBancoTrabajador.get(CuentaBancoTrabajador_.cuentaBancoTrabajadorTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RelacionLaboral;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RelacionLaboral_;
+//import com.areatecnica.sigf.entities.RelacionLaboral_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -45,7 +45,7 @@ public class RelacionLaboralFacade extends AbstractFacade<RelacionLaboral> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RelacionLaboral> relacionLaboral = cq.from(RelacionLaboral.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdTipoContrato)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdTipoContrato)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -57,7 +57,7 @@ public class RelacionLaboralFacade extends AbstractFacade<RelacionLaboral> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RelacionLaboral> relacionLaboral = cq.from(RelacionLaboral.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdEmpresa)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdEmpresa)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -69,7 +69,7 @@ public class RelacionLaboralFacade extends AbstractFacade<RelacionLaboral> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RelacionLaboral> relacionLaboral = cq.from(RelacionLaboral.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdOperador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdOperador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -81,7 +81,7 @@ public class RelacionLaboralFacade extends AbstractFacade<RelacionLaboral> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RelacionLaboral> relacionLaboral = cq.from(RelacionLaboral.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdTerminal)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdTerminal)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -93,7 +93,7 @@ public class RelacionLaboralFacade extends AbstractFacade<RelacionLaboral> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RelacionLaboral> relacionLaboral = cq.from(RelacionLaboral.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -105,7 +105,7 @@ public class RelacionLaboralFacade extends AbstractFacade<RelacionLaboral> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RelacionLaboral> relacionLaboral = cq.from(RelacionLaboral.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdTipoTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotNull(relacionLaboral.get(RelacionLaboral_.relacionLaboralIdTipoTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -117,7 +117,7 @@ public class RelacionLaboralFacade extends AbstractFacade<RelacionLaboral> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RelacionLaboral> relacionLaboral = cq.from(RelacionLaboral.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotEmpty(relacionLaboral.get(RelacionLaboral_.finiquitoRelacionLaboralList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(relacionLaboral, entity), cb.isNotEmpty(relacionLaboral.get(RelacionLaboral_.finiquitoRelacionLaboralList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,6 @@ import com.areatecnica.sigf.entities.AbonoBus;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.AbonoBus_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +40,7 @@ public class AbonoBusFacade extends AbstractFacade<AbonoBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<AbonoBus> abonoBus = cq.from(AbonoBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(abonoBus, entity), cb.isNotNull(abonoBus.get(AbonoBus_.abonoBusIdBus)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(abonoBus, entity), cb.isNotNull(abonoBus.get(AbonoBus_.abonoBusIdBus)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -53,7 +52,7 @@ public class AbonoBusFacade extends AbstractFacade<AbonoBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<AbonoBus> abonoBus = cq.from(AbonoBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(abonoBus, entity), cb.isNotNull(abonoBus.get(AbonoBus_.abonoBusIdTipoAbono)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(abonoBus, entity), cb.isNotNull(abonoBus.get(AbonoBus_.abonoBusIdTipoAbono)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -65,7 +64,7 @@ public class AbonoBusFacade extends AbstractFacade<AbonoBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<AbonoBus> abonoBus = cq.from(AbonoBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(abonoBus, entity), cb.isNotEmpty(abonoBus.get(AbonoBus_.abonoLiquidacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(abonoBus, entity), cb.isNotEmpty(abonoBus.get(AbonoBus_.abonoLiquidacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

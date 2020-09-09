@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CentroCosto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CentroCosto_;
+//import com.areatecnica.sigf.entities.CentroCosto_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class CentroCostoFacade extends AbstractFacade<CentroCosto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CentroCosto> centroCosto = cq.from(CentroCosto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(centroCosto, entity), cb.isNotNull(centroCosto.get(CentroCosto_.centroCostoIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(centroCosto, entity), cb.isNotNull(centroCosto.get(CentroCosto_.centroCostoIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class CentroCostoFacade extends AbstractFacade<CentroCosto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CentroCosto> centroCosto = cq.from(CentroCosto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(centroCosto, entity), cb.isNotEmpty(centroCosto.get(CentroCosto_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(centroCosto, entity), cb.isNotEmpty(centroCosto.get(CentroCosto_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

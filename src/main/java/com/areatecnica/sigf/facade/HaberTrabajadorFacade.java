@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.HaberTrabajador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.HaberTrabajador_;
+//import com.areatecnica.sigf.entities.HaberTrabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class HaberTrabajadorFacade extends AbstractFacade<HaberTrabajador> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HaberTrabajador> haberTrabajador = cq.from(HaberTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(haberTrabajador, entity), cb.isNotNull(haberTrabajador.get(HaberTrabajador_.haberTrabajadorIdHaber)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(haberTrabajador, entity), cb.isNotNull(haberTrabajador.get(HaberTrabajador_.haberTrabajadorIdHaber)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -53,7 +53,7 @@ public class HaberTrabajadorFacade extends AbstractFacade<HaberTrabajador> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HaberTrabajador> haberTrabajador = cq.from(HaberTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(haberTrabajador, entity), cb.isNotNull(haberTrabajador.get(HaberTrabajador_.haberTrabajadorIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(haberTrabajador, entity), cb.isNotNull(haberTrabajador.get(HaberTrabajador_.haberTrabajadorIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -65,7 +65,7 @@ public class HaberTrabajadorFacade extends AbstractFacade<HaberTrabajador> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HaberTrabajador> haberTrabajador = cq.from(HaberTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(haberTrabajador, entity), cb.isNotEmpty(haberTrabajador.get(HaberTrabajador_.haberLiquidacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(haberTrabajador, entity), cb.isNotEmpty(haberTrabajador.get(HaberTrabajador_.haberLiquidacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,12 +9,12 @@ import com.areatecnica.sigf.entities.TipoCombustible;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoCombustible_;
+//import com.areatecnica.sigf.entities.TipoCombustible_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.areatecnica.sigf.entities.PrecioCombustible;
-import com.areatecnica.sigf.entities.CompraCombustible;
+import com.areatecnica.sigf.entities.CompraPetroleo;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class TipoCombustibleFacade extends AbstractFacade<TipoCombustible> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoCombustible> tipoCombustible = cq.from(TipoCombustible.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCombustible, entity), cb.isNotEmpty(tipoCombustible.get(TipoCombustible_.precioCombustibleList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCombustible, entity), cb.isNotEmpty(tipoCombustible.get(TipoCombustible_.precioCombustibleList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,15 +55,8 @@ public class TipoCombustibleFacade extends AbstractFacade<TipoCombustible> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoCombustible> tipoCombustible = cq.from(TipoCombustible.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCombustible, entity), cb.isNotEmpty(tipoCombustible.get(TipoCombustible_.compraCombustibleList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCombustible, entity), cb.isNotEmpty(tipoCombustible.get(TipoCombustible_.compraCombustibleList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<CompraCombustible> findCompraCombustibleList(TipoCombustible entity) {
-        TipoCombustible mergedEntity = this.getMergedEntity(entity);
-        List<CompraCombustible> compraCombustibleList = mergedEntity.getCompraCombustibleList();
-        compraCombustibleList.size();
-        return compraCombustibleList;
-    }
-    
 }

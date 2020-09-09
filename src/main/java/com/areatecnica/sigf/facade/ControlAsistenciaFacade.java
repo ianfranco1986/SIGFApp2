@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ControlAsistencia;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ControlAsistencia_;
+//import com.areatecnica.sigf.entities.ControlAsistencia_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class ControlAsistenciaFacade extends AbstractFacade<ControlAsistencia> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ControlAsistencia> controlAsistencia = cq.from(ControlAsistencia.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(controlAsistencia, entity), cb.isNotNull(controlAsistencia.get(ControlAsistencia_.controlAsistenciaIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(controlAsistencia, entity), cb.isNotNull(controlAsistencia.get(ControlAsistencia_.controlAsistenciaIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

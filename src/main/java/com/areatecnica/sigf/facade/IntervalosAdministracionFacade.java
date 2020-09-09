@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.IntervalosAdministracion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.IntervalosAdministracion_;
+//import com.areatecnica.sigf.entities.IntervalosAdministracion_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class IntervalosAdministracionFacade extends AbstractFacade<IntervalosAdm
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<IntervalosAdministracion> intervalosAdministracion = cq.from(IntervalosAdministracion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(intervalosAdministracion, entity), cb.isNotNull(intervalosAdministracion.get(IntervalosAdministracion_.intervalosAdministracionIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(intervalosAdministracion, entity), cb.isNotNull(intervalosAdministracion.get(IntervalosAdministracion_.intervalosAdministracionIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class IntervalosAdministracionFacade extends AbstractFacade<IntervalosAdm
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<IntervalosAdministracion> intervalosAdministracion = cq.from(IntervalosAdministracion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(intervalosAdministracion, entity), cb.isNotEmpty(intervalosAdministracion.get(IntervalosAdministracion_.detalleIntervalosMensualList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(intervalosAdministracion, entity), cb.isNotEmpty(intervalosAdministracion.get(IntervalosAdministracion_.detalleIntervalosMensualList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

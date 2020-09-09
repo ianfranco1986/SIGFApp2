@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ReconocimientoDeuda;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ReconocimientoDeuda_;
+//import com.areatecnica.sigf.entities.ReconocimientoDeuda_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class ReconocimientoDeudaFacade extends AbstractFacade<ReconocimientoDeud
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ReconocimientoDeuda> reconocimientoDeuda = cq.from(ReconocimientoDeuda.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(reconocimientoDeuda, entity), cb.isNotNull(reconocimientoDeuda.get(ReconocimientoDeuda_.reconocimientoDeudaIdEmpresa)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(reconocimientoDeuda, entity), cb.isNotNull(reconocimientoDeuda.get(ReconocimientoDeuda_.reconocimientoDeudaIdEmpresa)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class ReconocimientoDeudaFacade extends AbstractFacade<ReconocimientoDeud
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ReconocimientoDeuda> reconocimientoDeuda = cq.from(ReconocimientoDeuda.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(reconocimientoDeuda, entity), cb.isNotNull(reconocimientoDeuda.get(ReconocimientoDeuda_.reconocimientoDeudaIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(reconocimientoDeuda, entity), cb.isNotNull(reconocimientoDeuda.get(ReconocimientoDeuda_.reconocimientoDeudaIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

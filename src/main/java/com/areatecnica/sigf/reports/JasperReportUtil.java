@@ -48,7 +48,7 @@ public class JasperReportUtil {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://www.areatecnica.cl:3306/sigfdb", "root", "NintendO64");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb", "root", "NintendO64");
         } catch (SQLException e) {
             e.printStackTrace();
         }

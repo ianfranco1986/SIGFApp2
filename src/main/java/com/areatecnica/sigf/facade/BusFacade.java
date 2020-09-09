@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Bus;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Bus_;
+//import com.areatecnica.sigf.entities.Bus_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -55,7 +55,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.abonoBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.abonoBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -70,7 +70,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.cargoBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.cargoBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -85,7 +85,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.despachoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.despachoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -100,7 +100,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.ventaBoletoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.ventaBoletoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -115,7 +115,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdEmpresa)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdEmpresa)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -127,7 +127,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdEstadoBus)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdEstadoBus)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -139,7 +139,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdFlota)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdFlota)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -151,7 +151,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdGrupoServicio)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdGrupoServicio)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -163,7 +163,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdModelo)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdModelo)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -175,7 +175,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdProcesoRecaudacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdProcesoRecaudacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -187,7 +187,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdTerminal)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdTerminal)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -199,7 +199,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdUnidadNegocio)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotNull(bus.get(Bus_.busIdUnidadNegocio)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -211,7 +211,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.descuentoExtraBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.descuentoExtraBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -226,7 +226,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.ventaCombustibleList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.ventaCombustibleList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -241,7 +241,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.egresoBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.egresoBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -256,7 +256,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.guiaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.guiaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -271,7 +271,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.registroMinutoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.registroMinutoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -286,7 +286,7 @@ public class BusFacade extends AbstractFacade<Bus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.registroMinutoList1)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.registroMinutoList1)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

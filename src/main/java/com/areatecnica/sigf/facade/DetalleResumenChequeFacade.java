@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.DetalleResumenCheque;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.DetalleResumenCheque_;
+//import com.areatecnica.sigf.entities.DetalleResumenCheque_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class DetalleResumenChequeFacade extends AbstractFacade<DetalleResumenChe
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DetalleResumenCheque> detalleResumenCheque = cq.from(DetalleResumenCheque.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleResumenCheque, entity), cb.isNotNull(detalleResumenCheque.get(DetalleResumenCheque_.detalleResumenChequeIdBanco)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleResumenCheque, entity), cb.isNotNull(detalleResumenCheque.get(DetalleResumenCheque_.detalleResumenChequeIdBanco)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class DetalleResumenChequeFacade extends AbstractFacade<DetalleResumenChe
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DetalleResumenCheque> detalleResumenCheque = cq.from(DetalleResumenCheque.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleResumenCheque, entity), cb.isNotNull(detalleResumenCheque.get(DetalleResumenCheque_.detalleResumenChequeIdResumen)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleResumenCheque, entity), cb.isNotNull(detalleResumenCheque.get(DetalleResumenCheque_.detalleResumenChequeIdResumen)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

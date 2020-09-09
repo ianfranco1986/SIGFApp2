@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Ciudad;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Ciudad_;
+//import com.areatecnica.sigf.entities.Ciudad_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class CiudadFacade extends AbstractFacade<Ciudad> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Ciudad> ciudad = cq.from(Ciudad.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ciudad, entity), cb.isNotNull(ciudad.get(Ciudad_.ciudadIdRegion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ciudad, entity), cb.isNotNull(ciudad.get(Ciudad_.ciudadIdRegion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class CiudadFacade extends AbstractFacade<Ciudad> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Ciudad> ciudad = cq.from(Ciudad.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ciudad, entity), cb.isNotEmpty(ciudad.get(Ciudad_.comunaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ciudad, entity), cb.isNotEmpty(ciudad.get(Ciudad_.comunaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoContrato;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoContrato_;
+//import com.areatecnica.sigf.entities.TipoContrato_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class TipoContratoFacade extends AbstractFacade<TipoContrato> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoContrato> tipoContrato = cq.from(TipoContrato.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoContrato, entity), cb.isNotEmpty(tipoContrato.get(TipoContrato_.liquidacionSueldoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoContrato, entity), cb.isNotEmpty(tipoContrato.get(TipoContrato_.liquidacionSueldoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -56,7 +56,7 @@ public class TipoContratoFacade extends AbstractFacade<TipoContrato> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoContrato> tipoContrato = cq.from(TipoContrato.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoContrato, entity), cb.isNotNull(tipoContrato.get(TipoContrato_.tipoContratoIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoContrato, entity), cb.isNotNull(tipoContrato.get(TipoContrato_.tipoContratoIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class TipoContratoFacade extends AbstractFacade<TipoContrato> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoContrato> tipoContrato = cq.from(TipoContrato.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoContrato, entity), cb.isNotEmpty(tipoContrato.get(TipoContrato_.relacionLaboralList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoContrato, entity), cb.isNotEmpty(tipoContrato.get(TipoContrato_.relacionLaboralList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

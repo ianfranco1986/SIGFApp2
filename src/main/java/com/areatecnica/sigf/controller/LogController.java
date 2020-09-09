@@ -1,7 +1,6 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.Log;
-import com.areatecnica.sigf.facade.LogFacade;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;

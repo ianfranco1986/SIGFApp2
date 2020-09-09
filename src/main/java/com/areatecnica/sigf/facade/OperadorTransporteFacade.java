@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.OperadorTransporte;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.OperadorTransporte_;
+//import com.areatecnica.sigf.entities.OperadorTransporte_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class OperadorTransporteFacade extends AbstractFacade<OperadorTransporte>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<OperadorTransporte> operadorTransporte = cq.from(OperadorTransporte.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(operadorTransporte, entity), cb.isNotNull(operadorTransporte.get(OperadorTransporte_.operadorTransporteIdRepresentante)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(operadorTransporte, entity), cb.isNotNull(operadorTransporte.get(OperadorTransporte_.operadorTransporteIdRepresentante)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -53,7 +53,7 @@ public class OperadorTransporteFacade extends AbstractFacade<OperadorTransporte>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<OperadorTransporte> operadorTransporte = cq.from(OperadorTransporte.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(operadorTransporte, entity), cb.isNotEmpty(operadorTransporte.get(OperadorTransporte_.relacionLaboralList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(operadorTransporte, entity), cb.isNotEmpty(operadorTransporte.get(OperadorTransporte_.relacionLaboralList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class OperadorTransporteFacade extends AbstractFacade<OperadorTransporte>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<OperadorTransporte> operadorTransporte = cq.from(OperadorTransporte.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(operadorTransporte, entity), cb.isNotEmpty(operadorTransporte.get(OperadorTransporte_.unidadNegocioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(operadorTransporte, entity), cb.isNotEmpty(operadorTransporte.get(OperadorTransporte_.unidadNegocioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

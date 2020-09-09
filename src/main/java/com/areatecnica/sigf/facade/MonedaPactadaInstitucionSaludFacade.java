@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.MonedaPactadaInstitucionSalud;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.MonedaPactadaInstitucionSalud_;
+//import com.areatecnica.sigf.entities.MonedaPactadaInstitucionSalud_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class MonedaPactadaInstitucionSaludFacade extends AbstractFacade<MonedaPa
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<MonedaPactadaInstitucionSalud> monedaPactadaInstitucionSalud = cq.from(MonedaPactadaInstitucionSalud.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(monedaPactadaInstitucionSalud, entity), cb.isNotEmpty(monedaPactadaInstitucionSalud.get(MonedaPactadaInstitucionSalud_.trabajadorAdicionalSaludList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(monedaPactadaInstitucionSalud, entity), cb.isNotEmpty(monedaPactadaInstitucionSalud.get(MonedaPactadaInstitucionSalud_.trabajadorAdicionalSaludList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

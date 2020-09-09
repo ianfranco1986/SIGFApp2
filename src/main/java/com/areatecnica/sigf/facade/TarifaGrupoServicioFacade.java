@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TarifaGrupoServicio;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TarifaGrupoServicio_;
+//import com.areatecnica.sigf.entities.TarifaGrupoServicio_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TarifaGrupoServicioFacade extends AbstractFacade<TarifaGrupoServici
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TarifaGrupoServicio> tarifaGrupoServicio = cq.from(TarifaGrupoServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tarifaGrupoServicio, entity), cb.isNotNull(tarifaGrupoServicio.get(TarifaGrupoServicio_.tarifaGrupoServicioIdBoleto)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tarifaGrupoServicio, entity), cb.isNotNull(tarifaGrupoServicio.get(TarifaGrupoServicio_.tarifaGrupoServicioIdBoleto)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class TarifaGrupoServicioFacade extends AbstractFacade<TarifaGrupoServici
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TarifaGrupoServicio> tarifaGrupoServicio = cq.from(TarifaGrupoServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tarifaGrupoServicio, entity), cb.isNotNull(tarifaGrupoServicio.get(TarifaGrupoServicio_.tarifaGrupoServicioIdGrupo)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tarifaGrupoServicio, entity), cb.isNotNull(tarifaGrupoServicio.get(TarifaGrupoServicio_.tarifaGrupoServicioIdGrupo)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

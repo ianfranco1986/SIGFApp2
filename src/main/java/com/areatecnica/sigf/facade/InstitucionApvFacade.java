@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.InstitucionApv;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.InstitucionApv_;
+//import com.areatecnica.sigf.entities.InstitucionApv_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class InstitucionApvFacade extends AbstractFacade<InstitucionApv> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InstitucionApv> institucionApv = cq.from(InstitucionApv.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionApv, entity), cb.isNotEmpty(institucionApv.get(InstitucionApv_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionApv, entity), cb.isNotEmpty(institucionApv.get(InstitucionApv_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -56,7 +56,7 @@ public class InstitucionApvFacade extends AbstractFacade<InstitucionApv> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InstitucionApv> institucionApv = cq.from(InstitucionApv.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionApv, entity), cb.isNotNull(institucionApv.get(InstitucionApv_.institucionApvIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionApv, entity), cb.isNotNull(institucionApv.get(InstitucionApv_.institucionApvIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class InstitucionApvFacade extends AbstractFacade<InstitucionApv> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InstitucionApv> institucionApv = cq.from(InstitucionApv.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionApv, entity), cb.isNotNull(institucionApv.get(InstitucionApv_.institucionApvIdTipo)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionApv, entity), cb.isNotNull(institucionApv.get(InstitucionApv_.institucionApvIdTipo)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

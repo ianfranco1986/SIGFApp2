@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.PlanCuentaSubTipo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.PlanCuentaSubTipo_;
+//import com.areatecnica.sigf.entities.PlanCuentaSubTipo_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class PlanCuentaSubTipoFacade extends AbstractFacade<PlanCuentaSubTipo> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<PlanCuentaSubTipo> planCuentaSubTipo = cq.from(PlanCuentaSubTipo.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuentaSubTipo, entity), cb.isNotEmpty(planCuentaSubTipo.get(PlanCuentaSubTipo_.planCuentaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuentaSubTipo, entity), cb.isNotEmpty(planCuentaSubTipo.get(PlanCuentaSubTipo_.planCuentaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class PlanCuentaSubTipoFacade extends AbstractFacade<PlanCuentaSubTipo> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<PlanCuentaSubTipo> planCuentaSubTipo = cq.from(PlanCuentaSubTipo.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuentaSubTipo, entity), cb.isNotEmpty(planCuentaSubTipo.get(PlanCuentaSubTipo_.cuentaMayorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuentaSubTipo, entity), cb.isNotEmpty(planCuentaSubTipo.get(PlanCuentaSubTipo_.cuentaMayorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

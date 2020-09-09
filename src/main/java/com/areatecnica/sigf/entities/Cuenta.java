@@ -118,8 +118,6 @@ public class Cuenta implements Serializable {
     private List<GrupoServicio> grupoServicioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaRecaudacionIdCuenta")
     private List<CajaRecaudacion> cajaRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraCombustibleIdCuenta")
-    private List<CompraCombustible> compraCombustibleList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mutualIdCuenta")
     private List<Mutual> mutualList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAbonoIdCuenta")
@@ -451,15 +449,6 @@ public class Cuenta implements Serializable {
 
     public void setCajaRecaudacionList(List<CajaRecaudacion> cajaRecaudacionList) {
         this.cajaRecaudacionList = cajaRecaudacionList;
-    }
-
-    @XmlTransient
-    public List<CompraCombustible> getCompraCombustibleList() {
-        return compraCombustibleList;
-    }
-
-    public void setCompraCombustibleList(List<CompraCombustible> compraCombustibleList) {
-        this.compraCombustibleList = compraCombustibleList;
     }
 
     @XmlTransient

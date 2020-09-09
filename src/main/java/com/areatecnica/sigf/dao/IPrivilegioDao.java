@@ -5,10 +5,14 @@
  */
 package com.areatecnica.sigf.dao;
 
+import com.areatecnica.sigf.entities.Privilegio;
+
 /**
  *
  * @author ianfr
  */
-public interface IPrivilegioDao {
-    
+public interface IPrivilegioDao<T> extends IGenericDAO<T> {
+
+    public Privilegio findById(int id);
+
 }

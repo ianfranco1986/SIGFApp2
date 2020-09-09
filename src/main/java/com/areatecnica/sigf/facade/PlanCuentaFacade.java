@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.PlanCuenta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.PlanCuenta_;
+//import com.areatecnica.sigf.entities.PlanCuenta_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class PlanCuentaFacade extends AbstractFacade<PlanCuenta> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<PlanCuenta> planCuenta = cq.from(PlanCuenta.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuenta, entity), cb.isNotNull(planCuenta.get(PlanCuenta_.planCuentaEmpresaId)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuenta, entity), cb.isNotNull(planCuenta.get(PlanCuenta_.planCuentaEmpresaId)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class PlanCuentaFacade extends AbstractFacade<PlanCuenta> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<PlanCuenta> planCuenta = cq.from(PlanCuenta.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuenta, entity), cb.isNotNull(planCuenta.get(PlanCuenta_.planCuentaSubTipoId)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuenta, entity), cb.isNotNull(planCuenta.get(PlanCuenta_.planCuentaSubTipoId)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -64,7 +64,7 @@ public class PlanCuentaFacade extends AbstractFacade<PlanCuenta> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<PlanCuenta> planCuenta = cq.from(PlanCuenta.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuenta, entity), cb.isNotNull(planCuenta.get(PlanCuenta_.planCuentaTipoId)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuenta, entity), cb.isNotNull(planCuenta.get(PlanCuenta_.planCuentaTipoId)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

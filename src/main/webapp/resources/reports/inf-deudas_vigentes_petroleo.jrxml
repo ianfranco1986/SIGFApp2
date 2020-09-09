@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-VentasFecha" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="806aa414-a9dc-4e5d-b0b0-705f3270152d">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="318"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="670"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -14,7 +15,7 @@
     venta_combustible_hora, 
     venta_combustible_numero_boleta, 
     venta_combustible_total, 
-    bus.bus_numero, 
+    IF(bus.bus_numero = 0, IF(venta_combustible_observacion > '' ,venta_combustible_observacion , "Sin información"), bus.bus_numero) as bus_numero, 
     bus.bus_patente, 
     proceso_recaudacion.proceso_recaudacion_nombre, 
     flota.flota_nombre, 
@@ -52,7 +53,7 @@ ORDER BY venta_combustible_numero_boleta ASC]]>
 		<property name="com.jaspersoft.studio.field.tree.path" value="venta_combustible"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="bus_numero" class="java.lang.Long">
+	<field name="bus_numero" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="bus_numero"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -114,7 +115,7 @@ ORDER BY venta_combustible_numero_boleta ASC]]>
 	<columnHeader>
 		<band height="12" splitType="Stretch">
 			<staticText>
-				<reportElement x="363" y="0" width="60" height="12" uuid="96d49f3f-0fdb-4983-8afc-060852e8b6f4">
+				<reportElement x="363" y="0" width="77" height="12" uuid="96d49f3f-0fdb-4983-8afc-060852e8b6f4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -190,7 +191,7 @@ ORDER BY venta_combustible_numero_boleta ASC]]>
 				<textFieldExpression><![CDATA[$F{venta_combustible_hora}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="363" y="0" width="60" height="12" uuid="83378703-be8f-447d-a709-08e64a771750">
+				<reportElement x="328" y="0" width="112" height="12" uuid="83378703-be8f-447d-a709-08e64a771750">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
 				</reportElement>
 				<textElement textAlignment="Right">

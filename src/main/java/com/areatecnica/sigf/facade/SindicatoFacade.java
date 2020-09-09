@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Sindicato;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Sindicato_;
+//import com.areatecnica.sigf.entities.Sindicato_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class SindicatoFacade extends AbstractFacade<Sindicato> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Sindicato> sindicato = cq.from(Sindicato.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(sindicato, entity), cb.isNotEmpty(sindicato.get(Sindicato_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(sindicato, entity), cb.isNotEmpty(sindicato.get(Sindicato_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class SindicatoFacade extends AbstractFacade<Sindicato> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Sindicato> sindicato = cq.from(Sindicato.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(sindicato, entity), cb.isNotNull(sindicato.get(Sindicato_.sindicatoIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(sindicato, entity), cb.isNotNull(sindicato.get(Sindicato_.sindicatoIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

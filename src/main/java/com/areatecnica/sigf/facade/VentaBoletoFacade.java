@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.VentaBoleto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.VentaBoleto_;
+//import com.areatecnica.sigf.entities.VentaBoleto_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -42,7 +42,7 @@ public class VentaBoletoFacade extends AbstractFacade<VentaBoleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<VentaBoleto> ventaBoleto = cq.from(VentaBoleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaBoleto, entity), cb.isNotEmpty(ventaBoleto.get(VentaBoleto_.recaudacionBoletoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaBoleto, entity), cb.isNotEmpty(ventaBoleto.get(VentaBoleto_.recaudacionBoletoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -57,7 +57,7 @@ public class VentaBoletoFacade extends AbstractFacade<VentaBoleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<VentaBoleto> ventaBoleto = cq.from(VentaBoleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaBoleto, entity), cb.isNotNull(ventaBoleto.get(VentaBoleto_.ventaBoletoIdBus)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaBoleto, entity), cb.isNotNull(ventaBoleto.get(VentaBoleto_.ventaBoletoIdBus)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -69,7 +69,7 @@ public class VentaBoletoFacade extends AbstractFacade<VentaBoleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<VentaBoleto> ventaBoleto = cq.from(VentaBoleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaBoleto, entity), cb.isNotNull(ventaBoleto.get(VentaBoleto_.ventaBoletoIdInventarioCaja)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaBoleto, entity), cb.isNotNull(ventaBoleto.get(VentaBoleto_.ventaBoletoIdInventarioCaja)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -81,7 +81,7 @@ public class VentaBoletoFacade extends AbstractFacade<VentaBoleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<VentaBoleto> ventaBoleto = cq.from(VentaBoleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaBoleto, entity), cb.isNotNull(ventaBoleto.get(VentaBoleto_.ventaBoletoIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ventaBoleto, entity), cb.isNotNull(ventaBoleto.get(VentaBoleto_.ventaBoletoIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

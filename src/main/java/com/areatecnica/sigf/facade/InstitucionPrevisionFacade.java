@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.InstitucionPrevision;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.InstitucionPrevision_;
+//import com.areatecnica.sigf.entities.InstitucionPrevision_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class InstitucionPrevisionFacade extends AbstractFacade<InstitucionPrevis
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InstitucionPrevision> institucionPrevision = cq.from(InstitucionPrevision.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionPrevision, entity), cb.isNotEmpty(institucionPrevision.get(InstitucionPrevision_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionPrevision, entity), cb.isNotEmpty(institucionPrevision.get(InstitucionPrevision_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class InstitucionPrevisionFacade extends AbstractFacade<InstitucionPrevis
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InstitucionPrevision> institucionPrevision = cq.from(InstitucionPrevision.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionPrevision, entity), cb.isNotNull(institucionPrevision.get(InstitucionPrevision_.institucionPrevisionIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionPrevision, entity), cb.isNotNull(institucionPrevision.get(InstitucionPrevision_.institucionPrevisionIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

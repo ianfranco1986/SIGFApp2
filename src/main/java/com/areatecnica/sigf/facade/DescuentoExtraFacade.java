@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.DescuentoExtra;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.DescuentoExtra_;
+////import com.areatecnica.sigf.entities.DescuentoExtra_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class DescuentoExtraFacade extends AbstractFacade<DescuentoExtra> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DescuentoExtra> descuentoExtra = cq.from(DescuentoExtra.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtra, entity), cb.isNotEmpty(descuentoExtra.get(DescuentoExtra_.descuentoExtraBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtra, entity), cb.isNotEmpty(descuentoExtra.get(DescuentoExtra_.descuentoExtraBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class DescuentoExtraFacade extends AbstractFacade<DescuentoExtra> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DescuentoExtra> descuentoExtra = cq.from(DescuentoExtra.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtra, entity), cb.isNotNull(descuentoExtra.get(DescuentoExtra_.descuentoExtraIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtra, entity), cb.isNotNull(descuentoExtra.get(DescuentoExtra_.descuentoExtraIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

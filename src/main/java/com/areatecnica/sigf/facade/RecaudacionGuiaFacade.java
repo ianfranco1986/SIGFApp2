@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RecaudacionGuia;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RecaudacionGuia_;
+//import com.areatecnica.sigf.entities.RecaudacionGuia_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class RecaudacionGuiaFacade extends AbstractFacade<RecaudacionGuia> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionGuia> recaudacionGuia = cq.from(RecaudacionGuia.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionGuia, entity), cb.isNotNull(recaudacionGuia.get(RecaudacionGuia_.recaudacionGuiaIdEgreso)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionGuia, entity), cb.isNotNull(recaudacionGuia.get(RecaudacionGuia_.recaudacionGuiaIdEgreso)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class RecaudacionGuiaFacade extends AbstractFacade<RecaudacionGuia> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionGuia> recaudacionGuia = cq.from(RecaudacionGuia.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionGuia, entity), cb.isNotNull(recaudacionGuia.get(RecaudacionGuia_.recaudacionGuiaIdGuia)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionGuia, entity), cb.isNotNull(recaudacionGuia.get(RecaudacionGuia_.recaudacionGuiaIdGuia)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -64,7 +64,7 @@ public class RecaudacionGuiaFacade extends AbstractFacade<RecaudacionGuia> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionGuia> recaudacionGuia = cq.from(RecaudacionGuia.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionGuia, entity), cb.isNotNull(recaudacionGuia.get(RecaudacionGuia_.recaudacionGuiaIdRecaudacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionGuia, entity), cb.isNotNull(recaudacionGuia.get(RecaudacionGuia_.recaudacionGuiaIdRecaudacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

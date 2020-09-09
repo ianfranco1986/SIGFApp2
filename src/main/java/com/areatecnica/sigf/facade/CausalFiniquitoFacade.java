@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CausalFiniquito;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CausalFiniquito_;
+//import com.areatecnica.sigf.entities.CausalFiniquito_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class CausalFiniquitoFacade extends AbstractFacade<CausalFiniquito> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CausalFiniquito> causalFiniquito = cq.from(CausalFiniquito.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(causalFiniquito, entity), cb.isNotEmpty(causalFiniquito.get(CausalFiniquito_.finiquitoRelacionLaboralList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(causalFiniquito, entity), cb.isNotEmpty(causalFiniquito.get(CausalFiniquito_.finiquitoRelacionLaboralList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

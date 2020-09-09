@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RegistroMinuto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RegistroMinuto_;
+//import com.areatecnica.sigf.entities.RegistroMinuto_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class RegistroMinutoFacade extends AbstractFacade<RegistroMinuto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RegistroMinuto> registroMinuto = cq.from(RegistroMinuto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(registroMinuto, entity), cb.isNotEmpty(registroMinuto.get(RegistroMinuto_.recaudacionMinutoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(registroMinuto, entity), cb.isNotEmpty(registroMinuto.get(RegistroMinuto_.recaudacionMinutoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -56,7 +56,7 @@ public class RegistroMinutoFacade extends AbstractFacade<RegistroMinuto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RegistroMinuto> registroMinuto = cq.from(RegistroMinuto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(registroMinuto, entity), cb.isNotNull(registroMinuto.get(RegistroMinuto_.registroMinutoDesdeIdBus)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(registroMinuto, entity), cb.isNotNull(registroMinuto.get(RegistroMinuto_.registroMinutoDesdeIdBus)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class RegistroMinutoFacade extends AbstractFacade<RegistroMinuto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RegistroMinuto> registroMinuto = cq.from(RegistroMinuto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(registroMinuto, entity), cb.isNotNull(registroMinuto.get(RegistroMinuto_.registroMinutoHastaIdBus)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(registroMinuto, entity), cb.isNotNull(registroMinuto.get(RegistroMinuto_.registroMinutoHastaIdBus)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

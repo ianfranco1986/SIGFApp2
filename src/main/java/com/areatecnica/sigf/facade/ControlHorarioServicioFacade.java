@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ControlHorarioServicio;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ControlHorarioServicio_;
+//import com.areatecnica.sigf.entities.ControlHorarioServicio_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class ControlHorarioServicioFacade extends AbstractFacade<ControlHorarioS
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ControlHorarioServicio> controlHorarioServicio = cq.from(ControlHorarioServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(controlHorarioServicio, entity), cb.isNotNull(controlHorarioServicio.get(ControlHorarioServicio_.controlHorarioServicioIdControl)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(controlHorarioServicio, entity), cb.isNotNull(controlHorarioServicio.get(ControlHorarioServicio_.controlHorarioServicioIdControl)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class ControlHorarioServicioFacade extends AbstractFacade<ControlHorarioS
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ControlHorarioServicio> controlHorarioServicio = cq.from(ControlHorarioServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(controlHorarioServicio, entity), cb.isNotNull(controlHorarioServicio.get(ControlHorarioServicio_.controlHorarioServicioIdHorario)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(controlHorarioServicio, entity), cb.isNotNull(controlHorarioServicio.get(ControlHorarioServicio_.controlHorarioServicioIdHorario)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

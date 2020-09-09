@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RecaudacionDescuentoExtra;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RecaudacionDescuentoExtra_;
+//import com.areatecnica.sigf.entities.RecaudacionDescuentoExtra_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class RecaudacionDescuentoExtraFacade extends AbstractFacade<RecaudacionD
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionDescuentoExtra> recaudacionDescuentoExtra = cq.from(RecaudacionDescuentoExtra.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionDescuentoExtra, entity), cb.isNotNull(recaudacionDescuentoExtra.get(RecaudacionDescuentoExtra_.recaudacionDescuentoExtraIdDcto)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionDescuentoExtra, entity), cb.isNotNull(recaudacionDescuentoExtra.get(RecaudacionDescuentoExtra_.recaudacionDescuentoExtraIdDcto)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class RecaudacionDescuentoExtraFacade extends AbstractFacade<RecaudacionD
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionDescuentoExtra> recaudacionDescuentoExtra = cq.from(RecaudacionDescuentoExtra.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionDescuentoExtra, entity), cb.isNotNull(recaudacionDescuentoExtra.get(RecaudacionDescuentoExtra_.recaudacionDescuentoExtraIdRecaudacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionDescuentoExtra, entity), cb.isNotNull(recaudacionDescuentoExtra.get(RecaudacionDescuentoExtra_.recaudacionDescuentoExtraIdRecaudacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CtvResumen;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CtvResumen_;
+//import com.areatecnica.sigf.entities.CtvResumen_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class CtvResumenFacade extends AbstractFacade<CtvResumen> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CtvResumen> ctvResumen = cq.from(CtvResumen.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ctvResumen, entity), cb.isNotNull(ctvResumen.get(CtvResumen_.ctvResumenIdResumenRecaudacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(ctvResumen, entity), cb.isNotNull(ctvResumen.get(CtvResumen_.ctvResumenIdResumenRecaudacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

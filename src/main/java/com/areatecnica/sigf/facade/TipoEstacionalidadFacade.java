@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoEstacionalidad;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoEstacionalidad_;
+//import com.areatecnica.sigf.entities.TipoEstacionalidad_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TipoEstacionalidadFacade extends AbstractFacade<TipoEstacionalidad>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoEstacionalidad> tipoEstacionalidad = cq.from(TipoEstacionalidad.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoEstacionalidad, entity), cb.isNotEmpty(tipoEstacionalidad.get(TipoEstacionalidad_.horarioServicioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoEstacionalidad, entity), cb.isNotEmpty(tipoEstacionalidad.get(TipoEstacionalidad_.horarioServicioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -18,15 +18,15 @@
                 <h:outputLabel for="hasta" value="Hasta:" />
                 <p:calendar id="hasta" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerPetroleoBusMes.hasta}" required="true" requiredMessage="Debe ingresar la fecha hasta" />
 
-                <p:outputLabel value="Flota" for="busIdFlota" />
-                <p:selectOneMenu id="busIdFlota" value="#{reportControllerPetroleoBusMes.flota}" converter="omnifaces.SelectItemsConverter" >
+                <p:outputLabel value="Empresa" for="busIdFlota" />
+                <p:selectOneMenu id="busIdFlota" value="#{reportControllerPetroleoBusMes.empresa}" converter="omnifaces.SelectItemsConverter" >
                     <f:selectItem itemLabel="Todas"/>
-                    <f:selectItems value="#{flotaController.items}"
+                    <f:selectItems value="#{empresaController.items}"
                                    var="busIdFlotaItem"
                                    itemValue="#{busIdFlotaItem}"
-                                   itemLabel="#{busIdFlotaItem.flotaNombre}"
+                                   itemLabel="#{busIdFlotaItem.empresaNombre}"
                                    />
-                    <p:ajax event="valueChange" update="multiple" listener="#{reportControllerPetroleoBusMes.handleFlotaChange}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:ajax event="valueChange" update="multiple" listener="#{reportControllerPetroleoBusMes.handleEmpresaChange}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                 </p:selectOneMenu>
 
                 <p:outputLabel value="Unidad" for="busIdUnidadNegocio" />
@@ -43,12 +43,15 @@
                 <h:outputLabel for="multiple" value="Buses:" />
                 <p:selectCheckboxMenu id="multiple" value="#{reportControllerPetroleoBusMes.selectedItems}" label="Cities" multiple="true" converter="omnifaces.SelectItemsConverter" 
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    
+
                     <f:selectItems value="#{reportControllerPetroleoBusMes.items}" 
                                    var="bus"
                                    itemValue="#{bus}"
                                    itemLabel="#{bus.busNumero} - #{bus.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>                    
                 </p:selectCheckboxMenu>
+
+                <p:outputLabel value=""/>
+                <p:selectBooleanCheckbox value="#{reportControllerPetroleoBusMes.tipoInforme}" itemLabel="Imprimir sólo deudas?"/>
 
 
                 <p:outputLabel value=""/>

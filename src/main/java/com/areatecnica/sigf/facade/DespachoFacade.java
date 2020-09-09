@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Despacho;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Despacho_;
+//import com.areatecnica.sigf.entities.Despacho_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class DespachoFacade extends AbstractFacade<Despacho> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Despacho> despacho = cq.from(Despacho.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(despacho, entity), cb.isNotNull(despacho.get(Despacho_.despachoIdBus)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(despacho, entity), cb.isNotNull(despacho.get(Despacho_.despachoIdBus)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -53,7 +53,7 @@ public class DespachoFacade extends AbstractFacade<Despacho> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Despacho> despacho = cq.from(Despacho.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(despacho, entity), cb.isNotNull(despacho.get(Despacho_.despachoIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(despacho, entity), cb.isNotNull(despacho.get(Despacho_.despachoIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -65,7 +65,7 @@ public class DespachoFacade extends AbstractFacade<Despacho> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Despacho> despacho = cq.from(Despacho.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(despacho, entity), cb.isNotNull(despacho.get(Despacho_.despachoIdInspector)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(despacho, entity), cb.isNotNull(despacho.get(Despacho_.despachoIdInspector)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -77,7 +77,7 @@ public class DespachoFacade extends AbstractFacade<Despacho> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Despacho> despacho = cq.from(Despacho.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(despacho, entity), cb.isNotNull(despacho.get(Despacho_.despachoIdServicio)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(despacho, entity), cb.isNotNull(despacho.get(Despacho_.despachoIdServicio)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

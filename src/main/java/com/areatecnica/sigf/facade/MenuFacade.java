@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Menu;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Menu_;
+//import com.areatecnica.sigf.entities.Menu_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class MenuFacade extends AbstractFacade<Menu> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Menu> menu = cq.from(Menu.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(menu, entity), cb.isNotEmpty(menu.get(Menu_.rolMenuList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(menu, entity), cb.isNotEmpty(menu.get(Menu_.rolMenuList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class MenuFacade extends AbstractFacade<Menu> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Menu> menu = cq.from(Menu.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(menu, entity), cb.isNotEmpty(menu.get(Menu_.privilegioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(menu, entity), cb.isNotEmpty(menu.get(Menu_.privilegioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.InventarioInterno;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.InventarioInterno_;
+//import com.areatecnica.sigf.entities.InventarioInterno_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class InventarioInternoFacade extends AbstractFacade<InventarioInterno> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InventarioInterno> inventarioInterno = cq.from(InventarioInterno.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioInterno, entity), cb.isNotNull(inventarioInterno.get(InventarioInterno_.inventarioInternoIdBoleto)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioInterno, entity), cb.isNotNull(inventarioInterno.get(InventarioInterno_.inventarioInternoIdBoleto)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class InventarioInternoFacade extends AbstractFacade<InventarioInterno> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InventarioInterno> inventarioInterno = cq.from(InventarioInterno.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioInterno, entity), cb.isNotEmpty(inventarioInterno.get(InventarioInterno_.inventarioCajaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioInterno, entity), cb.isNotEmpty(inventarioInterno.get(InventarioInterno_.inventarioCajaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

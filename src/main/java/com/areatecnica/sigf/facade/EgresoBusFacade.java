@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.EgresoBus;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.EgresoBus_;
+//import com.areatecnica.sigf.entities.EgresoBus_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class EgresoBusFacade extends AbstractFacade<EgresoBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<EgresoBus> egresoBus = cq.from(EgresoBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoBus, entity), cb.isNotNull(egresoBus.get(EgresoBus_.egresoBusIdEgreso)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoBus, entity), cb.isNotNull(egresoBus.get(EgresoBus_.egresoBusIdEgreso)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class EgresoBusFacade extends AbstractFacade<EgresoBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<EgresoBus> egresoBus = cq.from(EgresoBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoBus, entity), cb.isNotNull(egresoBus.get(EgresoBus_.egresoBusIdBus)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoBus, entity), cb.isNotNull(egresoBus.get(EgresoBus_.egresoBusIdBus)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

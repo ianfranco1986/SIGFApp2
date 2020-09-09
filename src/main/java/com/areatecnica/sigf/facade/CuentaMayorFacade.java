@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CuentaMayor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CuentaMayor_;
+//import com.areatecnica.sigf.entities.CuentaMayor_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class CuentaMayorFacade extends AbstractFacade<CuentaMayor> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CuentaMayor> cuentaMayor = cq.from(CuentaMayor.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaMayor, entity), cb.isNotEmpty(cuentaMayor.get(CuentaMayor_.compraList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaMayor, entity), cb.isNotEmpty(cuentaMayor.get(CuentaMayor_.compraList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class CuentaMayorFacade extends AbstractFacade<CuentaMayor> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CuentaMayor> cuentaMayor = cq.from(CuentaMayor.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaMayor, entity), cb.isNotNull(cuentaMayor.get(CuentaMayor_.cuentaMayorSubTipoId)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaMayor, entity), cb.isNotNull(cuentaMayor.get(CuentaMayor_.cuentaMayorSubTipoId)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

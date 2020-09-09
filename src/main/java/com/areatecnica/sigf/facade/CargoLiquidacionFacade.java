@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CargoLiquidacion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CargoLiquidacion_;
+//import com.areatecnica.sigf.entities.CargoLiquidacion_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class CargoLiquidacionFacade extends AbstractFacade<CargoLiquidacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CargoLiquidacion> cargoLiquidacion = cq.from(CargoLiquidacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cargoLiquidacion, entity), cb.isNotNull(cargoLiquidacion.get(CargoLiquidacion_.cargoLiquidacionIdCargo)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cargoLiquidacion, entity), cb.isNotNull(cargoLiquidacion.get(CargoLiquidacion_.cargoLiquidacionIdCargo)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class CargoLiquidacionFacade extends AbstractFacade<CargoLiquidacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CargoLiquidacion> cargoLiquidacion = cq.from(CargoLiquidacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cargoLiquidacion, entity), cb.isNotNull(cargoLiquidacion.get(CargoLiquidacion_.cargoLiquidacionIdLiquidacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cargoLiquidacion, entity), cb.isNotNull(cargoLiquidacion.get(CargoLiquidacion_.cargoLiquidacionIdLiquidacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

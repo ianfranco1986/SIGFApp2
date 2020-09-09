@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CalleServicio;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CalleServicio_;
+//import com.areatecnica.sigf.entities.CalleServicio_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class CalleServicioFacade extends AbstractFacade<CalleServicio> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CalleServicio> calleServicio = cq.from(CalleServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(calleServicio, entity), cb.isNotNull(calleServicio.get(CalleServicio_.calleServicioIdCalle)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(calleServicio, entity), cb.isNotNull(calleServicio.get(CalleServicio_.calleServicioIdCalle)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class CalleServicioFacade extends AbstractFacade<CalleServicio> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CalleServicio> calleServicio = cq.from(CalleServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(calleServicio, entity), cb.isNotNull(calleServicio.get(CalleServicio_.calleServicioIdServicio)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(calleServicio, entity), cb.isNotNull(calleServicio.get(CalleServicio_.calleServicioIdServicio)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

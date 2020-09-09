@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoCargaFamiliar;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoCargaFamiliar_;
+//import com.areatecnica.sigf.entities.TipoCargaFamiliar_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TipoCargaFamiliarFacade extends AbstractFacade<TipoCargaFamiliar> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoCargaFamiliar> tipoCargaFamiliar = cq.from(TipoCargaFamiliar.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCargaFamiliar, entity), cb.isNotEmpty(tipoCargaFamiliar.get(TipoCargaFamiliar_.cargaTrabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCargaFamiliar, entity), cb.isNotEmpty(tipoCargaFamiliar.get(TipoCargaFamiliar_.cargaTrabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

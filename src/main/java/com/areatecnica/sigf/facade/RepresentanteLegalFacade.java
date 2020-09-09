@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RepresentanteLegal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RepresentanteLegal_;
+//import com.areatecnica.sigf.entities.RepresentanteLegal_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class RepresentanteLegalFacade extends AbstractFacade<RepresentanteLegal>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RepresentanteLegal> representanteLegal = cq.from(RepresentanteLegal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteLegal, entity), cb.isNotNull(representanteLegal.get(RepresentanteLegal_.representanteLegalIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteLegal, entity), cb.isNotNull(representanteLegal.get(RepresentanteLegal_.representanteLegalIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -53,7 +53,7 @@ public class RepresentanteLegalFacade extends AbstractFacade<RepresentanteLegal>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RepresentanteLegal> representanteLegal = cq.from(RepresentanteLegal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteLegal, entity), cb.isNotEmpty(representanteLegal.get(RepresentanteLegal_.representanteEmpresaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteLegal, entity), cb.isNotEmpty(representanteLegal.get(RepresentanteLegal_.representanteEmpresaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class RepresentanteLegalFacade extends AbstractFacade<RepresentanteLegal>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RepresentanteLegal> representanteLegal = cq.from(RepresentanteLegal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteLegal, entity), cb.isNotEmpty(representanteLegal.get(RepresentanteLegal_.operadorTransporteList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteLegal, entity), cb.isNotEmpty(representanteLegal.get(RepresentanteLegal_.operadorTransporteList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoAbono;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoAbono_;
+//import com.areatecnica.sigf.entities.TipoAbono_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class TipoAbonoFacade extends AbstractFacade<TipoAbono> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoAbono> tipoAbono = cq.from(TipoAbono.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoAbono, entity), cb.isNotEmpty(tipoAbono.get(TipoAbono_.abonoBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoAbono, entity), cb.isNotEmpty(tipoAbono.get(TipoAbono_.abonoBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class TipoAbonoFacade extends AbstractFacade<TipoAbono> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoAbono> tipoAbono = cq.from(TipoAbono.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoAbono, entity), cb.isNotNull(tipoAbono.get(TipoAbono_.tipoAbonoIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoAbono, entity), cb.isNotNull(tipoAbono.get(TipoAbono_.tipoAbonoIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

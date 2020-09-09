@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ValorMinuto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ValorMinuto_;
+//import com.areatecnica.sigf.entities.ValorMinuto_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class ValorMinutoFacade extends AbstractFacade<ValorMinuto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ValorMinuto> valorMinuto = cq.from(ValorMinuto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(valorMinuto, entity), cb.isNotNull(valorMinuto.get(ValorMinuto_.valorMinutoIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(valorMinuto, entity), cb.isNotNull(valorMinuto.get(ValorMinuto_.valorMinutoIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

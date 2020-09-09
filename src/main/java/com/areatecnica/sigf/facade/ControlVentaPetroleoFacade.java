@@ -5,7 +5,7 @@
  */
 package com.areatecnica.sigf.facade;
 
-import com.areatecnica.sigf.entities.TipoMovimiento;
+import com.areatecnica.sigf.entities.ControlVentaPetroleo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author ianfr
  */
 @Stateless
-public class TipoMovimientoFacade extends AbstractFacade<TipoMovimiento> {
+public class ControlVentaPetroleoFacade extends AbstractFacade<ControlVentaPetroleo> {
 
     @PersistenceContext(unitName = "com.areatecnica_SIGFapp_war_1PU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class TipoMovimientoFacade extends AbstractFacade<TipoMovimiento> {
         return em;
     }
 
-    public TipoMovimientoFacade() {
-        super(TipoMovimiento.class);
+    public ControlVentaPetroleoFacade() {
+        super(ControlVentaPetroleo.class);
     }
 
 }

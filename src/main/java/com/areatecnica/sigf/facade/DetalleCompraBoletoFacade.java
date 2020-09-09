@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.DetalleCompraBoleto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.DetalleCompraBoleto_;
+//import com.areatecnica.sigf.entities.DetalleCompraBoleto_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class DetalleCompraBoletoFacade extends AbstractFacade<DetalleCompraBolet
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DetalleCompraBoleto> detalleCompraBoleto = cq.from(DetalleCompraBoleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleCompraBoleto, entity), cb.isNotNull(detalleCompraBoleto.get(DetalleCompraBoleto_.detalleCompraBoletoIdBoleto)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleCompraBoleto, entity), cb.isNotNull(detalleCompraBoleto.get(DetalleCompraBoleto_.detalleCompraBoletoIdBoleto)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class DetalleCompraBoletoFacade extends AbstractFacade<DetalleCompraBolet
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DetalleCompraBoleto> detalleCompraBoleto = cq.from(DetalleCompraBoleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleCompraBoleto, entity), cb.isNotNull(detalleCompraBoleto.get(DetalleCompraBoleto_.detalleCompraBoletoIdCompraBoleto)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleCompraBoleto, entity), cb.isNotNull(detalleCompraBoleto.get(DetalleCompraBoleto_.detalleCompraBoletoIdCompraBoleto)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

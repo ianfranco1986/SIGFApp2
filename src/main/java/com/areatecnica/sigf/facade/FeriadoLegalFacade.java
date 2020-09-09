@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.FeriadoLegal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.FeriadoLegal_;
+//import com.areatecnica.sigf.entities.FeriadoLegal_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class FeriadoLegalFacade extends AbstractFacade<FeriadoLegal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<FeriadoLegal> feriadoLegal = cq.from(FeriadoLegal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(feriadoLegal, entity), cb.isNotNull(feriadoLegal.get(FeriadoLegal_.feriadoLegalIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(feriadoLegal, entity), cb.isNotNull(feriadoLegal.get(FeriadoLegal_.feriadoLegalIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

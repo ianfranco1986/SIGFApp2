@@ -5,19 +5,17 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.entities.TipoMovimiento;
+import com.areatecnica.sigf.entities.ControlVentaPetroleo;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author ianfr
  */
-public interface ITipoMovimientoDao<T> extends IGenericDAO<T> {
+public interface IControlVentaPetroleoDao<T> extends IGenericDAO<T> {
 
-    public TipoMovimiento findById(int id);
+    public ControlVentaPetroleo findById(int id);
 
-    public List<TipoMovimiento> findByIngreso();
-
-    public List<TipoMovimiento> findByEgreso();
-
+    public List<ControlVentaPetroleo> findByDates(Date from, Date to);
 }

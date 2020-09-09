@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Comuna;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Comuna_;
+//import com.areatecnica.sigf.entities.Comuna_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -42,7 +42,7 @@ public class ComunaFacade extends AbstractFacade<Comuna> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Comuna> comuna = cq.from(Comuna.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(comuna, entity), cb.isNotEmpty(comuna.get(Comuna_.calleList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(comuna, entity), cb.isNotEmpty(comuna.get(Comuna_.calleList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -57,7 +57,7 @@ public class ComunaFacade extends AbstractFacade<Comuna> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Comuna> comuna = cq.from(Comuna.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(comuna, entity), cb.isNotEmpty(comuna.get(Comuna_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(comuna, entity), cb.isNotEmpty(comuna.get(Comuna_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -72,7 +72,7 @@ public class ComunaFacade extends AbstractFacade<Comuna> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Comuna> comuna = cq.from(Comuna.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(comuna, entity), cb.isNotEmpty(comuna.get(Comuna_.terminalList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(comuna, entity), cb.isNotEmpty(comuna.get(Comuna_.terminalList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -87,7 +87,7 @@ public class ComunaFacade extends AbstractFacade<Comuna> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Comuna> comuna = cq.from(Comuna.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(comuna, entity), cb.isNotNull(comuna.get(Comuna_.comunaIdCiudad)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(comuna, entity), cb.isNotNull(comuna.get(Comuna_.comunaIdCiudad)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

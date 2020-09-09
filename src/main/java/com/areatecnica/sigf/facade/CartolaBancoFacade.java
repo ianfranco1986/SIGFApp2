@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CartolaBanco;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CartolaBanco_;
+//import com.areatecnica.sigf.entities.CartolaBanco_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class CartolaBancoFacade extends AbstractFacade<CartolaBanco> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CartolaBanco> cartolaBanco = cq.from(CartolaBanco.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cartolaBanco, entity), cb.isNotNull(cartolaBanco.get(CartolaBanco_.cartolaBancoIdCuentaBancaria)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cartolaBanco, entity), cb.isNotNull(cartolaBanco.get(CartolaBanco_.cartolaBancoIdCuentaBancaria)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class CartolaBancoFacade extends AbstractFacade<CartolaBanco> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CartolaBanco> cartolaBanco = cq.from(CartolaBanco.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cartolaBanco, entity), cb.isNotEmpty(cartolaBanco.get(CartolaBanco_.detalleCartolaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cartolaBanco, entity), cb.isNotEmpty(cartolaBanco.get(CartolaBanco_.detalleCartolaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

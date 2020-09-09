@@ -9,7 +9,7 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Flota;
+import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -39,7 +39,7 @@ public class ReportControllerPetroleoBusMes implements Serializable {
     private Date fecha;
     private Date desde;
     private Date hasta;
-    private Flota flota;
+    private Empresa empresa;
     private UnidadNegocio unidadNegocio;
     private int mes;
     private int anio;
@@ -74,7 +74,7 @@ public class ReportControllerPetroleoBusMes implements Serializable {
         this.anio = calendar.get(Calendar.YEAR);
         setFecha();
         this.desde = this.fecha;
-        this.hasta = this.fecha;
+        this.hasta = new Date();
     }
 
     public Map<String, Object> getMap() {
@@ -201,6 +201,11 @@ public class ReportControllerPetroleoBusMes implements Serializable {
     }
 
     public String getInforme() {
+        if (this.tipoInforme) {
+            this.informe = "inf-venta_petroleo_bus_deudas";
+        } else {
+            this.informe = "inf-venta_petroleo_bus";
+        }
         return informe;
     }
 
@@ -216,12 +221,12 @@ public class ReportControllerPetroleoBusMes implements Serializable {
         return unidadItems;
     }
 
-    public void setFlota(Flota flota) {
-        this.flota = flota;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
-    public Flota getFlota() {
-        return flota;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
     public void setUnidadNegocio(UnidadNegocio unidadNegocio) {
@@ -264,14 +269,14 @@ public class ReportControllerPetroleoBusMes implements Serializable {
         this.hasta = hasta;
     }
 
-    public void handleFlotaChange() {
+    public void handleEmpresaChange() {
         this.items = new ArrayList<>();
         this.selectedItems = new ArrayList<>();
-        if (this.flota != null) {
+        if (this.empresa != null) {
             if (this.unidadNegocio != null) {
-                this.items = new IBusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
+                this.items = new IBusDaoImpl().findByEmpresaUnidad(empresa, unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findAllByFlota(flota);
+                this.items = new IBusDaoImpl().findByEmpresa(empresa);
             }
         } else {
             if (this.unidadNegocio != null) {
@@ -285,13 +290,13 @@ public class ReportControllerPetroleoBusMes implements Serializable {
     public void handleUnidadChange() {
         this.selectedItems = new ArrayList<>();
         if (this.unidadNegocio != null) {
-            if (this.flota != null) {
-                this.items = new IBusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
+            if (this.empresa != null) {
+                this.items = new IBusDaoImpl().findByEmpresaUnidad(empresa, unidadNegocio);
             } else {
                 this.items = new IBusDaoImpl().findByUnidad(unidadNegocio);
             }
-        } else if (this.flota != null) {
-            this.items = new IBusDaoImpl().findAllByFlota(flota);
+        } else if (this.empresa != null) {
+            this.items = new IBusDaoImpl().findByEmpresa(empresa);
         } else {
             this.items = new IBusDaoImpl().findAll();
         }

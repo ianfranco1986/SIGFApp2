@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoDemanda;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoDemanda_;
+//import com.areatecnica.sigf.entities.TipoDemanda_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TipoDemandaFacade extends AbstractFacade<TipoDemanda> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoDemanda> tipoDemanda = cq.from(TipoDemanda.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoDemanda, entity), cb.isNotEmpty(tipoDemanda.get(TipoDemanda_.frecuenciaServicioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoDemanda, entity), cb.isNotEmpty(tipoDemanda.get(TipoDemanda_.frecuenciaServicioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

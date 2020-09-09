@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion_;
+//import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class EgresoProcesoRecaudacionFacade extends AbstractFacade<EgresoProceso
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<EgresoProcesoRecaudacion> egresoProcesoRecaudacion = cq.from(EgresoProcesoRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoProcesoRecaudacion, entity), cb.isNotNull(egresoProcesoRecaudacion.get(EgresoProcesoRecaudacion_.egresoProcesoRecaudacionIdEgreso)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoProcesoRecaudacion, entity), cb.isNotNull(egresoProcesoRecaudacion.get(EgresoProcesoRecaudacion_.egresoProcesoRecaudacionIdEgreso)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class EgresoProcesoRecaudacionFacade extends AbstractFacade<EgresoProceso
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<EgresoProcesoRecaudacion> egresoProcesoRecaudacion = cq.from(EgresoProcesoRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoProcesoRecaudacion, entity), cb.isNotNull(egresoProcesoRecaudacion.get(EgresoProcesoRecaudacion_.egresoProcesoRecaudacionIdProceso)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoProcesoRecaudacion, entity), cb.isNotNull(egresoProcesoRecaudacion.get(EgresoProcesoRecaudacion_.egresoProcesoRecaudacionIdProceso)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

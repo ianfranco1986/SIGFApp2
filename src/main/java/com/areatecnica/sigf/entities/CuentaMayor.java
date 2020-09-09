@@ -210,7 +210,7 @@ public class CuentaMayor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.areatecnica.sigf.entities.CuentaMayor[ cuentaMayorId=" + cuentaMayorId + " ]";
+        return cuentaMayorNombre;
     }
     
 }

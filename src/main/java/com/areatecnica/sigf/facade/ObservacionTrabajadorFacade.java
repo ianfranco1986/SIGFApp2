@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ObservacionTrabajador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ObservacionTrabajador_;
+//import com.areatecnica.sigf.entities.ObservacionTrabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class ObservacionTrabajadorFacade extends AbstractFacade<ObservacionTraba
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ObservacionTrabajador> observacionTrabajador = cq.from(ObservacionTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(observacionTrabajador, entity), cb.isNotNull(observacionTrabajador.get(ObservacionTrabajador_.observacionTrabajadorIdTipoObservacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(observacionTrabajador, entity), cb.isNotNull(observacionTrabajador.get(ObservacionTrabajador_.observacionTrabajadorIdTipoObservacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class ObservacionTrabajadorFacade extends AbstractFacade<ObservacionTraba
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ObservacionTrabajador> observacionTrabajador = cq.from(ObservacionTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(observacionTrabajador, entity), cb.isNotNull(observacionTrabajador.get(ObservacionTrabajador_.observacionTrabajadorIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(observacionTrabajador, entity), cb.isNotNull(observacionTrabajador.get(ObservacionTrabajador_.observacionTrabajadorIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

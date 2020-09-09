@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoMovimientoPersonal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoMovimientoPersonal_;
+//import com.areatecnica.sigf.entities.TipoMovimientoPersonal_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TipoMovimientoPersonalFacade extends AbstractFacade<TipoMovimientoP
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoMovimientoPersonal> tipoMovimientoPersonal = cq.from(TipoMovimientoPersonal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoMovimientoPersonal, entity), cb.isNotEmpty(tipoMovimientoPersonal.get(TipoMovimientoPersonal_.liquidacionSueldoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoMovimientoPersonal, entity), cb.isNotEmpty(tipoMovimientoPersonal.get(TipoMovimientoPersonal_.liquidacionSueldoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

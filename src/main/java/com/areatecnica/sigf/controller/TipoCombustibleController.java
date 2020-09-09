@@ -2,7 +2,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.TipoCombustible;
 import com.areatecnica.sigf.entities.PrecioCombustible;
-import com.areatecnica.sigf.entities.CompraCombustible;
+import com.areatecnica.sigf.entities.CompraPetroleo;
 import java.util.List;
 import com.areatecnica.sigf.facade.TipoCombustibleFacade;
 import javax.inject.Named;
@@ -29,7 +29,6 @@ public class TipoCombustibleController extends AbstractController<TipoCombustibl
     @Override
     protected void setChildrenEmptyFlags() {
         this.setIsPrecioCombustibleListEmpty();
-        this.setIsCompraCombustibleListEmpty();
     }
 
     public boolean getIsPrecioCombustibleListEmpty() {
@@ -61,37 +60,6 @@ public class TipoCombustibleController extends AbstractController<TipoCombustibl
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("PrecioCombustible_items", selectedPrecioCombustibleList);
         }
         return "/app/precioCombustible/index";
-    }
-
-    public boolean getIsCompraCombustibleListEmpty() {
-        return this.isCompraCombustibleListEmpty;
-    }
-
-    private void setIsCompraCombustibleListEmpty() {
-        TipoCombustible selected = this.getSelected();
-        if (selected != null) {
-            TipoCombustibleFacade ejbFacade = (TipoCombustibleFacade) this.getFacade();
-            this.isCompraCombustibleListEmpty = ejbFacade.isCompraCombustibleListEmpty(selected);
-        } else {
-            this.isCompraCombustibleListEmpty = true;
-        }
-    }
-
-    /**
-     * Sets the "items" attribute with a collection of CompraCombustible
-     * entities that are retrieved from TipoCombustible and returns the
-     * navigation outcome.
-     *
-     * @return navigation outcome for CompraCombustible page
-     */
-    public String navigateCompraCombustibleList() {
-        TipoCombustible selected = this.getSelected();
-        if (selected != null) {
-            TipoCombustibleFacade ejbFacade = (TipoCombustibleFacade) this.getFacade();
-            List<CompraCombustible> selectedCompraCombustibleList = ejbFacade.findCompraCombustibleList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("CompraCombustible_items", selectedCompraCombustibleList);
-        }
-        return "/app/compraCombustible/index";
     }
 
 }

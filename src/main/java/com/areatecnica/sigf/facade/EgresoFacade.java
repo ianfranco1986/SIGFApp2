@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Egreso;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Egreso_;
+//import com.areatecnica.sigf.entities.Egreso_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -44,7 +44,7 @@ public class EgresoFacade extends AbstractFacade<Egreso> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Egreso> egreso = cq.from(Egreso.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotNull(egreso.get(Egreso_.egresoIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotNull(egreso.get(Egreso_.egresoIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -56,7 +56,7 @@ public class EgresoFacade extends AbstractFacade<Egreso> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Egreso> egreso = cq.from(Egreso.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.egresoCajaRecaudacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.egresoCajaRecaudacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -71,7 +71,7 @@ public class EgresoFacade extends AbstractFacade<Egreso> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Egreso> egreso = cq.from(Egreso.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.egresoProcesoRecaudacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.egresoProcesoRecaudacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -86,7 +86,7 @@ public class EgresoFacade extends AbstractFacade<Egreso> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Egreso> egreso = cq.from(Egreso.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.recaudacionGuiaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.recaudacionGuiaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -101,7 +101,7 @@ public class EgresoFacade extends AbstractFacade<Egreso> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Egreso> egreso = cq.from(Egreso.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.egresoBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.egresoBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -116,7 +116,7 @@ public class EgresoFacade extends AbstractFacade<Egreso> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Egreso> egreso = cq.from(Egreso.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.egresoFlotaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egreso, entity), cb.isNotEmpty(egreso.get(Egreso_.egresoFlotaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.converter;
 
-import com.areatecnica.sigf.entities.CompraCombustible;
-import com.areatecnica.sigf.facade.CompraCombustibleFacade;
+import com.areatecnica.sigf.entities.CompraPetroleo;
+import com.areatecnica.sigf.facade.CompraPetroleoFacade;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +14,7 @@ import javax.faces.convert.Converter;
 @FacesConverter(value = "compraCombustibleConverter")
 public class CompraCombustibleConverter implements Converter {
 
-    private CompraCombustibleFacade ejbFacade;
+    private CompraPetroleoFacade ejbFacade;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -42,17 +42,17 @@ public class CompraCombustibleConverter implements Converter {
                 || (object instanceof String && ((String) object).length() == 0)) {
             return null;
         }
-        if (object instanceof CompraCombustible) {
-            CompraCombustible o = (CompraCombustible) object;
-            return getStringKey(o.getCompraCombustibleId());
+        if (object instanceof CompraPetroleo) {
+            CompraPetroleo o = (CompraPetroleo) object;
+            return getStringKey(o.getCompraPetroleoId());
         } else {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CompraCombustible.class.getName()});
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CompraPetroleo.class.getName()});
             return null;
         }
     }
 
-    private CompraCombustibleFacade getEjbFacade() {
-        this.ejbFacade = CDI.current().select(CompraCombustibleFacade.class).get();
+    private CompraPetroleoFacade getEjbFacade() {
+        this.ejbFacade = CDI.current().select(CompraPetroleoFacade.class).get();
         return this.ejbFacade;
     }
 }

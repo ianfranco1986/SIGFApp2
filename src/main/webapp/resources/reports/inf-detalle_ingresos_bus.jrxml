@@ -43,7 +43,7 @@
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 1 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS administracion, 
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 2 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS cuotaextra, 
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 3 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS imposiciones, 
-    IFNULL((SELECT IFNULL(IF((recaudacion_guia.recaudacion_guia_monto)>0, ((recaudacion_guia.recaudacion_guia_monto)-((recaudacion_guia.recaudacion_guia_monto)/5000*500)), 0), 0) FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 4 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS boletos
+    IFNULL((SELECT IFNULL(IF((recaudacion_guia.recaudacion_guia_monto)>0, ((recaudacion_guia.recaudacion_guia_monto)-((recaudacion_guia.recaudacion_guia_monto)/5000*450)), 0), 0) FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 4 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS boletos
 FROM
     recaudacion
         LEFT JOIN

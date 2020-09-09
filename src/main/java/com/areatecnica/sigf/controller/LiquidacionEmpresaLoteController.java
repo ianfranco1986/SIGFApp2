@@ -573,22 +573,22 @@ public class LiquidacionEmpresaLoteController implements Serializable {
             this.movimientos = new IMovimientoMesDaoImpl().findByEmpresaAndDates(empresa, from, to);
 
             if (!this.movimientos.isEmpty()) {
-                for (MovimientoMes m : this.movimientos) {
-                    if (m.getMovimientoMesMvtoId().getTipoMovimientoAbono()) {
-                        this.abonosVarios = this.abonosVarios + m.getMovimientoMesMonto();
-
-                        hashAbonos.put(m.getMovimientoMesMvtoId().getTipoMovimientoId(), m.getMovimientoMesMonto());
-
-                    }
-
-                    if (m.getMovimientoMesMvtoId().getTipoMovimientoDescuento()) {
-                        this.cargosVarios = this.cargosVarios + m.getMovimientoMesMonto();
-
-                        hashDescuentos.put(m.getMovimientoMesMvtoId().getTipoMovimientoId(), m.getMovimientoMesMonto());
-
-                    }
-
-                }
+//                for (MovimientoMes m : this.movimientos) {
+//                    if (m.getMovimientoMesMvtoId().getTipoMovimientoAbono()) {
+//                        this.abonosVarios = this.abonosVarios + m.getMovimientoMesMonto();
+//
+//                        hashAbonos.put(m.getMovimientoMesMvtoId().getTipoMovimientoId(), m.getMovimientoMesMonto());
+//
+//                    }
+//
+//                    if (m.getMovimientoMesMvtoId().getTipoMovimientoDescuento()) {
+//                        this.cargosVarios = this.cargosVarios + m.getMovimientoMesMonto();
+//
+//                        hashDescuentos.put(m.getMovimientoMesMvtoId().getTipoMovimientoId(), m.getMovimientoMesMonto());
+//
+//                    }
+//
+//                }
 
             }
 

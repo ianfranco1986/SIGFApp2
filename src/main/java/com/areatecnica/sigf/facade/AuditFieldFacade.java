@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.AuditField;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.AuditField_;
+//import com.areatecnica.sigf.entities.AuditField_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class AuditFieldFacade extends AbstractFacade<AuditField> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<AuditField> auditField = cq.from(AuditField.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(auditField, entity), cb.isNotNull(auditField.get(AuditField_.auditEntryId)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(auditField, entity), cb.isNotNull(auditField.get(AuditField_.auditEntryId)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

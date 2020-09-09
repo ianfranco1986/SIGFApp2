@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoControl;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoControl_;
+//import com.areatecnica.sigf.entities.TipoControl_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class TipoControlFacade extends AbstractFacade<TipoControl> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoControl> tipoControl = cq.from(TipoControl.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoControl, entity), cb.isNotNull(tipoControl.get(TipoControl_.tipoControlIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoControl, entity), cb.isNotNull(tipoControl.get(TipoControl_.tipoControlIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class TipoControlFacade extends AbstractFacade<TipoControl> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoControl> tipoControl = cq.from(TipoControl.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoControl, entity), cb.isNotEmpty(tipoControl.get(TipoControl_.controlList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoControl, entity), cb.isNotEmpty(tipoControl.get(TipoControl_.controlList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

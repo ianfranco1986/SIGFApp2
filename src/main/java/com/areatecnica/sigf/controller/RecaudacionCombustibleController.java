@@ -1,12 +1,17 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
+import com.areatecnica.sigf.dao.IPrivilegioDao;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.ILogDaoImpl;
+import com.areatecnica.sigf.dao.impl.IPrivilegioDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionCombustibleDaoImpl;
 import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.RecaudacionCombustible;
 import com.areatecnica.sigf.entities.VentaCombustible;
+import com.areatecnica.sigf.entities.Log;
+import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.models.RecaudacionCombustibleDataModel;
 import com.areatecnica.sigf.models.VentaCombustibleModel;
 import java.text.NumberFormat;
@@ -30,6 +35,7 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
     private Date fecha;
     private int totalRecaudacion = 0;
     private boolean print;
+    private Privilegio privilegio;
 
     private NumberFormat nf = NumberFormat.getInstance();
 
@@ -43,12 +49,13 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
     private void init() {
         this.fecha = new Date();
         this.cajasItems = new ICajaRecaudacionDaoImpl().findAll();
+        this.privilegio = new IPrivilegioDaoImpl().findById(89);
     }
 
     public void load() {
         if (this.cajaRecaudacion != null) {
             this.items = new IRecaudacionCombustibleDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
-            
+
             if (!this.items.isEmpty()) {
                 this.recaudacionCombustibleDataModel = new RecaudacionCombustibleDataModel(items);
                 this.totalRecaudacion = 0;
@@ -75,8 +82,18 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
                 new IVentaCombustibleDaoImpl().update(ventaCombustible);
 
                 super.delete(event);
+
+                Log log = new Log();
+                log.setLogIdPrivilegio(privilegio);
+                log.setLogIdUsuario(this.getCurrentUser());
+                log.setLogTipoAccion("Borrado");
+                log.setLogDescripcion("Se ha borrado de la " + this.getSelected().getRecaudacionCombustibleIdRecaudacion().getRecaudacionIdCaja().getCajaRecaudacionNombre() + " la Recaudación Folio: " + this.getSelected().getRecaudacionCombustibleIdRecaudacion().getRecaudacionId() + " asociado a la Venta N°: " + this.ventaCombustible.getVentaCombustibleNumeroBoleta());
+
+                new ILogDaoImpl().create(log);
+
                 this.setSelected(null);
                 JsfUtil.addSuccessMessage("Se ha eliminado la recaudación");
+
             } catch (NullPointerException e) {
                 this.setSelected(null);
             }

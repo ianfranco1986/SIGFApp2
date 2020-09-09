@@ -2,9 +2,12 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.ILogDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionMinutoDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRegistroMinutoDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
+import com.areatecnica.sigf.entities.Log;
+import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.entities.Recaudacion;
 import com.areatecnica.sigf.entities.RecaudacionMinuto;
 import com.areatecnica.sigf.entities.RegistroMinuto;
@@ -31,6 +34,7 @@ public class RecaudacionMinutoController extends AbstractController<RecaudacionM
     private Date fecha;
     private int totalRecaudacion = 0;
     private boolean print;
+    private Privilegio privilegio;
 
     private NumberFormat nf = NumberFormat.getInstance();
 
@@ -48,6 +52,7 @@ public class RecaudacionMinutoController extends AbstractController<RecaudacionM
     public void init() {
         this.fecha = new Date();
         this.cajasItems = new ICajaRecaudacionDaoImpl().findAll();
+        this.privilegio = new Privilegio();
     }
 
     public void load() {
@@ -77,12 +82,23 @@ public class RecaudacionMinutoController extends AbstractController<RecaudacionM
 
                 Recaudacion r = this.getSelected().getRecaudacionMinutoIdRecaudacion();
 
+                String folios = "";
+
                 for (RecaudacionMinuto m : r.getRecaudacionMinutoList()) {
+                    folios = folios + ", " + m.getRecaudacionMinutoIdRegistroMinuto().getRegistroMinutoId();
                     m.getRecaudacionMinutoIdRegistroMinuto().setRegistroMinutoRecaudado(Boolean.FALSE);
                     new IRegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
                     this.items.remove(m);
                     new IRecaudacionMinutoDaoImpl().delete(m);
                 }
+
+                Log log = new Log();
+                log.setLogIdPrivilegio(privilegio);
+                log.setLogIdUsuario(this.getCurrentUser());
+                log.setLogTipoAccion("Borrado");
+                log.setLogDescripcion("Se ha borrado de la " + this.getSelected().getRecaudacionMinutoIdRecaudacion().getRecaudacionIdCaja().getCajaRecaudacionNombre() + " la Recaudación Folio: " + this.getSelected().getRecaudacionMinutoIdRecaudacion().getRecaudacionId() + " asociado a los minutos folios°: " + folios);
+
+                new ILogDaoImpl().create(log);
 
                 //this.registroMinuto = this.getSelected().getRecaudacionMinutoIdRegistroMinuto();
                 //this.registroMinuto.setRegistroMinutoRecaudado(Boolean.FALSE);

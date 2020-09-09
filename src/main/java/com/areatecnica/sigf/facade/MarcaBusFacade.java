@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.MarcaBus;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.MarcaBus_;
+//import com.areatecnica.sigf.entities.MarcaBus_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class MarcaBusFacade extends AbstractFacade<MarcaBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<MarcaBus> marcaBus = cq.from(MarcaBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(marcaBus, entity), cb.isNotEmpty(marcaBus.get(MarcaBus_.modeloMarcaBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(marcaBus, entity), cb.isNotEmpty(marcaBus.get(MarcaBus_.modeloMarcaBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

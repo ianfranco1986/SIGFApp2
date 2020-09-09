@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.AsignacionFamiliar;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.AsignacionFamiliar_;
+//import com.areatecnica.sigf.entities.AsignacionFamiliar_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class AsignacionFamiliarFacade extends AbstractFacade<AsignacionFamiliar>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<AsignacionFamiliar> asignacionFamiliar = cq.from(AsignacionFamiliar.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(asignacionFamiliar, entity), cb.isNotNull(asignacionFamiliar.get(AsignacionFamiliar_.asignacionFamiliarIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(asignacionFamiliar, entity), cb.isNotNull(asignacionFamiliar.get(AsignacionFamiliar_.asignacionFamiliarIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class AsignacionFamiliarFacade extends AbstractFacade<AsignacionFamiliar>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<AsignacionFamiliar> asignacionFamiliar = cq.from(AsignacionFamiliar.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(asignacionFamiliar, entity), cb.isNotEmpty(asignacionFamiliar.get(AsignacionFamiliar_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(asignacionFamiliar, entity), cb.isNotEmpty(asignacionFamiliar.get(AsignacionFamiliar_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

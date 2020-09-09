@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoDocumento;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoDocumento_;
+//import com.areatecnica.sigf.entities.TipoDocumento_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TipoDocumentoFacade extends AbstractFacade<TipoDocumento> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoDocumento> tipoDocumento = cq.from(TipoDocumento.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoDocumento, entity), cb.isNotEmpty(tipoDocumento.get(TipoDocumento_.compraList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoDocumento, entity), cb.isNotEmpty(tipoDocumento.get(TipoDocumento_.compraList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

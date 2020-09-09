@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TrabajadorAdicionalSalud;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TrabajadorAdicionalSalud_;
+//import com.areatecnica.sigf.entities.TrabajadorAdicionalSalud_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TrabajadorAdicionalSaludFacade extends AbstractFacade<TrabajadorAdi
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TrabajadorAdicionalSalud> trabajadorAdicionalSalud = cq.from(TrabajadorAdicionalSalud.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajadorAdicionalSalud, entity), cb.isNotNull(trabajadorAdicionalSalud.get(TrabajadorAdicionalSalud_.trabajadorAdicionalSaludIdMoneda)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajadorAdicionalSalud, entity), cb.isNotNull(trabajadorAdicionalSalud.get(TrabajadorAdicionalSalud_.trabajadorAdicionalSaludIdMoneda)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class TrabajadorAdicionalSaludFacade extends AbstractFacade<TrabajadorAdi
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TrabajadorAdicionalSalud> trabajadorAdicionalSalud = cq.from(TrabajadorAdicionalSalud.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajadorAdicionalSalud, entity), cb.isNotNull(trabajadorAdicionalSalud.get(TrabajadorAdicionalSalud_.trabajadorAdicionalSaludIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajadorAdicionalSalud, entity), cb.isNotNull(trabajadorAdicionalSalud.get(TrabajadorAdicionalSalud_.trabajadorAdicionalSaludIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

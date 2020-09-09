@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoDescuentoTrabajador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoDescuentoTrabajador_;
+//import com.areatecnica.sigf.entities.TipoDescuentoTrabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class TipoDescuentoTrabajadorFacade extends AbstractFacade<TipoDescuentoT
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoDescuentoTrabajador> tipoDescuentoTrabajador = cq.from(TipoDescuentoTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoDescuentoTrabajador, entity), cb.isNotNull(tipoDescuentoTrabajador.get(TipoDescuentoTrabajador_.tipoDescuentoTrabajadorIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoDescuentoTrabajador, entity), cb.isNotNull(tipoDescuentoTrabajador.get(TipoDescuentoTrabajador_.tipoDescuentoTrabajadorIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class TipoDescuentoTrabajadorFacade extends AbstractFacade<TipoDescuentoT
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoDescuentoTrabajador> tipoDescuentoTrabajador = cq.from(TipoDescuentoTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoDescuentoTrabajador, entity), cb.isNotEmpty(tipoDescuentoTrabajador.get(TipoDescuentoTrabajador_.descuentoTrabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoDescuentoTrabajador, entity), cb.isNotEmpty(tipoDescuentoTrabajador.get(TipoDescuentoTrabajador_.descuentoTrabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

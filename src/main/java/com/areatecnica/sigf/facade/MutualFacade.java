@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Mutual;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Mutual_;
+//import com.areatecnica.sigf.entities.Mutual_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class MutualFacade extends AbstractFacade<Mutual> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Mutual> mutual = cq.from(Mutual.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(mutual, entity), cb.isNotNull(mutual.get(Mutual_.mutualIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(mutual, entity), cb.isNotNull(mutual.get(Mutual_.mutualIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class MutualFacade extends AbstractFacade<Mutual> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Mutual> mutual = cq.from(Mutual.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(mutual, entity), cb.isNotEmpty(mutual.get(Mutual_.empresaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(mutual, entity), cb.isNotEmpty(mutual.get(Mutual_.empresaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

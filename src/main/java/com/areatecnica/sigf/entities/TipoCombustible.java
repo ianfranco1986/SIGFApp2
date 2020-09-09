@@ -49,9 +49,7 @@ public class TipoCombustible implements Serializable {
     private String tipoCombustibleNombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "precioCombustibleIdTipoCombustible")
     private List<PrecioCombustible> precioCombustibleList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraCombustibleIdTipo")
-    private List<CompraCombustible> compraCombustibleList;
-
+    
     public TipoCombustible() {
     }
 
@@ -87,15 +85,6 @@ public class TipoCombustible implements Serializable {
 
     public void setPrecioCombustibleList(List<PrecioCombustible> precioCombustibleList) {
         this.precioCombustibleList = precioCombustibleList;
-    }
-
-    @XmlTransient
-    public List<CompraCombustible> getCompraCombustibleList() {
-        return compraCombustibleList;
-    }
-
-    public void setCompraCombustibleList(List<CompraCombustible> compraCombustibleList) {
-        this.compraCombustibleList = compraCombustibleList;
     }
 
     @Override

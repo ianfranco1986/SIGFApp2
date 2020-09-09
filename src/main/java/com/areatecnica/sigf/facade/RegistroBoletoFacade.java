@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RegistroBoleto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RegistroBoleto_;
+//import com.areatecnica.sigf.entities.RegistroBoleto_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class RegistroBoletoFacade extends AbstractFacade<RegistroBoleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RegistroBoleto> registroBoleto = cq.from(RegistroBoleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(registroBoleto, entity), cb.isNotNull(registroBoleto.get(RegistroBoleto_.registroBoletoIdBoleto)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(registroBoleto, entity), cb.isNotNull(registroBoleto.get(RegistroBoleto_.registroBoletoIdBoleto)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

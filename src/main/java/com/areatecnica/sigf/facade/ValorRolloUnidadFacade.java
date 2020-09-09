@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ValorRolloUnidad;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ValorRolloUnidad_;
+//import com.areatecnica.sigf.entities.ValorRolloUnidad_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class ValorRolloUnidadFacade extends AbstractFacade<ValorRolloUnidad> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ValorRolloUnidad> valorRolloUnidad = cq.from(ValorRolloUnidad.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(valorRolloUnidad, entity), cb.isNotNull(valorRolloUnidad.get(ValorRolloUnidad_.valorRolloUnidadIdUnidad)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(valorRolloUnidad, entity), cb.isNotNull(valorRolloUnidad.get(ValorRolloUnidad_.valorRolloUnidadIdUnidad)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

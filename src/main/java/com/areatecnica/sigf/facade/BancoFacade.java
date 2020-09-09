@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Banco;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Banco_;
+//import com.areatecnica.sigf.entities.Banco_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class BancoFacade extends AbstractFacade<Banco> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Banco> banco = cq.from(Banco.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(banco, entity), cb.isNotNull(banco.get(Banco_.bancoIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(banco, entity), cb.isNotNull(banco.get(Banco_.bancoIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -53,7 +53,7 @@ public class BancoFacade extends AbstractFacade<Banco> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Banco> banco = cq.from(Banco.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(banco, entity), cb.isNotEmpty(banco.get(Banco_.cuentaBancariaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(banco, entity), cb.isNotEmpty(banco.get(Banco_.cuentaBancariaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class BancoFacade extends AbstractFacade<Banco> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Banco> banco = cq.from(Banco.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(banco, entity), cb.isNotEmpty(banco.get(Banco_.detalleResumenChequeList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(banco, entity), cb.isNotEmpty(banco.get(Banco_.detalleResumenChequeList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

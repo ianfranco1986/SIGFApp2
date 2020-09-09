@@ -124,7 +124,7 @@ public class TipoDocumento implements Serializable {
 
     @Override
     public String toString() {
-        return "com.areatecnica.sigf.entities.TipoDocumento[ tipoDocumentoId=" + tipoDocumentoId + " ]";
+        return tipoDocumentoNombre;
     }
     
 }

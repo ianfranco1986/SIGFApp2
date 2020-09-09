@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.PrecioCombustible;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.PrecioCombustible_;
+//import com.areatecnica.sigf.entities.PrecioCombustible_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class PrecioCombustibleFacade extends AbstractFacade<PrecioCombustible> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<PrecioCombustible> precioCombustible = cq.from(PrecioCombustible.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(precioCombustible, entity), cb.isNotNull(precioCombustible.get(PrecioCombustible_.precioCombustibleIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(precioCombustible, entity), cb.isNotNull(precioCombustible.get(PrecioCombustible_.precioCombustibleIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class PrecioCombustibleFacade extends AbstractFacade<PrecioCombustible> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<PrecioCombustible> precioCombustible = cq.from(PrecioCombustible.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(precioCombustible, entity), cb.isNotNull(precioCombustible.get(PrecioCombustible_.precioCombustibleIdTipoCombustible)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(precioCombustible, entity), cb.isNotNull(precioCombustible.get(PrecioCombustible_.precioCombustibleIdTipoCombustible)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

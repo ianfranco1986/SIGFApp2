@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Boleto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Boleto_;
+//import com.areatecnica.sigf.entities.Boleto_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -43,7 +43,7 @@ public class BoletoFacade extends AbstractFacade<Boleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Boleto> boleto = cq.from(Boleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotNull(boleto.get(Boleto_.boletoIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotNull(boleto.get(Boleto_.boletoIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class BoletoFacade extends AbstractFacade<Boleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Boleto> boleto = cq.from(Boleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotEmpty(boleto.get(Boleto_.inventarioInternoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotEmpty(boleto.get(Boleto_.inventarioInternoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -70,7 +70,7 @@ public class BoletoFacade extends AbstractFacade<Boleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Boleto> boleto = cq.from(Boleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotEmpty(boleto.get(Boleto_.detalleCompraBoletoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotEmpty(boleto.get(Boleto_.detalleCompraBoletoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -85,7 +85,7 @@ public class BoletoFacade extends AbstractFacade<Boleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Boleto> boleto = cq.from(Boleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotEmpty(boleto.get(Boleto_.registroBoletoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotEmpty(boleto.get(Boleto_.registroBoletoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -100,7 +100,7 @@ public class BoletoFacade extends AbstractFacade<Boleto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Boleto> boleto = cq.from(Boleto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotEmpty(boleto.get(Boleto_.tarifaGrupoServicioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(boleto, entity), cb.isNotEmpty(boleto.get(Boleto_.tarifaGrupoServicioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

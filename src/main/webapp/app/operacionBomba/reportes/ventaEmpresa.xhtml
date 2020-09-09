@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RegistroMinutoListForm">
+
+        <p:panel>
+            <p:spacer/>
+            <h3 style="text-align: center;">Venta de Combustible x Empresa </h3>
+            <p:panelGrid columns="2" style="width: 100%; margin-bottom: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+                <h:outputLabel for="desde" value="Desde:" />
+                <p:calendar id="desde" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerVentaPetroleoEmpresa.desde}" required="true" requiredMessage="Debe ingresar la fecha desde" />
+
+                <h:outputLabel for="hasta" value="Hasta:" />
+                <p:calendar id="hasta" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerVentaPetroleoEmpresa.hasta}" required="true" requiredMessage="Debe ingresar la fecha hasta" />
+
+                <p:outputLabel value="Empresa" for="busIdFlota" />
+                <p:selectOneMenu id="busIdFlota" value="#{reportControllerVentaPetroleoEmpresa.empresa}" converter="omnifaces.SelectItemsConverter" >
+                    <f:selectItem itemLabel="Todas"/>
+                    <f:selectItems value="#{reportControllerVentaPetroleoEmpresa.empresaItems}"
+                                   var="busIdFlotaItem"
+                                   itemValue="#{busIdFlotaItem}"
+                                   itemLabel="#{busIdFlotaItem.empresaNombre}"
+                                   />
+                    <p:ajax event="valueChange" update="multiple" listener="#{reportControllerVentaPetroleoEmpresa.handleEmpresaChange}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Unidad" for="busIdUnidadNegocio" />
+                <p:selectOneMenu id="busIdUnidadNegocio" value="#{reportControllerVentaPetroleoEmpresa.unidadNegocio}" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="Todas"/>
+                    <f:selectItems value="#{reportControllerVentaPetroleoEmpresa.unidadItems}"
+                                   var="busIdUnidadNegocioItem"
+                                   itemValue="#{busIdUnidadNegocioItem}"
+                                   itemLabel="#{busIdUnidadNegocioItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
+                                   />
+                    <p:ajax event="valueChange" update="multiple" listener="#{reportControllerVentaPetroleoEmpresa.handleUnidadChange()}"/>
+                </p:selectOneMenu>
+
+                <h:outputLabel for="multiple" value="Buses:" />
+                <p:selectCheckboxMenu id="multiple" value="#{reportControllerVentaPetroleoEmpresa.selectedItems}" label="Cities" multiple="true" converter="omnifaces.SelectItemsConverter" 
+                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                    <f:selectItems value="#{reportControllerVentaPetroleoEmpresa.items}" 
+                                   var="bus"
+                                   itemValue="#{bus}"
+                                   itemLabel="#{bus.busNumero} - #{bus.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>                    
+                </p:selectCheckboxMenu>
+
+
+                <p:outputLabel value=""/>
+                <h:panelGroup>
+                    <h:commandLink value="Generar Reporte" 
+                                   actionListener="#{reportController.downloadFile(reportControllerVentaPetroleoEmpresa.informe, reportControllerVentaPetroleoEmpresa.map)}" target="blank"  styleClass="btn btn-primary" />
+                </h:panelGroup>
+
+            </p:panelGrid>
+            <div class="column-center">
+                <p:media cache="false" rendered="#{empty reportControllerVentaPetroleoEmpresa.selectedItems}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
+            </div>
+        </p:panel>
+
+
+
+    </h:form>
+
+</ui:composition>

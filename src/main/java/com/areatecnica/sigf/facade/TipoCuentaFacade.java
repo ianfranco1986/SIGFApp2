@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoCuenta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoCuenta_;
+//import com.areatecnica.sigf.entities.TipoCuenta_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class TipoCuentaFacade extends AbstractFacade<TipoCuenta> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoCuenta> tipoCuenta = cq.from(TipoCuenta.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCuenta, entity), cb.isNotEmpty(tipoCuenta.get(TipoCuenta_.observacionTipoCuentaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCuenta, entity), cb.isNotEmpty(tipoCuenta.get(TipoCuenta_.observacionTipoCuentaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class TipoCuentaFacade extends AbstractFacade<TipoCuenta> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoCuenta> tipoCuenta = cq.from(TipoCuenta.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCuenta, entity), cb.isNotEmpty(tipoCuenta.get(TipoCuenta_.cuentaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoCuenta, entity), cb.isNotEmpty(tipoCuenta.get(TipoCuenta_.cuentaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

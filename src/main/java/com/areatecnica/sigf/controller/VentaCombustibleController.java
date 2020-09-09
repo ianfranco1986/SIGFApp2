@@ -65,11 +65,9 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         this.mes = calendar.get(Calendar.MONTH) + 1;
         this.anio = calendar.get(Calendar.YEAR);
 
-        try {
-            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-            this.currentDate = new CurrentDate(1, mes, anio);
-        } catch (ParseException ex) {
-        }
+        this.fecha = new Date();
+        this.currentDate = new CurrentDate();
+        this.currentDate.setDate(fecha);
     }
 
     public Map<String, Object> getMap() {
@@ -127,7 +125,7 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
             this.currentDate.setDate(fecha);
 
             this.dao = new IVentaCombustibleDaoImpl();
-            this.total = 0; 
+            this.total = 0;
             this.items = this.dao.findByDate(fecha);
 
             if (!this.items.isEmpty()) {

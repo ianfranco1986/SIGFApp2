@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.NumeralSurtidor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.NumeralSurtidor_;
+//import com.areatecnica.sigf.entities.NumeralSurtidor_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class NumeralSurtidorFacade extends AbstractFacade<NumeralSurtidor> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<NumeralSurtidor> numeralSurtidor = cq.from(NumeralSurtidor.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(numeralSurtidor, entity), cb.isNotNull(numeralSurtidor.get(NumeralSurtidor_.numeralSurtidorIdSurtidor)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(numeralSurtidor, entity), cb.isNotNull(numeralSurtidor.get(NumeralSurtidor_.numeralSurtidorIdSurtidor)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

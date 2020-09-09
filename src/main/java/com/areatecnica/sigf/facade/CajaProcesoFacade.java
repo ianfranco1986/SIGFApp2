@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CajaProceso;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CajaProceso_;
+//import com.areatecnica.sigf.entities.CajaProceso_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class CajaProcesoFacade extends AbstractFacade<CajaProceso> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaProceso> cajaProceso = cq.from(CajaProceso.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaProceso, entity), cb.isNotNull(cajaProceso.get(CajaProceso_.cajaProcesoIdCaja)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaProceso, entity), cb.isNotNull(cajaProceso.get(CajaProceso_.cajaProcesoIdCaja)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class CajaProcesoFacade extends AbstractFacade<CajaProceso> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaProceso> cajaProceso = cq.from(CajaProceso.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaProceso, entity), cb.isNotNull(cajaProceso.get(CajaProceso_.cajaProcesoIdProceso)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaProceso, entity), cb.isNotNull(cajaProceso.get(CajaProceso_.cajaProcesoIdProceso)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoObservacion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoObservacion_;
+//import com.areatecnica.sigf.entities.TipoObservacion_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class TipoObservacionFacade extends AbstractFacade<TipoObservacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoObservacion> tipoObservacion = cq.from(TipoObservacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoObservacion, entity), cb.isNotNull(tipoObservacion.get(TipoObservacion_.tipoObservacionIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoObservacion, entity), cb.isNotNull(tipoObservacion.get(TipoObservacion_.tipoObservacionIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class TipoObservacionFacade extends AbstractFacade<TipoObservacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoObservacion> tipoObservacion = cq.from(TipoObservacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoObservacion, entity), cb.isNotEmpty(tipoObservacion.get(TipoObservacion_.observacionTrabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoObservacion, entity), cb.isNotEmpty(tipoObservacion.get(TipoObservacion_.observacionTrabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

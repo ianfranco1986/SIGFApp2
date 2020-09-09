@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.InventarioCaja;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.InventarioCaja_;
+//import com.areatecnica.sigf.entities.InventarioCaja_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class InventarioCajaFacade extends AbstractFacade<InventarioCaja> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InventarioCaja> inventarioCaja = cq.from(InventarioCaja.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotEmpty(inventarioCaja.get(InventarioCaja_.ventaBoletoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotEmpty(inventarioCaja.get(InventarioCaja_.ventaBoletoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -56,7 +56,7 @@ public class InventarioCajaFacade extends AbstractFacade<InventarioCaja> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InventarioCaja> inventarioCaja = cq.from(InventarioCaja.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotNull(inventarioCaja.get(InventarioCaja_.inventarioCajaIdInventarioInterno)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotNull(inventarioCaja.get(InventarioCaja_.inventarioCajaIdInventarioInterno)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class InventarioCajaFacade extends AbstractFacade<InventarioCaja> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InventarioCaja> inventarioCaja = cq.from(InventarioCaja.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotNull(inventarioCaja.get(InventarioCaja_.inventarioCajaIdCaja)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotNull(inventarioCaja.get(InventarioCaja_.inventarioCajaIdCaja)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

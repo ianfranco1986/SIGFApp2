@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ProgramacionTrabajador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ProgramacionTrabajador_;
+//import com.areatecnica.sigf.entities.ProgramacionTrabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class ProgramacionTrabajadorFacade extends AbstractFacade<ProgramacionTra
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ProgramacionTrabajador> programacionTrabajador = cq.from(ProgramacionTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(programacionTrabajador, entity), cb.isNotNull(programacionTrabajador.get(ProgramacionTrabajador_.programacionTrabajadorIdAdministrador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(programacionTrabajador, entity), cb.isNotNull(programacionTrabajador.get(ProgramacionTrabajador_.programacionTrabajadorIdAdministrador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class ProgramacionTrabajadorFacade extends AbstractFacade<ProgramacionTra
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ProgramacionTrabajador> programacionTrabajador = cq.from(ProgramacionTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(programacionTrabajador, entity), cb.isNotNull(programacionTrabajador.get(ProgramacionTrabajador_.programacionTrabajadorIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(programacionTrabajador, entity), cb.isNotNull(programacionTrabajador.get(ProgramacionTrabajador_.programacionTrabajadorIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

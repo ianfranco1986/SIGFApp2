@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.DetalleIntervalosMensual;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.DetalleIntervalosMensual_;
+//import com.areatecnica.sigf.entities.DetalleIntervalosMensual_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class DetalleIntervalosMensualFacade extends AbstractFacade<DetalleInterv
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DetalleIntervalosMensual> detalleIntervalosMensual = cq.from(DetalleIntervalosMensual.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleIntervalosMensual, entity), cb.isNotNull(detalleIntervalosMensual.get(DetalleIntervalosMensual_.detalleIntervalosMensualIdAdministracion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleIntervalosMensual, entity), cb.isNotNull(detalleIntervalosMensual.get(DetalleIntervalosMensual_.detalleIntervalosMensualIdAdministracion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class DetalleIntervalosMensualFacade extends AbstractFacade<DetalleInterv
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DetalleIntervalosMensual> detalleIntervalosMensual = cq.from(DetalleIntervalosMensual.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleIntervalosMensual, entity), cb.isNotNull(detalleIntervalosMensual.get(DetalleIntervalosMensual_.detalleIntervalosMensualIdIntervaloAdministracion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(detalleIntervalosMensual, entity), cb.isNotNull(detalleIntervalosMensual.get(DetalleIntervalosMensual_.detalleIntervalosMensualIdIntervaloAdministracion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

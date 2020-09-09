@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.DescuentoTrabajador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.DescuentoTrabajador_;
+//import com.areatecnica.sigf.entities.DescuentoTrabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class DescuentoTrabajadorFacade extends AbstractFacade<DescuentoTrabajado
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DescuentoTrabajador> descuentoTrabajador = cq.from(DescuentoTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoTrabajador, entity), cb.isNotEmpty(descuentoTrabajador.get(DescuentoTrabajador_.descuentoLiquidacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoTrabajador, entity), cb.isNotEmpty(descuentoTrabajador.get(DescuentoTrabajador_.descuentoLiquidacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -56,7 +56,7 @@ public class DescuentoTrabajadorFacade extends AbstractFacade<DescuentoTrabajado
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DescuentoTrabajador> descuentoTrabajador = cq.from(DescuentoTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoTrabajador, entity), cb.isNotNull(descuentoTrabajador.get(DescuentoTrabajador_.descuentoTrabajadorIdDescuento)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoTrabajador, entity), cb.isNotNull(descuentoTrabajador.get(DescuentoTrabajador_.descuentoTrabajadorIdDescuento)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class DescuentoTrabajadorFacade extends AbstractFacade<DescuentoTrabajado
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DescuentoTrabajador> descuentoTrabajador = cq.from(DescuentoTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoTrabajador, entity), cb.isNotNull(descuentoTrabajador.get(DescuentoTrabajador_.descuentoTrabajadorIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoTrabajador, entity), cb.isNotNull(descuentoTrabajador.get(DescuentoTrabajador_.descuentoTrabajadorIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

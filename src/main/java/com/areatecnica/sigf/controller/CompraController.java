@@ -6,7 +6,6 @@ import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProveedorDaoImpl;
-import com.areatecnica.sigf.dao.impl.ITipoMovimientoDaoImpl;
 import com.areatecnica.sigf.entities.Compra;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.CuentaMayor;
@@ -14,7 +13,6 @@ import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.MovimientoMes;
 import com.areatecnica.sigf.entities.Proveedor;
 import com.areatecnica.sigf.entities.TipoDocumento;
-import com.areatecnica.sigf.entities.TipoMovimiento;
 import com.areatecnica.sigf.models.CompraDataModel;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -46,7 +44,6 @@ public class CompraController extends AbstractController<Compra> {
     private TipoDocumento tipoDocumento;
     private CuentaMayor cuentaMayor;
     private MovimientoMes movimiento;
-    private TipoMovimiento tipoMovimiento;
     private CuentaBancaria cuentaBancaria;
     private List<TipoDocumento> tipoDocumentoItems;
     private List<CuentaMayor> cuentaMayorItems;
@@ -98,7 +95,6 @@ public class CompraController extends AbstractController<Compra> {
 
         this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
         this.empresaNandu = new IEmpresaDaoImpl().findById(7);
-        this.tipoMovimiento = new ITipoMovimientoDaoImpl().findById(1);
         //load();
     }
 
@@ -118,49 +114,49 @@ public class CompraController extends AbstractController<Compra> {
     }
 
     public void handleCuentaChange() {
-        if (this.cuentaBancaria != null) {
-            MovimientoMes movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
-            if (movimientoDocumento == null) {
-                movimientoDocumento = new MovimientoMes();
-                movimientoDocumento.setMovimientoMesDocumento(1);
-            }
-
-            this.documento = movimientoDocumento.getMovimientoMesDocumento() + 1;
-        }
+//        if (this.cuentaBancaria != null) {
+//            MovimientoMes movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+//            if (movimientoDocumento == null) {
+//                movimientoDocumento = new MovimientoMes();
+//                movimientoDocumento.setMovimientoMesDocumento(1);
+//            }
+//
+//            this.documento = movimientoDocumento.getMovimientoMesDocumento() + 1;
+//        }
     }
 
     @Override
     public void saveNew(ActionEvent event) {
-        if (this.getSelected() != null) {
-
-            this.getSelected().setCompraProveedorId(proveedor);
-            this.getSelected().setCompraCuentaId(cuentaMayor);
-
-            Compra t = new ICompraDaoImpl().create(this.getSelected());
-
-            MovimientoMes mov = new MovimientoMes();
-            mov.setMovimientoMesCuentaId(cuentaBancaria);
-            mov.setMovimientoMesDetalle(this.getSelected().getCompraDescripcion());
-            mov.setMovimientoMesDocumento(this.documento);
-            mov.setMovimientoMesEmpresaId(empresaNandu);
-            mov.setMovimientoMesFechaLiquidacion(this.desde);
-            mov.setMovimientoMesFechaMvto(this.getSelected().getCompraFechaDocumento());
-            mov.setMovimientoMesMonto(this.getSelected().getCompraTotal());
-            mov.setMovimientoMesMvtoId(this.tipoMovimiento);
-
-            MovimientoMes auxMov = new IMovimientoMesDaoImpl().create(mov);
-
-            if (t != null) {
-                this.items.add(this.getSelected());
-                this.setSelected(this.prepareCreate(event));
-                JsfUtil.addSuccessMessage("Se ha regristrado una Compra");
-            } else {
-                JsfUtil.addErrorMessage("Ha ocurrido un error durante la persistencia ");
-            }
-
-            this.setSelected(prepareCreate(event));
-
-        }
+//        if (this.getSelected() != null) {
+//
+//            this.getSelected().setCompraProveedorId(proveedor);
+//            this.getSelected().setCompraCuentaId(cuentaMayor);
+//
+//            Compra t = new ICompraDaoImpl().create(this.getSelected());
+//
+//            MovimientoMes mov = new MovimientoMes();
+//            mov.setMovimientoMesCuentaId(cuentaBancaria);
+//            mov.setMovimientoMesDetalle(this.getSelected().getCompraDescripcion());
+//            mov.setMovimientoMesDocumento(this.documento);
+//            mov.setMovimientoMesEmpresaId(empresaNandu);
+//            mov.setMovimientoMesFechaLiquidacion(this.desde);
+//            mov.setMovimientoMesFechaMvto(this.getSelected().getCompraFechaDocumento());
+//            mov.setMovimientoMesMonto(this.getSelected().getCompraTotal());
+//            mov.setMovimientoMesMvtoId(this.tipoMovimiento);
+//
+//            MovimientoMes auxMov = new IMovimientoMesDaoImpl().create(mov);
+//
+//            if (t != null) {
+//                this.items.add(this.getSelected());
+//                this.setSelected(this.prepareCreate(event));
+//                JsfUtil.addSuccessMessage("Se ha regristrado una Compra");
+//            } else {
+//                JsfUtil.addErrorMessage("Ha ocurrido un error durante la persistencia ");
+//            }
+//
+//            this.setSelected(prepareCreate(event));
+//
+//        }
     }
 
     @Override
@@ -279,14 +275,6 @@ public class CompraController extends AbstractController<Compra> {
 
     public void setMovimiento(MovimientoMes movimiento) {
         this.movimiento = movimiento;
-    }
-
-    public TipoMovimiento getTipoMovimiento() {
-        return tipoMovimiento;
-    }
-
-    public void setTipoMovimiento(TipoMovimiento tipoMovimiento) {
-        this.tipoMovimiento = tipoMovimiento;
     }
 
     public CuentaBancaria getCuentaBancaria() {

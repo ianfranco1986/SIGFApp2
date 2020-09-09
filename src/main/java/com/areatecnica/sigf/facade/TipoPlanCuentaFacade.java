@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoPlanCuenta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoPlanCuenta_;
+//import com.areatecnica.sigf.entities.TipoPlanCuenta_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TipoPlanCuentaFacade extends AbstractFacade<TipoPlanCuenta> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoPlanCuenta> tipoPlanCuenta = cq.from(TipoPlanCuenta.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoPlanCuenta, entity), cb.isNotEmpty(tipoPlanCuenta.get(TipoPlanCuenta_.planCuentaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoPlanCuenta, entity), cb.isNotEmpty(tipoPlanCuenta.get(TipoPlanCuenta_.planCuentaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

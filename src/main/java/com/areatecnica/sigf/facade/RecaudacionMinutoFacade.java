@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RecaudacionMinuto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RecaudacionMinuto_;
+//import com.areatecnica.sigf.entities.RecaudacionMinuto_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class RecaudacionMinutoFacade extends AbstractFacade<RecaudacionMinuto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionMinuto> recaudacionMinuto = cq.from(RecaudacionMinuto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionMinuto, entity), cb.isNotNull(recaudacionMinuto.get(RecaudacionMinuto_.recaudacionMinutoIdRecaudacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionMinuto, entity), cb.isNotNull(recaudacionMinuto.get(RecaudacionMinuto_.recaudacionMinutoIdRecaudacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class RecaudacionMinutoFacade extends AbstractFacade<RecaudacionMinuto> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionMinuto> recaudacionMinuto = cq.from(RecaudacionMinuto.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionMinuto, entity), cb.isNotNull(recaudacionMinuto.get(RecaudacionMinuto_.recaudacionMinutoIdRegistroMinuto)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionMinuto, entity), cb.isNotNull(recaudacionMinuto.get(RecaudacionMinuto_.recaudacionMinutoIdRegistroMinuto)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

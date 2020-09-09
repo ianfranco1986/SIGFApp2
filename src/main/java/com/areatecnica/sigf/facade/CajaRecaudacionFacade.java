@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CajaRecaudacion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CajaRecaudacion_;
+//import com.areatecnica.sigf.entities.CajaRecaudacion_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -46,7 +46,7 @@ public class CajaRecaudacionFacade extends AbstractFacade<CajaRecaudacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaRecaudacion> cajaRecaudacion = cq.from(CajaRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.egresoCajaRecaudacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.egresoCajaRecaudacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -61,7 +61,7 @@ public class CajaRecaudacionFacade extends AbstractFacade<CajaRecaudacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaRecaudacion> cajaRecaudacion = cq.from(CajaRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.recaudacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.recaudacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -76,7 +76,7 @@ public class CajaRecaudacionFacade extends AbstractFacade<CajaRecaudacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaRecaudacion> cajaRecaudacion = cq.from(CajaRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.cajaProcesoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.cajaProcesoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -91,7 +91,7 @@ public class CajaRecaudacionFacade extends AbstractFacade<CajaRecaudacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaRecaudacion> cajaRecaudacion = cq.from(CajaRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.resumenRecaudacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.resumenRecaudacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -106,7 +106,7 @@ public class CajaRecaudacionFacade extends AbstractFacade<CajaRecaudacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaRecaudacion> cajaRecaudacion = cq.from(CajaRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotNull(cajaRecaudacion.get(CajaRecaudacion_.cajaRecaudacionIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotNull(cajaRecaudacion.get(CajaRecaudacion_.cajaRecaudacionIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -118,7 +118,7 @@ public class CajaRecaudacionFacade extends AbstractFacade<CajaRecaudacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaRecaudacion> cajaRecaudacion = cq.from(CajaRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotNull(cajaRecaudacion.get(CajaRecaudacion_.cajaRecaudacionIdTerminal)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotNull(cajaRecaudacion.get(CajaRecaudacion_.cajaRecaudacionIdTerminal)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -130,7 +130,7 @@ public class CajaRecaudacionFacade extends AbstractFacade<CajaRecaudacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaRecaudacion> cajaRecaudacion = cq.from(CajaRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotNull(cajaRecaudacion.get(CajaRecaudacion_.cajaRecaudacionIdUsuario)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotNull(cajaRecaudacion.get(CajaRecaudacion_.cajaRecaudacionIdUsuario)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -142,7 +142,7 @@ public class CajaRecaudacionFacade extends AbstractFacade<CajaRecaudacion> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CajaRecaudacion> cajaRecaudacion = cq.from(CajaRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.inventarioCajaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cajaRecaudacion, entity), cb.isNotEmpty(cajaRecaudacion.get(CajaRecaudacion_.inventarioCajaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

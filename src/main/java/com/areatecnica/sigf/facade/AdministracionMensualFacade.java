@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.AdministracionMensual;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.AdministracionMensual_;
+//import com.areatecnica.sigf.entities.AdministracionMensual_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class AdministracionMensualFacade extends AbstractFacade<AdministracionMe
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<AdministracionMensual> administracionMensual = cq.from(AdministracionMensual.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(administracionMensual, entity), cb.isNotNull(administracionMensual.get(AdministracionMensual_.administracionMensualIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(administracionMensual, entity), cb.isNotNull(administracionMensual.get(AdministracionMensual_.administracionMensualIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class AdministracionMensualFacade extends AbstractFacade<AdministracionMe
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<AdministracionMensual> administracionMensual = cq.from(AdministracionMensual.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(administracionMensual, entity), cb.isNotEmpty(administracionMensual.get(AdministracionMensual_.detalleIntervalosMensualList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(administracionMensual, entity), cb.isNotEmpty(administracionMensual.get(AdministracionMensual_.detalleIntervalosMensualList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

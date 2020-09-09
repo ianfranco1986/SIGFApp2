@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ModeloMarcaBus;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ModeloMarcaBus_;
+//import com.areatecnica.sigf.entities.ModeloMarcaBus_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class ModeloMarcaBusFacade extends AbstractFacade<ModeloMarcaBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ModeloMarcaBus> modeloMarcaBus = cq.from(ModeloMarcaBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(modeloMarcaBus, entity), cb.isNotNull(modeloMarcaBus.get(ModeloMarcaBus_.modeloMarcaBusIdMarca)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(modeloMarcaBus, entity), cb.isNotNull(modeloMarcaBus.get(ModeloMarcaBus_.modeloMarcaBusIdMarca)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class ModeloMarcaBusFacade extends AbstractFacade<ModeloMarcaBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ModeloMarcaBus> modeloMarcaBus = cq.from(ModeloMarcaBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(modeloMarcaBus, entity), cb.isNotEmpty(modeloMarcaBus.get(ModeloMarcaBus_.busList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(modeloMarcaBus, entity), cb.isNotEmpty(modeloMarcaBus.get(ModeloMarcaBus_.busList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

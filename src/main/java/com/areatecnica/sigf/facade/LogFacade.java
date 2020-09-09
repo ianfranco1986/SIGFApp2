@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Log;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Log_;
+//import com.areatecnica.sigf.entities.Log_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class LogFacade extends AbstractFacade<Log> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Log> log = cq.from(Log.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(log, entity), cb.isNotNull(log.get(Log_.logIdPrivilegio)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(log, entity), cb.isNotNull(log.get(Log_.logIdPrivilegio)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class LogFacade extends AbstractFacade<Log> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Log> log = cq.from(Log.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(log, entity), cb.isNotNull(log.get(Log_.logIdUsuario)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(log, entity), cb.isNotNull(log.get(Log_.logIdUsuario)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

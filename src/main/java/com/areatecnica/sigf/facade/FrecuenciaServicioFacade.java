@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.FrecuenciaServicio;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.FrecuenciaServicio_;
+//import com.areatecnica.sigf.entities.FrecuenciaServicio_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class FrecuenciaServicioFacade extends AbstractFacade<FrecuenciaServicio>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<FrecuenciaServicio> frecuenciaServicio = cq.from(FrecuenciaServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(frecuenciaServicio, entity), cb.isNotNull(frecuenciaServicio.get(FrecuenciaServicio_.frecuenciaServicioIdPeriodo)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(frecuenciaServicio, entity), cb.isNotNull(frecuenciaServicio.get(FrecuenciaServicio_.frecuenciaServicioIdPeriodo)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -53,7 +53,7 @@ public class FrecuenciaServicioFacade extends AbstractFacade<FrecuenciaServicio>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<FrecuenciaServicio> frecuenciaServicio = cq.from(FrecuenciaServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(frecuenciaServicio, entity), cb.isNotNull(frecuenciaServicio.get(FrecuenciaServicio_.frecuenciaServicioIdServicio)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(frecuenciaServicio, entity), cb.isNotNull(frecuenciaServicio.get(FrecuenciaServicio_.frecuenciaServicioIdServicio)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -65,7 +65,7 @@ public class FrecuenciaServicioFacade extends AbstractFacade<FrecuenciaServicio>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<FrecuenciaServicio> frecuenciaServicio = cq.from(FrecuenciaServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(frecuenciaServicio, entity), cb.isNotNull(frecuenciaServicio.get(FrecuenciaServicio_.frecuenciaServicioIdTipoDemanda)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(frecuenciaServicio, entity), cb.isNotNull(frecuenciaServicio.get(FrecuenciaServicio_.frecuenciaServicioIdTipoDemanda)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -77,7 +77,7 @@ public class FrecuenciaServicioFacade extends AbstractFacade<FrecuenciaServicio>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<FrecuenciaServicio> frecuenciaServicio = cq.from(FrecuenciaServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(frecuenciaServicio, entity), cb.isNotNull(frecuenciaServicio.get(FrecuenciaServicio_.frecuenciaServicioIdTipoDia)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(frecuenciaServicio, entity), cb.isNotNull(frecuenciaServicio.get(FrecuenciaServicio_.frecuenciaServicioIdTipoDia)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

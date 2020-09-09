@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Administrador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Administrador_;
+//import com.areatecnica.sigf.entities.Administrador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -56,7 +56,7 @@ public class AdministradorFacade extends AbstractFacade<Administrador> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Administrador> administrador = cq.from(Administrador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(administrador, entity), cb.isNotEmpty(administrador.get(Administrador_.administradorFlotaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(administrador, entity), cb.isNotEmpty(administrador.get(Administrador_.administradorFlotaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -71,7 +71,7 @@ public class AdministradorFacade extends AbstractFacade<Administrador> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Administrador> administrador = cq.from(Administrador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(administrador, entity), cb.isNotEmpty(administrador.get(Administrador_.administradorBusList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(administrador, entity), cb.isNotEmpty(administrador.get(Administrador_.administradorBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ParentescoCarga;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ParentescoCarga_;
+//import com.areatecnica.sigf.entities.ParentescoCarga_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class ParentescoCargaFacade extends AbstractFacade<ParentescoCarga> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ParentescoCarga> parentescoCarga = cq.from(ParentescoCarga.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(parentescoCarga, entity), cb.isNotEmpty(parentescoCarga.get(ParentescoCarga_.cargaTrabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(c"22cSb.equal(parentescoCarga, entity), cb.isNotEmpty(parentescoCarga.get(ParentescoCarga_.cargaTrabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

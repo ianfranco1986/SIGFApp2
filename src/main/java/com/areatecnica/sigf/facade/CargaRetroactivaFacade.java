@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.CargaRetroactiva;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.CargaRetroactiva_;
+//import com.areatecnica.sigf.entities.CargaRetroactiva_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class CargaRetroactivaFacade extends AbstractFacade<CargaRetroactiva> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CargaRetroactiva> cargaRetroactiva = cq.from(CargaRetroactiva.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cargaRetroactiva, entity), cb.isNotNull(cargaRetroactiva.get(CargaRetroactiva_.cargaRetroactivaIdCargaTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cargaRetroactiva, entity), cb.isNotNull(cargaRetroactiva.get(CargaRetroactiva_.cargaRetroactivaIdCargaTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class CargaRetroactivaFacade extends AbstractFacade<CargaRetroactiva> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<CargaRetroactiva> cargaRetroactiva = cq.from(CargaRetroactiva.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cargaRetroactiva, entity), cb.isNotNull(cargaRetroactiva.get(CargaRetroactiva_.cargaRetroactivaIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cargaRetroactiva, entity), cb.isNotNull(cargaRetroactiva.get(CargaRetroactiva_.cargaRetroactivaIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

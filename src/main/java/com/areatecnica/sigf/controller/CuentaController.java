@@ -30,7 +30,7 @@ import com.areatecnica.sigf.entities.TipoDescuentoTrabajador;
 import com.areatecnica.sigf.entities.InstitucionPrevision;
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.CompraCombustible;
+import com.areatecnica.sigf.entities.CompraPetroleo;
 import com.areatecnica.sigf.entities.Mutual;
 import com.areatecnica.sigf.entities.TipoAbono;
 import com.areatecnica.sigf.entities.Empresa;
@@ -1053,22 +1053,7 @@ public class CuentaController extends AbstractController<Cuenta> {
         }
     }
 
-    /**
-     * Sets the "items" attribute with a collection of CompraCombustible
-     * entities that are retrieved from Cuenta and returns the navigation
-     * outcome.
-     *
-     * @return navigation outcome for CompraCombustible page
-     */
-    public String navigateCompraCombustibleList() {
-        Cuenta selected = this.getSelected();
-        if (selected != null) {
-            CuentaFacade ejbFacade = (CuentaFacade) this.getFacade();
-            List<CompraCombustible> selectedCompraCombustibleList = ejbFacade.findCompraCombustibleList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("CompraCombustible_items", selectedCompraCombustibleList);
-        }
-        return "/app/compraCombustible/index";
-    }
+    
 
     public boolean getIsMutualListEmpty() {
         return this.isMutualListEmpty;

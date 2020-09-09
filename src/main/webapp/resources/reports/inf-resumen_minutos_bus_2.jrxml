@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c9e9601b-a518-4a0a-9cc9-7efd1a40f7f1">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    b.bus_numero AS numeroPaga,
+    b.bus_patente AS patentePaga,
+    c.bus_numero AS numeroRecibe,
+    c.bus_patente AS patenteRecibe,
+    sum(r.registro_minuto_monto) AS monto, 
+minutos_cobrados_bus($P{desde}, $P{hasta}, b.bus_id) AS cobrado, 
+
+(minutos_cobrados_bus($P{desde}, $P{hasta}, b.bus_id)-sum(r.registro_minuto_monto)) AS saldo
+FROM
+	recaudacion_minuto rm
+		LEFT JOIN 
+    recaudacion rr ON rm.recaudacion_minuto_id_recaudacion = rr.recaudacion_id 
+		LEFT JOIN 
+    registro_minuto r ON rm.recaudacion_minuto_id_registro_minuto = r.registro_minuto_id
+        LEFT JOIN
+    bus b ON r.registro_minuto_desde_id_bus = b.bus_id
+        LEFT JOIN
+    bus c ON r.registro_minuto_hasta_id_bus = c.bus_id
+WHERE
+    rr.recaudacion_fecha BETWEEN  $P{desde} AND $P{hasta}  AND   $X{IN, c.bus_id, list} GROUP BY c.bus_numero ORDER BY c.bus_numero ASC]]>
+	</queryString>
+	<field name="numeroPaga" class="java.lang.Long"/>
+	<field name="patentePaga" class="java.lang.String"/>
+	<field name="numeroRecibe" class="java.lang.Long"/>
+	<field name="patenteRecibe" class="java.lang.String"/>
+	<field name="monto" class="java.math.BigDecimal"/>
+	<field name="cobrado" class="java.lang.Integer"/>
+	<field name="saldo" class="java.math.BigDecimal"/>
+	<variable name="monto_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
+	</variable>
+	<variable name="cobrado_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cobrado}]]></variableExpression>
+	</variable>
+	<variable name="saldo_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="221" y="0" width="334" height="30" uuid="00d7489f-8729-4b3d-b0aa-c0278f31e317"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen Cobro Minutos x Bus]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="100" y="30" width="46" height="15" uuid="cf4b249e-ed4e-466f-b882-8b8be0ccdba3"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="100" height="15" uuid="a4d1b297-a738-4ea0-8904-ea3d549302f7"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="30" width="16" height="15" uuid="2b36db11-ca4f-490c-bd51-0934bf338f55"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="221" height="19" uuid="bf90264b-12ae-4739-b1e9-1f31562f6562"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="167" y="30" width="60" height="15" uuid="c33af457-53d8-45c8-bdd8-c12377fdaf83"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="15" uuid="25c920b0-dd5d-4da3-9bc5-a2d41790cdac"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Bus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="100" height="15" uuid="27953466-ca28-4228-afb5-690de704e97c"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Recibido ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="100" height="15" uuid="d4e0146b-ebf0-4e51-91ea-94e993ec9c63"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pagado ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="100" height="15" uuid="67bebbd7-b7dd-433f-9fe3-e323919e840a"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo ($)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="15" uuid="62b9d3f0-5727-418e-bec4-ee63233fbcc6"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="50" y="0" width="100" height="15" uuid="3218ce63-c419-48c0-910b-0f4d9e7b0a35"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cobrado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="150" y="0" width="100" height="15" uuid="583d917a-b1e7-4973-a82b-97c5a08547a0"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="250" y="0" width="100" height="15" uuid="5551f2a6-4364-43c3-9fba-96f1d7cc0e46"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="150" y="0" width="100" height="15" uuid="9a69bc9c-5443-41b1-9b7e-5f3ab866bc20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{monto_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="51" y="0" width="100" height="15" uuid="b8b9cf93-f147-4bd0-aed0-61b1a1597869"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{cobrado_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="250" y="0" width="100" height="15" uuid="7d04532a-3110-43ea-82ca-e3163110b83a"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldo_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

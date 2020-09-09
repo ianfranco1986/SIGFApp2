@@ -6,10 +6,10 @@
 package com.areatecnica.sigf.entities;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,36 +19,31 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author ianfr
  */
 @Entity
-@Cacheable(false)
 @Table(name = "movimiento_mes", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MovimientoMes.findAll", query = "SELECT d FROM MovimientoMes d")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesId", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesId = :movimientoMesId")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvto", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto = :movimientoMesFechaMvto")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDates", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to ORDER BY d.movimientoMesId ASC")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesIngresos", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesMvtoId.tipoMovimientoAbono = 1 ORDER BY d.movimientoMesId ASC")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesEgresos", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesMvtoId.tipoMovimientoDescuento = 1 ORDER BY d.movimientoMesId ASC")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesEmpresa", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesEmpresaId = :movimientoMesEmpresaId ORDER BY d.movimientoMesId ASC")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesTipo", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesMvtoId = :movimientoMesMvtoId ORDER BY d.movimientoMesId ASC")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesCuenta", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesCuentaId = :movimientoMesCuentaId ORDER BY d.movimientoMesId ASC")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesDocumento", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesDocumento = :movimientoMesDocumento")
-    , @NamedQuery(name = "MovimientoMes.findLastByCuenta", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesCuentaId = :movimientoMesCuentaId ORDER BY d.movimientoMesDocumento DESC")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesDetalle", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesDetalle = :movimientoMesDetalle")
-    , @NamedQuery(name = "MovimientoMes.findByMovimientoMesMonto", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesMonto = :movimientoMesMonto")})
+    @NamedQuery(name = "MovimientoMes.findAll", query = "SELECT m FROM MovimientoMes m"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesId", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesId = :movimientoMesId"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvto", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesFechaMvto = :movimientoMesFechaMvto"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaLiquidacion", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesFechaLiquidacion = :movimientoMesFechaLiquidacion"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesMonto", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesMonto = :movimientoMesMonto"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesDetalle", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesDetalle = :movimientoMesDetalle"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesTipoDocumento", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesTipoDocumento = :movimientoMesTipoDocumento"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesNumeroDocumento", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesNumeroDocumento = :movimientoMesNumeroDocumento")})
 public class MovimientoMes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,26 +68,33 @@ public class MovimientoMes implements Serializable {
     private int movimientoMesMonto;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "movimiento_mes_documento")
-    private int movimientoMesDocumento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 150)
+    @Size(min = 1, max = 200)
     @Column(name = "movimiento_mes_detalle")
     private String movimientoMesDetalle;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "movimiento_mes_tipo_documento")
+    private int movimientoMesTipoDocumento;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "movimiento_mes_numero_documento")
+    private int movimientoMesNumeroDocumento;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraMovimientoId")
+    private List<Compra> compraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anticipoMovimientoId")
+    private List<Anticipo> anticipoList;
+    @JoinColumn(name = "movimiento_mes_cuenta_banco_id", referencedColumnName = "cuenta_bancaria_id")
+    @ManyToOne(optional = false)
+    private CuentaBancaria movimientoMesCuentaBancoId;
     @JoinColumn(name = "movimiento_mes_empresa_id", referencedColumnName = "empresa_id")
     @ManyToOne(optional = false)
     private Empresa movimientoMesEmpresaId;
-    @JoinColumn(name = "movimiento_mes_mvto_id", referencedColumnName = "tipo_movimiento_id")
-    @ManyToOne(optional = false)
-    private TipoMovimiento movimientoMesMvtoId;
-    @JoinColumn(name = "movimiento_mes_cuenta_id", referencedColumnName = "cuenta_bancaria_id")
-    @ManyToOne(optional = false)
-    private CuentaBancaria movimientoMesCuentaId;
-    @Transient
-    private int saldo;
-    @Transient
-    private String liquidacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaMovimientoId")
+    private List<Factura> facturaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "honorarioMovimientoId")
+    private List<Honorario> honorarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraPetroleoMovtId")
+    private List<CompraPetroleo> compraPetroleoList;
 
     public MovimientoMes() {
     }
@@ -101,14 +103,14 @@ public class MovimientoMes implements Serializable {
         this.movimientoMesId = movimientoMesId;
     }
 
-    public MovimientoMes(Integer movimientoMesId, Date movimientoMesFechaMvto, Date movimientoMesFechaLiquidacion, int movimientoMesDocumento, String movimientoMesDetalle, int movimientoMesMonto) {
+    public MovimientoMes(Integer movimientoMesId, Date movimientoMesFechaMvto, Date movimientoMesFechaLiquidacion, int movimientoMesMonto, String movimientoMesDetalle, int movimientoMesTipoDocumento, int movimientoMesNumeroDocumento) {
         this.movimientoMesId = movimientoMesId;
         this.movimientoMesFechaMvto = movimientoMesFechaMvto;
         this.movimientoMesFechaLiquidacion = movimientoMesFechaLiquidacion;
-        this.movimientoMesDocumento = movimientoMesDocumento;
-        this.movimientoMesDetalle = movimientoMesDetalle;
         this.movimientoMesMonto = movimientoMesMonto;
-
+        this.movimientoMesDetalle = movimientoMesDetalle;
+        this.movimientoMesTipoDocumento = movimientoMesTipoDocumento;
+        this.movimientoMesNumeroDocumento = movimientoMesNumeroDocumento;
     }
 
     public Integer getMovimientoMesId() {
@@ -135,12 +137,12 @@ public class MovimientoMes implements Serializable {
         this.movimientoMesFechaLiquidacion = movimientoMesFechaLiquidacion;
     }
 
-    public int getMovimientoMesDocumento() {
-        return movimientoMesDocumento;
+    public int getMovimientoMesMonto() {
+        return movimientoMesMonto;
     }
 
-    public void setMovimientoMesDocumento(int movimientoMesDocumento) {
-        this.movimientoMesDocumento = movimientoMesDocumento;
+    public void setMovimientoMesMonto(int movimientoMesMonto) {
+        this.movimientoMesMonto = movimientoMesMonto;
     }
 
     public String getMovimientoMesDetalle() {
@@ -151,12 +153,46 @@ public class MovimientoMes implements Serializable {
         this.movimientoMesDetalle = movimientoMesDetalle;
     }
 
-    public int getMovimientoMesMonto() {
-        return movimientoMesMonto;
+    public int getMovimientoMesTipoDocumento() {
+        return movimientoMesTipoDocumento;
     }
 
-    public void setMovimientoMesMonto(int movimientoMesMonto) {
-        this.movimientoMesMonto = movimientoMesMonto;
+    public void setMovimientoMesTipoDocumento(int movimientoMesTipoDocumento) {
+        this.movimientoMesTipoDocumento = movimientoMesTipoDocumento;
+    }
+
+    public int getMovimientoMesNumeroDocumento() {
+        return movimientoMesNumeroDocumento;
+    }
+
+    public void setMovimientoMesNumeroDocumento(int movimientoMesNumeroDocumento) {
+        this.movimientoMesNumeroDocumento = movimientoMesNumeroDocumento;
+    }
+
+    @XmlTransient
+    public List<Compra> getCompraList() {
+        return compraList;
+    }
+
+    public void setCompraList(List<Compra> compraList) {
+        this.compraList = compraList;
+    }
+
+    @XmlTransient
+    public List<Anticipo> getAnticipoList() {
+        return anticipoList;
+    }
+
+    public void setAnticipoList(List<Anticipo> anticipoList) {
+        this.anticipoList = anticipoList;
+    }
+
+    public CuentaBancaria getMovimientoMesCuentaBancoId() {
+        return movimientoMesCuentaBancoId;
+    }
+
+    public void setMovimientoMesCuentaBancoId(CuentaBancaria movimientoMesCuentaBancoId) {
+        this.movimientoMesCuentaBancoId = movimientoMesCuentaBancoId;
     }
 
     public Empresa getMovimientoMesEmpresaId() {
@@ -167,82 +203,31 @@ public class MovimientoMes implements Serializable {
         this.movimientoMesEmpresaId = movimientoMesEmpresaId;
     }
 
-    public TipoMovimiento getMovimientoMesMvtoId() {
-        return movimientoMesMvtoId;
+    @XmlTransient
+    public List<Factura> getFacturaList() {
+        return facturaList;
     }
 
-    public void setMovimientoMesMvtoId(TipoMovimiento movimientoMesMvtoId) {
-        this.movimientoMesMvtoId = movimientoMesMvtoId;
+    public void setFacturaList(List<Factura> facturaList) {
+        this.facturaList = facturaList;
     }
 
-    public CuentaBancaria getMovimientoMesCuentaId() {
-        return movimientoMesCuentaId;
+    @XmlTransient
+    public List<Honorario> getHonorarioList() {
+        return honorarioList;
     }
 
-    public void setMovimientoMesCuentaId(CuentaBancaria movimientoMesCuentaId) {
-        this.movimientoMesCuentaId = movimientoMesCuentaId;
+    public void setHonorarioList(List<Honorario> honorarioList) {
+        this.honorarioList = honorarioList;
     }
 
-    public void setSaldo(int saldo) {
-        this.saldo = saldo;
+    @XmlTransient
+    public List<CompraPetroleo> getCompraPetroleoList() {
+        return compraPetroleoList;
     }
 
-    public int getSaldo() {
-        return saldo;
-    }
-
-    public void setLiquidacion(String liquidacion) {
-        this.liquidacion = liquidacion;
-    }
-
-    public String getLiquidacion() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(this.movimientoMesFechaLiquidacion);
-
-        int mes = cal.get(Calendar.MONTH) + 1;
-        int anio = cal.get(Calendar.YEAR);
-        switch (mes) {
-            case 1:
-                this.liquidacion = "ENE";
-                break;
-            case 2:
-                this.liquidacion = "FEB";
-                break;
-            case 3:
-                this.liquidacion = "MAR";
-                break;
-            case 4:
-                this.liquidacion = "ABR";
-                break;
-            case 5:
-                this.liquidacion = "MAY";
-                break;
-            case 6:
-                this.liquidacion = "JUN";
-                break;
-            case 7:
-                this.liquidacion = "JUL";
-                break;
-            case 8:
-                this.liquidacion = "AGO";
-                break;
-            case 9:
-                this.liquidacion = "SEP";
-                break;
-            case 10:
-                this.liquidacion = "OCT";
-                break;
-            case 11:
-                this.liquidacion = "NOV";
-                break;
-            case 12:
-                this.liquidacion = "DIC";
-                break;
-
-        }
-        liquidacion = liquidacion + " " + anio;
-
-        return liquidacion;
+    public void setCompraPetroleoList(List<CompraPetroleo> compraPetroleoList) {
+        this.compraPetroleoList = compraPetroleoList;
     }
 
     @Override
@@ -269,5 +254,5 @@ public class MovimientoMes implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.MovimientoMes[ movimientoMesId=" + movimientoMesId + " ]";
     }
-
+    
 }

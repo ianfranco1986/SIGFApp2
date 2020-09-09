@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ContratoUnidad;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ContratoUnidad_;
+//import com.areatecnica.sigf.entities.ContratoUnidad_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class ContratoUnidadFacade extends AbstractFacade<ContratoUnidad> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ContratoUnidad> contratoUnidad = cq.from(ContratoUnidad.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(contratoUnidad, entity), cb.isNotNull(contratoUnidad.get(ContratoUnidad_.contratoUnidadIdUnidadNegocio)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(contratoUnidad, entity), cb.isNotNull(contratoUnidad.get(ContratoUnidad_.contratoUnidadIdUnidadNegocio)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

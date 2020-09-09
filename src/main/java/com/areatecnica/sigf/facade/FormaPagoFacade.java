@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.FormaPago;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.FormaPago_;
+//import com.areatecnica.sigf.entities.FormaPago_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class FormaPagoFacade extends AbstractFacade<FormaPago> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<FormaPago> formaPago = cq.from(FormaPago.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(formaPago, entity), cb.isNotEmpty(formaPago.get(FormaPago_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(formaPago, entity), cb.isNotEmpty(formaPago.get(FormaPago_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.HorarioJornada;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.HorarioJornada_;
+//import com.areatecnica.sigf.entities.HorarioJornada_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class HorarioJornadaFacade extends AbstractFacade<HorarioJornada> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HorarioJornada> horarioJornada = cq.from(HorarioJornada.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioJornada, entity), cb.isNotNull(horarioJornada.get(HorarioJornada_.horarioJornadaIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioJornada, entity), cb.isNotNull(horarioJornada.get(HorarioJornada_.horarioJornadaIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class HorarioJornadaFacade extends AbstractFacade<HorarioJornada> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HorarioJornada> horarioJornada = cq.from(HorarioJornada.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioJornada, entity), cb.isNotEmpty(horarioJornada.get(HorarioJornada_.jornadaLaboralList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioJornada, entity), cb.isNotEmpty(horarioJornada.get(HorarioJornada_.jornadaLaboralList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

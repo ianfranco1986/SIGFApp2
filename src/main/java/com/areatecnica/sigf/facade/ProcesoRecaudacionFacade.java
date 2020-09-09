@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ProcesoRecaudacion_;
+//import com.areatecnica.sigf.entities.ProcesoRecaudacion_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -43,7 +43,7 @@ public class ProcesoRecaudacionFacade extends AbstractFacade<ProcesoRecaudacion>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ProcesoRecaudacion> procesoRecaudacion = cq.from(ProcesoRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotEmpty(procesoRecaudacion.get(ProcesoRecaudacion_.cuentaBancoProcesoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotEmpty(procesoRecaudacion.get(ProcesoRecaudacion_.cuentaBancoProcesoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -58,7 +58,7 @@ public class ProcesoRecaudacionFacade extends AbstractFacade<ProcesoRecaudacion>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ProcesoRecaudacion> procesoRecaudacion = cq.from(ProcesoRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotEmpty(procesoRecaudacion.get(ProcesoRecaudacion_.busList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotEmpty(procesoRecaudacion.get(ProcesoRecaudacion_.busList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -73,7 +73,7 @@ public class ProcesoRecaudacionFacade extends AbstractFacade<ProcesoRecaudacion>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ProcesoRecaudacion> procesoRecaudacion = cq.from(ProcesoRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotEmpty(procesoRecaudacion.get(ProcesoRecaudacion_.egresoProcesoRecaudacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotEmpty(procesoRecaudacion.get(ProcesoRecaudacion_.egresoProcesoRecaudacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -88,7 +88,7 @@ public class ProcesoRecaudacionFacade extends AbstractFacade<ProcesoRecaudacion>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ProcesoRecaudacion> procesoRecaudacion = cq.from(ProcesoRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotEmpty(procesoRecaudacion.get(ProcesoRecaudacion_.cajaProcesoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotEmpty(procesoRecaudacion.get(ProcesoRecaudacion_.cajaProcesoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -103,7 +103,7 @@ public class ProcesoRecaudacionFacade extends AbstractFacade<ProcesoRecaudacion>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ProcesoRecaudacion> procesoRecaudacion = cq.from(ProcesoRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotNull(procesoRecaudacion.get(ProcesoRecaudacion_.procesoRecaudacionIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(procesoRecaudacion, entity), cb.isNotNull(procesoRecaudacion.get(ProcesoRecaudacion_.procesoRecaudacionIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

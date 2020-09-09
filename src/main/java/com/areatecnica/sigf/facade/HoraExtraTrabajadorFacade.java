@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.HoraExtraTrabajador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.HoraExtraTrabajador_;
+//import com.areatecnica.sigf.entities.HoraExtraTrabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class HoraExtraTrabajadorFacade extends AbstractFacade<HoraExtraTrabajado
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HoraExtraTrabajador> horaExtraTrabajador = cq.from(HoraExtraTrabajador.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horaExtraTrabajador, entity), cb.isNotNull(horaExtraTrabajador.get(HoraExtraTrabajador_.horaExtraTrabajadorIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horaExtraTrabajador, entity), cb.isNotNull(horaExtraTrabajador.get(HoraExtraTrabajador_.horaExtraTrabajadorIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

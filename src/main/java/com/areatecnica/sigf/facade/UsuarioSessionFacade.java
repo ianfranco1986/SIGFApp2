@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.UsuarioSession;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.UsuarioSession_;
+//import com.areatecnica.sigf.entities.UsuarioSession_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class UsuarioSessionFacade extends AbstractFacade<UsuarioSession> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<UsuarioSession> usuarioSession = cq.from(UsuarioSession.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(usuarioSession, entity), cb.isNotNull(usuarioSession.get(UsuarioSession_.usuarioSessionIdUsuario)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(usuarioSession, entity), cb.isNotNull(usuarioSession.get(UsuarioSession_.usuarioSessionIdUsuario)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

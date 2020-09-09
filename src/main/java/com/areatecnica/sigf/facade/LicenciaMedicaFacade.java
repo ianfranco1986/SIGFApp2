@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.LicenciaMedica;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.LicenciaMedica_;
+//import com.areatecnica.sigf.entities.LicenciaMedica_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +38,7 @@ public class LicenciaMedicaFacade extends AbstractFacade<LicenciaMedica> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<LicenciaMedica> licenciaMedica = cq.from(LicenciaMedica.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(licenciaMedica, entity), cb.isNotNull(licenciaMedica.get(LicenciaMedica_.licenciaMedicaIdTrabajador)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(licenciaMedica, entity), cb.isNotNull(licenciaMedica.get(LicenciaMedica_.licenciaMedicaIdTrabajador)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

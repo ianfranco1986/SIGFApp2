@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RepresentanteEmpresa;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RepresentanteEmpresa_;
+//import com.areatecnica.sigf.entities.RepresentanteEmpresa_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class RepresentanteEmpresaFacade extends AbstractFacade<RepresentanteEmpr
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RepresentanteEmpresa> representanteEmpresa = cq.from(RepresentanteEmpresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteEmpresa, entity), cb.isNotNull(representanteEmpresa.get(RepresentanteEmpresa_.representanteEmpresaIdEmpresa)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteEmpresa, entity), cb.isNotNull(representanteEmpresa.get(RepresentanteEmpresa_.representanteEmpresaIdEmpresa)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class RepresentanteEmpresaFacade extends AbstractFacade<RepresentanteEmpr
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RepresentanteEmpresa> representanteEmpresa = cq.from(RepresentanteEmpresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteEmpresa, entity), cb.isNotNull(representanteEmpresa.get(RepresentanteEmpresa_.representanteEmpresaIdRepresentanteLegal)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(representanteEmpresa, entity), cb.isNotNull(representanteEmpresa.get(RepresentanteEmpresa_.representanteEmpresaIdRepresentanteLegal)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

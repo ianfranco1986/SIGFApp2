@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RecaudacionCombustible;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RecaudacionCombustible_;
+//import com.areatecnica.sigf.entities.RecaudacionCombustible_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class RecaudacionCombustibleFacade extends AbstractFacade<RecaudacionComb
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionCombustible> recaudacionCombustible = cq.from(RecaudacionCombustible.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionCombustible, entity), cb.isNotNull(recaudacionCombustible.get(RecaudacionCombustible_.recaudacionCombustibleIdRecaudacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionCombustible, entity), cb.isNotNull(recaudacionCombustible.get(RecaudacionCombustible_.recaudacionCombustibleIdRecaudacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class RecaudacionCombustibleFacade extends AbstractFacade<RecaudacionComb
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RecaudacionCombustible> recaudacionCombustible = cq.from(RecaudacionCombustible.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionCombustible, entity), cb.isNotNull(recaudacionCombustible.get(RecaudacionCombustible_.recaudacionCombustibleIdVentaCombustible)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(recaudacionCombustible, entity), cb.isNotNull(recaudacionCombustible.get(RecaudacionCombustible_.recaudacionCombustibleIdVentaCombustible)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

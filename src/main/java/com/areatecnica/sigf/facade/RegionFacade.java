@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Region;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Region_;
+//import com.areatecnica.sigf.entities.Region_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class RegionFacade extends AbstractFacade<Region> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Region> region = cq.from(Region.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(region, entity), cb.isNotEmpty(region.get(Region_.ciudadList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(region, entity), cb.isNotEmpty(region.get(Region_.ciudadList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -55,7 +55,7 @@ public class RegionFacade extends AbstractFacade<Region> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Region> region = cq.from(Region.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(region, entity), cb.isNotEmpty(region.get(Region_.unidadNegocioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(region, entity), cb.isNotEmpty(region.get(Region_.unidadNegocioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

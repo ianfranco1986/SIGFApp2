@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.RolMenu;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.RolMenu_;
+//import com.areatecnica.sigf.entities.RolMenu_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class RolMenuFacade extends AbstractFacade<RolMenu> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RolMenu> rolMenu = cq.from(RolMenu.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(rolMenu, entity), cb.isNotNull(rolMenu.get(RolMenu_.rolMenuIdMenu)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(rolMenu, entity), cb.isNotNull(rolMenu.get(RolMenu_.rolMenuIdMenu)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class RolMenuFacade extends AbstractFacade<RolMenu> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<RolMenu> rolMenu = cq.from(RolMenu.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(rolMenu, entity), cb.isNotNull(rolMenu.get(RolMenu_.rolMenuIdRol)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(rolMenu, entity), cb.isNotNull(rolMenu.get(RolMenu_.rolMenuIdRol)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

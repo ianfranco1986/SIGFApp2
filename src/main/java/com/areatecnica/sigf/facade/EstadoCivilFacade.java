@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.EstadoCivil;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.EstadoCivil_;
+//import com.areatecnica.sigf.entities.EstadoCivil_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class EstadoCivilFacade extends AbstractFacade<EstadoCivil> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<EstadoCivil> estadoCivil = cq.from(EstadoCivil.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(estadoCivil, entity), cb.isNotEmpty(estadoCivil.get(EstadoCivil_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(estadoCivil, entity), cb.isNotEmpty(estadoCivil.get(EstadoCivil_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -65,10 +65,8 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
         Map<String, Object> map = new HashMap();
 
         map.put("fechaCompleta", getFechaCompleta());
-        map.put("desde", desde);
-        map.put("hasta", hasta);
-        map.put("list", array);
-
+        map.put("fecha", desde);
+        
         return map;
     }
 

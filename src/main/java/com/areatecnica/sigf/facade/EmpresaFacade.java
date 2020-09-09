@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Empresa;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Empresa_;
+//import com.areatecnica.sigf.entities.Empresa_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -47,7 +47,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.liquidacionEmpresaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.liquidacionEmpresaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -62,7 +62,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.representanteEmpresaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.representanteEmpresaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -92,7 +92,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.liquidacionSueldoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.liquidacionSueldoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -107,7 +107,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.reconocimientoDeudaList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.reconocimientoDeudaList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -122,7 +122,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.busList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.busList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -137,7 +137,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.relacionLaboralList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotEmpty(empresa.get(Empresa_.relacionLaboralList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -152,7 +152,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotNull(empresa.get(Empresa_.empresaIdCajaCompensacion)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotNull(empresa.get(Empresa_.empresaIdCajaCompensacion)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -164,7 +164,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotNull(empresa.get(Empresa_.empresaIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotNull(empresa.get(Empresa_.empresaIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -176,7 +176,7 @@ public class EmpresaFacade extends AbstractFacade<Empresa> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Empresa> empresa = cq.from(Empresa.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotNull(empresa.get(Empresa_.empresaIdMutual)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(empresa, entity), cb.isNotNull(empresa.get(Empresa_.empresaIdMutual)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

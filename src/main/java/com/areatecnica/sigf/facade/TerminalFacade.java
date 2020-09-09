@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Terminal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Terminal_;
+//import com.areatecnica.sigf.entities.Terminal_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -49,7 +49,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.surtidorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.surtidorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -64,7 +64,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.usuarioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.usuarioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -79,7 +79,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.liquidacionSueldoList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.liquidacionSueldoList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -94,7 +94,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -109,7 +109,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.busList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.busList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -124,7 +124,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.relacionLaboralList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.relacionLaboralList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -139,7 +139,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.grupoServicioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.grupoServicioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -154,7 +154,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.cajaRecaudacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.cajaRecaudacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -169,7 +169,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.servicioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotEmpty(terminal.get(Terminal_.servicioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -184,7 +184,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotNull(terminal.get(Terminal_.terminalIdComuna)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotNull(terminal.get(Terminal_.terminalIdComuna)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -196,7 +196,7 @@ public class TerminalFacade extends AbstractFacade<Terminal> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Terminal> terminal = cq.from(Terminal.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotNull(terminal.get(Terminal_.terminalIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(terminal, entity), cb.isNotNull(terminal.get(Terminal_.terminalIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

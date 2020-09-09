@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.TipoInstitucionApv;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.TipoInstitucionApv_;
+//import com.areatecnica.sigf.entities.TipoInstitucionApv_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class TipoInstitucionApvFacade extends AbstractFacade<TipoInstitucionApv>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<TipoInstitucionApv> tipoInstitucionApv = cq.from(TipoInstitucionApv.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoInstitucionApv, entity), cb.isNotEmpty(tipoInstitucionApv.get(TipoInstitucionApv_.institucionApvList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(tipoInstitucionApv, entity), cb.isNotEmpty(tipoInstitucionApv.get(TipoInstitucionApv_.institucionApvList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.HorarioServicio;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.HorarioServicio_;
+//import com.areatecnica.sigf.entities.HorarioServicio_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class HorarioServicioFacade extends AbstractFacade<HorarioServicio> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HorarioServicio> horarioServicio = cq.from(HorarioServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioServicio, entity), cb.isNotEmpty(horarioServicio.get(HorarioServicio_.controlHorarioServicioList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioServicio, entity), cb.isNotEmpty(horarioServicio.get(HorarioServicio_.controlHorarioServicioList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -56,7 +56,7 @@ public class HorarioServicioFacade extends AbstractFacade<HorarioServicio> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HorarioServicio> horarioServicio = cq.from(HorarioServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioServicio, entity), cb.isNotNull(horarioServicio.get(HorarioServicio_.horarioServicioIdTipoEstacionalidad)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioServicio, entity), cb.isNotNull(horarioServicio.get(HorarioServicio_.horarioServicioIdTipoEstacionalidad)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class HorarioServicioFacade extends AbstractFacade<HorarioServicio> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<HorarioServicio> horarioServicio = cq.from(HorarioServicio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioServicio, entity), cb.isNotNull(horarioServicio.get(HorarioServicio_.horarioServicioIdServicio)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(horarioServicio, entity), cb.isNotNull(horarioServicio.get(HorarioServicio_.horarioServicioIdServicio)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

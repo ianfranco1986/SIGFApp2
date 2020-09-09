@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.ResumenRecaudacion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.ResumenRecaudacion_;
+//import com.areatecnica.sigf.entities.ResumenRecaudacion_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class ResumenRecaudacionFacade extends AbstractFacade<ResumenRecaudacion>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ResumenRecaudacion> resumenRecaudacion = cq.from(ResumenRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(resumenRecaudacion, entity), cb.isNotNull(resumenRecaudacion.get(ResumenRecaudacion_.resumenRecaudacionIdCaja)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(resumenRecaudacion, entity), cb.isNotNull(resumenRecaudacion.get(ResumenRecaudacion_.resumenRecaudacionIdCaja)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -53,7 +53,7 @@ public class ResumenRecaudacionFacade extends AbstractFacade<ResumenRecaudacion>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ResumenRecaudacion> resumenRecaudacion = cq.from(ResumenRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(resumenRecaudacion, entity), cb.isNotEmpty(resumenRecaudacion.get(ResumenRecaudacion_.detalleDepositoRecaudacionList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(resumenRecaudacion, entity), cb.isNotEmpty(resumenRecaudacion.get(ResumenRecaudacion_.detalleDepositoRecaudacionList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class ResumenRecaudacionFacade extends AbstractFacade<ResumenRecaudacion>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<ResumenRecaudacion> resumenRecaudacion = cq.from(ResumenRecaudacion.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(resumenRecaudacion, entity), cb.isNotEmpty(resumenRecaudacion.get(ResumenRecaudacion_.ctvResumenList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(resumenRecaudacion, entity), cb.isNotEmpty(resumenRecaudacion.get(ResumenRecaudacion_.ctvResumenList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

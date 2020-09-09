@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.DescuentoExtraBus;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.DescuentoExtraBus_;
+//import com.areatecnica.sigf.entities.DescuentoExtraBus_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -41,7 +41,7 @@ public class DescuentoExtraBusFacade extends AbstractFacade<DescuentoExtraBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DescuentoExtraBus> descuentoExtraBus = cq.from(DescuentoExtraBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtraBus, entity), cb.isNotEmpty(descuentoExtraBus.get(DescuentoExtraBus_.recaudacionDescuentoExtraList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtraBus, entity), cb.isNotEmpty(descuentoExtraBus.get(DescuentoExtraBus_.recaudacionDescuentoExtraList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -56,7 +56,7 @@ public class DescuentoExtraBusFacade extends AbstractFacade<DescuentoExtraBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DescuentoExtraBus> descuentoExtraBus = cq.from(DescuentoExtraBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtraBus, entity), cb.isNotNull(descuentoExtraBus.get(DescuentoExtraBus_.descuentoExtraBusIdBus)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtraBus, entity), cb.isNotNull(descuentoExtraBus.get(DescuentoExtraBus_.descuentoExtraBusIdBus)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -68,7 +68,7 @@ public class DescuentoExtraBusFacade extends AbstractFacade<DescuentoExtraBus> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<DescuentoExtraBus> descuentoExtraBus = cq.from(DescuentoExtraBus.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtraBus, entity), cb.isNotNull(descuentoExtraBus.get(DescuentoExtraBus_.descuentoExtraBusIdDescuento)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(descuentoExtraBus, entity), cb.isNotNull(descuentoExtraBus.get(DescuentoExtraBus_.descuentoExtraBusIdDescuento)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

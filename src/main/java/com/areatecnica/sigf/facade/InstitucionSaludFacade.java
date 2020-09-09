@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.InstitucionSalud;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.InstitucionSalud_;
+//import com.areatecnica.sigf.entities.InstitucionSalud_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class InstitucionSaludFacade extends AbstractFacade<InstitucionSalud> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InstitucionSalud> institucionSalud = cq.from(InstitucionSalud.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionSalud, entity), cb.isNotNull(institucionSalud.get(InstitucionSalud_.institucionSaludIdCuenta)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionSalud, entity), cb.isNotNull(institucionSalud.get(InstitucionSalud_.institucionSaludIdCuenta)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class InstitucionSaludFacade extends AbstractFacade<InstitucionSalud> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<InstitucionSalud> institucionSalud = cq.from(InstitucionSalud.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionSalud, entity), cb.isNotEmpty(institucionSalud.get(InstitucionSalud_.trabajadorList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(institucionSalud, entity), cb.isNotEmpty(institucionSalud.get(InstitucionSalud_.trabajadorList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

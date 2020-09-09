@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,9 +64,6 @@ public class Proveedor implements Serializable {
     @Size(max = 45)
     @Column(name = "proveedor_direccion")
     private String proveedorDireccion;
-    @JoinColumn(name = "proveedor_comuna_id", referencedColumnName = "comuna_id", nullable = false)
-    @ManyToOne(optional = false)
-    private Comuna proveedorComunaId;
     @Size(max = 45)
     @Column(name = "proveedor_telefono")
     private String proveedorTelefono;
@@ -77,6 +75,11 @@ public class Proveedor implements Serializable {
     private String proveedorGiro;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraProveedorId")
     private List<Compra> compraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraPetroleoProveedorId", fetch = FetchType.LAZY)
+    private List<CompraPetroleo> compraPetroleoList;
+    @JoinColumn(name = "proveedor_comuna_id", referencedColumnName = "comuna_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Comuna proveedorComunaId;
 
     public Proveedor() {
     }
@@ -162,6 +165,15 @@ public class Proveedor implements Serializable {
 
     public void setCompraList(List<Compra> compraList) {
         this.compraList = compraList;
+    }
+    
+    @XmlTransient
+    public List<CompraPetroleo> getCompraPetroleoList() {
+        return compraPetroleoList;
+    }
+
+    public void setCompraPetroleoList(List<CompraPetroleo> compraPetroleoList) {
+        this.compraPetroleoList = compraPetroleoList;
     }
 
     @Override

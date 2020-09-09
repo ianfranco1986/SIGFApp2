@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.EgresoFlota;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.EgresoFlota_;
+//import com.areatecnica.sigf.entities.EgresoFlota_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -39,7 +39,7 @@ public class EgresoFlotaFacade extends AbstractFacade<EgresoFlota> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<EgresoFlota> egresoFlota = cq.from(EgresoFlota.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoFlota, entity), cb.isNotNull(egresoFlota.get(EgresoFlota_.egresoFlotaIdEgreso)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoFlota, entity), cb.isNotNull(egresoFlota.get(EgresoFlota_.egresoFlotaIdEgreso)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -51,7 +51,7 @@ public class EgresoFlotaFacade extends AbstractFacade<EgresoFlota> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<EgresoFlota> egresoFlota = cq.from(EgresoFlota.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoFlota, entity), cb.isNotNull(egresoFlota.get(EgresoFlota_.egresoFlotaIdFlota)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(egresoFlota, entity), cb.isNotNull(egresoFlota.get(EgresoFlota_.egresoFlotaIdFlota)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 

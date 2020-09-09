@@ -9,7 +9,7 @@ import com.areatecnica.sigf.entities.Privilegio;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import com.areatecnica.sigf.entities.Privilegio_;
+//import com.areatecnica.sigf.entities.Privilegio_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -40,7 +40,7 @@ public class PrivilegioFacade extends AbstractFacade<Privilegio> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Privilegio> privilegio = cq.from(Privilegio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(privilegio, entity), cb.isNotNull(privilegio.get(Privilegio_.privilegioIdMenu)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(privilegio, entity), cb.isNotNull(privilegio.get(Privilegio_.privilegioIdMenu)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class PrivilegioFacade extends AbstractFacade<Privilegio> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Privilegio> privilegio = cq.from(Privilegio.class);
-        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(privilegio, entity), cb.isNotEmpty(privilegio.get(Privilegio_.logList)));
+//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(privilegio, entity), cb.isNotEmpty(privilegio.get(Privilegio_.logList)));
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
