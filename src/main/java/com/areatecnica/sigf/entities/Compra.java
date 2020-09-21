@@ -31,19 +31,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "compra", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Compra.findAll", query = "SELECT c FROM Compra c")
-    , @NamedQuery(name = "Compra.findByCompraId", query = "SELECT c FROM Compra c WHERE c.compraId = :compraId")
-    , @NamedQuery(name = "Compra.findByCompraFechaDocumento", query = "SELECT c FROM Compra c WHERE c.compraFechaDocumento = :compraFechaDocumento")
-    , @NamedQuery(name = "Compra.findByCompraBetweenDates", query = "SELECT c FROM Compra c WHERE c.compraFechaDocumento BETWEEN :from AND :to ORDER BY c.compraFechaDocumento")
-    , @NamedQuery(name = "Compra.findByCompraFechaAcuse", query = "SELECT c FROM Compra c WHERE c.compraFechaAcuse = :compraFechaAcuse")
-    , @NamedQuery(name = "Compra.findByCompraFechaRecepcion", query = "SELECT c FROM Compra c WHERE c.compraFechaRecepcion = :compraFechaRecepcion")
-    , @NamedQuery(name = "Compra.findByCompraFolio", query = "SELECT c FROM Compra c WHERE c.compraFolio = :compraFolio")
-    , @NamedQuery(name = "Compra.findByCompraDescripcion", query = "SELECT c FROM Compra c WHERE c.compraDescripcion = :compraDescripcion")
-    , @NamedQuery(name = "Compra.findByCompraNeto", query = "SELECT c FROM Compra c WHERE c.compraNeto = :compraNeto")
-    , @NamedQuery(name = "Compra.findByCompraExento", query = "SELECT c FROM Compra c WHERE c.compraExento = :compraExento")
-    , @NamedQuery(name = "Compra.findByCompraIva", query = "SELECT c FROM Compra c WHERE c.compraIva = :compraIva")
-    , @NamedQuery(name = "Compra.findByCompraOtrosImpuestos", query = "SELECT c FROM Compra c WHERE c.compraOtrosImpuestos = :compraOtrosImpuestos")
-    , @NamedQuery(name = "Compra.findByCompraTotal", query = "SELECT c FROM Compra c WHERE c.compraTotal = :compraTotal")})
+    @NamedQuery(name = "Compra.findAll", query = "SELECT c FROM Compra c"),
+    @NamedQuery(name = "Compra.findByCompraId", query = "SELECT c FROM Compra c WHERE c.compraId = :compraId"),
+    @NamedQuery(name = "Compra.findByCompraFechaDocumento", query = "SELECT c FROM Compra c WHERE c.compraFechaDocumento = :compraFechaDocumento"),
+    @NamedQuery(name = "Compra.findByCompraFechaAcuse", query = "SELECT c FROM Compra c WHERE c.compraFechaAcuse = :compraFechaAcuse"),
+    @NamedQuery(name = "Compra.findByCompraFechaRecepcion", query = "SELECT c FROM Compra c WHERE c.compraFechaRecepcion = :compraFechaRecepcion"),
+    @NamedQuery(name = "Compra.findByCompraFolio", query = "SELECT c FROM Compra c WHERE c.compraFolio = :compraFolio"),
+    @NamedQuery(name = "Compra.findByCompraDescripcion", query = "SELECT c FROM Compra c WHERE c.compraDescripcion = :compraDescripcion"),
+    @NamedQuery(name = "Compra.findByCompraNeto", query = "SELECT c FROM Compra c WHERE c.compraNeto = :compraNeto"),
+    @NamedQuery(name = "Compra.findByCompraExento", query = "SELECT c FROM Compra c WHERE c.compraExento = :compraExento"),
+    @NamedQuery(name = "Compra.findByCompraIva", query = "SELECT c FROM Compra c WHERE c.compraIva = :compraIva"),
+    @NamedQuery(name = "Compra.findByCompraOtrosImpuestos", query = "SELECT c FROM Compra c WHERE c.compraOtrosImpuestos = :compraOtrosImpuestos"),
+    @NamedQuery(name = "Compra.findByCompraTotal", query = "SELECT c FROM Compra c WHERE c.compraTotal = :compraTotal")})
 public class Compra implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -76,9 +75,12 @@ public class Compra implements Serializable {
     private Integer compraOtrosImpuestos;
     @Column(name = "compra_total")
     private Integer compraTotal;
-    @JoinColumn(name = "compra_cuenta_id", referencedColumnName = "cuenta_mayor_id")
+    @JoinColumn(name = "compra_cuenta_mayor_id", referencedColumnName = "cuenta_mayor_id")
     @ManyToOne(optional = false)
-    private CuentaMayor compraCuentaId;
+    private CuentaMayor compraCuentaMayorId;
+    @JoinColumn(name = "compra_movimiento_id", referencedColumnName = "movimiento_mes_id")
+    @ManyToOne(optional = false)
+    private MovimientoMes compraMovimientoId;
     @JoinColumn(name = "compra_proveedor_id", referencedColumnName = "proveedor_id")
     @ManyToOne(optional = false)
     private Proveedor compraProveedorId;
@@ -181,12 +183,20 @@ public class Compra implements Serializable {
         this.compraTotal = compraTotal;
     }
 
-    public CuentaMayor getCompraCuentaId() {
-        return compraCuentaId;
+    public CuentaMayor getCompraCuentaMayorId() {
+        return compraCuentaMayorId;
     }
 
-    public void setCompraCuentaId(CuentaMayor compraCuentaId) {
-        this.compraCuentaId = compraCuentaId;
+    public void setCompraCuentaMayorId(CuentaMayor compraCuentaMayorId) {
+        this.compraCuentaMayorId = compraCuentaMayorId;
+    }
+
+    public MovimientoMes getCompraMovimientoId() {
+        return compraMovimientoId;
+    }
+
+    public void setCompraMovimientoId(MovimientoMes compraMovimientoId) {
+        this.compraMovimientoId = compraMovimientoId;
     }
 
     public Proveedor getCompraProveedorId() {

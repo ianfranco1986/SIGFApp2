@@ -47,7 +47,7 @@ public class JasperReportUtil {
         Connection connection = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.mariadb.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb", "root", "NintendO64");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,8 +66,8 @@ public class JasperReportUtil {
         Connection connection = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://www.areatecnica.cl:3306/sigfdb", "root", "NintendO64");
+            Class.forName("org.mariadb.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://35.236.225.109:3306/sigfdb", "ianfranco", ".TrustNo1.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

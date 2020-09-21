@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "cuenta_mayor", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CuentaMayor.findAll", query = "SELECT c FROM CuentaMayor c")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorId", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorId = :cuentaMayorId")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorNombre", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorNombre = :cuentaMayorNombre")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorCompras", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorCompras = :cuentaMayorCompras")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorHonorarios", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorHonorarios = :cuentaMayorHonorarios")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorRemuneraciones", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorRemuneraciones = :cuentaMayorRemuneraciones")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorTesoreria", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorTesoreria = :cuentaMayorTesoreria")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorPresupuesto", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorPresupuesto = :cuentaMayorPresupuesto")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorVentas", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorVentas = :cuentaMayorVentas")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorBanco", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorBanco = :cuentaMayorBanco")
-    , @NamedQuery(name = "CuentaMayor.findByCuentaMayorActivosFijos", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorActivosFijos = :cuentaMayorActivosFijos")})
+    @NamedQuery(name = "CuentaMayor.findAll", query = "SELECT c FROM CuentaMayor c"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorId", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorId = :cuentaMayorId"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorNombre", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorNombre = :cuentaMayorNombre"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorCompras", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorCompras = :cuentaMayorCompras"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorHonorarios", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorHonorarios = :cuentaMayorHonorarios"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorRemuneraciones", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorRemuneraciones = :cuentaMayorRemuneraciones"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorTesoreria", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorTesoreria = :cuentaMayorTesoreria"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorPresupuesto", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorPresupuesto = :cuentaMayorPresupuesto"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorVentas", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorVentas = :cuentaMayorVentas"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorBanco", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorBanco = :cuentaMayorBanco"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorActivosFijos", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorActivosFijos = :cuentaMayorActivosFijos")})
 public class CuentaMayor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,11 +73,19 @@ public class CuentaMayor implements Serializable {
     private Boolean cuentaMayorBanco;
     @Column(name = "cuenta_mayor_activos_fijos")
     private Boolean cuentaMayorActivosFijos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraCuentaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraCuentaMayorId")
     private List<Compra> compraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anticipoCuentaMayorId")
+    private List<Anticipo> anticipoList;
     @JoinColumn(name = "cuenta_mayor_sub_tipo_id", referencedColumnName = "plan_cuenta_sub_tipo_id")
     @ManyToOne(optional = false)
     private PlanCuentaSubTipo cuentaMayorSubTipoId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaCuentaMayorId")
+    private List<Factura> facturaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "honorarioCuentaMayorId")
+    private List<Honorario> honorarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraPetroleoCuentaMayorId")
+    private List<CompraPetroleo> compraPetroleoList;
 
     public CuentaMayor() {
     }
@@ -180,12 +188,48 @@ public class CuentaMayor implements Serializable {
         this.compraList = compraList;
     }
 
+    @XmlTransient
+    public List<Anticipo> getAnticipoList() {
+        return anticipoList;
+    }
+
+    public void setAnticipoList(List<Anticipo> anticipoList) {
+        this.anticipoList = anticipoList;
+    }
+
     public PlanCuentaSubTipo getCuentaMayorSubTipoId() {
         return cuentaMayorSubTipoId;
     }
 
     public void setCuentaMayorSubTipoId(PlanCuentaSubTipo cuentaMayorSubTipoId) {
         this.cuentaMayorSubTipoId = cuentaMayorSubTipoId;
+    }
+
+    @XmlTransient
+    public List<Factura> getFacturaList() {
+        return facturaList;
+    }
+
+    public void setFacturaList(List<Factura> facturaList) {
+        this.facturaList = facturaList;
+    }
+
+    @XmlTransient
+    public List<Honorario> getHonorarioList() {
+        return honorarioList;
+    }
+
+    public void setHonorarioList(List<Honorario> honorarioList) {
+        this.honorarioList = honorarioList;
+    }
+
+    @XmlTransient
+    public List<CompraPetroleo> getCompraPetroleoList() {
+        return compraPetroleoList;
+    }
+
+    public void setCompraPetroleoList(List<CompraPetroleo> compraPetroleoList) {
+        this.compraPetroleoList = compraPetroleoList;
     }
 
     @Override
@@ -210,7 +254,7 @@ public class CuentaMayor implements Serializable {
 
     @Override
     public String toString() {
-        return cuentaMayorNombre;
+        return "com.areatecnica.sigf.entities.CuentaMayor[ cuentaMayorId=" + cuentaMayorId + " ]";
     }
     
 }

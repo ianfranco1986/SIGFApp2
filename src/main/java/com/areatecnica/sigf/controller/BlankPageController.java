@@ -100,124 +100,124 @@ public class BlankPageController implements Serializable {
 
         client = ClientBuilder.newClient();
 
-        //Total Recaudación General 
-        String totalRecaudacionGeneralURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacion/totalRecaudacionGeneral/" + sdf.format(from);//NO OLVIDAR MODIFICAR
-        target = client.target(totalRecaudacionGeneralURL);
-        Name3ValuePOJO ppp = null;
-        Name2ValuePOJO pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalRecaudacion = Integer.parseInt(pp.getValue());
-
-          //Total Recaudación Administración
-        String totalRecaudacionAdministracionURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionAdministracion/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
-        target = client.target(totalRecaudacionAdministracionURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalAdministracion = Integer.parseInt(pp.getValue());
-
-        //Total Recaudación CuotaExtra
-        String totalRecaudacionCuotaExtraURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionCuotaExtra/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
-        target = client.target(totalRecaudacionCuotaExtraURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalCuotaExtra = Integer.parseInt(pp.getValue());
-
-        //Total Recaudación Imposiciones
-        String totalRecaudacionImposicionesURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionImposiciones/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
-        target = client.target(totalRecaudacionImposicionesURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalImposiciones = Integer.parseInt(pp.getValue());
-
-        //Total Recaudación Boletos
-        String totalRecaudacionBoletosURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionBoletos/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
-        target = client.target(totalRecaudacionBoletosURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalBoletos = Integer.parseInt(pp.getValue());
-
-        //Total Recaudación Mensual
-        String totalRecaudacionMensualURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacion/totalRecaudacionMes/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
-
-        target = client.target(totalRecaudacionMensualURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalRecaudacionMes = Integer.parseInt(pp.getValue());
-
-        //Total Recaudación Combustible
-        String totalRecaudacionCombustibleURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacioncombustible/totalRecaudacionCombustible/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
-
-        target = client.target(totalRecaudacionCombustibleURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalCombustible = Integer.parseInt(pp.getValue());
-
-        //Total Recaudación Minuto
-        String totalRecaudacionMinutoURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionminuto/totalRecaudacionMinuto/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
-
-        target = client.target(totalRecaudacionMinutoURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalMinutos = Integer.parseInt(pp.getValue());
-
-        //N° de Imposiciones Recaudadas
-        String numeroImposicionesURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/cantidadRecaudacionImposiciones/" + sdf.format(from);
-
-        target = client.target(numeroImposicionesURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.numeroImposiciones = Integer.parseInt(pp.getValue());
-
-        //Total Venta de Petroleo 
-        String totalVentaPetroleoURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/totalVentaCombustibleFecha/" + sdf.format(from);
-
-        target = client.target(totalVentaPetroleoURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalVentaPetroleo = Integer.parseInt(pp.getValue());
-
-        //Total Venta de Petroleo Prestadores
-        String totalVentaPetroleoPrestadoresURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/totalVentaCombustibleFechaPrestador/" + sdf.format(from);
-
-        target = client.target(totalVentaPetroleoPrestadoresURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalVentaPrestadores = Integer.parseInt(pp.getValue());
-
-        //Total Venta de Petroleo Anterior
-        String totalVentaPetroleoAnteriorURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/totalVentaCombustibleFecha/" + sdf.format(new DateTime(from).minusDays(1).toDate());
-
-        target = client.target(totalVentaPetroleoAnteriorURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.totalVentaPetroleoAnterior = Integer.parseInt(pp.getValue());
-
-        if (this.totalVentaPetroleo == this.totalVentaPetroleoAnterior) {
-            this.leyendaVentaPetroleo = "No existe variación entre las ventas de ayer y hoy";
-        } else if (this.totalVentaPetroleo > this.totalVentaPetroleoAnterior) {
-            this.leyendaVentaPetroleo = "Ventas un " + getPorcentajeSuperior(this.totalVentaPetroleoAnterior, this.totalVentaPetroleo ) + " superiores al día anterior (" + formattedValue(String.valueOf(this.totalVentaPetroleoAnterior));
-        } else {
-            this.leyendaVentaPetroleo = "Ventas un " + getPorcentaje(this.totalVentaPetroleoAnterior, this.totalVentaPetroleo) + " inferiores al día anterior (" + formattedValue(String.valueOf(this.totalVentaPetroleoAnterior));
-        }
-
-        //N° de Deudas Petroleo
-        String numeroDeudasPetroleoURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/numeroDeudasVentaCombustible/";
-
-        target = client.target(numeroDeudasPetroleoURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.numeroDeudasPetroleo = Integer.parseInt(pp.getValue());
-
-        //Cantidad de Litros
-        String cantidadLitrosURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/totalLitrosVentasFecha/" + sdf.format(from);
-
-        target = client.target(cantidadLitrosURL);
-        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
-        this.cantidadLitros = Float.parseFloat(pp.getValue());
-
-        //Bus con más de Deudas Petroleo
-        String busDeudasPetroleoURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/numeroDeudasBusVentaCombustible/";
-
-        target = client.target(busDeudasPetroleoURL);
-        ppp = target.request(MediaType.APPLICATION_JSON).get(Name3ValuePOJO.class);
-
-        String _bus = String.valueOf(ppp.getName());
-        this.numeroDeudasBusPetroleo = String.valueOf(ppp.getValue());
-
-        this.leyendaBusDeudasPetroleo = "El Bus N° " + _bus + " posee " + ppp.getValue().toString() + " deudas ($ " + formattedValue(ppp.getOther().toString()) + ") ";
-
-        //Última Recaudación 
-        String ultimaRecaudacionURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacion/ultimaRecaudacion/";
-
-        target = client.target(ultimaRecaudacionURL);
-        this.ultimaRecaudacion = target.request(MediaType.APPLICATION_JSON).get(Recaudacion.class);
+////        //Total Recaudación General 
+////        String totalRecaudacionGeneralURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacion/totalRecaudacionGeneral/" + sdf.format(from);//NO OLVIDAR MODIFICAR
+////        target = client.target(totalRecaudacionGeneralURL);
+////        Name3ValuePOJO ppp = null;
+////        Name2ValuePOJO pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalRecaudacion = Integer.parseInt(pp.getValue());
+////
+////          //Total Recaudación Administración
+////        String totalRecaudacionAdministracionURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionAdministracion/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
+////        target = client.target(totalRecaudacionAdministracionURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalAdministracion = Integer.parseInt(pp.getValue());
+////
+////        //Total Recaudación CuotaExtra
+////        String totalRecaudacionCuotaExtraURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionCuotaExtra/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
+////        target = client.target(totalRecaudacionCuotaExtraURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalCuotaExtra = Integer.parseInt(pp.getValue());
+////
+////        //Total Recaudación Imposiciones
+////        String totalRecaudacionImposicionesURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionImposiciones/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
+////        target = client.target(totalRecaudacionImposicionesURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalImposiciones = Integer.parseInt(pp.getValue());
+////
+////        //Total Recaudación Boletos
+////        String totalRecaudacionBoletosURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/totalRecaudacionBoletos/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
+////        target = client.target(totalRecaudacionBoletosURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalBoletos = Integer.parseInt(pp.getValue());
+////
+////        //Total Recaudación Mensual
+////        String totalRecaudacionMensualURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacion/totalRecaudacionMes/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
+////
+////        target = client.target(totalRecaudacionMensualURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalRecaudacionMes = Integer.parseInt(pp.getValue());
+////
+////        //Total Recaudación Combustible
+////        String totalRecaudacionCombustibleURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacioncombustible/totalRecaudacionCombustible/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
+////
+////        target = client.target(totalRecaudacionCombustibleURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalCombustible = Integer.parseInt(pp.getValue());
+////
+////        //Total Recaudación Minuto
+////        String totalRecaudacionMinutoURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionminuto/totalRecaudacionMinuto/" + sdfFirst.format(from) + "/" + sdf.format(to.dayOfMonth().withMaximumValue().toDate());
+////
+////        target = client.target(totalRecaudacionMinutoURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalMinutos = Integer.parseInt(pp.getValue());
+////
+////        //N° de Imposiciones Recaudadas
+////        String numeroImposicionesURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacionguia/cantidadRecaudacionImposiciones/" + sdf.format(from);
+////
+////        target = client.target(numeroImposicionesURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.numeroImposiciones = Integer.parseInt(pp.getValue());
+////
+////        //Total Venta de Petroleo 
+////        String totalVentaPetroleoURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/totalVentaCombustibleFecha/" + sdf.format(from);
+////
+////        target = client.target(totalVentaPetroleoURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalVentaPetroleo = Integer.parseInt(pp.getValue());
+////
+////        //Total Venta de Petroleo Prestadores
+////        String totalVentaPetroleoPrestadoresURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/totalVentaCombustibleFechaPrestador/" + sdf.format(from);
+////
+////        target = client.target(totalVentaPetroleoPrestadoresURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalVentaPrestadores = Integer.parseInt(pp.getValue());
+////
+////        //Total Venta de Petroleo Anterior
+////        String totalVentaPetroleoAnteriorURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/totalVentaCombustibleFecha/" + sdf.format(new DateTime(from).minusDays(1).toDate());
+////
+////        target = client.target(totalVentaPetroleoAnteriorURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.totalVentaPetroleoAnterior = Integer.parseInt(pp.getValue());
+////
+////        if (this.totalVentaPetroleo == this.totalVentaPetroleoAnterior) {
+////            this.leyendaVentaPetroleo = "No existe variación entre las ventas de ayer y hoy";
+////        } else if (this.totalVentaPetroleo > this.totalVentaPetroleoAnterior) {
+////            this.leyendaVentaPetroleo = "Ventas un " + getPorcentajeSuperior(this.totalVentaPetroleoAnterior, this.totalVentaPetroleo ) + " superiores al día anterior (" + formattedValue(String.valueOf(this.totalVentaPetroleoAnterior));
+////        } else {
+////            this.leyendaVentaPetroleo = "Ventas un " + getPorcentaje(this.totalVentaPetroleoAnterior, this.totalVentaPetroleo) + " inferiores al día anterior (" + formattedValue(String.valueOf(this.totalVentaPetroleoAnterior));
+////        }
+////
+////        //N° de Deudas Petroleo
+////        String numeroDeudasPetroleoURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/numeroDeudasVentaCombustible/";
+////
+////        target = client.target(numeroDeudasPetroleoURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.numeroDeudasPetroleo = Integer.parseInt(pp.getValue());
+////
+////        //Cantidad de Litros
+////        String cantidadLitrosURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/totalLitrosVentasFecha/" + sdf.format(from);
+////
+////        target = client.target(cantidadLitrosURL);
+////        pp = target.request(MediaType.APPLICATION_JSON).get(Name2ValuePOJO.class);
+////        this.cantidadLitros = Float.parseFloat(pp.getValue());
+////
+////        //Bus con más de Deudas Petroleo
+////        String busDeudasPetroleoURL = "http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/numeroDeudasBusVentaCombustible/";
+////
+////        target = client.target(busDeudasPetroleoURL);
+////        ppp = target.request(MediaType.APPLICATION_JSON).get(Name3ValuePOJO.class);
+////
+////        String _bus = String.valueOf(ppp.getName());
+////        this.numeroDeudasBusPetroleo = String.valueOf(ppp.getValue());
+////
+////        this.leyendaBusDeudasPetroleo = "El Bus N° " + _bus + " posee " + ppp.getValue().toString() + " deudas ($ " + formattedValue(ppp.getOther().toString()) + ") ";
+////
+////        //Última Recaudación 
+////        String ultimaRecaudacionURL = "http://localhost:8080/SIGFRest-1.0/webresources/recaudacion/ultimaRecaudacion/";
+//
+//        target = client.target(ultimaRecaudacionURL);
+//        this.ultimaRecaudacion = target.request(MediaType.APPLICATION_JSON).get(Recaudacion.class);
 
         //this.animatedModel1 = initLinearModel();
         //createAnimatedModels();

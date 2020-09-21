@@ -76,7 +76,7 @@ public class CompraController extends AbstractController<Compra> {
     @PostConstruct
     @Override
     public void initParams() {
-        super.initParams(); //To change body of generated methods, choose Tools | Templates.
+        //super.initParams(); //To change body of generated methods, choose Tools | Templates.
 
         Calendar cal = Calendar.getInstance();
         this.mes = cal.get(Calendar.MONTH) + 1;

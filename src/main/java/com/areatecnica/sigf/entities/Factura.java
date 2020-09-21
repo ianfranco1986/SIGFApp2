@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,64 +32,60 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "factura", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Factura.findAll", query = "SELECT c FROM Factura c")
-    , @NamedQuery(name = "Factura.findByFacturaId", query = "SELECT c FROM Factura c WHERE c.facturaId = :facturaId")
-    , @NamedQuery(name = "Factura.findByFacturaFolio", query = "SELECT c FROM Factura c WHERE c.facturaFolio = :facturaFolio")
-    , @NamedQuery(name = "Factura.findBetweenDates", query = "SELECT c FROM Factura c WHERE c.facturaFecha BETWEEN :from AND :to ORDER BY c.facturaId ASC")
-    , @NamedQuery(name = "Factura.findByFacturaFecha", query = "SELECT c FROM Factura c WHERE c.facturaFecha = :facturaFecha")
-})
+    @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
+    @NamedQuery(name = "Factura.findByFacturaId", query = "SELECT f FROM Factura f WHERE f.facturaId = :facturaId"),
+    @NamedQuery(name = "Factura.findByFacturaFolio", query = "SELECT f FROM Factura f WHERE f.facturaFolio = :facturaFolio"),
+    @NamedQuery(name = "Factura.findByFacturaFecha", query = "SELECT f FROM Factura f WHERE f.facturaFecha = :facturaFecha"),
+    @NamedQuery(name = "Factura.findByFacturaDetalle", query = "SELECT f FROM Factura f WHERE f.facturaDetalle = :facturaDetalle"),
+    @NamedQuery(name = "Factura.findByFacturaNeto", query = "SELECT f FROM Factura f WHERE f.facturaNeto = :facturaNeto"),
+    @NamedQuery(name = "Factura.findByFacturaIva", query = "SELECT f FROM Factura f WHERE f.facturaIva = :facturaIva"),
+    @NamedQuery(name = "Factura.findByFacturaTotal", query = "SELECT f FROM Factura f WHERE f.facturaTotal = :facturaTotal")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "factura_id", nullable = false)
+    @Column(name = "factura_id")
     private Integer facturaId;
-
     @Basic(optional = false)
     @NotNull
-    @Column(name = "factura_folio", nullable = false, length = 45)
+    @Column(name = "factura_folio")
     private int facturaFolio;
-
     @Basic(optional = false)
     @NotNull
-    @Column(name = "factura_fecha", nullable = false)
+    @Column(name = "factura_fecha")
     @Temporal(TemporalType.DATE)
     private Date facturaFecha;
-
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 200)
-    @Column(name = "factura_nombre_cliente", nullable = false, length = 100)
-    private String facturaNombreCliente;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
-    @Column(name = "factura_detalle", nullable = false, length = 100)
+    @Size(min = 1, max = 100)
+    @Column(name = "factura_detalle")
     private String facturaDetalle;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 15)
-    @Column(name = "factura_rut_cliente", nullable = false, length = 100)
-    private String facturaRutCliente;
-
     @Basic(optional = false)
     @NotNull
     @Column(name = "factura_neto")
     private int facturaNeto;
-
     @Basic(optional = false)
     @NotNull
     @Column(name = "factura_iva")
     private int facturaIva;
-
     @Basic(optional = false)
     @NotNull
     @Column(name = "factura_total")
     private int facturaTotal;
+    @JoinColumn(name = "factura_cliente_id", referencedColumnName = "cliente_id")
+    @ManyToOne(optional = false)
+    private Cliente facturaClienteId;
+    @JoinColumn(name = "factura_cuenta_mayor_id", referencedColumnName = "cuenta_mayor_id")
+    @ManyToOne(optional = false)
+    private CuentaMayor facturaCuentaMayorId;
+    @JoinColumn(name = "factura_movimiento_id", referencedColumnName = "movimiento_mes_id")
+    @ManyToOne(optional = false)
+    private MovimientoMes facturaMovimientoId;
+    @JoinColumn(name = "factura_tipo_documento_id", referencedColumnName = "tipo_documento_id")
+    @ManyToOne(optional = false)
+    private TipoDocumento facturaTipoDocumentoId;
 
     public Factura() {
     }
@@ -96,11 +94,10 @@ public class Factura implements Serializable {
         this.facturaId = facturaId;
     }
 
-    public Factura(int facturaFolio, Date facturaFecha, String facturaNombreCliente, String facturaRutCliente, String facturaDetalle, int facturaNeto, int facturaIva, int facturaTotal) {
+    public Factura(Integer facturaId, int facturaFolio, Date facturaFecha, String facturaDetalle, int facturaNeto, int facturaIva, int facturaTotal) {
+        this.facturaId = facturaId;
         this.facturaFolio = facturaFolio;
         this.facturaFecha = facturaFecha;
-        this.facturaNombreCliente = facturaNombreCliente;
-        this.facturaRutCliente = facturaRutCliente;
         this.facturaDetalle = facturaDetalle;
         this.facturaNeto = facturaNeto;
         this.facturaIva = facturaIva;
@@ -139,22 +136,6 @@ public class Factura implements Serializable {
         this.facturaDetalle = facturaDetalle;
     }
 
-    public String getFacturaNombreCliente() {
-        return facturaNombreCliente;
-    }
-
-    public void setFacturaNombreCliente(String facturaNombreCliente) {
-        this.facturaNombreCliente = facturaNombreCliente;
-    }
-
-    public String getFacturaRutCliente() {
-        return facturaRutCliente;
-    }
-
-    public void setFacturaRutCliente(String facturaRutCliente) {
-        this.facturaRutCliente = facturaRutCliente;
-    }
-
     public int getFacturaNeto() {
         return facturaNeto;
     }
@@ -177,6 +158,38 @@ public class Factura implements Serializable {
 
     public void setFacturaTotal(int facturaTotal) {
         this.facturaTotal = facturaTotal;
+    }
+
+    public Cliente getFacturaClienteId() {
+        return facturaClienteId;
+    }
+
+    public void setFacturaClienteId(Cliente facturaClienteId) {
+        this.facturaClienteId = facturaClienteId;
+    }
+
+    public CuentaMayor getFacturaCuentaMayorId() {
+        return facturaCuentaMayorId;
+    }
+
+    public void setFacturaCuentaMayorId(CuentaMayor facturaCuentaMayorId) {
+        this.facturaCuentaMayorId = facturaCuentaMayorId;
+    }
+
+    public MovimientoMes getFacturaMovimientoId() {
+        return facturaMovimientoId;
+    }
+
+    public void setFacturaMovimientoId(MovimientoMes facturaMovimientoId) {
+        this.facturaMovimientoId = facturaMovimientoId;
+    }
+
+    public TipoDocumento getFacturaTipoDocumentoId() {
+        return facturaTipoDocumentoId;
+    }
+
+    public void setFacturaTipoDocumentoId(TipoDocumento facturaTipoDocumentoId) {
+        this.facturaTipoDocumentoId = facturaTipoDocumentoId;
     }
 
     @Override
@@ -203,5 +216,5 @@ public class Factura implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.Factura[ facturaId=" + facturaId + " ]";
     }
-
+    
 }
