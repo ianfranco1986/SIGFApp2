@@ -2,7 +2,6 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IControlVentaPetroleoDaoImpl;
-import com.areatecnica.sigf.dao.impl.NumeralSurtidorDaoImpl;
 import com.areatecnica.sigf.entities.ControlVentaPetroleo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

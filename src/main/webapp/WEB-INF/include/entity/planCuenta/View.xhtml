@@ -8,24 +8,18 @@
 
     <ui:composition>
 
-        <p:dialog id="PlanCuentaViewDlg" widgetVar="PlanCuentaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPlanCuentaTitle}" closeOnEscape="true">
+        <p:dialog id="PlanCuentaViewDlg" widgetVar="PlanCuentaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="Ficha Plan de Cuenta" closeOnEscape="true">
 
             <h:form id="PlanCuentaViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{planCuentaController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewPlanCuentaLabel_planCuentaId}"/>
+                        <h:outputText value="#"/>
                         <h:outputText value="#{planCuentaController.selected.planCuentaId}" title="#{myBundle.ViewPlanCuentaTitle_planCuentaId}"/>
 
-                        <h:outputText value="#{myBundle.ViewPlanCuentaLabel_planCuentaIdClasificacion}"/>
-                        <h:outputText value="#{planCuentaController.selected.planCuentaIdClasificacion}" title="#{myBundle.ViewPlanCuentaTitle_planCuentaIdClasificacion}"/>
-
-                        <h:outputText value="#{myBundle.ViewPlanCuentaLabel_planCuentaIdEmpresa}"/>
-                        <h:outputText value="#{planCuentaController.selected.planCuentaIdEmpresa}" title="#{myBundle.ViewPlanCuentaTitle_planCuentaIdEmpresa}"/>
-
-                        <h:outputText value="#{myBundle.ViewPlanCuentaLabel_planCuentaNombre}"/>
-                        <h:outputText value="#{planCuentaController.selected.planCuentaNombre}" title="#{myBundle.ViewPlanCuentaTitle_planCuentaNombre}"/>
+                        <h:outputText value="Empresa"/>
+                        <h:outputText value="#{planCuentaController.selected.planCuentaEmpresaId.empresaNombre}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('PlanCuentaViewDialog').hide()"/>
                 </h:panelGroup>

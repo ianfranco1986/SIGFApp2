@@ -46,21 +46,6 @@ public class PlanCuentaSubTipoController extends AbstractController<PlanCuentaSu
         }
     }
 
-    /**
-     * Sets the "items" attribute with a collection of PlanCuenta entities that
-     * are retrieved from PlanCuentaSubTipo and returns the navigation outcome.
-     *
-     * @return navigation outcome for PlanCuenta page
-     */
-    public String navigatePlanCuentaList() {
-        PlanCuentaSubTipo selected = this.getSelected();
-        if (selected != null) {
-            PlanCuentaSubTipoFacade ejbFacade = (PlanCuentaSubTipoFacade) this.getFacade();
-            List<PlanCuenta> selectedPlanCuentaList = ejbFacade.findPlanCuentaList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("PlanCuenta_items", selectedPlanCuentaList);
-        }
-        return "/app/planCuenta/index";
-    }
 
     public boolean getIsCuentaMayorListEmpty() {
         return this.isCuentaMayorListEmpty;

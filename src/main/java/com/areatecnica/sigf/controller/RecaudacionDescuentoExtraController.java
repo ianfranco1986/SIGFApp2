@@ -1,7 +1,6 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.RecaudacionDescuentoExtra;
-import com.areatecnica.sigf.facade.RecaudacionDescuentoExtraFacade;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -13,9 +12,7 @@ public class RecaudacionDescuentoExtraController extends AbstractController<Reca
 
     @Inject
     private DescuentoExtraBusController recaudacionDescuentoExtraIdDctoController;
-    @Inject
-    private RecaudacionController recaudacionDescuentoExtraIdRecaudacionController;
-
+    
     public RecaudacionDescuentoExtraController() {
         // Inform the Abstract parent controller of the concrete RecaudacionDescuentoExtra Entity
         super(RecaudacionDescuentoExtra.class);
@@ -25,8 +22,7 @@ public class RecaudacionDescuentoExtraController extends AbstractController<Reca
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        recaudacionDescuentoExtraIdDctoController.setSelected(null);
-        recaudacionDescuentoExtraIdRecaudacionController.setSelected(null);
+        
     }
 
     /**
@@ -49,10 +45,7 @@ public class RecaudacionDescuentoExtraController extends AbstractController<Reca
      * @param event Event object for the widget that triggered an action
      */
     public void prepareRecaudacionDescuentoExtraIdRecaudacion(ActionEvent event) {
-        RecaudacionDescuentoExtra selected = this.getSelected();
-        if (selected != null && recaudacionDescuentoExtraIdRecaudacionController.getSelected() == null) {
-            recaudacionDescuentoExtraIdRecaudacionController.setSelected(selected.getRecaudacionDescuentoExtraIdRecaudacion());
-        }
+        
     }
 
 }

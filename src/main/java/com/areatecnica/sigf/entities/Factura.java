@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
     @NamedQuery(name = "Factura.findByFacturaId", query = "SELECT f FROM Factura f WHERE f.facturaId = :facturaId"),
     @NamedQuery(name = "Factura.findByFacturaFolio", query = "SELECT f FROM Factura f WHERE f.facturaFolio = :facturaFolio"),
+    @NamedQuery(name = "Factura.findBetweenDates", query = "SELECT f FROM Factura f WHERE f.facturaFecha BETWEEN :from AND :to ORDER BY f.facturaFecha ASC"),
     @NamedQuery(name = "Factura.findByFacturaFecha", query = "SELECT f FROM Factura f WHERE f.facturaFecha = :facturaFecha"),
     @NamedQuery(name = "Factura.findByFacturaDetalle", query = "SELECT f FROM Factura f WHERE f.facturaDetalle = :facturaDetalle"),
     @NamedQuery(name = "Factura.findByFacturaNeto", query = "SELECT f FROM Factura f WHERE f.facturaNeto = :facturaNeto"),

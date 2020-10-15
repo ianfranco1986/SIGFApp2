@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesId", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesId = :movimientoMesId"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvto", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesFechaMvto = :movimientoMesFechaMvto"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaLiquidacion", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesFechaLiquidacion = :movimientoMesFechaLiquidacion"),
+    @NamedQuery(name = "MovimientoMes.findLastByCuenta", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesCuentaBancoId = :movimientoMesCuentaId ORDER BY d.movimientoMesNumeroDocumento DESC"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesMonto", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesMonto = :movimientoMesMonto"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesDetalle", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesDetalle = :movimientoMesDetalle"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesTipoDocumento", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesTipoDocumento = :movimientoMesTipoDocumento"),
@@ -254,5 +255,5 @@ public class MovimientoMes implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.MovimientoMes[ movimientoMesId=" + movimientoMesId + " ]";
     }
-    
+
 }

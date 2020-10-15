@@ -15,12 +15,17 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{planCuentaSubTipoController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewPlanCuentaSubTipoLabel_planCuentaSubTipoId}"/>
+                        <h:outputText value="#"/>
                         <h:outputText value="#{planCuentaSubTipoController.selected.planCuentaSubTipoId}" title="#{myBundle.ViewPlanCuentaSubTipoTitle_planCuentaSubTipoId}"/>
 
-                        <h:outputText value="#{myBundle.ViewPlanCuentaSubTipoLabel_planCuentaSubTipoNombre}"/>
+                        <h:outputText value="Nombre"/>
                         <h:outputText value="#{planCuentaSubTipoController.selected.planCuentaSubTipoNombre}" title="#{myBundle.ViewPlanCuentaSubTipoTitle_planCuentaSubTipoNombre}"/>
-                    </p:panelGrid>
+
+                        <h:outputText value="Plan de Cuenta Empresa"/>
+                        <h:outputText value="#{planCuentaSubTipoController.selected.planCuentaSubTipoIdPlan.planCuentaEmpresaId.empresaNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanCuentaSubTipoLabel_planCuentaSubTipoIdTipoPlan}"/>
+                        <h:outputText value="#{planCuentaSubTipoController.selected.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId}"/>       </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('PlanCuentaSubTipoViewDialog').hide()"/>
                 </h:panelGroup>
 

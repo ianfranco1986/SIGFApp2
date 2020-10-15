@@ -27,8 +27,6 @@ import javax.inject.Inject;
 public class DescuentoExtraBusController extends AbstractController<DescuentoExtraBus> {
 
     @Inject
-    private BusController descuentoExtraBusIdBusController;
-    @Inject
     private DescuentoExtraController descuentoExtraBusIdDescuentoController;
 
     private List<Flota> flotaItems;
@@ -84,8 +82,8 @@ public class DescuentoExtraBusController extends AbstractController<DescuentoExt
         }
 
         if (this.selectedBusItems.size() > 1) {
-            JsfUtil.addSuccessMessage("Se agregaron "+this.selectedBusItems.size()+" descuentos extras x buses");
-        }else{
+            JsfUtil.addSuccessMessage("Se agregaron " + this.selectedBusItems.size() + " descuentos extras x buses");
+        } else {
             JsfUtil.addSuccessMessage("Se agregó un descuento extra x bus");
         }
 
@@ -113,7 +111,6 @@ public class DescuentoExtraBusController extends AbstractController<DescuentoExt
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        descuentoExtraBusIdBusController.setSelected(null);
         descuentoExtraBusIdDescuentoController.setSelected(null);
     }
 
@@ -154,19 +151,6 @@ public class DescuentoExtraBusController extends AbstractController<DescuentoExt
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("RecaudacionDescuentoExtra_items", selectedRecaudacionDescuentoExtraList);
         }
         return "/app/recaudacionDescuentoExtra/index";
-    }
-
-    /**
-     * Sets the "selected" attribute of the Bus controller in order to display
-     * its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareDescuentoExtraBusIdBus(ActionEvent event) {
-        DescuentoExtraBus selected = this.getSelected();
-        if (selected != null && descuentoExtraBusIdBusController.getSelected() == null) {
-            descuentoExtraBusIdBusController.setSelected(selected.getDescuentoExtraBusIdBus());
-        }
     }
 
     /**

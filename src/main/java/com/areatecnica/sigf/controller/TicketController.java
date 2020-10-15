@@ -13,9 +13,7 @@ import javax.inject.Inject;
 public class TicketController extends AbstractController<Ticket> {
 
     private List<Ticket> items;
-    
-    @Inject
-    private UsuarioController ticketIdUsuarioController;
+      
 
     public TicketController() {
         // Inform the Abstract parent controller of the concrete Ticket Entity
@@ -31,25 +29,7 @@ public class TicketController extends AbstractController<Ticket> {
         this.items = items;
     }
 
-    /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
-        ticketIdUsuarioController.setSelected(null);
-    }
-
-    /**
-     * Sets the "selected" attribute of the Usuario controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareTicketIdUsuario(ActionEvent event) {
-        Ticket selected = this.getSelected();
-        if (selected != null && ticketIdUsuarioController.getSelected() == null) {
-            ticketIdUsuarioController.setSelected(selected.getTicketIdUsuario());
-        }
-    }
+   
 
     @Override
     public Ticket prepareCreate(ActionEvent event) {

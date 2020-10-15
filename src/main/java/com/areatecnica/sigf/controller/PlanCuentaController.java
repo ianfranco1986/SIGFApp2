@@ -45,30 +45,4 @@ public class PlanCuentaController extends AbstractController<PlanCuenta> {
         }
     }
 
-    /**
-     * Sets the "selected" attribute of the PlanCuentaSubTipo controller in
-     * order to display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void preparePlanCuentaSubTipoId(ActionEvent event) {
-        PlanCuenta selected = this.getSelected();
-        if (selected != null && planCuentaSubTipoIdController.getSelected() == null) {
-            planCuentaSubTipoIdController.setSelected(selected.getPlanCuentaSubTipoId());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the TipoPlanCuenta controller in order
-     * to display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void preparePlanCuentaTipoId(ActionEvent event) {
-        PlanCuenta selected = this.getSelected();
-        if (selected != null && planCuentaTipoIdController.getSelected() == null) {
-            planCuentaTipoIdController.setSelected(selected.getPlanCuentaTipoId());
-        }
-    }
-
 }

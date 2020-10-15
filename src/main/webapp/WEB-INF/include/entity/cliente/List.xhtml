@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ClienteListForm">
+
+        <p:panel >
+            <h3 style="text-align: center;">Clientes</h3>
+            <p:dataTable id="datalist"
+                         value="#{clienteController.items}"
+                         lazy="false"
+                         rowKey="#{item.clienteId}"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="100, 200, 500"
+                         selectionMode="single"
+                         selection="#{clienteController.selected}"
+                         filteredValue="#{clienteController.filteredItems}"
+                         emptyMessage="No se han encontrado registros">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{clienteController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.clienteId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton" listener="#{clienteController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton" listener="#{clienteController.resetParents}"/>
+                <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{clienteController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ClienteListForm:viewButton').click();"/>
+
+                <f:facet name="header">
+                    <div class="row row-nomargin">
+                        <div class="col-lg-3">
+                        </div>
+                        <div class="col-lg-5">
+                            <h:outputText value=""/>   
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="pull-right">
+                                <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{myBundle.Create}" actionListener="#{clienteController.prepareCreate}" update=":ClienteCreateForm" oncomplete="PF('ClienteCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{myBundle.View}" update=":ClienteViewForm" oncomplete="PF('ClienteViewDialog').show()" disabled="#{empty clienteController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{myBundle.Edit}" update=":ClienteEditForm" oncomplete="PF('ClienteEditDialog').show()" disabled="#{empty clienteController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{myBundle.Delete}" actionListener="#{clienteController.delete}" update=":growl,datalist" disabled="#{empty clienteController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column sortBy="#{item.clienteId}" filterBy="#{item.clienteId}">
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{item.clienteId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.clienteRut}" filterBy="#{item.clienteRut}">
+                    <f:facet name="header">
+                        <h:outputText value="Rut"/>
+                    </f:facet>
+                    <h:outputText value="#{item.clienteRut}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.clienteNombre}" filterBy="#{item.clienteNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"/>
+                    </f:facet>
+                    <h:outputText value="#{item.clienteNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.clienteDireccion}" filterBy="#{item.clienteDireccion}">
+                    <f:facet name="header">
+                        <h:outputText value="Dirección"/>
+                    </f:facet>
+                    <h:outputText value="#{item.clienteDireccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.clienteTelefono}" filterBy="#{item.clienteTelefono}">
+                    <f:facet name="header">
+                        <h:outputText value="Teléfono"/>
+                    </f:facet>
+                    <h:outputText value="#{item.clienteTelefono}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.clienteEmail}" filterBy="#{item.clienteEmail}">
+                    <f:facet name="header">
+                        <h:outputText value="Email"/>
+                    </f:facet>
+                    <h:outputText value="#{item.clienteEmail}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.clienteGiro}" filterBy="#{item.clienteGiro}">
+                        <f:facet name="header">
+                            <h:outputText value="Giro"/>
+                        </f:facet>
+                        <h:outputText value="#{item.clienteGiro}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.clienteComunaId.comunaId}" filterBy="#{item.clienteComunaId.comunaId}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListClienteTitle_clienteComunaId}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.clienteComunaId.comunaId}"/>
+                    </p:column>
+                </ui:remove>
+
+            </p:dataTable>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

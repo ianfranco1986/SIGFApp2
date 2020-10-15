@@ -13,9 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.CargoLiquidacion;
 import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.AbonoLiquidacion;
 import java.util.List;
 
 /**
@@ -45,12 +43,7 @@ public class LiquidacionEmpresaFacade extends AbstractFacade<LiquidacionEmpresa>
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<CargoLiquidacion> findCargoLiquidacionList(LiquidacionEmpresa entity) {
-        LiquidacionEmpresa mergedEntity = this.getMergedEntity(entity);
-        List<CargoLiquidacion> cargoLiquidacionList = mergedEntity.getCargoLiquidacionList();
-        cargoLiquidacionList.size();
-        return cargoLiquidacionList;
-    }
+    
 
     public boolean isLiquidacionEmpresaIdEmpresaEmpty(LiquidacionEmpresa entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -72,11 +65,5 @@ public class LiquidacionEmpresaFacade extends AbstractFacade<LiquidacionEmpresa>
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<AbonoLiquidacion> findAbonoLiquidacionList(LiquidacionEmpresa entity) {
-        LiquidacionEmpresa mergedEntity = this.getMergedEntity(entity);
-        List<AbonoLiquidacion> abonoLiquidacionList = mergedEntity.getAbonoLiquidacionList();
-        abonoLiquidacionList.size();
-        return abonoLiquidacionList;
-    }
     
 }

@@ -8,15 +8,37 @@
 
     <ui:composition>
 
-        <p:dialog id="PlanCuentaSubTipoCreateDlg" widgetVar="PlanCuentaSubTipoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePlanCuentaSubTipoTitle}" closeOnEscape="true">
+        <p:dialog id="PlanCuentaSubTipoCreateDlg" widgetVar="PlanCuentaSubTipoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registro Sub Tipo" closeOnEscape="true">
 
             <h:form id="PlanCuentaSubTipoCreateForm">
 
                 <h:panelGroup id="display" rendered="#{planCuentaSubTipoController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{myBundle.CreatePlanCuentaSubTipoLabel_planCuentaSubTipoNombre}" for="planCuentaSubTipoNombre" />
+                        <p:outputLabel value="Nombre" for="planCuentaSubTipoNombre" />
                         <p:inputText id="planCuentaSubTipoNombre" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoNombre}" title="#{myBundle.CreatePlanCuentaSubTipoTitle_planCuentaSubTipoNombre}" required="true" requiredMessage="#{myBundle.CreatePlanCuentaSubTipoRequiredMessage_planCuentaSubTipoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Plan de Cuenta" for="planCuentaSubTipoIdPlan" />
+                        <p:selectOneMenu id="planCuentaSubTipoIdPlan" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoIdPlan}" required="true" requiredMessage="#{myBundle.CreatePlanCuentaSubTipoRequiredMessage_planCuentaSubTipoIdPlan}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{planCuentaController.items}"
+                                           var="planCuentaSubTipoIdPlanItem"
+                                           itemValue="#{planCuentaSubTipoIdPlanItem}"
+                                           itemLabel="#{planCuentaSubTipoIdPlanItem.planCuentaEmpresaId.empresaNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Tipo" for="planCuentaSubTipoIdTipoPlan" />
+                        <p:selectOneMenu id="planCuentaSubTipoIdTipoPlan" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoIdTipoPlan}" required="true" requiredMessage="#{myBundle.CreatePlanCuentaSubTipoRequiredMessage_planCuentaSubTipoIdTipoPlan}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoPlanCuentaController.items}"
+                                           var="planCuentaSubTipoIdTipoPlanItem"
+                                           itemValue="#{planCuentaSubTipoIdTipoPlanItem}"
+                                           itemLabel="#{planCuentaSubTipoIdTipoPlanItem.tipoPlanCuentaNombre}"
+                                           />
+
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{planCuentaSubTipoController.saveNew}" value="#{myBundle.Save}" update="display,:PlanCuentaSubTipoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlanCuentaSubTipoCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>

@@ -22,8 +22,6 @@ import org.primefaces.event.RowEditEvent;
 @ViewScoped
 public class RecaudacionExtraController implements Serializable {
 
-    @Inject
-    private RecaudacionController recaudacionExtraIdRecaudacionController;
     private RecaudacionExtraDataModel recaudacionExtraDataModel;
 
     private Date fecha;
@@ -78,16 +76,8 @@ public class RecaudacionExtraController implements Serializable {
         return recaudacion;
     }
 
-    public RecaudacionController getRecaudacionExtraIdRecaudacionController() {
-        return recaudacionExtraIdRecaudacionController;
-    }
-
     public void setRecaudacion(Recaudacion recaudacion) {
         this.recaudacion = recaudacion;
-    }
-
-    public void setRecaudacionExtraIdRecaudacionController(RecaudacionController recaudacionExtraIdRecaudacionController) {
-        this.recaudacionExtraIdRecaudacionController = recaudacionExtraIdRecaudacionController;
     }
 
     public void setRecaudacionExtraDataModel(RecaudacionExtraDataModel recaudacionExtraDataModel) {

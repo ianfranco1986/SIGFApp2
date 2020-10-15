@@ -2,7 +2,6 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.Surtidor;
 import com.areatecnica.sigf.entities.VentaCombustible;
-import com.areatecnica.sigf.entities.NumeralSurtidor;
 import java.util.List;
 import com.areatecnica.sigf.facade.SurtidorFacade;
 import javax.inject.Named;
@@ -100,20 +99,5 @@ public class SurtidorController extends AbstractController<Surtidor> {
         }
     }
 
-    /**
-     * Sets the "items" attribute with a collection of NumeralSurtidor entities
-     * that are retrieved from Surtidor and returns the navigation outcome.
-     *
-     * @return navigation outcome for NumeralSurtidor page
-     */
-    public String navigateNumeralSurtidorList() {
-        Surtidor selected = this.getSelected();
-        if (selected != null) {
-            SurtidorFacade ejbFacade = (SurtidorFacade) this.getFacade();
-            List<NumeralSurtidor> selectedNumeralSurtidorList = ejbFacade.findNumeralSurtidorList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("NumeralSurtidor_items", selectedNumeralSurtidorList);
-        }
-        return "/app/numeralSurtidor/index";
-    }
 
 }

@@ -27,8 +27,6 @@ import com.areatecnica.sigf.entities.InstitucionSalud;
 import com.areatecnica.sigf.entities.Flota;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.TipoObservacion;
-import com.areatecnica.sigf.entities.AdministracionMensual;
-import com.areatecnica.sigf.entities.IntervalosAdministracion;
 import com.areatecnica.sigf.entities.TipoHaberTrabajador;
 import com.areatecnica.sigf.entities.Trabajador;
 import com.areatecnica.sigf.entities.PrecioCombustible;
@@ -37,14 +35,12 @@ import com.areatecnica.sigf.entities.TipoContrato;
 import com.areatecnica.sigf.entities.DescuentoExtra;
 import com.areatecnica.sigf.entities.Sindicato;
 import com.areatecnica.sigf.entities.CompraBoleto;
-import com.areatecnica.sigf.entities.TipoCargo;
 import com.areatecnica.sigf.entities.TipoDescuentoTrabajador;
 import com.areatecnica.sigf.entities.InstitucionPrevision;
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.CompraPetroleo;
 import com.areatecnica.sigf.entities.Mutual;
-import com.areatecnica.sigf.entities.TipoAbono;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
@@ -294,26 +290,12 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<AdministracionMensual> findAdministracionMensualList(Cuenta entity) {
-        Cuenta mergedEntity = this.getMergedEntity(entity);
-        List<AdministracionMensual> administracionMensualList = mergedEntity.getAdministracionMensualList();
-        administracionMensualList.size();
-        return administracionMensualList;
-    }
-
     public boolean isIntervalosAdministracionListEmpty(Cuenta entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Cuenta> cuenta = cq.from(Cuenta.class);
 //        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuenta, entity), cb.isNotEmpty(cuenta.get(Cuenta_.intervalosAdministracionList)));
         return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public List<IntervalosAdministracion> findIntervalosAdministracionList(Cuenta entity) {
-        Cuenta mergedEntity = this.getMergedEntity(entity);
-        List<IntervalosAdministracion> intervalosAdministracionList = mergedEntity.getIntervalosAdministracionList();
-        intervalosAdministracionList.size();
-        return intervalosAdministracionList;
     }
 
     public boolean isTipoHaberTrabajadorListEmpty(Cuenta entity) {
@@ -444,13 +426,6 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<TipoCargo> findTipoCargoList(Cuenta entity) {
-        Cuenta mergedEntity = this.getMergedEntity(entity);
-        List<TipoCargo> tipoCargoList = mergedEntity.getTipoCargoList();
-        tipoCargoList.size();
-        return tipoCargoList;
-    }
-
     public boolean isTipoDescuentoTrabajadorListEmpty(Cuenta entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -541,13 +516,6 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
         Root<Cuenta> cuenta = cq.from(Cuenta.class);
 //        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuenta, entity), cb.isNotEmpty(cuenta.get(Cuenta_.tipoAbonoList)));
         return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public List<TipoAbono> findTipoAbonoList(Cuenta entity) {
-        Cuenta mergedEntity = this.getMergedEntity(entity);
-        List<TipoAbono> tipoAbonoList = mergedEntity.getTipoAbonoList();
-        tipoAbonoList.size();
-        return tipoAbonoList;
     }
 
     public boolean isEmpresaListEmpty(Cuenta entity) {

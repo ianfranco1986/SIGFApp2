@@ -1,8 +1,6 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.LiquidacionEmpresa;
-import com.areatecnica.sigf.entities.CargoLiquidacion;
-import com.areatecnica.sigf.entities.AbonoLiquidacion;
 import java.util.List;
 import com.areatecnica.sigf.facade.LiquidacionEmpresaFacade;
 import javax.inject.Named;

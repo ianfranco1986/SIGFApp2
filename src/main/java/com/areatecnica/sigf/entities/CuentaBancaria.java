@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CuentaBancaria.findAll", query = "SELECT c FROM CuentaBancaria c"),
     @NamedQuery(name = "CuentaBancaria.findByCuentaBancariaId", query = "SELECT c FROM CuentaBancaria c WHERE c.cuentaBancariaId = :cuentaBancariaId"),
     @NamedQuery(name = "CuentaBancaria.findByCuentaBancariaNumero", query = "SELECT c FROM CuentaBancaria c WHERE c.cuentaBancariaNumero = :cuentaBancariaNumero"),
+    @NamedQuery(name = "CuentaBancaria.findByCuenta", query = "SELECT c FROM CuentaBancaria c WHERE c.cuentaBancariaIdEmpresa.empresaIdCuenta = :empresaIdCuenta ORDER BY c.cuentaBancariaIdEmpresa.empresaNombre ASC"),
     @NamedQuery(name = "CuentaBancaria.findByCuentaBancariaNombreTitular", query = "SELECT c FROM CuentaBancaria c WHERE c.cuentaBancariaNombreTitular = :cuentaBancariaNombreTitular"),
     @NamedQuery(name = "CuentaBancaria.findByCuentaBancariaRutTitular", query = "SELECT c FROM CuentaBancaria c WHERE c.cuentaBancariaRutTitular = :cuentaBancariaRutTitular"),
     @NamedQuery(name = "CuentaBancaria.findByCuentaBancariaActiva", query = "SELECT c FROM CuentaBancaria c WHERE c.cuentaBancariaActiva = :cuentaBancariaActiva"),

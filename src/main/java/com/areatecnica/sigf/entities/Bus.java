@@ -106,11 +106,7 @@ public class Bus implements Serializable {
     @Column(name = "bus_comparte_servicio")
     private Boolean busComparteServicio;
     @Column(name = "bus_activo")
-    private Boolean busActivo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abonoBusIdBus")
-    private List<AbonoBus> abonoBusList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoBusIdBus")
-    private List<CargoBus> cargoBusList;
+    private Boolean busActivo;    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdBus")
     private List<Despacho> despachoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdBus")
@@ -280,24 +276,6 @@ public class Bus implements Serializable {
 
     public void setBusActivo(Boolean busActivo) {
         this.busActivo = busActivo;
-    }
-
-    @XmlTransient
-    public List<AbonoBus> getAbonoBusList() {
-        return abonoBusList;
-    }
-
-    public void setAbonoBusList(List<AbonoBus> abonoBusList) {
-        this.abonoBusList = abonoBusList;
-    }
-
-    @XmlTransient
-    public List<CargoBus> getCargoBusList() {
-        return cargoBusList;
-    }
-
-    public void setCargoBusList(List<CargoBus> cargoBusList) {
-        this.cargoBusList = cargoBusList;
     }
 
     @XmlTransient

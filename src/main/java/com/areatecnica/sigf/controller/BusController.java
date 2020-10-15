@@ -2,8 +2,6 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.AbonoBus;
-import com.areatecnica.sigf.entities.CargoBus;
 import com.areatecnica.sigf.entities.Despacho;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.entities.DescuentoExtraBus;
@@ -115,8 +113,8 @@ public class BusController extends AbstractController<Bus> {
         Bus selected = this.getSelected();
         if (selected != null) {
             BusFacade ejbFacade = (BusFacade) this.getFacade();
-            List<AbonoBus> selectedAbonoBusList = ejbFacade.findAbonoBusList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("AbonoBus_items", selectedAbonoBusList);
+//            List<AbonoBus> selectedAbonoBusList = ejbFacade.findAbonoBusList(selected);
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("AbonoBus_items", selectedAbonoBusList);
         }
         return "/app/abonoBus/index";
     }
@@ -145,8 +143,8 @@ public class BusController extends AbstractController<Bus> {
         Bus selected = this.getSelected();
         if (selected != null) {
             BusFacade ejbFacade = (BusFacade) this.getFacade();
-            List<CargoBus> selectedCargoBusList = ejbFacade.findCargoBusList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("CargoBus_items", selectedCargoBusList);
+//            List<CargoBus> selectedCargoBusList = ejbFacade.findCargoBusList(selected);
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("CargoBus_items", selectedCargoBusList);
         }
         return "/app/cargoBus/index";
     }

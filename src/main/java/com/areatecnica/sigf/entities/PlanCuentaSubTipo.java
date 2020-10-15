@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,9 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "plan_cuenta_sub_tipo", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PlanCuentaSubTipo.findAll", query = "SELECT p FROM PlanCuentaSubTipo p")
-    , @NamedQuery(name = "PlanCuentaSubTipo.findByPlanCuentaSubTipoId", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoId = :planCuentaSubTipoId")
-    , @NamedQuery(name = "PlanCuentaSubTipo.findByPlanCuentaSubTipoNombre", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoNombre = :planCuentaSubTipoNombre")})
+    @NamedQuery(name = "PlanCuentaSubTipo.findAll", query = "SELECT p FROM PlanCuentaSubTipo p"),
+    @NamedQuery(name = "PlanCuentaSubTipo.findByPlanCuentaSubTipoId", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoId = :planCuentaSubTipoId"),
+    @NamedQuery(name = "PlanCuentaSubTipo.findByPlanCuentaSubTipoNombre", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoNombre = :planCuentaSubTipoNombre")})
 public class PlanCuentaSubTipo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,10 +49,14 @@ public class PlanCuentaSubTipo implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "plan_cuenta_sub_tipo_nombre")
     private String planCuentaSubTipoNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaSubTipoId")
-    private List<PlanCuenta> planCuentaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaMayorSubTipoId")
     private List<CuentaMayor> cuentaMayorList;
+    @JoinColumn(name = "plan_cuenta_sub_tipo_id_plan", referencedColumnName = "plan_cuenta_id")
+    @ManyToOne(optional = false)
+    private PlanCuenta planCuentaSubTipoIdPlan;
+    @JoinColumn(name = "plan_cuenta_sub_tipo_id_tipo_plan", referencedColumnName = "tipo_plan_cuenta_id")
+    @ManyToOne(optional = false)
+    private TipoPlanCuenta planCuentaSubTipoIdTipoPlan;
 
     public PlanCuentaSubTipo() {
     }
@@ -81,21 +87,28 @@ public class PlanCuentaSubTipo implements Serializable {
     }
 
     @XmlTransient
-    public List<PlanCuenta> getPlanCuentaList() {
-        return planCuentaList;
-    }
-
-    public void setPlanCuentaList(List<PlanCuenta> planCuentaList) {
-        this.planCuentaList = planCuentaList;
-    }
-
-    @XmlTransient
     public List<CuentaMayor> getCuentaMayorList() {
         return cuentaMayorList;
     }
 
     public void setCuentaMayorList(List<CuentaMayor> cuentaMayorList) {
         this.cuentaMayorList = cuentaMayorList;
+    }
+
+    public PlanCuenta getPlanCuentaSubTipoIdPlan() {
+        return planCuentaSubTipoIdPlan;
+    }
+
+    public void setPlanCuentaSubTipoIdPlan(PlanCuenta planCuentaSubTipoIdPlan) {
+        this.planCuentaSubTipoIdPlan = planCuentaSubTipoIdPlan;
+    }
+
+    public TipoPlanCuenta getPlanCuentaSubTipoIdTipoPlan() {
+        return planCuentaSubTipoIdTipoPlan;
+    }
+
+    public void setPlanCuentaSubTipoIdTipoPlan(TipoPlanCuenta planCuentaSubTipoIdTipoPlan) {
+        this.planCuentaSubTipoIdTipoPlan = planCuentaSubTipoIdTipoPlan;
     }
 
     @Override

@@ -44,12 +44,6 @@ public class PlanCuentaSubTipoFacade extends AbstractFacade<PlanCuentaSubTipo> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<PlanCuenta> findPlanCuentaList(PlanCuentaSubTipo entity) {
-        PlanCuentaSubTipo mergedEntity = this.getMergedEntity(entity);
-        List<PlanCuenta> planCuentaList = mergedEntity.getPlanCuentaList();
-        planCuentaList.size();
-        return planCuentaList;
-    }
 
     public boolean isCuentaMayorListEmpty(PlanCuentaSubTipo entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();

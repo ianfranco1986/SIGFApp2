@@ -13,8 +13,6 @@ public class DetalleResumenChequeController extends AbstractController<DetalleRe
 
     @Inject
     private BancoController detalleResumenChequeIdBancoController;
-    @Inject
-    private ResumenRecaudacionController detalleResumenChequeIdResumenController;
 
     public DetalleResumenChequeController() {
         // Inform the Abstract parent controller of the concrete DetalleResumenCheque Entity
@@ -26,7 +24,7 @@ public class DetalleResumenChequeController extends AbstractController<DetalleRe
      */
     public void resetParents() {
         detalleResumenChequeIdBancoController.setSelected(null);
-        detalleResumenChequeIdResumenController.setSelected(null);
+
     }
 
     /**
@@ -39,19 +37,6 @@ public class DetalleResumenChequeController extends AbstractController<DetalleRe
         DetalleResumenCheque selected = this.getSelected();
         if (selected != null && detalleResumenChequeIdBancoController.getSelected() == null) {
             detalleResumenChequeIdBancoController.setSelected(selected.getDetalleResumenChequeIdBanco());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the ResumenRecaudacion controller in
-     * order to display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareDetalleResumenChequeIdResumen(ActionEvent event) {
-        DetalleResumenCheque selected = this.getSelected();
-        if (selected != null && detalleResumenChequeIdResumenController.getSelected() == null) {
-            detalleResumenChequeIdResumenController.setSelected(selected.getDetalleResumenChequeIdResumen());
         }
     }
 

@@ -9,7 +9,7 @@
     <h:form id="CuentaMayorListForm">
 
         <p:panel>
-            <h3 style="text-align: center;">Registro de Cuentas</h3>
+            <h3 style="text-align: center;">Registro de Cuenta Mayor</h3>
             <p:contextMenu id="CuentaMayorDataTableContextMenu" for="datalist">  
                 <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CuentaMayorListForm:createButton').click();" icon="ui-icon-plus"/>
                 <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CuentaMayorListForm:viewButton').click();" icon="ui-icon-search"/>
@@ -71,20 +71,25 @@
                     <h:outputText value="#{item.cuentaMayorId}"/>
                 </p:column>
 
+                <p:column sortBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Tipo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Sub-Tipo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}"/>
+                </p:column>
 
                 <p:column sortBy="#{item.cuentaMayorNombre}" filterBy="#{item.cuentaMayorNombre}">
                     <f:facet name="header">
                         <h:outputText value="Nombre"/>
                     </f:facet>
                     <h:outputText value="#{item.cuentaMayorNombre}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}">
-                    <f:facet name="header">
-                        <h:outputText value="Sub-Tipo"/>
-                    </f:facet>
-                    <h:outputText value="#{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.cuentaMayorCompras}">
@@ -143,9 +148,6 @@
                     </f:facet>
                     <h:selectBooleanCheckbox id="cuentaMayorActivosFijos" value="#{item.cuentaMayorActivosFijos}" title="#{myBundle.EditCuentaMayorTitle_cuentaMayorActivosFijos}"  disabled="true"/>
                 </p:column>
-
-
-
             </p:dataTable>
 
         </p:panel>

@@ -8,6 +8,7 @@ package com.areatecnica.sigf.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Compra.findAll", query = "SELECT c FROM Compra c"),
     @NamedQuery(name = "Compra.findByCompraId", query = "SELECT c FROM Compra c WHERE c.compraId = :compraId"),
+    @NamedQuery(name = "Compra.findByCompraBetweenDates", query = "SELECT c FROM Compra c WHERE c.compraFechaDocumento BETWEEN :from AND :to ORDER BY c.compraFechaDocumento"),
     @NamedQuery(name = "Compra.findByCompraFechaDocumento", query = "SELECT c FROM Compra c WHERE c.compraFechaDocumento = :compraFechaDocumento"),
     @NamedQuery(name = "Compra.findByCompraFechaAcuse", query = "SELECT c FROM Compra c WHERE c.compraFechaAcuse = :compraFechaAcuse"),
     @NamedQuery(name = "Compra.findByCompraFechaRecepcion", query = "SELECT c FROM Compra c WHERE c.compraFechaRecepcion = :compraFechaRecepcion"),
@@ -79,7 +81,7 @@ public class Compra implements Serializable {
     @ManyToOne(optional = false)
     private CuentaMayor compraCuentaMayorId;
     @JoinColumn(name = "compra_movimiento_id", referencedColumnName = "movimiento_mes_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     private MovimientoMes compraMovimientoId;
     @JoinColumn(name = "compra_proveedor_id", referencedColumnName = "proveedor_id")
     @ManyToOne(optional = false)
@@ -239,5 +241,5 @@ public class Compra implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.Compra[ compraId=" + compraId + " ]";
     }
-    
+
 }

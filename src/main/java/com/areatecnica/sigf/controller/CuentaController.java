@@ -15,8 +15,6 @@ import com.areatecnica.sigf.entities.InstitucionSalud;
 import com.areatecnica.sigf.entities.Flota;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.TipoObservacion;
-import com.areatecnica.sigf.entities.AdministracionMensual;
-import com.areatecnica.sigf.entities.IntervalosAdministracion;
 import com.areatecnica.sigf.entities.TipoHaberTrabajador;
 import com.areatecnica.sigf.entities.Trabajador;
 import com.areatecnica.sigf.entities.PrecioCombustible;
@@ -25,14 +23,12 @@ import com.areatecnica.sigf.entities.TipoContrato;
 import com.areatecnica.sigf.entities.DescuentoExtra;
 import com.areatecnica.sigf.entities.Sindicato;
 import com.areatecnica.sigf.entities.CompraBoleto;
-import com.areatecnica.sigf.entities.TipoCargo;
 import com.areatecnica.sigf.entities.TipoDescuentoTrabajador;
 import com.areatecnica.sigf.entities.InstitucionPrevision;
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.CompraPetroleo;
 import com.areatecnica.sigf.entities.Mutual;
-import com.areatecnica.sigf.entities.TipoAbono;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
@@ -608,8 +604,8 @@ public class CuentaController extends AbstractController<Cuenta> {
         Cuenta selected = this.getSelected();
         if (selected != null) {
             CuentaFacade ejbFacade = (CuentaFacade) this.getFacade();
-            List<AdministracionMensual> selectedAdministracionMensualList = ejbFacade.findAdministracionMensualList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("AdministracionMensual_items", selectedAdministracionMensualList);
+//            List<AdministracionMensual> selectedAdministracionMensualList = ejbFacade.findAdministracionMensualList(selected);
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("AdministracionMensual_items", selectedAdministracionMensualList);
         }
         return "/app/administracionMensual/index";
     }
@@ -639,8 +635,8 @@ public class CuentaController extends AbstractController<Cuenta> {
         Cuenta selected = this.getSelected();
         if (selected != null) {
             CuentaFacade ejbFacade = (CuentaFacade) this.getFacade();
-            List<IntervalosAdministracion> selectedIntervalosAdministracionList = ejbFacade.findIntervalosAdministracionList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("IntervalosAdministracion_items", selectedIntervalosAdministracionList);
+//            List<IntervalosAdministracion> selectedIntervalosAdministracionList = ejbFacade.findIntervalosAdministracionList(selected);
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("IntervalosAdministracion_items", selectedIntervalosAdministracionList);
         }
         return "/app/intervalosAdministracion/index";
     }
@@ -911,8 +907,8 @@ public class CuentaController extends AbstractController<Cuenta> {
         Cuenta selected = this.getSelected();
         if (selected != null) {
             CuentaFacade ejbFacade = (CuentaFacade) this.getFacade();
-            List<TipoCargo> selectedTipoCargoList = ejbFacade.findTipoCargoList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("TipoCargo_items", selectedTipoCargoList);
+//            List<TipoCargo> selectedTipoCargoList = ejbFacade.findTipoCargoList(selected);
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("TipoCargo_items", selectedTipoCargoList);
         }
         return "/app/tipoCargo/index";
     }
@@ -1109,8 +1105,8 @@ public class CuentaController extends AbstractController<Cuenta> {
         Cuenta selected = this.getSelected();
         if (selected != null) {
             CuentaFacade ejbFacade = (CuentaFacade) this.getFacade();
-            List<TipoAbono> selectedTipoAbonoList = ejbFacade.findTipoAbonoList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("TipoAbono_items", selectedTipoAbonoList);
+//            List<TipoAbono> selectedTipoAbonoList = ejbFacade.findTipoAbonoList(selected);
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("TipoAbono_items", selectedTipoAbonoList);
         }
         return "/app/tipoAbono/index";
     }

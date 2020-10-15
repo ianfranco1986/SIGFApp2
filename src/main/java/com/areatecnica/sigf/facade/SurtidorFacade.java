@@ -14,7 +14,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.areatecnica.sigf.entities.Terminal;
 import com.areatecnica.sigf.entities.VentaCombustible;
-import com.areatecnica.sigf.entities.NumeralSurtidor;
 import java.util.List;
 
 /**
@@ -71,11 +70,4 @@ public class SurtidorFacade extends AbstractFacade<Surtidor> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<NumeralSurtidor> findNumeralSurtidorList(Surtidor entity) {
-        Surtidor mergedEntity = this.getMergedEntity(entity);
-        List<NumeralSurtidor> numeralSurtidorList = mergedEntity.getNumeralSurtidorList();
-        numeralSurtidorList.size();
-        return numeralSurtidorList;
-    }
-    
 }

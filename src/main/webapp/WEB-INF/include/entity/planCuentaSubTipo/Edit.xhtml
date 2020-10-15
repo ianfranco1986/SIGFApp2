@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:dialog id="PlanCuentaSubTipoEditDlg" widgetVar="PlanCuentaSubTipoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPlanCuentaSubTipoTitle}" closeOnEscape="true">
+        <p:dialog id="PlanCuentaSubTipoEditDlg" widgetVar="PlanCuentaSubTipoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="Edición de Sub Tipo" closeOnEscape="true">
 
             <h:form id="PlanCuentaSubTipoEditForm">
 
@@ -15,13 +15,35 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{planCuentaSubTipoController.selected != null}">
 
 
-                        <h:outputLabel value="#{myBundle.EditPlanCuentaSubTipoLabel_planCuentaSubTipoId}" for="planCuentaSubTipoId" />
+                        <h:outputLabel value="#" for="planCuentaSubTipoId" />
                         <h:outputText id="planCuentaSubTipoId" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoId}" />
 
-                        <p:outputLabel value="#{myBundle.EditPlanCuentaSubTipoLabel_planCuentaSubTipoNombre}" for="planCuentaSubTipoNombre" />
+                        <p:outputLabel value="Nombre" for="planCuentaSubTipoNombre" />
                         <p:inputText id="planCuentaSubTipoNombre" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoNombre}" title="#{myBundle.EditPlanCuentaSubTipoTitle_planCuentaSubTipoNombre}" required="true" requiredMessage="#{myBundle.EditPlanCuentaSubTipoRequiredMessage_planCuentaSubTipoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Plan de Cuenta" for="planCuentaSubTipoIdPlan" />
+                        <p:selectOneMenu id="planCuentaSubTipoIdPlan" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoIdPlan}" required="true" requiredMessage="#{myBundle.EditPlanCuentaSubTipoRequiredMessage_planCuentaSubTipoIdPlan}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{planCuentaController.items}"
+                                           var="planCuentaSubTipoIdPlanItem"
+                                           itemValue="#{planCuentaSubTipoIdPlanItem}"
+                                           itemLabel="#{planCuentaSubTipoIdPlanItem.planCuentaEmpresaId.empresaNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Tipo" for="planCuentaSubTipoIdTipoPlan" />
+                        <p:selectOneMenu id="planCuentaSubTipoIdTipoPlan" value="#{planCuentaSubTipoController.selected.planCuentaSubTipoIdTipoPlan}" required="true" requiredMessage="#{myBundle.EditPlanCuentaSubTipoRequiredMessage_planCuentaSubTipoIdTipoPlan}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoPlanCuentaController.items}"
+                                           var="planCuentaSubTipoIdTipoPlanItem"
+                                           itemValue="#{planCuentaSubTipoIdTipoPlanItem}"
+                                           itemLabel="#{planCuentaSubTipoIdTipoPlanItem.tipoPlanCuentaNombre}"
+                                           />
+
+                        </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{planCuentaSubTipoController.save}" value="#{myBundle.Save}" update="display,:PlanCuentaSubTipoListForm:datalist,:PlanCuentaSubTipoListForm:PlanCuentaSubTipoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlanCuentaSubTipoEditDialog'));">
+                    <p:commandButton actionListener="#{planCuentaSubTipoController.save}" value="#{myBundle.Save}" update="display,:PlanCuentaSubTipoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlanCuentaSubTipoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PlanCuentaSubTipoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

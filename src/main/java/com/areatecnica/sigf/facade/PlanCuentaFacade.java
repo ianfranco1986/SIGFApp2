@@ -56,20 +56,12 @@ public class PlanCuentaFacade extends AbstractFacade<PlanCuenta> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public PlanCuentaSubTipo findPlanCuentaSubTipoId(PlanCuenta entity) {
-        return this.getMergedEntity(entity).getPlanCuentaSubTipoId();
-    }
-
     public boolean isPlanCuentaTipoIdEmpty(PlanCuenta entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<PlanCuenta> planCuenta = cq.from(PlanCuenta.class);
 //        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(planCuenta, entity), cb.isNotNull(planCuenta.get(PlanCuenta_.planCuentaTipoId)));
         return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public TipoPlanCuenta findPlanCuentaTipoId(PlanCuenta entity) {
-        return this.getMergedEntity(entity).getPlanCuentaTipoId();
     }
     
 }

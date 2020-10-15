@@ -23,11 +23,6 @@ import org.primefaces.event.RowEditEvent;
 @ViewScoped
 public class RegistroMinutoController extends AbstractController<RegistroMinuto> {
 
-    @Inject
-    private BusController registroMinutoDesdeIdBusController;
-    @Inject
-    private BusController registroMinutoHastaIdBusController;
-
     // Flags to indicate if child collections are empty
     private boolean isRecaudacionMinutoListEmpty;
 
@@ -124,14 +119,6 @@ public class RegistroMinutoController extends AbstractController<RegistroMinuto>
     }
 
     /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
-        registroMinutoDesdeIdBusController.setSelected(null);
-        registroMinutoHastaIdBusController.setSelected(null);
-    }
-
-    /**
      * Set the "is[ChildCollection]Empty" property for OneToMany fields.
      */
     @Override
@@ -168,32 +155,6 @@ public class RegistroMinutoController extends AbstractController<RegistroMinuto>
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("RecaudacionMinuto_items", selectedRecaudacionMinutoList);
         }
         return "/app/recaudacionMinuto/index";
-    }
-
-    /**
-     * Sets the "selected" attribute of the Bus controller in order to display
-     * its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareRegistroMinutoDesdeIdBus(ActionEvent event) {
-        RegistroMinuto selected = this.getSelected();
-        if (selected != null && registroMinutoDesdeIdBusController.getSelected() == null) {
-            registroMinutoDesdeIdBusController.setSelected(selected.getRegistroMinutoDesdeIdBus());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the Bus controller in order to display
-     * its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareRegistroMinutoHastaIdBus(ActionEvent event) {
-        RegistroMinuto selected = this.getSelected();
-        if (selected != null && registroMinutoHastaIdBusController.getSelected() == null) {
-            registroMinutoHastaIdBusController.setSelected(selected.getRegistroMinutoHastaIdBus());
-        }
     }
 
 }

@@ -50,7 +50,7 @@
             <p:focus context="compraFolio"/>
             <p:panelGrid columns="4" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
                 <p:outputLabel value="Folio" for="compraFolio" />
-                <p:inputText id="compraFolio" tabindex="1" value="#{compraController.selected.compraFolio}" title="#{myBundle.CreateCompraTitle_compraFolio}"/>
+                <p:inputText id="compraFolio" tabindex="1" value="#{compraController.selected.compraFolio}" title="#{myBundle.CreateCompraTitle_compraFolio}" autocomplete="off"/>
 
                 <p:outputLabel/>
                 <p:outputLabel/>
@@ -105,7 +105,7 @@
                 <p:outputLabel value="Cuenta" for="compraCuentaId" />
                 <p:selectOneMenu id="compraCuentaId" value="#{compraController.cuentaMayor}" tabindex="6" required="true" requiredMessage="Debe seleccionar la cuenta"  converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                    <f:selectItems value="#{cuentaMayorController.items}"
+                    <f:selectItems value="#{compraController.cuentaMayorItems}"
                                    var="compraCuentaIdItem"
                                    itemValue="#{compraCuentaIdItem}"
                                    itemLabel="#{compraCuentaIdItem.cuentaMayorNombre}"
@@ -115,7 +115,7 @@
                 <p:outputLabel/>
 
                 <p:outputLabel value="Detalle" for="compraDescripcion" />
-                <p:inputText id="compraDescripcion" tabindex="7" value="#{compraController.selected.compraDescripcion}" size="80" maxlength="255"/>
+                <p:inputText id="compraDescripcion" tabindex="7" value="#{compraController.selected.compraDescripcion}" size="80" maxlength="255" autocomplete="off"/>
 
                 <p:outputLabel/>
                 <p:outputLabel/>
@@ -165,7 +165,7 @@
                         <f:selectItems value="#{compraController.cuentaItems}"
                                        var="cuenta"
                                        itemValue="#{cuenta}"
-                                       itemLabel="#{cuenta.cuentaBancariaDescripcion} - #{cuenta.cuentaBancariaNumero}"
+                                       itemLabel="#{cuenta.cuentaBancariaNombreTitular} - #{cuenta.cuentaBancariaNumero}"
                                        />
                         <p:ajax event="valueChange" update="detalleCartolaNumeroDocumento" listener="#{compraController.handleCuentaChange()}"/>
                     </p:selectOneMenu>
@@ -176,12 +176,12 @@
                 <p:outputLabel/>
 
                 <p:outputLabel value="N° Documento " for="detalleCartolaNumeroDocumento" />
-                <p:inputText id="detalleCartolaNumeroDocumento" tabindex="14" value="#{compraController.documento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="15" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                <p:inputText id="detalleCartolaNumeroDocumento" tabindex="14" value="#{compraController.documento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="15" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" />
 
                 <p:outputLabel/>
                 <p:outputLabel/>
 
-                <p:commandButton actionListener="#{compraController.saveNew}" value="#{myBundle.Save}" update=":CompraListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CompraCreateDialog'));" resetValues="true">
+                <p:commandButton actionListener="#{compraController.saveNew}" value="#{myBundle.Save}" update=":display, :CompraListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CompraCreateDialog'));" resetValues="true">
                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                 </p:commandButton>
             </p:panelGrid>
@@ -249,16 +249,16 @@
 
                 </p:column>
 
-                <p:column sortBy="#{item.compraCuentaId.cuentaMayorNombre}" filterBy="#{item.compraCuentaId.cuentaMayorNombre}">
+                <p:column sortBy="#{item.compraCuentaMayorId.cuentaMayorNombre}" filterBy="#{item.compraCuentaMayorId.cuentaMayorNombre}">
                     <f:facet name="header">
                         <h:outputText value="Cuenta"/>
                     </f:facet>
                     <p:cellEditor>
                         <f:facet name="output">
-                            <h:outputText value="#{item.compraCuentaId.cuentaMayorNombre}"/>
+                            <h:outputText value="#{item.compraCuentaMayorId.cuentaMayorNombre}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <p:selectOneMenu id="cuenta" value="#{item.compraCuentaId}" required="true" requiredMessage="Debe seleccionar la Cuenta" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                            <p:selectOneMenu id="cuenta" value="#{item.compraCuentaMayorId}" required="true" requiredMessage="Debe seleccionar la Cuenta" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
                                 <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                 <f:selectItems value="#{compraController.cuentaMayorItems}"
                                                var="cuentaMayorItem"

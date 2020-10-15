@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ClienteEditDlg" widgetVar="ClienteEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="Edición de Cliente" closeOnEscape="true">
+
+            <h:form id="ClienteEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{clienteController.selected != null}">
+
+
+                        <h:outputLabel value="#" for="clienteId" />
+                        <h:outputText id="clienteId" value="#{clienteController.selected.clienteId}" />
+
+                        <p:outputLabel value="Rut" for="clienteRut" />
+                        <p:outputLabel id="clienteRut" value="#{clienteController.selected.clienteRut}" title="#{myBundle.EditClienteTitle_clienteRut}"/>
+
+                        <p:outputLabel value="Nombre" for="clienteNombre" />
+                        <p:inputText id="clienteNombre" value="#{clienteController.selected.clienteNombre}" title="#{myBundle.EditClienteTitle_clienteNombre}" required="true" requiredMessage="#{myBundle.EditClienteRequiredMessage_clienteNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Dirección" for="clienteDireccion" />
+                        <p:inputText id="clienteDireccion" value="#{clienteController.selected.clienteDireccion}" title="#{myBundle.EditClienteTitle_clienteDireccion}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Teléfono" for="clienteTelefono" />
+                        <p:inputText id="clienteTelefono" value="#{clienteController.selected.clienteTelefono}" title="#{myBundle.EditClienteTitle_clienteTelefono}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Email" for="clienteEmail" />
+                        <p:inputText id="clienteEmail" value="#{clienteController.selected.clienteEmail}" title="#{myBundle.EditClienteTitle_clienteEmail}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Giro" for="clienteGiro" />
+                        <p:inputText id="clienteGiro" value="#{clienteController.selected.clienteGiro}" title="#{myBundle.EditClienteTitle_clienteGiro}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Comuna" for="clienteComunaId" />
+                        <p:selectOneMenu id="clienteComunaId" value="#{clienteController.selected.clienteComunaId}" required="true" requiredMessage="#{myBundle.EditClienteRequiredMessage_clienteComunaId}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{comunaController.items}"
+                                           var="clienteComunaIdItem"
+                                           itemValue="#{clienteComunaIdItem}"
+                                           itemLabel="#{clienteComunaIdItem.comunaNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{clienteController.save}" value="#{myBundle.Save}" update="display,:ClienteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ClienteEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ClienteEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

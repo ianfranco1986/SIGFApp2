@@ -1,7 +1,6 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.AdministradorBus;
-import com.areatecnica.sigf.facade.AdministradorBusFacade;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -13,8 +12,6 @@ public class AdministradorBusController extends AbstractController<Administrador
 
     @Inject
     private AdministradorController administradorBusIdAdminController;
-    @Inject
-    private BusController administradorBusIdBusController;
 
     public AdministradorBusController() {
         // Inform the Abstract parent controller of the concrete AdministradorBus Entity
@@ -26,7 +23,6 @@ public class AdministradorBusController extends AbstractController<Administrador
      */
     public void resetParents() {
         administradorBusIdAdminController.setSelected(null);
-        administradorBusIdBusController.setSelected(null);
     }
 
     /**
@@ -39,19 +35,6 @@ public class AdministradorBusController extends AbstractController<Administrador
         AdministradorBus selected = this.getSelected();
         if (selected != null && administradorBusIdAdminController.getSelected() == null) {
             administradorBusIdAdminController.setSelected(selected.getAdministradorBusIdAdmin());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the Bus controller in order to display
-     * its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareAdministradorBusIdBus(ActionEvent event) {
-        AdministradorBus selected = this.getSelected();
-        if (selected != null && administradorBusIdBusController.getSelected() == null) {
-            administradorBusIdBusController.setSelected(selected.getAdministradorBusIdBus());
         }
     }
 

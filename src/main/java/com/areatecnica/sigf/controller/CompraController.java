@@ -3,6 +3,7 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICompraDaoImpl;
 import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
+import com.areatecnica.sigf.dao.impl.ICuentaMayorDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProveedorDaoImpl;
@@ -103,6 +104,8 @@ public class CompraController extends AbstractController<Compra> {
         System.err.println("FECHA DE BUSQUEDA DE FACTURAS:" + desde + " - " + hasta);
         this.items = new ICompraDaoImpl().findCompraBetweenDates(desde, hasta);
 
+        this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
+
         if (this.items.isEmpty()) {
             JsfUtil.addWarningMessage("No se han encontrado registros");
         } else {
@@ -114,49 +117,53 @@ public class CompraController extends AbstractController<Compra> {
     }
 
     public void handleCuentaChange() {
-//        if (this.cuentaBancaria != null) {
-//            MovimientoMes movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
-//            if (movimientoDocumento == null) {
-//                movimientoDocumento = new MovimientoMes();
-//                movimientoDocumento.setMovimientoMesDocumento(1);
-//            }
-//
-//            this.documento = movimientoDocumento.getMovimientoMesDocumento() + 1;
-//        }
+        if (this.cuentaBancaria != null) {
+            MovimientoMes movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            if (movimientoDocumento == null) {
+                movimientoDocumento = new MovimientoMes();
+                movimientoDocumento.setMovimientoMesNumeroDocumento(1);
+            }
+            this.documento = movimientoDocumento.getMovimientoMesNumeroDocumento() + 1;
+        }
     }
 
     @Override
     public void saveNew(ActionEvent event) {
-//        if (this.getSelected() != null) {
-//
-//            this.getSelected().setCompraProveedorId(proveedor);
-//            this.getSelected().setCompraCuentaId(cuentaMayor);
-//
-//            Compra t = new ICompraDaoImpl().create(this.getSelected());
-//
-//            MovimientoMes mov = new MovimientoMes();
-//            mov.setMovimientoMesCuentaId(cuentaBancaria);
-//            mov.setMovimientoMesDetalle(this.getSelected().getCompraDescripcion());
-//            mov.setMovimientoMesDocumento(this.documento);
-//            mov.setMovimientoMesEmpresaId(empresaNandu);
-//            mov.setMovimientoMesFechaLiquidacion(this.desde);
-//            mov.setMovimientoMesFechaMvto(this.getSelected().getCompraFechaDocumento());
-//            mov.setMovimientoMesMonto(this.getSelected().getCompraTotal());
-//            mov.setMovimientoMesMvtoId(this.tipoMovimiento);
-//
-//            MovimientoMes auxMov = new IMovimientoMesDaoImpl().create(mov);
-//
-//            if (t != null) {
-//                this.items.add(this.getSelected());
-//                this.setSelected(this.prepareCreate(event));
-//                JsfUtil.addSuccessMessage("Se ha regristrado una Compra");
-//            } else {
-//                JsfUtil.addErrorMessage("Ha ocurrido un error durante la persistencia ");
-//            }
-//
-//            this.setSelected(prepareCreate(event));
-//
-//        }
+        if (this.getSelected() != null) {
+
+            this.getSelected().setCompraProveedorId(proveedor);
+            this.getSelected().setCompraCuentaMayorId(cuentaMayor);
+
+            MovimientoMes mov = new MovimientoMes();
+
+            mov.setMovimientoMesEmpresaId(empresaNandu);
+            mov.setMovimientoMesCuentaBancoId(cuentaBancaria);
+            mov.setMovimientoMesFechaMvto(this.getSelected().getCompraFechaDocumento());
+            mov.setMovimientoMesFechaLiquidacion(this.desde);
+            mov.setMovimientoMesMonto(this.getSelected().getCompraTotal());
+
+            String descripcion = this.getSelected().getCompraTipoDocumentoId().getTipoDocumentoSigla() + ": " + this.proveedor.getProveedorNombre() + " - " + this.getSelected().getCompraDescripcion();
+
+            mov.setMovimientoMesDetalle(descripcion);
+            mov.setMovimientoMesTipoDocumento(documento);
+            mov.setMovimientoMesNumeroDocumento(this.documento);
+
+            this.getSelected().setCompraMovimientoId(mov);
+
+            Compra t = new ICompraDaoImpl().create(this.getSelected());
+
+            if (t != null) {
+                this.items.add(this.getSelected());
+                this.setSelected(this.prepareCreate(event));
+                resetParents();
+                JsfUtil.addSuccessMessage("Se ha regristrado una Compra");
+            } else {
+                JsfUtil.addErrorMessage("Ha ocurrido un error durante la persistencia ");
+            }
+
+            this.setSelected(prepareCreate(event));
+
+        }
     }
 
     @Override

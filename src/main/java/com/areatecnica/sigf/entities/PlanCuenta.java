@@ -6,7 +6,9 @@
 package com.areatecnica.sigf.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,55 +31,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "plan_cuenta", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PlanCuenta.findAll", query = "SELECT p FROM PlanCuenta p")
-    , @NamedQuery(name = "PlanCuenta.findByPlanCuentaId", query = "SELECT p FROM PlanCuenta p WHERE p.planCuentaId = :planCuentaId")
-    , @NamedQuery(name = "PlanCuenta.findByPlanCuentaIdClasificacion", query = "SELECT p FROM PlanCuenta p WHERE p.planCuentaIdClasificacion = :planCuentaIdClasificacion")
-    , @NamedQuery(name = "PlanCuenta.findByPlanCuentaIdEmpresa", query = "SELECT p FROM PlanCuenta p WHERE p.planCuentaIdEmpresa = :planCuentaIdEmpresa")
-    , @NamedQuery(name = "PlanCuenta.findByPlanCuentaNombre", query = "SELECT p FROM PlanCuenta p WHERE p.planCuentaNombre = :planCuentaNombre")})
+    @NamedQuery(name = "PlanCuenta.findAll", query = "SELECT p FROM PlanCuenta p"),
+    @NamedQuery(name = "PlanCuenta.findByPlanCuentaId", query = "SELECT p FROM PlanCuenta p WHERE p.planCuentaId = :planCuentaId")})
 public class PlanCuenta implements Serializable {
-
-    @JoinColumn(name = "plan_cuenta_empresa_id", referencedColumnName = "empresa_id")
-    @ManyToOne(optional = false)
-    private Empresa planCuentaEmpresaId;
-    @JoinColumn(name = "plan_cuenta_sub_tipo_id", referencedColumnName = "plan_cuenta_sub_tipo_id")
-    @ManyToOne(optional = false)
-    private PlanCuentaSubTipo planCuentaSubTipoId;
-    @JoinColumn(name = "plan_cuenta_tipo_id", referencedColumnName = "tipo_plan_cuenta_id")
-    @ManyToOne(optional = false)
-    private TipoPlanCuenta planCuentaTipoId;
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "plan_cuenta_id", nullable = false)
+    @Column(name = "plan_cuenta_id")
     private Integer planCuentaId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "plan_cuenta_id_clasificacion", nullable = false)
-    private int planCuentaIdClasificacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "plan_cuenta_id_empresa", nullable = false)
-    private int planCuentaIdEmpresa;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "plan_cuenta_nombre", nullable = false, length = 100)
-    private String planCuentaNombre;
+    @JoinColumn(name = "plan_cuenta_empresa_id", referencedColumnName = "empresa_id")
+    @ManyToOne(optional = false)
+    private Empresa planCuentaEmpresaId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaSubTipoIdPlan")
+    private List<PlanCuentaSubTipo> planCuentaSubTipoList;
 
     public PlanCuenta() {
     }
 
     public PlanCuenta(Integer planCuentaId) {
         this.planCuentaId = planCuentaId;
-    }
-
-    public PlanCuenta(Integer planCuentaId, int planCuentaIdClasificacion, int planCuentaIdEmpresa, String planCuentaNombre) {
-        this.planCuentaId = planCuentaId;
-        this.planCuentaIdClasificacion = planCuentaIdClasificacion;
-        this.planCuentaIdEmpresa = planCuentaIdEmpresa;
-        this.planCuentaNombre = planCuentaNombre;
     }
 
     public Integer getPlanCuentaId() {
@@ -88,28 +62,21 @@ public class PlanCuenta implements Serializable {
         this.planCuentaId = planCuentaId;
     }
 
-    public int getPlanCuentaIdClasificacion() {
-        return planCuentaIdClasificacion;
+    public Empresa getPlanCuentaEmpresaId() {
+        return planCuentaEmpresaId;
     }
 
-    public void setPlanCuentaIdClasificacion(int planCuentaIdClasificacion) {
-        this.planCuentaIdClasificacion = planCuentaIdClasificacion;
+    public void setPlanCuentaEmpresaId(Empresa planCuentaEmpresaId) {
+        this.planCuentaEmpresaId = planCuentaEmpresaId;
     }
 
-    public int getPlanCuentaIdEmpresa() {
-        return planCuentaIdEmpresa;
+    @XmlTransient
+    public List<PlanCuentaSubTipo> getPlanCuentaSubTipoList() {
+        return planCuentaSubTipoList;
     }
 
-    public void setPlanCuentaIdEmpresa(int planCuentaIdEmpresa) {
-        this.planCuentaIdEmpresa = planCuentaIdEmpresa;
-    }
-
-    public String getPlanCuentaNombre() {
-        return planCuentaNombre;
-    }
-
-    public void setPlanCuentaNombre(String planCuentaNombre) {
-        this.planCuentaNombre = planCuentaNombre;
+    public void setPlanCuentaSubTipoList(List<PlanCuentaSubTipo> planCuentaSubTipoList) {
+        this.planCuentaSubTipoList = planCuentaSubTipoList;
     }
 
     @Override
@@ -135,30 +102,6 @@ public class PlanCuenta implements Serializable {
     @Override
     public String toString() {
         return "com.areatecnica.sigf.entities.PlanCuenta[ planCuentaId=" + planCuentaId + " ]";
-    }
-
-    public Empresa getPlanCuentaEmpresaId() {
-        return planCuentaEmpresaId;
-    }
-
-    public void setPlanCuentaEmpresaId(Empresa planCuentaEmpresaId) {
-        this.planCuentaEmpresaId = planCuentaEmpresaId;
-    }
-
-    public PlanCuentaSubTipo getPlanCuentaSubTipoId() {
-        return planCuentaSubTipoId;
-    }
-
-    public void setPlanCuentaSubTipoId(PlanCuentaSubTipo planCuentaSubTipoId) {
-        this.planCuentaSubTipoId = planCuentaSubTipoId;
-    }
-
-    public TipoPlanCuenta getPlanCuentaTipoId() {
-        return planCuentaTipoId;
-    }
-
-    public void setPlanCuentaTipoId(TipoPlanCuenta planCuentaTipoId) {
-        this.planCuentaTipoId = planCuentaTipoId;
     }
     
 }

@@ -8,21 +8,23 @@
 
     <ui:composition>
 
-        <p:dialog id="PlanCuentaCreateDlg" widgetVar="PlanCuentaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePlanCuentaTitle}" closeOnEscape="true">
+        <p:dialog id="PlanCuentaCreateDlg" widgetVar="PlanCuentaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registro Plan de Cuenta x Empresa" closeOnEscape="true">
 
             <h:form id="PlanCuentaCreateForm">
 
                 <h:panelGroup id="display" rendered="#{planCuentaController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{myBundle.CreatePlanCuentaLabel_planCuentaIdClasificacion}" for="planCuentaIdClasificacion" />
-                        <p:inputText id="planCuentaIdClasificacion" value="#{planCuentaController.selected.planCuentaIdClasificacion}" title="#{myBundle.CreatePlanCuentaTitle_planCuentaIdClasificacion}" required="true" requiredMessage="#{myBundle.CreatePlanCuentaRequiredMessage_planCuentaIdClasificacion}"/>
+                        <p:outputLabel value="Empresa" for="planCuentaEmpresaId" />
+                        <p:selectOneMenu id="planCuentaEmpresaId" value="#{planCuentaController.selected.planCuentaEmpresaId}" required="true" requiredMessage="#{myBundle.CreatePlanCuentaRequiredMessage_planCuentaEmpresaId}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empresaController.items}"
+                                           var="planCuentaEmpresaIdItem"
+                                           itemValue="#{planCuentaEmpresaIdItem}"
+                                           itemLabel="#{planCuentaEmpresaIdItem.empresaNombre}"
+                                           />
 
-                        <p:outputLabel value="#{myBundle.CreatePlanCuentaLabel_planCuentaIdEmpresa}" for="planCuentaIdEmpresa" />
-                        <p:inputText id="planCuentaIdEmpresa" value="#{planCuentaController.selected.planCuentaIdEmpresa}" title="#{myBundle.CreatePlanCuentaTitle_planCuentaIdEmpresa}" required="true" requiredMessage="#{myBundle.CreatePlanCuentaRequiredMessage_planCuentaIdEmpresa}"/>
-
-                        <p:outputLabel value="#{myBundle.CreatePlanCuentaLabel_planCuentaNombre}" for="planCuentaNombre" />
-                        <p:inputText id="planCuentaNombre" value="#{planCuentaController.selected.planCuentaNombre}" title="#{myBundle.CreatePlanCuentaTitle_planCuentaNombre}" required="true" requiredMessage="#{myBundle.CreatePlanCuentaRequiredMessage_planCuentaNombre}" size="100" maxlength="100"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{planCuentaController.saveNew}" value="#{myBundle.Save}" update="display,:PlanCuentaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlanCuentaCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>

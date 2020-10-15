@@ -60,9 +60,7 @@ public class Surtidor implements Serializable {
     private Terminal surtidorIdTerminal;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaCombustibleIdSurtidor")
     private List<VentaCombustible> ventaCombustibleList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "numeralSurtidorIdSurtidor")
-    private List<NumeralSurtidor> numeralSurtidorList;
-
+    
     public Surtidor() {
     }
 
@@ -114,15 +112,6 @@ public class Surtidor implements Serializable {
 
     public void setVentaCombustibleList(List<VentaCombustible> ventaCombustibleList) {
         this.ventaCombustibleList = ventaCombustibleList;
-    }
-
-    @XmlTransient
-    public List<NumeralSurtidor> getNumeralSurtidorList() {
-        return numeralSurtidorList;
-    }
-
-    public void setNumeralSurtidorList(List<NumeralSurtidor> numeralSurtidorList) {
-        this.numeralSurtidorList = numeralSurtidorList;
     }
 
     @Override

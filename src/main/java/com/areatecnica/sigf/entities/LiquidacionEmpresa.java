@@ -7,9 +7,7 @@ package com.areatecnica.sigf.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,13 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,51 +31,46 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "liquidacion_empresa", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LiquidacionEmpresa.findAll", query = "SELECT l FROM LiquidacionEmpresa l")
-    , @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaId", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaId = :liquidacionEmpresaId")
-    , @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaFechaLiquidacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaLiquidacion = :liquidacionEmpresaFechaLiquidacion")
-    , @NamedQuery(name = "LiquidacionEmpresa.findByEmpresaFecha", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to AND l.liquidacionEmpresaIdEmpresa = :liquidacionEmpresaIdEmpresa")
-    , @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaFechaPago", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaPago = :liquidacionEmpresaFechaPago")
-    , @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalAbonos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalAbonos = :liquidacionEmpresaTotalAbonos")
-    , @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalCargos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalCargos = :liquidacionEmpresaTotalCargos")
-    , @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaSaldo", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaSaldo = :liquidacionEmpresaSaldo")})
+    @NamedQuery(name = "LiquidacionEmpresa.findAll", query = "SELECT l FROM LiquidacionEmpresa l"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaId", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaId = :liquidacionEmpresaId"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaFechaLiquidacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaLiquidacion = :liquidacionEmpresaFechaLiquidacion"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaFechaPago", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaPago = :liquidacionEmpresaFechaPago"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalAbonos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalAbonos = :liquidacionEmpresaTotalAbonos"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalCargos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalCargos = :liquidacionEmpresaTotalCargos"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaSaldo", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaSaldo = :liquidacionEmpresaSaldo")})
 public class LiquidacionEmpresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "liquidacion_empresa_id", nullable = false)
+    @Column(name = "liquidacion_empresa_id")
     private Integer liquidacionEmpresaId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "liquidacion_empresa_fecha_liquidacion", nullable = false)
+    @Column(name = "liquidacion_empresa_fecha_liquidacion")
     @Temporal(TemporalType.DATE)
     private Date liquidacionEmpresaFechaLiquidacion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "liquidacion_empresa_fecha_pago", nullable = false)
+    @Column(name = "liquidacion_empresa_fecha_pago")
     @Temporal(TemporalType.DATE)
     private Date liquidacionEmpresaFechaPago;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "liquidacion_empresa_total_abonos", nullable = false)
+    @Column(name = "liquidacion_empresa_total_abonos")
     private int liquidacionEmpresaTotalAbonos;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "liquidacion_empresa_total_cargos", nullable = false)
+    @Column(name = "liquidacion_empresa_total_cargos")
     private int liquidacionEmpresaTotalCargos;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "liquidacion_empresa_saldo", nullable = false)
+    @Column(name = "liquidacion_empresa_saldo")
     private int liquidacionEmpresaSaldo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoLiquidacionIdLiquidacion")
-    private List<CargoLiquidacion> cargoLiquidacionList;
-    @JoinColumn(name = "liquidacion_empresa_id_empresa", referencedColumnName = "empresa_id", nullable = false)
+    @JoinColumn(name = "liquidacion_empresa_id_empresa", referencedColumnName = "empresa_id")
     @ManyToOne(optional = false)
     private Empresa liquidacionEmpresaIdEmpresa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abonoLiquidacionIdLiquidacionEmpresa")
-    private List<AbonoLiquidacion> abonoLiquidacionList;
 
     public LiquidacionEmpresa() {
     }
@@ -145,30 +136,12 @@ public class LiquidacionEmpresa implements Serializable {
         this.liquidacionEmpresaSaldo = liquidacionEmpresaSaldo;
     }
 
-    @XmlTransient
-    public List<CargoLiquidacion> getCargoLiquidacionList() {
-        return cargoLiquidacionList;
-    }
-
-    public void setCargoLiquidacionList(List<CargoLiquidacion> cargoLiquidacionList) {
-        this.cargoLiquidacionList = cargoLiquidacionList;
-    }
-
     public Empresa getLiquidacionEmpresaIdEmpresa() {
         return liquidacionEmpresaIdEmpresa;
     }
 
     public void setLiquidacionEmpresaIdEmpresa(Empresa liquidacionEmpresaIdEmpresa) {
         this.liquidacionEmpresaIdEmpresa = liquidacionEmpresaIdEmpresa;
-    }
-
-    @XmlTransient
-    public List<AbonoLiquidacion> getAbonoLiquidacionList() {
-        return abonoLiquidacionList;
-    }
-
-    public void setAbonoLiquidacionList(List<AbonoLiquidacion> abonoLiquidacionList) {
-        this.abonoLiquidacionList = abonoLiquidacionList;
     }
 
     @Override

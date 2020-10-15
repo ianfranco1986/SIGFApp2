@@ -179,11 +179,12 @@
     <class>com.areatecnica.sigf.entities.Honorario</class>
     <class>com.areatecnica.sigf.entities.Anticipo</class>
     <class>com.areatecnica.sigf.entities.EmisorBoleta</class>
-    <class>com.areatecnica.sigf.entities.TipoBoletaHonorario</class>    
+    <class>com.areatecnica.sigf.entities.TipoBoletaHonorario</class>
     <class>com.areatecnica.sigf.entities.Cliente</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.jdbc.native-sql" value="true"/>
+      <property name="eclipselink.logging.level" value="SEVERE"/>
     </properties>
   </persistence-unit>
 </persistence>

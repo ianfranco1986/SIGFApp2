@@ -36,14 +36,6 @@ public class CuentaMayorFacade extends AbstractFacade<CuentaMayor> {
         super(CuentaMayor.class);
     }
 
-    public boolean isCompraListEmpty(CuentaMayor entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<CuentaMayor> cuentaMayor = cq.from(CuentaMayor.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(cuentaMayor, entity), cb.isNotEmpty(cuentaMayor.get(CuentaMayor_.compraList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
-
     public List<Compra> findCompraList(CuentaMayor entity) {
         CuentaMayor mergedEntity = this.getMergedEntity(entity);
         List<Compra> compraList = mergedEntity.getCompraList();

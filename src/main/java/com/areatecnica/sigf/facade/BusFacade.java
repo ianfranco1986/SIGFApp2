@@ -13,8 +13,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.AbonoBus;
-import com.areatecnica.sigf.entities.CargoBus;
 import com.areatecnica.sigf.entities.Despacho;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.entities.Empresa;
@@ -59,26 +57,12 @@ public class BusFacade extends AbstractFacade<Bus> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<AbonoBus> findAbonoBusList(Bus entity) {
-        Bus mergedEntity = this.getMergedEntity(entity);
-        List<AbonoBus> abonoBusList = mergedEntity.getAbonoBusList();
-        abonoBusList.size();
-        return abonoBusList;
-    }
-
     public boolean isCargoBusListEmpty(Bus entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Bus> bus = cq.from(Bus.class);
 //        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(bus, entity), cb.isNotEmpty(bus.get(Bus_.cargoBusList)));
         return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public List<CargoBus> findCargoBusList(Bus entity) {
-        Bus mergedEntity = this.getMergedEntity(entity);
-        List<CargoBus> cargoBusList = mergedEntity.getCargoBusList();
-        cargoBusList.size();
-        return cargoBusList;
     }
 
     public boolean isDespachoListEmpty(Bus entity) {
@@ -296,5 +280,5 @@ public class BusFacade extends AbstractFacade<Bus> {
         registroMinutoList1.size();
         return registroMinutoList1;
     }
-    
+
 }

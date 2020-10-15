@@ -31,9 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "tipo_plan_cuenta", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoPlanCuenta.findAll", query = "SELECT t FROM TipoPlanCuenta t")
-    , @NamedQuery(name = "TipoPlanCuenta.findByTipoPlanCuentaId", query = "SELECT t FROM TipoPlanCuenta t WHERE t.tipoPlanCuentaId = :tipoPlanCuentaId")
-    , @NamedQuery(name = "TipoPlanCuenta.findByTipoPlanCuentaNombre", query = "SELECT t FROM TipoPlanCuenta t WHERE t.tipoPlanCuentaNombre = :tipoPlanCuentaNombre")})
+    @NamedQuery(name = "TipoPlanCuenta.findAll", query = "SELECT t FROM TipoPlanCuenta t"),
+    @NamedQuery(name = "TipoPlanCuenta.findByTipoPlanCuentaId", query = "SELECT t FROM TipoPlanCuenta t WHERE t.tipoPlanCuentaId = :tipoPlanCuentaId"),
+    @NamedQuery(name = "TipoPlanCuenta.findByTipoPlanCuentaNombre", query = "SELECT t FROM TipoPlanCuenta t WHERE t.tipoPlanCuentaNombre = :tipoPlanCuentaNombre")})
 public class TipoPlanCuenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,8 +47,8 @@ public class TipoPlanCuenta implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tipo_plan_cuenta_nombre")
     private String tipoPlanCuentaNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaTipoId")
-    private List<PlanCuenta> planCuentaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaSubTipoIdTipoPlan")
+    private List<PlanCuentaSubTipo> planCuentaSubTipoList;
 
     public TipoPlanCuenta() {
     }
@@ -79,12 +79,12 @@ public class TipoPlanCuenta implements Serializable {
     }
 
     @XmlTransient
-    public List<PlanCuenta> getPlanCuentaList() {
-        return planCuentaList;
+    public List<PlanCuentaSubTipo> getPlanCuentaSubTipoList() {
+        return planCuentaSubTipoList;
     }
 
-    public void setPlanCuentaList(List<PlanCuenta> planCuentaList) {
-        this.planCuentaList = planCuentaList;
+    public void setPlanCuentaSubTipoList(List<PlanCuentaSubTipo> planCuentaSubTipoList) {
+        this.planCuentaSubTipoList = planCuentaSubTipoList;
     }
 
     @Override

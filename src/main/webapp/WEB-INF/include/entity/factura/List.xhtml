@@ -54,14 +54,32 @@
                 <p:inputNumber id="folio" decimalPlaces="0" value="#{facturaController.selected.facturaFolio}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                 </p:inputNumber>
 
-                <p:outputLabel value="Rut" for="rut" />
-                <p:inputText id="rut" value="#{facturaController.selected.facturaRutCliente}" required="true" requiredMessage="Debe ingresar el rut del Cliente" size="11" maxlength="9" onfocus="this.setSelectionRange(0, this.value.length)" validator="rutValidator"/>
+                <p:outputLabel value="Tipo Documento" for="facturaTipoDocumentoId" />
+                <p:selectOneMenu id="facturaTipoDocumentoId" value="#{facturaController.selected.facturaTipoDocumentoId}" required="true" requiredMessage="#{myBundle.CreateFacturaRequiredMessage_facturaTipoDocumentoId}" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{tipoDocumentoController.items}"
+                                   var="facturaTipoDocumentoIdItem"
+                                   itemValue="#{facturaTipoDocumentoIdItem}"
+                                   itemLabel="#{facturaTipoDocumentoIdItem.tipoDocumentoNombre}"
+                                   />
 
-                <p:outputLabel value="Cliente" for="cliente" />
-                <p:inputText id="cliente" value="#{facturaController.selected.facturaNombreCliente}" required="true" requiredMessage="Debe ingresar el nombre del Cliente" size="30" maxlength="200" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Cliente" for="facturaClienteId" />
+                <p:selectOneMenu id="facturaClienteId" value="#{facturaController.selected.facturaClienteId}" required="true" requiredMessage="#{myBundle.CreateFacturaRequiredMessage_facturaClienteId}" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{clienteController.items}"
+                                   var="facturaClienteIdItem"
+                                   itemValue="#{facturaClienteIdItem}"
+                                   itemLabel="#{facturaClienteIdItem.clienteNombre}"
+                                   />
+
+                </p:selectOneMenu>
+
+
 
                 <p:outputLabel value="Detalle" for="detalleCartolaDescripcion" />
-                <p:inputText id="detalleCartolaDescripcion" value="#{facturaController.selected.facturaDetalle}" required="true" requiredMessage="Debe ingresar detalle" size="30" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                <p:inputText id="detalleCartolaDescripcion" value="#{facturaController.selected.facturaDetalle}" required="true" requiredMessage="Debe ingresar detalle" size="60" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)"/>
 
                 <p:outputLabel value="Neto" for="neto" />
                 <p:inputNumber id="neto" decimalPlaces="0" value="#{facturaController.selected.facturaNeto}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
@@ -76,6 +94,17 @@
                 <p:outputLabel value="Total" for="total" />
                 <p:inputNumber id="total" decimalPlaces="0" value="#{facturaController.selected.facturaTotal}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                 </p:inputNumber>
+
+                <p:outputLabel value="Cuenta Mayor" for="facturaCuentaMayorId" />
+                <p:selectOneMenu id="facturaCuentaMayorId" value="#{facturaController.selected.facturaCuentaMayorId}" required="true" requiredMessage="#{myBundle.CreateFacturaRequiredMessage_facturaCuentaMayorId}" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{cuentaMayorController.items}"
+                                   var="facturaCuentaMayorIdItem"
+                                   itemValue="#{facturaCuentaMayorIdItem}"
+                                   itemLabel="#{facturaCuentaMayorIdItem.cuentaMayorNombre}"
+                                   />
+
+                </p:selectOneMenu>
 
                 <p:outputLabel/>
                 <p:commandButton value="Agregar" actionListener="#{facturaController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
@@ -153,33 +182,17 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column sortBy="#{item.facturaNombreCliente}" filterBy="#{item.facturaNombreCliente}" filterMatchMode="contains">
+                <p:column sortBy="#{item.facturaClienteId.clienteNombre}" filterBy="#{item.facturaClienteId.clienteNombre}" filterMatchMode="contains">
                     <f:facet name="header">
                         <h:outputText value="Cliente"/>
                     </f:facet>
                     <p:cellEditor>
                         <f:facet name="output">
-                            <h:outputText value="#{item.facturaNombreCliente}">
+                            <h:outputText value="#{item.facturaClienteId.clienteNombre}">
                             </h:outputText> 
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText id="cliente" value="#{item.facturaNombreCliente}" required="true" requiredMessage="Debe ingresar un nombre de cliente" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
-                            </p:inputText>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column sortBy="#{item.facturaRutCliente}" filterBy="#{item.facturaRutCliente}" filterMatchMode="contains">
-                    <f:facet name="header">
-                        <h:outputText value="Rut"/>
-                    </f:facet>
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{item.facturaRutCliente}">
-                            </h:outputText> 
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText id="rut" value="#{item.facturaRutCliente}" required="true" requiredMessage="Debe ingresar un rut" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            <p:inputText id="cliente" value="#{item.facturaClienteId.clienteNombre}" required="true" requiredMessage="Debe ingresar un nombre de cliente" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                             </p:inputText>
                         </f:facet>
                     </p:cellEditor>

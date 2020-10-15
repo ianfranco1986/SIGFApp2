@@ -32,26 +32,9 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
         cuentaMayorSubTipoIdController.setSelected(null);
     }
 
-    /**
-     * Set the "is[ChildCollection]Empty" property for OneToMany fields.
-     */
-    @Override
-    protected void setChildrenEmptyFlags() {
-        this.setIsCompraListEmpty();
-    }
 
     public boolean getIsCompraListEmpty() {
         return this.isCompraListEmpty;
-    }
-
-    private void setIsCompraListEmpty() {
-        CuentaMayor selected = this.getSelected();
-        if (selected != null) {
-            CuentaMayorFacade ejbFacade = (CuentaMayorFacade) this.getFacade();
-            this.isCompraListEmpty = ejbFacade.isCompraListEmpty(selected);
-        } else {
-            this.isCompraListEmpty = true;
-        }
     }
 
     /**

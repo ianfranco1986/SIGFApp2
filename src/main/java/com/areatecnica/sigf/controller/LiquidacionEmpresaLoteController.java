@@ -5,17 +5,12 @@
  */
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.dao.impl.AbonoBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.CargoBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.ILiquidacionEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionMinutoDaoImpl;
-import com.areatecnica.sigf.entities.AbonoBus;
-import com.areatecnica.sigf.entities.AbonoLiquidacion;
 import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CargoBus;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.LiquidacionEmpresa;
 import com.areatecnica.sigf.entities.MovimientoMes;
@@ -240,23 +235,23 @@ public class LiquidacionEmpresaLoteController implements Serializable {
         if (!this.items.isEmpty()) {
             for (LiquidacionHelper l : this.items) {
                 if (l.liquidacionEmpresa == null) {
-                    AbonoLiquidacion abonoLiquidacion = new AbonoLiquidacion();
-
-                    for (AbonoBus a : l.abonoBusItems) {
-                        //abonoLiquidacion
-                    }
-
-                    LiquidacionEmpresa liquidacion = new LiquidacionEmpresa();
-
-                    liquidacion.setLiquidacionEmpresaFechaLiquidacion(desde);
-                    liquidacion.setLiquidacionEmpresaFechaPago(hasta);
-                    liquidacion.setLiquidacionEmpresaIdEmpresa(l.empresa);
-                    liquidacion.setLiquidacionEmpresaSaldo(l.saldo);
-                    liquidacion.setLiquidacionEmpresaTotalAbonos(totalAbonos);
-                    liquidacion.setLiquidacionEmpresaTotalCargos(totalCargos);
-
-                    ILiquidacionEmpresaDaoImpl daoImpl = new ILiquidacionEmpresaDaoImpl();
-                    daoImpl.create(l.liquidacionEmpresa);
+//                    AbonoLiquidacion abonoLiquidacion = new AbonoLiquidacion();
+//
+//                    for (AbonoBus a : l.abonoBusItems) {
+//                        //abonoLiquidacion
+//                    }
+//
+//                    LiquidacionEmpresa liquidacion = new LiquidacionEmpresa();
+//
+//                    liquidacion.setLiquidacionEmpresaFechaLiquidacion(desde);
+//                    liquidacion.setLiquidacionEmpresaFechaPago(hasta);
+//                    liquidacion.setLiquidacionEmpresaIdEmpresa(l.empresa);
+//                    liquidacion.setLiquidacionEmpresaSaldo(l.saldo);
+//                    liquidacion.setLiquidacionEmpresaTotalAbonos(totalAbonos);
+//                    liquidacion.setLiquidacionEmpresaTotalCargos(totalCargos);
+//
+//                    ILiquidacionEmpresaDaoImpl daoImpl = new ILiquidacionEmpresaDaoImpl();
+//                    daoImpl.create(l.liquidacionEmpresa);
 
                 }
             }
@@ -441,8 +436,8 @@ public class LiquidacionEmpresaLoteController implements Serializable {
         private Empresa empresa;
         private List<RecaudacionGuia> recaudacionItems;
         private List<RecaudacionMinuto> recaudacionMinutoItems;
-        private List<CargoBus> cargoBusItems;
-        private List<AbonoBus> abonoBusItems;
+//        private List<CargoBus> cargoBusItems;
+//        private List<AbonoBus> abonoBusItems;
         private List<MovimientoMes> movimientos;
         private LinkedHashMap hashMap;
 
@@ -556,17 +551,17 @@ public class LiquidacionEmpresaLoteController implements Serializable {
                 this.boletos = 0;
                 this.minutos = 0;
 
-                this.cargoBusItems = new CargoBusDaoImpl().findByBusBetweenDates(b, from, to);
-
-                for (CargoBus c : this.cargoBusItems) {
-                    this.cargosVarios = this.cargosVarios + c.getCargoBusMontoFijo();
-                }
-
-                this.abonoBusItems = new AbonoBusDaoImpl().findByBusBetweenDates(b, from, to);
-
-                for (AbonoBus c : this.abonoBusItems) {
-                    this.abonosVarios = this.abonosVarios + c.getAbonoBusMontoFijo();
-                }
+//                this.cargoBusItems = new CargoBusDaoImpl().findByBusBetweenDates(b, from, to);
+//
+//                for (CargoBus c : this.cargoBusItems) {
+//                    this.cargosVarios = this.cargosVarios + c.getCargoBusMontoFijo();
+//                }
+//
+//                this.abonoBusItems = new AbonoBusDaoImpl().findByBusBetweenDates(b, from, to);
+//
+//                for (AbonoBus c : this.abonoBusItems) {
+//                    this.abonosVarios = this.abonosVarios + c.getAbonoBusMontoFijo();
+//                }
 
             }
 
@@ -604,21 +599,21 @@ public class LiquidacionEmpresaLoteController implements Serializable {
             this.saldo = (this.total + this.totalAbonos) - this.totalCargos;
         }
 
-        public List<CargoBus> getCargoBusItems() {
-            return cargoBusItems;
-        }
-
-        public void setCargoBusItems(List<CargoBus> cargoBusItems) {
-            this.cargoBusItems = cargoBusItems;
-        }
-
-        public List<AbonoBus> getAbonoBusItems() {
-            return abonoBusItems;
-        }
-
-        public void setAbonoBusItems(List<AbonoBus> abonoBusItems) {
-            this.abonoBusItems = abonoBusItems;
-        }
+//        public List<CargoBus> getCargoBusItems() {
+//            return cargoBusItems;
+//        }
+//
+//        public void setCargoBusItems(List<CargoBus> cargoBusItems) {
+//            this.cargoBusItems = cargoBusItems;
+//        }
+//
+//        public List<AbonoBus> getAbonoBusItems() {
+//            return abonoBusItems;
+//        }
+//
+//        public void setAbonoBusItems(List<AbonoBus> abonoBusItems) {
+//            this.abonoBusItems = abonoBusItems;
+//        }
 
         public LinkedHashMap getHashMap() {
             return hashMap;

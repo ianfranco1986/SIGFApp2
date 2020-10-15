@@ -39,9 +39,9 @@
 
 
 
-                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ProveedorDataTableContextMenu" listener="#{proveedorController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ProveedorDataTableContextMenu" listener="#{proveedorController.resetParents}"/>
-                <p:ajax event="contextMenu" update="datalist:createButton, datalist:viewButton, datalist:editButton, datalist:deleteButton" listener="#{proveedorController.resetParents}"/>
+                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ProveedorDataTableContextMenu" />
+                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:ProveedorDataTableContextMenu" />
+                <p:ajax event="contextMenu" update="datalist:createButton, datalist:viewButton, datalist:editButton, datalist:deleteButton" />
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProveedorListForm:viewButton').click();"/>
 
                 <f:facet name="header">

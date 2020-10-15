@@ -9,7 +9,6 @@ import java.util.List;
 import com.areatecnica.sigf.facade.VentaCombustibleFacade;
 import com.areatecnica.sigf.util.CurrentDate;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
@@ -28,11 +27,7 @@ import javax.inject.Inject;
 @ViewScoped
 public class VentaCombustibleController extends AbstractController<VentaCombustible> {
 
-    @Inject
-    private BusController ventaCombustibleIdBusController;
-    @Inject
-    private SurtidorController ventaCombustibleIdSurtidorController;
-
+    
     // Flags to indicate if child collections are empty
     private boolean isRecaudacionCombustibleListEmpty;
 
@@ -78,14 +73,7 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         return map;
     }
 
-    /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
-        ventaCombustibleIdBusController.setSelected(null);
-        ventaCombustibleIdSurtidorController.setSelected(null);
-    }
-
+    
     public boolean getIsRecaudacionCombustibleListEmpty() {
         return this.isRecaudacionCombustibleListEmpty;
     }
@@ -164,31 +152,7 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         return "/app/recaudacionCombustible/index";
     }
 
-    /**
-     * Sets the "selected" attribute of the Bus controller in order to display
-     * its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareVentaCombustibleIdBus(ActionEvent event) {
-        VentaCombustible selected = this.getSelected();
-        if (selected != null && ventaCombustibleIdBusController.getSelected() == null) {
-            ventaCombustibleIdBusController.setSelected(selected.getVentaCombustibleIdBus());
-        }
-    }
-
-    /**
-     * Sets the "selected" attribute of the Surtidor controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareVentaCombustibleIdSurtidor(ActionEvent event) {
-        VentaCombustible selected = this.getSelected();
-        if (selected != null && ventaCombustibleIdSurtidorController.getSelected() == null) {
-            ventaCombustibleIdSurtidorController.setSelected(selected.getVentaCombustibleIdSurtidor());
-        }
-    }
+   
 
 //    public void setFecha() {
 //        try {

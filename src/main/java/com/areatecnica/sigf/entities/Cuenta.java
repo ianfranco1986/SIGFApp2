@@ -33,11 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "cuenta", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Cuenta.findAll", query = "SELECT c FROM Cuenta c")
-    , @NamedQuery(name = "Cuenta.findByCuentaId", query = "SELECT c FROM Cuenta c WHERE c.cuentaId = :cuentaId")
-    , @NamedQuery(name = "Cuenta.findByCuentaAdministrador", query = "SELECT c FROM Cuenta c WHERE c.cuentaAdministrador = :cuentaAdministrador")
-    , @NamedQuery(name = "Cuenta.findByCuentaRut", query = "SELECT c FROM Cuenta c WHERE c.cuentaRut = :cuentaRut")
-    , @NamedQuery(name = "Cuenta.findByCuentaActiva", query = "SELECT c FROM Cuenta c WHERE c.cuentaActiva = :cuentaActiva")})
+    @NamedQuery(name = "Cuenta.findAll", query = "SELECT c FROM Cuenta c"),
+    @NamedQuery(name = "Cuenta.findByCuentaId", query = "SELECT c FROM Cuenta c WHERE c.cuentaId = :cuentaId"),
+    @NamedQuery(name = "Cuenta.findByCuentaAdministrador", query = "SELECT c FROM Cuenta c WHERE c.cuentaAdministrador = :cuentaAdministrador"),
+    @NamedQuery(name = "Cuenta.findByCuentaRut", query = "SELECT c FROM Cuenta c WHERE c.cuentaRut = :cuentaRut"),
+    @NamedQuery(name = "Cuenta.findByCuentaActiva", query = "SELECT c FROM Cuenta c WHERE c.cuentaActiva = :cuentaActiva")})
 public class Cuenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -87,11 +87,7 @@ public class Cuenta implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoIdCuenta")
     private List<Egreso> egresoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoObservacionIdCuenta")
-    private List<TipoObservacion> tipoObservacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administracionMensualIdCuenta")
-    private List<AdministracionMensual> administracionMensualList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "intervalosAdministracionIdCuenta")
-    private List<IntervalosAdministracion> intervalosAdministracionList;
+    private List<TipoObservacion> tipoObservacionList;    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoHaberTrabajadorIdCuenta")
     private List<TipoHaberTrabajador> tipoHaberTrabajadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdCuenta")
@@ -108,8 +104,6 @@ public class Cuenta implements Serializable {
     private List<Sindicato> sindicatoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraBoletoIdCuenta")
     private List<CompraBoleto> compraBoletoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoCargoIdCuenta")
-    private List<TipoCargo> tipoCargoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoDescuentoTrabajadorIdCuenta")
     private List<TipoDescuentoTrabajador> tipoDescuentoTrabajadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "institucionPrevisionIdCuenta")
@@ -120,8 +114,6 @@ public class Cuenta implements Serializable {
     private List<CajaRecaudacion> cajaRecaudacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mutualIdCuenta")
     private List<Mutual> mutualList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAbonoIdCuenta")
-    private List<TipoAbono> tipoAbonoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdCuenta")
     private List<Empresa> empresaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidadNegocioIdCuenta")
@@ -317,24 +309,6 @@ public class Cuenta implements Serializable {
     }
 
     @XmlTransient
-    public List<AdministracionMensual> getAdministracionMensualList() {
-        return administracionMensualList;
-    }
-
-    public void setAdministracionMensualList(List<AdministracionMensual> administracionMensualList) {
-        this.administracionMensualList = administracionMensualList;
-    }
-
-    @XmlTransient
-    public List<IntervalosAdministracion> getIntervalosAdministracionList() {
-        return intervalosAdministracionList;
-    }
-
-    public void setIntervalosAdministracionList(List<IntervalosAdministracion> intervalosAdministracionList) {
-        this.intervalosAdministracionList = intervalosAdministracionList;
-    }
-
-    @XmlTransient
     public List<TipoHaberTrabajador> getTipoHaberTrabajadorList() {
         return tipoHaberTrabajadorList;
     }
@@ -407,15 +381,6 @@ public class Cuenta implements Serializable {
     }
 
     @XmlTransient
-    public List<TipoCargo> getTipoCargoList() {
-        return tipoCargoList;
-    }
-
-    public void setTipoCargoList(List<TipoCargo> tipoCargoList) {
-        this.tipoCargoList = tipoCargoList;
-    }
-
-    @XmlTransient
     public List<TipoDescuentoTrabajador> getTipoDescuentoTrabajadorList() {
         return tipoDescuentoTrabajadorList;
     }
@@ -458,15 +423,6 @@ public class Cuenta implements Serializable {
 
     public void setMutualList(List<Mutual> mutualList) {
         this.mutualList = mutualList;
-    }
-
-    @XmlTransient
-    public List<TipoAbono> getTipoAbonoList() {
-        return tipoAbonoList;
-    }
-
-    public void setTipoAbonoList(List<TipoAbono> tipoAbonoList) {
-        this.tipoAbonoList = tipoAbonoList;
     }
 
     @XmlTransient
@@ -582,5 +538,5 @@ public class Cuenta implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.Cuenta[ cuentaId=" + cuentaId + " ]";
     }
-    
+
 }
