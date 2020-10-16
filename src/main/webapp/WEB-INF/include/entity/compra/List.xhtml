@@ -181,9 +181,10 @@
                 <p:outputLabel/>
                 <p:outputLabel/>
 
-                <p:commandButton actionListener="#{compraController.saveNew}" value="#{myBundle.Save}" update=":display, :CompraListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CompraCreateDialog'));" resetValues="true">
+                <p:commandButton actionListener="#{compraController.saveNew}" value="#{myBundle.Save}" update=":CompraCreateForm:registro, :CompraListForm:datalist,:growl" resetValues="true" ajax="true" onsuccess="document.getElementById('CompraCreateForm:link').click();">
                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                 </p:commandButton>
+                <h:commandLink id="link" value="Generar Reporte" style="visibility: hidden" actionListener="#{reportController.downloadFile(compraController.informe, compraController.map)}" target="blank"/>
             </p:panelGrid>
 
         </p:panel>

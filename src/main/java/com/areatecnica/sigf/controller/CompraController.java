@@ -20,7 +20,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -54,11 +56,14 @@ public class CompraController extends AbstractController<Compra> {
     private Proveedor proveedor;
     private Empresa empresaNandu;
 
+    private String informe = "inf-comprobante_egreso";
+
     private int folio;
     private int mes;
     private int anio;
     private int tipo;
     private int documento;
+    private int finalID;
     private Date fecha;
     private Date desde;
     private Date hasta;
@@ -153,16 +158,16 @@ public class CompraController extends AbstractController<Compra> {
             Compra t = new ICompraDaoImpl().create(this.getSelected());
 
             if (t != null) {
+                this.finalID = t.getCompraId();
                 this.items.add(this.getSelected());
-                this.setSelected(this.prepareCreate(event));
+                this.model = new CompraDataModel(items);
+                this.setSelected(null);
+                this.setSelected(prepareCreate(null));
                 resetParents();
                 JsfUtil.addSuccessMessage("Se ha regristrado una Compra");
             } else {
                 JsfUtil.addErrorMessage("Ha ocurrido un error durante la persistencia ");
             }
-
-            this.setSelected(prepareCreate(event));
-
         }
     }
 
@@ -217,9 +222,10 @@ public class CompraController extends AbstractController<Compra> {
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        compraCuentaIdController.setSelected(null);
-        compraProveedorIdController.setSelected(null);
-        compraTipoDocumentoIdController.setSelected(null);
+        this.proveedor = null;
+        this.cuentaBancaria = null;
+        this.cuentaMayor = null;
+        this.documento = 0;
     }
 
     public void setModel(CompraDataModel model) {
@@ -434,6 +440,17 @@ public class CompraController extends AbstractController<Compra> {
 
     public void setNf(NumberFormat nf) {
         this.nf = nf;
+    }
+
+    public Map<String, Object> getMap() {
+        Map<String, Object> map = new HashMap();
+
+        map.put("compra_id", finalID);
+        return map;
+    }
+
+    public String getInforme() {
+        return informe;
     }
 
 }
