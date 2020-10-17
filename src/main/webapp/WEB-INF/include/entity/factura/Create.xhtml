@@ -8,39 +8,51 @@
 
     <ui:composition>
 
-        <p:dialog id="DetalleCartolaCreateDlg" widgetVar="DetalleCartolaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Ingreso Nuevo Movimiento" closeOnEscape="true">
+        <p:dialog id="ClienteCreateDlg" widgetVar="ClienteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registro Nuevo Cliente" closeOnEscape="true">
 
-            <h:form id="DetalleCartolaCreateForm">
+            <h:form id="ClienteCreateForm">
 
-                <h:panelGroup id="display" rendered="#{detalleCartolaController.selected != null}">
-                    <p:panelGrid columns="4" columnClasses="column">
+                <h:panelGroup id="display" rendered="#{compraController.proveedor != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
 
-                        <f:facet name="header">
-                            <p:outputLabel value="#{detalleCartolaController.cuentaBancaria.cuenta_bancaria_numero} - #{detalleCartolaController.cuentaBancaria.cuentaBancariaIdEmpresa}"/>
-                        </f:facet>
+                        <p:outputLabel value="Rut" for="proveedorRut" />
+                        <p:inputText id="proveedorRut" value="#{compraController.proveedor.proveedorRut}" title="#{myBundle.CreateClienteTitle_proveedorRut}" required="true" requiredMessage="#{myBundle.CreateClienteRequiredMessage_proveedorRut}" size="45" maxlength="45" validator="rutValidatorCliente"/>
 
-                        <p:outputLabel value="Fecha" for="detalleCartolaFechaMovimiento" />
-                        <p:calendar id="detalleCartolaFechaMovimiento" pattern="dd/MM/yy" value="#{detalleCartolaController.selected.detalleCartolaFechaMovimiento}" required="true" requiredMessage="Debe ingresar la fecha del movimiento" showOn="button"/>
+                        <p:outputLabel value="Nombre" for="proveedorNombre" />
+                        <p:inputText id="proveedorNombre" value="#{compraController.proveedor.proveedorNombre}" title="#{myBundle.CreateClienteTitle_proveedorNombre}" required="true" requiredMessage="#{myBundle.CreateClienteRequiredMessage_proveedorNombre}" size="45" maxlength="45"/>
 
-                        <p:outputLabel value="N° Documento: " for="detalleCartolaNumeroDocumento" />
-                        <p:inputText id="detalleCartolaNumeroDocumento" value="#{detalleCartolaController.selected.detalleCartolaNumeroDocumento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="50" maxlength="50"/>
+                        <p:outputLabel value="Giro" for="proveedorGiro" />
+                        <p:inputText id="proveedorGiro" value="#{compraController.proveedor.proveedorGiro}" title="#{myBundle.CreateClienteTitle_proveedorGiro}" size="45" maxlength="45"/>
 
-                        <p:outputLabel value="Descripción:" for="detalleCartolaDescripcion" />
-                        <p:inputText id="detalleCartolaDescripcion" value="#{detalleCartolaController.selected.detalleCartolaDescripcion}" required="true" requiredMessage="Debe ingresar la descripción del movimiento" size="100" maxlength="100"/>
+                        <p:outputLabel value="Dirección" for="proveedorDireccion" />
+                        <p:inputText id="proveedorDireccion" value="#{compraController.proveedor.proveedorDireccion}" title="#{myBundle.CreateClienteTitle_proveedorDireccion}" size="45" maxlength="45"/>
 
-                        <p:outputLabel value="Abono:" for="detalleCartolaAbono" />
-                        <p:inputText id="detalleCartolaAbono" value="#{detalleCartolaController.selected.detalleCartolaAbono}" required="true" requiredMessage="Valor mínimo 0"/>
+                        <p:outputLabel value="Comuna" for="proveedorComunaId" />
+                        <p:selectOneMenu id="proveedorComunaId" value="#{compraController.proveedor.proveedorComunaId}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_trabajadorIdComuna}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{comunaController.items}"
+                                           var="trabajadorIdComunaItem"
+                                           itemValue="#{trabajadorIdComunaItem}"
+                                           itemLabel="#{trabajadorIdComunaItem.comunaNombre}"
+                                           />
 
-                        <p:outputLabel value="Cargo:" for="detalleCartolaCargo" />
-                        <p:inputText id="detalleCartolaCargo" value="#{detalleCartolaController.selected.detalleCartolaCargo}" required="true" requiredMessage="Valor mínimo 0"/>
+                        </p:selectOneMenu>
 
+                        <p:outputLabel value="Teléfono" for="proveedorTelefono" />
+                        <p:inputText id="proveedorTelefono" value="#{compraController.proveedor.proveedorTelefono}" title="#{myBundle.CreateClienteTitle_proveedorTelefono}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Email" for="proveedorEmail" />
+                        <p:inputText id="proveedorEmail" value="#{compraController.proveedor.proveedorEmail}" title="#{myBundle.CreateClienteTitle_proveedorEmail}" size="45" maxlength="45"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{detalleCartolaController.saveNew}" value="#{myBundle.Save}" update="display,:DetalleCartolaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetalleCartolaCreateDialog'));">
+                    <p:commandButton actionListener="#{compraController.saveNewCliente}" value="#{myBundle.Save}" update="display,:CompraCreateForm:compraClienteId,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ClienteCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DetalleCartolaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ClienteCreateDialog').hide()" update="display, :CompraCreateForm:compraClienteId" process="@this" immediate="true" resetValues="true"/>
                 </h:panelGroup>
+
             </h:form>
+
         </p:dialog>
     </ui:composition>
 

@@ -102,7 +102,7 @@
                 <p:outputLabel/>
                 <p:outputLabel/>
 
-                <p:outputLabel value="Cuenta" for="compraCuentaId" />
+                <p:outputLabel value="Cuenta Mayor" for="compraCuentaId" />
                 <p:selectOneMenu id="compraCuentaId" value="#{compraController.cuentaMayor}" tabindex="6" required="true" requiredMessage="Debe seleccionar la cuenta"  converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                     <f:selectItems value="#{compraController.cuentaMayorItems}"
@@ -158,7 +158,7 @@
                 <p:outputLabel/>
                 <p:outputLabel/>
 
-                <p:outputLabel value="Cuenta" for="cuenta" />
+                <p:outputLabel value="Cuenta Banco" for="cuenta" />
                 <h:panelGroup>
                     <p:selectOneMenu id="cuenta" tabindex="13" value="#{compraController.cuentaBancaria}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>

@@ -2,7 +2,10 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IFacturaDaoImpl;
+import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
+import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.Factura;
+import com.areatecnica.sigf.entities.MovimientoMes;
 import com.areatecnica.sigf.models.FacturaDataModel;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -23,6 +26,7 @@ public class FacturaController extends AbstractController<Factura> {
 
     private List<Factura> items;
     private FacturaDataModel model;
+    private CuentaBancaria cuentaBancaria;
 
     private int mes;
     private int anio;
@@ -30,6 +34,8 @@ public class FacturaController extends AbstractController<Factura> {
     private int neto = 0;
     private int iva = 0;
     private int folio = 0;
+
+    private int documento;
     private Date desde;
     private Date hasta;
     private Date fechaMovimiento;
@@ -63,11 +69,16 @@ public class FacturaController extends AbstractController<Factura> {
         //load();
     }
 
-    /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
+    @Override
+    public Factura prepareCreate(ActionEvent event) {
+        super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
 
+        this.getSelected().setFacturaFecha(new Date());
+        this.getSelected().setFacturaIva(0);
+        this.getSelected().setFacturaNeto(0);
+        this.getSelected().setFacturaTotal(0);
+
+        return this.getSelected();
     }
 
     public void calculaIva() {
@@ -162,6 +173,22 @@ public class FacturaController extends AbstractController<Factura> {
             this.items.remove(this.getSelected());
             super.delete(event); //To change body of generated methods, choose Tools | Templates.
         }
+    }
+
+    public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
+        this.cuentaBancaria = cuentaBancaria;
+    }
+
+    public CuentaBancaria getCuentaBancaria() {
+        return cuentaBancaria;
+    }
+
+    public void setDocumento(int documento) {
+        this.documento = documento;
+    }
+
+    public int getDocumento() {
+        return documento;
     }
 
     public int getNeto() {
@@ -264,6 +291,17 @@ public class FacturaController extends AbstractController<Factura> {
             this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
         } catch (ParseException ex) {
 
+        }
+    }
+
+    public void handleCuentaChange() {
+        if (this.cuentaBancaria != null) {
+            MovimientoMes movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            if (movimientoDocumento == null) {
+                movimientoDocumento = new MovimientoMes();
+                movimientoDocumento.setMovimientoMesNumeroDocumento(1);
+            }
+            this.documento = movimientoDocumento.getMovimientoMesNumeroDocumento() + 1;
         }
     }
 
