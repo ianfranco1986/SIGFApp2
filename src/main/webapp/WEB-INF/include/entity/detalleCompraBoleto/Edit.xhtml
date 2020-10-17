@@ -42,7 +42,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.EditDetalleCompraBoletoLabel_detalleCompraBoletoIdCompraBoleto}" for="detalleCompraBoletoIdCompraBoleto" />
-                        <p:selectOneMenu id="detalleCompraBoletoIdCompraBoleto" value="#{detalleCompraBoletoController.selected.detalleCompraBoletoIdCompraBoleto}" required="true" requiredMessage="#{myBundle.EditDetalleCompraBoletoRequiredMessage_detalleCompraBoletoIdCompraBoleto}" converter="compraBoletoConverter">
+                        <p:selectOneMenu id="detalleCompraBoletoIdCompraBoleto" value="#{detalleCompraBoletoController.selected.detalleCompraBoletoIdCompraBoleto}" required="true" requiredMessage="#{myBundle.EditDetalleCompraBoletoRequiredMessage_detalleCompraBoletoIdCompraBoleto}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{compraBoletoController.items}"
                                            var="detalleCompraBoletoIdCompraBoletoItem"

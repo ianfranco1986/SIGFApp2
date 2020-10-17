@@ -28,7 +28,7 @@
                         <p:inputText id="detalleCompraBoletoTotal" value="#{detalleCompraBoletoController.selected.detalleCompraBoletoTotal}" title="#{myBundle.CreateDetalleCompraBoletoTitle_detalleCompraBoletoTotal}" required="true" requiredMessage="#{myBundle.CreateDetalleCompraBoletoRequiredMessage_detalleCompraBoletoTotal}"/>
 
                         <p:outputLabel value="#{myBundle.CreateDetalleCompraBoletoLabel_detalleCompraBoletoIdBoleto}" for="detalleCompraBoletoIdBoleto" />
-                        <p:selectOneMenu id="detalleCompraBoletoIdBoleto" value="#{detalleCompraBoletoController.selected.detalleCompraBoletoIdBoleto}" required="true" requiredMessage="#{myBundle.CreateDetalleCompraBoletoRequiredMessage_detalleCompraBoletoIdBoleto}" converter="boletoConverter">
+                        <p:selectOneMenu id="detalleCompraBoletoIdBoleto" value="#{detalleCompraBoletoController.selected.detalleCompraBoletoIdBoleto}" required="true" requiredMessage="#{myBundle.CreateDetalleCompraBoletoRequiredMessage_detalleCompraBoletoIdBoleto}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{boletoController.items}"
                                            var="detalleCompraBoletoIdBoletoItem"
@@ -39,7 +39,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreateDetalleCompraBoletoLabel_detalleCompraBoletoIdCompraBoleto}" for="detalleCompraBoletoIdCompraBoleto" />
-                        <p:selectOneMenu id="detalleCompraBoletoIdCompraBoleto" value="#{detalleCompraBoletoController.selected.detalleCompraBoletoIdCompraBoleto}" required="true" requiredMessage="#{myBundle.CreateDetalleCompraBoletoRequiredMessage_detalleCompraBoletoIdCompraBoleto}" converter="compraBoletoConverter">
+                        <p:selectOneMenu id="detalleCompraBoletoIdCompraBoleto" value="#{detalleCompraBoletoController.selected.detalleCompraBoletoIdCompraBoleto}" required="true" requiredMessage="#{myBundle.CreateDetalleCompraBoletoRequiredMessage_detalleCompraBoletoIdCompraBoleto}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{compraBoletoController.items}"
                                            var="detalleCompraBoletoIdCompraBoletoItem"

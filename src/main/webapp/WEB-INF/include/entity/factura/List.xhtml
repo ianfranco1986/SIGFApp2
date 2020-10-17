@@ -45,16 +45,20 @@
         <p:panel id="registro">
             <h3 style="text-align: center;">Registro de Facturas</h3>
             <p:focus context="folio"/>
-            <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
-
-                <p:outputLabel value="Fecha" for="detalleCartolaFechaMovimiento" />
-                <p:calendar id="detalleCartolaFechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{facturaController.desde}" required="true" requiredMessage="Debe ingresar la fecha de la Factura" />
+            <p:panelGrid columns="4" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
 
                 <p:outputLabel value="Folio" for="folio" />
                 <p:inputNumber id="folio" decimalPlaces="0" value="#{facturaController.selected.facturaFolio}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off">
                 </p:inputNumber>
 
+                <p:outputLabel/>
+                <p:outputLabel/>
 
+                <p:outputLabel value="Fecha" for="detalleCartolaFechaMovimiento" />
+                <p:calendar id="detalleCartolaFechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{facturaController.desde}" required="true" requiredMessage="Debe ingresar la fecha de la Factura" />
+
+                <p:outputLabel/>
+                <p:outputLabel/>
 
                 <p:outputLabel value="Cliente" for="facturaClienteId" />
                 <h:panelGroup>
@@ -67,9 +71,10 @@
                                        />
 
                     </p:selectOneMenu>
-                    <p:commandLink id="createButton" styleClass="btn btn-primary" tabindex="-1"  value="Agregar" actionListener="#{facturaController.prepareCreateCliente}" update=":ClienteCreateForm" oncomplete="PF('ClienteCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:outputLabel/>
                 </h:panelGroup>
+                <p:commandLink id="createButton" styleClass="btn btn-primary" tabindex="-1"  value="Agregar" actionListener="#{facturaController.prepareCreateCliente}" update=":ClienteCreateForm" oncomplete="PF('ClienteCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                <p:outputLabel/>
+
 
                 <p:outputLabel value="Tipo Documento" for="facturaTipoDocumentoId" />
                 <p:selectOneMenu id="facturaTipoDocumentoId" value="#{facturaController.selected.facturaTipoDocumentoId}" required="true" requiredMessage="#{myBundle.CreateFacturaRequiredMessage_facturaTipoDocumentoId}" converter="omnifaces.SelectItemsConverter">
@@ -82,6 +87,9 @@
 
                 </p:selectOneMenu>  
 
+                <p:outputLabel/>
+                <p:outputLabel/>
+
                 <p:outputLabel value="Cuenta Mayor" for="facturaCuentaMayorId" />
                 <p:selectOneMenu id="facturaCuentaMayorId" value="#{facturaController.selected.facturaCuentaMayorId}" required="true" requiredMessage="#{myBundle.CreateFacturaRequiredMessage_facturaCuentaMayorId}" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
@@ -93,22 +101,37 @@
 
                 </p:selectOneMenu>
 
+                <p:outputLabel/>
+                <p:outputLabel/>
+
                 <p:outputLabel value="Detalle" for="detalleCartolaDescripcion" />
                 <p:inputText id="detalleCartolaDescripcion" value="#{facturaController.selected.facturaDetalle}" required="true" requiredMessage="Debe ingresar detalle" size="60" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)"/>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
 
                 <p:outputLabel value="Neto" for="neto" />
                 <p:inputNumber id="neto" decimalPlaces="0" value="#{facturaController.selected.facturaNeto}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                     <p:ajax event="blur" update="iva, total" listener="#{facturaController.calculaIva()}"/>
                 </p:inputNumber>
 
+                <p:outputLabel/>
+                <p:outputLabel/>
+
                 <p:outputLabel value="Iva" for="iva" />
                 <p:inputNumber id="iva" decimalPlaces="0" value="#{facturaController.selected.facturaIva}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                     <p:ajax event="blur" update="total" listener="#{facturaController.calculaTotal()}"/>
                 </p:inputNumber>
 
+                <p:outputLabel/>
+                <p:outputLabel/>
+
                 <p:outputLabel value="Total" for="total" />
                 <p:inputNumber id="total" decimalPlaces="0" value="#{facturaController.selected.facturaTotal}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                 </p:inputNumber>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
 
                 <p:outputLabel value="Cuenta Banco" for="cuenta" />
                 <h:panelGroup>
@@ -130,7 +153,8 @@
                 <p:outputLabel value="N° Documento " for="detalleCartolaNumeroDocumento" />
                 <p:inputText id="detalleCartolaNumeroDocumento" tabindex="14" value="#{facturaController.documento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="15" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" />
 
-
+                <p:outputLabel/>
+                <p:outputLabel/>
 
                 <p:outputLabel/>
                 <p:commandButton value="Agregar" actionListener="#{facturaController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">

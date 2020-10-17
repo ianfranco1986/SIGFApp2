@@ -1,8 +1,10 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
+import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IFacturaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
+import com.areatecnica.sigf.entities.Cliente;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.Factura;
 import com.areatecnica.sigf.entities.MovimientoMes;
@@ -25,8 +27,10 @@ import org.primefaces.event.RowEditEvent;
 public class FacturaController extends AbstractController<Factura> {
 
     private List<Factura> items;
+    private Cliente cliente;
     private FacturaDataModel model;
     private CuentaBancaria cuentaBancaria;
+    private List<CuentaBancaria> cuentaItems;
 
     private int mes;
     private int anio;
@@ -66,6 +70,7 @@ public class FacturaController extends AbstractController<Factura> {
 
         this.prepareCreate(null);
         this.getSelected().setFacturaFecha(this.desde);
+        this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
         //load();
     }
 
@@ -167,12 +172,34 @@ public class FacturaController extends AbstractController<Factura> {
         }
     }
 
+    public Cliente prepareCreateProveedor(ActionEvent event) {
+        this.cliente = new Cliente();
+
+        return this.cliente;
+    }
+
     @Override
     public void delete(ActionEvent event) {
         if (this.getSelected() != null) {
             this.items.remove(this.getSelected());
             super.delete(event); //To change body of generated methods, choose Tools | Templates.
         }
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCuentaItems(List<CuentaBancaria> cuentaItems) {
+        this.cuentaItems = cuentaItems;
+    }
+
+    public List<CuentaBancaria> getCuentaItems() {
+        return cuentaItems;
     }
 
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
