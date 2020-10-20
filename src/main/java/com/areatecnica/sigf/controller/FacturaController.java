@@ -2,10 +2,14 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
+import com.areatecnica.sigf.dao.impl.ICuentaMayorDaoImpl;
+import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IFacturaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
 import com.areatecnica.sigf.entities.Cliente;
 import com.areatecnica.sigf.entities.CuentaBancaria;
+import com.areatecnica.sigf.entities.CuentaMayor;
+import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.Factura;
 import com.areatecnica.sigf.entities.MovimientoMes;
 import com.areatecnica.sigf.models.FacturaDataModel;
@@ -14,7 +18,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
@@ -30,14 +36,21 @@ public class FacturaController extends AbstractController<Factura> {
     private Cliente cliente;
     private FacturaDataModel model;
     private CuentaBancaria cuentaBancaria;
-    private List<CuentaBancaria> cuentaItems;
+    private CuentaMayor cuentaMayor;
+    private Empresa empresaNandu;
 
+    private List<CuentaBancaria> cuentaItems;
+    private List<CuentaMayor> cuentaMayorItems;
+
+    private int finalID;
     private int mes;
     private int anio;
     private int total = 0;
     private int neto = 0;
     private int iva = 0;
     private int folio = 0;
+
+    private String informe = "inf-comprobante_ingreso";
 
     private int documento;
     private Date desde;
@@ -68,9 +81,11 @@ public class FacturaController extends AbstractController<Factura> {
         this.desde = new Date();
         setFecha();
 
+        this.cliente = new Cliente();
         this.prepareCreate(null);
         this.getSelected().setFacturaFecha(this.desde);
         this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
+        this.empresaNandu = new IEmpresaDaoImpl().findById(7);
         //load();
     }
 
@@ -110,6 +125,8 @@ public class FacturaController extends AbstractController<Factura> {
             this.items = new IFacturaDaoImpl().findBetweenDates(this.desde, this.hasta);
             this.model = new FacturaDataModel(items);
 
+            this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
+
             if (!this.items.isEmpty()) {
                 for (Factura f : this.items) {
                     this.total = this.total + f.getFacturaTotal();
@@ -123,6 +140,7 @@ public class FacturaController extends AbstractController<Factura> {
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
 
             } else {
+                this.model = new FacturaDataModel(this.items);
                 JsfUtil.addWarningMessage("No se han encontrado registros");
             }
         }
@@ -131,20 +149,39 @@ public class FacturaController extends AbstractController<Factura> {
     @Override
     public void saveNew(ActionEvent event) {
         if (this.getSelected() != null) {
-            int folio = this.getSelected().getFacturaFolio();
-            this.getSelected().setFacturaFecha(this.desde);
-            this.items.add(this.getSelected());
-            super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
 
-            this.total = this.total + this.getSelected().getFacturaTotal();
-            this.neto = this.neto + this.getSelected().getFacturaNeto();
-            this.iva = this.iva + this.getSelected().getFacturaIva();
+            this.getSelected().setFacturaClienteId(cliente);
+            this.getSelected().setFacturaCuentaMayorId(cuentaMayor);
 
-            JsfUtil.addSuccessMessage("Se ha registrado una Factura");
+            MovimientoMes mov = new MovimientoMes();
 
-            this.setSelected(prepareCreate(event));
-            this.getSelected().setFacturaFolio(folio + 1);
+            mov.setMovimientoMesEmpresaId(empresaNandu);
+            mov.setMovimientoMesCuentaBancoId(cuentaBancaria);
+            mov.setMovimientoMesFechaMvto(this.getSelected().getFacturaFecha());
+            mov.setMovimientoMesFechaLiquidacion(this.desde);
+            mov.setMovimientoMesMonto(this.getSelected().getFacturaTotal());
 
+            String descripcion = this.getSelected().getFacturaTipoDocumentoId().getTipoDocumentoSigla() + ": " + this.cliente.getClienteNombre() + " - " + this.getSelected().getFacturaDetalle();
+
+            mov.setMovimientoMesDetalle(descripcion);
+            mov.setMovimientoMesTipoDocumento(documento);
+            mov.setMovimientoMesNumeroDocumento(this.documento);
+
+            this.getSelected().setFacturaMovimientoId(mov);
+
+            Factura t = new IFacturaDaoImpl().create(this.getSelected());
+
+            if (t != null) {
+                this.finalID = t.getFacturaId();
+                this.items.add(this.getSelected());
+                this.model = new FacturaDataModel(items);
+                this.setSelected(null);
+                this.setSelected(prepareCreate(null));
+                resetParents();
+                JsfUtil.addSuccessMessage("Se ha regristrado una Factura");
+            } else {
+                JsfUtil.addErrorMessage("Ha ocurrido un error durante la persistencia ");
+            }
         }
     }
 
@@ -172,7 +209,14 @@ public class FacturaController extends AbstractController<Factura> {
         }
     }
 
-    public Cliente prepareCreateProveedor(ActionEvent event) {
+    public void resetParents() {
+        this.cliente = null;
+        this.cuentaBancaria = null;
+        this.cuentaMayor = null;
+        this.documento = 0;
+    }
+
+    public Cliente prepareCreateCliente(ActionEvent event) {
         this.cliente = new Cliente();
 
         return this.cliente;
@@ -330,6 +374,41 @@ public class FacturaController extends AbstractController<Factura> {
             }
             this.documento = movimientoDocumento.getMovimientoMesNumeroDocumento() + 1;
         }
+    }
+
+    public NumberFormat getNf() {
+        return nf;
+    }
+
+    public void setNf(NumberFormat nf) {
+        this.nf = nf;
+    }
+
+    public Map<String, Object> getMap() {
+        Map<String, Object> map = new HashMap();
+        this.finalID = this.getSelected().getFacturaId();
+        map.put("factura_id", finalID);
+        return map;
+    }
+
+    public String getInforme() {
+        return informe;
+    }
+
+    public CuentaMayor getCuentaMayor() {
+        return cuentaMayor;
+    }
+
+    public List<CuentaMayor> getCuentaMayorItems() {
+        return cuentaMayorItems;
+    }
+
+    public void setCuentaMayor(CuentaMayor cuentaMayor) {
+        this.cuentaMayor = cuentaMayor;
+    }
+
+    public void setCuentaMayorItems(List<CuentaMayor> cuentaMayorItems) {
+        this.cuentaMayorItems = cuentaMayorItems;
     }
 
 }

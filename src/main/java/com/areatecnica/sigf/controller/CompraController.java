@@ -113,6 +113,7 @@ public class CompraController extends AbstractController<Compra> {
 
         if (this.items.isEmpty()) {
             JsfUtil.addWarningMessage("No se han encontrado registros");
+            this.model = new CompraDataModel(items);
         } else {
             JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
             this.model = new CompraDataModel(items);
@@ -444,7 +445,7 @@ public class CompraController extends AbstractController<Compra> {
 
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap();
-
+        this.finalID = this.getSelected().getCompraId();
         map.put("compra_id", finalID);
         return map;
     }

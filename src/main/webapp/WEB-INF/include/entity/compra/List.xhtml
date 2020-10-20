@@ -46,7 +46,7 @@
     <h:form id="CompraCreateForm">
 
         <p:panel id="registro" >
-            <h3 style="text-align: center;">Registro de Facturas de Compras</h3>
+            <h3 style="text-align: center;">Registro de Compras</h3>
             <p:focus context="compraFolio"/>
             <p:panelGrid columns="4" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
                 <p:outputLabel value="Folio" for="compraFolio" />
@@ -364,6 +364,13 @@
                     <h:outputText value="#{item.compraTotal}">
                         <f:convertNumber/>
                     </h:outputText>
+                </p:column>
+
+                <p:column style="width:55px;text-align: center">
+                    <h:commandLink id="link2"  styleClass="btn btn-primary"  actionListener="#{reportController.downloadFile(compraController.informe, compraController.map)}" target="blank">
+                        <f:setPropertyActionListener value="#{item}" target="#{compraController.selected}"  />
+                        <h:outputText value="" class="ui-icon ui-icon-print"/>
+                    </h:commandLink>
                 </p:column>
 
                 <p:column style="width:35px">

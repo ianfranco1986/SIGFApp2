@@ -62,7 +62,7 @@
 
                 <p:outputLabel value="Cliente" for="facturaClienteId" />
                 <h:panelGroup>
-                    <p:selectOneMenu id="facturaClienteId" value="#{facturaController.selected.facturaClienteId}" required="true" requiredMessage="#{myBundle.CreateFacturaRequiredMessage_facturaClienteId}" converter="omnifaces.SelectItemsConverter">
+                    <p:selectOneMenu id="facturaClienteId" value="#{facturaController.selected.facturaClienteId}" required="true" requiredMessage="Debe seleccionar al cliente" converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                         <f:selectItems value="#{clienteController.items}"
                                        var="facturaClienteIdItem"
@@ -72,12 +72,12 @@
 
                     </p:selectOneMenu>
                 </h:panelGroup>
-                <p:commandLink id="createButton" styleClass="btn btn-primary" tabindex="-1"  value="Agregar" actionListener="#{facturaController.prepareCreateProveedor}" update=":ClienteCreateForm" oncomplete="PF('ClienteCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                <p:commandLink id="createButton" styleClass="btn btn-primary" tabindex="-1"  value="Agregar" actionListener="#{facturaController.prepareCreateCliente}" update=":ClienteCreateForm" oncomplete="PF('ClienteCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                 <p:outputLabel/>
 
 
                 <p:outputLabel value="Tipo Documento" for="facturaTipoDocumentoId" />
-                <p:selectOneMenu id="facturaTipoDocumentoId" value="#{facturaController.selected.facturaTipoDocumentoId}" required="true" requiredMessage="#{myBundle.CreateFacturaRequiredMessage_facturaTipoDocumentoId}" converter="omnifaces.SelectItemsConverter">
+                <p:selectOneMenu id="facturaTipoDocumentoId" value="#{facturaController.selected.facturaTipoDocumentoId}" required="true" requiredMessage="Debe seleccionar el tipo de documento" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                     <f:selectItems value="#{tipoDocumentoController.items}"
                                    var="facturaTipoDocumentoIdItem"
@@ -91,9 +91,9 @@
                 <p:outputLabel/>
 
                 <p:outputLabel value="Cuenta Mayor" for="facturaCuentaMayorId" />
-                <p:selectOneMenu id="facturaCuentaMayorId" value="#{facturaController.selected.facturaCuentaMayorId}" required="true" requiredMessage="#{myBundle.CreateFacturaRequiredMessage_facturaCuentaMayorId}" converter="omnifaces.SelectItemsConverter">
+                <p:selectOneMenu id="facturaCuentaMayorId" value="#{facturaController.cuentaMayor}" required="true" requiredMessage="Debe seleccionar la cuenta mayor" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                    <f:selectItems value="#{cuentaMayorController.items}"
+                    <f:selectItems value="#{facturaController.cuentaMayorItems}"
                                    var="facturaCuentaMayorIdItem"
                                    itemValue="#{facturaCuentaMayorIdItem}"
                                    itemLabel="#{facturaCuentaMayorIdItem.cuentaMayorNombre}"
@@ -156,10 +156,11 @@
                 <p:outputLabel/>
                 <p:outputLabel/>
 
-                <p:outputLabel/>
                 <p:commandButton value="Agregar" actionListener="#{facturaController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                 </p:commandButton>
+                <h:commandLink id="link" value="Generar Reporte" style="visibility: hidden" actionListener="#{reportController.downloadFile(facturaController.informe, facturaController.map)}" target="blank"/>
+
             </p:panelGrid>
         </p:panel>
         <p:blockUI block="registro" widgetVar="bui"/>
@@ -318,6 +319,13 @@
 
                 </p:column>
 
+                <p:column style="width:55px;text-align: center">
+                    <h:commandLink id="link2"  styleClass="btn btn-primary"  actionListener="#{reportController.downloadFile(facturaController.informe, facturaController.map)}" target="blank">
+                        <f:setPropertyActionListener value="#{item}" target="#{facturaController.selected}"  />
+                        <h:outputText value="" class="ui-icon ui-icon-print"/>
+                    </h:commandLink>
+                </p:column>
+
                 <p:column style="width:35px">
                     <p:rowEditor />
                 </p:column>
@@ -343,10 +351,10 @@
                 <p:panelGrid columns="2" columnClasses="column">
 
                     <p:outputLabel value="Rut" for="clienteRut" />
-                    <p:inputText id="clienteRut" value="#{facturaController.cliente.clienteRut}" title="#{myBundle.CreateClienteTitle_clienteRut}" required="true" requiredMessage="#{myBundle.CreateClienteRequiredMessage_clienteRut}" size="45" maxlength="45" validator="rutValidatorCliente"/>
+                    <p:inputText id="clienteRut" value="#{facturaController.cliente.clienteRut}" title="#{myBundle.CreateClienteTitle_clienteRut}" required="true" requiredMessage="Rut mal formado" size="45" maxlength="45" validator="rutValidatorCliente"/>
 
                     <p:outputLabel value="Nombre" for="clienteNombre" />
-                    <p:inputText id="clienteNombre" value="#{facturaController.cliente.clienteNombre}" title="#{myBundle.CreateClienteTitle_clienteNombre}" required="true" requiredMessage="#{myBundle.CreateClienteRequiredMessage_clienteNombre}" size="45" maxlength="45"/>
+                    <p:inputText id="clienteNombre" value="#{facturaController.cliente.clienteNombre}" title="#{myBundle.CreateClienteTitle_clienteNombre}" required="true" requiredMessage="Debe ingresar un nombre" size="45" maxlength="45"/>
 
                     <p:outputLabel value="Giro" for="clienteGiro" />
                     <p:inputText id="clienteGiro" value="#{facturaController.cliente.clienteGiro}" title="#{myBundle.CreateClienteTitle_clienteGiro}" size="45" maxlength="45"/>
@@ -355,7 +363,7 @@
                     <p:inputText id="clienteDireccion" value="#{facturaController.cliente.clienteDireccion}" title="#{myBundle.CreateClienteTitle_clienteDireccion}" size="45" maxlength="45"/>
 
                     <p:outputLabel value="Comuna" for="clienteComunaId" />
-                    <p:selectOneMenu id="clienteComunaId" value="#{facturaController.cliente.clienteComunaId}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_trabajadorIdComuna}" converter="omnifaces.SelectItemsConverter">
+                    <p:selectOneMenu id="clienteComunaId" value="#{facturaController.cliente.clienteComunaId}" required="true" requiredMessage="Debe seleccionar la comuna" converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                         <f:selectItems value="#{comunaController.items}"
                                        var="trabajadorIdComunaItem"
@@ -371,11 +379,11 @@
                     <p:outputLabel value="Email" for="clienteEmail" />
                     <p:inputText id="clienteEmail" value="#{facturaController.cliente.clienteEmail}" title="#{myBundle.CreateClienteTitle_clienteEmail}" size="45" maxlength="45"/>
                 </p:panelGrid>
-                <p:commandButton actionListener="#{facturaController.saveNewCliente}" value="#{myBundle.Save}" update="display,:FacturaCreateForm:facturaClienteId,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ClienteCreateDialog'));">
+                <p:commandButton actionListener="#{facturaController.saveNewCliente}" value="#{myBundle.Save}" update="display,:DetalleCartolaCreateForm2:facturaClienteId,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ClienteCreateDialog'));">
                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                 </p:commandButton>
 
-                <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ClienteCreateDialog').hide()" update="display, :FacturaCreateForm:facturaClienteId" process="@this" immediate="true" resetValues="true"/>
+                <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ClienteCreateDialog').hide()" update="display, :DetalleCartolaCreateForm2:facturaClienteId" process="@this" immediate="true" resetValues="true"/>
             </h:panelGroup>
 
         </h:form>
