@@ -62,7 +62,7 @@
 
                 <p:outputLabel value="Cliente" for="facturaClienteId" />
                 <h:panelGroup>
-                    <p:selectOneMenu id="facturaClienteId" value="#{facturaController.selected.facturaClienteId}" required="true" requiredMessage="Debe seleccionar al cliente" converter="omnifaces.SelectItemsConverter">
+                    <p:selectOneMenu id="facturaClienteId" value="#{facturaController.cliente}" required="true" requiredMessage="Debe seleccionar al cliente" converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                         <f:selectItems value="#{clienteController.items}"
                                        var="facturaClienteIdItem"
@@ -132,10 +132,22 @@
 
                 <p:outputLabel/>
                 <p:outputLabel/>
+            </p:panelGrid>
 
-                <p:outputLabel value="Cuenta Banco" for="cuenta" />
+            <h3 style="text-align: center;">Contabilizar</h3>
+            <p:separator />
+
+            <p:panelGrid columns="4" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                <p:outputLabel value="Fecha" for="fechaMovimiento" />
+                <p:calendar id="fechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{facturaController.fechaMovimiento}" required="true" requiredMessage="Debe ingresar la fecha del movimiento" />
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="Cuenta Depósito" for="cuenta" />
                 <h:panelGroup>
-                    <p:selectOneMenu id="cuenta" tabindex="13" value="#{facturaController.cuentaBancaria}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
+                    <p:selectOneMenu id="cuenta" value="#{facturaController.cuentaBancaria}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                         <f:selectItems value="#{facturaController.cuentaItems}"
                                        var="cuenta"
@@ -144,19 +156,20 @@
                                        />
                         <p:ajax event="valueChange" update="detalleCartolaNumeroDocumento" listener="#{facturaController.handleCuentaChange()}"/>
                     </p:selectOneMenu>
-                    <p:tooltip id="toolcuenta" for="cuenta" value="Seleccione la cuenta bancaria del documento (cheque)" position="top"/>
+                    <p:tooltip id="toolcuenta" for="cuenta" value="Seleccione la cuenta bancaria donde se realizará el depósito" position="top"/>
                 </h:panelGroup>
 
                 <p:outputLabel/>
                 <p:outputLabel/>
 
                 <p:outputLabel value="N° Documento " for="detalleCartolaNumeroDocumento" />
-                <p:inputText id="detalleCartolaNumeroDocumento" tabindex="14" value="#{facturaController.documento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="15" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" />
+                <p:inputText id="detalleCartolaNumeroDocumento" value="#{facturaController.documento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="15" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" />
+
 
                 <p:outputLabel/>
                 <p:outputLabel/>
 
-                <p:commandButton value="Agregar" actionListener="#{facturaController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                <p:commandButton value="Guardar" actionListener="#{facturaController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                 </p:commandButton>
                 <h:commandLink id="link" value="Generar Reporte" style="visibility: hidden" actionListener="#{reportController.downloadFile(facturaController.informe, facturaController.map)}" target="blank"/>

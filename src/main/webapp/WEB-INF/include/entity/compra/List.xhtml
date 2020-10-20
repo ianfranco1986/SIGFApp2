@@ -157,10 +157,23 @@
 
                 <p:outputLabel/>
                 <p:outputLabel/>
+            </p:panelGrid>
+
+            <h3 style="text-align: center;">Contabilizar</h3>
+            <p:separator />
+
+            <p:panelGrid columns="4" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+
+
+                <p:outputLabel value="Fecha" for="fechaMovimiento" />
+                <p:calendar id="fechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{compraController.fechaMovimiento}" required="true" requiredMessage="Debe ingresar la fecha del movimiento" />
+
+                <p:outputLabel/>
+                <p:outputLabel/>
 
                 <p:outputLabel value="Cuenta Banco" for="cuenta" />
                 <h:panelGroup>
-                    <p:selectOneMenu id="cuenta" tabindex="13" value="#{compraController.cuentaBancaria}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
+                    <p:selectOneMenu id="cuenta" value="#{compraController.cuentaBancaria}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                         <f:selectItems value="#{compraController.cuentaItems}"
                                        var="cuenta"
@@ -176,7 +189,7 @@
                 <p:outputLabel/>
 
                 <p:outputLabel value="N° Documento " for="detalleCartolaNumeroDocumento" />
-                <p:inputText id="detalleCartolaNumeroDocumento" tabindex="14" value="#{compraController.documento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="15" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" />
+                <p:inputText id="detalleCartolaNumeroDocumento" value="#{compraController.documento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="15" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" />
 
                 <p:outputLabel/>
                 <p:outputLabel/>

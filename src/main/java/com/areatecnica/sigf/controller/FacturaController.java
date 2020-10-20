@@ -83,8 +83,13 @@ public class FacturaController extends AbstractController<Factura> {
 
         this.cliente = new Cliente();
         this.prepareCreate(null);
-        this.getSelected().setFacturaFecha(this.desde);
+        this.getSelected().setFacturaFecha(new Date());
+        this.folio = new IFacturaDaoImpl().findLastFolio();
+        this.getSelected().setFacturaFolio(folio + 1);
+
         this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
+        this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
+
         this.empresaNandu = new IEmpresaDaoImpl().findById(7);
         //load();
     }
@@ -125,18 +130,13 @@ public class FacturaController extends AbstractController<Factura> {
             this.items = new IFacturaDaoImpl().findBetweenDates(this.desde, this.hasta);
             this.model = new FacturaDataModel(items);
 
-            this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
-
             if (!this.items.isEmpty()) {
                 for (Factura f : this.items) {
                     this.total = this.total + f.getFacturaTotal();
                     this.neto = this.neto + f.getFacturaNeto();
                     this.iva = this.iva + f.getFacturaIva();
                 }
-                Factura factura = this.items.get(this.items.size() - 1);
-                this.folio = factura.getFacturaFolio();
 
-                this.getSelected().setFacturaFolio(folio + 1);
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
 
             } else {

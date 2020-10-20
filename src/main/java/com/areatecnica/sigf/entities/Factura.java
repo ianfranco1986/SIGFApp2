@@ -8,6 +8,7 @@ package com.areatecnica.sigf.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -82,7 +83,7 @@ public class Factura implements Serializable {
     @ManyToOne(optional = false)
     private CuentaMayor facturaCuentaMayorId;
     @JoinColumn(name = "factura_movimiento_id", referencedColumnName = "movimiento_mes_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     private MovimientoMes facturaMovimientoId;
     @JoinColumn(name = "factura_tipo_documento_id", referencedColumnName = "tipo_documento_id")
     @ManyToOne(optional = false)

@@ -59,4 +59,13 @@ public class IFacturaDaoImpl extends GenericDAOImpl<Factura> implements IFactura
         }
     }
 
+    public int findLastFolio() {
+        try {
+            return (int) entityManager.createQuery("SELECT MAX(f.facturaFolio) FROM  Factura f ")
+                    .getSingleResult() + 1;
+        } catch (NoResultException ne) {
+            return 1;
+        }
+    }
+
 }

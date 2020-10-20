@@ -1,35 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inf-libro_venta_nandu_subreport1" pageWidth="752" pageHeight="572" orientation="Landscape" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="24bc394a-27d5-4bc6-852c-1f3ecf79d2b4">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="278"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="715"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT * FROM factura WHERE factura.factura_fecha BETWEEN $P{fecha} AND LAST_DAY($P{fecha}) ORDER BY factura.factura_folio ASC]]>
+		<![CDATA[SELECT * FROM factura LEFT JOIN cliente on factura.factura_cliente_id = cliente.cliente_id WHERE factura.factura_fecha BETWEEN $P{fecha} AND LAST_DAY($P{fecha}) ORDER BY factura.factura_folio ASC]]>
 	</queryString>
 	<field name="factura_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="factura_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="factura_movimiento_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="factura_movimiento_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
+	<field name="factura_cliente_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="factura_cliente_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
+	<field name="factura_tipo_documento_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="factura_tipo_documento_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
+	<field name="factura_cuenta_mayor_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="factura_cuenta_mayor_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
 	<field name="factura_folio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="factura_folio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="factura_fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="factura_fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="factura_nombre_cliente" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="factura_rut_cliente" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="factura_detalle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="factura_detalle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="factura_neto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="factura_neto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="factura_iva" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="factura_iva"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="factura_total" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="factura_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliente_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente_rut" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_rut"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente_direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente_comuna_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_comuna_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente_telefono" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_telefono"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente_email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente_giro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_giro"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
 	</field>
 	<variable name="factura_total_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{factura_total}]]></variableExpression>
@@ -191,7 +254,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_nombre_cliente}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cliente_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="291" y="0" width="67" height="15" uuid="924f25f2-3133-4c05-a9e8-92c2f1440b2e"/>
@@ -204,7 +267,7 @@
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_rut_cliente}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cliente_rut}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="358" y="0" width="63" height="15" uuid="fa107a7b-c38d-4605-9033-7b69a1d5c278"/>
