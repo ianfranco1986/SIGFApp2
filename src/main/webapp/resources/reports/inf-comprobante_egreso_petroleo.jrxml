@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inf-comprobante_egreso" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="01785132-19ac-44fc-ab28-ea021e4057f8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -47,7 +47,7 @@ FROM
         cuenta_mayor ON compra_petroleo.compra_petroleo_cuenta_mayor_id = cuenta_mayor.cuenta_mayor_id
         LEFT JOIN
     banco ON cuenta_bancaria.cuenta_bancaria_id_banco = banco.banco_id
-WHERE compra_petroleo.compra_petroleo_id =   $P{compra_id} ]]>
+WHERE compra_petroleo.compra_petroleo_id =   $P{compra_id}]]>
 	</queryString>
 	<field name="compra_petroleo_id" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_id"/>
@@ -244,7 +244,7 @@ WHERE compra_petroleo.compra_petroleo_id =   $P{compra_id} ]]>
 				<text><![CDATA[Total Litros: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="100" width="90" height="20" uuid="ad6f155a-64bd-4ad3-9e5b-067348e52bff"/>
+				<reportElement x="400" y="100" width="70" height="20" uuid="ad6f155a-64bd-4ad3-9e5b-067348e52bff"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -323,23 +323,23 @@ WHERE compra_petroleo.compra_petroleo_id =   $P{compra_id} ]]>
 				<text><![CDATA[IEF :]]></text>
 			</staticText>
 			<textField pattern="$ #,##0.###">
-				<reportElement x="134" y="105" width="50" height="15" uuid="18b1b875-eb89-43ab-a18f-0bc0000ac9c1"/>
+				<reportElement x="134" y="105" width="58" height="15" uuid="18b1b875-eb89-43ab-a18f-0bc0000ac9c1"/>
 				<textFieldExpression><![CDATA[$F{compra_petroleo_ief}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="184" y="105" width="31" height="15" uuid="a3d5bf06-3f8c-4e1f-84fd-1a04c7bc81b6"/>
+				<reportElement x="193" y="105" width="31" height="15" uuid="a3d5bf06-3f8c-4e1f-84fd-1a04c7bc81b6"/>
 				<text><![CDATA[IEV :]]></text>
 			</staticText>
 			<textField pattern="$ #,##0.###">
-				<reportElement x="215" y="105" width="64" height="15" uuid="094e2b14-41cf-477b-934f-96e5c4d9651d"/>
+				<reportElement x="224" y="105" width="74" height="15" uuid="094e2b14-41cf-477b-934f-96e5c4d9651d"/>
 				<textFieldExpression><![CDATA[$F{compra_petroleo_iev}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="279" y="105" width="31" height="15" uuid="e969a729-b215-4581-a2ca-aae1b099b155"/>
+				<reportElement x="298" y="105" width="31" height="15" uuid="e969a729-b215-4581-a2ca-aae1b099b155"/>
 				<text><![CDATA[IVA :]]></text>
 			</staticText>
 			<textField pattern="$ #,##0.###">
-				<reportElement x="310" y="105" width="50" height="15" uuid="a5d414bf-7af9-4fc8-89fd-35af2351e358"/>
+				<reportElement x="329" y="105" width="60" height="15" uuid="a5d414bf-7af9-4fc8-89fd-35af2351e358"/>
 				<textFieldExpression><![CDATA[$F{compra_petroleo_iva}]]></textFieldExpression>
 			</textField>
 			<staticText>

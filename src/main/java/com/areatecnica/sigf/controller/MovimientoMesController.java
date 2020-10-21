@@ -8,6 +8,7 @@ import com.areatecnica.sigf.entities.CartolaBanco;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.MovimientoMes;
 import com.areatecnica.sigf.entities.Empresa;
+import com.areatecnica.sigf.entities.TipoMovimiento;
 import com.areatecnica.sigf.models.MovimientoMesDataModel;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -29,10 +30,12 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     private List<Empresa> empresaItems;
     private List<CuentaBancaria> cuentaItems;
     private List<MovimientoMes> items;
+    private List<TipoMovimiento> tipoMovimientoItems; 
     private Empresa empresa;
     private CuentaBancaria cuentaBancaria;
     private CartolaBanco cartolaBanco;
     private MovimientoMes movimientoDocumento;
+    private TipoMovimiento tipoMovimiento; 
 
     private MovimientoMesDataModel model;
 
@@ -124,20 +127,20 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     }
 
     public void loadTipo() {
-//        if (this.tipoMovimiento != null) {
-//            setFecha();
-//            if (this.desde != null && this.hasta != null) {
-//                this.items = new IMovimientoMesDaoImpl().findByTipoAndDates(this.tipoMovimiento, desde, hasta);
-//                this.model = new MovimientoMesDataModel(items);
-//                getTotals();
-//                if (this.items.isEmpty()) {
-//                    JsfUtil.addWarningMessage("No se han encontrado registros ");
-//                } else {
-//                    JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
-//
-//                }
-//            }
-//        }
+        if (this.tipoMovimiento != null) {
+            setFecha();
+            if (this.desde != null && this.hasta != null) {
+                this.items = new IMovimientoMesDaoImpl().findByTipoAndDates(this.tipoMovimiento, desde, hasta);
+                this.model = new MovimientoMesDataModel(items);
+                getTotals();
+                if (this.items.isEmpty()) {
+                    JsfUtil.addWarningMessage("No se han encontrado registros ");
+                } else {
+                    JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
+
+                }
+            }
+        }
     }
 
     public void loadEmpresa() {
@@ -180,13 +183,13 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
 
         if (!this.items.isEmpty()) {
             for (MovimientoMes m : this.items) {
-//                if (m.getMovimientoMesMvtoId().getTipoMovimientoAbono()) {
-//                    this.totalAbonos = this.totalAbonos + m.getMovimientoMesMonto();
-//                }
-//
-//                if (m.getMovimientoMesMvtoId().getTipoMovimientoDescuento()) {
-//                    this.totalDescuentos = this.totalDescuentos + m.getMovimientoMesMonto();
-//                }
+                if (m.getMovimientoMesMvtoId().getTipoMovimientoAbono()) {
+                    this.totalAbonos = this.totalAbonos + m.getMovimientoMesMonto();
+                }
+
+                if (m.getMovimientoMesMvtoId().getTipoMovimientoDescuento()) {
+                    this.totalDescuentos = this.totalDescuentos + m.getMovimientoMesMonto();
+                }
             }
         }
     }
@@ -209,27 +212,27 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     }
 
     public void saveNew(ActionEvent event) {
-//        if (this.getSelected() != null) {
-//            this.getSelected().setMovimientoMesMvtoId(tipoMovimiento);
-//            this.getSelected().setMovimientoMesFechaLiquidacion(fechaLiquidacion);
-//            this.getSelected().setMovimientoMesFechaMvto(fechaMovimiento);
-//            this.getSelected().setMovimientoMesCuentaId(cuentaBancaria);
-//            this.getSelected().setMovimientoMesDocumento(documento);
-//            this.getSelected().setMovimientoMesEmpresaId(empresa);
-//            new IMovimientoMesDaoImpl().create(this.getSelected());
-//
-//            this.items.add(this.getSelected());
-//
-//            MovimientoMes _aux = this.getSelected();
-//
-//            this.setSelected(prepareCreate(event));
-//            this.getSelected().setMovimientoMesDocumento(documento + 1);
-//            this.documento = this.documento + 1;
-//            JsfUtil.addSuccessMessage("Se ha registrado un movimiento");
-//
-//        } else {
-//            JsfUtil.addErrorMessage("Ocurrió un error al guardar el registro");
-//        }
+        if (this.getSelected() != null) {
+            this.getSelected().setMovimientoMesMvtoId(tipoMovimiento);
+            this.getSelected().setMovimientoMesFechaLiquidacion(fechaLiquidacion);
+            this.getSelected().setMovimientoMesFechaMvto(fechaMovimiento);
+            this.getSelected().setMovimientoMesCuentaBancoId(cuentaBancaria);
+            this.getSelected().setMovimientoMesNumeroDocumento(documento);
+            this.getSelected().setMovimientoMesEmpresaId(empresa);
+            new IMovimientoMesDaoImpl().create(this.getSelected());
+
+            this.items.add(this.getSelected());
+
+            MovimientoMes _aux = this.getSelected();
+
+            this.setSelected(prepareCreate(event));
+            this.getSelected().setMovimientoMesNumeroDocumento(documento + 1);
+            this.documento = this.documento + 1;
+            JsfUtil.addSuccessMessage("Se ha registrado un movimiento");
+
+        } else {
+            JsfUtil.addErrorMessage("Ocurrió un error al guardar el registro");
+        }
     }
 
     public void delete(ActionEvent event) {
@@ -244,22 +247,22 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     }
 
     public void handleMovimientoChange() {
-//        if (this.tipoMovimiento != null) {
-//            this.getSelected().setMovimientoMesMonto(this.tipoMovimiento.getTipoMovimientoMontoDefecto());
-//            this.getSelected().setMovimientoMesDetalle(this.tipoMovimiento.getTipoMovimientoDescripcion());
-//        }
+        if (this.tipoMovimiento != null) {
+            this.getSelected().setMovimientoMesMonto(this.tipoMovimiento.getTipoMovimientoMontoDefecto());
+            this.getSelected().setMovimientoMesDetalle(this.tipoMovimiento.getTipoMovimientoDescripcion());
+        }
     }
 
     public void handleCuentaChange() {
-//        if (this.cuentaBancaria != null) {
-//            this.movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
-//            if (this.movimientoDocumento == null) {
-//                this.movimientoDocumento = new MovimientoMes();
-//                this.movimientoDocumento.setMovimientoMesDocumento(1);
-//            }
-//
-//            this.documento = this.movimientoDocumento.getMovimientoMesDocumento() + 1;
-//        }
+        if (this.cuentaBancaria != null) {
+            this.movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            if (this.movimientoDocumento == null) {
+                this.movimientoDocumento = new MovimientoMes();
+                this.movimientoDocumento.setMovimientoMesNumeroDocumento(1);
+            }
+
+            this.documento = this.movimientoDocumento.getMovimientoMesNumeroDocumento() + 1;
+        }
     }
 
     public void setTipo(int tipo) {
@@ -402,21 +405,21 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         return sdf.format(fecha);
     }
 
-//    public void setTipoMovimientoItems(List<TipoMovimiento> tipoMovimientoItems) {
-//        this.tipoMovimientoItems = tipoMovimientoItems;
-//    }
-//
-//    public List<TipoMovimiento> getTipoMovimientoItems() {
-//        return tipoMovimientoItems;
-//    }
-//
-//    public void setTipoMovimiento(TipoMovimiento tipoMovimiento) {
-//        this.tipoMovimiento = tipoMovimiento;
-//    }
-//
-//    public TipoMovimiento getTipoMovimiento() {
-//        return tipoMovimiento;
-//    }
+    public void setTipoMovimientoItems(List<TipoMovimiento> tipoMovimientoItems) {
+        this.tipoMovimientoItems = tipoMovimientoItems;
+    }
+
+    public List<TipoMovimiento> getTipoMovimientoItems() {
+        return tipoMovimientoItems;
+    }
+
+    public void setTipoMovimiento(TipoMovimiento tipoMovimiento) {
+        this.tipoMovimiento = tipoMovimiento;
+    }
+
+    public TipoMovimiento getTipoMovimiento() {
+        return tipoMovimiento;
+    }
 
     public void setMes(int mes) {
         this.mes = mes;

@@ -96,7 +96,7 @@
 
 
                 <p:outputLabel value="Detalle" for="detalleCartolaDescripcion" />
-                <p:inputText id="detalleCartolaDescripcion" value="#{movimientoMesController.selected.movimientoMesDetalle}" required="true" requiredMessage="Debe ingresar la descripción del movimiento" size="30" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)">
+                <p:inputText id="detalleCartolaDescripcion" autocomplete="off" value="#{movimientoMesController.selected.movimientoMesDetalle}" required="true" requiredMessage="Debe ingresar la descripción del movimiento" size="30" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)">
                     <p:tooltip id="tooldetalleCartolaDescripcion" for="detalleCartolaDescripcion" value="Ingrese una descripción" position="top"/>
                 </p:inputText>
 
@@ -202,16 +202,16 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.movimientoMesDocumento}" filterBy="#{item.movimientoMesDocumento}" filterMatchMode="contains">
+                <p:column sortBy="#{item.movimientoMesNumeroDocumento}" filterBy="#{item.movimientoMesNumeroDocumento}" filterMatchMode="contains">
                     <f:facet name="header">
                         <h:outputText value="N° Documento "/>
                     </f:facet>
                     <p:cellEditor>
                         <f:facet name="output">
-                            <h:outputText value="#{item.movimientoMesDocumento}"/>
+                            <h:outputText value="#{item.movimientoMesNumeroDocumento}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputNumber id="documento" decimalPlaces="0" value="#{item.movimientoMesDocumento}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            <p:inputNumber id="documento" decimalPlaces="0" value="#{item.movimientoMesNumeroDocumento}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                             </p:inputNumber>
                         </f:facet>
                     </p:cellEditor>

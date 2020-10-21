@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LiquidacionEmpresa.findAll", query = "SELECT l FROM LiquidacionEmpresa l"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaId", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaId = :liquidacionEmpresaId"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaFechaLiquidacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaLiquidacion = :liquidacionEmpresaFechaLiquidacion"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByEmpresaFecha", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to AND l.liquidacionEmpresaIdEmpresa = :liquidacionEmpresaIdEmpresa"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaFechaPago", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaPago = :liquidacionEmpresaFechaPago"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalAbonos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalAbonos = :liquidacionEmpresaTotalAbonos"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalCargos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalCargos = :liquidacionEmpresaTotalCargos"),
@@ -168,5 +169,5 @@ public class LiquidacionEmpresa implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.LiquidacionEmpresa[ liquidacionEmpresaId=" + liquidacionEmpresaId + " ]";
     }
-    
+
 }

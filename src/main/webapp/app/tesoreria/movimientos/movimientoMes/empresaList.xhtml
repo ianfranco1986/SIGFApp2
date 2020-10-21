@@ -43,8 +43,8 @@
 
                 <p:commandButton value="Buscar" actionListener="#{movimientoMesViewController.loadEmpresa()}" styleClass="btn btn-primary" update="DetalleCartolaListForm, DetalleCartolaListForm:detalleCartola, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                 </p:commandButton>
-                  
-               
+
+
 
             </p:panelGrid>
         </p:panel>
@@ -52,8 +52,9 @@
     <h:form id="DetalleCartolaListForm">
         <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola" rendered="#{movimientoMesViewController.empresa != null}">
             <h3>Detalle Movimientos</h3>
-             <h:commandLink value="Generar Reporte" 
-                               actionListener="#{reportController.downloadFile(movimientoMesViewController.informeEmpresa, movimientoMesViewController.mapEmpresa)}" target="blank"  styleClass="btn btn-primary" />
+            <h:commandLink value="Generar Reporte" 
+                           actionListener="#{reportController.downloadFile(movimientoMesViewController.informeEmpresa, movimientoMesViewController.mapEmpresa)}" target="blank"  styleClass="btn btn-primary" />
+            <p:separator/>
 
             <p:dataTable id="datalist"
                          value="#{movimientoMesViewController.model}"
@@ -119,26 +120,8 @@
                             <p:datePicker id="liqui" view="month" value="#{item.movimientoMesFechaLiquidacion}" pattern="MM/yyyy" yearNavigator="true" yearRange="2019:2020" locale="es"/>
                         </f:facet>
                     </p:cellEditor>
-
                 </p:column>
-
-
-                <p:column sortBy="#{item.movimientoMesDocumento}" filterBy="#{item.movimientoMesDocumento}" filterMatchMode="contains">
-                    <f:facet name="header">
-                        <h:outputText value="N° Documento "/>
-                    </f:facet>
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{item.movimientoMesDocumento}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputNumber id="documento" decimalPlaces="0" value="#{item.movimientoMesDocumento}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
-                            </p:inputNumber>
-                        </f:facet>
-                    </p:cellEditor>
-
-                </p:column>
-
+                
                 <p:column sortBy="#{item.movimientoMesMvtoId.tipoMovimientoNombre}" filterBy="#{item.movimientoMesMvtoId.tipoMovimientoNombre}" filterMatchMode="contains">
                     <f:facet name="header">
                         <h:outputText value="Movimiento"/>

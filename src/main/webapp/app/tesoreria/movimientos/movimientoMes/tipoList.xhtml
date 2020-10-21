@@ -55,6 +55,7 @@
             <h3>Detalle Movimientos</h3>
             <h:commandLink value="Generar Reporte" 
                            actionListener="#{reportController.downloadFile(movimientoMesViewController.informeTipo, movimientoMesViewController.mapTipo)}" target="blank"  styleClass="btn btn-primary" />
+            <p:separator/>
 
             <p:dataTable id="datalist"
                          value="#{movimientoMesViewController.model}"
@@ -124,16 +125,16 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.movimientoMesDocumento}" filterBy="#{item.movimientoMesDocumento}" filterMatchMode="contains">
+                <p:column sortBy="#{item.movimientoMesNumeroDocumento}" filterBy="#{item.movimientoMesNumeroDocumento}" filterMatchMode="contains">
                     <f:facet name="header">
                         <h:outputText value="N° Documento "/>
                     </f:facet>
                     <p:cellEditor>
                         <f:facet name="output">
-                            <h:outputText value="#{item.movimientoMesDocumento}"/>
+                            <h:outputText value="#{item.movimientoMesNumeroDocumento}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputNumber id="documento" decimalPlaces="0" value="#{item.movimientoMesDocumento}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                            <p:inputNumber id="documento" decimalPlaces="0" value="#{item.movimientoMesNumeroDocumento}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                             </p:inputNumber>
                         </f:facet>
                     </p:cellEditor>

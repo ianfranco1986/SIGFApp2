@@ -181,6 +181,7 @@
     <class>com.areatecnica.sigf.entities.EmisorBoleta</class>
     <class>com.areatecnica.sigf.entities.TipoBoletaHonorario</class>
     <class>com.areatecnica.sigf.entities.Cliente</class>
+    <class>com.areatecnica.sigf.entities.TipoMovimiento</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.jdbc.native-sql" value="true"/>

@@ -4,10 +4,12 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
+import com.areatecnica.sigf.dao.impl.ITipoMovimientoDaoImpl;
 import com.areatecnica.sigf.entities.CartolaBanco;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.MovimientoMes;
 import com.areatecnica.sigf.entities.Empresa;
+import com.areatecnica.sigf.entities.TipoMovimiento;
 import com.areatecnica.sigf.models.MovimientoMesDataModel;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -31,6 +33,9 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
     private List<Empresa> empresaItems;
     private List<CuentaBancaria> cuentaItems;
     private List<MovimientoMes> items;
+    private List<TipoMovimiento> tipoMovimientoItems;
+
+    private TipoMovimiento tipoMovimiento;
     private Empresa empresa;
     private CuentaBancaria cuentaBancaria;
     private CartolaBanco cartolaBanco;
@@ -68,8 +73,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
         super.initParams(); //To change body of generated methods, choose Tools | Templates.
 
         this.empresaItems = new IEmpresaDaoImpl().findByCuenta(this.getUserCount());
-
-
+        this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findAll();
         this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
 
         Calendar cal = Calendar.getInstance();
@@ -115,20 +119,20 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
     }
 
     public void loadTipo() {
-//        if (this.tipoMovimiento != null) {
-//            setFecha();
-//            if (this.desde != null && this.hasta != null) {
-//                this.items = new IMovimientoMesDaoImpl().findByTipoAndDates(this.tipoMovimiento, desde, hasta);
-//                this.model = new MovimientoMesDataModel(items);
-//                getTotals();
-//                if (this.items.isEmpty()) {
-//                    JsfUtil.addWarningMessage("No se han encontrado registros ");
-//                } else {
-//                    JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
-//
-//                }
-//            }
-//        }
+        if (this.tipoMovimiento != null) {
+            setFecha();
+            if (this.desde != null && this.hasta != null) {
+                this.items = new IMovimientoMesDaoImpl().findByTipoAndDates(this.tipoMovimiento, desde, hasta);
+                this.model = new MovimientoMesDataModel(items);
+
+                if (this.items.isEmpty()) {
+                    JsfUtil.addWarningMessage("No se han encontrado registros ");
+                } else {
+                    JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
+                    getTotals();
+                }
+            }
+        }
     }
 
     public void loadEmpresa() {
@@ -137,12 +141,12 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
             if (this.desde != null && this.hasta != null) {
                 this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, desde, hasta);
                 this.model = new MovimientoMesDataModel(items);
-                getTotals();
+
                 if (this.items.isEmpty()) {
                     JsfUtil.addWarningMessage("No se han encontrado registros ");
                 } else {
                     JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
-
+                    getTotals();
                 }
             }
         }
@@ -155,12 +159,12 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
                 this.items = new IMovimientoMesDaoImpl().findByCuentaAndDates(this.cuentaBancaria, desde, hasta);
 
                 this.model = new MovimientoMesDataModel(items);
-                getTotals();
+
                 if (this.items.isEmpty()) {
                     JsfUtil.addWarningMessage("No se han encontrado registros ");
                 } else {
                     JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
-
+                    getTotals();
                 }
             }
         }
@@ -182,8 +186,8 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
 
         map.put("fechaLiquidacion", getFechaCompleta());
         map.put("fecha", desde);
-//        map.put("tipo_id", this.tipoMovimiento.getTipoMovimientoId());
-//        map.put("nombreMovimiento", this.tipoMovimiento.getTipoMovimientoNombre());
+        map.put("tipo_id", this.tipoMovimiento.getTipoMovimientoId());
+        map.put("nombreMovimiento", this.tipoMovimiento.getTipoMovimientoNombre());
 
         return map;
     }
@@ -205,13 +209,13 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
 
         if (!this.items.isEmpty()) {
             for (MovimientoMes m : this.items) {
-//                if (m.getMovimientoMesMvtoId().getTipoMovimientoAbono()) {
-//                    this.totalAbonos = this.totalAbonos + m.getMovimientoMesMonto();
-//                }
-//
-//                if (m.getMovimientoMesMvtoId().getTipoMovimientoDescuento()) {
-//                    this.totalDescuentos = this.totalDescuentos + m.getMovimientoMesMonto();
-//                }
+                if (m.getMovimientoMesMvtoId().getTipoMovimientoAbono()) {
+                    this.totalAbonos = this.totalAbonos + m.getMovimientoMesMonto();
+                }
+
+                if (m.getMovimientoMesMvtoId().getTipoMovimientoDescuento()) {
+                    this.totalDescuentos = this.totalDescuentos + m.getMovimientoMesMonto();
+                }
             }
         }
     }
@@ -259,22 +263,21 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
     }
 
     public void handleMovimientoChange() {
-//        if (this.tipoMovimiento != null) {
-//            this.getSelected().setMovimientoMesMonto(this.tipoMovimiento.getTipoMovimientoMontoDefecto());
-//            this.getSelected().setMovimientoMesDetalle(this.tipoMovimiento.getTipoMovimientoDescripcion());
-//        }
+        if (this.tipoMovimiento != null) {
+            this.getSelected().setMovimientoMesMonto(this.tipoMovimiento.getTipoMovimientoMontoDefecto());
+            this.getSelected().setMovimientoMesDetalle(this.tipoMovimiento.getTipoMovimientoDescripcion());
+        }
     }
 
     public void handleCuentaChange() {
-//        if (this.cuentaBancaria != null) {
-//            this.movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
-//            if (this.movimientoDocumento == null) {
-//                this.movimientoDocumento = new MovimientoMes();
-//                this.movimientoDocumento.setMovimientoMesDocumento(1);
-//            }
-//
-//            this.documento = this.movimientoDocumento.getMovimientoMesDocumento() + 1;
-//        }
+        if (this.cuentaBancaria != null) {
+            this.movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            if (this.movimientoDocumento == null) {
+                this.movimientoDocumento = new MovimientoMes();
+                this.movimientoDocumento.setMovimientoMesNumeroDocumento(1);
+            }
+            this.documento = this.movimientoDocumento.getMovimientoMesNumeroDocumento() + 1;
+        }
     }
 
     private String getFechaCompleta() {
@@ -320,6 +323,22 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
         }
 
         return fechaCompleta + " " + anio;
+    }
+
+    public void setTipoMovimientoItems(List<TipoMovimiento> tipoMovimientoItems) {
+        this.tipoMovimientoItems = tipoMovimientoItems;
+    }
+
+    public void setTipoMovimiento(TipoMovimiento tipoMovimiento) {
+        this.tipoMovimiento = tipoMovimiento;
+    }
+
+    public TipoMovimiento getTipoMovimiento() {
+        return tipoMovimiento;
+    }
+
+    public List<TipoMovimiento> getTipoMovimientoItems() {
+        return tipoMovimientoItems;
     }
 
     public String getInformeCuenta() {

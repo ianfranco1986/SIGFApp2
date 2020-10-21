@@ -149,7 +149,7 @@ WHERE compra.compra_id =  $P{compra_id}]]>
 				<text><![CDATA[Ñandu Tur S.A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="227" y="0" width="262" height="30" uuid="43e93b7d-e366-43c2-a51f-b49997b1c766"/>
+				<reportElement x="227" y="0" width="272" height="30" uuid="43e93b7d-e366-43c2-a51f-b49997b1c766"/>
 				<box padding="0"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="16" isBold="true"/>
@@ -164,8 +164,8 @@ WHERE compra.compra_id =  $P{compra_id}]]>
 				<text><![CDATA[Las Acacias #01388, Peñablanca Villa Alemana]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="489" y="0" width="82" height="30" uuid="983bd9f9-128d-4cef-aa7e-906196f2e2ff"/>
-				<textElement textAlignment="Left">
+				<reportElement x="500" y="0" width="70" height="30" uuid="983bd9f9-128d-4cef-aa7e-906196f2e2ff"/>
+				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compra_id}]]></textFieldExpression>
@@ -223,14 +223,14 @@ WHERE compra.compra_id =  $P{compra_id}]]>
 				<text><![CDATA[Detalle : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="100" width="108" height="20" uuid="ad6f155a-64bd-4ad3-9e5b-067348e52bff"/>
+				<reportElement x="410" y="100" width="70" height="20" uuid="ad6f155a-64bd-4ad3-9e5b-067348e52bff"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total : ]]></text>
 			</staticText>
 			<textField pattern="$ #,##0.###">
-				<reportElement x="489" y="100" width="80" height="20" uuid="9f091660-d125-4427-9da9-d41d10f5c7db"/>
+				<reportElement x="480" y="100" width="91" height="20" uuid="9f091660-d125-4427-9da9-d41d10f5c7db"/>
 				<textElement textAlignment="Left">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -302,23 +302,23 @@ WHERE compra.compra_id =  $P{compra_id}]]>
 				<text><![CDATA[Exento :]]></text>
 			</staticText>
 			<textField pattern="$ #,##0.###">
-				<reportElement x="134" y="105" width="50" height="15" uuid="18b1b875-eb89-43ab-a18f-0bc0000ac9c1"/>
+				<reportElement x="134" y="105" width="55" height="15" uuid="18b1b875-eb89-43ab-a18f-0bc0000ac9c1"/>
 				<textFieldExpression><![CDATA[$F{compra_exento}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="184" y="105" width="31" height="15" uuid="a3d5bf06-3f8c-4e1f-84fd-1a04c7bc81b6"/>
+				<reportElement x="299" y="105" width="31" height="15" uuid="a3d5bf06-3f8c-4e1f-84fd-1a04c7bc81b6"/>
 				<text><![CDATA[IVA :]]></text>
 			</staticText>
 			<textField pattern="$ #,##0.###">
-				<reportElement x="215" y="105" width="64" height="15" uuid="094e2b14-41cf-477b-934f-96e5c4d9651d"/>
+				<reportElement x="330" y="105" width="72" height="15" uuid="094e2b14-41cf-477b-934f-96e5c4d9651d"/>
 				<textFieldExpression><![CDATA[$F{compra_iva}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="279" y="105" width="31" height="15" uuid="e969a729-b215-4581-a2ca-aae1b099b155"/>
+				<reportElement x="190" y="105" width="36" height="15" uuid="e969a729-b215-4581-a2ca-aae1b099b155"/>
 				<text><![CDATA[O.Imp :]]></text>
 			</staticText>
 			<textField pattern="$ #,##0.###">
-				<reportElement x="310" y="105" width="50" height="15" uuid="a5d414bf-7af9-4fc8-89fd-35af2351e358"/>
+				<reportElement x="227" y="105" width="72" height="15" uuid="a5d414bf-7af9-4fc8-89fd-35af2351e358"/>
 				<textFieldExpression><![CDATA[$F{compra_otros_impuestos}]]></textFieldExpression>
 			</textField>
 			<staticText>

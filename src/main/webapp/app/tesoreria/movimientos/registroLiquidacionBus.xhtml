@@ -321,7 +321,7 @@
 
                         <p:outputLabel value="#{bundle.CreateCargoBusLabel_tipoCargo}" for="tipoCargo" />
                         <h:panelGroup>
-                            <p:selectOneMenu id="tipoCargo" value="#{registroLiquidacionController.selected.tipoCargo}" required="true" requiredMessage="#{bundle.CreateCargoBusRequiredMessage_tipoCargo}" converter="tipoCargoConverter">
+                            <p:selectOneMenu id="tipoCargo" value="#{registroLiquidacionController.selected.tipoCargo}" required="true" requiredMessage="#{bundle.CreateCargoBusRequiredMessage_tipoCargo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                 <f:selectItems value="#{registroLiquidacionController.tipoCargoItems}"
                                                var="tipoCargoItem"
@@ -378,7 +378,7 @@
 
                         <p:outputLabel value="#{bundle.EditCargoBusLabel_tipoCargo}" for="tipoCargo" />
                         <h:panelGroup>
-                            <p:selectOneMenu id="tipoCargo" value="#{registroLiquidacionController.selected.tipoCargo}" required="true" requiredMessage="#{bundle.EditCargoBusRequiredMessage_tipoCargo}" converter="tipoCargoConverter">
+                            <p:selectOneMenu id="tipoCargo" value="#{registroLiquidacionController.selected.tipoCargo}" required="true" requiredMessage="#{bundle.EditCargoBusRequiredMessage_tipoCargo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                 <f:selectItems value="#{registroLiquidacionController.items}"
                                                var="tipoCargoItem"
@@ -425,7 +425,7 @@
 
                         <p:outputLabel value="#{bundle.CreateAbonoBusLabel_tipoAbono}" for="tipoAbono" />
                         <h:panelGroup>
-                            <p:selectOneMenu id="tipoAbono" value="#{registroLiquidacionController.selectedAbono.tipoAbono}" required="true" requiredMessage="#{bundle.CreateAbonoBusRequiredMessage_tipoAbono}" converter="tipoAbonoConverter">
+                            <p:selectOneMenu id="tipoAbono" value="#{registroLiquidacionController.selectedAbono.tipoAbono}" required="true" requiredMessage="#{bundle.CreateAbonoBusRequiredMessage_tipoAbono}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                 <f:selectItems value="#{registroLiquidacionController.tipoAbonoItems}"
                                                var="tipoAbonoItem"

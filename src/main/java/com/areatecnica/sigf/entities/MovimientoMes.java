@@ -40,6 +40,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesId", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesId = :movimientoMesId"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvto", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesFechaMvto = :movimientoMesFechaMvto"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaLiquidacion", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesFechaLiquidacion = :movimientoMesFechaLiquidacion"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesCuenta", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesCuentaBancoId = :movimientoMesCuentaId ORDER BY d.movimientoMesId ASC"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesIngresos", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesTipoMvtoId = 1 ORDER BY d.movimientoMesId ASC"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesEgresos", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesTipoMvtoId.tipoMovimientoDescuento = 1 ORDER BY d.movimientoMesId ASC"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesEmpresa", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesEmpresaId = :movimientoMesEmpresaId ORDER BY d.movimientoMesId ASC"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesTipo", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesTipoMvtoId = :movimientoMesMvtoId ORDER BY d.movimientoMesId ASC"),
     @NamedQuery(name = "MovimientoMes.findLastByCuenta", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesCuentaBancoId = :movimientoMesCuentaId ORDER BY d.movimientoMesNumeroDocumento DESC"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesMonto", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesMonto = :movimientoMesMonto"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesDetalle", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesDetalle = :movimientoMesDetalle"),
@@ -90,6 +95,9 @@ public class MovimientoMes implements Serializable {
     @JoinColumn(name = "movimiento_mes_empresa_id", referencedColumnName = "empresa_id")
     @ManyToOne(optional = false)
     private Empresa movimientoMesEmpresaId;
+    @JoinColumn(name = "movimiento_mes_tipo_movimiento_id", referencedColumnName = "tipo_movimiento_id")
+    @ManyToOne(optional = false)
+    private TipoMovimiento movimientoMesTipoMvtoId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaMovimientoId")
     private List<Factura> facturaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "honorarioMovimientoId")
@@ -120,6 +128,14 @@ public class MovimientoMes implements Serializable {
 
     public void setMovimientoMesId(Integer movimientoMesId) {
         this.movimientoMesId = movimientoMesId;
+    }
+
+    public TipoMovimiento getMovimientoMesMvtoId() {
+        return movimientoMesTipoMvtoId;
+    }
+
+    public void setMovimientoMesMvtoId(TipoMovimiento movimientoMesTipoMvtoId) {
+        this.movimientoMesTipoMvtoId = movimientoMesTipoMvtoId;
     }
 
     public Date getMovimientoMesFechaMvto() {

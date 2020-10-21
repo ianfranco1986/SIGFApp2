@@ -9,6 +9,7 @@ import com.areatecnica.sigf.dao.IMovimientoMesDao;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.MovimientoMes;
+import com.areatecnica.sigf.entities.TipoMovimiento;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,6 +105,19 @@ public class IMovimientoMesDaoImpl extends GenericDAOImpl<MovimientoMes> impleme
                     setParameter("movimientoMesCuentaId", cuenta).
                     setMaxResults(1).
                     getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+    
+    @Override
+    public List<MovimientoMes> findByTipoAndDates(TipoMovimiento tipo, Date from, Date to) {
+        try {
+            return this.entityManager.createNamedQuery("MovimientoMes.findByMovimientoMesFechaMvtoDatesTipo").
+                    setParameter("movimientoMesMvtoId", tipo).
+                    setParameter("from", from).
+                    setParameter("to", to).
+                    getResultList();
         } catch (NoResultException ne) {
             return null;
         }

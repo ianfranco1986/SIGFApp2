@@ -404,7 +404,7 @@
                     <p:outputLabel id="patente" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdBus.busNumero}"/>
 
                     <p:outputLabel value="Abono:" for="abonoBusIdTipoAbono" />
-                    <p:selectOneMenu id="abonoBusIdTipoAbono" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdTipoAbono}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusIdTipoAbono}" converter="tipoAbonoConverter">
+                    <p:selectOneMenu id="abonoBusIdTipoAbono" value="#{registroLiquidacionBusController.abonoBus.abonoBusIdTipoAbono}" required="true" requiredMessage="#{myBundle.CreateAbonoBusRequiredMessage_abonoBusIdTipoAbono}" converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                         <f:selectItems value="#{tipoAbonoController.items}"
                                        var="abonoBusIdTipoAbonoItem"

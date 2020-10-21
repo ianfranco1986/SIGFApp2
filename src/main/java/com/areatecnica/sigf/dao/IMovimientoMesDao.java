@@ -8,6 +8,7 @@ package com.areatecnica.sigf.dao;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.MovimientoMes;
+import com.areatecnica.sigf.entities.TipoMovimiento;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +19,9 @@ import java.util.List;
 public interface IMovimientoMesDao<T> extends IGenericDAO<T> {
 
     public List<MovimientoMes> findByDates(Date from, Date to);
-    
+
     public List<MovimientoMes> findByIngresosDates(Date from, Date to);
-    
+
     public List<MovimientoMes> findByEgresosDates(Date from, Date to);
 
     public List<MovimientoMes> findByDocumento(int documento);
@@ -30,4 +31,7 @@ public interface IMovimientoMesDao<T> extends IGenericDAO<T> {
     public List<MovimientoMes> findByCuentaAndDates(CuentaBancaria cuenta, Date from, Date to);
 
     public MovimientoMes findLastByCuenta(CuentaBancaria cuenta);
+
+    public List<MovimientoMes> findByTipoAndDates(TipoMovimiento tipo, Date from, Date to);
+
 }
