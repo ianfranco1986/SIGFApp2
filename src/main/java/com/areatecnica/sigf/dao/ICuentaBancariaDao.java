@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.CartolaBanco;
 import com.areatecnica.sigf.entities.Cuenta;
+import com.areatecnica.sigf.entities.CuentaBancaria;
 import java.util.List;
 
 /**
@@ -15,6 +16,6 @@ import java.util.List;
  */
 public interface ICuentaBancariaDao<T> extends IGenericDAO<T> {
     
-    public List<CartolaBanco> findByCuenta(Cuenta cuenta);
-   
+    public List<CuentaBancaria> findByCuenta(Cuenta cuenta);
+    public CuentaBancaria findById(int id);
 }

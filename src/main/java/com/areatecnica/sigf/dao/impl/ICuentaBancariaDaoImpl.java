@@ -23,9 +23,22 @@ public class ICuentaBancariaDaoImpl extends GenericDAOImpl<CuentaBancaria> imple
     }
 
     @Override
-    public List<CartolaBanco> findByCuenta(Cuenta cuenta) {
+    public List<CuentaBancaria> findByCuenta(Cuenta cuenta) {
         try {
             return this.entityManager.createNamedQuery("CuentaBancaria.findByCuenta").setParameter("empresaIdCuenta", cuenta).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
+    public CuentaBancaria findById(int id) {
+        try {
+            CuentaBancaria c = (CuentaBancaria) this.entityManager.
+                    createNamedQuery("CuentaBancaria.findByCuentaBancariaId").
+                    setParameter("cuentaBancariaId", id).
+                    getSingleResult();
+            return c;
         } catch (NoResultException ne) {
             return null;
         }

@@ -8,6 +8,7 @@ package com.areatecnica.sigf.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,6 +34,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "CompraPetroleo.findAll", query = "SELECT c FROM CompraPetroleo c"),
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoId", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoId = :compraPetroleoId"),
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoFecha", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoFecha = :compraPetroleoFecha"),
+    @NamedQuery(name = "CompraPetroleo.findByCompraBetweenDates", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoFecha BETWEEN :from AND :to ORDER BY c.compraPetroleoFecha"),
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoFolio", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoFolio = :compraPetroleoFolio"),
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoCantidadLitros", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoCantidadLitros = :compraPetroleoCantidadLitros"),
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoSurtidorN1", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoSurtidorN1 = :compraPetroleoSurtidorN1"),
@@ -95,7 +97,7 @@ public class CompraPetroleo implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CuentaMayor compraPetroleoCuentaMayorId;
     @JoinColumn(name = "compra_petroleo_movt_id", referencedColumnName = "movimiento_mes_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private MovimientoMes compraPetroleoMovtId;
     @JoinColumn(name = "compra_petroleo_proveedor_id", referencedColumnName = "proveedor_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

@@ -5,6 +5,7 @@ import com.areatecnica.sigf.dao.impl.IControlVentaPetroleoDaoImpl;
 import com.areatecnica.sigf.entities.ControlVentaPetroleo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,7 @@ public class ControlVentaPetroleoController extends AbstractController<ControlVe
 
         this.anio = calendar.get(Calendar.YEAR);
         this.mes = calendar.get(Calendar.MONTH) + 1;
+        this.items = new ArrayList();
     }
 
     public void load() {
@@ -49,6 +51,7 @@ public class ControlVentaPetroleoController extends AbstractController<ControlVe
 
             if (this.items.isEmpty()) {
                 JsfUtil.addSuccessMessage("No se han encontrado registros");
+                this.items = new ArrayList();
             } else {
                 JsfUtil.addSuccessMessage("Mostrando registros a la fecha");
             }
@@ -95,7 +98,5 @@ public class ControlVentaPetroleoController extends AbstractController<ControlVe
     public void setAnio(int anio) {
         this.anio = anio;
     }
-    
-    
 
 }

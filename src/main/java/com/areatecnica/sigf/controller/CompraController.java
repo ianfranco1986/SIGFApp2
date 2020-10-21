@@ -445,7 +445,9 @@ public class CompraController extends AbstractController<Compra> {
 
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap();
-        this.finalID = this.getSelected().getCompraId();
+        if (this.getSelected().getCompraId() != null) {
+            this.finalID = this.getSelected().getCompraId();
+        }
         map.put("compra_id", finalID);
         return map;
     }

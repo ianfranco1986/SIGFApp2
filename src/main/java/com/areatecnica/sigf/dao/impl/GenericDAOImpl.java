@@ -46,6 +46,7 @@ public class GenericDAOImpl<T> implements IGenericDAO<T> {
         } catch (Exception e) {
             rollback();
             e.printStackTrace();
+            return null; 
         }
         return t;
     }

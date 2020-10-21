@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inf-comprobante_egreso" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="01785132-19ac-44fc-ab28-ea021e4057f8">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="385"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="609"/>
+	<parameter name="compra_id" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT 
+    compra_petroleo.compra_petroleo_id,
+    compra_petroleo.compra_petroleo_fecha,
+    compra_petroleo.compra_petroleo_folio,
+    compra_petroleo.compra_petroleo_base_afecta,
+    compra_petroleo.compra_petroleo_ief,
+    compra_petroleo.compra_petroleo_iev,
+    compra_petroleo.compra_petroleo_iva, 
+    compra_petroleo.compra_petroleo_cantidad_litros, 
+    compra_petroleo.compra_petroleo_surtidor_n1, 
+    compra_petroleo.compra_petroleo_surtidor_n2,
+    compra_petroleo.compra_petroleo_total, 
+    movimiento_mes.movimiento_mes_fecha_mvto,
+    movimiento_mes.movimiento_mes_fecha_liquidacion,
+    movimiento_mes.movimiento_mes_monto,
+    movimiento_mes.movimiento_mes_detalle,
+    movimiento_mes.movimiento_mes_numero_documento,
+    empresa.empresa_nombre,
+    cuenta_bancaria.cuenta_bancaria_nombre_titular,
+    cuenta_bancaria.cuenta_bancaria_numero,
+    proveedor.proveedor_nombre,
+    proveedor.proveedor_rut,
+    tipo_documento.tipo_documento_nombre,
+    cuenta_mayor.cuenta_mayor_nombre, banco.banco_nombre
+FROM
+    compra_petroleo
+        LEFT JOIN
+    movimiento_mes ON compra_petroleo.compra_petroleo_movt_id = movimiento_mes_id
+        LEFT JOIN
+    empresa ON movimiento_mes.movimiento_mes_empresa_id = empresa.empresa_id
+        LEFT JOIN
+    cuenta_bancaria ON movimiento_mes.movimiento_mes_cuenta_banco_id = cuenta_bancaria.cuenta_bancaria_id
+        LEFT JOIN
+    proveedor ON compra_petroleo.compra_petroleo_proveedor_id = proveedor.proveedor_id
+        LEFT JOIN
+    tipo_documento ON compra_petroleo.compra_petroleo_tipo_documento_id = tipo_documento.tipo_documento_id
+		LEFT JOIN 
+        cuenta_mayor ON compra_petroleo.compra_petroleo_cuenta_mayor_id = cuenta_mayor.cuenta_mayor_id
+        LEFT JOIN
+    banco ON cuenta_bancaria.cuenta_bancaria_id_banco = banco.banco_id
+WHERE compra_petroleo.compra_petroleo_id =   $P{compra_id} ]]>
+	</queryString>
+	<field name="compra_petroleo_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_folio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_folio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_base_afecta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_base_afecta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_ief" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_ief"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_iev" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_iev"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_iva" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_iva"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_cantidad_litros" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_cantidad_litros"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_surtidor_n1" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_surtidor_n1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_surtidor_n2" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_surtidor_n2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="compra_petroleo_total" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="compra_petroleo_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra_petroleo"/>
+	</field>
+	<field name="movimiento_mes_fecha_mvto" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="movimiento_mes_fecha_mvto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="movimiento_mes"/>
+	</field>
+	<field name="movimiento_mes_fecha_liquidacion" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="movimiento_mes_fecha_liquidacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="movimiento_mes"/>
+	</field>
+	<field name="movimiento_mes_monto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="movimiento_mes_monto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="movimiento_mes"/>
+	</field>
+	<field name="movimiento_mes_detalle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="movimiento_mes_detalle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="movimiento_mes"/>
+	</field>
+	<field name="movimiento_mes_numero_documento" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="movimiento_mes_numero_documento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="movimiento_mes"/>
+	</field>
+	<field name="empresa_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="empresa_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
+	<field name="cuenta_bancaria_nombre_titular" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cuenta_bancaria_nombre_titular"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuenta_bancaria"/>
+	</field>
+	<field name="cuenta_bancaria_numero" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="cuenta_bancaria_numero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuenta_bancaria"/>
+	</field>
+	<field name="proveedor_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="proveedor_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="proveedor_rut" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="proveedor_rut"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="tipo_documento_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_documento_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tipo_documento"/>
+	</field>
+	<field name="cuenta_mayor_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cuenta_mayor_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuenta_mayor"/>
+	</field>
+	<field name="banco_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="banco_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="banco"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="19" uuid="56aac9b0-86ca-4022-b190-5b126c649ef1"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="0" width="272" height="21" uuid="43e93b7d-e366-43c2-a51f-b49997b1c766"/>
+				<box padding="0"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comprobante de Egreso N° ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="19" width="226" height="15" uuid="b15f2556-2f4d-4fd7-9eaa-ce717c772494"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Las Acacias #01388, Peñablanca Villa Alemana]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="0" width="70" height="21" uuid="983bd9f9-128d-4cef-aa7e-906196f2e2ff">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="274" y="21" width="226" height="15" uuid="cd88852b-78f3-42fe-bf7a-c1b10dfc62c7"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Petróleo)]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="359" splitType="Stretch">
+			<textField pattern="M/d/yy">
+				<reportElement x="500" y="0" width="70" height="15" uuid="4c71161f-946c-44cc-842d-7571cc9fc52b"/>
+				<textFieldExpression><![CDATA[$F{movimiento_mes_fecha_liquidacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="410" y="0" width="90" height="15" uuid="7a3060a2-3184-4cf4-a2cd-316447cfe7ec"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Fecha :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="25" width="290" height="15" uuid="4a987de0-570b-4f0c-a3f2-f4590221c5cb"/>
+				<textFieldExpression><![CDATA[$F{proveedor_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="25" width="60" height="15" uuid="1b303a65-b9f1-4f4a-8cf8-82f7de919882"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Proveedor : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="60" height="15" uuid="779b097d-c82d-4c5e-9b75-9ba28225bddf"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Rut : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="40" width="140" height="15" uuid="2c7c4850-f199-4146-8340-3d2042f1d8f0"/>
+				<textFieldExpression><![CDATA[$F{proveedor_rut}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="62" width="190" height="15" uuid="641e93d6-1ca0-4a03-b9bc-91179e7b6455"/>
+				<textFieldExpression><![CDATA[$F{tipo_documento_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="62" width="60" height="15" uuid="b191e6f8-07d7-40b3-a41a-72f46ae68cc6"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Tipo : ]]></text>
+			</staticText>
+			<textField pattern="#,###.###">
+				<reportElement x="60" y="77" width="60" height="15" uuid="6ee292bd-e188-4ba9-b1d9-a7ba3c6100a0"/>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_cantidad_litros}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="77" width="60" height="15" uuid="20d210ae-977d-4900-8749-71d23632c83b"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Total Litros: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="100" width="90" height="20" uuid="ad6f155a-64bd-4ad3-9e5b-067348e52bff"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total : ]]></text>
+			</staticText>
+			<textField pattern="$ #,##0.###">
+				<reportElement x="470" y="100" width="98" height="20" uuid="9f091660-d125-4427-9da9-d41d10f5c7db"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="130" width="570" height="15" uuid="0b140b93-8702-4771-89d5-7313d67f4103"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contabilidad ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="146" width="570" height="1" uuid="67966671-3729-4d01-a978-eb1ef99ce6cb"/>
+			</line>
+			<textField>
+				<reportElement x="80" y="150" width="220" height="15" uuid="e279bb05-3b79-4428-b334-2cae22e4539a"/>
+				<textFieldExpression><![CDATA[$F{cuenta_mayor_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="150" width="80" height="15" uuid="567eb554-02df-441e-b7c2-e9b546435143"/>
+				<text><![CDATA[Cuenta Mayor :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="170" width="80" height="15" uuid="746e845b-245f-4894-8a11-4c7baf4d7546"/>
+				<text><![CDATA[Banco :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="170" width="220" height="15" uuid="3860b840-081d-4686-8498-109ee94dddb6"/>
+				<textFieldExpression><![CDATA[$F{banco_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="200" width="80" height="15" uuid="2dc2c8a7-8aea-4117-ab9d-0d804d9e3735"/>
+				<text><![CDATA[N° Cuenta :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="200" width="220" height="15" uuid="7b2651bf-04d2-4c80-a644-53197c7cb4ed"/>
+				<textFieldExpression><![CDATA[$F{cuenta_bancaria_numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="185" width="80" height="15" uuid="8cfaceee-c84d-478e-89ff-38ce98b3f14e"/>
+				<text><![CDATA[Detalle Cuenta :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="185" width="220" height="15" uuid="10d6bb3d-ec4b-42da-a85b-54fedfa07638"/>
+				<textFieldExpression><![CDATA[$F{cuenta_bancaria_nombre_titular}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="230" width="80" height="15" uuid="4962cfed-72bb-47f9-a3ba-f6f9a54f7a30"/>
+				<text><![CDATA[N° Cheque :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="230" width="220" height="15" uuid="6c6ab0fa-42ff-45a6-99fe-de29b3ed85e0"/>
+				<textFieldExpression><![CDATA[$F{movimiento_mes_numero_documento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.###">
+				<reportElement x="30" y="105" width="64" height="15" uuid="8d219b76-0676-46ce-a0c1-ceb3d72e1111"/>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_base_afecta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="105" width="30" height="15" uuid="187afbeb-cd4c-4199-8ee7-ac5c6ac23764"/>
+				<text><![CDATA[Neto :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="105" width="39" height="15" uuid="2bff7e20-4f9c-4ae6-b5ac-2a77906f1a2a"/>
+				<text><![CDATA[IEF :]]></text>
+			</staticText>
+			<textField pattern="$ #,##0.###">
+				<reportElement x="134" y="105" width="50" height="15" uuid="18b1b875-eb89-43ab-a18f-0bc0000ac9c1"/>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_ief}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="184" y="105" width="31" height="15" uuid="a3d5bf06-3f8c-4e1f-84fd-1a04c7bc81b6"/>
+				<text><![CDATA[IEV :]]></text>
+			</staticText>
+			<textField pattern="$ #,##0.###">
+				<reportElement x="215" y="105" width="64" height="15" uuid="094e2b14-41cf-477b-934f-96e5c4d9651d"/>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_iev}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="105" width="31" height="15" uuid="e969a729-b215-4581-a2ca-aae1b099b155"/>
+				<text><![CDATA[IVA :]]></text>
+			</staticText>
+			<textField pattern="$ #,##0.###">
+				<reportElement x="310" y="105" width="50" height="15" uuid="a5d414bf-7af9-4fc8-89fd-35af2351e358"/>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_iva}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="62" width="40" height="15" uuid="898b0e3e-9853-4086-938b-d427f6571e84"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Folio : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="62" width="100" height="15" uuid="f14903da-69fc-493b-afb8-914bd57fd3b8"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_folio}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="360" y="290" width="160" height="1" uuid="451fd727-4b0d-469f-9546-6be1e80f1b3d"/>
+			</line>
+			<staticText>
+				<reportElement x="410" y="291" width="78" height="15" uuid="f2993f28-6226-4b42-b5af-1174651c0664"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Firma y Timbre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="77" width="72" height="15" uuid="88dc81f6-6ea1-4974-932b-850b7f5a868f"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Surtidor N° 1: ]]></text>
+			</staticText>
+			<textField pattern="#,###.###">
+				<reportElement x="192" y="77" width="58" height="15" uuid="6b10e1d6-1b16-41ea-9fd4-ddc927a24206"/>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_surtidor_n1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="77" width="72" height="15" uuid="00eee70f-4161-412f-9b01-ef8ae85a2296"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Surtidor N° 2: ]]></text>
+			</staticText>
+			<textField pattern="#,###.###">
+				<reportElement x="322" y="77" width="68" height="15" uuid="4bf091ee-7831-4fbc-bb18-f5fbfe91ba97"/>
+				<textFieldExpression><![CDATA[$F{compra_petroleo_surtidor_n2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

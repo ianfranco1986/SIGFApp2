@@ -386,7 +386,9 @@ public class FacturaController extends AbstractController<Factura> {
 
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap();
-        this.finalID = this.getSelected().getFacturaId();
+        if (this.getSelected().getFacturaId() != null) {
+            this.finalID = this.getSelected().getFacturaId();
+        }
         map.put("factura_id", finalID);
         return map;
     }
