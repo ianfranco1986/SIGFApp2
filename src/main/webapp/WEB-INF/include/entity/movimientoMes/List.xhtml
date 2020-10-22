@@ -105,7 +105,7 @@
                 </p:inputNumber>
 
                 <p:outputLabel/>
-                <p:commandButton value="Agregar" actionListener="#{movimientoMesController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, detalleCartolaNumeroDocumento, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                <p:commandButton value="Agregar" actionListener="#{movimientoMesController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                 </p:commandButton>
             </p:panelGrid>
