@@ -15,7 +15,7 @@
             <h5 style="text-align: center;">Periodo</h5>
             <p:panelGrid columns="8" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
                 <h:outputLabel for="tipo" value="Tipo:" />
-                <p:selectOneMenu id="tipo" value="#{movimientoMesController.tipo}" style="width:125px">
+                <p:selectOneMenu id="tipo" value="#{movimientoMesCuotasController.tipo}" style="width:125px">
                     <f:selectItem itemLabel="Egresos" itemValue="1" />
                     <f:selectItem itemLabel="Ingresos" itemValue="2" />
                 </p:selectOneMenu>
@@ -23,7 +23,7 @@
 
 
                 <h:outputLabel for="mes" value="Mes:" />
-                <p:selectOneMenu id="mes" value="#{movimientoMesController.mes}" style="width:125px">
+                <p:selectOneMenu id="mes" value="#{movimientoMesCuotasController.mes}" style="width:125px">
                     <f:selectItem itemLabel="Enero" itemValue="1" />
                     <f:selectItem itemLabel="Febrero" itemValue="2" />
                     <f:selectItem itemLabel="Marzo" itemValue="3" />
@@ -40,9 +40,9 @@
 
 
                 <h:outputLabel for="anio" value="Año:" />
-                <p:inputText id="anio" value="#{movimientoMesController.anio}" size="5" />
+                <p:inputText id="anio" value="#{movimientoMesCuotasController.anio}" size="5" />
 
-                <p:commandButton value="Buscar" actionListener="#{movimientoMesController.load}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, DetalleCartolaCreateForm2:movimiento, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
+                <p:commandButton value="Buscar" actionListener="#{movimientoMesCuotasController.load}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, DetalleCartolaCreateForm2:movimiento, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
 
                 </p:commandButton>
 
@@ -52,60 +52,63 @@
     </h:form>
     <h:form id="DetalleCartolaCreateForm2" >
         <p:panel id="registro" >
-            <h3 style="text-align: center;">Registro de Movimientos</h3>
+            <h3 style="text-align: center;">Registro de Movimientos x Cuotas</h3>
             <p:focus context="movimiento"/>
             <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
 
-                <h:outputLabel for="liqui" value="Liquidación" />
-                <p:datePicker id="liqui" view="month" value="#{movimientoMesController.fechaLiquidacion}" pattern="MM/yyyy" yearNavigator="true" yearRange="2019:2020" locale="es">
+                <h:outputLabel for="liqui" value="Fecha Liquidación Inicial" />
+                <p:datePicker id="liqui" view="month" value="#{movimientoMesCuotasController.fechaLiquidacion}" pattern="MM/yyyy" yearNavigator="true" yearRange="2019:2020" locale="es">
                     <p:tooltip id="toolliqui" for="liqui" value="Seleccione el Mes de la Liquidación" position="top"/>
                 </p:datePicker>
 
-                <p:outputLabel value="Fecha" for="detalleCartolaFechaMovimiento" />
-                <p:calendar id="detalleCartolaFechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{movimientoMesController.fechaMovimiento}" required="true" requiredMessage="Debe ingresar la fecha del movimiento" >
+                <p:outputLabel value="Fecha Movto Inicial" for="detalleCartolaFechaMovimiento" />
+                <p:calendar id="detalleCartolaFechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{movimientoMesCuotasController.fechaMovimiento}" required="true" requiredMessage="Debe ingresar la fecha del movimiento" >
                     <p:tooltip id="tooldetalleCartolaFechaMovimiento" for="detalleCartolaFechaMovimiento" value="Seleccione la fecha del Movimiento" position="top"/>
                 </p:calendar>
 
-                <p:outputLabel value="Empresa" for="empresa" />
+                <p:outputLabel value="Empresa(s)" for="multipleEmpresas" />
                 <h:panelGroup>
-                    <p:selectOneMenu id="empresa" value="#{movimientoMesController.empresa}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                        <f:selectItems value="#{movimientoMesController.empresaItems}"
-                                       var="busIdEmpresaItem"
-                                       itemValue="#{busIdEmpresaItem}"
-                                       itemLabel="#{busIdEmpresaItem.empresaNombre} (#{busIdEmpresaItem.empresaId})"
-                                       />
-                    </p:selectOneMenu>
-                    <p:tooltip id="toolempresa" for="empresa" value="Seleccione la empresa a la que se realizará el movimiento" position="top"/>
+                    <p:selectCheckboxMenu id="multipleEmpresas" value="#{movimientoMesCuotasController.selectedEmpresa}"
+                                          label="Seleccionar" 
+                                          multiple="true" 
+                                          converter="omnifaces.SelectItemsConverter" 
+                                          filter="true" 
+                                          filterMatchMode="contains" 
+                                          panelStyle="width:250px"
+                                          immediate="true" >
+                        <f:selectItems value="#{movimientoMesCuotasController.empresaItems}" 
+                                       var="empresa"
+                                       itemValue="#{empresa}"
+                                       itemLabel="#{empresa.empresaNombre} (#{empresa.empresaId}) "/>
+                    </p:selectCheckboxMenu>
+                    <p:tooltip id="toolempresa" for="multipleEmpresas" value="Seleccione un o más empresas a las que se realizará el movimiento" position="top"/>
                 </h:panelGroup>
 
 
                 <p:outputLabel value="Movimiento" for="movimiento" />
                 <h:panelGroup>
-                    <p:selectOneMenu id="movimiento" value="#{movimientoMesController.tipoMovimiento}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
+                    <p:selectOneMenu id="movimiento" value="#{movimientoMesCuotasController.tipoMovimiento}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                        <f:selectItems value="#{movimientoMesController.tipoMovimientoItems}"
+                        <f:selectItems value="#{movimientoMesCuotasController.tipoMovimientoItems}"
                                        var="mov"
                                        itemValue="#{mov}"
                                        itemLabel="#{mov.tipoMovimientoNombre}"
                                        />
-                        <p:ajax event="valueChange" update="monto" listener="#{movimientoMesController.handleMovimientoChange()}"/>
+                        <p:ajax event="valueChange" update="monto" listener="#{movimientoMesCuotasController.handleMovimientoChange()}"/>
                     </p:selectOneMenu>
                     <p:tooltip id="toolmovimiento" for="movimiento" value="Seleccione el tipo de movimiento" position="top"/>
                 </h:panelGroup>
 
-
-                <p:outputLabel value="Detalle" for="detalleCartolaDescripcion" />
-                <p:inputText id="detalleCartolaDescripcion" autocomplete="off" value="#{movimientoMesController.selected.movimientoMesDetalle}" required="true" requiredMessage="Debe ingresar la descripción del movimiento" size="30" maxlength="100" onfocus="this.setSelectionRange(0, this.value.length)">
-                    <p:tooltip id="tooldetalleCartolaDescripcion" for="detalleCartolaDescripcion" value="Ingrese una descripción" position="top"/>
-                </p:inputText>
-
                 <p:outputLabel value="Monto" for="monto" />
-                <p:inputNumber id="monto" decimalPlaces="0" value="#{movimientoMesController.selected.movimientoMesMonto}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                <p:inputNumber id="monto" decimalPlaces="0" value="#{movimientoMesCuotasController.selected.movimientoMesMonto}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
+                </p:inputNumber>
+                
+                <p:outputLabel value="N° de Cuotas" for="cuotas" />
+                <p:inputNumber id="cuotas" decimalPlaces="0" value="#{movimientoMesCuotasController.numeroCuotas}" required="true" requiredMessage="Valor mínimo 0" size="10" onfocus="this.setSelectionRange(0, this.value.length)">
                 </p:inputNumber>
 
                 <p:outputLabel/>
-                <p:commandButton value="Agregar" actionListener="#{movimientoMesController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, detalleCartolaNumeroDocumento, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                <p:commandButton value="Agregar" actionListener="#{movimientoMesCuotasController.saveNew}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                     <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                 </p:commandButton>
             </p:panelGrid>
@@ -117,12 +120,12 @@
         <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola">
             <h3>Detalle Movimientos</h3>
             <p:dataTable id="datalist"
-                         value="#{movimientoMesController.model}"
+                         value="#{movimientoMesCuotasController.model}"
                          lazy="false"
                          rowKey="#{item.movimientoMesId}"
                          var="item"                         
                          selectionMode="single"
-                         selection="#{movimientoMesController.selected}"
+                         selection="#{movimientoMesCuotasController.selected}"
                          widgetVar="datalistWidget"
                          rowIndexVar="rowIndex" 
                          emptyMessage="No se han encontrado registros" 
@@ -132,11 +135,11 @@
                          To enable Lazy Loading, please copy/replace the following lines above,
                          and be sure to replace the word HASH with the # symbol:
                 
-                         value="HASH{movimientoMesController.lazyItems}"
+                         value="HASH{movimientoMesCuotasController.lazyItems}"
                          lazy="true"
                          rowKey="HASH{item.detalleCartolaId}"  <<< Remove this line
                 -->
-                <p:ajax event="rowEdit" listener="#{movimientoMesController.onRowEdit}" update=":growl" />
+                <p:ajax event="rowEdit" listener="#{movimientoMesCuotasController.onRowEdit}" update=":growl" />
 
 
                 <p:column>
@@ -182,6 +185,7 @@
 
                 </p:column>
 
+
                 <p:column sortBy="#{item.movimientoMesEmpresaId.empresaNombre}" filterBy="#{item.movimientoMesEmpresaId.empresaNombre}" filterMatchMode="contains">
                     <f:facet name="header">
                         <h:outputText value="Empresa"/>
@@ -193,7 +197,7 @@
                         <f:facet name="input">
                             <p:selectOneMenu id="empresa2" value="#{item.movimientoMesEmpresaId}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
                                 <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                <f:selectItems value="#{movimientoMesController.empresaItems}"
+                                <f:selectItems value="#{movimientoMesCuotasController.empresaItems}"
                                                var="busIdEmpresaItem"
                                                itemValue="#{busIdEmpresaItem}"
                                                itemLabel="#{busIdEmpresaItem.empresaNombre} (#{busIdEmpresaItem.empresaId})"
@@ -214,7 +218,7 @@
                         </f:facet>
                         <f:facet name="input">
                             <p:selectOneMenu id="mov2" value="#{item.movimientoMesMvtoId}" required="true" requiredMessage="Debe seleccionar el Movimiento" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{movimientoMesController.tipoMovimientoItems}"
+                                <f:selectItems value="#{movimientoMesCuotasController.tipoMovimientoItems}"
                                                var="mov"
                                                itemValue="#{mov}"
                                                itemLabel="#{mov.tipoMovimientoNombre}"
@@ -282,8 +286,8 @@
                 </p:column>
 
                 <p:column style="width:45px;text-align: center">
-                    <p:commandButton update="DetalleCartolaListForm:detalleCartola, DetalleCartolaListForm:datalist, :growl" icon="fa fa-trash" actionListener="#{movimientoMesController.delete}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <f:setPropertyActionListener value="#{item}" target="#{movimientoMesController.selected}"  />
+                    <p:commandButton update="DetalleCartolaListForm:detalleCartola, DetalleCartolaListForm:datalist, :growl" icon="fa fa-trash" actionListener="#{movimientoMesCuotasController.delete}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <f:setPropertyActionListener value="#{item}" target="#{movimientoMesCuotasController.selected}"  />
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
                     </p:commandButton>
                 </p:column>

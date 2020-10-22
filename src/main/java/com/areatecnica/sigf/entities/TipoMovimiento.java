@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "tipo_movimiento", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoMovimiento.findAll", query = "SELECT t FROM TipoMovimiento t")
+    @NamedQuery(name = "TipoMovimiento.findAll", query = "SELECT t FROM TipoMovimiento t ORDER BY t.tipoMovimientoNombre ASC")
     , @NamedQuery(name = "TipoMovimiento.findByTipoMovimientoId", query = "SELECT t FROM TipoMovimiento t WHERE t.tipoMovimientoId = :tipoMovimientoId")
-    , @NamedQuery(name = "TipoMovimiento.findByTipoMovimientoAbono", query = "SELECT t FROM TipoMovimiento t WHERE t.tipoMovimientoAbono = 1")
-    , @NamedQuery(name = "TipoMovimiento.findByTipoMovimientoDescuento", query = "SELECT t FROM TipoMovimiento t WHERE t.tipoMovimientoDescuento = 1")
+    , @NamedQuery(name = "TipoMovimiento.findByTipoMovimientoAbono", query = "SELECT t FROM TipoMovimiento t WHERE t.tipoMovimientoAbono = 1 ORDER BY t.tipoMovimientoNombre")
+    , @NamedQuery(name = "TipoMovimiento.findByTipoMovimientoDescuento", query = "SELECT t FROM TipoMovimiento t WHERE t.tipoMovimientoDescuento = 1 ORDER BY t.tipoMovimientoNombre")
     , @NamedQuery(name = "TipoMovimiento.findByTipoMovimientoNombre", query = "SELECT t FROM TipoMovimiento t WHERE t.tipoMovimientoNombre = :tipoMovimientoNombre")
     , @NamedQuery(name = "TipoMovimiento.findByTipoMovimientoMontoDefecto", query = "SELECT t FROM TipoMovimiento t WHERE t.tipoMovimientoMontoDefecto = :tipoMovimientoMontoDefecto")})
 public class TipoMovimiento implements Serializable {

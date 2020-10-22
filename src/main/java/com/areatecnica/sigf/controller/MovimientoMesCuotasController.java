@@ -14,6 +14,7 @@ import com.areatecnica.sigf.models.MovimientoMesDataModel;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,11 +25,12 @@ import javax.faces.event.ActionEvent;
 import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
-@Named(value = "movimientoMesController")
+@Named(value = "movimientoMesCuotasController")
 @ViewScoped
-public class MovimientoMesController extends AbstractController<MovimientoMes> {
+public class MovimientoMesCuotasController extends AbstractController<MovimientoMes> {
 
     private List<Empresa> empresaItems;
+    private List<Empresa> selectedEmpresa;
     private List<CuentaBancaria> cuentaItems;
     private List<MovimientoMes> items;
     private List<TipoMovimiento> tipoMovimientoItems;
@@ -46,6 +48,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     private int totalAbonos = 0;
     private int totalDescuentos = 0;
     private int tipo;
+    private int numeroCuotas = 0;
     private Date fecha;
     private Date desde;
     private Date hasta;
@@ -56,7 +59,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     private NumberFormat nf = NumberFormat.getInstance();
 
-    public MovimientoMesController() {
+    public MovimientoMesCuotasController() {
         // Inform the Abstract parent controller of the concrete MovimientoMes Entity
         super(MovimientoMes.class);
     }
@@ -70,6 +73,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
 
         this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findALL();
         //this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
+
         this.cuentaBancaria = new ICuentaBancariaDaoImpl().findById(8);
 
         Calendar cal = Calendar.getInstance();
@@ -77,7 +81,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         this.anio = cal.get(Calendar.YEAR);
         this.fechaMovimiento = new Date();
         this.fechaLiquidacion = new Date();
-        this.documento = 0; 
+        this.documento = 0;
         this.fecha = new Date();
         setFecha();
         this.desde = this.fecha;
@@ -215,22 +219,52 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
 
     public void saveNew(ActionEvent event) {
         if (this.getSelected() != null) {
-            this.getSelected().setMovimientoMesMvtoId(tipoMovimiento);
-            this.getSelected().setMovimientoMesFechaLiquidacion(fechaLiquidacion);
-            this.getSelected().setMovimientoMesFechaMvto(fechaMovimiento);
-            this.getSelected().setMovimientoMesCuentaBancoId(cuentaBancaria);
-            this.getSelected().setMovimientoMesNumeroDocumento(documento);
-            this.getSelected().setMovimientoMesEmpresaId(empresa);
-            new IMovimientoMesDaoImpl().create(this.getSelected());
+            if (this.numeroCuotas != 0) {
+                if (!this.selectedEmpresa.isEmpty()) {
+                    for (Empresa e : this.selectedEmpresa) {
 
-            this.items.add(this.getSelected());
+                        DateTime fechaL = new DateTime(this.fechaLiquidacion);
+                        DateTime fechaM = new DateTime(this.fechaMovimiento);
 
-            MovimientoMes _aux = this.getSelected();
+                        MovimientoMes movEmpresa = new MovimientoMes();
 
-            this.setSelected(prepareCreate(event));
-            this.getSelected().setMovimientoMesNumeroDocumento(documento + 1);
-            this.documento = this.documento + 1;
-            JsfUtil.addSuccessMessage("Se ha registrado un movimiento");
+                        for (int i = 0; i < this.numeroCuotas; i++) {
+
+                            movEmpresa.setMovimientoMesMvtoId(tipoMovimiento);
+                            movEmpresa.setMovimientoMesFechaLiquidacion(fechaL.plusMonths(i).toDate());
+                            movEmpresa.setMovimientoMesFechaMvto(fechaM.plusMonths(i).toDate());
+                            movEmpresa.setMovimientoMesCuentaBancoId(cuentaBancaria);
+                            movEmpresa.setMovimientoMesNumeroDocumento(documento);
+                            movEmpresa.setMovimientoMesMonto(this.getSelected().getMovimientoMesMonto());
+                            movEmpresa.setMovimientoMesDetalle(tipoMovimiento.getTipoMovimientoNombre() + " (cuota " + (i + 1) + " de " + this.numeroCuotas + ")");
+                            movEmpresa.setMovimientoMesEmpresaId(e);
+
+                            new IMovimientoMesDaoImpl().create(movEmpresa);
+
+                            this.items.add(movEmpresa);
+
+                            movEmpresa = new MovimientoMes();
+
+                            //this.setSelected(prepareCreate(event));
+                            //this.getSelected().setMovimientoMesNumeroDocumento(documento + 1);
+                            //this.documento = this.documento + 1;
+                            //JsfUtil.addSuccessMessage("Se ha registrado un movimiento");
+                        }
+                    }
+
+                    JsfUtil.addSuccessMessage("Se han ingresado los registros");
+                    this.setSelected(prepareCreate(null));
+                    this.setSelectedEmpresa(new ArrayList<>());
+                    this.tipoMovimiento = null; 
+                    this.numeroCuotas = 0; 
+
+                } else {
+                    JsfUtil.addErrorMessage("Debe seleccionar al menos una empresa");
+                }
+
+            } else {
+                JsfUtil.addErrorMessage("Debe ingresar un número de cuotas mayor a 0");
+            }
 
         } else {
             JsfUtil.addErrorMessage("Ocurrió un error al guardar el registro");
@@ -265,6 +299,22 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
 
             this.documento = this.movimientoDocumento.getMovimientoMesNumeroDocumento() + 1;
         }
+    }
+
+    public void setNumeroCuotas(int numeroCuotas) {
+        this.numeroCuotas = numeroCuotas;
+    }
+
+    public int getNumeroCuotas() {
+        return numeroCuotas;
+    }
+
+    public void setSelectedEmpresa(List<Empresa> selectedEmpresa) {
+        this.selectedEmpresa = selectedEmpresa;
+    }
+
+    public List<Empresa> getSelectedEmpresa() {
+        return selectedEmpresa;
     }
 
     public void setTipo(int tipo) {

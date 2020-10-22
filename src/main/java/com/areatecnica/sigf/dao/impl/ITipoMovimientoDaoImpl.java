@@ -30,6 +30,15 @@ public class ITipoMovimientoDaoImpl extends GenericDAOImpl<TipoMovimiento> imple
         }
     }
     
+    public List<TipoMovimiento> findALL() {
+        try {
+            return this.entityManager.createNamedQuery("TipoMovimiento.findAll").
+                    getResultList();
+        } catch (NoResultException ne) {
+            return new ArrayList<>();
+        }
+    }
+    
     @Override
     public List<TipoMovimiento> findByIngreso() {
         try {
