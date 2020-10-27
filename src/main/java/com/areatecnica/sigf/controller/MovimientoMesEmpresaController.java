@@ -19,7 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -49,6 +51,7 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
     private int anio;
     private int totalAbonos = 0;
     private int totalDescuentos = 0;
+    private int saldo = 0;
     private int tipo;
     private int numeroCuotas = 0;
 
@@ -66,6 +69,8 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
     private DateTime dateTime;
+
+    private String informe = "inf-liquidacion_empresa_grupal";
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     private NumberFormat nf = NumberFormat.getInstance();
@@ -130,8 +135,6 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
 
             this.totalIngresos = this.administracion + this.cuotaExtra + this.imposiciones + this.boletos + this.minutos;
 
-            System.err.println("la administración total es :" + this.administracion + " entre el (from): " + sdf.format(desde) + " y el (to): " + sdf.format(hasta));
-
             this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
 
             this.model = new MovimientoMesDataModel(items);
@@ -139,8 +142,9 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
                 JsfUtil.addWarningMessage("No se han encontrado movimientos ");
             } else {
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
-
             }
+
+            getTotals();
 
         }
     }
@@ -210,6 +214,92 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
                     this.totalDescuentos = this.totalDescuentos + m.getMovimientoMesMonto();
                 }
             }
+        }
+
+        this.saldo = (this.totalIngresos + this.totalAbonos) - this.totalDescuentos;
+
+    }
+
+    public void next() {
+        if (this.empresa != null) {
+            int idx = this.empresaItems.indexOf(this.empresa);
+
+            if ((idx + 1) != this.empresaItems.size()) {
+                this.empresa = this.empresaItems.get(idx + 1);
+
+                setFecha();
+                if (this.fecha != null) {
+
+                    this.administracion = new IRecaudacionGuiaDaoImpl().findByEgreso(this.desde, this.hasta, this.empresa, 1);
+                    this.cuotaExtra = new IRecaudacionGuiaDaoImpl().findByEgreso(this.desde, this.hasta, this.empresa, 2);
+                    this.imposiciones = new IRecaudacionGuiaDaoImpl().findByEgreso(this.desde, this.hasta, this.empresa, 3);
+                    this.boletos = new IRecaudacionGuiaDaoImpl().findByEgreso(this.desde, this.hasta, this.empresa, 4);
+
+                    int auxMinutos = new IRecaudacionMinutoDaoImpl().findMinutosRecibidos(this.empresa, this.desde, this.hasta);
+
+                    this.minutos = (auxMinutos > 0 ? (auxMinutos - (auxMinutos / 5000 * 550)) : 0);
+
+                    this.totalIngresos = this.administracion + this.cuotaExtra + this.imposiciones + this.boletos + this.minutos;
+
+                    this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+
+                    this.model = new MovimientoMesDataModel(items);
+                    if (this.items.isEmpty()) {
+                        JsfUtil.addWarningMessage("No se han encontrado movimientos ");
+                    } else {
+                        JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
+                    }
+
+                    getTotals();
+
+                }
+            } else {
+                JsfUtil.addErrorMessage("No existen más empresas a la derecha");
+            }
+        } else {
+            JsfUtil.addErrorMessage("No ha seleccionado ninguna empresa");
+        }
+    }
+
+    public void previous() {
+        if (this.empresa != null) {
+            int idx = this.empresaItems.indexOf(this.empresa);
+
+            if ((idx) != 0) {
+                this.empresa = this.empresaItems.get(idx - 1);
+
+                setFecha();
+                if (this.fecha != null) {
+
+                    this.administracion = new IRecaudacionGuiaDaoImpl().findByEgreso(this.desde, this.hasta, this.empresa, 1);
+                    this.cuotaExtra = new IRecaudacionGuiaDaoImpl().findByEgreso(this.desde, this.hasta, this.empresa, 2);
+                    this.imposiciones = new IRecaudacionGuiaDaoImpl().findByEgreso(this.desde, this.hasta, this.empresa, 3);
+                    this.boletos = new IRecaudacionGuiaDaoImpl().findByEgreso(this.desde, this.hasta, this.empresa, 4);
+
+                    int auxMinutos = new IRecaudacionMinutoDaoImpl().findMinutosRecibidos(this.empresa, this.desde, this.hasta);
+
+                    this.minutos = (auxMinutos > 0 ? (auxMinutos - (auxMinutos / 5000 * 550)) : 0);
+
+                    this.totalIngresos = this.administracion + this.cuotaExtra + this.imposiciones + this.boletos + this.minutos;
+
+                    this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+
+                    this.model = new MovimientoMesDataModel(items);
+                    if (this.items.isEmpty()) {
+                        JsfUtil.addWarningMessage("No se han encontrado movimientos ");
+                    } else {
+                        JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
+                    }
+
+                    getTotals();
+
+                }
+            } else {
+                JsfUtil.addErrorMessage("No existen más empresas a la izquierda");
+            }
+
+        } else {
+            JsfUtil.addErrorMessage("No ha seleccionado ninguna empresa");
         }
     }
 
@@ -312,6 +402,83 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
 
             this.documento = this.movimientoDocumento.getMovimientoMesNumeroDocumento() + 1;
         }
+    }
+
+    public Map<String, Object> getMap() {
+        Map<String, Object> map = new HashMap();
+        if (this.empresa != null) {
+            String list = "";
+
+            list = String.valueOf(empresa.getEmpresaId());
+
+            map.put("fechaCompleta", getFechaCompleta());
+            map.put("desde", desde);
+            map.put("hasta", hasta);
+            map.put("list", list);
+        }
+
+        return map;
+    }
+
+    private String getFechaCompleta() {
+        String fechaCompleta = "";
+        switch (mes) {
+            case 1:
+                fechaCompleta = "Enero ";
+                break;
+            case 2:
+                fechaCompleta = "Febrero ";
+                break;
+            case 3:
+                fechaCompleta = "Marzo ";
+                break;
+            case 4:
+                fechaCompleta = "Abril ";
+                break;
+            case 5:
+                fechaCompleta = "Mayo ";
+                break;
+            case 6:
+                fechaCompleta = "Junio ";
+                break;
+            case 7:
+                fechaCompleta = "Julio ";
+                break;
+            case 8:
+                fechaCompleta = "Agosto ";
+                break;
+            case 9:
+                fechaCompleta = "Septiembre ";
+                break;
+            case 10:
+                fechaCompleta = "Octubre ";
+                break;
+            case 11:
+                fechaCompleta = "Noviembre ";
+                break;
+            case 12:
+                fechaCompleta = "Diciembre ";
+                break;
+
+        }
+
+        return fechaCompleta + " " + anio;
+    }
+
+    public String getInforme() {
+        return informe;
+    }
+
+    public void setInforme(String informe) {
+        this.informe = informe;
+    }
+
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
+    }
+
+    public int getSaldo() {
+        return saldo;
     }
 
     public void setNumeroCuotas(int numeroCuotas) {

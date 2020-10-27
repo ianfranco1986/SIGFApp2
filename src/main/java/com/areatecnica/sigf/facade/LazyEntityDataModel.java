@@ -30,7 +30,7 @@ public class LazyEntityDataModel<T> extends LazyDataModel<T> {
      * @param filters
      * @return
      */
-    @Override
+    
     public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         if (this.facade != null) { // Handle data that needs to be retrieved from the data back-end of the application
 
@@ -78,7 +78,6 @@ public class LazyEntityDataModel<T> extends LazyDataModel<T> {
      * @param filters
      * @return
      */
-    @Override
     public List<T> load(int first, int pageSize, List<SortMeta> multiSortMeta, Map<String, Object> filters) {
         // Turn sort info into a linked hash map for the facade
         HashMap<String, String> sortFields = new LinkedHashMap<>();

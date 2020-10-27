@@ -27,7 +27,7 @@
 
 
                 <h:outputLabel for="mes" value="Mes:" />
-                <p:selectOneMenu id="mes" value="#{movimientoMesEmpresaController.mes}" style="width:125px">
+                <p:selectOneMenu id="mes" value="#{movimientoMesEmpresaController.mes}" style="width:115px">
                     <f:selectItem itemLabel="Enero" itemValue="1" />
                     <f:selectItem itemLabel="Febrero" itemValue="2" />
                     <f:selectItem itemLabel="Marzo" itemValue="3" />
@@ -56,42 +56,79 @@
     </h:form>
     <h:form id="DetalleCartolaCreateForm2" >
         <p:panel id="registro" >
-            <h3 style="text-align: center;">Resumen: #{movimientoMesEmpresaController.empresa.empresaNombre}</h3>
-            <p:panelGrid columns="2" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
-
-                <h:outputLabel value="Aporte Administración ($)" />
-                <h:outputLabel value="#{movimientoMesEmpresaController.administracion}" >
+            <h3>Resumen: #{movimientoMesEmpresaController.empresa.empresaNombre}</h3>
+            <p:separator/>
+            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank"  >
+                <h:outputLabel for="textB1" value="Administración" style="font-size: 15px;"/>
+                <h:outputLabel id="textB1" value="#{movimientoMesEmpresaController.administracion}" style="font-size: 15px;" >
                     <f:convertNumber />
                 </h:outputLabel>
 
-                <p:outputLabel value="Aporte Cuotas Extras ($)" />
-                <h:outputLabel value="#{movimientoMesEmpresaController.cuotaExtra}" >
+                <h:outputLabel value="Total Ingresos" style="font-size: 15px;"/>
+                <h:outputLabel value="#{movimientoMesEmpresaController.totalIngresos}" style="font-size: 15px;">
                     <f:convertNumber />
                 </h:outputLabel>
 
-                <p:outputLabel value="Imposiciones ($)" />
-                <h:outputLabel value="#{movimientoMesEmpresaController.imposiciones}" >
+                <h:outputLabel for="textB2" value="Cuota Extra" style="font-size: 15px;"/>
+                <h:outputLabel id="textB2" value="#{movimientoMesEmpresaController.cuotaExtra}" style="font-size: 15px;" >
                     <f:convertNumber />
                 </h:outputLabel>
 
-                <p:outputLabel value="Dev. Boletos ($)" />
-                <h:outputLabel value="#{movimientoMesEmpresaController.boletos}" >
+                <h:outputLabel value="Total Abonos" style="font-size: 15px;"/>
+                <h:outputLabel value="#{movimientoMesEmpresaController.totalAbonos}" style="font-size: 15px;">
                     <f:convertNumber />
                 </h:outputLabel>
 
-                <p:outputLabel value="Minutos Recibidos ($)" />
-                <h:outputLabel value="#{movimientoMesEmpresaController.minutos}" >
+                <h:outputLabel for="dateB" value="Imposiciones" style="font-size: 15px;"/>
+                <h:outputLabel id="dateB" value="#{movimientoMesEmpresaController.imposiciones}" style="font-size: 15px;">
                     <f:convertNumber />
                 </h:outputLabel>
 
-                <p:outputLabel value="Total Ingresos ($)" />
-                <h:outputLabel value="#{movimientoMesEmpresaController.totalIngresos}" >
+                <h:outputLabel value="Total Cargos" style="font-size: 15px;" />
+                <h:outputLabel value="#{movimientoMesEmpresaController.totalDescuentos}" style="font-size: 15px;" >
                     <f:convertNumber />
                 </h:outputLabel>
+
+                <h:outputLabel for="checkboxB" value="Dev. Boletos" style="font-size: 15px;"/>
+                <h:outputLabel id="checkboxB" value="#{movimientoMesEmpresaController.boletos}" style="font-size: 15px;">
+                    <f:convertNumber />
+                </h:outputLabel>
+
+                <h:outputLabel value="Saldo" style="font-size: 15px;"/>
+                <h:outputLabel value="#{movimientoMesEmpresaController.saldo}" style="font-size: 15px;">
+                    <f:convertNumber />
+                </h:outputLabel>
+
+                <h:outputLabel for="text3B" value="Minutos Recibidos" style="font-size: 15px;"/>
+                <h:outputLabel id="text3B" value="#{movimientoMesEmpresaController.minutos}" style="font-size: 15px;">
+                    <f:convertNumber />
+                </h:outputLabel>
+
+                <h:outputLabel />
+                <h:outputLabel />
             </p:panelGrid>
-        </p:panel>
-        <p:blockUI block="registro" widgetVar="bui"/>
+            <p:separator/>
 
+            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
+
+                <h:outputLabel/>
+                <h:outputLabel/>
+
+                <h:panelGroup style="width: 100%">
+                    <p:commandButton value="Retroceder" actionListener="#{movimientoMesEmpresaController.previous()}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, Selector:empresa,  DetalleCartolaCreateForm2:registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
+
+                    </p:commandButton>
+
+                    <p:commandButton value="Avanzar" actionListener="#{movimientoMesEmpresaController.next()}" styleClass="btn btn-primary" update="DetalleCartolaListForm:detalleCartola, Selector:empresa,  DetalleCartolaCreateForm2:registro, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
+
+                    </p:commandButton>
+
+                    <h:commandLink id="link" value="Imprimir" actionListener="#{reportController.downloadFile(movimientoMesEmpresaController.informe, movimientoMesEmpresaController.map)}" target="blank"/>
+                </h:panelGroup>
+
+            </p:panelGrid>
+            <p:blockUI block="registro" widgetVar="bui"/>
+        </p:panel>
     </h:form>
     <h:form id="DetalleCartolaListForm">
         <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola">
