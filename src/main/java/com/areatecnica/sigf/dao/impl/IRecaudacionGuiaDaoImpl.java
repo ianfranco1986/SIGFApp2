@@ -10,7 +10,9 @@ import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.Egreso;
+import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.RecaudacionGuia;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,6 +66,27 @@ public class IRecaudacionGuiaDaoImpl extends GenericDAOImpl<RecaudacionGuia> imp
                     getResultList();
         } catch (NoResultException ne) {
             return null;
+        }
+    }
+
+    public int findByEgreso(Date from, Date to, Empresa empresa, int egreso) {
+        try {
+
+            BigDecimal aux = (BigDecimal) entityManager.createQuery("SELECT COALESCE(SUM(r.recaudacionGuiaMonto), 0) "
+                    + "FROM  RecaudacionGuia r "
+                    + "WHERE r.recaudacionGuiaIdGuia.guiaIdBus.busIdEmpresa = :empresa "
+                    + "AND r.recaudacionGuiaIdEgreso.egresoId = :egreso "
+                    + "AND r.recaudacionGuiaIdRecaudacion.recaudacionFecha "
+                    + "BETWEEN :from AND :to").
+                    setParameter("from", from).
+                    setParameter("to", to).
+                    setParameter("empresa", empresa).
+                    setParameter("egreso", egreso)
+                    .getSingleResult();
+            int xua = aux.intValue();
+            return xua;
+        } catch (NoResultException ne) {
+            return 0;
         }
     }
 

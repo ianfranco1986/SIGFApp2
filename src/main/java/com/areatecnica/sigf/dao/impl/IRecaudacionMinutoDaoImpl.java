@@ -9,8 +9,10 @@ import com.areatecnica.sigf.dao.IRecaudacionMinutoDao;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
+import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.RecaudacionMinuto;
 import com.areatecnica.sigf.entities.Terminal;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -125,5 +127,24 @@ public class IRecaudacionMinutoDaoImpl extends GenericDAOImpl<RecaudacionMinuto>
         }
     }
 
+    public int findMinutosRecibidos(Empresa empresa, Date from, Date to) {
+        try {// FROM RecaudacionMinuto r WHERE r.recaudacionMinutoIdRegistroMinuto.registroMinutoHastaIdBus = :registroMinutoHastaIdBus AND r.recaudacionMinutoIdRecaudacion.recaudacionFecha BETWEEN :from AND :to
+
+            BigDecimal aux = (BigDecimal) entityManager.createQuery("SELECT COALESCE(SUM(r.recaudacionMinutoMonto), 0) "
+                    + "FROM  RecaudacionMinuto r "
+                    + "WHERE r.recaudacionMinutoIdRegistroMinuto.registroMinutoHastaIdBus.busIdEmpresa = :empresa "
+                    + "AND r.recaudacionMinutoIdRecaudacion.recaudacionFecha "
+                    + "BETWEEN :from AND :to").
+                    setParameter("from", from).
+                    setParameter("to", to).
+                    setParameter("empresa", empresa)
+                    .getSingleResult();
+            int xua = aux.intValue();
+            return xua;
+        } catch (NoResultException ne) {
+            return 0;
+        }
+
+    }
 
 }
