@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="20" uuid="c9e9601b-a518-4a0a-9cc9-7efd1a40f7f1">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="284"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="711"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="desde" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -18,10 +23,10 @@
     b.bus_patente AS patentePaga,
     c.bus_numero AS numeroRecibe,
     c.bus_patente AS patenteRecibe,
-    sum(r.registro_minuto_monto) AS monto, 
-minutos_cobrados_bus($P{desde}, $P{hasta}, b.bus_id) AS cobrado, 
+   minutos_pagados_bus($P{desde}, $P{hasta}, c.bus_id) AS monto, 
+minutos_cobrados_bus($P{desde}, $P{hasta}, c.bus_id) AS cobrado, 
 
-(minutos_cobrados_bus($P{desde}, $P{hasta}, b.bus_id)-sum(r.registro_minuto_monto)) AS saldo
+(minutos_cobrados_bus($P{desde}, $P{hasta}, c.bus_id)-minutos_pagados_bus($P{desde}, $P{hasta}, c.bus_id) ) AS saldo
 FROM
 	recaudacion_minuto rm
 		LEFT JOIN 
@@ -33,7 +38,7 @@ FROM
         LEFT JOIN
     bus c ON r.registro_minuto_hasta_id_bus = c.bus_id
 WHERE
-    rr.recaudacion_fecha BETWEEN  $P{desde} AND $P{hasta}  AND   $X{IN, b.bus_id, list} GROUP BY b.bus_numero ORDER BY b.bus_numero ASC]]>
+    rr.recaudacion_fecha BETWEEN  $P{desde} AND $P{hasta}  AND   $X{IN, c.bus_id, list} GROUP BY c.bus_numero ORDER BY c.bus_numero ASC]]>
 	</queryString>
 	<field name="numeroPaga" class="java.lang.Long"/>
 	<field name="patentePaga" class="java.lang.String"/>
@@ -107,7 +112,7 @@ WHERE
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="50" y="0" width="100" height="15" uuid="3218ce63-c419-48c0-910b-0f4d9e7b0a35"/>
