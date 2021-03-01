@@ -9,16 +9,21 @@
 
 
     <h:form id="GuiaListForm" class="form-height">
-        <p:panel>
-            <f:facet name="header">
+        <div class="card">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-4">
+                    <p:staticMessage severity="info" summary="OBSERVACIÓN:" detail="Permite editar o eliminar los valores de Administración, C.Extra e Imposiciones. No se permite modificar boletos"/>
+                </div>
+            </div>
+        </div>
+        <p:panel id="resumen" style="padding-bottom: 20px;margin-top: 20px;">
+            <h3 style="text-align: center;">
                 Recaudación de Guías
-            </f:facet>
-            <p:panelGrid columns="9" style="width: 100%;margin-bottom: 10px;">
+            </h3>
 
-                <h:outputLabel value="F. Recaudación:" for="fecha" style="text-align: right;"/>
-                <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{recaudacionGuiaController.fecha}" title="#{myBundle.CreateGuiaTitle_guiaFecha}" required="true" requiredMessage="Debe seleccionar la fecha" locale="es"/>
+            <p:panelGrid columns="9" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank"  >
 
-                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
+                <h:outputLabel value="Caja" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionGuiaController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                     <f:selectItems value="#{recaudacionGuiaController.cajaRecaudacionItems}"
@@ -28,10 +33,15 @@
                                    />
                 </p:selectOneMenu>
 
-                <p:outputLabel value="Total: "/>
+                <h:outputLabel value="Fecha" for="fecha" style="text-align: right;"/>
+                <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{recaudacionGuiaController.fecha}" title="#{myBundle.CreateGuiaTitle_guiaFecha}" required="true" requiredMessage="Debe seleccionar la fecha" locale="es"/>
+
+
+
+                <p:outputLabel value="Total "/>
                 <p:outputLabel id="formatTotal" value="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalRecaudacion)}" />
 
-                <p:outputLabel value="N° de Recaudación: "/>
+                <p:outputLabel value="N° de Recaudación"/>
                 <p:outputLabel id="numeroRecaudacion" value="#{recaudacionGuiaController.itemsRecaudacion.size()>0?recaudacionGuiaController.itemsRecaudacion.size():0}"/>
 
 
@@ -87,38 +97,14 @@
                     <f:facet name="header">
                         <h:outputText value="N° Bus"/>
                     </f:facet>
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{item.guia.guiaIdBus.busNumero}"/></f:facet>
-                        <f:facet name="input">
-                            <p:selectOneMenu id="bus" value="#{item.guia.guiaIdBus}" style="width: 70%;" converter="omnifaces.SelectItemsConverter">
-
-                                <f:selectItems value="#{recaudacionGuiaController.busItems}"
-                                               var="bus"
-                                               itemValue="#{bus}"
-                                               itemLabel="#{bus.busNumero}"
-                                               />
-                            </p:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
+                    <h:outputText value="#{item.guia.guiaIdBus.busNumero}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.guia.guiaIdTrabajador.trabajadorCodigo}" style="text-align: center; " footerText="Total">
                     <f:facet name="header">
                         <h:outputText value="Trabajador"/>
                     </f:facet>
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{item.guia.guiaIdTrabajador.trabajadorCodigo}"/></f:facet>
-                        <f:facet name="input">
-                            <p:selectOneMenu id="conductor" value="#{item.guia.guiaIdTrabajador}" style="width: 70%;" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
-
-                                <f:selectItems  value="#{recaudacionGuiaController.trabajadorItems}"
-                                                var="busIdUnidadNegocioItem" 
-                                                itemValue="#{busIdUnidadNegocioItem}"
-                                                itemLabel="#{busIdUnidadNegocioItem.trabajadorApellidoPaterno} #{busIdUnidadNegocioItem.trabajadorApellidoMaterno} #{busIdUnidadNegocioItem.trabajadorNombres} (#{busIdUnidadNegocioItem.trabajadorCodigo})"
-                                                />
-                            </p:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
+                    <h:outputText value="#{item.guia.guiaIdTrabajador.trabajadorCodigo}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.administracion}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalAdministracion)}" >

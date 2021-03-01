@@ -4,6 +4,7 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
+import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.ITrabajadorDaoImpl;
@@ -11,6 +12,7 @@ import com.areatecnica.sigf.dao.impl.IVentaBoletoDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Egreso;
+import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.RecaudacionGuia;
 import com.areatecnica.sigf.entities.Trabajador;
 import com.areatecnica.sigf.entities.VentaBoleto;
@@ -23,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
 @Named(value = "ventaBoletoController")
@@ -44,6 +47,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
     private List<VentaBoleto> items;
     private List<Bus> busItems;
     private List<Trabajador> trabajadorItems;
+    private List<Guia> guiaItems;
     private VentaBoleto selectedItem;
     private VentaBoletoRecaudacionDataModel model;
     private Egreso boleto;
@@ -110,6 +114,8 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
 
                 this.totalRecaudacion = this.items.size();
 
+                this.guiaItems = new IGuiaDaoImpl().findBetweenFechaRecaudacion(new DateTime(this.fecha).minusDays(2).toDate(), this.fecha);
+                
             } else {
                 JsfUtil.addErrorMessage("No se han encontrado ventas ");
                 this.totalAdministracion = 0;
@@ -122,6 +128,10 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
             JsfUtil.addErrorMessage("Debe seleccionar la caja");
         }
 
+    }
+
+    public List<Guia> getGuiaItems() {
+        return guiaItems;
     }
 
     public void setSerie(int serie) {

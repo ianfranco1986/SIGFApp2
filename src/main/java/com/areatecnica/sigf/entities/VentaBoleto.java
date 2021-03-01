@@ -20,9 +20,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -38,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "VentaBoleto.findAll", query = "SELECT v FROM VentaBoleto v")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoId", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoId = :ventaBoletoId")
     , @NamedQuery(name = "VentaBoleto.findBySerie", query = "SELECT v FROM VentaBoleto v WHERE :inventarioCajaSerie BETWEEN v.ventaBoletoIdInventarioCaja.inventarioCajaSerie AND (v.ventaBoletoIdInventarioCaja.inventarioCajaSerie+1000) ")
+    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuiaBusBoleto", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus = :ventaBoletoIdBus AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto = :inventarioInternoIdBoleto ORDER BY v.ventaBoletoId DESC")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoFecha", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoFecha = :ventaBoletoFecha")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoFecha = :ventaBoletoFecha AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja ORDER BY v.ventaBoletoNumeroBoleta ASC")
     , @NamedQuery(name = "VentaBoleto.findByVentaBoletoNumeroBoleta", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoNumeroBoleta = :ventaBoletoNumeroBoleta")
@@ -86,7 +89,10 @@ public class VentaBoleto implements Serializable {
     @JoinColumn(name = "venta_boleto_id_trabajador", referencedColumnName = "trabajador_id", nullable = false)
     @ManyToOne(optional = false)
     private Trabajador ventaBoletoIdTrabajador;
-
+    @Transient
+    private Guia guia; 
+    
+    
     public VentaBoleto() {
     }
 
@@ -104,6 +110,11 @@ public class VentaBoleto implements Serializable {
         this.ventaBoletoFolioSolyMar = ventaBoletoFolioSolyMar;
     }
 
+    @PostUpdate
+    public void postUpdated(){
+        
+    }
+    
     public Integer getVentaBoletoId() {
         return ventaBoletoId;
     }
@@ -199,6 +210,14 @@ public class VentaBoleto implements Serializable {
 
     public void setVentaBoletoIdTrabajador(Trabajador ventaBoletoIdTrabajador) {
         this.ventaBoletoIdTrabajador = ventaBoletoIdTrabajador;
+    }
+
+    public void setGuia(Guia guia) {
+        this.guia = guia;
+    }
+
+    public Guia getGuia() {
+        return guia;
     }
 
     @Override

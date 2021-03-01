@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
@@ -25,6 +26,7 @@ r.registro_minuto_id,
     f2.empresa_nombre AS flotaRecibe, 
     r.registro_minuto_monto, 
     r.registro_minuto_fecha_minuto, 
+    (SELECT recaudacion.recaudacion_fecha FROM recaudacion LEFT JOIN recaudacion_minuto ON recaudacion_id = recaudacion_minuto.recaudacion_minuto_id_recaudacion WHERE recaudacion_minuto.recaudacion_minuto_id_registro_minuto = r.registro_minuto_id) AS recaudacion, 
     YEAR($P{fecha}) AS anio, 
     ELT(MONTH($P{fecha}), "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE") AS Mes
 FROM
@@ -79,6 +81,9 @@ WHERE
 		<property name="com.jaspersoft.studio.field.tree.path" value="registro_minuto"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="recaudacion" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion"/>
+	</field>
 	<field name="anio" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="anio"/>
 	</field>
@@ -97,7 +102,7 @@ WHERE
 	<group name="Fecha">
 		<groupExpression><![CDATA[$F{registro_minuto_fecha_minuto}]]></groupExpression>
 		<groupHeader>
-			<band height="30">
+			<band height="35">
 				<staticText>
 					<reportElement x="114" y="18" width="89" height="12" uuid="000ac3f0-80af-4ae2-bdd7-013a4c65ae19"/>
 					<textElement markup="none">
@@ -106,14 +111,14 @@ WHERE
 					<text><![CDATA[N° Bus Paga]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="260" y="18" width="79" height="12" uuid="940c0525-b7c6-4f0f-b8e0-38c6c6987f32"/>
+					<reportElement x="249" y="18" width="79" height="12" uuid="940c0525-b7c6-4f0f-b8e0-38c6c6987f32"/>
 					<textElement markup="none">
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[N° Bus Recibe]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="452" y="18" width="70" height="12" uuid="8ce82345-7f1d-401f-8146-2bc794c9e8c5"/>
+					<reportElement x="386" y="18" width="70" height="12" uuid="8ce82345-7f1d-401f-8146-2bc794c9e8c5"/>
 					<textElement textAlignment="Right" markup="none">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -140,19 +145,26 @@ WHERE
 					</textElement>
 					<text><![CDATA[Folio]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="475" y="18" width="80" height="12" uuid="13ac4b52-5895-489c-964f-8afb6f4f66ba"/>
+					<textElement textAlignment="Right" markup="none">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[F.Recaudación]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="12">
 				<textField pattern="#,##0.###">
-					<reportElement x="450" y="0" width="72" height="12" uuid="c888d57d-a642-4b2c-9ffd-3dccfd8466d4"/>
+					<reportElement x="384" y="0" width="72" height="12" uuid="c888d57d-a642-4b2c-9ffd-3dccfd8466d4"/>
 					<textElement textAlignment="Right">
 						<font size="9"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{registro_minuto_monto_2}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="350" y="0" width="100" height="12" uuid="52134926-ddd0-43b1-af00-fbce1716ed33"/>
+					<reportElement x="284" y="0" width="100" height="12" uuid="52134926-ddd0-43b1-af00-fbce1716ed33"/>
 					<textElement textAlignment="Right">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -216,14 +228,14 @@ WHERE
 				<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="260" y="0" width="90" height="12" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<reportElement x="249" y="0" width="90" height="12" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###">
-				<reportElement x="452" y="0" width="70" height="12" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+				<reportElement x="386" y="0" width="70" height="12" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -237,6 +249,15 @@ WHERE
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{registro_minuto_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement x="485" y="0" width="70" height="12" uuid="cf186c22-8dcd-46ae-bbad-50a550a5cc90">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -278,14 +299,14 @@ WHERE
 	<summary>
 		<band height="20" splitType="Stretch">
 			<textField pattern="#,###.###">
-				<reportElement x="450" y="0" width="72" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
+				<reportElement x="384" y="0" width="72" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{registro_minuto_monto1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="350" y="0" width="100" height="20" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
+				<reportElement x="284" y="0" width="100" height="20" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>

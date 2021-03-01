@@ -13,15 +13,19 @@
             <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('VentaCombustibleListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
             <p:separator/>
         </p:contextMenu>
-        <p:panel header="Recaudación de Petroleo" id="resumen" style="padding-bottom: 10px;">
-            <p:panelGrid columns="9" style="width: 100%">
+        <div class="card">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-4">
+                    <p:staticMessage severity="info" summary="OBSERVACIÓN:" detail="La única opción disponible es la de cancelar la recaudación, lo que devolverá el petróleo al listado de deudores"/>
+                </div>
+            </div>
+        </div>
+        <p:panel id="resumen" style="padding-bottom: 20px;margin-top: 20px;">
+            <h3 style="text-align: center;">Recaudación de Petróleos</h3>
 
-                <p:outputLabel value="Fecha" for="fechaRecaudacionPetroleo" />
-                <p:calendar id="fechaRecaudacionPetroleo" pattern="dd/MM/yyyy" value="#{recaudacionCombustibleController.fecha}" required="true" requiredMessage="Debe seleccionar la fecha" locale="es" >
-                    <p:ajax event="valueChange" update="loadButton"/>
-                </p:calendar>
+            <p:panelGrid columns="9" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
 
-                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
+                <h:outputLabel value="Caja" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionCombustibleController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                     <f:selectItems value="#{recaudacionCombustibleController.cajasItems}"
@@ -30,6 +34,13 @@
                                    itemLabel="#{cajaId.cajaRecaudacionNombre}"
                                    />                    
                 </p:selectOneMenu>
+
+                <p:outputLabel value="Fecha" for="fechaRecaudacionPetroleo" />
+                <p:calendar id="fechaRecaudacionPetroleo" pattern="dd/MM/yyyy" value="#{recaudacionCombustibleController.fecha}" required="true" requiredMessage="Debe seleccionar la fecha" locale="es" >
+                    <p:ajax event="valueChange" update="loadButton"/>
+                </p:calendar>
+
+
 
                 <p:outputLabel value="Total: "/>
                 <p:outputLabel id="formatTotal" value="#{recaudacionCombustibleController.getFormatValue(recaudacionCombustibleController.totalRecaudacion)}" />

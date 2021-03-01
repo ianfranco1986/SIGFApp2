@@ -66,7 +66,7 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     @Override
     public VentaBoleto findByBusBoletoEstado(Bus bus, Boleto boleto) {
         try {
-            return (VentaBoleto) this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaBusBoletoEstado").
+            return (VentaBoleto) this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaBusBoleto").
                     setParameter("ventaBoletoIdBus", bus).
                     setParameter("inventarioInternoIdBoleto", boleto).
                     setMaxResults(1).

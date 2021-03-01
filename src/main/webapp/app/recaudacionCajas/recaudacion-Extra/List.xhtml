@@ -8,15 +8,18 @@
                 >
 
     <h:form id="RecaudacionExtraListForm" class="form-height">
-        <p:panel header="Recaudación Extra" id="resumen" style="padding-bottom: 10px;">
-            <p:panelGrid columns="9" style="width: 100%">
+        <div class="card">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-4">
+                    <p:staticMessage severity="info" summary="OBSERVACIÓN:" detail="Permite administrar ingresos extras asociados a la recaudación"/>
+                </div>
+            </div>
+        </div>
+        <p:panel id="resumen" style="padding-bottom: 20px;margin-top: 20px;">
+            <h3 style="text-align: center;">Recaudación Extra</h3>
+            <p:panelGrid columns="9" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
 
-                <p:outputLabel value="F. Recaudación" for="fechaRecaudacionPetroleo" />
-                <p:calendar id="fechaRecaudacionPetroleo" pattern="dd/MM/yyyy" value="#{recaudacionExtraController.fecha}" required="true" requiredMessage="Debe seleccionar la fecha" locale="es" >
-                    <p:ajax event="valueChange" update="loadButton"/>
-                </p:calendar>
-
-                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
+                <h:outputLabel value="Caja" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionExtraController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                     <f:selectItems value="#{recaudacionExtraController.cajaRecaudacionItems}"
@@ -25,6 +28,12 @@
                                    itemLabel="#{cajaId.cajaRecaudacionNombre}"
                                    />                    
                 </p:selectOneMenu>
+
+                <p:outputLabel value="Fecha" for="fechaRecaudacionPetroleo" />
+                <p:calendar id="fechaRecaudacionPetroleo" pattern="dd/MM/yyyy" value="#{recaudacionExtraController.fecha}" required="true" requiredMessage="Debe seleccionar la fecha" locale="es" >
+                    <p:ajax event="valueChange" update="loadButton"/>
+                </p:calendar>
+
 
                 <p:outputLabel value="Total: "/>
                 <p:outputLabel id="formatTotal" value="#{recaudacionExtraController.getFormatValue(recaudacionExtraController.totalRecaudacion)}" />
@@ -78,7 +87,7 @@
                     <h:outputLabel value="#{rowIndex+1}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.recaudacionExtraDescripcion}" filterBy="#{item.recaudacionExtraDescripcion}" style="text-align: center; font-weight: 900;">
+                <p:column sortBy="#{item.recaudacionExtraDescripcion}" filterBy="#{item.recaudacionExtraDescripcion}" style="text-align: center;">
                     <f:facet name="header">
                         <h:outputText value="Descripción"/>
                     </f:facet>
@@ -91,7 +100,7 @@
 
                 </p:column>
 
-                <p:column sortBy="#{item.recaudacionExtraUsuario}" filterBy="#{item.recaudacionExtraUsuario}" style="text-align: center; font-weight: 900;">
+                <p:column sortBy="#{item.recaudacionExtraUsuario}" filterBy="#{item.recaudacionExtraUsuario}" style="text-align: center; ">
                     <f:facet name="header">
                         <h:outputText value="Detalle"/>
                     </f:facet>
@@ -104,12 +113,14 @@
 
                 </p:column>
 
-                <p:column sortBy="#{item.recaudacionExtraMonto}" footerText="#{recaudacionExtraController.getFormatValue(recaudacionExtraController.totalRecaudacion)}" filterBy="#{item.recaudacionExtraMonto}" style="text-align: center; font-weight: 900;">
+                <p:column sortBy="#{item.recaudacionExtraMonto}" footerText="#{recaudacionExtraController.getFormatValue(recaudacionExtraController.totalRecaudacion)}" filterBy="#{item.recaudacionExtraMonto}" style="text-align: center;">
                     <f:facet name="header">
                         <h:outputText value="Monto"/>
                     </f:facet>
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{item.recaudacionExtraMonto}"/></f:facet>
+                        <f:facet name="output"><h:outputText value="#{item.recaudacionExtraMonto}">
+                                <f:convertNumber />
+                            </h:outputText></f:facet>
                         <f:facet name="input">
                             <p:inputText id="adin3" value="#{item.recaudacionExtraMonto}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/>
                         </f:facet>

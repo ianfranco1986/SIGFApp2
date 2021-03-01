@@ -23,7 +23,6 @@
 	<parameter name="list" class="java.util.List">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-
 	<queryString>
 		<![CDATA[SELECT 
     @rownum:=@rownum+1 AS numero, 
@@ -43,7 +42,7 @@
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 1 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS administracion, 
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 2 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS cuotaextra, 
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 3 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS imposiciones, 
-    IFNULL((SELECT IFNULL(IF((recaudacion_guia.recaudacion_guia_monto)>0, ((recaudacion_guia.recaudacion_guia_monto)-((recaudacion_guia.recaudacion_guia_monto)/5000*450)), 0), 0) FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 4 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS boletos
+    IFNULL((SELECT IFNULL(IF((recaudacion_guia.recaudacion_guia_monto)>0, ((recaudacion_guia.recaudacion_guia_monto)-((recaudacion_guia.recaudacion_guia_monto)/5000*(IF(recaudacion.recaudacion_fecha < '2020-12-14', 550, 700)))), 0), 0) FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 4 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS boletos
 FROM
     recaudacion
         LEFT JOIN
@@ -132,13 +131,13 @@ ORDER BY bus.bus_numero, recaudacion.recaudacion_fecha]]>
 		<property name="com.jaspersoft.studio.field.tree.path" value="flota"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="administracion" class="java.lang.Long">
+	<field name="administracion" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="administracion"/>
 	</field>
-	<field name="cuotaextra" class="java.lang.Long">
+	<field name="cuotaextra" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="cuotaextra"/>
 	</field>
-	<field name="imposiciones" class="java.lang.Long">
+	<field name="imposiciones" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="imposiciones"/>
 	</field>
 	<field name="boletos" class="java.math.BigDecimal">

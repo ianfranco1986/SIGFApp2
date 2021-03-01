@@ -198,12 +198,6 @@ public class TrabajadorController extends AbstractController<Trabajador> {
      */
     @Override
     protected void setChildrenEmptyFlags() {
-        this.setIsHaberTrabajadorListEmpty();
-        this.setIsCargaTrabajadorListEmpty();
-        this.setIsTrabajadorAdicionalSaludListEmpty();
-        this.setIsDespachoListEmpty();
-        this.setIsVentaBoletoListEmpty();
-        this.setIsLiquidacionSueldoListEmpty();
         this.setIsReconocimientoDeudaListEmpty();
         this.setIsRelacionLaboralListEmpty();
         this.setIsCargaRetroactivaListEmpty();
@@ -220,16 +214,6 @@ public class TrabajadorController extends AbstractController<Trabajador> {
 
     public boolean getIsHaberTrabajadorListEmpty() {
         return this.isHaberTrabajadorListEmpty;
-    }
-
-    private void setIsHaberTrabajadorListEmpty() {
-        Trabajador selected = this.getSelected();
-        if (selected != null) {
-            TrabajadorFacade ejbFacade = (TrabajadorFacade) this.getFacade();
-            this.isHaberTrabajadorListEmpty = ejbFacade.isHaberTrabajadorListEmpty(selected);
-        } else {
-            this.isHaberTrabajadorListEmpty = true;
-        }
     }
 
     /**
@@ -252,15 +236,6 @@ public class TrabajadorController extends AbstractController<Trabajador> {
         return this.isCargaTrabajadorListEmpty;
     }
 
-    private void setIsCargaTrabajadorListEmpty() {
-        Trabajador selected = this.getSelected();
-        if (selected != null) {
-            TrabajadorFacade ejbFacade = (TrabajadorFacade) this.getFacade();
-            this.isCargaTrabajadorListEmpty = ejbFacade.isCargaTrabajadorListEmpty(selected);
-        } else {
-            this.isCargaTrabajadorListEmpty = true;
-        }
-    }
 
     /**
      * Sets the "items" attribute with a collection of CargaTrabajador entities
@@ -282,15 +257,6 @@ public class TrabajadorController extends AbstractController<Trabajador> {
         return this.isTrabajadorAdicionalSaludListEmpty;
     }
 
-    private void setIsTrabajadorAdicionalSaludListEmpty() {
-        Trabajador selected = this.getSelected();
-        if (selected != null) {
-            TrabajadorFacade ejbFacade = (TrabajadorFacade) this.getFacade();
-            this.isTrabajadorAdicionalSaludListEmpty = ejbFacade.isTrabajadorAdicionalSaludListEmpty(selected);
-        } else {
-            this.isTrabajadorAdicionalSaludListEmpty = true;
-        }
-    }
 
     /**
      * Sets the "items" attribute with a collection of TrabajadorAdicionalSalud
@@ -313,15 +279,6 @@ public class TrabajadorController extends AbstractController<Trabajador> {
         return this.isDespachoListEmpty;
     }
 
-    private void setIsDespachoListEmpty() {
-        Trabajador selected = this.getSelected();
-        if (selected != null) {
-            TrabajadorFacade ejbFacade = (TrabajadorFacade) this.getFacade();
-            this.isDespachoListEmpty = ejbFacade.isDespachoListEmpty(selected);
-        } else {
-            this.isDespachoListEmpty = true;
-        }
-    }
 
     /**
      * Sets the "items" attribute with a collection of Despacho entities that
@@ -343,15 +300,6 @@ public class TrabajadorController extends AbstractController<Trabajador> {
         return this.isVentaBoletoListEmpty;
     }
 
-    private void setIsVentaBoletoListEmpty() {
-        Trabajador selected = this.getSelected();
-        if (selected != null) {
-            TrabajadorFacade ejbFacade = (TrabajadorFacade) this.getFacade();
-            this.isVentaBoletoListEmpty = ejbFacade.isVentaBoletoListEmpty(selected);
-        } else {
-            this.isVentaBoletoListEmpty = true;
-        }
-    }
 
     /**
      * Sets the "items" attribute with a collection of VentaBoleto entities that
@@ -371,16 +319,6 @@ public class TrabajadorController extends AbstractController<Trabajador> {
 
     public boolean getIsLiquidacionSueldoListEmpty() {
         return this.isLiquidacionSueldoListEmpty;
-    }
-
-    private void setIsLiquidacionSueldoListEmpty() {
-        Trabajador selected = this.getSelected();
-        if (selected != null) {
-            TrabajadorFacade ejbFacade = (TrabajadorFacade) this.getFacade();
-            this.isLiquidacionSueldoListEmpty = ejbFacade.isLiquidacionSueldoListEmpty(selected);
-        } else {
-            this.isLiquidacionSueldoListEmpty = true;
-        }
     }
 
     /**

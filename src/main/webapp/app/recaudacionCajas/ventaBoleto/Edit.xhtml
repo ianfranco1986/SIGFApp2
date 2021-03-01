@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <script>
+        $(function () {
+            PF('bui').show();
+        });
+    </script>
+    <style type="text/css">
+        .ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+            text-align: center;
+        }
+
+        .customPanelGrid .ui-panelgrid-content {
+            align-items: center;
+        }
+    </style>
+
+    <h:form id="GuiaListForm" class="form-height">
+        <div class="card">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-4">
+                    <p:staticMessage severity="info" summary="OBSERVACIÓN:" detail="Permite corregir una venta de boletos. Debe seleccionar el bus involucrado en la venta y el tipo de boleto que desea modificar para buscar la ÚLTIMA VENTA REALIZADA"/>
+                </div>
+            </div>
+        </div>
+        <p:panel id="resumen" style="padding-bottom: 20px;margin-top: 20px;">
+            <h3 style="text-align: center;">Edición de Venta de Boleto</h3>
+            <p:panelGrid columns="9" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
+
+                <p:outputLabel value="N° Bus:" for="numeroBus"/>
+                <p:selectOneMenu id="numeroBus" value="#{edicionVentaBoletoController.bus}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{edicionVentaBoletoController.busItems}"
+                                   var="busItem"
+                                   itemValue="#{busItem}"
+                                   itemLabel="#{busItem.busNumero}"
+                                   />
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Tipo de Boleto: " for="tipoBoleto"/>
+                <p:selectOneMenu id="tipoBoleto" value="#{edicionVentaBoletoController.selectedBoleto}" required="true" requiredMessage="Debe seleccionar un tipo de boleto" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{edicionVentaBoletoController.boletoItems}"
+                                   var="boletoItem"
+                                   itemValue="#{boletoItem}"
+                                   itemLabel="#{boletoItem.boletoNombre}"
+                                   />
+                </p:selectOneMenu>
+
+
+                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Buscar" update="@(.clase), GuiaListForm:detail, growl" styleClass="btn btn-primary" style="width:120px" actionListener="#{edicionVentaBoletoController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
+                </p:commandButton>
+
+            </p:panelGrid>
+
+
+
+
+
+        </p:panel>
+
+        <p:panel id="detail" style="margin-top: 10px;">
+
+            <h3 style="text-align: center;">Datos de la Venta</h3>
+
+            <div class="card">
+                <p:panelGrid columns="2" style="width: 100%; height: 200px;" columnClasses="column2, column3">
+                    <h:outputText value="Fecha:" style="font-size: 15px; margin-top: 15px;"/>
+                    <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoFecha}" style="font-size: 15px; margin-top: 15px;">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+
+                    <h:outputText value="Recaudación:" style="font-size: 15px; margin-top: 15px;"/>
+                    <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoFolioRecaudacion}" style="font-size: 15px; margin-top: 15px;"/>
+
+                    <h:outputText value="Folio Sol y Mar:" style="font-size: 15px; margin-top: 15px;"/>
+                    <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoFolioSolyMar}" style="font-size: 15px; margin-top: 15px;"/>
+
+                    <h:outputText value="N° Bus:" style="font-size: 15px; margin-top: 15px;"/>
+                    <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoIdBus.busNumero}" style="font-size: 15px; margin-top: 15px;"/>
+
+                    <h:outputText value="Boleto:" style="font-size: 15px; margin-top: 15px;"/>
+                    <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" style="font-size: 15px; margin-top: 15px;"/>
+
+                    <h:outputText value="Serie:" style="font-size: 15px; margin-top: 15px;"/>
+                    <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoSerie}" style="font-size: 15px; margin-top: 15px;"/>
+
+
+
+                </p:panelGrid>
+            </div>
+
+        </p:panel>
+
+
+
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+    <h:form id="form2">
+        <p:panel id="next" style="margin-top: 10px;">
+            <h3 style="text-align: center;">Selección nuevo Boleto/Serie</h3>
+            <p:panelGrid columns="2" style="width: 100%; height: 150px;" columnClasses="column2, column3">
+
+                <h:outputText value="Caja:" style="font-size: 15px; margin-top: 15px;"/>                
+                <p:selectOneMenu id="cajaRecaudacion" value="#{edicionVentaBoletoController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar una caja para obtener su inventario" converter="omnifaces.SelectItemsConverter" style="font-size: 15px;">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{edicionVentaBoletoController.cajaRecaudacionItems}"
+                                   var="cajaItem"
+                                   itemValue="#{cajaItem}"
+                                   itemLabel="#{cajaItem.cajaRecaudacionNombre}"
+                                   />
+                    <p:ajax event="valueChange" listener="#{edicionVentaBoletoController.findInventario()}" update=":growl"/>
+                </p:selectOneMenu>
+
+                <h:outputText value="Boleto:" style="font-size: 15px; margin-top: 15px;"/>                
+                <p:selectOneMenu id="tipoBoletoNuevo" value="#{edicionVentaBoletoController.newBoleto}" required="true" requiredMessage="Debe seleccionar un tipo de boleto" converter="omnifaces.SelectItemsConverter" style="font-size: 15px;">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{edicionVentaBoletoController.boletoItems}"
+                                   var="boletoItem"
+                                   itemValue="#{boletoItem}"
+                                   itemLabel="#{boletoItem.boletoNombre}"
+                                   />
+                    <p:ajax event="valueChange" listener="#{edicionVentaBoletoController.findInventario()}" update="serieNueva, :growl"/>
+                </p:selectOneMenu>
+
+                <h:outputText value="Serie:" style="font-size: 15px; margin-top: 15px;"/>                
+                <p:selectOneMenu id="serieNueva" value="#{edicionVentaBoletoController.inventario}" required="true" requiredMessage="Debe seleccionar una serie disponible" converter="omnifaces.SelectItemsConverter" style="font-size: 15px;">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{edicionVentaBoletoController.inventarioCajaItems}"
+                                   var="inventarioItem"
+                                   itemValue="#{inventarioItem}"
+                                   itemLabel="#{inventarioItem.inventarioCajaSerie}"
+                                   />
+                </p:selectOneMenu>
+
+                <h:outputText value="" style="font-size: 15px; margin-top: 15px;"/>
+                <p:commandButton id="value3" ajax="true" icon="fa fa-database" value="Cambiar Boleto" update="@(.clase), GuiaListForm:detail, growl" styleClass="btn btn-primary" style="width:120px" actionListener="#{edicionVentaBoletoController.save}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                </p:commandButton>
+            </p:panelGrid>
+
+        </p:panel>
+        <p:blockUI block="next" widgetVar="bui"/>
+    </h:form>
+
+</ui:composition>

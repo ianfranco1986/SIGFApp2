@@ -765,7 +765,7 @@ public class Trabajador implements Serializable {
 
     @Override
     public String toString() {
-        return trabajadorApellidoPaterno + " " + trabajadorApellidoMaterno + trabajadorNombres;
+        return trabajadorApellidoPaterno + " " + trabajadorApellidoMaterno +" "+ trabajadorNombres;
     }
 
 }

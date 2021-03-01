@@ -64,13 +64,7 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> {
         super(Trabajador.class);
     }
 
-    public boolean isHaberTrabajadorListEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotEmpty(trabajador.get(Trabajador_.haberTrabajadorList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
+    
 
     public List<HaberTrabajador> findHaberTrabajadorList(Trabajador entity) {
         Trabajador mergedEntity = this.getMergedEntity(entity);
@@ -79,13 +73,6 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> {
         return haberTrabajadorList;
     }
 
-    public boolean isCargaTrabajadorListEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotEmpty(trabajador.get(Trabajador_.cargaTrabajadorList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public List<CargaTrabajador> findCargaTrabajadorList(Trabajador entity) {
         Trabajador mergedEntity = this.getMergedEntity(entity);
@@ -94,27 +81,12 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> {
         return cargaTrabajadorList;
     }
 
-    public boolean isTrabajadorAdicionalSaludListEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotEmpty(trabajador.get(Trabajador_.trabajadorAdicionalSaludList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public List<TrabajadorAdicionalSalud> findTrabajadorAdicionalSaludList(Trabajador entity) {
         Trabajador mergedEntity = this.getMergedEntity(entity);
         List<TrabajadorAdicionalSalud> trabajadorAdicionalSaludList = mergedEntity.getTrabajadorAdicionalSaludList();
         trabajadorAdicionalSaludList.size();
         return trabajadorAdicionalSaludList;
-    }
-
-    public boolean isDespachoListEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotEmpty(trabajador.get(Trabajador_.despachoList)));
-        return em.createQuery(cq).getResultList().isEmpty();
     }
 
     public List<Despacho> findDespachoList(Trabajador entity) {
@@ -124,13 +96,6 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> {
         return despachoList;
     }
 
-    public boolean isVentaBoletoListEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotEmpty(trabajador.get(Trabajador_.ventaBoletoList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public List<VentaBoleto> findVentaBoletoList(Trabajador entity) {
         Trabajador mergedEntity = this.getMergedEntity(entity);
@@ -139,13 +104,6 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> {
         return ventaBoletoList;
     }
 
-    public boolean isLiquidacionSueldoListEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotEmpty(trabajador.get(Trabajador_.liquidacionSueldoList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public List<LiquidacionSueldo> findLiquidacionSueldoList(Trabajador entity) {
         Trabajador mergedEntity = this.getMergedEntity(entity);
@@ -154,97 +112,38 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> {
         return liquidacionSueldoList;
     }
 
-    public boolean isTrabajadorIdCuentaEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotNull(trabajador.get(Trabajador_.trabajadorIdCuenta)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
-
     public Cuenta findTrabajadorIdCuenta(Trabajador entity) {
         return this.getMergedEntity(entity).getTrabajadorIdCuenta();
-    }
-
-    public boolean isTrabajadorIdInstitucionApvEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotNull(trabajador.get(Trabajador_.trabajadorIdInstitucionApv)));
-        return em.createQuery(cq).getResultList().isEmpty();
     }
 
     public InstitucionApv findTrabajadorIdInstitucionApv(Trabajador entity) {
         return this.getMergedEntity(entity).getTrabajadorIdInstitucionApv();
     }
 
-    public boolean isTrabajadorIdAsignacionFamiliarEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotNull(trabajador.get(Trabajador_.trabajadorIdAsignacionFamiliar)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public AsignacionFamiliar findTrabajadorIdAsignacionFamiliar(Trabajador entity) {
         return this.getMergedEntity(entity).getTrabajadorIdAsignacionFamiliar();
     }
 
-    public boolean isTrabajadorIdCentroCostoEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotNull(trabajador.get(Trabajador_.trabajadorIdCentroCosto)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public CentroCosto findTrabajadorIdCentroCosto(Trabajador entity) {
         return this.getMergedEntity(entity).getTrabajadorIdCentroCosto();
     }
 
-    public boolean isTrabajadorIdComunaEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotNull(trabajador.get(Trabajador_.trabajadorIdComuna)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public Comuna findTrabajadorIdComuna(Trabajador entity) {
         return this.getMergedEntity(entity).getTrabajadorIdComuna();
     }
 
-    public boolean isTrabajadorIdTipoCotizacionTrabajadorEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotNull(trabajador.get(Trabajador_.trabajadorIdTipoCotizacionTrabajador)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public TipoCotizacionTrabajador findTrabajadorIdTipoCotizacionTrabajador(Trabajador entity) {
         return this.getMergedEntity(entity).getTrabajadorIdTipoCotizacionTrabajador();
-    }
-
-    public boolean isTrabajadorIdEstadoCivilEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotNull(trabajador.get(Trabajador_.trabajadorIdEstadoCivil)));
-        return em.createQuery(cq).getResultList().isEmpty();
     }
 
     public EstadoCivil findTrabajadorIdEstadoCivil(Trabajador entity) {
         return this.getMergedEntity(entity).getTrabajadorIdEstadoCivil();
     }
 
-    public boolean isTrabajadorIdFormaPagoEmpty(Trabajador entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Trabajador> trabajador = cq.from(Trabajador.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(trabajador, entity), cb.isNotNull(trabajador.get(Trabajador_.trabajadorIdFormaPago)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
 
     public FormaPago findTrabajadorIdFormaPago(Trabajador entity) {
         return this.getMergedEntity(entity).getTrabajadorIdFormaPago();

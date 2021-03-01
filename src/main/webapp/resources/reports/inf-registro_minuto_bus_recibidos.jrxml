@@ -25,6 +25,7 @@
     f2.empresa_nombre AS flotaRecibe, 
     r.registro_minuto_monto, 
     r.registro_minuto_fecha_minuto, 
+        (SELECT recaudacion.recaudacion_fecha FROM recaudacion LEFT JOIN recaudacion_minuto ON recaudacion_id = recaudacion_minuto.recaudacion_minuto_id_recaudacion WHERE recaudacion_minuto.recaudacion_minuto_id_registro_minuto = r.registro_minuto_id) AS recaudacion, 
     YEAR($P{fecha}) AS anio, 
     ELT(MONTH($P{fecha}), "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE") AS Mes
    
@@ -79,6 +80,9 @@ WHERE
 		<property name="com.jaspersoft.studio.field.label" value="registro_minuto_fecha_minuto"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="registro_minuto"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion"/>
 	</field>
 	<field name="anio" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="anio"/>
@@ -162,7 +166,9 @@ WHERE
 				<text><![CDATA[Folio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="428" y="0" width="70" height="12" uuid="8ce82345-7f1d-401f-8146-2bc794c9e8c5"/>
+				<reportElement x="368" y="0" width="70" height="12" uuid="8ce82345-7f1d-401f-8146-2bc794c9e8c5">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right" markup="none">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -174,6 +180,13 @@ WHERE
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="0" width="75" height="12" uuid="4cefdfdf-fca4-417c-b82e-667034070df2"/>
+				<textElement textAlignment="Right" markup="none">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F.Recaudación]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -187,8 +200,9 @@ WHERE
 				<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###">
-				<reportElement x="428" y="0" width="70" height="12" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+				<reportElement x="368" y="0" width="70" height="12" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font size="9"/>
@@ -208,6 +222,13 @@ WHERE
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{registro_minuto_fecha_minuto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement x="475" y="0" width="75" height="12" uuid="d001fda7-ced5-4f15-bd3b-bf79d52fa025"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -242,14 +263,16 @@ WHERE
 	<summary>
 		<band height="12" splitType="Stretch">
 			<textField pattern="#,###.###">
-				<reportElement x="426" y="0" width="72" height="12" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
+				<reportElement x="368" y="0" width="72" height="12" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{registro_minuto_monto_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="326" y="0" width="100" height="12" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
+				<reportElement x="268" y="0" width="100" height="12" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
 				<textElement textAlignment="Right">
 					<font size="9" isBold="true"/>
 				</textElement>

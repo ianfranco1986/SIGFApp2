@@ -12,6 +12,7 @@ import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.entities.Terminal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -68,6 +69,17 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
             return this.entityManager.createNamedQuery("Guia.findByBusBetweenFechaRecaudacion").setParameter("guiaIdBus", bus).setParameter("inicio", inicio).setParameter("termino", inicio).getResultList();
         } catch (NoResultException ne) {
             return null;
+        }
+    }
+
+    public List<Guia> findBetweenFechaRecaudacion(Date from, Date to) {
+        try {
+            return this.entityManager.
+                    createNamedQuery("Guia.findBetweenDates").
+                    setParameter("inicio", from).
+                    setParameter("termino", to).getResultList();
+        } catch (NoResultException ne) {
+            return new ArrayList();
         }
     }
 

@@ -24,6 +24,15 @@
     background-color: menu;
 }
 
+.column2{
+    font-weight: bold;
+    width: 50%;
+}
+
+.column3{
+    width: 50%;
+}
+
 .form-height{
     position: relative;
     width: 100%;
