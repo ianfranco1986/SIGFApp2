@@ -86,6 +86,25 @@
                     </f:facet>
                     <h:outputLabel value="#{rowIndex+1}"/>
                 </p:column>
+                
+                <p:column sortBy="#{item.recaudacionExtraIdTipo.tipoRecaudacionExtraNombre}" style="text-align: center; ">
+                    <f:facet name="header">
+                        <h:outputText value="Tipo"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.recaudacionExtraIdTipo.tipoRecaudacionExtraNombre}"/></f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu id="tipo" value="#{item.recaudacionExtraIdTipo}" style="width: 70%;" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                                                <f:selectItems value="#{recaudacionExtraController.tipoRecaudacionExtraItems}" var="tipo"
+                                                                               itemValue="#{tipo}"
+                                                                               itemLabel="#{tipo.tipoRecaudacionExtraNombre}"
+                                                                               />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+
+                    
+                </p:column>
 
                 <p:column sortBy="#{item.recaudacionExtraDescripcion}" filterBy="#{item.recaudacionExtraDescripcion}" style="text-align: center;">
                     <f:facet name="header">

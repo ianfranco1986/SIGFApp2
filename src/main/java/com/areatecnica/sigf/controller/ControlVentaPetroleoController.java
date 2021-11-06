@@ -3,6 +3,7 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IControlVentaPetroleoDaoImpl;
 import com.areatecnica.sigf.entities.ControlVentaPetroleo;
+import com.areatecnica.sigf.entities.Usuario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.joda.time.DateTime;
@@ -23,12 +25,14 @@ public class ControlVentaPetroleoController extends AbstractController<ControlVe
     private int anio;
     private Date fecha;
     private DateTime dateTime;
+    private Usuario currentUser;
 
     private final static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 
     public ControlVentaPetroleoController() {
         // Inform the Abstract parent controller of the concrete ControlVentaPetroleo Entity
         super(ControlVentaPetroleo.class);
+        this.currentUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
     }
 
     @Override
@@ -47,7 +51,7 @@ public class ControlVentaPetroleoController extends AbstractController<ControlVe
         if (this.fecha != null) {
             this.dateTime = new DateTime(fecha);
             DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
-            this.items = new IControlVentaPetroleoDaoImpl().findByDates(fecha, _maxDate.toDate());
+            this.items = new IControlVentaPetroleoDaoImpl().findByDates(fecha, _maxDate.toDate(), this.currentUser.getUsuarioIdCuenta());
 
             if (this.items.isEmpty()) {
                 JsfUtil.addSuccessMessage("No se han encontrado registros");

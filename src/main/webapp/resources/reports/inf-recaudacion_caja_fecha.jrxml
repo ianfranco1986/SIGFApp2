@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
 	<parameter name="fecha" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -214,6 +216,13 @@ ORDER BY recaudacion_id]]>
 				</textElement>
 				<text><![CDATA[Recaudación Guías ]]></text>
 			</staticText>
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="220" y="42" width="165" height="15" uuid="fb7e9a4f-a58d-4521-bfd0-a5ea98da2955"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
@@ -282,7 +291,9 @@ ORDER BY recaudacion_id]]>
 				<textFieldExpression><![CDATA[$F{bus_numero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="0" width="23" height="15" uuid="0b2dbaf1-0849-4acf-a9d6-278391dc25da"/>
+				<reportElement x="90" y="0" width="30" height="15" uuid="0b2dbaf1-0849-4acf-a9d6-278391dc25da">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<box rightPadding="5"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="9"/>
@@ -326,13 +337,6 @@ ORDER BY recaudacion_id]]>
 				</textElement>
 				<text><![CDATA[Fecha Impresión:]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yy h:mm a">
-				<reportElement x="80" y="7" width="165" height="15" uuid="fb7e9a4f-a58d-4521-bfd0-a5ea98da2955"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageFooter>
 	<summary>

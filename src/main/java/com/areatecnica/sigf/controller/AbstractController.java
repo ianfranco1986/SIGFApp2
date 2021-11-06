@@ -62,8 +62,10 @@ public abstract class AbstractController<T> implements Serializable {
         this.limitedByCuenta = Boolean.FALSE;
         this.currentUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
         this.userCount = this.currentUser.getUsuarioIdCuenta();
+
+        System.err.println("LA CUENTA DEL USUARIO ES: " + this.currentUser.getUsuarioIdCuenta().getCuentaId());
         listVisible = new ArrayList<Boolean>();
-        
+
         //listWidth = new ArrayList<>();
     }
 
@@ -139,10 +141,9 @@ public abstract class AbstractController<T> implements Serializable {
      * @return a collection of Entity items returned by the data layer
      */
     public Collection<T> getItems() {
-        if (items == null) {
-            if (limitedByCuenta) {
-                items = this.ejbFacade.findAllByCuenta(userCount, namedQuery);
-            }
+        if (limitedByCuenta) {
+            items = this.ejbFacade.findAllByCuenta(userCount, namedQuery);
+        } else {
             items = this.ejbFacade.findAll();
         }
         return items;

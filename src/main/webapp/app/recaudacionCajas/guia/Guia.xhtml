@@ -64,7 +64,7 @@
                 <p:ajax event="rowEdit" listener="#{guiaController.onRowEdit}" update=":growl" />
 
                 <f:facet name="header">
-                    Guías entre el : #{guiaController.getformatMes()}
+                    Guías 
                 </f:facet>
 
                 <p:column style="text-align: center; ">
@@ -101,15 +101,38 @@
                     <f:facet name="header">
                         <h:outputText value="N° Bus"/>
                     </f:facet>
-                    <h:outputText value="#{item.guiaIdBus.busNumero}"/>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.guiaIdBus.busNumero}"/></f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu id="bus" value="#{item.guiaIdBus}" style="width: 70%;" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                                                <f:selectItems value="#{guiaController.itemsBus}" var="bus"
+                                                                               itemValue="#{bus}"
+                                                                               itemLabel="#{bus.busNumero}"
+                                                                               />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+
+                    
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdTrabajador.trabajadorCodigo}" style="text-align: center; ">
                     <f:facet name="header">
                         <h:outputText value="Código"/>
                     </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.guiaIdTrabajador.trabajadorCodigo}"/></f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu id="conductor" value="#{item.guiaIdTrabajador}" style="width: 70%;" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                                                <f:selectItems value="#{guiaController.trabajadorItems}" var="trab"
+                                                                               itemValue="#{trab}"
+                                                                               itemLabel="#{trab.trabajadorCodigo}"
+                                                                               />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
 
-                    <h:outputText value="#{item.guiaIdTrabajador.trabajadorCodigo}"/>
+
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdTrabajador}" style="text-align: center; width: 250px">
@@ -119,17 +142,11 @@
 
                     <h:outputText value="#{item.guiaIdTrabajador}"/>
                 </p:column>
-                
+
                 <p:column style="width:35px">
                     <p:rowEditor />
                 </p:column>
 
-                <p:column style="width:45px;text-align: center">
-                    <p:commandButton update="datalist, :growl" icon="fa fa-trash" actionListener="#{guiaController.delete()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <f:setPropertyActionListener value="#{item}" target="#{guiaController.selectedGuia}"  />
-                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                    </p:commandButton>
-                </p:column>
             </p:dataTable>
         </p:panel>
 

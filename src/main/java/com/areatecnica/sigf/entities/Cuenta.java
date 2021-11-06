@@ -135,6 +135,10 @@ public class Cuenta implements Serializable {
     private List<Terminal> terminalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamentoIdCuenta")
     private List<Departamento> departamentoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlIdCuenta")
+    private List<ControlVentaPetroleo> controlVentaPetroleoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraPetroleoIdCuenta")
+    private List<CompraPetroleo> compraPetroleoList;
 
     public Cuenta() {
     }
@@ -512,6 +516,22 @@ public class Cuenta implements Serializable {
 
     public void setDepartamentoList(List<Departamento> departamentoList) {
         this.departamentoList = departamentoList;
+    }
+    @XmlTransient
+    public List<ControlVentaPetroleo> getControlVentaPetroleoList() {
+        return controlVentaPetroleoList;
+    }
+
+    public void setControlVentaPetroleoList(List<ControlVentaPetroleo> controlVentaPetroleoList) {
+        this.controlVentaPetroleoList = controlVentaPetroleoList;
+    }
+    @XmlTransient
+    public List<CompraPetroleo> getCompraPetroleoList() {
+        return compraPetroleoList;
+    }
+
+    public void setcompraPetroleoListList(List<CompraPetroleo> compraPetroleoList) {
+        this.compraPetroleoList = compraPetroleoList;
     }
 
     @Override

@@ -2,7 +2,7 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.areatecnica_SIGFapp_war_1PU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <jta-data-source>java:/MySqlDS</jta-data-source>
+    <jta-data-source>java:/MySqlDS8</jta-data-source>
     <class>com.areatecnica.sigf.entities.AbonoBus</class>
     <class>com.areatecnica.sigf.entities.AbonoLiquidacion</class>
     <class>com.areatecnica.sigf.entities.AdministracionMensual</class>
@@ -182,6 +182,7 @@
     <class>com.areatecnica.sigf.entities.TipoBoletaHonorario</class>
     <class>com.areatecnica.sigf.entities.Cliente</class>
     <class>com.areatecnica.sigf.entities.TipoMovimiento</class>
+    <class>com.areatecnica.sigf.entities.TipoRecaudacionExtra</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.jdbc.native-sql" value="true"/>

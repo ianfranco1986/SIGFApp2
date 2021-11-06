@@ -7,6 +7,7 @@ package com.areatecnica.sigf.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -24,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,13 +39,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "Recaudacion.findAll", query = "SELECT r FROM Recaudacion r")
-    , @NamedQuery(name = "Recaudacion.findByRecaudacionId", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionId = :recaudacionId")
-    , @NamedQuery(name = "Recaudacion.findByFechaRecaudacionCaja", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionFecha = :recaudacionFecha ORDER BY r.recaudacionId")
-    , @NamedQuery(name = "Recaudacion.findByRecaudacionIdentificador", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdentificador = :recaudacionIdentificador")
-    , @NamedQuery(name = "Recaudacion.findByRecaudacionTotal", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionTotal = :recaudacionTotal")
-    , @NamedQuery(name = "Recaudacion.findByRecaudacionFecha", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionFecha = :recaudacionFecha")
-    , @NamedQuery(name = "Recaudacion.findByRecaudacionHora", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionHora = :recaudacionHora")})
+    @NamedQuery(name = "Recaudacion.findAll", query = "SELECT r FROM Recaudacion r"),
+    @NamedQuery(name = "Recaudacion.findByRecaudacionId", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionId = :recaudacionId"),
+    @NamedQuery(name = "Recaudacion.findByProcesoFechaRecaudacionCaja", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionFecha = :recaudacionFecha AND r.recaudacionIdProceso = :recaudacionIdProceso ORDER BY r.recaudacionId"),
+    @NamedQuery(name = "Recaudacion.findByFechaRecaudacionCaja", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionFecha = :recaudacionFecha ORDER BY r.recaudacionId"),
+    @NamedQuery(name = "Recaudacion.findByRecaudacionIdentificador", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdentificador = :recaudacionIdentificador"),
+    @NamedQuery(name = "Recaudacion.findByRecaudacionTotal", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionTotal = :recaudacionTotal"),
+    @NamedQuery(name = "Recaudacion.findByRecaudacionFecha", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionFecha = :recaudacionFecha"),
+    @NamedQuery(name = "Recaudacion.findByRecaudacionHora", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionHora = :recaudacionHora")})
 public class Recaudacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -79,12 +82,18 @@ public class Recaudacion implements Serializable {
     @JoinColumn(name = "recaudacion_id_caja", referencedColumnName = "caja_recaudacion_id", nullable = false)
     @ManyToOne(optional = false)
     private CajaRecaudacion recaudacionIdCaja;
+    @JoinColumn(name = "recaudacion_id_proceso", referencedColumnName = "proceso_recaudacion_id", nullable = false)
+    @ManyToOne(optional = false)
+    private ProcesoRecaudacion recaudacionIdProceso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionDescuentoExtraIdRecaudacion")
     private List<RecaudacionDescuentoExtra> recaudacionDescuentoExtraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionGuiaIdRecaudacion")
     private List<RecaudacionGuia> recaudacionGuiaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionExtraIdRecaudacion")
     private List<RecaudacionExtra> recaudacionExtraList;
+
+    @Transient
+    private LinkedHashMap link;
 
     public Recaudacion() {
     }
@@ -168,6 +177,14 @@ public class Recaudacion implements Serializable {
         this.recaudacionCombustibleList = recaudacionCombustibleList;
     }
 
+    public ProcesoRecaudacion getRecaudacionIdProceso() {
+        return recaudacionIdProceso;
+    }
+
+    public void setRecaudacionIdProceso(ProcesoRecaudacion recaudacionIdProceso) {
+        this.recaudacionIdProceso = recaudacionIdProceso;
+    }
+
     public CajaRecaudacion getRecaudacionIdCaja() {
         return recaudacionIdCaja;
     }
@@ -201,6 +218,14 @@ public class Recaudacion implements Serializable {
 
     public void setRecaudacionExtraList(List<RecaudacionExtra> recaudacionExtraList) {
         this.recaudacionExtraList = recaudacionExtraList;
+    }
+
+    public LinkedHashMap getLink() {
+        return link;
+    }
+
+    public void setLink(LinkedHashMap link) {
+        this.link = link;
     }
 
     @Override

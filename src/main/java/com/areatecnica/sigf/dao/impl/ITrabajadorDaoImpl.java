@@ -50,6 +50,14 @@ public class ITrabajadorDaoImpl extends GenericDAOImpl<Trabajador> implements IT
         }
     }
     
+    public List<Trabajador> findNanduOrderByCode() {
+        try {
+            return this.entityManager.createNamedQuery("Trabajador.findByNanduOrderByCode").getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+    
     @Override
     public Trabajador findByTrabajadorRutAndCuenta(String rut, Cuenta cuenta) {
         try {

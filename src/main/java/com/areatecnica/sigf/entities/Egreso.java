@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Egreso.findAll", query = "SELECT e FROM Egreso e")
     , @NamedQuery(name = "Egreso.findByEgresoId", query = "SELECT e FROM Egreso e WHERE e.egresoId = :egresoId")
-    , @NamedQuery(name = "Egreso.findAllByCuenta", query = "SELECT e FROM Egreso e WHERE e.egresoIdCuenta = :idCuenta")
+    , @NamedQuery(name = "Egreso.findByCuenta", query = "SELECT e FROM Egreso e WHERE e.egresoIdCuenta = :idCuenta")
     , @NamedQuery(name = "Egreso.findByEgresoNombre", query = "SELECT e FROM Egreso e WHERE e.egresoNombre = :egresoNombre")
     , @NamedQuery(name = "Egreso.findByEgresoValorDefecto", query = "SELECT e FROM Egreso e WHERE e.egresoValorDefecto = :egresoValorDefecto")
     , @NamedQuery(name = "Egreso.findByEgresoPorcentaje", query = "SELECT e FROM Egreso e WHERE e.egresoPorcentaje = :egresoPorcentaje")

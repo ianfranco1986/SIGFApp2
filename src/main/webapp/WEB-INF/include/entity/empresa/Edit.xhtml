@@ -63,7 +63,7 @@
                         <p:outputLabel value="Activa?"/>
                         <p:selectBooleanCheckbox value="#{empresaController.selected.empresaActiva}"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{empresaController.save}" value="#{myBundle.Save}" update="display,:EmpresaListForm:datalist,:EmpresaListForm:EmpresaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpresaEditDialog'));">
+                    <p:commandButton actionListener="#{empresaController.save}" value="#{myBundle.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpresaEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EmpresaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

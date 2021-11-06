@@ -7,6 +7,7 @@ import com.areatecnica.sigf.dao.impl.ICuentaMayorDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProveedorDaoImpl;
+import com.areatecnica.sigf.dao.impl.ITipoMovimientoDaoImpl;
 import com.areatecnica.sigf.entities.Compra;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.CuentaMayor;
@@ -14,6 +15,7 @@ import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.MovimientoMes;
 import com.areatecnica.sigf.entities.Proveedor;
 import com.areatecnica.sigf.entities.TipoDocumento;
+import com.areatecnica.sigf.entities.TipoMovimiento;
 import com.areatecnica.sigf.models.CompraDataModel;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -45,6 +47,7 @@ public class CompraController extends AbstractController<Compra> {
     private CompraDataModel model;
 
     private TipoDocumento tipoDocumento;
+    private TipoMovimiento tipoMoviento; 
     private CuentaMayor cuentaMayor;
     private MovimientoMes movimiento;
     private CuentaBancaria cuentaBancaria;
@@ -90,7 +93,9 @@ public class CompraController extends AbstractController<Compra> {
         this.fechaMovimiento = new Date();
         this.fechaLiquidacion = new Date();
         this.proveedorItems = new IProveedorDaoImpl().findAll();
-
+        this.tipoMoviento = new ITipoMovimientoDaoImpl().findById(1);
+        
+        
         this.fecha = new Date();
         setFecha();
         this.desde = this.fecha;
@@ -142,6 +147,7 @@ public class CompraController extends AbstractController<Compra> {
 
             MovimientoMes mov = new MovimientoMes();
 
+            mov.setMovimientoMesMvtoId(tipoMoviento);
             mov.setMovimientoMesEmpresaId(empresaNandu);
             mov.setMovimientoMesCuentaBancoId(cuentaBancaria);
             mov.setMovimientoMesFechaMvto(this.getSelected().getCompraFechaDocumento());

@@ -130,6 +130,9 @@ public class FacturaController extends AbstractController<Factura> {
             this.items = new IFacturaDaoImpl().findBetweenDates(this.desde, this.hasta);
             this.model = new FacturaDataModel(items);
 
+            //items.stream().filter(factura->factura.getFacturaDetalle().equals("COSA")).map(Factura::getFacturaFolio).forEach(System.out::println);
+            
+            
             if (!this.items.isEmpty()) {
                 for (Factura f : this.items) {
                     this.total = this.total + f.getFacturaTotal();

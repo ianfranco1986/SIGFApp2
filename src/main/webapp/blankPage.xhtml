@@ -14,8 +14,8 @@
                     </i>                    
                 </div>
             </div>
-            <p:poll interval="1200" listener="#{blankPageController.init()}" update="form" />
-            
+
+
             <div class="panel-body" style="height: 70%;position: absolute;overflow-y: scroll">
 
                 <div class="row">
@@ -125,71 +125,57 @@
 
                                         <div class="progress-group">
                                             <span class="progress-text">Administración</span>
-                                            <span class="progress-number"><b>$ #{blankPageController.formattedValue(blankPageController.totalAdministracion.toString())}</b> (#{blankPageController.formattedFloat(blankPageController.getPorcentaje(blankPageController.totalAdministracion, blankPageController.totalRecaudacionMes))}%)</span>
 
                                             <div class="progress sm">
-                                                <div class="progress-bar progress-bar-aqua" style="width: #{blankPageController.getPorcentaje(blankPageController.totalAdministracion, blankPageController.totalRecaudacionMes)}%"></div>
                                             </div>
                                         </div>
                                         <!-- /.progress-group -->
                                         <div class="progress-group">
                                             <span class="progress-text">Cuota Extra</span>
-                                            <span class="progress-number"><b>$ #{blankPageController.formattedValue(blankPageController.totalCuotaExtra)}</b>(#{blankPageController.formattedFloat(blankPageController.getPorcentaje(blankPageController.totalCuotaExtra, blankPageController.totalRecaudacionMes))}%)</span>
 
                                             <div class="progress sm">
-                                                <div class="progress-bar progress-bar-red" style="width: #{blankPageController.getPorcentaje(blankPageController.totalCuotaExtra, blankPageController.totalRecaudacionMes)}%"></div>
                                             </div>
                                         </div>
                                         <!-- /.progress-group -->
                                         <div class="progress-group">
                                             <span class="progress-text">Imposiciones</span>
-                                            <span class="progress-number"><b>$ #{blankPageController.formattedValue(blankPageController.totalImposiciones)}</b>(#{blankPageController.formattedFloat(blankPageController.getPorcentaje(blankPageController.totalImposiciones, blankPageController.totalRecaudacionMes))}%)</span>
-
+                                            
                                             <div class="progress sm">
-                                                <div class="progress-bar progress-bar-green" style="width: #{blankPageController.getPorcentaje(blankPageController.totalImposiciones, blankPageController.totalRecaudacionMes)}%"></div>
-                                            </div>
+                                             </div>
                                         </div>
                                         <!-- /.progress-group -->
                                         <div class="progress-group">
                                             <span class="progress-text">Boletos</span>
-                                            <span class="progress-number"><b>$ #{blankPageController.formattedValue(blankPageController.totalBoletos)}</b>(#{blankPageController.formattedFloat(blankPageController.getPorcentaje(blankPageController.totalBoletos, blankPageController.totalRecaudacionMes))}%)</span>
-
+                                           
                                             <div class="progress sm">
-                                                <div class="progress-bar progress-bar-yellow" style="width: #{blankPageController.getPorcentaje(blankPageController.totalBoletos, blankPageController.totalRecaudacionMes)}%"></div>
-                                            </div>
+                                              </div>
                                         </div>
                                         <!-- /.progress-group -->
 
                                         <!-- /.progress-group -->
                                         <div class="progress-group">
                                             <span class="progress-text">Combustible</span>
-                                            <span class="progress-number"><b>$ #{blankPageController.formattedValue(blankPageController.totalCombustible)}</b>(#{blankPageController.formattedFloat(blankPageController.getPorcentaje(blankPageController.totalCombustible, blankPageController.totalRecaudacionMes))}%)</span>
-
+                                           
                                             <div class="progress sm">
-                                                <div class="progress-bar progress-bar-yellow" style="width: #{blankPageController.getPorcentaje(blankPageController.totalCombustible, blankPageController.totalRecaudacionMes)}%"></div>
-                                            </div>
+                                              </div>
                                         </div>
                                         <!-- /.progress-group -->
 
                                         <!-- /.progress-group -->
                                         <div class="progress-group">
                                             <span class="progress-text">Minutos</span>
-                                            <span class="progress-number"><b>$ #{blankPageController.formattedValue(blankPageController.totalMinutos)}</b>(#{blankPageController.formattedFloat(blankPageController.getPorcentaje(blankPageController.totalMinutos, blankPageController.totalRecaudacionMes))}%)</span>
-
+                                           
                                             <div class="progress sm">
-                                                <div class="progress-bar progress-bar-yellow" style="width: #{blankPageController.getPorcentaje(blankPageController.totalMinutos, blankPageController.totalRecaudacionMes)}%"></div>
-                                            </div>
+                                              </div>
                                         </div>
                                         <!-- /.progress-group -->
 
                                         <!-- /.progress-group -->
                                         <div class="progress-group">
                                             <span class="progress-text">Varios</span>
-                                            <span class="progress-number"><b>$ #{blankPageController.formattedValue(blankPageController.totalBoletos)}</b>(#{blankPageController.formattedFloat(blankPageController.getPorcentaje(blankPageController.totalBoletos, blankPageController.totalRecaudacionMes))}%)</span>
-
+                                         
                                             <div class="progress sm">
-                                                <div class="progress-bar progress-bar-yellow" style="width: #{blankPageController.getPorcentaje(blankPageController.totalBoletos, blankPageController.totalRecaudacionMes)}%"></div>
-                                            </div>
+                                                </div>
                                         </div>
                                         <!-- /.progress-group -->
                                     </div>

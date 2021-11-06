@@ -11,9 +11,11 @@ import com.areatecnica.sigf.util.Name2DateValuePOJO;
 import com.areatecnica.sigf.util.Name2ValuePOJO;
 import com.areatecnica.sigf.util.Name3ValuePOJO;
 import java.io.Serializable;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -90,13 +92,16 @@ public class BlankPageController implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.nombreMes = "Julio 2019";
+        
+        int mes = LocalDate.now().getMonth().getValue();
+        
+        this.nombreMes = new DateFormatSymbols().getMonths()[mes - 1];
         this.list = new ArrayList<>();
         
-        pieModel = new PieChartModel();
-        pieModel.setWidth("100%");
-
-        pieModel.setShowTooltip(true);
+//        pieModel = new PieChartModel();
+//        pieModel.setWidth("100%");
+//
+//        pieModel.setShowTooltip(true);
 
         client = ClientBuilder.newClient();
 
@@ -430,25 +435,25 @@ public class BlankPageController implements Serializable {
         return df.format(val);
     }
     
-    public float getPorcentaje(int part, int total) {
-        System.err.println("PARTE: " + part);
-        System.err.println("TOTAL: " + total);
-
-        float val = (part * 100.0f) / total;// (part * 100) / total;
-
-        System.err.println("Porcentaje: " + val);
-        return val;
-    }    
-    
-    public float getPorcentajeSuperior(int hoy, int ayer) {
-        System.err.println("PARTE: " + hoy);
-        System.err.println("TOTAL: " + ayer);
-
-        float val = (hoy * 100.0f) / ayer;// (part * 100) / total;
-
-        System.err.println("Porcentaje: " + val);
-        return val;
-    }
+//    public float getPorcentaje(int part, int total) {
+//        System.err.println("PARTE: " + part);
+//        System.err.println("TOTAL: " + total);
+//
+//        float val = (part * 100.0f) / total;// (part * 100) / total;
+//
+//        System.err.println("Porcentaje: " + val);
+//        return val;
+//    }    
+//    
+//    public float getPorcentajeSuperior(int hoy, int ayer) {
+//        System.err.println("PARTE: " + hoy);
+//        System.err.println("TOTAL: " + ayer);
+//
+//        float val = (hoy * 100.0f) / ayer;// (part * 100) / total;
+//
+//        System.err.println("Porcentaje: " + val);
+//        return val;
+//    }
 
     private void createPieModel(Name2ValuePOJO n) {
         String serie = n.getName();

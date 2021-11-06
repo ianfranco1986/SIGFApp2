@@ -35,22 +35,23 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "resumen_recaudacion", catalog = "sigfdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ResumenRecaudacion.findAll", query = "SELECT r FROM ResumenRecaudacion r")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionId", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionId = :resumenRecaudacionId")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionFecha", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionFecha = :resumenRecaudacionFecha")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionTotal", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionTotal = :resumenRecaudacionTotal")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionTieneTransporte", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionTieneTransporte = :resumenRecaudacionTieneTransporte")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionCerrado", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionCerrado = :resumenRecaudacionCerrado")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion20000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion20000 = :resumenRecaudacion20000")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion10000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion10000 = :resumenRecaudacion10000")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion5000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion5000 = :resumenRecaudacion5000")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion2000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion2000 = :resumenRecaudacion2000")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion1000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion1000 = :resumenRecaudacion1000")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion500", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion500 = :resumenRecaudacion500")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion100", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion100 = :resumenRecaudacion100")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion50", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion50 = :resumenRecaudacion50")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion10", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion10 = :resumenRecaudacion10")
-    , @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionCheques", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionCheques = :resumenRecaudacionCheques")})
+    @NamedQuery(name = "ResumenRecaudacion.findAll", query = "SELECT r FROM ResumenRecaudacion r"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionId", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionId = :resumenRecaudacionId"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionFecha", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionFecha = :resumenRecaudacionFecha"),
+    @NamedQuery(name = "ResumenRecaudacion.findByCajaProcesoDate", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionIdCaja = :resumenRecaudacionIdCaja AND r.resumenRecaudacionIdProceso = :resumenRecaudacionIdProceso AND r.resumenRecaudacionFecha = :resumenRecaudacionFecha"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionTotal", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionTotal = :resumenRecaudacionTotal"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionTieneTransporte", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionTieneTransporte = :resumenRecaudacionTieneTransporte"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionCerrado", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionCerrado = :resumenRecaudacionCerrado"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion20000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion20000 = :resumenRecaudacion20000"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion10000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion10000 = :resumenRecaudacion10000"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion5000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion5000 = :resumenRecaudacion5000"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion2000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion2000 = :resumenRecaudacion2000"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion1000", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion1000 = :resumenRecaudacion1000"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion500", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion500 = :resumenRecaudacion500"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion100", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion100 = :resumenRecaudacion100"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion50", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion50 = :resumenRecaudacion50"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion10", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion10 = :resumenRecaudacion10"),
+    @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionCheques", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionCheques = :resumenRecaudacionCheques")})
 public class ResumenRecaudacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -99,6 +100,9 @@ public class ResumenRecaudacion implements Serializable {
     @JoinColumn(name = "resumen_recaudacion_id_caja", referencedColumnName = "caja_recaudacion_id")
     @ManyToOne(optional = false)
     private CajaRecaudacion resumenRecaudacionIdCaja;
+    @JoinColumn(name = "resumen_recaudacion_id_proceso", referencedColumnName = "proceso_recaudacion_id")
+    @ManyToOne(optional = false)
+    private ProcesoRecaudacion resumenRecaudacionIdProceso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleDepositoRecaudacionIdResumen")
     private List<DetalleDepositoRecaudacion> detalleDepositoRecaudacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ctvResumenIdResumenRecaudacion")
@@ -247,6 +251,14 @@ public class ResumenRecaudacion implements Serializable {
         this.resumenRecaudacionIdCaja = resumenRecaudacionIdCaja;
     }
 
+    public void setResumenRecaudacionIdProceso(ProcesoRecaudacion resumenRecaudacionIdProceso) {
+        this.resumenRecaudacionIdProceso = resumenRecaudacionIdProceso;
+    }
+
+    public ProcesoRecaudacion getResumenRecaudacionIdProceso() {
+        return resumenRecaudacionIdProceso;
+    }
+
     @XmlTransient
     public List<DetalleDepositoRecaudacion> getDetalleDepositoRecaudacionList() {
         return detalleDepositoRecaudacionList;
@@ -289,5 +301,5 @@ public class ResumenRecaudacion implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.ResumenRecaudacion[ resumenRecaudacionId=" + resumenRecaudacionId + " ]";
     }
-    
+
 }

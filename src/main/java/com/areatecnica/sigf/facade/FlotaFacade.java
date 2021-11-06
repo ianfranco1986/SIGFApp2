@@ -36,46 +36,5 @@ public class FlotaFacade extends AbstractFacade<Flota> {
         super(Flota.class);
     }
 
-    public boolean isFlotaIdCuentaEmpty(Flota entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Flota> flota = cq.from(Flota.class);
-        //cq.select(cb.literal(1L)).distinct(true).where(cb.equal(flota, entity), cb.isNotNull(flota.get(Flota_.flotaIdCuenta)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public Cuenta findFlotaIdCuenta(Flota entity) {
-        return this.getMergedEntity(entity).getFlotaIdCuenta();
-    }
-
-    public boolean isBusListEmpty(Flota entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Flota> flota = cq.from(Flota.class);
-        //cq.select(cb.literal(1L)).distinct(true).where(cb.equal(flota, entity), cb.isNotEmpty(flota.get(Flota_.busList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public List<Bus> findBusList(Flota entity) {
-        Flota mergedEntity = this.getMergedEntity(entity);
-        List<Bus> busList = mergedEntity.getBusList();
-        busList.size();
-        return busList;
-    }
-
-    public boolean isEgresoFlotaListEmpty(Flota entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<Flota> flota = cq.from(Flota.class);
-        //cq.select(cb.literal(1L)).distinct(true).where(cb.equal(flota, entity), cb.isNotEmpty(flota.get(Flota_.egresoFlotaList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public List<EgresoFlota> findEgresoFlotaList(Flota entity) {
-        Flota mergedEntity = this.getMergedEntity(entity);
-        List<EgresoFlota> egresoFlotaList = mergedEntity.getEgresoFlotaList();
-        egresoFlotaList.size();
-        return egresoFlotaList;
-    }
     
 }

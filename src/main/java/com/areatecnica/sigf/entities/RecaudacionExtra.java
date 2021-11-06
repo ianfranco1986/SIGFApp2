@@ -31,12 +31,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "RecaudacionExtra.findAll", query = "SELECT r FROM RecaudacionExtra r")
-    , @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraId", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraId = :recaudacionExtraId")
-    , @NamedQuery(name = "RecaudacionExtra.findByFechaRecaudacionCaja", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraIdRecaudacion.recaudacionFecha = :recaudacionFecha AND r.recaudacionExtraIdRecaudacion.recaudacionIdCaja = :recaudacionIdCaja ORDER BY r.recaudacionExtraId")
-    , @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraMonto", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraMonto = :recaudacionExtraMonto")
-    , @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraDescripcion", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraDescripcion = :recaudacionExtraDescripcion")
-    , @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraUsuario", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraUsuario = :recaudacionExtraUsuario")})
+    @NamedQuery(name = "RecaudacionExtra.findAll", query = "SELECT r FROM RecaudacionExtra r"),
+    @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraId", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraId = :recaudacionExtraId"),
+    @NamedQuery(name = "RecaudacionExtra.findByFechaRecaudacionCaja", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraIdRecaudacion.recaudacionFecha = :recaudacionFecha AND r.recaudacionExtraIdRecaudacion.recaudacionIdCaja = :recaudacionIdCaja ORDER BY r.recaudacionExtraId"),
+    @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraMonto", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraMonto = :recaudacionExtraMonto"),
+    @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraDescripcion", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraDescripcion = :recaudacionExtraDescripcion"),
+    @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraUsuario", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraUsuario = :recaudacionExtraUsuario")})
 public class RecaudacionExtra implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +62,9 @@ public class RecaudacionExtra implements Serializable {
     @JoinColumn(name = "recaudacion_extra_id_recaudacion", referencedColumnName = "recaudacion_id", nullable = false)
     @ManyToOne(optional = false)
     private Recaudacion recaudacionExtraIdRecaudacion;
+    @JoinColumn(name = "recaudacion_extra_id_tipo", referencedColumnName = "tipo_recaudacion_extra_id")
+    @ManyToOne(optional = false)
+    private TipoRecaudacionExtra recaudacionExtraIdTipo;
 
     public RecaudacionExtra() {
     }
@@ -117,6 +120,14 @@ public class RecaudacionExtra implements Serializable {
         this.recaudacionExtraIdRecaudacion = recaudacionExtraIdRecaudacion;
     }
 
+    public TipoRecaudacionExtra getRecaudacionExtraIdTipo() {
+        return recaudacionExtraIdTipo;
+    }
+
+    public void setRecaudacionExtraIdTipo(TipoRecaudacionExtra recaudacionExtraIdTipo) {
+        this.recaudacionExtraIdTipo = recaudacionExtraIdTipo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -141,5 +152,5 @@ public class RecaudacionExtra implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.RecaudacionExtra[ recaudacionExtraId=" + recaudacionExtraId + " ]";
     }
-    
+
 }

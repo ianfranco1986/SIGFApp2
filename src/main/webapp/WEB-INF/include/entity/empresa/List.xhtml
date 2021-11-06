@@ -9,13 +9,6 @@
     <h:form id="EmpresaListForm">
         <p:panel id="panel" style="margin-top: 20px;">
             <h3 style="text-align: center;">Empresas</h3>
-            <p:contextMenu id="EmpresaDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EmpresaListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EmpresaListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EmpresaListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EmpresaListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{empresaController.items}"
                          lazy="false"
@@ -41,9 +34,9 @@
                 -->
 
 
-                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:EmpresaDataTableContextMenu" listener="#{empresaController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:EmpresaDataTableContextMenu" listener="#{empresaController.resetParents}"/>
-                <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{empresaController.resetParents}"/>
+                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton" />
+                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton" />
+                <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" />
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpresaListForm:viewButton').click();"/>
 
                 <f:facet name="header">

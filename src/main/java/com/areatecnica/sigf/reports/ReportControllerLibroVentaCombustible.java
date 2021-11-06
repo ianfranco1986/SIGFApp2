@@ -6,6 +6,8 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
+import com.areatecnica.sigf.entities.Usuario;
+import com.areatecnica.sigf.entities.Cuenta;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -36,7 +39,9 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/01");
     private List<Integer> array;
     private Boolean tipoInforme;
-
+    private Usuario currentUser;
+    private Cuenta userCount;
+ 
     /**
      * Creates a new instance of ReportControllerGuiaCajaFecha
      */
@@ -48,6 +53,11 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
     private void init() {
         this.tipoInforme = Boolean.TRUE;
         //this.items = new IBusDaoImpl().findAll();
+
+        this.currentUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
+        this.userCount = this.currentUser.getUsuarioIdCuenta();
+
+        System.err.println("LA CUENTA DEL USUARIO ES: " + this.currentUser.getUsuarioIdCuenta().getCuentaId());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -66,7 +76,8 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
 
         map.put("fechaCompleta", getFechaCompleta());
         map.put("fecha", desde);
-        
+        map.put("idCuenta", this.currentUser.getUsuarioIdCuenta());
+
         return map;
     }
 

@@ -62,7 +62,7 @@ public class IRecaudacionDaoImpl extends GenericDAOImpl<Recaudacion> implements 
     public List<Recaudacion> findByProcesoCajaFechaRecaudacion(ProcesoRecaudacion procesoRecaudacion, CajaRecaudacion caja, Date fechaRecaudacion) {
         try {
             return this.entityManager.createNamedQuery("Recaudacion.findByProcesoFechaRecaudacionCaja").
-                    setParameter("busIdProcesoRecaudacion", procesoRecaudacion).
+                    setParameter("recaudacionIdProceso", procesoRecaudacion).
                     setParameter("recaudacionIdCaja", caja).
                     setParameter("recaudacionFecha", fechaRecaudacion).getResultList();
         } catch (NoResultException ne) {

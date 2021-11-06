@@ -72,6 +72,10 @@
 
             <div class="card">
                 <p:panelGrid columns="2" style="width: 100%; height: 200px;" columnClasses="column2, column3">
+
+                    <h:outputText value="Nº Venta:" style="font-size: 15px; margin-top: 15px;"/>
+                    <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoId}" style="font-size: 15px; margin-top: 15px;"/>
+
                     <h:outputText value="Fecha:" style="font-size: 15px; margin-top: 15px;"/>
                     <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoFecha}" style="font-size: 15px; margin-top: 15px;">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -117,7 +121,7 @@
                                    itemValue="#{cajaItem}"
                                    itemLabel="#{cajaItem.cajaRecaudacionNombre}"
                                    />
-                    <p:ajax event="valueChange" listener="#{edicionVentaBoletoController.findInventario()}" update=":growl"/>
+                    <p:ajax event="valueChange" listener="#{edicionVentaBoletoController.findInventario()}" update=":growl, serieNueva"/>
                 </p:selectOneMenu>
 
                 <h:outputText value="Boleto:" style="font-size: 15px; margin-top: 15px;"/>                
@@ -132,7 +136,7 @@
                 </p:selectOneMenu>
 
                 <h:outputText value="Serie:" style="font-size: 15px; margin-top: 15px;"/>                
-                <p:selectOneMenu id="serieNueva" value="#{edicionVentaBoletoController.inventario}" required="true" requiredMessage="Debe seleccionar una serie disponible" converter="omnifaces.SelectItemsConverter" style="font-size: 15px;">
+                <p:selectOneMenu id="serieNueva" value="#{edicionVentaBoletoController.inventario}" required="true" requiredMessage="Debe seleccionar una serie disponible" converter="omnifaces.SelectItemsConverter" style="font-size: 15px;" >
                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                     <f:selectItems value="#{edicionVentaBoletoController.inventarioCajaItems}"
                                    var="inventarioItem"
@@ -142,7 +146,8 @@
                 </p:selectOneMenu>
 
                 <h:outputText value="" style="font-size: 15px; margin-top: 15px;"/>
-                <p:commandButton id="value3" ajax="true" icon="fa fa-database" value="Cambiar Boleto" update="@(.clase), GuiaListForm:detail, growl" styleClass="btn btn-primary" style="width:120px" actionListener="#{edicionVentaBoletoController.save}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                <p:commandButton id="value3" ajax="true" icon="fa fa-database" value="Cambiar Boleto" update="@(.clase), GuiaListForm:detail, form2:next, growl" styleClass="btn btn-primary" style="width:120px" actionListener="#{edicionVentaBoletoController.save}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" resetValues="true">
+                    <p:confirm header="Confirmación" message="¿Actualizar venta de boleto?" icon="ui-icon-alert"/>
                 </p:commandButton>
             </p:panelGrid>
 

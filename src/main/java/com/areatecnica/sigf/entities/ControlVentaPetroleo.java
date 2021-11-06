@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,7 +32,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "ControlVentaPetroleo.findAll", query = "SELECT c FROM ControlVentaPetroleo c"),
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoId", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoId = :controlVentaPetroleoId"),
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoFecha", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoFecha = :controlVentaPetroleoFecha"),
-    @NamedQuery(name = "ControlVentaPetroleo.findByDates", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoFecha BETWEEN :from AND :to ORDER BY c.controlVentaPetroleoFecha "),
+    @NamedQuery(name = "ControlVentaPetroleo.findByDates", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoFecha BETWEEN :from AND :to and c.controlIdCuenta = :idCuenta ORDER BY c.controlVentaPetroleoFecha "),
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoN1StockInicial", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoN1StockInicial = :controlVentaPetroleoN1StockInicial"),
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoN1NumeralInicial", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoN1NumeralInicial = :controlVentaPetroleoN1NumeralInicial"),
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoN1NumeralFinal", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoN1NumeralFinal = :controlVentaPetroleoN1NumeralFinal"),
@@ -94,6 +96,9 @@ public class ControlVentaPetroleo implements Serializable {
     @NotNull
     @Column(name = "control_venta_petroleo_n2_stock_final")
     private float controlVentaPetroleoN2StockFinal;
+    @JoinColumn(name = "control_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
+    @ManyToOne(optional = false)
+    private Cuenta controlIdCuenta;
 
     public ControlVentaPetroleo() {
     }
@@ -213,6 +218,14 @@ public class ControlVentaPetroleo implements Serializable {
         this.controlVentaPetroleoN2StockFinal = controlVentaPetroleoN2StockFinal;
     }
 
+    public Cuenta getControlIdCuenta() {
+        return controlIdCuenta;
+    }
+
+    public void setControlIdCuenta(Cuenta controlIdCuenta) {
+        this.controlIdCuenta = controlIdCuenta;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

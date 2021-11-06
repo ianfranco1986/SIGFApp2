@@ -1,6 +1,10 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.CuentaBancaria;
+import com.areatecnica.sigf.entities.Empresa;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -23,6 +27,7 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
     public CuentaBancariaController() {
         // Inform the Abstract parent controller of the concrete CuentaBancaria Entity
         super(CuentaBancaria.class);
+
     }
 
     /**
@@ -56,7 +61,6 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
 //            this.isCuentaBancoProcesoListEmpty = true;
 //        }
 //    }
-
     /**
      * Sets the "items" attribute with a collection of CuentaBancoProceso
      * entities that are retrieved from CuentaBancaria and returns the
@@ -73,7 +77,6 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
 //        }
 //        return "/app/cuentaBancoProceso/index";
 //    }
-
     public boolean getIsCuentaBancoEmpresaListEmpty() {
         return this.isCuentaBancoEmpresaListEmpty;
     }
@@ -87,7 +90,6 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
 //            this.isCuentaBancoEmpresaListEmpty = true;
 //        }
 //    }
-
     /**
      * Sets the "items" attribute with a collection of CuentaBancoEmpresa
      * entities that are retrieved from CuentaBancaria and returns the
@@ -104,7 +106,6 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
 //        }
 //        return "/app/cuentaBancoEmpresa/index";
 //    }
-
     /**
      * Sets the "selected" attribute of the Banco controller in order to display
      * its data in its View dialog.
@@ -135,6 +136,26 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
         return this.isCuentaBancoTrabajadorListEmpty;
     }
 
+    @Override
+    public Collection<CuentaBancaria> getItems() {
+
+        List<Empresa> empresas = this.getUserCount().getEmpresaList();
+
+        if (!empresas.isEmpty()) {
+            List<CuentaBancaria> cuentas = new ArrayList<>();
+
+            for (Empresa e : empresas) {
+                cuentas.addAll(e.getCuentaBancariaList());
+            }
+
+            this.setItems(cuentas);
+        }else{
+            this.setItems(new ArrayList());
+        }
+
+        return getItems();
+    }
+
 //    private void setIsCuentaBancoTrabajadorListEmpty() {
 //        CuentaBancaria selected = this.getSelected();
 //        if (selected != null) {
@@ -144,7 +165,6 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
 //            this.isCuentaBancoTrabajadorListEmpty = true;
 //        }
 //    }
-
     /**
      * Sets the "items" attribute with a collection of CuentaBancoTrabajador
      * entities that are retrieved from CuentaBancaria and returns the
@@ -161,5 +181,4 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
 //        }
 //        return "/app/cuentaBancoTrabajador/index";
 //    }
-
 }

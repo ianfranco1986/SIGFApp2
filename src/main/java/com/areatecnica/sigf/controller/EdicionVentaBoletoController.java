@@ -17,6 +17,7 @@ import com.areatecnica.sigf.entities.InventarioCaja;
 import com.areatecnica.sigf.entities.RecaudacionGuia;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +29,7 @@ import org.primefaces.event.RowEditEvent;
 
 @Named(value = "edicionVentaBoletoController")
 @ViewScoped
-public class EdicionVentaBoletoController extends AbstractController<VentaBoleto> {
+public class EdicionVentaBoletoController implements Serializable {
 
     private Date fecha;
     private int totalRecaudacion = 0;
@@ -56,8 +57,7 @@ public class EdicionVentaBoletoController extends AbstractController<VentaBoleto
     private int serie = 0;
 
     public EdicionVentaBoletoController() {
-        // Inform the Abstract parent controller of the concrete RecaudacionGuia Entity
-        super(VentaBoleto.class);
+
     }
 
     @PostConstruct
@@ -76,7 +76,7 @@ public class EdicionVentaBoletoController extends AbstractController<VentaBoleto
             this.ventaBoleto = new IVentaBoletoDaoImpl().findByBusBoletoEstado(bus, selectedBoleto);
 
             if (this.ventaBoleto != null) {
-
+                JsfUtil.addSuccessMessage("Se encontró la Venta Nº : " + this.ventaBoleto.getVentaBoletoId());
             } else {
                 JsfUtil.addErrorMessage("No se han encontrado ventas para el par bus/boleto seleccionado");
             }
@@ -90,8 +90,15 @@ public class EdicionVentaBoletoController extends AbstractController<VentaBoleto
     public void save() {
         if (this.inventario != null) {
             this.ventaBoleto.setVentaBoletoIdInventarioCaja(inventario);
-            new IVentaBoletoDaoImpl().update(ventaBoleto);
+            VentaBoleto aux = new IVentaBoletoDaoImpl().update(ventaBoleto);
 
+            if (aux != null) {
+                JsfUtil.addSuccessMessage("Se ha actualizado la serie: "+this.inventario.getInventarioCajaSerie()+" ("+this.inventario.getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoNombre()+") para la Venta Nº "+this.ventaBoleto.getVentaBoletoId());
+                this.ventaBoleto = null; 
+                this.inventario = null; 
+                this.newBoleto = null; 
+                this.cajaRecaudacion = null; 
+            }
         } else {
             JsfUtil.addErrorMessage("Error al guardar los cambios");
         }
@@ -101,7 +108,7 @@ public class EdicionVentaBoletoController extends AbstractController<VentaBoleto
         if (this.newBoleto != null && this.cajaRecaudacion != null) {
             this.inventarioCajaItems = new IInventarioCajaDaoImpl().findByBoletoEstado(cajaRecaudacion, newBoleto, Boolean.FALSE);
         } else {
-            JsfUtil.addErrorMessage("Error al buscar el inventario, boleto: " + this.newBoleto + " caja:" + this.cajaRecaudacion);
+            //JsfUtil.addErrorMessage("Error al buscar el inventario, boleto: " + this.newBoleto + " caja:" + this.cajaRecaudacion);
         }
     }
 

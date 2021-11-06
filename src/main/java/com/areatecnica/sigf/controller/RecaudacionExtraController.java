@@ -3,9 +3,11 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionExtraDaoImpl;
+import com.areatecnica.sigf.dao.impl.ITipoRecaudacionExtraDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Recaudacion;
 import com.areatecnica.sigf.entities.RecaudacionExtra;
+import com.areatecnica.sigf.entities.TipoRecaudacionExtra;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.models.RecaudacionExtraDataModel;
 import java.io.Serializable;
@@ -30,6 +32,7 @@ public class RecaudacionExtraController implements Serializable {
     private Recaudacion recaudacion;
     private List<CajaRecaudacion> cajaRecaudacionItems;
     private List<RecaudacionExtra> items;
+    private List<TipoRecaudacionExtra> tipoRecaudacionExtraItems; 
 
     private int totalRecaudacion;
 
@@ -43,7 +46,7 @@ public class RecaudacionExtraController implements Serializable {
     public void init() {
         this.fecha = new Date();
         this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAll();
-
+        this.tipoRecaudacionExtraItems = new ITipoRecaudacionExtraDaoImpl().findAll();
     }
 
     public void load() {
@@ -130,6 +133,14 @@ public class RecaudacionExtraController implements Serializable {
 
     public String getFormatValue(int val) {
         return nf.format(val);
+    }
+
+    public void setTipoRecaudacionExtraItems(List<TipoRecaudacionExtra> tipoRecaudacionExtraItems) {
+        this.tipoRecaudacionExtraItems = tipoRecaudacionExtraItems;
+    }
+
+    public List<TipoRecaudacionExtra> getTipoRecaudacionExtraItems() {
+        return tipoRecaudacionExtraItems;
     }
 
     public void delete() {

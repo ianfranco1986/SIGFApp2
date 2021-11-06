@@ -35,12 +35,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "ProcesoRecaudacion.findAll", query = "SELECT p FROM ProcesoRecaudacion p")
-    , @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionId", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionId = :procesoRecaudacionId")
-    , @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionNombre", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionNombre = :procesoRecaudacionNombre")
-    , @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionTieneCuenta", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionTieneCuenta = :procesoRecaudacionTieneCuenta")
-    , @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionTieneEgresos", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionTieneEgresos = :procesoRecaudacionTieneEgresos")
-    , @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionActivo", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionActivo = :procesoRecaudacionActivo")})
+    @NamedQuery(name = "ProcesoRecaudacion.findAll", query = "SELECT p FROM ProcesoRecaudacion p"),
+    @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionId", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionId = :procesoRecaudacionId"),
+    @NamedQuery(name = "ProcesoRecaudacion.findByCuenta", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionIdCuenta = :idCuenta"),
+    @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionNombre", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionNombre = :procesoRecaudacionNombre"),
+    @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionTieneCuenta", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionTieneCuenta = :procesoRecaudacionTieneCuenta"),
+    @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionTieneEgresos", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionTieneEgresos = :procesoRecaudacionTieneEgresos"),
+    @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionActivo", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionActivo = :procesoRecaudacionActivo")})
 public class ProcesoRecaudacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,6 +71,11 @@ public class ProcesoRecaudacion implements Serializable {
     private List<EgresoProcesoRecaudacion> egresoProcesoRecaudacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaProcesoIdProceso")
     private List<CajaProceso> cajaProcesoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenRecaudacionIdProceso")
+    private List<ResumenRecaudacion> resumenRecaudacionList;
+    @JoinColumn(name = "proceso_recaudacion_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionIdProceso")
+    private List<Recaudacion> recaudacionList;
     @JoinColumn(name = "proceso_recaudacion_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
     @ManyToOne(optional = false)
     private Cuenta procesoRecaudacionIdCuenta;
@@ -127,6 +133,14 @@ public class ProcesoRecaudacion implements Serializable {
         this.procesoRecaudacionActivo = procesoRecaudacionActivo;
     }
 
+    public List<ResumenRecaudacion> getResumenRecaudacionList() {
+        return resumenRecaudacionList;
+    }
+
+    public void setResumenRecaudacionList(List<ResumenRecaudacion> resumenRecaudacionList) {
+        this.resumenRecaudacionList = resumenRecaudacionList;
+    }
+
     @XmlTransient
     public List<CuentaBancoProceso> getCuentaBancoProcesoList() {
         return cuentaBancoProcesoList;
@@ -171,6 +185,14 @@ public class ProcesoRecaudacion implements Serializable {
         this.procesoRecaudacionIdCuenta = procesoRecaudacionIdCuenta;
     }
 
+    public List<Recaudacion> getRecaudacionList() {
+        return recaudacionList;
+    }
+
+    public void setRecaudacionList(List<Recaudacion> recaudacionList) {
+        this.recaudacionList = recaudacionList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -195,5 +217,5 @@ public class ProcesoRecaudacion implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.ProcesoRecaudacion[ procesoRecaudacionId=" + procesoRecaudacionId + " ]";
     }
-    
+
 }

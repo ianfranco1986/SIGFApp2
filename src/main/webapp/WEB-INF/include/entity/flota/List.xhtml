@@ -10,13 +10,6 @@
 
         <p:panel id="panel" style="margin-top: 20px;">
             <h3 style="text-align: center;">Flotas</h3>
-            <p:contextMenu id="FlotaDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('FlotaListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('FlotaListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('FlotaListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('FlotaListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{flotaController.items}"
                          lazy="false"
@@ -41,8 +34,8 @@
                 -->
 
 
-                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:FlotaDataTableContextMenu" listener="#{flotaController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:FlotaDataTableContextMenu" listener="#{flotaController.resetParents}"/>
+                <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton" listener="#{flotaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton" listener="#{flotaController.resetParents}"/>
                 <p:ajax event="contextMenu" update="datalist:createButton datalist:viewButton datalist:editButton datalist:deleteButton" listener="#{flotaController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('FlotaListForm:viewButton').click();"/>
 

@@ -24,7 +24,7 @@ public class ICajaRecaudacionDaoImpl extends GenericDAOImpl<CajaRecaudacion> imp
     @Override
     public List<CajaRecaudacion> findAllByUser(Usuario usuario) {
         try {
-            return this.entityManager.createNamedQuery("CajaRecaudacion.findByCajaRecaudacionIdUsuario").setParameter("cajaRecaudacionIdUsuario", usuario).getResultList();
+            return this.entityManager.createNamedQuery("CajaRecaudacion.findAllByCuenta").setParameter("cajaRecaudacionIdUsuario", usuario).getResultList();
         } catch (NoResultException ne) {
             return null;
         }

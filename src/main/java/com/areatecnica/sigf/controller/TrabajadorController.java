@@ -93,8 +93,8 @@ public class TrabajadorController extends AbstractController<Trabajador> {
     public TrabajadorController() {
         // Inform the Abstract parent controller of the concrete Trabajador Entity
         super(Trabajador.class);
-//        this.setLimitedByCuenta(Boolean.TRUE);
-//        this.setNamedQuery("Trabajador.findAllByCuenta");
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Trabajador.findAllByCuenta");
         Calendar calendar = Calendar.getInstance();
         DateTime dateTime = new DateTime(calendar.get(Calendar.YEAR) - 20, 1, 1, 0, 0);
         this.minFechaNacimiento = dateTime.toDate();

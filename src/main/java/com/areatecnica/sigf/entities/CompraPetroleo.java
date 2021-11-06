@@ -105,6 +105,9 @@ public class CompraPetroleo implements Serializable {
     @JoinColumn(name = "compra_petroleo_tipo_documento_id", referencedColumnName = "tipo_documento_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoDocumento compraPetroleoTipoDocumentoId;
+    @JoinColumn(name = "compra_petroleo_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
+    @ManyToOne(optional = false)
+    private Cuenta compraPetroleoIdCuenta;
 
     public CompraPetroleo() {
     }
@@ -247,6 +250,14 @@ public class CompraPetroleo implements Serializable {
         this.compraPetroleoTipoDocumentoId = compraPetroleoTipoDocumentoId;
     }
 
+    public Cuenta getCompraPetroleoIdCuenta() {
+        return compraPetroleoIdCuenta;
+    }
+
+    public void setCompraPetroleoIdCuenta(Cuenta compraPetroleoIdCuenta) {
+        this.compraPetroleoIdCuenta = compraPetroleoIdCuenta;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

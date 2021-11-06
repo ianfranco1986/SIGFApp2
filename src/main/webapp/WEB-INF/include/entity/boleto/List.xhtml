@@ -31,10 +31,7 @@
             -->
 
 
-            <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton" listener="#{boletoController.resetParents}"/>
-            <p:ajax event="rowUnselect" update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton" listener="#{boletoController.resetParents}"/>
-            <p:ajax event="rowDblselect" onsuccess="document.getElementById('BoletoListForm:viewButton').click();"/>
-
+            
             <f:facet name="header">
                 <div class="row row-nomargin">
                     <div class="col-lg-3">

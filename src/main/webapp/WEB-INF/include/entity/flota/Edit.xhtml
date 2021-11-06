@@ -25,7 +25,7 @@
                         <p:selectBooleanCheckbox id="flotaTieneEgresos" value="#{flotaController.selected.flotaTieneEgresos}" />
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{flotaController.save}" value="#{myBundle.Save}" update="display,:FlotaListForm:datalist,:FlotaListForm:FlotaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FlotaEditDialog'));">
+                    <p:commandButton actionListener="#{flotaController.save}" value="#{myBundle.Save}" update="display,:FlotaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FlotaEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('FlotaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

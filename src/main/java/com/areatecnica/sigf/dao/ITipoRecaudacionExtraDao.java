@@ -5,18 +5,16 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.entities.ControlVentaPetroleo;
 import com.areatecnica.sigf.entities.Cuenta;
-import java.util.Date;
+import com.areatecnica.sigf.entities.TipoRecaudacionExtra;
 import java.util.List;
 
 /**
  *
  * @author ianfr
  */
-public interface IControlVentaPetroleoDao<T> extends IGenericDAO<T> {
+public interface ITipoRecaudacionExtraDao<T> extends IGenericDAO<T> {
 
-    public ControlVentaPetroleo findById(int id);
+    public List<TipoRecaudacionExtra> findByCuenta(Cuenta cuenta);
 
-    public List<ControlVentaPetroleo> findByDates(Date from, Date to, Cuenta cuenta);
 }

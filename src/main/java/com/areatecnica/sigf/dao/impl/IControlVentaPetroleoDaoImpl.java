@@ -28,11 +28,12 @@ public class IControlVentaPetroleoDaoImpl extends GenericDAOImpl<ControlVentaPet
     }
     
     @Override
-    public List<ControlVentaPetroleo> findByDates(Date from, Date to) {
+    public List<ControlVentaPetroleo> findByDates(Date from, Date to, Cuenta cuenta) {
         try {
             return this.entityManager.createNamedQuery("ControlVentaPetroleo.findByDates").
                     setParameter("from", from).
                     setParameter("to", to).
+                    setParameter("idCuenta", cuenta).
                     getResultList();
         } catch (NoResultException ne) {
             return null;
