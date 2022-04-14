@@ -1,0 +1,179 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/avalon">
+
+    <div class="topbar clearfix">
+        <div class="topbar-left">            
+            <h2 style="color: white; font-weight: bold">areTECNICA</h2>
+        </div>
+
+        <div class="topbar-right">
+            <a id="menu-button" href="#">
+                <i class="pi pi-angle-left"/>
+            </a>
+
+            <a id="topbar-menu-button" href="#">
+                <i class="pi pi-bars"/>
+            </a>
+
+            <h:form id="topbar-items-form">
+                <ul class="topbar-items fadeInDown animated">
+                    <ui:fragment rendered="#{guestPreferences.profileMode == 'overlay'||guestPreferences.menuLayout == 'menu-layout-static menu-layout-horizontal'}">
+                        <li class="profile-item">
+                            <a href="#">                            
+                                <p:avatar icon="pi pi-user" shape="circle" styleClass="profile-image" style="border: 0 none"/>
+
+                                <span class="topbar-item-name">#{loginController.usuario.usuarioNombres}</span>
+                                <span class="topbar-item-role">#{loginController.usuario.usuarioIdRol.rolNombre}</span>
+                            </a>
+
+                            <ul class="layout-menu animated">
+                                <li role="menuitem">
+                                    <a href="#">
+                                        <i class="pi pi-fw pi-user"/>
+                                        <span>Perfil</span>
+                                    </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a href="#">
+                                        <i class="pi pi-fw pi-lock"/>
+                                        <span>Privacidad</span>
+                                    </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a href="#">
+                                        <i class="pi pi-fw pi-cog"/>
+                                        <span>Configuración</span>
+                                    </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a href="#">
+                                        <i class="pi pi-fw pi-sign-out"/>
+                                        <span>Salir</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ui:fragment>
+                    <li>
+                        <a href="#">
+                            <i class="topbar-icon pi pi-fw pi-cog"/>
+                            <span class="topbar-item-name">Configuración</span>
+                        </a>
+                        <ul class="layout-menu animated">
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="pi pi-fw pi-palette"/>
+                                    <span>Cambiar tema</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="pi pi-fw pi-star"/>
+                                    <span>Favoritos</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="pi pi-fw pi-lock"/>
+                                    <span>Bloquear</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="pi pi-fw pi-image"/>
+                                    <span>Fondo</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="topbar-icon animated swing pi pi-fw pi-envelope"/>
+                            <span class="topbar-badge animated rubberBand">0</span>
+                            <span class="topbar-item-name">Mensajes</span>
+                        </a>
+                        <ul class="layout-menu animated">
+                            <li role="menuitem">
+                                <a href="#" class="topbar-message">
+                                    <p:graphicImage name="images/avatar1.png" library="avalon-layout" width="35"/>
+                                    <span>Mensaje 1</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="topbar-message">
+                                    <p:graphicImage name="images/avatar2.png" library="avalon-layout" width="35"/>
+                                    <span>Mensaje 2</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="topbar-message">
+                                    <p:graphicImage name="images/avatar3.png" library="avalon-layout" width="35"/>
+                                    <span>Mensaje 3</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="topbar-message">
+                                    <p:graphicImage name="images/avatar2.png" library="avalon-layout" width="35"/>
+                                    <span>Mensaje 4</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="topbar-message">
+                                    <p:graphicImage name="images/avatar4.png" library="avalon-layout" width="35"/>
+                                    <span>Mensaje 5</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="topbar-icon pi pi-fw pi-bell"/>
+                            <span class="topbar-badge animated rubberBand">0</span>
+                            <span class="topbar-item-name">Notificaciones</span>
+                        </a>
+                        <ul class="layout-menu animated">
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="pi pi-fw pi-sliders-h"/>
+                                    <span>Tareas Pendientes 1</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="pi pi-fw pi-calendar"/>
+                                    <span>Tareas Pendientes 2</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="pi pi-fw pi-download"/>
+                                    <span>Tareas Pendientes 3</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="pi pi-fw pi-bookmark"/>
+                                    <span>Tareas Pendientes 4</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="search-item">
+                        <div class="topbar-search">
+                            <input type="text" placeholder="Busqueda" onkeypress="if (event.keyCode == 13) {
+                                        return false;
+                                    }"/>
+                            <i class="pi pi-search"/>
+                        </div>
+                    </li>
+                </ul>
+            </h:form>
+        </div>
+    </div>
+
+</ui:composition>

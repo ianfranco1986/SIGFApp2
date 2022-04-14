@@ -24,8 +24,8 @@ public class BusDataModel extends ListDataModel<Bus> implements SelectableDataMo
     }
 
     @Override
-    public Object getRowKey(Bus object) {
-        return object.getBusId();
+    public String getRowKey(Bus object) {
+        return String.valueOf(object.getBusId());
     }
 
     @Override

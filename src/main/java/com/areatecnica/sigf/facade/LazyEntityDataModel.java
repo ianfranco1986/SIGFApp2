@@ -1,14 +1,13 @@
 package com.areatecnica.sigf.facade;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
-import org.primefaces.model.SortOrder;
 
 /**
  * Specific implementation of LazyDataModel supporting the facade pattern
@@ -31,43 +30,43 @@ public class LazyEntityDataModel<T> extends LazyDataModel<T> {
      * @return
      */
     
-    public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        if (this.facade != null) { // Handle data that needs to be retrieved from the data back-end of the application
-
-            String sortOrderName = sortOrder.toString();
-            this.itemList = this.facade.findRange(first, pageSize, sortField, sortOrderName, filters);
-            this.setRowCount(this.facade.count(filters)); // Count ALL records for the applied filter
-            return this.itemList;
-
-        } else if (this.itemList != null) { // Handle data that was passed in by application
-
-            // filter
-            List<T> filteredItemList = filter(this.itemList, filters);
-
-            // sort
-            if (sortField != null) {
-                Collections.sort(filteredItemList, new LazyEntitySorter<T>(sortField, sortOrder));
-            }
-
-            // rowCount
-            int itemCount = filteredItemList.size();
-            this.setRowCount(itemCount);
-
-            // paginate
-            if (itemCount > pageSize) {
-                try {
-                    return filteredItemList.subList(first, first + pageSize);
-                } catch (IndexOutOfBoundsException e) {
-                    return filteredItemList.subList(first, first + (itemCount % pageSize));
-                }
-            } else {
-                return filteredItemList;
-            }
-
-        } else { // Nothing passed in by application
-            return null;
-        }
-    }
+//    public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+//        if (this.facade != null) { // Handle data that needs to be retrieved from the data back-end of the application
+//
+//            String sortOrderName = sortOrder.toString();
+//            this.itemList = this.facade.findRange(first, pageSize, sortField, sortOrderName, filters);
+//            this.setRowCount(this.facade.count(filters)); // Count ALL records for the applied filter
+//            return this.itemList;
+//
+//        } else if (this.itemList != null) { // Handle data that was passed in by application
+//
+//            // filter
+//            List<T> filteredItemList = filter(this.itemList, filters);
+//
+//            // sort
+//            if (sortField != null) {
+//                Collections.sort(filteredItemList, new LazyEntitySorter<T>(sortField, sortOrder));
+//            }
+//
+//            // rowCount
+//            int itemCount = filteredItemList.size();
+//            this.setRowCount(itemCount);
+//
+//            // paginate
+//            if (itemCount > pageSize) {
+//                try {
+//                    return filteredItemList.subList(first, first + pageSize);
+//                } catch (IndexOutOfBoundsException e) {
+//                    return filteredItemList.subList(first, first + (itemCount % pageSize));
+//                }
+//            } else {
+//                return filteredItemList;
+//            }
+//
+//        } else { // Nothing passed in by application
+//            return null;
+//        }
+//    }
 
     /**
      * Loads data lazily using multiple sort fields.
@@ -83,7 +82,7 @@ public class LazyEntityDataModel<T> extends LazyDataModel<T> {
         HashMap<String, String> sortFields = new LinkedHashMap<>();
         if (multiSortMeta != null) {
             for (SortMeta s : multiSortMeta) {
-                sortFields.put(s.getSortField(), s.getSortOrder().toString());
+                sortFields.put(s.getField(), s.getOrder().toString());
             }
         }
         itemList = this.facade.findRange(first, pageSize, sortFields, filters);
@@ -108,7 +107,7 @@ public class LazyEntityDataModel<T> extends LazyDataModel<T> {
      * @return
      */
     @Override
-    public Object getRowKey(T object) {
+    public String getRowKey(T object) {
         return Integer.toString(object.hashCode());
     }
 
@@ -166,6 +165,16 @@ public class LazyEntityDataModel<T> extends LazyDataModel<T> {
             }
         }
         return filteredItemList;
+    }
+
+    @Override
+    public int count(Map<String, FilterMeta> map) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<T> load(int i, int i1, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

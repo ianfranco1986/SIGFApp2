@@ -35,8 +35,8 @@ public class CajaRecaudacionController extends AbstractController<CajaRecaudacio
     public CajaRecaudacionController() {
         // Inform the Abstract parent controller of the concrete CajaRecaudacion Entity
         super(CajaRecaudacion.class);
-        this.setLimitedByCuenta(Boolean.TRUE);
-        this.setNamedQuery("CajaRecaudacion.findAllByCuenta");
+//        this.setLimitedByCuenta(Boolean.TRUE);
+//        this.setNamedQuery("CajaRecaudacion.findAllByCuenta");
     }
 
     @Override

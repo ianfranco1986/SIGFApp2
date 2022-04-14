@@ -41,8 +41,8 @@ public class TerminalController extends AbstractController<Terminal> {
     public TerminalController() {
         // Inform the Abstract parent controller of the concrete Terminal Entity
         super(Terminal.class);
-        this.setLimitedByCuenta(Boolean.TRUE);
-        this.setNamedQuery("Terminal.findAllByCuenta");
+//        this.setLimitedByCuenta(Boolean.TRUE);
+//        this.setNamedQuery("Terminal.findAllByCuenta");
     }
 
     /**

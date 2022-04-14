@@ -24,8 +24,8 @@ public class RecaudacionDataModel extends ListDataModel<RecaudacionGuiaControlle
     }
 
     @Override
-    public Object getRowKey(RecaudacionGuiaController.RecaudacionGuiaHelper object) {
-        return object.getId();
+    public String getRowKey(RecaudacionGuiaController.RecaudacionGuiaHelper object) {
+        return String.valueOf(object.getId());
     }
 
     @Override

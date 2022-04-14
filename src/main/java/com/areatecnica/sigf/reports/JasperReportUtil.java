@@ -48,7 +48,7 @@ public class JasperReportUtil {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://www.areatecnica.cl:3306/sigfdb", "root", "NintendO64");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "nandu", ".TrustNo1.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class JasperReportUtil {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://www.areatecnica.cl:3306/sigfdb", "root", "NintendO64");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "nandu", ".TrustNo1.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,7 +97,7 @@ public class JasperReportUtil {
     public static StreamedContent getStreamContentFromOutputStream(ByteArrayOutputStream os, String contentType, String nameFile) throws Exception {
         StreamedContent file = null;
         InputStream is = new ByteArrayInputStream(os.toByteArray());
-        file = new DefaultStreamedContent(is, contentType, nameFile);
+//        file = new DefaultStreamedContent(is, contentType, nameFile);
         return file;
     }
 
@@ -113,7 +113,7 @@ public class JasperReportUtil {
         os.close();
 
         InputStream is = new ByteArrayInputStream(os.toByteArray());
-        pdf = new DefaultStreamedContent(is, "application/pdf", nameFilePdf);
+//        pdf = new DefaultStreamedContent(is, "application/pdf", nameFilePdf);
         return pdf;
     }
 

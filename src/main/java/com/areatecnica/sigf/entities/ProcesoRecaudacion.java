@@ -74,9 +74,6 @@ public class ProcesoRecaudacion implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenRecaudacionIdProceso")
     private List<ResumenRecaudacion> resumenRecaudacionList;
     @JoinColumn(name = "proceso_recaudacion_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionIdProceso")
-    private List<Recaudacion> recaudacionList;
-    @JoinColumn(name = "proceso_recaudacion_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
     @ManyToOne(optional = false)
     private Cuenta procesoRecaudacionIdCuenta;
 
@@ -183,14 +180,6 @@ public class ProcesoRecaudacion implements Serializable {
 
     public void setProcesoRecaudacionIdCuenta(Cuenta procesoRecaudacionIdCuenta) {
         this.procesoRecaudacionIdCuenta = procesoRecaudacionIdCuenta;
-    }
-
-    public List<Recaudacion> getRecaudacionList() {
-        return recaudacionList;
-    }
-
-    public void setRecaudacionList(List<Recaudacion> recaudacionList) {
-        this.recaudacionList = recaudacionList;
     }
 
     @Override

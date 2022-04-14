@@ -4,7 +4,7 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.ITrabajadorDaoImpl;
+import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.Trabajador;
@@ -158,7 +158,7 @@ public class GuiaController extends AbstractController<Guia> {
         this.hasta = new Date();
 
         this.itemsBus = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
-        this.trabajadorItems = new ITrabajadorDaoImpl().findNanduOrderByCode();
+        this.trabajadorItems = new TrabajadorDaoImpl().findNanduOrderByCode();
     }
 
     public void load() {

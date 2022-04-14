@@ -36,44 +36,5 @@ public class InventarioCajaFacade extends AbstractFacade<InventarioCaja> {
     public InventarioCajaFacade() {
         super(InventarioCaja.class);
     }
-
-    public boolean isVentaBoletoListEmpty(InventarioCaja entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<InventarioCaja> inventarioCaja = cq.from(InventarioCaja.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotEmpty(inventarioCaja.get(InventarioCaja_.ventaBoletoList)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public List<VentaBoleto> findVentaBoletoList(InventarioCaja entity) {
-        InventarioCaja mergedEntity = this.getMergedEntity(entity);
-        List<VentaBoleto> ventaBoletoList = mergedEntity.getVentaBoletoList();
-        ventaBoletoList.size();
-        return ventaBoletoList;
-    }
-
-    public boolean isInventarioCajaIdInventarioInternoEmpty(InventarioCaja entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<InventarioCaja> inventarioCaja = cq.from(InventarioCaja.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotNull(inventarioCaja.get(InventarioCaja_.inventarioCajaIdInventarioInterno)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public InventarioInterno findInventarioCajaIdInventarioInterno(InventarioCaja entity) {
-        return this.getMergedEntity(entity).getInventarioCajaIdInventarioInterno();
-    }
-
-    public boolean isInventarioCajaIdCajaEmpty(InventarioCaja entity) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<InventarioCaja> inventarioCaja = cq.from(InventarioCaja.class);
-//        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(inventarioCaja, entity), cb.isNotNull(inventarioCaja.get(InventarioCaja_.inventarioCajaIdCaja)));
-        return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public CajaRecaudacion findInventarioCajaIdCaja(InventarioCaja entity) {
-        return this.getMergedEntity(entity).getInventarioCajaIdCaja();
-    }
     
 }

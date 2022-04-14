@@ -39,8 +39,8 @@ public class ServicioController extends AbstractController<Servicio> {
     public ServicioController() {
         // Inform the Abstract parent controller of the concrete Servicio Entity
         super(Servicio.class);
-        this.setLimitedByCuenta(Boolean.TRUE);
-        this.setNamedQuery("Servicio.findAllByCuenta");
+//        this.setLimitedByCuenta(Boolean.TRUE);
+//        this.setNamedQuery("Servicio.findAllByCuenta");
     }
 
     /**

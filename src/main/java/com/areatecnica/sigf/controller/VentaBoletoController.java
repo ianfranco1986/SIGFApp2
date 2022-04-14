@@ -7,7 +7,7 @@ import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
 import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
-import com.areatecnica.sigf.dao.impl.ITrabajadorDaoImpl;
+import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
 import com.areatecnica.sigf.dao.impl.IVentaBoletoDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
@@ -100,7 +100,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
             this.totalRecaudacion = 0;
 
             this.busItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
-            this.trabajadorItems = new ITrabajadorDaoImpl().findNandu();
+            this.trabajadorItems = new TrabajadorDaoImpl().findNandu();
 
             this.items = new IVentaBoletoDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
             if (!this.items.isEmpty()) {

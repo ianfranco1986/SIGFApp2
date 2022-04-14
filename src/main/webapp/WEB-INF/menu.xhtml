@@ -1,0 +1,152 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/avalon">
+
+    <h:form id="menuform">
+        <div class="layout-menu-container #{guestPreferences.menuClass}">
+            <div class="menu-scroll-content">
+                <ui:fragment
+                    rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
+                    <div class="profile">
+                        <a id="profile-options" href="#">
+                            <p:graphicImage name="images/avatar.png" library="avalon-layout" styleClass="profile-image"
+                                            style="border: 0 none"/>
+                            <span class="profile-name">#{loginController.usuario.usuarioNombres}</span>
+                            <i class="pi pi-fw pi-chevron-down"/>
+                            <span class="profile-role">#{loginController.usuario.usuarioIdRol.rolNombre}</span>
+                        </a>
+                    </div>
+                    <ul id="profile-menu" class="layout-menu">
+                        <li role="menuitem">
+                            <a href="#">
+                                <i class="pi pi-fw pi-user"/>
+                                <span>Perfil</span>
+                            </a>
+                            <div class="layout-menu-tooltip">
+                                <div class="layout-menu-tooltip-arrow"></div>
+                                <div class="layout-menu-tooltip-text">Profile</div>
+                            </div>
+                        </li>
+                        <li role="menuitem">
+                            <a href="#">
+                                <i class="pi pi-fw pi-lock"/>
+                                <span>Privacidad</span>
+                            </a>
+                            <div class="layout-menu-tooltip">
+                                <div class="layout-menu-tooltip-arrow"></div>
+                                <div class="layout-menu-tooltip-text">Privacy</div>
+                            </div>
+                        </li>
+                        <li role="menuitem">
+                            <a href="#">
+                                <i class="pi pi-fw pi-cog"/>
+                                <span>Configuración</span>
+                            </a>
+                            <div class="layout-menu-tooltip">
+                                <div class="layout-menu-tooltip-arrow"></div>
+                                <div class="layout-menu-tooltip-text">Settings</div>
+                            </div>
+                        </li>
+                        <li role="menuitem">
+                            <a href="#">
+                                <i class="pi pi-fw pi-sign-out"/>
+                                <span>Salir</span>
+                            </a>
+                            <div class="layout-menu-tooltip">
+                                <div class="layout-menu-tooltip-arrow"></div>
+                                <div class="layout-menu-tooltip-text">Logout</div>
+                            </div>
+                        </li>
+                    </ul>
+                </ui:fragment>
+
+                <pu:menu widgetVar="me" styleClass="layout-main-menu">
+                    <p:submenu id="om_homepage" label="Favoritos" icon="pi pi-fw pi-home">
+                        <p:submenu id="om_dashboards" icon="pi pi-fw pi-home" label="Dashboards">
+                            <p:menuitem id="om_dashboard" value="General" icon="pi pi-fw pi-home" outcome="/webapp/dashboard"/>
+                            <p:menuitem id="om_dashboard_banking" value="Recaudación" icon="pi pi-fw pi-money-bill" outcome="/webapp/dashboard_banking"/>
+                        </p:submenu>
+                    </p:submenu>
+                    <p:submenu id="om_datos" label="Mantención de Datos" icon="pi pi-fw pi-database">
+                        <p:menuitem id="om_buses" value="Buses" icon="pi pi-fw pi-car" outcome="/webapp/datos/bus/List.xhtml" />
+                        <p:menuitem id="om_trabajadores" value="Trabajadores" icon="pi pi-fw pi-users" outcome="/webapp/datos/trabajador/List.xhtml" />
+                        <p:menuitem id="om_empresas" value="Empresas" icon="pi pi-fw pi-id-card" outcome="/webapp/datos/empresa/List.xhtml" />
+                        <p:menuitem id="om_flotas" value="Flotas" icon="pi pi-fw pi-book" outcome="/webapp/datos/flota/List.xhtml" />
+                    </p:submenu>
+                    <p:submenu id="om_recaudacion" label="Recaudación" icon="pi pi-fw pi-dollar">
+                        <p:menuitem id="om_guias" value="Ver o Editar R. de Guías " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/recaudacion-Guia/List.xhtml" />
+                    </p:submenu>
+                    <p:submenu id="om_utils" label="Utilities" icon="pi pi-fw pi-compass">
+                        <p:menuitem id="om_formlayout" value="Form Layout" icon="pi pi-fw pi-id-card" outcome="/webapp/formlayout" />
+                        <p:menuitem id="om_input" value="Input" icon="pi pi-fw pi-check-square" outcome="/webapp/input" />
+                        <p:menuitem id="om_floatlabel" value="Float Label" icon="pi pi-fw pi-bookmark" outcome="/webapp/floatlabel" />
+                        <p:menuitem id="om_invalidstate" value="Invalid State" icon="pi pi-fw pi-exclamation-circle" outcome="/webapp/invalidstate" />
+                        <p:menuitem id="om_button" value="Button" icon="pi pi-fw pi-mobile" outcome="/webapp/button" styleClass="rotated-icon"/>
+                        <p:menuitem id="om_table" value="Table" icon="pi pi-fw pi-table" outcome="/webapp/table" />
+                        <p:menuitem id="om_list" value="List" icon="pi pi-fw pi-list" outcome="/webapp/list" />
+                        <p:menuitem id="om_tree" value="Tree" icon="pi pi-fw pi-share-alt" outcome="/webapp/tree" />
+                        <p:menuitem id="om_panel" value="Panel" icon="pi pi-fw pi-tablet" outcome="/webapp/panel" />
+                        <p:menuitem id="om_overlay" value="Overlay" icon="pi pi-fw pi-clone" outcome="/webapp/overlay" />
+                        <p:menuitem id="om_menu" value="Menu" icon="pi pi-fw pi-bars" outcome="/webapp/menu" />
+                        <p:menuitem id="om_message" value="Message" icon="pi pi-fw pi-comment" outcome="/webapp/messages" />
+                        <p:menuitem id="om_file" value="File" icon="pi pi-fw pi-file" outcome="/webapp/file" />
+                        <p:menuitem id="om_chart" value="Chart" icon="pi pi-fw pi-chart-bar" outcome="/webapp/charts" />
+                        <p:menuitem id="om_media" value="Media" icon="pi pi-fw pi-image" outcome="/webapp/media" />
+                        <p:menuitem id="om_misc" value="Misc" icon="pi pi-fw pi-circle-off" outcome="/webapp/misc" />
+                        <p:menuitem id="om_display" value="Display" icon="pi pi-fw pi-desktop" outcome="/webapp/display" />
+                        <p:menuitem id="om_elevation" value="Elevation" icon="pi pi-fw pi-external-link" outcome="/webapp/elevation" />
+                        <p:menuitem id="om_flexbox" value="FlexBox" icon="pi pi-fw pi-directions" outcome="/webapp/flexbox" />
+                        <p:menuitem id="om_icons" value="Icons" icon="pi pi-fw pi-search" outcome="/webapp/icons" />
+                        <p:menuitem id="om_text" value="Text" icon="pi pi-fw pi-pencil" outcome="/webapp/text" />
+                        <p:menuitem id="om_widgets" value="Widgets" icon="pi pi-fw pi-star" outcome="/webapp/widgets" />
+                        <p:menuitem id="om_grid" value="Grid System" icon="pi pi-fw pi-th-large" outcome="/webapp/grid" />
+                        <p:menuitem id="om_spacing" value="Spacing" icon="pi pi-fw pi-arrow-right" outcome="/webapp/spacing" />
+                        <p:menuitem id="om_typography" value="Typography" icon="pi pi-fw pi-align-center" outcome="/webapp/typography" />
+                    </p:submenu>
+                    <p:submenu id="om_default" label="Pages" icon="pi pi-fw pi-briefcase">
+                        <p:menuitem id="om_crud" value="Crud" icon="pi pi-fw pi-pencil" outcome="/webapp/crud" />
+                        <p:menuitem id="om_calendar" value="Calendar" icon="pi pi-fw pi-calendar-plus" outcome="/webapp/calendar" />
+                        <p:menuitem id="om_chronoline" value="Chronoline" icon="pi pi-fw pi-calendar" outcome="/webapp/chronoline" />
+                        <p:menuitem id="om_landing" value="Landing" icon="pi pi-fw pi-globe" url="/webapp/landing.html" />
+                        <p:menuitem id="om_invoice" value="Invoice" icon="pi pi-fw pi-dollar" outcome="/webapp/invoice" />
+                        <p:menuitem id="om_wizard" value="Wizard" icon="pi pi-fw pi-star" outcome="/webapp/wizard" />
+                        <p:menuitem id="om_help" value="Help" icon="pi pi-fw pi-question-circle" outcome="/webapp/help" />
+                        <p:menuitem id="om_error" value="Error" icon="pi pi-fw pi-times-circle" outcome="/webapp/error" />
+                        <p:menuitem id="om_notfound" value="Not Found" icon="pi pi-fw pi-exclamation-circle" outcome="/webapp/notfound" />
+                        <p:menuitem id="om_access" value="Access Denied" icon="pi pi-fw pi-lock" outcome="/webapp/access" />
+                        <p:menuitem id="om_empty" value="Empty" icon="pi pi-fw pi-circle-off" outcome="/webapp/empty" />
+                    </p:submenu>
+                    <p:submenu id="om_hierarchy" label="Hierarchy" icon="pi pi-fw pi-align-left">
+                        <p:submenu id="om_sm1" label="Submenu 1" icon="pi pi-fw pi-align-left">
+                            <p:submenu id="om_sm11" label="Submenu 1.1" icon="pi pi-fw pi-align-left">
+                                <p:menuitem id="om_lnk111" value="Link 1.1.1" icon="pi pi-fw pi-align-left" url="#"/>
+                                <p:menuitem id="om_lnk112" value="Link 1.1.2" icon="pi pi-fw pi-align-left" url="#"/>
+                                <p:menuitem id="om_lnk113" value="Link 1.1.3" icon="pi pi-fw pi-align-left" url="#"/>
+                            </p:submenu>
+                            <p:submenu id="om_sm12" label="Submenu 1.2" icon="pi pi-fw pi-align-left">
+                                <p:menuitem id="om_lnk121" value="Link 1.2.1" icon="pi pi-fw pi-align-left" url="#"/>
+                            </p:submenu>
+                        </p:submenu>
+                        <p:submenu id="om_sm2" label="Submenu 2" icon="pi pi-fw pi-align-left">
+                            <p:submenu id="om_sm21" label="Submenu 2.1" icon="pi pi-fw pi-align-left">
+                                <p:menuitem id="om_lnk211" value="Link 2.1.1" icon="pi pi-fw pi-align-left" url="#"/>
+                                <p:menuitem id="om_lnk212" value="Link 2.1.2" icon="pi pi-fw pi-align-left" url="#"/>
+                            </p:submenu>
+                            <p:submenu id="om_sm22" label="Submenu 2.2" icon="pi pi-fw pi-align-left">
+                                <p:menuitem id="om_lnk221" value="Link 2.2.1" icon="pi pi-fw pi-align-left" url="#"/>
+                            </p:submenu>
+                        </p:submenu>
+                    </p:submenu>
+                    <p:submenu id="om_getstarted" label="Start" icon="pi pi-fw pi-download">
+                        <p:menuitem id="om_buy" value="Buy Now" icon="pi pi-fw pi-shopping-cart" url="https://www.primefaces.org/store" />
+                        <p:menuitem id="om_doc" value="Documentation" icon="pi pi-fw pi-info-circle" outcome="/webapp/documentation"/>
+                    </p:submenu>
+                </pu:menu>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

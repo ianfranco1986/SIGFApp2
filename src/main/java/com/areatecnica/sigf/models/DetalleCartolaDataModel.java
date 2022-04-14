@@ -24,8 +24,8 @@ public class DetalleCartolaDataModel extends ListDataModel<DetalleCartola> imple
     }
 
     @Override
-    public Object getRowKey(DetalleCartola object) {
-        return object.getDetalleCartolaId();
+    public String getRowKey(DetalleCartola object) {
+        return String.valueOf(object.getDetalleCartolaId());
     }
 
     @Override

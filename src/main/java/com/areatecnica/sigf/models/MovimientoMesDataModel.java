@@ -24,8 +24,8 @@ public class MovimientoMesDataModel extends ListDataModel<MovimientoMes> impleme
     }
 
     @Override
-    public Object getRowKey(MovimientoMes object) {
-        return object.getMovimientoMesId();
+    public String getRowKey(MovimientoMes object) {
+        return String.valueOf(object.getMovimientoMesId());
     }
 
     @Override

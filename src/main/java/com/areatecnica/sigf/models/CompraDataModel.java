@@ -24,8 +24,8 @@ public class CompraDataModel extends ListDataModel<Compra> implements Selectable
     }
 
     @Override
-    public Object getRowKey(Compra object) {
-        return object.getCompraId();
+    public String getRowKey(Compra object) {
+        return String.valueOf(object.getCompraId());
     }
 
     @Override

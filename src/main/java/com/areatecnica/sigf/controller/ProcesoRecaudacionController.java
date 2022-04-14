@@ -29,8 +29,8 @@ public class ProcesoRecaudacionController extends AbstractController<ProcesoReca
     public ProcesoRecaudacionController() {
         // Inform the Abstract parent controller of the concrete ProcesoRecaudacion Entity
         super(ProcesoRecaudacion.class);
-        this.setLimitedByCuenta(Boolean.TRUE);
-        this.setNamedQuery("ProcesoRecaudacion.findByCuenta");
+//        this.setLimitedByCuenta(Boolean.TRUE);
+//        this.setNamedQuery("ProcesoRecaudacion.findByCuenta");
     }
 
     @Override

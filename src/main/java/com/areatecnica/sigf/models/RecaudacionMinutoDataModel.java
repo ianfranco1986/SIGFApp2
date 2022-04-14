@@ -24,8 +24,8 @@ public class RecaudacionMinutoDataModel extends ListDataModel<RecaudacionMinuto>
     }
 
     @Override
-    public Object getRowKey(RecaudacionMinuto object) {
-        return object.getRecaudacionMinutoId();
+    public String getRowKey(RecaudacionMinuto object) {
+        return String.valueOf(object.getRecaudacionMinutoId());
     }
 
     @Override

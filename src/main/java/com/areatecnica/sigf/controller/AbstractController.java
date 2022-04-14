@@ -141,11 +141,9 @@ public abstract class AbstractController<T> implements Serializable {
      * @return a collection of Entity items returned by the data layer
      */
     public Collection<T> getItems() {
-        if (limitedByCuenta) {
-            items = this.ejbFacade.findAllByCuenta(userCount, namedQuery);
-        } else {
-            items = this.ejbFacade.findAll();
-        }
+
+        items = this.ejbFacade.findAll();
+
         return items;
     }
 

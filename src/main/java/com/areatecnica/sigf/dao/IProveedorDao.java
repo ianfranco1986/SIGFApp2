@@ -16,4 +16,6 @@ public interface IProveedorDao<T> extends IGenericDAO<T> {
 
     public Proveedor findByRut(String rut);
 
+
+
 }

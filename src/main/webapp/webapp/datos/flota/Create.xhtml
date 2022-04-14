@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FlotaCreateDialog" widgetVar="FlotaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateFlotaTitle}" closeOnEscape="true">
+
+            <h:form id="FlotaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{flotaController.selected != null}">
+                    <h:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="Nombre" for="flotaNombre" />
+                        <p:inputText id="flotaNombre" value="#{flotaController.selected.flotaNombre}" title="#{myBundle.CreateFlotaTitle_flotaNombre}" required="true" requiredMessage="#{myBundle.CreateFlotaRequiredMessage_flotaNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Tiene Egresos?" for="flotaTieneEgresos" />
+                        <p:selectBooleanCheckbox id="flotaTieneEgresos" value="#{flotaController.selected.flotaTieneEgresos}" />
+
+                    </h:panelGrid>
+                </h:panelGroup>
+                <div class="p-text-right">
+                    <p:commandButton 
+                        actionListener="#{flotaController.saveNew}" 
+                        value="Guardar" 
+                        icon="pi pi-save" 
+                        update=":FlotaListForm:datalist,:growl" 
+                        oncomplete="handleSubmit(xhr,status,args,PF('FlotaCreateDialog'));"
+                        styleClass="p-mr-2 p-mb-2" 
+                        >
+                        <p:confirm 
+                            header="#{myBundle.ConfirmationHeader}" 
+                            message="#{myBundle.ConfirmCreateMessage}" 
+                            icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton 
+                        value="Cancelar" 
+                        icon="pi pi-ban" 
+                        class="ui-button-secondary"
+                        oncomplete="PF('FlotaCreateDialog').hide()" 
+                        update="growl" 
+                        process="@this" 
+                        immediate="true" 
+                        resetValues="true"        
+                        styleClass="p-mr-2"
+                        />
+                </div>
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

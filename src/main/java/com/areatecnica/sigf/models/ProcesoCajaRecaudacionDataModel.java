@@ -24,8 +24,8 @@ public class ProcesoCajaRecaudacionDataModel extends ListDataModel<CajaProceso> 
     }
 
     @Override
-    public Object getRowKey(CajaProceso object) {
-        return object.getCajaProcesoId();
+    public String getRowKey(CajaProceso object) {
+        return String.valueOf(object.getCajaProcesoId());
     }
 
     @Override

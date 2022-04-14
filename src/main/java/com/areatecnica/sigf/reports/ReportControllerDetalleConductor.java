@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ITrabajadorDaoImpl;
+import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
 import com.areatecnica.sigf.entities.Trabajador;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -64,7 +64,7 @@ public class ReportControllerDetalleConductor implements Serializable {
         System.err.println("primera fecha: " + this.fecha);
         this.desde = this.fecha;
         this.hasta = this.fecha;
-        this.itemsTrabajador = new ITrabajadorDaoImpl().findNandu();
+        this.itemsTrabajador = new TrabajadorDaoImpl().findNandu();
     }
 
     public Map<String, Object> getMap() {

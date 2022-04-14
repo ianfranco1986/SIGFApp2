@@ -59,41 +59,7 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
     /**
      * Set the "is[ChildCollection]Empty" property for OneToMany fields.
      */
-    @Override
-    protected void setChildrenEmptyFlags() {
-        this.setIsVentaBoletoListEmpty();
-    }
-
-    public boolean getIsVentaBoletoListEmpty() {
-        return this.isVentaBoletoListEmpty;
-    }
-
-    private void setIsVentaBoletoListEmpty() {
-        InventarioCaja selected = this.getSelected();
-        if (selected != null) {
-            InventarioCajaFacade ejbFacade = (InventarioCajaFacade) this.getFacade();
-            this.isVentaBoletoListEmpty = ejbFacade.isVentaBoletoListEmpty(selected);
-        } else {
-            this.isVentaBoletoListEmpty = true;
-        }
-    }
-
-    /**
-     * Sets the "items" attribute with a collection of VentaBoleto entities that
-     * are retrieved from InventarioCaja and returns the navigation outcome.
-     *
-     * @return navigation outcome for VentaBoleto page
-     */
-    public String navigateVentaBoletoList() {
-        InventarioCaja selected = this.getSelected();
-        if (selected != null) {
-            InventarioCajaFacade ejbFacade = (InventarioCajaFacade) this.getFacade();
-            List<VentaBoleto> selectedVentaBoletoList = ejbFacade.findVentaBoletoList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("VentaBoleto_items", selectedVentaBoletoList);
-        }
-        return "/app/ventaBoleto/index";
-    }
-
+    
     /**
      * Sets the "selected" attribute of the InventarioInterno controller in
      * order to display its data in its View dialog.

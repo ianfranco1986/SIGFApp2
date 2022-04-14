@@ -24,8 +24,8 @@ public class CompraPetroleoDataModel extends ListDataModel<CompraPetroleo> imple
     }
 
     @Override
-    public Object getRowKey(CompraPetroleo object) {
-        return object.getCompraPetroleoId();
+    public String getRowKey(CompraPetroleo object) {
+        return String.valueOf(object.getCompraPetroleoId());
     }
 
     @Override

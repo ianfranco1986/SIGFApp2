@@ -41,7 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Recaudacion.findAll", query = "SELECT r FROM Recaudacion r"),
     @NamedQuery(name = "Recaudacion.findByRecaudacionId", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionId = :recaudacionId"),
-    @NamedQuery(name = "Recaudacion.findByProcesoFechaRecaudacionCaja", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionFecha = :recaudacionFecha AND r.recaudacionIdProceso = :recaudacionIdProceso ORDER BY r.recaudacionId"),
     @NamedQuery(name = "Recaudacion.findByFechaRecaudacionCaja", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionFecha = :recaudacionFecha ORDER BY r.recaudacionId"),
     @NamedQuery(name = "Recaudacion.findByRecaudacionIdentificador", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionIdentificador = :recaudacionIdentificador"),
     @NamedQuery(name = "Recaudacion.findByRecaudacionTotal", query = "SELECT r FROM Recaudacion r WHERE r.recaudacionTotal = :recaudacionTotal"),
@@ -82,9 +81,7 @@ public class Recaudacion implements Serializable {
     @JoinColumn(name = "recaudacion_id_caja", referencedColumnName = "caja_recaudacion_id", nullable = false)
     @ManyToOne(optional = false)
     private CajaRecaudacion recaudacionIdCaja;
-    @JoinColumn(name = "recaudacion_id_proceso", referencedColumnName = "proceso_recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
-    private ProcesoRecaudacion recaudacionIdProceso;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionDescuentoExtraIdRecaudacion")
     private List<RecaudacionDescuentoExtra> recaudacionDescuentoExtraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionGuiaIdRecaudacion")
@@ -175,14 +172,6 @@ public class Recaudacion implements Serializable {
 
     public void setRecaudacionCombustibleList(List<RecaudacionCombustible> recaudacionCombustibleList) {
         this.recaudacionCombustibleList = recaudacionCombustibleList;
-    }
-
-    public ProcesoRecaudacion getRecaudacionIdProceso() {
-        return recaudacionIdProceso;
-    }
-
-    public void setRecaudacionIdProceso(ProcesoRecaudacion recaudacionIdProceso) {
-        this.recaudacionIdProceso = recaudacionIdProceso;
     }
 
     public CajaRecaudacion getRecaudacionIdCaja() {

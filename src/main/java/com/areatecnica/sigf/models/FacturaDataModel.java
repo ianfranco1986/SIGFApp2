@@ -24,8 +24,8 @@ public class FacturaDataModel extends ListDataModel<Factura> implements Selectab
     }
 
     @Override
-    public Object getRowKey(Factura object) {
-        return object.getFacturaId();
+    public String getRowKey(Factura object) {
+        return String.valueOf(object.getFacturaId());
     }
 
     @Override

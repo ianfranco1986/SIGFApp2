@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Trabajadores</ui:define>
+
+    <ui:define name="content">
+        <h:form id="TrabajadorListForm">
+            <div class="p-grid crud-demo">
+                <div class="p-col-12">
+                    <div class="card">
+                        <p:growl id="messages" showDetail="true" />
+
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Nuevo" icon="pi pi-plus"  actionListener="#{trabajadorController.prepareCreate}" update=":TrabajadorCreateForm" oncomplete="PF('TrabajadorCreateDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" />
+
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <p:dataTable id="datalist"
+                                     value="#{trabajadorController.items}"
+                                     lazy="false"
+                                     rowKey="#{item.trabajadorId}"
+                                     var="item"
+                                     paginator="true"
+                                     rows="100"
+                                     paginatorPosition="bottom"
+                                     selectionMode="single"
+                                     selection="#{trabajadorController.selected}"
+                                     reflow="true"
+                                     rowIndexVar="rowIndex"
+                                     emptyMessage="No se han encontrado registros" 
+                                     widgetVar="datalistWidget">
+                            <!--
+                                     To enable Lazy Loading, please copy/replace the following lines above,
+                                     and be sure to replace the word HASH with the # symbol:
+                            
+                                     value="HASH{trabajadorController.lazyItems}"
+                                     lazy="true"
+                                     rowKey="HASH{item.trabajadorId}"  <<< Remove this line
+                            -->
+
+
+                            <f:facet name="header">
+                                <div class="products-table-header">
+                                    <span style="font-weight: bold"><h3>Trabajadores</h3></span>
+
+                                    <span class="filter-container ui-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+                            <p:column selectionMode="single" style="width:16px;text-align:center"/>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#"/>
+                                </f:facet>
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.trabajadorCodigo}" filterBy="#{item.trabajadorCodigo}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorCodigo}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trabajadorCodigo}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.trabajadorRut}" filterBy="#{item.trabajadorRut}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorRut}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trabajadorRut}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.trabajadorNombres}" filterBy="#{item.trabajadorNombres}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorNombres}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trabajadorNombres}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.trabajadorApellidoPaterno}" filterBy="#{item.trabajadorApellidoPaterno}">
+                                <f:facet name="header">
+                                    <h:outputText value="Ap.Paterno"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trabajadorApellidoPaterno}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.trabajadorApellidoMaterno}" filterBy="#{item.trabajadorApellidoMaterno}">
+                                <f:facet name="header">
+                                    <h:outputText value="Ap.Materno"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trabajadorApellidoMaterno}"/>
+                            </p:column>
+
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorFechaNacimiento}" filterBy="#{item.trabajadorFechaNacimiento}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorFechaNacimiento}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorFechaNacimiento}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorNacionalidad}" filterBy="#{item.trabajadorNacionalidad}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorNacionalidad}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorNacionalidad" value="#{item.trabajadorNacionalidad}" title="#{myBundle.EditTrabajadorTitle_trabajadorNacionalidad}"  disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorSexo}" filterBy="#{item.trabajadorSexo}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorSexo}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorSexo" value="#{item.trabajadorSexo}" title="#{myBundle.EditTrabajadorTitle_trabajadorSexo}"  disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorCalle}" filterBy="#{item.trabajadorCalle}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorCalle}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorCalle}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorNumeroDireccion}" filterBy="#{item.trabajadorNumeroDireccion}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorNumeroDireccion}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorNumeroDireccion}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorTelefonoFijo}" filterBy="#{item.trabajadorTelefonoFijo}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorTelefonoFijo}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorTelefonoFijo}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorCelular}" filterBy="#{item.trabajadorCelular}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorCelular}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorCelular}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorEmail}" filterBy="#{item.trabajadorEmail}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorEmail}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorEmail}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorPoseeCargas}" filterBy="#{item.trabajadorPoseeCargas}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorPoseeCargas}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorPoseeCargas" value="#{item.trabajadorPoseeCargas}" title="#{myBundle.EditTrabajadorTitle_trabajadorPoseeCargas}" required="true" requiredMessage="#{myBundle.EditTrabajadorRequiredMessage_trabajadorPoseeCargas}" disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorNumeroCargas}" filterBy="#{item.trabajadorNumeroCargas}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorNumeroCargas}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorNumeroCargas}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorMontoSalud}" filterBy="#{item.trabajadorMontoSalud}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorMontoSalud}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorMontoSalud}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorPoseeApv}" filterBy="#{item.trabajadorPoseeApv}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorPoseeApv}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorPoseeApv" value="#{item.trabajadorPoseeApv}" title="#{myBundle.EditTrabajadorTitle_trabajadorPoseeApv}" required="true" requiredMessage="#{myBundle.EditTrabajadorRequiredMessage_trabajadorPoseeApv}" disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorFormaPagoApv}" filterBy="#{item.trabajadorFormaPagoApv}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorFormaPagoApv}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorFormaPagoApv" value="#{item.trabajadorFormaPagoApv}" title="#{myBundle.EditTrabajadorTitle_trabajadorFormaPagoApv}"  disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorMontoApv}" filterBy="#{item.trabajadorMontoApv}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorMontoApv}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorMontoApv}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorSubsidioJoven}" filterBy="#{item.trabajadorSubsidioJoven}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorSubsidioJoven}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorSubsidioJoven" value="#{item.trabajadorSubsidioJoven}" title="#{myBundle.EditTrabajadorTitle_trabajadorSubsidioJoven}"  disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorCesantia}" filterBy="#{item.trabajadorCesantia}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorCesantia}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorCesantia" value="#{item.trabajadorCesantia}" title="#{myBundle.EditTrabajadorTitle_trabajadorCesantia}"  disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorContratado}" filterBy="#{item.trabajadorContratado}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorContratado}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorContratado" value="#{item.trabajadorContratado}" title="#{myBundle.EditTrabajadorTitle_trabajadorContratado}"  disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorPoseeCuentaBanco}" filterBy="#{item.trabajadorPoseeCuentaBanco}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorPoseeCuentaBanco}"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="trabajadorPoseeCuentaBanco" value="#{item.trabajadorPoseeCuentaBanco}" title="#{myBundle.EditTrabajadorTitle_trabajadorPoseeCuentaBanco}" required="true" requiredMessage="#{myBundle.EditTrabajadorRequiredMessage_trabajadorPoseeCuentaBanco}" disabled="true"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdCuenta.cuentaId}" filterBy="#{item.trabajadorIdCuenta.cuentaId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdCuenta}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdCuenta.cuentaId}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdInstitucionApv.institucionApvId}" filterBy="#{item.trabajadorIdInstitucionApv.institucionApvId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdInstitucionApv}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdInstitucionApv.institucionApvId}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdAsignacionFamiliar.asignacionFamiliarId}" filterBy="#{item.trabajadorIdAsignacionFamiliar.asignacionFamiliarId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdAsignacionFamiliar}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdAsignacionFamiliar.asignacionFamiliarId}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdCentroCosto.centroCostoId}" filterBy="#{item.trabajadorIdCentroCosto.centroCostoId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdCentroCosto}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdCentroCosto.centroCostoId}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdComuna.comunaId}" filterBy="#{item.trabajadorIdComuna.comunaId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdComuna}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdComuna.comunaId}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdTipoCotizacionTrabajador.tipoCotizacionTrabajadorId}" filterBy="#{item.trabajadorIdTipoCotizacionTrabajador.tipoCotizacionTrabajadorId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdTipoCotizacionTrabajador}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdTipoCotizacionTrabajador.tipoCotizacionTrabajadorId}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdEstadoCivil.estadoCivilId}" filterBy="#{item.trabajadorIdEstadoCivil.estadoCivilId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdEstadoCivil}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdEstadoCivil.estadoCivilId}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdFormaPago.formaPagoId}" filterBy="#{item.trabajadorIdFormaPago.formaPagoId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdFormaPago}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdFormaPago.formaPagoId}"/>
+                                </p:column>
+                            </ui:remove>
+
+                            <p:column sortBy="#{item.trabajadorIdInstitucionPrevision.institucionPrevisionNombre}" filterBy="#{item.trabajadorIdInstitucionPrevision.institucionPrevisionNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Previsión"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trabajadorIdInstitucionPrevision.institucionPrevisionNombre}"/>
+                            </p:column>
+
+                            <ui:remove>
+                                <p:column sortBy="#{item.trabajadorIdTerminal.terminalId}" filterBy="#{item.trabajadorIdTerminal.terminalId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListTrabajadorTitle_trabajadorIdTerminal}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.trabajadorIdTerminal.terminalId}"/>
+                                </p:column>
+                            </ui:remove>
+
+                            <p:column sortBy="#{item.trabajadorIdInstitucionSalud.institucionSaludNombre}" filterBy="#{item.trabajadorIdInstitucionSalud.institucionSaludNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Salud"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trabajadorIdInstitucionSalud.institucionSaludNombre}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.trabajadorIdSindicato.sindicatoNombre}" filterBy="#{item.trabajadorIdSindicato.sindicatoNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Sindicato"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trabajadorIdSindicato.sindicatoNombre}"/>
+                            </p:column>
+                            
+                            <p:column exportable="false">
+                                <p:commandButton icon="pi pi-search" update="TrabajadorViewForm, datalist" oncomplete="PF('TrabajadorViewDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-info" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{trabajadorController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-pencil" update="TrabajadorEditForm, datalist" oncomplete="PF('TrabajadorEditDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{trabajadorController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{trabajadorController.selected}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="#{trabajadorController.delete(event)}" header="Confirmación" severity="warn">
+                            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{trabajadorController.delete(event)}" process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </div>
+            </div>
+        </h:form>
+        <ui:include src="Create.xhtml" />
+        <ui:include src="View.xhtml" />
+        <ui:include src="Edit.xhtml" />
+    </ui:define>
+</ui:composition>

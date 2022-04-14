@@ -1,6 +1,7 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.Proveedor;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -15,4 +16,11 @@ public class ProveedorController extends AbstractController<Proveedor> {
         // Inform the Abstract parent controller of the concrete Proveedor Entity
         super(Proveedor.class);
     }
+
+    public void delete(ActionEvent event) {
+        if (getSelected() != null) {
+              
+        }
+    }
+
 }

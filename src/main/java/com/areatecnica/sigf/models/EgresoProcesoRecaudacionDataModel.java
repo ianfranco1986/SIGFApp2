@@ -24,8 +24,8 @@ public class EgresoProcesoRecaudacionDataModel extends ListDataModel<EgresoProce
     }
 
     @Override
-    public Object getRowKey(EgresoProcesoRecaudacion object) {
-        return object.getEgresoProcesoRecaudacionId();
+    public String getRowKey(EgresoProcesoRecaudacion object) {
+        return String.valueOf(object.getEgresoProcesoRecaudacionId());
     }
 
     @Override

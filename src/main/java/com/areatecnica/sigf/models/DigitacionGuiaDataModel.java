@@ -24,8 +24,8 @@ public class DigitacionGuiaDataModel extends ListDataModel<Guia> implements Sele
     }
 
     @Override
-    public Object getRowKey(Guia object) {
-        return object.getGuiaId();
+    public String getRowKey(Guia object) {
+        return String.valueOf(object.getGuiaId());
     }
 
     @Override

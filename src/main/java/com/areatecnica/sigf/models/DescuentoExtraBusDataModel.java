@@ -24,8 +24,8 @@ public class DescuentoExtraBusDataModel extends ListDataModel<DescuentoExtraBus>
     }
 
     @Override
-    public Object getRowKey(DescuentoExtraBus object) {
-        return object.getDescuentoExtraBusId();
+    public String getRowKey(DescuentoExtraBus object) {
+        return String.valueOf(object.getDescuentoExtraBusId()                                                                                                                                                                                                                                                                               );
     }
 
     @Override

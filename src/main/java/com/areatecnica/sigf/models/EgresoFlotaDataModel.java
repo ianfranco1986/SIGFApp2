@@ -24,8 +24,8 @@ public class EgresoFlotaDataModel extends ListDataModel<EgresoFlota> implements 
     }
 
     @Override
-    public Object getRowKey(EgresoFlota object) {
-        return object.getEgresoFlotaId();
+    public String getRowKey(EgresoFlota object) {
+        return String.valueOf(object.getEgresoFlotaId());
     }
 
     @Override

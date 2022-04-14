@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Empresas</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="EmpresaListForm">
+            <div class="p-grid crud-demo">
+                <div class="p-col-12">
+                    <div class="card">
+                        <p:growl id="messages" showDetail="true" />
+
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Nuevo" icon="pi pi-plus"  actionListener="#{empresaController.prepareCreate}" update=":EmpresaCreateForm" oncomplete="PF('EmpresaCreateDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" />
+
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <p:dataTable id="datalist"
+                                     value="#{empresaController.items}"
+                                     lazy="false"
+                                     rowKey="#{item.empresaId}"
+                                     var="item"
+                                     paginator="true"
+                                     rows="100"
+                                     paginatorPosition="bottom"
+                                     selectionMode="single"
+                                     selection="#{empresaController.selected}"
+                                     filteredValue="#{empresaController.filteredItems}"
+                                     rowIndexVar="rowIndex"
+                                     reflow="true"
+                                     emptyMessage="No se han encontrado registros"
+                                     widgetVar="datalistWidget">
+                            <!--
+                                     To enable Lazy Loading, please copy/replace the following lines above,
+                                     and be sure to replace the word HASH with the # symbol:
+                            
+                                     value="HASH{empresaController.lazyItems}"
+                                     lazy="true"
+                                     rowKey="HASH{item.empresaId}"  <<< Remove this line
+                            -->
+
+
+                            <f:facet name="header">
+                                <div class="products-table-header">
+                                    <span style="font-weight: bold"><h3>Empresas</h3></span>
+
+                                    <span class="filter-container ui-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+                            <p:column selectionMode="single" style="width:16px;text-align:center"/>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#"/>
+                                </f:facet>
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.empresaRut}" filterBy="#{item.empresaRut}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListEmpresaTitle_empresaRut}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.empresaRut}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.empresaNombre}" filterBy="#{item.empresaNombre}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListEmpresaTitle_empresaNombre}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.empresaNombre}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.empresaDireccion}" filterBy="#{item.empresaDireccion}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListEmpresaTitle_empresaDireccion}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.empresaDireccion}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.empresaTelefono}" filterBy="#{item.empresaTelefono}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListEmpresaTitle_empresaTelefono}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.empresaTelefono}"/>
+                            </p:column>
+
+
+                            <ui:remove>
+                                <p:column sortBy="#{item.empresaEmail}" filterBy="#{item.empresaEmail}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaEmail}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.empresaEmail}"/>
+                                </p:column>
+                            </ui:remove>
+                            <ui:remove>
+                                <p:column sortBy="#{item.empresaPorcentajeMutual}" filterBy="#{item.empresaPorcentajeMutual}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaPorcentajeMutual}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.empresaPorcentajeMutual}"/>
+                                </p:column>
+                            </ui:remove>
+
+                            <p:column sortBy="#{item.empresaIdCajaCompensacion.cajaCompensacionNombre}" filterBy="#{item.empresaIdCajaCompensacion.cajaCompensacionNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="C. Compensación"/>
+                                </f:facet>
+                                <h:outputText value="#{item.empresaIdCajaCompensacion.cajaCompensacionNombre}"/>
+                            </p:column>
+
+                            <ui:remove>
+                                <p:column sortBy="#{item.empresaIdCuenta.cuentaId}" filterBy="#{item.empresaIdCuenta.cuentaId}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaIdCuenta}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.empresaIdCuenta.cuentaId}"/>
+                                </p:column>
+                            </ui:remove>
+
+                            <p:column sortBy="#{item.empresaIdMutual.mutualNombre}" filterBy="#{item.empresaIdMutual.mutualNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListEmpresaTitle_empresaIdMutual}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.empresaIdMutual.mutualNombre}"/>
+                            </p:column>
+
+                            <p:column exportable="false">
+                                <p:commandButton icon="pi pi-search" update="EmpresaViewForm, datalist" oncomplete="PF('EmpresaViewDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-info" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{empresaController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-pencil" update="EmpresaEditForm, datalist" oncomplete="PF('EmpresaEditDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{empresaController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{empresaController.selected}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Eliminar la Empresa? " header="Confirmación" severity="warn">
+                            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{empresaController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </div>
+            </div>
+
+        </h:form>
+        <ui:include src="Create.xhtml" />
+        <ui:include src="View.xhtml" />
+        <ui:include src="Edit.xhtml" />
+    </ui:define>
+</ui:composition>

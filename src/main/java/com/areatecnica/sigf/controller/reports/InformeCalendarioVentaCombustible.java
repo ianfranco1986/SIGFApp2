@@ -7,7 +7,7 @@ package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.util.DatePlusValueHelper;
-import com.ibm.icu.text.NumberFormat;
+import java.text.NumberFormat;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

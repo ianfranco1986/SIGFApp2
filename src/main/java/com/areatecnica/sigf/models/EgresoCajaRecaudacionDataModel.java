@@ -24,8 +24,8 @@ public class EgresoCajaRecaudacionDataModel extends ListDataModel<EgresoCajaReca
     }
 
     @Override
-    public Object getRowKey(EgresoCajaRecaudacion object) {
-        return object.getEgresoCajaRecaudacionId();
+    public String getRowKey(EgresoCajaRecaudacion object) {
+        return String.valueOf(object.getEgresoCajaRecaudacionId());
     }
 
     @Override

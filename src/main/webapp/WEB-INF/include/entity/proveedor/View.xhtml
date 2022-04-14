@@ -8,35 +8,35 @@
 
     <ui:composition>
 
-        <p:dialog id="ProveedorViewDlg" widgetVar="ProveedorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewProveedorTitle}" closeOnEscape="true">
+        <p:dialog id="ProveedorViewDlg" widgetVar="ProveedorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="Proveedor" closeOnEscape="true">
 
             <h:form id="ProveedorViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{proveedorController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewProveedorLabel_proveedorId}"/>
+                        <h:outputText value="#"/>
                         <h:outputText value="#{proveedorController.selected.proveedorId}" title="#{myBundle.ViewProveedorTitle_proveedorId}"/>
 
-                        <h:outputText value="#{myBundle.ViewProveedorLabel_proveedorRut}"/>
+                        <h:outputText value="Rut"/>
                         <h:outputText value="#{proveedorController.selected.proveedorRut}" title="#{myBundle.ViewProveedorTitle_proveedorRut}"/>
 
-                        <h:outputText value="#{myBundle.ViewProveedorLabel_proveedorNombre}"/>
+                        <h:outputText value="Nombre o Razón Social"/>
                         <h:outputText value="#{proveedorController.selected.proveedorNombre}" title="#{myBundle.ViewProveedorTitle_proveedorNombre}"/>
 
-                        <h:outputText value="#{myBundle.ViewProveedorLabel_proveedorDireccion}"/>
+                        <h:outputText value="Dirección"/>
                         <h:outputText value="#{proveedorController.selected.proveedorDireccion}" title="#{myBundle.ViewProveedorTitle_proveedorDireccion}"/>
 
-                        <h:outputText value="#{myBundle.ViewProveedorLabel_proveedorComunaId}"/>
+                        <h:outputText value="Comuna"/>
                         <h:outputText value="#{proveedorController.selected.proveedorComunaId}" title="#{myBundle.ViewProveedorTitle_proveedorComunaId}"/>
 
-                        <h:outputText value="#{myBundle.ViewProveedorLabel_proveedorTelefono}"/>
+                        <h:outputText value="Teléfono"/>
                         <h:outputText value="#{proveedorController.selected.proveedorTelefono}" title="#{myBundle.ViewProveedorTitle_proveedorTelefono}"/>
 
-                        <h:outputText value="#{myBundle.ViewProveedorLabel_proveedorEmail}"/>
+                        <h:outputText value="Email"/>
                         <h:outputText value="#{proveedorController.selected.proveedorEmail}" title="#{myBundle.ViewProveedorTitle_proveedorEmail}"/>
 
-                        <h:outputText value="#{myBundle.ViewProveedorLabel_proveedorGiro}"/>
+                        <h:outputText value="Giro"/>
                         <h:outputText value="#{proveedorController.selected.proveedorGiro}" title="#{myBundle.ViewProveedorTitle_proveedorGiro}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('ProveedorViewDialog').hide()"/>

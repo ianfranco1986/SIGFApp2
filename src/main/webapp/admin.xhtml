@@ -20,14 +20,18 @@
         <meta http-equiv="pragma" content="no-cache" />
         <!-- Bootstrap 3.3.5 -->
         <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"/>
-
+        <h:outputScript name="js/prism.js" library="avalon-layout"/>
+        <h:outputScript name="js/layout.js" library="avalon-layout" />
         <h:outputStylesheet library="css" name="ionicons.min.css"/>
+        <h:outputStylesheet library="css" name="avalon-layout/css/layout-blue.css"/>
         <h:outputStylesheet library="dist" name="css/AdminLTE.min.css"/>
         <h:outputStylesheet library="dist" name="css/skins/_all-skins.min.css"/>
         <h:outputStylesheet library="plugins" name="iCheck/flat/blue.css"/>
         <h:outputStylesheet library="plugins" name="jvectormap/jquery-jvectormap-1.2.2.css"/>
         <h:outputStylesheet library="plugins" name="bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
         <h:outputStylesheet library="css" name="nprogress.css"/>
+        <h:outputStylesheet name="css/primeflex.min.css" library="avalon-layout" />
+        <h:outputStylesheet name="css/primeicons.css" library="avalon-layout" />
         <style type="text/css">
             .old {
                 background-color: #fca752 !important;
@@ -38,7 +42,7 @@
         <style type="text/css">
             div[id="growl_container"] {
                 top: 60px;
-                z-index:1001; 
+                z-index:1001;
             }
 
             div[id="growl_container"] {
@@ -101,10 +105,15 @@
                 box-sizing: border-box;
             }
 
-            .ct-label{fill:rgba(0,0,0,.4);color:rgba(0,0,0,.4);font-size:15px;line-height:1}
+            .ct-label{
+                fill:rgba(0,0,0,.4);
+                color:rgba(0,0,0,.4);
+                font-size:15px;
+                line-height:1
+            }
 
             .btn:hover, .btn-primary:focus{
-                background-color: red;                
+                background-color: red;
             }
 
             .headline_class {
@@ -141,7 +150,7 @@
             }
 
             @media print
-            {    
+            {
                 .no-print, .no-print *
                 {
                     display: none !important;
@@ -162,7 +171,7 @@
                 <center>#{myBundle.loading}
                     <p:graphicImage value="/resources/images/ajaxloadingbar.gif"/></center>
             </p:dialog>
-
+            
             <ui:include src="Profile.xhtml"/>
 
             <p:dialog appendTo="@(body)" resizable="false" header="test" widgetVar="Chat" responsive="true" position="right,bottom" width="400px">

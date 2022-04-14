@@ -7,7 +7,7 @@ import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
-import com.areatecnica.sigf.dao.impl.ITrabajadorDaoImpl;
+import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Guia;
@@ -16,10 +16,14 @@ import com.areatecnica.sigf.entities.RecaudacionGuia;
 import com.areatecnica.sigf.entities.Trabajador;
 import com.areatecnica.sigf.models.RecaudacionDataModel;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -60,6 +64,11 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     private int totalCuotaExtra = 0;
     private int totalBoletos = 0;
     private int totalImposiciones = 0;
+    
+    List<RecaudacionGuia> g; 
+    
+    LocalDate f; 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
 
     public RecaudacionGuiaController() {
         // Inform the Abstract parent controller of the concrete RecaudacionGuia Entity
@@ -71,7 +80,6 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
         this.fecha = new Date();
         this.itemsRecaudacion = new ArrayList<RecaudacionGuiaHelper>();
         this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAll();
-
     }
 
     public void load() {
@@ -81,7 +89,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
             this.totalCuotaExtra = 0;
             this.totalImposiciones = 0;
             this.totalRecaudacion = 0;
-            this.trabajadorItems = new ITrabajadorDaoImpl().findNandu();
+            this.trabajadorItems = new TrabajadorDaoImpl().findNandu();
             this.busItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
             this.items = new IRecaudacionDaoImpl().findByCajaFechaRecaudacion(cajaRecaudacion, fecha);
             this.itemsRecaudacion = new ArrayList<RecaudacionGuiaHelper>();
@@ -114,7 +122,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar la caja");
         }
-
+        //this.g = this.items.stream().filter(distinctByKey)
     }
 
     public void setSelectedRecaudacion(RecaudacionGuiaHelper selectedRecaudacion) {
@@ -159,6 +167,11 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
     public int getTotalAdministracion() {
         return totalAdministracion;
+    }
+    
+    public String getFechaCompleta(){
+        LocalDate date = LocalDate.from(this.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        return date.format(formatter);
     }
 
     public void delete() {

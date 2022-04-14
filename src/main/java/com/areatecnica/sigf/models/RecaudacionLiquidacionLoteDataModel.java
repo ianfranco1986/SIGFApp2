@@ -24,8 +24,8 @@ public class RecaudacionLiquidacionLoteDataModel extends ListDataModel<Liquidaci
     }
 
     @Override
-    public Object getRowKey(LiquidacionEmpresaLoteController.LiquidacionHelper object) {
-        return object.getId();
+    public String getRowKey(LiquidacionEmpresaLoteController.LiquidacionHelper object) {
+        return String.valueOf(object.getId());
     }
 
     @Override

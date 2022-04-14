@@ -7,6 +7,7 @@ import com.areatecnica.sigf.dao.impl.ICuentaMayorDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProveedorDaoImpl;
+import com.areatecnica.sigf.dao.impl.ITipoDocumentoDaoImpl;
 import com.areatecnica.sigf.dao.impl.ITipoMovimientoDaoImpl;
 import com.areatecnica.sigf.entities.Compra;
 import com.areatecnica.sigf.entities.CuentaBancaria;
@@ -17,6 +18,7 @@ import com.areatecnica.sigf.entities.Proveedor;
 import com.areatecnica.sigf.entities.TipoDocumento;
 import com.areatecnica.sigf.entities.TipoMovimiento;
 import com.areatecnica.sigf.models.CompraDataModel;
+import com.areatecnica.sigf.reports.ReportController;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +40,8 @@ import org.primefaces.event.RowEditEvent;
 public class CompraController extends AbstractController<Compra> {
 
     @Inject
+    private ReportController reportController;
+    @Inject
     private CuentaMayorController compraCuentaIdController;
     @Inject
     private ProveedorController compraProveedorIdController;
@@ -47,7 +51,7 @@ public class CompraController extends AbstractController<Compra> {
     private CompraDataModel model;
 
     private TipoDocumento tipoDocumento;
-    private TipoMovimiento tipoMoviento; 
+    private TipoMovimiento tipoMoviento;
     private CuentaMayor cuentaMayor;
     private MovimientoMes movimiento;
     private CuentaBancaria cuentaBancaria;
@@ -60,6 +64,8 @@ public class CompraController extends AbstractController<Compra> {
     private Empresa empresaNandu;
 
     private String informe = "inf-comprobante_egreso";
+    private final String defaultTitle = "Registro de Compras";
+    private String title = defaultTitle;
 
     private int folio;
     private int mes;
@@ -94,8 +100,7 @@ public class CompraController extends AbstractController<Compra> {
         this.fechaLiquidacion = new Date();
         this.proveedorItems = new IProveedorDaoImpl().findAll();
         this.tipoMoviento = new ITipoMovimientoDaoImpl().findById(1);
-        
-        
+
         this.fecha = new Date();
         setFecha();
         this.desde = this.fecha;
@@ -110,11 +115,14 @@ public class CompraController extends AbstractController<Compra> {
     }
 
     public void load() {
+        setTitle(defaultTitle);
         setFecha();
         System.err.println("FECHA DE BUSQUEDA DE FACTURAS:" + desde + " - " + hasta);
         this.items = new ICompraDaoImpl().findCompraBetweenDates(desde, hasta);
 
         this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
+        
+        this.tipoDocumentoItems = new ITipoDocumentoDaoImpl().findAll();
 
         if (this.items.isEmpty()) {
             JsfUtil.addWarningMessage("No se han encontrado registros");
@@ -124,7 +132,7 @@ public class CompraController extends AbstractController<Compra> {
             this.model = new CompraDataModel(items);
 
         }
-
+        prepareCreate(null);
     }
 
     public void handleCuentaChange() {
@@ -144,6 +152,7 @@ public class CompraController extends AbstractController<Compra> {
 
             this.getSelected().setCompraProveedorId(proveedor);
             this.getSelected().setCompraCuentaMayorId(cuentaMayor);
+            this.getSelected().setCompraTipoDocumentoId(tipoDocumento);
 
             MovimientoMes mov = new MovimientoMes();
 
@@ -172,6 +181,7 @@ public class CompraController extends AbstractController<Compra> {
                 this.setSelected(prepareCreate(null));
                 resetParents();
                 JsfUtil.addSuccessMessage("Se ha regristrado una Compra");
+                reportController.downloadFile(this.informe, this.getMap());
             } else {
                 JsfUtil.addErrorMessage("Ha ocurrido un error durante la persistencia ");
             }
@@ -194,9 +204,22 @@ public class CompraController extends AbstractController<Compra> {
         return this.getSelected();
     }
 
+    public void prepareUpdate(ActionEvent event) {
+        if (this.getSelected() != null) {
+            this.setTitle("Actualizando Compra N°: " + this.getSelected().getCompraFolio());
+            this.setCuentaBancaria(this.getSelected().getCompraMovimientoId().getMovimientoMesCuentaBancoId());
+            this.setProveedor(this.getSelected().getCompraProveedorId());
+            this.setCuentaMayor(this.getSelected().getCompraCuentaMayorId());
+            this.setTipoDocumento(this.getSelected().getCompraTipoDocumentoId());
+            
+        } else {
+            JsfUtil.addErrorMessage("Debe seleccionar la compra");
+        }
+    }
+
     public void onRowEdit(RowEditEvent event) {
         Compra temp = (Compra) event.getObject();
-
+        
         try {
 
             new ICompraDaoImpl().update(temp);
@@ -462,4 +485,15 @@ public class CompraController extends AbstractController<Compra> {
         return informe;
     }
 
+    public String getDefaultTitle() {
+        return defaultTitle;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

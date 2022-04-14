@@ -24,8 +24,8 @@ public class EgresoBusDataModel extends ListDataModel<EgresoBus> implements Sele
     }
 
     @Override
-    public Object getRowKey(EgresoBus object) {
-        return object.getEgresoBusId();
+    public String getRowKey(EgresoBus object) {
+        return String.valueOf(object.getEgresoBusId());
     }
 
     @Override

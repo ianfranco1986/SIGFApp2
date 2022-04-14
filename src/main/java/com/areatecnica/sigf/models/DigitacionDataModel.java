@@ -25,8 +25,8 @@ public class DigitacionDataModel extends ListDataModel<Recaudacion> implements S
     }
 
     @Override
-    public Object getRowKey(Recaudacion object) {
-        return object.getRecaudacionId();
+    public String getRowKey(Recaudacion object) {
+        return String.valueOf(object.getRecaudacionId());
     }
 
     @Override

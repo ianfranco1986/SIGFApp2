@@ -24,8 +24,8 @@ public class CartolaBancoDataModel extends ListDataModel<CartolaBanco> implement
     }
 
     @Override
-    public Object getRowKey(CartolaBanco object) {
-        return object.getCartolaBancoId();
+    public String getRowKey(CartolaBanco object) {
+        return String.valueOf(object.getCartolaBancoId());
     }
 
     @Override

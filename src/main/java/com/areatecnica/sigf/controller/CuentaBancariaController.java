@@ -14,10 +14,7 @@ import javax.inject.Inject;
 @ViewScoped
 public class CuentaBancariaController extends AbstractController<CuentaBancaria> {
 
-    @Inject
-    private BancoController cuentaBancariaIdBancoController;
-    @Inject
-    private TipoCuentaBancoController cuentaBancariaIdTipoCuentaController;
+    
 
     // Flags to indicate if child collections are empty
     private boolean isCuentaBancoProcesoListEmpty;
@@ -34,8 +31,7 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        cuentaBancariaIdBancoController.setSelected(null);
-        cuentaBancariaIdTipoCuentaController.setSelected(null);
+        
     }
 
     /**
@@ -113,10 +109,7 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
      * @param event Event object for the widget that triggered an action
      */
     public void prepareCuentaBancariaIdBanco(ActionEvent event) {
-        CuentaBancaria selected = this.getSelected();
-        if (selected != null && cuentaBancariaIdBancoController.getSelected() == null) {
-            cuentaBancariaIdBancoController.setSelected(selected.getCuentaBancariaIdBanco());
-        }
+        
     }
 
     /**
@@ -126,10 +119,7 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
      * @param event Event object for the widget that triggered an action
      */
     public void prepareCuentaBancariaIdTipoCuenta(ActionEvent event) {
-        CuentaBancaria selected = this.getSelected();
-        if (selected != null && cuentaBancariaIdTipoCuentaController.getSelected() == null) {
-            cuentaBancariaIdTipoCuentaController.setSelected(selected.getCuentaBancariaIdTipoCuenta());
-        }
+        
     }
 
     public boolean getIsCuentaBancoTrabajadorListEmpty() {

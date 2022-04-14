@@ -30,6 +30,8 @@ public class FlotaController extends AbstractController<Flota> {
     public FlotaController() {
         // Inform the Abstract parent controller of the concrete Flota Entity
         super(Flota.class);
+        setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Flota.findAllByCuenta");
     }
 
     @PostConstruct

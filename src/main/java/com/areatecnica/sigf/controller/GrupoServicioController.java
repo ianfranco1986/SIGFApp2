@@ -29,8 +29,8 @@ public class GrupoServicioController extends AbstractController<GrupoServicio> {
     public GrupoServicioController() {
         // Inform the Abstract parent controller of the concrete GrupoServicio Entity
         super(GrupoServicio.class);
-        this.setLimitedByCuenta(Boolean.TRUE);
-        this.setNamedQuery("GrupoServicio.findByCuenta");
+//        this.setLimitedByCuenta(Boolean.TRUE);
+//        this.setNamedQuery("GrupoServicio.findByCuenta");
     }
 
     @Override

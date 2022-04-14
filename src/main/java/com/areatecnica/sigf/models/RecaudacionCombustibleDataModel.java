@@ -24,8 +24,8 @@ public class RecaudacionCombustibleDataModel extends ListDataModel<RecaudacionCo
     }
 
     @Override
-    public Object getRowKey(RecaudacionCombustible object) {
-        return object.getRecaudacionCombustibleId();
+    public String getRowKey(RecaudacionCombustible object) {
+        return String.valueOf(object.getRecaudacionCombustibleId());
     }
 
     @Override

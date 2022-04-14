@@ -24,8 +24,8 @@ public class GuiaGrupalDataModel extends ListDataModel<Guia> implements Selectab
     }
 
     @Override
-    public Object getRowKey(Guia object) {
-        return object.getGuiaId();
+    public String getRowKey(Guia object) {
+        return String.valueOf(object.getGuiaId());
     }
 
     @Override

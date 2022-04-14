@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e")
+    @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e ORDER BY e.empresaNombre")
     , @NamedQuery(name = "Empresa.findAllByCuenta", query = "SELECT e FROM Empresa e WHERE e.empresaIdCuenta = :idCuenta ORDER BY e.empresaNombre ASC")
     , @NamedQuery(name = "Empresa.findByNandu", query = "SELECT e FROM Empresa e WHERE e.empresaIdCuenta.cuentaId = 1 AND e.empresaId <> 1 AND e.empresaActiva = 1 ORDER BY e.empresaNombre ASC")
     , @NamedQuery(name = "Empresa.findByEmpresaId", query = "SELECT e FROM Empresa e WHERE e.empresaId = :empresaId")

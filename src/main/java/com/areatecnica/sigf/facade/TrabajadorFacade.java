@@ -64,7 +64,10 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> {
         super(Trabajador.class);
     }
 
-    
+@Override
+    public List<Trabajador> findAll(){
+        return em.createNamedQuery("Trabajador.findAll2").getResultList();
+    }
 
     public List<HaberTrabajador> findHaberTrabajadorList(Trabajador entity) {
         Trabajador mergedEntity = this.getMergedEntity(entity);

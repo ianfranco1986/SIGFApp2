@@ -24,8 +24,8 @@ public class DetalleCompraBoletosDataModel extends ListDataModel<DetalleCompraBo
     }
 
     @Override
-    public Object getRowKey(DetalleCompraBoleto object) {
-        return object.getDetalleCompraBoletoId();
+    public String getRowKey(DetalleCompraBoleto object) {
+        return String.valueOf(object.getDetalleCompraBoletoId());
     }
 
     @Override

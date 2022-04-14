@@ -4,9 +4,9 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="318"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="670"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
-	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="1"/>
 	<parameter name="desde" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -53,7 +53,7 @@ FROM
 caja_recaudacion ON recaudacion.recaudacion_id_caja = caja_recaudacion.caja_recaudacion_id
 WHERE venta_combustible_fecha BETWEEN $P{desde} AND  $P{hasta} AND  
      $X{IN, venta_combustible.venta_combustible_id_bus, list} 
-ORDER BY     bus.bus_numero, venta_combustible_numero_boleta ASC]]>
+ORDER BY     empresa.empresa_nombre, bus.bus_numero, venta_combustible_numero_boleta ASC]]>
 	</queryString>
 	<field name="venta_combustible_fecha" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="venta_combustible_fecha"/>

@@ -24,8 +24,8 @@ public class VentaBoletoRecaudacionDataModel extends ListDataModel<VentaBoleto> 
     }
 
     @Override
-    public Object getRowKey(VentaBoleto object) {
-        return object.getVentaBoletoId();
+    public String getRowKey(VentaBoleto object) {
+        return String.valueOf(object.getVentaBoletoId());
     }
 
     @Override

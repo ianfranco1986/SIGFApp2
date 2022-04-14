@@ -24,8 +24,8 @@ public class RegistroMinutoDataModel extends ListDataModel<RegistroMinuto> imple
     }
 
     @Override
-    public Object getRowKey(RegistroMinuto object) {
-        return object.getRegistroMinutoId();
+    public String getRowKey(RegistroMinuto object) {
+        return String.valueOf(object.getRegistroMinutoId());
     }
 
     @Override

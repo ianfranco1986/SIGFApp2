@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Recaudación de Guías</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="GuiaListForm" class="form-height">
+            <p:card id="dashboard">
+                <div  class="dashboard p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-calendar"/>
+                                <span>Fecha</span>
+                            </div>
+                            <div class="overview-box-count">#{recaudacionGuiaController.fechaCompleta}</div>
+                            <div class="overview-box-stats">Usuario</div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-1">
+                            <div class="overview-box-title">
+                                <i class="pi pi-dollar"/>
+                                <span>Total Recaudado</span>
+                            </div>
+                            <div class="overview-box-count">#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalRecaudacion)}</div>
+                            <div class="overview-box-stats"># de Vouchers: #{recaudacionGuiaController.itemsRecaudacion.size()>0?recaudacionGuiaController.itemsRecaudacion.size():0} </div>
+                        </div>
+                    </div>
+
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-folder"/>
+                                <span>N° de Buses</span>
+                            </div>
+                            <div class="overview-box-count">450</div>
+                            <div class="overview-box-stats">30 more than yesterday</div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-folder"/>
+                                <span>N° de Buses</span>
+                            </div>
+                            <div class="overview-box-count">450</div>
+                            <div class="overview-box-stats">30 more than yesterday</div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-4">
+                            <div class="overview-box-title">
+                                <i class="pi pi-user"/>
+                                <span>Users</span>
+                            </div>
+                            <div class="overview-box-count">532</div>
+                            <div class="overview-box-stats">250 more than yesterday</div>
+                        </div>
+                    </div>
+                </div>
+
+            </p:card>
+
+
+
+            <p:panel id="resumen" style="padding-bottom: 20px;margin-top: 20px;">
+                <h3 style="text-align: center;">
+                    Recaudación de Guías
+                </h3>
+
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <label for="firstname">Caja</label>
+                        <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionGuiaController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recaudacionGuiaController.cajaRecaudacionItems}"
+                                           var="cajaId"
+                                           itemValue="#{cajaId}"
+                                           itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                           />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field p-col">
+                        <label for="lastname">Fecha</label>
+                        <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{recaudacionGuiaController.fecha}" title="#{myBundle.CreateGuiaTitle_guiaFecha}" required="true" requiredMessage="Debe seleccionar la fecha" locale="es"/>
+                    </div>
+                    <div class="p-field p-col">
+                        <p:outputLabel />
+                        <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, dashboard" styleClass="btn btn-primary" style="width:120px" actionListener="#{recaudacionGuiaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        </p:commandButton>
+                    </div>
+                </div>
+
+
+                <p:dataTable id="datalist"
+                             scrollHeight="500" 
+                             scrollable="false"                         
+                             value="#{recaudacionGuiaController.model}"
+                             selection="#{recaudacionGuiaController.selectedRecaudacion}"
+                             widgetVar="datalist"
+                             selectionMode="single"
+                             var="item"
+                             rowKey="#{item.id}"
+                             rowIndexVar="rowIndex"
+                             emptyMessage="No se han encontrado registros"                         
+                             rowStyleClass="#{item.total eq 0 ? 'old' : null}" editable="true" >
+
+                    <p:ajax event="rowEdit" listener="#{recaudacionGuiaController.onRowEdit}" update=":growl" />
+                    <p:ajax event="rowEditCancel" listener="#{recaudacionGuiaController.loadGuia()}" update=":growl" />
+
+                    <f:facet name="header">
+                        Recaudación al: <h:outputLabel value="#{recaudacionGuiaController.fecha}">
+                            <f:convertDateTime pattern="dd-MM-yyyy"/>
+                        </h:outputLabel>
+                    </f:facet>
+
+                    <p:column style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="#"/>
+                        </f:facet>
+                        <h:outputText value="#{rowIndex+1}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.id}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="Folio"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.guia.guiaFolio}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="G.SolyMar"/>
+                        </f:facet>
+                        <h:outputText value="#{item.guia.guiaFolio}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.guia.guiaIdBus.busNumero}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="N° Bus"/>
+                        </f:facet>
+                        <h:outputText value="#{item.guia.guiaIdBus.busNumero}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.guia.guiaIdTrabajador.trabajadorCodigo}" style="text-align: center; " footerText="Total">
+                        <f:facet name="header">
+                            <h:outputText value="Trabajador"/>
+                        </f:facet>
+                        <h:outputText value="#{item.guia.guiaIdTrabajador.trabajadorCodigo}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.administracion}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalAdministracion)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Admin."/>
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{item.administracion}">
+                                    <f:convertNumber />
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input"><p:inputText id="adin" value="#{item.administracion}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
+
+                        </p:cellEditor>
+
+                    </p:column>
+
+                    <p:column sortBy="#{item.cuotaExtra}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalCuotaExtra)}">
+                        <f:facet name="header">
+                            <h:outputText value="C.Extra"/>
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{item.cuotaExtra}">
+                                    <f:convertNumber />
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input"><p:inputText id="ce" value="#{item.cuotaExtra}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
+
+                        </p:cellEditor>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.imposiciones}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalImposiciones)}">
+                        <f:facet name="header">
+                            <h:outputText value="Impos."/>
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{item.imposiciones}">
+                                    <f:convertNumber />
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input"><p:inputText id="impo" value="#{item.imposiciones}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column sortBy="#{item.total}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalRecaudacion)}">
+                        <f:facet name="header">
+                            <h:outputText value="Total"/>
+                        </f:facet>
+                        <h:outputText value="#{item.total}">
+                            <f:convertNumber />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.boletos}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalBoletos)}">
+                        <f:facet name="header">
+                            <h:outputText value="Boletos"/>
+                        </f:facet>
+                        <h:outputText value="#{item.boletos}">
+                            <f:convertNumber />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column style="width:35px">
+                        <p:rowEditor />
+                    </p:column>
+
+                    <p:column style="width:45px;text-align: center">
+                        <p:commandButton update="datalist, :GuiaListForm:dashboard, :growl" icon="fa fa-trash" actionListener="#{recaudacionGuiaController.delete()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                            <f:setPropertyActionListener value="#{item}" target="#{recaudacionGuiaController.selectedRecaudacion}"  />
+                            <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
+                <p:overlayPanel for="basic" style="width:350px">
+                    <p>OBSERVACIÓN: Permite editar o eliminar los valores de Administración, C.Extra e Imposiciones. No se permite modificar boletos</p>
+                </p:overlayPanel>
+
+            </p:panel>
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

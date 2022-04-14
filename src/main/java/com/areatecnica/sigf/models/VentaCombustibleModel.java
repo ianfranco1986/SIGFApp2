@@ -24,8 +24,8 @@ public class VentaCombustibleModel extends ListDataModel<VentaCombustible> imple
     }
 
     @Override
-    public Object getRowKey(VentaCombustible object) {
-        return object.getVentaCombustibleId();
+    public String getRowKey(VentaCombustible object) {
+        return String.valueOf(object.getVentaCombustibleId());
     }
 
     @Override

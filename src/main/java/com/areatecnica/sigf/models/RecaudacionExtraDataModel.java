@@ -24,8 +24,8 @@ public class RecaudacionExtraDataModel extends ListDataModel<RecaudacionExtra> i
     }
 
     @Override
-    public Object getRowKey(RecaudacionExtra object) {
-        return object.getRecaudacionExtraId();
+    public String getRowKey(RecaudacionExtra object) {
+        return String.valueOf(object.getRecaudacionExtraId());
     }
 
     @Override

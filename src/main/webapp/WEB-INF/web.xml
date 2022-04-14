@@ -24,9 +24,9 @@
         <filter-name>AuthorizationFilter</filter-name>
         <filter-class>com.areatecnica.sigf.filters.AuthorizationFilter</filter-class>
     </filter>
-    <context-param>
+<context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>omega</param-value>
+        <param-value>avalon-blue</param-value>
     </context-param>
     <!-- Fontawesome -->
     <context-param>
@@ -53,7 +53,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>login.xhtml</welcome-file>
+        <welcome-file>login2.xhtml</welcome-file>
     </welcome-file-list>
     <!-- Mime Type -->
     <mime-mapping>
@@ -116,10 +116,10 @@
     </error-page>
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/errorPage/viewExpired.xhtml</location>
+        <location>/errorPage/error.xhtml</location>
     </error-page>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/faces/views/app/login.xhtml?faces-redirect=true</location>
+        <location>/faces/views/app/login2.xhtml?faces-redirect=true</location>
     </error-page>
 </web-app>

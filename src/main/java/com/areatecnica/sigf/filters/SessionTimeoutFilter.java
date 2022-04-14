@@ -27,7 +27,7 @@ public class SessionTimeoutFilter implements Filter {
 
     private final String timeoutPage = "/errorPage/viewExpired.xhtml";
 
-    private final String loginPage = "/login.xhtml";
+    private final String loginPage = "/login2.xhtml";
     
     @Override
     public void destroy() {
