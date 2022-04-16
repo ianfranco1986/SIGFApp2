@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ObservacionTrabajador.findByObservacionTrabajadorId", query = "SELECT o FROM ObservacionTrabajador o WHERE o.observacionTrabajadorId = :observacionTrabajadorId")
     , @NamedQuery(name = "ObservacionTrabajador.findByObservacionTrabajadorFecha", query = "SELECT o FROM ObservacionTrabajador o WHERE o.observacionTrabajadorFecha = :observacionTrabajadorFecha")
     , @NamedQuery(name = "ObservacionTrabajador.findByObservacionTrabajadorDetalle", query = "SELECT o FROM ObservacionTrabajador o WHERE o.observacionTrabajadorDetalle = :observacionTrabajadorDetalle")})
-public class ObservacionTrabajador implements Serializable {
+public class ObservacionTrabajador extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

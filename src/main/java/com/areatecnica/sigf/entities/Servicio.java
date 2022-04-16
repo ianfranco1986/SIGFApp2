@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -12,6 +13,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "servicio", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -45,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Servicio.findByServicioDestino", query = "SELECT s FROM Servicio s WHERE s.servicioDestino = :servicioDestino")
     , @NamedQuery(name = "Servicio.findByServicioFolio", query = "SELECT s FROM Servicio s WHERE s.servicioFolio = :servicioFolio")
     , @NamedQuery(name = "Servicio.findByServicioTieneBusesCompartidos", query = "SELECT s FROM Servicio s WHERE s.servicioTieneBusesCompartidos = :servicioTieneBusesCompartidos")})
-public class Servicio implements Serializable {
+public class Servicio extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

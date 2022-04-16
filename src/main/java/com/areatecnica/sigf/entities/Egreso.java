@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "egreso", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -45,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Egreso.findByEgresoNumeroOrden", query = "SELECT e FROM Egreso e WHERE e.egresoNumeroOrden = :egresoNumeroOrden")
     , @NamedQuery(name = "Egreso.findByEgresoObligatorio", query = "SELECT e FROM Egreso e WHERE e.egresoObligatorio = :egresoObligatorio")
     , @NamedQuery(name = "Egreso.findByEgresoActivo", query = "SELECT e FROM Egreso e WHERE e.egresoActivo = :egresoActivo")})
-public class Egreso implements Serializable {
+public class Egreso extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

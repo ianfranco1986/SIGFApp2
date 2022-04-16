@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +31,14 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "causal_finiquito", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CausalFiniquito.findAll", query = "SELECT c FROM CausalFiniquito c")
     , @NamedQuery(name = "CausalFiniquito.findByCausalFiniquitoId", query = "SELECT c FROM CausalFiniquito c WHERE c.causalFiniquitoId = :causalFiniquitoId")
     , @NamedQuery(name = "CausalFiniquito.findByCausalFiniquitoCodigo", query = "SELECT c FROM CausalFiniquito c WHERE c.causalFiniquitoCodigo = :causalFiniquitoCodigo")
     , @NamedQuery(name = "CausalFiniquito.findByCausalFiniquitoDescripcion", query = "SELECT c FROM CausalFiniquito c WHERE c.causalFiniquitoDescripcion = :causalFiniquitoDescripcion")})
-public class CausalFiniquito implements Serializable {
+public class CausalFiniquito extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

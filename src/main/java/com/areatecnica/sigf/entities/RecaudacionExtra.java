@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "recaudacion_extra", catalog = "sigfdb", schema = "")
 @XmlRootElement
+@EntityListeners(AuditListener.class)
 @Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "RecaudacionExtra.findAll", query = "SELECT r FROM RecaudacionExtra r"),
@@ -37,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraMonto", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraMonto = :recaudacionExtraMonto"),
     @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraDescripcion", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraDescripcion = :recaudacionExtraDescripcion"),
     @NamedQuery(name = "RecaudacionExtra.findByRecaudacionExtraUsuario", query = "SELECT r FROM RecaudacionExtra r WHERE r.recaudacionExtraUsuario = :recaudacionExtraUsuario")})
-public class RecaudacionExtra implements Serializable {
+public class RecaudacionExtra extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

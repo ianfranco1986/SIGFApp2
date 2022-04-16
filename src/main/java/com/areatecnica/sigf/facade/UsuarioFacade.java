@@ -17,7 +17,6 @@ import com.areatecnica.sigf.entities.Despacho;
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.Rol;
 import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.Log;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import java.util.List;
 import java.util.logging.Logger;
@@ -115,13 +114,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         Root<Usuario> usuario = cq.from(Usuario.class);
         //cq.select(cb.literal(1L)).distinct(true).where(cb.equal(usuario, entity), cb.isNotEmpty(usuario.get(Usuario_.logList)));
         return em.createQuery(cq).getResultList().isEmpty();
-    }
-
-    public List<Log> findLogList(Usuario entity) {
-        Usuario mergedEntity = this.getMergedEntity(entity);
-        List<Log> logList = mergedEntity.getLogList();
-        logList.size();
-        return logList;
     }
 
     public boolean isCajaRecaudacionListEmpty(Usuario entity) {

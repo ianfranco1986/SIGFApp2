@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +31,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "carga_retroactiva", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CargaRetroactiva.findAll", query = "SELECT c FROM CargaRetroactiva c")
     , @NamedQuery(name = "CargaRetroactiva.findByCargaRetroactivaId", query = "SELECT c FROM CargaRetroactiva c WHERE c.cargaRetroactivaId = :cargaRetroactivaId")
     , @NamedQuery(name = "CargaRetroactiva.findByCargaRetroactivaMonto", query = "SELECT c FROM CargaRetroactiva c WHERE c.cargaRetroactivaMonto = :cargaRetroactivaMonto")
     , @NamedQuery(name = "CargaRetroactiva.findByCargaRetroactivaFecha", query = "SELECT c FROM CargaRetroactiva c WHERE c.cargaRetroactivaFecha = :cargaRetroactivaFecha")})
-public class CargaRetroactiva implements Serializable {
+public class CargaRetroactiva extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "carga_trabajador", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CargaTrabajador.findAll", query = "SELECT c FROM CargaTrabajador c")
@@ -43,7 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "CargaTrabajador.findByCargaTrabajadorRut", query = "SELECT c FROM CargaTrabajador c WHERE c.cargaTrabajadorRut = :cargaTrabajadorRut")
     , @NamedQuery(name = "CargaTrabajador.findByCargaTrabajadorFechaNacimiento", query = "SELECT c FROM CargaTrabajador c WHERE c.cargaTrabajadorFechaNacimiento = :cargaTrabajadorFechaNacimiento")
     , @NamedQuery(name = "CargaTrabajador.findByCargaTrabajadorActiva", query = "SELECT c FROM CargaTrabajador c WHERE c.cargaTrabajadorActiva = :cargaTrabajadorActiva")})
-public class CargaTrabajador implements Serializable {
+public class CargaTrabajador extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "detalle_resumen_cheque", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -36,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "DetalleResumenCheque.findByDetalleResumenChequeNumeroCuenta", query = "SELECT d FROM DetalleResumenCheque d WHERE d.detalleResumenChequeNumeroCuenta = :detalleResumenChequeNumeroCuenta")
     , @NamedQuery(name = "DetalleResumenCheque.findByDetalleResumenChequeTitular", query = "SELECT d FROM DetalleResumenCheque d WHERE d.detalleResumenChequeTitular = :detalleResumenChequeTitular")
     , @NamedQuery(name = "DetalleResumenCheque.findByDetalleResumenChequeMonto", query = "SELECT d FROM DetalleResumenCheque d WHERE d.detalleResumenChequeMonto = :detalleResumenChequeMonto")})
-public class DetalleResumenCheque implements Serializable {
+public class DetalleResumenCheque extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +31,14 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "emisor_boleta", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EmisorBoleta.findAll", query = "SELECT e FROM EmisorBoleta e"),
     @NamedQuery(name = "EmisorBoleta.findByEmisorBoletaId", query = "SELECT e FROM EmisorBoleta e WHERE e.emisorBoletaId = :emisorBoletaId"),
     @NamedQuery(name = "EmisorBoleta.findByEmisorBoletaNombre", query = "SELECT e FROM EmisorBoleta e WHERE e.emisorBoletaNombre = :emisorBoletaNombre"),
     @NamedQuery(name = "EmisorBoleta.findByEmisorBoletaRut", query = "SELECT e FROM EmisorBoleta e WHERE e.emisorBoletaRut = :emisorBoletaRut")})
-public class EmisorBoleta implements Serializable {
+public class EmisorBoleta extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

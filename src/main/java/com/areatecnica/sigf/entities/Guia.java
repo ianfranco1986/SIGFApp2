@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Guia.findByGuiaBetweenDate", query = "SELECT g FROM Guia g WHERE g.guiaFecha BETWEEN :inicio AND :termino AND g.guiaIdBus = :guiaIdBus ORDER BY g.guiaFecha ASC")
     , @NamedQuery(name = "Guia.findBetweenDates", query = "SELECT g FROM Guia g WHERE g.guiaFecha BETWEEN :inicio AND :termino ORDER BY g.guiaFolio ASC")
     , @NamedQuery(name = "Guia.findByGuiaTotalIngreso", query = "SELECT g FROM Guia g WHERE g.guiaTotalIngreso = :guiaTotalIngreso")})
-public class Guia implements Serializable {
+public class Guia extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

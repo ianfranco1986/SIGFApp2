@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ParametroInterpolacion.findByParametroInterpolacionNombre", query = "SELECT p FROM ParametroInterpolacion p WHERE p.parametroInterpolacionNombre = :parametroInterpolacionNombre")
     , @NamedQuery(name = "ParametroInterpolacion.findByParametroInterpolacionValor", query = "SELECT p FROM ParametroInterpolacion p WHERE p.parametroInterpolacionValor = :parametroInterpolacionValor")
     , @NamedQuery(name = "ParametroInterpolacion.findByParametroInterpolacionUnidad", query = "SELECT p FROM ParametroInterpolacion p WHERE p.parametroInterpolacionUnidad = :parametroInterpolacionUnidad")})
-public class ParametroInterpolacion implements Serializable {
+public class ParametroInterpolacion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

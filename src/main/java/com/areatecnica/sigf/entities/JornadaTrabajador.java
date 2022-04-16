@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "JornadaTrabajador.findAll", query = "SELECT j FROM JornadaTrabajador j")
     , @NamedQuery(name = "JornadaTrabajador.findByJornadaTrabajadorId", query = "SELECT j FROM JornadaTrabajador j WHERE j.jornadaTrabajadorId = :jornadaTrabajadorId")})
-public class JornadaTrabajador implements Serializable {
+public class JornadaTrabajador extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

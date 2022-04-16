@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ParametroCesantia.findByParametroCesantiaId", query = "SELECT p FROM ParametroCesantia p WHERE p.parametroCesantiaId = :parametroCesantiaId")
     , @NamedQuery(name = "ParametroCesantia.findByParametroCesantiaEmpleador", query = "SELECT p FROM ParametroCesantia p WHERE p.parametroCesantiaEmpleador = :parametroCesantiaEmpleador")
     , @NamedQuery(name = "ParametroCesantia.findByParametroCesantiaTrabajador", query = "SELECT p FROM ParametroCesantia p WHERE p.parametroCesantiaTrabajador = :parametroCesantiaTrabajador")})
-public class ParametroCesantia implements Serializable {
+public class ParametroCesantia extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

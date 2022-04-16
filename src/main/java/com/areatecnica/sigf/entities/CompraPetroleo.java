@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +32,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "compra_petroleo", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @NamedQueries({
     @NamedQuery(name = "CompraPetroleo.findAll", query = "SELECT c FROM CompraPetroleo c"),
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoId", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoId = :compraPetroleoId"),
@@ -44,7 +47,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoIef", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoIef = :compraPetroleoIef"),
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoIva", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoIva = :compraPetroleoIva"),
     @NamedQuery(name = "CompraPetroleo.findByCompraPetroleoTotal", query = "SELECT c FROM CompraPetroleo c WHERE c.compraPetroleoTotal = :compraPetroleoTotal")})
-public class CompraPetroleo implements Serializable {
+public class CompraPetroleo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

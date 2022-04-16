@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "PlanCuenta.findAll", query = "SELECT p FROM PlanCuenta p"),
     @NamedQuery(name = "PlanCuenta.findByPlanCuentaId", query = "SELECT p FROM PlanCuenta p WHERE p.planCuentaId = :planCuentaId")})
-public class PlanCuenta implements Serializable {
+public class PlanCuenta extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

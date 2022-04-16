@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Cacheable(false)
 @Table(name = "venta_combustible", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "VentaCombustible.findAll", query = "SELECT v FROM VentaCombustible v")
@@ -50,7 +53,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleTotal", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleTotal = :ventaCombustibleTotal")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleNumeroBoleta", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleNumeroBoleta = :ventaCombustibleNumeroBoleta")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleRecaudado", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleRecaudado = :ventaCombustibleRecaudado")})
-public class VentaCombustible implements Serializable {
+public class VentaCombustible extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

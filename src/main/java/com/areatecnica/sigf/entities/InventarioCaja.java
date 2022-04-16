@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "InventarioCaja.findByInventarioCajaBoletoEstadoCaja", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaEstado = :inventarioCajaEstado AND i.inventarioCajaIdCaja = :inventarioCajaIdCaja AND i.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto = :inventarioInternoIdBoleto ORDER BY i.inventarioCajaSerie ASC")
     , @NamedQuery(name = "InventarioCaja.findByInventarioCajaSerie", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaSerie = :inventarioCajaSerie")
     , @NamedQuery(name = "InventarioCaja.findByInventarioCajaIdentificador", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaIdentificador = :inventarioCajaIdentificador")})
-public class InventarioCaja implements Serializable {
+public class InventarioCaja extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

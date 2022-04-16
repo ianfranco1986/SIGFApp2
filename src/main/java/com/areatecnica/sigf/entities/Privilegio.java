@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Privilegio.findByPrivilegioNumeroOrden", query = "SELECT p FROM Privilegio p WHERE p.privilegioNumeroOrden = :privilegioNumeroOrden")
     , @NamedQuery(name = "Privilegio.findByPrivilegioColor", query = "SELECT p FROM Privilegio p WHERE p.privilegioColor = :privilegioColor")
     , @NamedQuery(name = "Privilegio.findByPrivilegioTipoMenu", query = "SELECT p FROM Privilegio p WHERE p.privilegioTipoMenu = :privilegioTipoMenu")})
-public class Privilegio implements Serializable {
+public class Privilegio extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -86,9 +86,7 @@ public class Privilegio implements Serializable {
     @JoinColumn(name = "privilegio_id_menu", referencedColumnName = "menu_id", nullable = false)
     @ManyToOne(optional = false)
     private Menu privilegioIdMenu;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "logIdPrivilegio")
-    private List<Log> logList;
-
+    
     public Privilegio() {
     }
 
@@ -182,15 +180,6 @@ public class Privilegio implements Serializable {
 
     public void setPrivilegioIdMenu(Menu privilegioIdMenu) {
         this.privilegioIdMenu = privilegioIdMenu;
-    }
-
-    @XmlTransient
-    public List<Log> getLogList() {
-        return logList;
-    }
-
-    public void setLogList(List<Log> logList) {
-        this.logList = logList;
     }
 
     @Override

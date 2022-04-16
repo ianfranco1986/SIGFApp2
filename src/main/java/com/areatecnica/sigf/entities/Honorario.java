@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Honorario.findByHonorarioTotal", query = "SELECT h FROM Honorario h WHERE h.honorarioTotal = :honorarioTotal"),
     @NamedQuery(name = "Honorario.findByHonorarioRetencion", query = "SELECT h FROM Honorario h WHERE h.honorarioRetencion = :honorarioRetencion"),
     @NamedQuery(name = "Honorario.findByHonorarioLiquido", query = "SELECT h FROM Honorario h WHERE h.honorarioLiquido = :honorarioLiquido")})
-public class Honorario implements Serializable {
+public class Honorario extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

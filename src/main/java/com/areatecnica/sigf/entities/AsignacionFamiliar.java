@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "asignacion_familiar", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AsignacionFamiliar.findAll", query = "SELECT a FROM AsignacionFamiliar a")
@@ -40,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "AsignacionFamiliar.findByAsignacionFamiliarMonto", query = "SELECT a FROM AsignacionFamiliar a WHERE a.asignacionFamiliarMonto = :asignacionFamiliarMonto")
     , @NamedQuery(name = "AsignacionFamiliar.findByAsignacionFamiliarDesde", query = "SELECT a FROM AsignacionFamiliar a WHERE a.asignacionFamiliarDesde = :asignacionFamiliarDesde")
     , @NamedQuery(name = "AsignacionFamiliar.findByAsignacionFamiliarHasta", query = "SELECT a FROM AsignacionFamiliar a WHERE a.asignacionFamiliarHasta = :asignacionFamiliarHasta")})
-public class AsignacionFamiliar implements Serializable {
+public class AsignacionFamiliar extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

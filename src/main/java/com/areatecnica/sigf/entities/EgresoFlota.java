@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "egreso_flota", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -37,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "EgresoFlota.findByEgresoFlotaPorcentaje", query = "SELECT e FROM EgresoFlota e WHERE e.egresoFlotaPorcentaje = :egresoFlotaPorcentaje")
     , @NamedQuery(name = "EgresoFlota.findByEgresoFlotaNumeroOrden", query = "SELECT e FROM EgresoFlota e WHERE e.egresoFlotaNumeroOrden = :egresoFlotaNumeroOrden")
     , @NamedQuery(name = "EgresoFlota.findByEgresoFlotaActivo", query = "SELECT e FROM EgresoFlota e WHERE e.egresoFlotaActivo = :egresoFlotaActivo")})
-public class EgresoFlota implements Serializable {
+public class EgresoFlota extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

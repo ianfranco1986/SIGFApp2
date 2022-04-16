@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "tarifa_grupo_servicio", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -38,7 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioValor", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioValor = :tarifaGrupoServicioValor")
     , @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioFecha", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioFecha = :tarifaGrupoServicioFecha")
     , @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioActiva", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioActiva = :tarifaGrupoServicioActiva")})
-public class TarifaGrupoServicio implements Serializable {
+public class TarifaGrupoServicio extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "descuento_liquidacion", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -40,7 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "DescuentoLiquidacion.findByDescuentoLiquidacionFecha", query = "SELECT d FROM DescuentoLiquidacion d WHERE d.descuentoLiquidacionFecha = :descuentoLiquidacionFecha")
     , @NamedQuery(name = "DescuentoLiquidacion.findByDescuentoLiquidacionMonto", query = "SELECT d FROM DescuentoLiquidacion d WHERE d.descuentoLiquidacionMonto = :descuentoLiquidacionMonto")
     , @NamedQuery(name = "DescuentoLiquidacion.findByDescuentoLiquidacionDescripcion", query = "SELECT d FROM DescuentoLiquidacion d WHERE d.descuentoLiquidacionDescripcion = :descuentoLiquidacionDescripcion")})
-public class DescuentoLiquidacion implements Serializable {
+public class DescuentoLiquidacion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

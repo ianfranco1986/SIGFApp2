@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PlanCuentaSubTipo.findAll", query = "SELECT p FROM PlanCuentaSubTipo p"),
     @NamedQuery(name = "PlanCuentaSubTipo.findByPlanCuentaSubTipoId", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoId = :planCuentaSubTipoId"),
     @NamedQuery(name = "PlanCuentaSubTipo.findByPlanCuentaSubTipoNombre", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoNombre = :planCuentaSubTipoNombre")})
-public class PlanCuentaSubTipo implements Serializable {
+public class PlanCuentaSubTipo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

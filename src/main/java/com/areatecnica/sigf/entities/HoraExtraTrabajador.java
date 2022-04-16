@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "HoraExtraTrabajador.findByHoraExtraTrabajadorCantidad", query = "SELECT h FROM HoraExtraTrabajador h WHERE h.horaExtraTrabajadorCantidad = :horaExtraTrabajadorCantidad")
     , @NamedQuery(name = "HoraExtraTrabajador.findByHoraExtraTrabajadorValor", query = "SELECT h FROM HoraExtraTrabajador h WHERE h.horaExtraTrabajadorValor = :horaExtraTrabajadorValor")
     , @NamedQuery(name = "HoraExtraTrabajador.findByHoraExtraTrabajadorFecha", query = "SELECT h FROM HoraExtraTrabajador h WHERE h.horaExtraTrabajadorFecha = :horaExtraTrabajadorFecha")})
-public class HoraExtraTrabajador implements Serializable {
+public class HoraExtraTrabajador extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

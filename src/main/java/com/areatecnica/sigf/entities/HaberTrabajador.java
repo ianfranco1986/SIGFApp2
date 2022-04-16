@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "HaberTrabajador.findByHaberTrabajadorMontoFijo", query = "SELECT h FROM HaberTrabajador h WHERE h.haberTrabajadorMontoFijo = :haberTrabajadorMontoFijo")
     , @NamedQuery(name = "HaberTrabajador.findByHaberTrabajadorDescripcion", query = "SELECT h FROM HaberTrabajador h WHERE h.haberTrabajadorDescripcion = :haberTrabajadorDescripcion")
     , @NamedQuery(name = "HaberTrabajador.findByHaberTrabajadorActivo", query = "SELECT h FROM HaberTrabajador h WHERE h.haberTrabajadorActivo = :haberTrabajadorActivo")})
-public class HaberTrabajador implements Serializable {
+public class HaberTrabajador extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

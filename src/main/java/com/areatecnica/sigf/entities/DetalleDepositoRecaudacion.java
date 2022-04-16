@@ -5,10 +5,12 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "detalle_deposito_recaudacion", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DetalleDepositoRecaudacion.findAll", query = "SELECT d FROM DetalleDepositoRecaudacion d")
@@ -36,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "DetalleDepositoRecaudacion.findByDetalleDepositoRecaudacionDetalle", query = "SELECT d FROM DetalleDepositoRecaudacion d WHERE d.detalleDepositoRecaudacionDetalle = :detalleDepositoRecaudacionDetalle")
     , @NamedQuery(name = "DetalleDepositoRecaudacion.findByDetalleDepositoRecaudacionSello", query = "SELECT d FROM DetalleDepositoRecaudacion d WHERE d.detalleDepositoRecaudacionSello = :detalleDepositoRecaudacionSello")
     , @NamedQuery(name = "DetalleDepositoRecaudacion.findByDetalleDepositoRecaudacionNumero", query = "SELECT d FROM DetalleDepositoRecaudacion d WHERE d.detalleDepositoRecaudacionNumero = :detalleDepositoRecaudacionNumero")})
-public class DetalleDepositoRecaudacion implements Serializable {
+public class DetalleDepositoRecaudacion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

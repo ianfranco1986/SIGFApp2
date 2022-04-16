@@ -5,10 +5,12 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +27,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "cuenta_banco_trabajador", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CuentaBancoTrabajador.findAll", query = "SELECT c FROM CuentaBancoTrabajador c")
     , @NamedQuery(name = "CuentaBancoTrabajador.findByCuentaBancoTrabajadorId", query = "SELECT c FROM CuentaBancoTrabajador c WHERE c.cuentaBancoTrabajadorId = :cuentaBancoTrabajadorId")})
-public class CuentaBancoTrabajador implements Serializable {
+public class CuentaBancoTrabajador extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

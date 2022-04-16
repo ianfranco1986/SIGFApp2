@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalAbonos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalAbonos = :liquidacionEmpresaTotalAbonos"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalCargos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalCargos = :liquidacionEmpresaTotalCargos"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaSaldo", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaSaldo = :liquidacionEmpresaSaldo")})
-public class LiquidacionEmpresa implements Serializable {
+public class LiquidacionEmpresa extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

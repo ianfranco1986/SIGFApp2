@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Mutual.findByMutualNombre", query = "SELECT m FROM Mutual m WHERE m.mutualNombre = :mutualNombre")
     , @NamedQuery(name = "Mutual.findByMutualComision", query = "SELECT m FROM Mutual m WHERE m.mutualComision = :mutualComision")
     , @NamedQuery(name = "Mutual.findByMutualPorcentajeDescuento", query = "SELECT m FROM Mutual m WHERE m.mutualPorcentajeDescuento = :mutualPorcentajeDescuento")})
-public class Mutual implements Serializable {
+public class Mutual extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

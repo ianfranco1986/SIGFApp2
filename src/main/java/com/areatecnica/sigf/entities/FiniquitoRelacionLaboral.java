@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "FiniquitoRelacionLaboral.findByFiniquitoRelacionLaboralMontoFiniquito", query = "SELECT f FROM FiniquitoRelacionLaboral f WHERE f.finiquitoRelacionLaboralMontoFiniquito = :finiquitoRelacionLaboralMontoFiniquito")
     , @NamedQuery(name = "FiniquitoRelacionLaboral.findByFiniquitoRelacionLaboralAniosServicio", query = "SELECT f FROM FiniquitoRelacionLaboral f WHERE f.finiquitoRelacionLaboralAniosServicio = :finiquitoRelacionLaboralAniosServicio")
     , @NamedQuery(name = "FiniquitoRelacionLaboral.findByFiniquitoRelacionLaboralAniosAdicionales", query = "SELECT f FROM FiniquitoRelacionLaboral f WHERE f.finiquitoRelacionLaboralAniosAdicionales = :finiquitoRelacionLaboralAniosAdicionales")})
-public class FiniquitoRelacionLaboral implements Serializable {
+public class FiniquitoRelacionLaboral extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

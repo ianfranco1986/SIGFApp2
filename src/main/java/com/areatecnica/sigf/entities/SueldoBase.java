@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "sueldo_base", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SueldoBase.findAll", query = "SELECT s FROM SueldoBase s")
@@ -36,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "SueldoBase.findBySueldoBaseBasePartime", query = "SELECT s FROM SueldoBase s WHERE s.sueldoBaseBasePartime = :sueldoBaseBasePartime")
     , @NamedQuery(name = "SueldoBase.findBySueldoBaseDesde", query = "SELECT s FROM SueldoBase s WHERE s.sueldoBaseDesde = :sueldoBaseDesde")
     , @NamedQuery(name = "SueldoBase.findBySueldoBaseHasta", query = "SELECT s FROM SueldoBase s WHERE s.sueldoBaseHasta = :sueldoBaseHasta")})
-public class SueldoBase implements Serializable {
+public class SueldoBase extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

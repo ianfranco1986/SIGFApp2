@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "recaudacion_guia", catalog = "sigfdb", schema = "")
 @XmlRootElement
+@EntityListeners(AuditListener.class)
 @Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "RecaudacionGuia.findAll", query = "SELECT r FROM RecaudacionGuia r")
@@ -34,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "RecaudacionGuia.findByCajaFecha", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaIdRecaudacion.recaudacionIdCaja = :recaudacionIdCaja AND r.recaudacionGuiaIdRecaudacion.recaudacionFecha = :recaudacionFecha ORDER BY r.recaudacionGuiaIdRecaudacion.recaudacionId")
     , @NamedQuery(name = "RecaudacionGuia.findByBusBetweenFechaRecaudacion", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaIdGuia.guiaIdBus = :guiaIdBus AND r.recaudacionGuiaIdRecaudacion.recaudacionFecha BETWEEN :from AND :to ")
     , @NamedQuery(name = "RecaudacionGuia.findByRecaudacionGuiaMonto", query = "SELECT r FROM RecaudacionGuia r WHERE r.recaudacionGuiaMonto = :recaudacionGuiaMonto")})
-public class RecaudacionGuia implements Serializable {
+public class RecaudacionGuia extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

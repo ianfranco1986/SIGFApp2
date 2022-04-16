@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ParentescoCarga.findAll", query = "SELECT p FROM ParentescoCarga p")
     , @NamedQuery(name = "ParentescoCarga.findByParentescoCargaId", query = "SELECT p FROM ParentescoCarga p WHERE p.parentescoCargaId = :parentescoCargaId")
     , @NamedQuery(name = "ParentescoCarga.findByParentescoCargaNombre", query = "SELECT p FROM ParentescoCarga p WHERE p.parentescoCargaNombre = :parentescoCargaNombre")})
-public class ParentescoCarga implements Serializable {
+public class ParentescoCarga extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

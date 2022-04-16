@@ -14,7 +14,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.areatecnica.sigf.entities.Menu;
-import com.areatecnica.sigf.entities.Log;
 import java.util.List;
 
 /**
@@ -56,11 +55,5 @@ public class PrivilegioFacade extends AbstractFacade<Privilegio> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<Log> findLogList(Privilegio entity) {
-        Privilegio mergedEntity = this.getMergedEntity(entity);
-        List<Log> logList = mergedEntity.getLogList();
-        logList.size();
-        return logList;
-    }
     
 }

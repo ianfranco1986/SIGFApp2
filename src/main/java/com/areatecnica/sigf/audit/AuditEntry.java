@@ -58,7 +58,7 @@ public class AuditEntry implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "auditUser", referencedColumnName = "staff_id")
+    @JoinColumn(name = "auditUser", referencedColumnName = "usuario_id")
     @ManyToOne(optional = false)
     private Usuario auditUser;
     @Column(name = "eventId")

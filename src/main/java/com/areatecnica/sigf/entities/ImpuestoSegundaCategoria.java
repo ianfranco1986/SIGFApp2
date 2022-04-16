@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ImpuestoSegundaCategoria.findByImpuestoSegundaCategoriaHasta", query = "SELECT i FROM ImpuestoSegundaCategoria i WHERE i.impuestoSegundaCategoriaHasta = :impuestoSegundaCategoriaHasta")
     , @NamedQuery(name = "ImpuestoSegundaCategoria.findByImpuestoSegundaCategoriaFactor", query = "SELECT i FROM ImpuestoSegundaCategoria i WHERE i.impuestoSegundaCategoriaFactor = :impuestoSegundaCategoriaFactor")
     , @NamedQuery(name = "ImpuestoSegundaCategoria.findByImpuestoSegundaCategoriaRebaja", query = "SELECT i FROM ImpuestoSegundaCategoria i WHERE i.impuestoSegundaCategoriaRebaja = :impuestoSegundaCategoriaRebaja")})
-public class ImpuestoSegundaCategoria implements Serializable {
+public class ImpuestoSegundaCategoria extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "representante_legal", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RepresentanteLegal.findAll", query = "SELECT r FROM RepresentanteLegal r")
@@ -40,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "RepresentanteLegal.findByRepresentanteLegalDireccion", query = "SELECT r FROM RepresentanteLegal r WHERE r.representanteLegalDireccion = :representanteLegalDireccion")
     , @NamedQuery(name = "RepresentanteLegal.findByRepresentanteLegalTelefono", query = "SELECT r FROM RepresentanteLegal r WHERE r.representanteLegalTelefono = :representanteLegalTelefono")
     , @NamedQuery(name = "RepresentanteLegal.findByRepresentanteLegalEmail", query = "SELECT r FROM RepresentanteLegal r WHERE r.representanteLegalEmail = :representanteLegalEmail")})
-public class RepresentanteLegal implements Serializable {
+public class RepresentanteLegal extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

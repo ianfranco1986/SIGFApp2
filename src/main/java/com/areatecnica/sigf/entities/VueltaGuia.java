@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -12,6 +13,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,13 +34,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Cacheable(false)
 @Table(name = "vuelta_guia", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "VueltaGuia.findAll", query = "SELECT v FROM VueltaGuia v")
     , @NamedQuery(name = "VueltaGuia.findByVueltaGuiaId", query = "SELECT v FROM VueltaGuia v WHERE v.vueltaGuiaId = :vueltaGuiaId")
     , @NamedQuery(name = "VueltaGuia.findByVueltaGuiaTotal", query = "SELECT v FROM VueltaGuia v WHERE v.vueltaGuiaTotal = :vueltaGuiaTotal")
     , @NamedQuery(name = "VueltaGuia.findByVueltaGuiaNumero", query = "SELECT v FROM VueltaGuia v WHERE v.vueltaGuiaNumero = :vueltaGuiaNumero")})
-public class VueltaGuia implements Serializable {
+public class VueltaGuia extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

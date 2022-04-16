@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "ctv_resumen", catalog = "sigfdb", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"ctv_resumen_numero"})})
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CtvResumen.findAll", query = "SELECT c FROM CtvResumen c")
@@ -39,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "CtvResumen.findByCtvResumenCantidadBolsas", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenCantidadBolsas = :ctvResumenCantidadBolsas")
     , @NamedQuery(name = "CtvResumen.findByCtvResumenTotalTransportado", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenTotalTransportado = :ctvResumenTotalTransportado")
     , @NamedQuery(name = "CtvResumen.findByCtvResumenFechaHoraRetiro", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenFechaHoraRetiro = :ctvResumenFechaHoraRetiro")})
-public class CtvResumen implements Serializable {
+public class CtvResumen extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

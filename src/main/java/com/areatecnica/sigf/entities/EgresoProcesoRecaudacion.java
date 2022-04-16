@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "egreso_proceso_recaudacion", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -37,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "EgresoProcesoRecaudacion.findByEgresoProcesoRecaudacionPorcentaje", query = "SELECT e FROM EgresoProcesoRecaudacion e WHERE e.egresoProcesoRecaudacionPorcentaje = :egresoProcesoRecaudacionPorcentaje")
     , @NamedQuery(name = "EgresoProcesoRecaudacion.findByEgresoProcesoRecaudacionNumeroOrden", query = "SELECT e FROM EgresoProcesoRecaudacion e WHERE e.egresoProcesoRecaudacionNumeroOrden = :egresoProcesoRecaudacionNumeroOrden")
     , @NamedQuery(name = "EgresoProcesoRecaudacion.findByEgresoProcesoRecaudacionActivo", query = "SELECT e FROM EgresoProcesoRecaudacion e WHERE e.egresoProcesoRecaudacionActivo = :egresoProcesoRecaudacionActivo")})
-public class EgresoProcesoRecaudacion implements Serializable {
+public class EgresoProcesoRecaudacion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

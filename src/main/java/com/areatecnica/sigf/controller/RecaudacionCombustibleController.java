@@ -3,14 +3,12 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IPrivilegioDao;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.ILogDaoImpl;
 import com.areatecnica.sigf.dao.impl.IPrivilegioDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionCombustibleDaoImpl;
 import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.RecaudacionCombustible;
 import com.areatecnica.sigf.entities.VentaCombustible;
-import com.areatecnica.sigf.entities.Log;
 import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.models.RecaudacionCombustibleDataModel;
 import com.areatecnica.sigf.models.VentaCombustibleModel;
@@ -83,14 +81,7 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
 
                 super.delete(event);
 
-                Log log = new Log();
-                log.setLogIdPrivilegio(privilegio);
-                log.setLogIdUsuario(this.getCurrentUser());
-                log.setLogTipoAccion("Borrado");
-                log.setLogDescripcion("Se ha borrado de la " + this.getSelected().getRecaudacionCombustibleIdRecaudacion().getRecaudacionIdCaja().getCajaRecaudacionNombre() + " la Recaudación Folio: " + this.getSelected().getRecaudacionCombustibleIdRecaudacion().getRecaudacionId() + " asociado a la Venta N°: " + this.ventaCombustible.getVentaCombustibleNumeroBoleta());
-
-                new ILogDaoImpl().create(log);
-
+                
                 this.setSelected(null);
                 JsfUtil.addSuccessMessage("Se ha eliminado la recaudación");
 

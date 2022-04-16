@@ -5,12 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "ticket")
 @XmlRootElement
+@EntityListeners(AuditListener.class)
 @Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Ticket t")
@@ -42,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Ticket.findByTicketFechaIngreso", query = "SELECT t FROM Ticket t WHERE t.ticketFechaIngreso = :ticketFechaIngreso")
     , @NamedQuery(name = "Ticket.findByTicketFechaRespuesta", query = "SELECT t FROM Ticket t WHERE t.ticketFechaRespuesta = :ticketFechaRespuesta")
     , @NamedQuery(name = "Ticket.findByTicketEstado", query = "SELECT t FROM Ticket t WHERE t.ticketEstado = :ticketEstado")})
-public class Ticket implements Serializable {
+public class Ticket extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

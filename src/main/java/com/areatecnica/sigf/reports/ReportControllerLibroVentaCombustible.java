@@ -41,7 +41,7 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
     private Boolean tipoInforme;
     private Usuario currentUser;
     private Cuenta userCount;
- 
+
     /**
      * Creates a new instance of ReportControllerGuiaCajaFecha
      */
@@ -56,9 +56,6 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
 
         this.currentUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
         this.userCount = this.currentUser.getUsuarioIdCuenta();
-
-        System.err.println("LA CUENTA DEL USUARIO ES: " + this.currentUser.getUsuarioIdCuenta().getCuentaId());
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
 

@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -12,6 +13,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,13 +32,14 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "estado_bus", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "EstadoBus.findAll", query = "SELECT e FROM EstadoBus e")
     , @NamedQuery(name = "EstadoBus.findByEstadoBusId", query = "SELECT e FROM EstadoBus e WHERE e.estadoBusId = :estadoBusId")
     , @NamedQuery(name = "EstadoBus.findByEstadoBusNombre", query = "SELECT e FROM EstadoBus e WHERE e.estadoBusNombre = :estadoBusNombre")})
-public class EstadoBus implements Serializable {
+public class EstadoBus extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

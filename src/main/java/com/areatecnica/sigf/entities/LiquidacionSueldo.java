@@ -84,7 +84,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "LiquidacionSueldo.findByLiquidacionSueldoMontoAlcanceLiquido", query = "SELECT l FROM LiquidacionSueldo l WHERE l.liquidacionSueldoMontoAlcanceLiquido = :liquidacionSueldoMontoAlcanceLiquido")
     , @NamedQuery(name = "LiquidacionSueldo.findByLiquidacionSueldoMontoAnticipo", query = "SELECT l FROM LiquidacionSueldo l WHERE l.liquidacionSueldoMontoAnticipo = :liquidacionSueldoMontoAnticipo")
     , @NamedQuery(name = "LiquidacionSueldo.findByLiquidacionSueldoMontoSaldo", query = "SELECT l FROM LiquidacionSueldo l WHERE l.liquidacionSueldoMontoSaldo = :liquidacionSueldoMontoSaldo")})
-public class LiquidacionSueldo implements Serializable {
+public class LiquidacionSueldo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

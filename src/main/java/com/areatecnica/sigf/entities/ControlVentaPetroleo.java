@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "control_venta_petroleo")
+@EntityListeners(AuditListener.class)
 @NamedQueries({
     @NamedQuery(name = "ControlVentaPetroleo.findAll", query = "SELECT c FROM ControlVentaPetroleo c"),
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoId", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoId = :controlVentaPetroleoId"),
@@ -43,7 +46,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoN2NumeralFinal", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoN2NumeralFinal = :controlVentaPetroleoN2NumeralFinal"),
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoN2Carga", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoN2Carga = :controlVentaPetroleoN2Carga"),
     @NamedQuery(name = "ControlVentaPetroleo.findByControlVentaPetroleoN2StockFinal", query = "SELECT c FROM ControlVentaPetroleo c WHERE c.controlVentaPetroleoN2StockFinal = :controlVentaPetroleoN2StockFinal")})
-public class ControlVentaPetroleo implements Serializable {
+public class ControlVentaPetroleo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

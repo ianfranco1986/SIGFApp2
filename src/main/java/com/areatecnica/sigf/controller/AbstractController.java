@@ -65,8 +65,6 @@ public abstract class AbstractController<T> implements Serializable {
         this.limitedByCuenta = Boolean.FALSE;
         this.currentUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
         this.userCount = this.currentUser.getUsuarioIdCuenta();
-
-        System.err.println("LA CUENTA DEL USUARIO ES: " + this.currentUser.getUsuarioIdCuenta().getCuentaId());
         listVisible = new ArrayList<Boolean>();
 
         //listWidth = new ArrayList<>();

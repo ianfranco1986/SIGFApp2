@@ -5,10 +5,12 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "valor_rollo_unidad", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ValorRolloUnidad.findAll", query = "SELECT v FROM ValorRolloUnidad v")
@@ -33,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ValorRolloUnidad.findByValorRolloUnidadCompra", query = "SELECT v FROM ValorRolloUnidad v WHERE v.valorRolloUnidadCompra = :valorRolloUnidadCompra")
     , @NamedQuery(name = "ValorRolloUnidad.findByValorRolloUnidadVenta", query = "SELECT v FROM ValorRolloUnidad v WHERE v.valorRolloUnidadVenta = :valorRolloUnidadVenta")
     , @NamedQuery(name = "ValorRolloUnidad.findByValorRolloUnidadInterno", query = "SELECT v FROM ValorRolloUnidad v WHERE v.valorRolloUnidadInterno = :valorRolloUnidadInterno")})
-public class ValorRolloUnidad implements Serializable {
+public class ValorRolloUnidad extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

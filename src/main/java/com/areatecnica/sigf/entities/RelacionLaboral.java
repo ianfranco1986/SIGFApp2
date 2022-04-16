@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "relacion_laboral", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -43,7 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "RelacionLaboral.findByRelacionLaboralFechaFin", query = "SELECT r FROM RelacionLaboral r WHERE r.relacionLaboralFechaFin = :relacionLaboralFechaFin")
     , @NamedQuery(name = "RelacionLaboral.findByRelacionLaboralSueldoBase", query = "SELECT r FROM RelacionLaboral r WHERE r.relacionLaboralSueldoBase = :relacionLaboralSueldoBase")
     , @NamedQuery(name = "RelacionLaboral.findByRelacionLaboralActivo", query = "SELECT r FROM RelacionLaboral r WHERE r.relacionLaboralActivo = :relacionLaboralActivo")})
-public class RelacionLaboral implements Serializable {
+public class RelacionLaboral extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

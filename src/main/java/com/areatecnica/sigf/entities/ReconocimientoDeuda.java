@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "reconocimiento_deuda", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -35,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ReconocimientoDeuda.findByReconocimientoDeudaId", query = "SELECT r FROM ReconocimientoDeuda r WHERE r.reconocimientoDeudaId = :reconocimientoDeudaId")
     , @NamedQuery(name = "ReconocimientoDeuda.findByReconocimientoDeudaMonto", query = "SELECT r FROM ReconocimientoDeuda r WHERE r.reconocimientoDeudaMonto = :reconocimientoDeudaMonto")
     , @NamedQuery(name = "ReconocimientoDeuda.findByReconocimientoDeudaDescripcion", query = "SELECT r FROM ReconocimientoDeuda r WHERE r.reconocimientoDeudaDescripcion = :reconocimientoDeudaDescripcion")})
-public class ReconocimientoDeuda implements Serializable {
+public class ReconocimientoDeuda extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

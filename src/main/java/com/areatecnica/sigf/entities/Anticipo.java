@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +31,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "anticipo", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Anticipo.findAll", query = "SELECT a FROM Anticipo a"),
     @NamedQuery(name = "Anticipo.findByAnticipoId", query = "SELECT a FROM Anticipo a WHERE a.anticipoId = :anticipoId"),
     @NamedQuery(name = "Anticipo.findByAnticipoFecha", query = "SELECT a FROM Anticipo a WHERE a.anticipoFecha = :anticipoFecha"),
     @NamedQuery(name = "Anticipo.findByAnticipoMonto", query = "SELECT a FROM Anticipo a WHERE a.anticipoMonto = :anticipoMonto")})
-public class Anticipo implements Serializable {
+public class Anticipo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -136,5 +139,5 @@ public class Anticipo implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.Anticipo[ anticipoId=" + anticipoId + " ]";
     }
-    
+
 }

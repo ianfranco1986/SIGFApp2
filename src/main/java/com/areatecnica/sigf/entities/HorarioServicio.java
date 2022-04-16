@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "HorarioServicio.findByHorarioServicioViernes", query = "SELECT h FROM HorarioServicio h WHERE h.horarioServicioViernes = :horarioServicioViernes")
     , @NamedQuery(name = "HorarioServicio.findByHorarioServicioSabado", query = "SELECT h FROM HorarioServicio h WHERE h.horarioServicioSabado = :horarioServicioSabado")
     , @NamedQuery(name = "HorarioServicio.findByHorarioServicioDomingo", query = "SELECT h FROM HorarioServicio h WHERE h.horarioServicioDomingo = :horarioServicioDomingo")})
-public class HorarioServicio implements Serializable {
+public class HorarioServicio extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

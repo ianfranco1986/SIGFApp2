@@ -44,6 +44,9 @@ public class AuditField implements Serializable {
     @Column(name = "field_name", length = 255)
     private String fieldName;
     @Size(max = 255)
+    @Column(name = "field_oldValue", length = 255)
+    private String fieldOldValue;
+    @Size(max = 255)
     @Column(name = "field_value", length = 255)
     private String fieldValue;
     @JoinColumn(name = "audit_entry_id", referencedColumnName = "id")
@@ -79,6 +82,14 @@ public class AuditField implements Serializable {
 
     public void setFieldValue(String fieldValue) {
         this.fieldValue = fieldValue;
+    }
+
+    public void setFieldOldValue(String fieldOldValue) {
+        this.fieldOldValue = fieldOldValue;
+    }
+
+    public String getFieldOldValue() {
+        return fieldOldValue;
     }
 
     public AuditEntry getAuditEntryId() {

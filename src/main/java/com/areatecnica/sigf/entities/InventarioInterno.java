@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "InventarioInterno.findByInventarioInternoSerie", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoSerie = :inventarioInternoSerie")
     , @NamedQuery(name = "InventarioInterno.findByInventarioInternoIdentificador", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoIdentificador = :inventarioInternoIdentificador")
     , @NamedQuery(name = "InventarioInterno.findByInventarioInternoEstado", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoEstado = :inventarioInternoEstado")})
-public class InventarioInterno implements Serializable {
+public class InventarioInterno extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "GrupoServicio.findByGrupoServicioId", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioId = :grupoServicioId")
     , @NamedQuery(name = "GrupoServicio.findByGrupoServicioIdentificador", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioIdentificador = :grupoServicioIdentificador")
     , @NamedQuery(name = "GrupoServicio.findByGrupoServicioAccesoInspector", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioAccesoInspector = :grupoServicioAccesoInspector")})
-public class GrupoServicio implements Serializable {
+public class GrupoServicio extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

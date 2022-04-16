@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "InstitucionSalud.findAll", query = "SELECT i FROM InstitucionSalud i")
     , @NamedQuery(name = "InstitucionSalud.findByInstitucionSaludId", query = "SELECT i FROM InstitucionSalud i WHERE i.institucionSaludId = :institucionSaludId")
     , @NamedQuery(name = "InstitucionSalud.findByInstitucionSaludNombre", query = "SELECT i FROM InstitucionSalud i WHERE i.institucionSaludNombre = :institucionSaludNombre")})
-public class InstitucionSalud implements Serializable {
+public class InstitucionSalud extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -3,7 +3,6 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.entities.Usuario;
 import com.areatecnica.sigf.entities.UsuarioSession;
 import com.areatecnica.sigf.entities.Despacho;
-import com.areatecnica.sigf.entities.Log;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import java.util.List;
 import com.areatecnica.sigf.facade.UsuarioFacade;
@@ -168,22 +167,7 @@ public class UsuarioController extends AbstractController<Usuario> {
         }
     }
 
-    /**
-     * Sets the "items" attribute with a collection of Log entities that are
-     * retrieved from Usuario and returns the navigation outcome.
-     *
-     * @return navigation outcome for Log page
-     */
-    public String navigateLogList() {
-        Usuario selected = this.getSelected();
-        if (selected != null) {
-            UsuarioFacade ejbFacade = (UsuarioFacade) this.getFacade();
-            List<Log> selectedLogList = ejbFacade.findLogList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Log_items", selectedLogList);
-        }
-        return "/app/log/index";
-    }
-
+   
     public boolean getIsCajaRecaudacionListEmpty() {
         return this.isCajaRecaudacionListEmpty;
     }

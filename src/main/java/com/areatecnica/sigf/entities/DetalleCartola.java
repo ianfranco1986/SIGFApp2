@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "detalle_cartola", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DetalleCartola.findAll", query = "SELECT d FROM DetalleCartola d")
@@ -40,7 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "DetalleCartola.findByDetalleCartolaDescripcion", query = "SELECT d FROM DetalleCartola d WHERE d.detalleCartolaDescripcion = :detalleCartolaDescripcion")
     , @NamedQuery(name = "DetalleCartola.findByDetalleCartolaAbono", query = "SELECT d FROM DetalleCartola d WHERE d.detalleCartolaAbono = :detalleCartolaAbono")
     , @NamedQuery(name = "DetalleCartola.findByDetalleCartolaCargo", query = "SELECT d FROM DetalleCartola d WHERE d.detalleCartolaCargo = :detalleCartolaCargo")})
-public class DetalleCartola implements Serializable {
+public class DetalleCartola extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

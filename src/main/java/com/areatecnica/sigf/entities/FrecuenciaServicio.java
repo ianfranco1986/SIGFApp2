@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "FrecuenciaServicio.findAll", query = "SELECT f FROM FrecuenciaServicio f")
     , @NamedQuery(name = "FrecuenciaServicio.findByFrecuenciaServicioId", query = "SELECT f FROM FrecuenciaServicio f WHERE f.frecuenciaServicioId = :frecuenciaServicioId")
     , @NamedQuery(name = "FrecuenciaServicio.findByFrecuenciaServicioNumeroBuses", query = "SELECT f FROM FrecuenciaServicio f WHERE f.frecuenciaServicioNumeroBuses = :frecuenciaServicioNumeroBuses")})
-public class FrecuenciaServicio implements Serializable {
+public class FrecuenciaServicio extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

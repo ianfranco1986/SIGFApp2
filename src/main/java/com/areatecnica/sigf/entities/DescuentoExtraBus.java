@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -12,6 +13,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "descuento_extra_bus", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -40,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "DescuentoExtraBus.findByDescuentoExtraBusId", query = "SELECT d FROM DescuentoExtraBus d WHERE d.descuentoExtraBusId = :descuentoExtraBusId")
     , @NamedQuery(name = "DescuentoExtraBus.findByDescuentoExtraBusMonto", query = "SELECT d FROM DescuentoExtraBus d WHERE d.descuentoExtraBusMonto = :descuentoExtraBusMonto")
     , @NamedQuery(name = "DescuentoExtraBus.findByDescuentoExtraBusRecaudado", query = "SELECT d FROM DescuentoExtraBus d WHERE d.descuentoExtraBusRecaudado = :descuentoExtraBusRecaudado")})
-public class DescuentoExtraBus implements Serializable {
+public class DescuentoExtraBus extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

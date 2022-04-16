@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "recaudacion_minuto", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -35,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "RecaudacionMinuto.findRecibidosBusFechas", query = "SELECT r FROM RecaudacionMinuto r WHERE r.recaudacionMinutoIdRegistroMinuto.registroMinutoHastaIdBus = :registroMinutoHastaIdBus AND r.recaudacionMinutoIdRecaudacion.recaudacionFecha BETWEEN :from AND :to ORDER BY r.recaudacionMinutoIdRecaudacion.recaudacionId ASC")
     , @NamedQuery(name = "RecaudacionMinuto.findByRecaudacionMinutoId", query = "SELECT r FROM RecaudacionMinuto r WHERE r.recaudacionMinutoId = :recaudacionMinutoId")
     , @NamedQuery(name = "RecaudacionMinuto.findByRecaudacionMinutoMonto", query = "SELECT r FROM RecaudacionMinuto r WHERE r.recaudacionMinutoMonto = :recaudacionMinutoMonto")})
-public class RecaudacionMinuto implements Serializable {
+public class RecaudacionMinuto extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

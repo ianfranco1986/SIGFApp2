@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -12,6 +13,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "caja_recaudacion", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -41,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionNombre", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionNombre = :cajaRecaudacionNombre")
     , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionTieneEgresos", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionTieneEgresos = :cajaRecaudacionTieneEgresos")
     , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionActiva", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionActiva = :cajaRecaudacionActiva")})
-public class CajaRecaudacion implements Serializable {
+public class CajaRecaudacion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

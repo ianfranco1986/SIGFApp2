@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "PeriodoFrecuencia.findByPeriodoFrecuenciaId", query = "SELECT p FROM PeriodoFrecuencia p WHERE p.periodoFrecuenciaId = :periodoFrecuenciaId")
     , @NamedQuery(name = "PeriodoFrecuencia.findByPeriodoFrecuenciaDesde", query = "SELECT p FROM PeriodoFrecuencia p WHERE p.periodoFrecuenciaDesde = :periodoFrecuenciaDesde")
     , @NamedQuery(name = "PeriodoFrecuencia.findByPeriodoFrecuenciaHasta", query = "SELECT p FROM PeriodoFrecuencia p WHERE p.periodoFrecuenciaHasta = :periodoFrecuenciaHasta")})
-public class PeriodoFrecuencia implements Serializable {
+public class PeriodoFrecuencia extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

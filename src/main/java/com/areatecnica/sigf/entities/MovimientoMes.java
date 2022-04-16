@@ -50,7 +50,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesDetalle", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesDetalle = :movimientoMesDetalle"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesTipoDocumento", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesTipoDocumento = :movimientoMesTipoDocumento"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesNumeroDocumento", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesNumeroDocumento = :movimientoMesNumeroDocumento")})
-public class MovimientoMes implements Serializable {
+public class MovimientoMes extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

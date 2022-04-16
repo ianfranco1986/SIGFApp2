@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "feriado_legal", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "FeriadoLegal.findAll", query = "SELECT f FROM FeriadoLegal f")
@@ -41,7 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "FeriadoLegal.findByFeriadoLegalFeriadoFraccionado", query = "SELECT f FROM FeriadoLegal f WHERE f.feriadoLegalFeriadoFraccionado = :feriadoLegalFeriadoFraccionado")
     , @NamedQuery(name = "FeriadoLegal.findByFeriadoLegalSaldoPendiente", query = "SELECT f FROM FeriadoLegal f WHERE f.feriadoLegalSaldoPendiente = :feriadoLegalSaldoPendiente")
     , @NamedQuery(name = "FeriadoLegal.findByFeriadoLegalValorFeriado", query = "SELECT f FROM FeriadoLegal f WHERE f.feriadoLegalValorFeriado = :feriadoLegalValorFeriado")})
-public class FeriadoLegal implements Serializable {
+public class FeriadoLegal extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

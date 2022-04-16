@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "LicenciaMedica.findByLicenciaMedicaFechaDesdeReposo", query = "SELECT l FROM LicenciaMedica l WHERE l.licenciaMedicaFechaDesdeReposo = :licenciaMedicaFechaDesdeReposo")
     , @NamedQuery(name = "LicenciaMedica.findByLicenciaMedicaFechaHastaReposo", query = "SELECT l FROM LicenciaMedica l WHERE l.licenciaMedicaFechaHastaReposo = :licenciaMedicaFechaHastaReposo")
     , @NamedQuery(name = "LicenciaMedica.findByLicenciaMedicaDiagnosticoLicencia", query = "SELECT l FROM LicenciaMedica l WHERE l.licenciaMedicaDiagnosticoLicencia = :licenciaMedicaDiagnosticoLicencia")})
-public class LicenciaMedica implements Serializable {
+public class LicenciaMedica extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

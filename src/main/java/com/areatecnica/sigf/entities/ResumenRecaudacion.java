@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "resumen_recaudacion", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ResumenRecaudacion.findAll", query = "SELECT r FROM ResumenRecaudacion r"),
@@ -52,7 +55,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion50", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion50 = :resumenRecaudacion50"),
     @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacion10", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacion10 = :resumenRecaudacion10"),
     @NamedQuery(name = "ResumenRecaudacion.findByResumenRecaudacionCheques", query = "SELECT r FROM ResumenRecaudacion r WHERE r.resumenRecaudacionCheques = :resumenRecaudacionCheques")})
-public class ResumenRecaudacion implements Serializable {
+public class ResumenRecaudacion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

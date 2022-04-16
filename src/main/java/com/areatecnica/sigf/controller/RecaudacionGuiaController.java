@@ -17,6 +17,7 @@ import com.areatecnica.sigf.entities.RecaudacionBoleto;
 import com.areatecnica.sigf.entities.RecaudacionGuia;
 import com.areatecnica.sigf.entities.Trabajador;
 import com.areatecnica.sigf.models.RecaudacionDataModel;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -172,9 +173,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                 this.totalImposiciones = 0;
                 this.totalRecaudacion = 0;
             }
-        } else {
-            JsfUtil.addErrorMessage("Debe seleccionar la caja");
-        }
+        } 
         //this.g = this.items.stream().filter(distinctByKey)
 
     }
@@ -487,7 +486,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
     }
 
-    public class RecaudacionGuiaHelper {
+    public class RecaudacionGuiaHelper implements Serializable{
 
         private Integer id;
 

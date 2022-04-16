@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -12,6 +13,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "usuario", catalog = "sigfdb", schema = "")
 @XmlRootElement
+@EntityListeners(AuditListener.class)
 @Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
@@ -45,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByUsuarioApellidoMaterno", query = "SELECT u FROM Usuario u WHERE u.usuarioApellidoMaterno = :usuarioApellidoMaterno")
     , @NamedQuery(name = "Usuario.findByUsuarioEmail", query = "SELECT u FROM Usuario u WHERE u.usuarioEmail = :usuarioEmail")
     , @NamedQuery(name = "Usuario.findByUsuarioActivo", query = "SELECT u FROM Usuario u WHERE u.usuarioActivo = :usuarioActivo")})
-public class Usuario implements Serializable {
+public class Usuario extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -90,8 +93,6 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "usuario_id_terminal", referencedColumnName = "terminal_id", nullable = false)
     @ManyToOne(optional = false)
     private Terminal usuarioIdTerminal;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "logIdUsuario")
-    private List<Log> logList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaRecaudacionIdUsuario")
     private List<CajaRecaudacion> cajaRecaudacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorIdUsuario")
@@ -218,14 +219,6 @@ public class Usuario implements Serializable {
         this.usuarioIdTerminal = usuarioIdTerminal;
     }
 
-    @XmlTransient
-    public List<Log> getLogList() {
-        return logList;
-    }
-
-    public void setLogList(List<Log> logList) {
-        this.logList = logList;
-    }
 
     @XmlTransient
     public List<CajaRecaudacion> getCajaRecaudacionList() {

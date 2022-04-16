@@ -98,6 +98,7 @@ public class AuditListener extends DescriptorEventAdapter implements SessionCust
                 AuditField field = new AuditField();
                 field.setAuditEntryId(entry);
                 field.setFieldName(fieldChange.getAttribute());
+                field.setFieldOldValue(fieldChange.getOldValue().toString());
                 field.setFieldValue(fieldChange.getNewValue().toString());
                 fields.add(field);
             }
