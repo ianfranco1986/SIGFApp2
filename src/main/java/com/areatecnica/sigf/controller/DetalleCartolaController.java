@@ -107,7 +107,8 @@ public class DetalleCartolaController extends AbstractController<DetalleCartola>
 
     public void handleEmpresaChange() {
         if (this.empresa != null) {
-            this.cuentaItems = this.empresa.getCuentaBancariaList();
+            //corregir
+            //this.cuentaItems = this.empresa.getCuentaBancariaList();
             this.cartolaItems = new ArrayList<>();
         }
     }

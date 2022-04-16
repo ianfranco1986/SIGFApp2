@@ -8,12 +8,13 @@ package com.areatecnica.sigf.facade;
 import com.areatecnica.sigf.entities.UsuarioSession;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 //import com.areatecnica.sigf.entities.UsuarioSession_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.areatecnica.sigf.entities.Usuario;
+import java.util.logging.Logger;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -22,8 +23,9 @@ import com.areatecnica.sigf.entities.Usuario;
 @Stateless
 public class UsuarioSessionFacade extends AbstractFacade<UsuarioSession> {
 
-    @PersistenceContext(unitName = "com.areatecnica_SIGFapp_war_1PU")
-    private EntityManager em;
+    Logger log = Logger.getLogger(this.getClass().getName());
+
+    private EntityManager em = Persistence.createEntityManagerFactory("com.areatecnica_SIGFapp_war_1PU").createEntityManager();
 
     @Override
     protected EntityManager getEntityManager() {
@@ -45,5 +47,5 @@ public class UsuarioSessionFacade extends AbstractFacade<UsuarioSession> {
     public Usuario findUsuarioSessionIdUsuario(UsuarioSession entity) {
         return this.getMergedEntity(entity).getUsuarioSessionIdUsuario();
     }
-    
+
 }

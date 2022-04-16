@@ -1054,23 +1054,23 @@ pre[class*=language-].line-numbers > code {
   padding: 5px 0;
 }
 .widget-overview.overview-box-1 {
-  background-color: #007bff;
-  border: solid 1px #007bff;
+  background-color: #6ba6d9;
+  border: solid 1px #6ba6d9;
   color: #ffffff;
 }
 .widget-overview.overview-box-2 {
-  background-color: #28a745;
-  border: solid 1px #28a745;
+  background-color: #0154a3;
+  border: solid 1px #0154a3;
   color: #ffffff;
 }
 .widget-overview.overview-box-3 {
-  background-color: #fd7e14;
-  border: solid 1px #fd7e14;
+  background-color: #457fca;
+  border: solid 1px #457fca;
   color: #ffffff;
 }
 .widget-overview.overview-box-4 {
-  background-color: #6f42c1;
-  border: solid 1px #6f42c1;
+  background-color: #5691c8;
+  border: solid 1px #5691c8;
   color: #ffffff;
 }
 

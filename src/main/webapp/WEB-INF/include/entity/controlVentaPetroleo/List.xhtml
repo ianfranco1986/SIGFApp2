@@ -49,7 +49,7 @@
                          selection="#{controlVentaPetroleoController.selected}"
                          rowIndexVar="rowIndex"
                          widgetVar="datalistWidget" 
-                         expandableRowGroups="true" 
+                         expandedRow="true"
                          emptyMessage="No se han encontrado registros">
 
                 <p:ajax event="rowSelect"   update="datalist:createButton,datalist:viewButton,datalist:editButton,datalist:deleteButton,@form:NumeralSurtidorDataTableContextMenu" listener="#{controlVentaPetroleoController.resetParents}"/>

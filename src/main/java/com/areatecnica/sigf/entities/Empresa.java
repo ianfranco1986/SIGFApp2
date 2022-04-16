@@ -37,18 +37,18 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e ORDER BY e.empresaNombre")
-    , @NamedQuery(name = "Empresa.findAllByCuenta", query = "SELECT e FROM Empresa e WHERE e.empresaIdCuenta = :idCuenta ORDER BY e.empresaNombre ASC")
-    , @NamedQuery(name = "Empresa.findByNandu", query = "SELECT e FROM Empresa e WHERE e.empresaIdCuenta.cuentaId = 1 AND e.empresaId <> 1 AND e.empresaActiva = 1 ORDER BY e.empresaNombre ASC")
-    , @NamedQuery(name = "Empresa.findByEmpresaId", query = "SELECT e FROM Empresa e WHERE e.empresaId = :empresaId")
-    , @NamedQuery(name = "Empresa.findByEmpresaRut", query = "SELECT e FROM Empresa e WHERE e.empresaRut = :empresaRut")
-    , @NamedQuery(name = "Empresa.findByEmpresaNombre", query = "SELECT e FROM Empresa e WHERE e.empresaNombre = :empresaNombre")
-    , @NamedQuery(name = "Empresa.findByEmpresaGiro", query = "SELECT e FROM Empresa e WHERE e.empresaGiro = :empresaGiro")
-    , @NamedQuery(name = "Empresa.findByEmpresaDireccion", query = "SELECT e FROM Empresa e WHERE e.empresaDireccion = :empresaDireccion")
-    , @NamedQuery(name = "Empresa.findByEmpresaTelefono", query = "SELECT e FROM Empresa e WHERE e.empresaTelefono = :empresaTelefono")
-    , @NamedQuery(name = "Empresa.findByEmpresaCelular", query = "SELECT e FROM Empresa e WHERE e.empresaCelular = :empresaCelular")
-    , @NamedQuery(name = "Empresa.findByEmpresaEmail", query = "SELECT e FROM Empresa e WHERE e.empresaEmail = :empresaEmail")
-    , @NamedQuery(name = "Empresa.findByEmpresaPorcentajeMutual", query = "SELECT e FROM Empresa e WHERE e.empresaPorcentajeMutual = :empresaPorcentajeMutual")})
+    @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e ORDER BY e.empresaNombre"),
+    @NamedQuery(name = "Empresa.findAllByCuenta", query = "SELECT e FROM Empresa e WHERE e.empresaIdCuenta = :idCuenta ORDER BY e.empresaNombre ASC"),
+    @NamedQuery(name = "Empresa.findByNandu", query = "SELECT e FROM Empresa e WHERE e.empresaIdCuenta.cuentaId = 1 AND e.empresaId <> 1 AND e.empresaActiva = 1 ORDER BY e.empresaNombre ASC"),
+    @NamedQuery(name = "Empresa.findByEmpresaId", query = "SELECT e FROM Empresa e WHERE e.empresaId = :empresaId"),
+    @NamedQuery(name = "Empresa.findByEmpresaRut", query = "SELECT e FROM Empresa e WHERE e.empresaRut = :empresaRut"),
+    @NamedQuery(name = "Empresa.findByEmpresaNombre", query = "SELECT e FROM Empresa e WHERE e.empresaNombre = :empresaNombre"),
+    @NamedQuery(name = "Empresa.findByEmpresaGiro", query = "SELECT e FROM Empresa e WHERE e.empresaGiro = :empresaGiro"),
+    @NamedQuery(name = "Empresa.findByEmpresaDireccion", query = "SELECT e FROM Empresa e WHERE e.empresaDireccion = :empresaDireccion"),
+    @NamedQuery(name = "Empresa.findByEmpresaTelefono", query = "SELECT e FROM Empresa e WHERE e.empresaTelefono = :empresaTelefono"),
+    @NamedQuery(name = "Empresa.findByEmpresaCelular", query = "SELECT e FROM Empresa e WHERE e.empresaCelular = :empresaCelular"),
+    @NamedQuery(name = "Empresa.findByEmpresaEmail", query = "SELECT e FROM Empresa e WHERE e.empresaEmail = :empresaEmail"),
+    @NamedQuery(name = "Empresa.findByEmpresaPorcentajeMutual", query = "SELECT e FROM Empresa e WHERE e.empresaPorcentajeMutual = :empresaPorcentajeMutual")})
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -90,24 +90,6 @@ public class Empresa implements Serializable {
     private float empresaPorcentajeMutual;
     @Column(name = "empresa_activa")
     private Boolean empresaActiva;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaEmpresaId")
-    private List<PlanCuenta> planCuentaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimientoMesEmpresaId")
-    private List<MovimientoMes> movimientoMesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "liquidacionEmpresaIdEmpresa")
-    private List<LiquidacionEmpresa> liquidacionEmpresaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "representanteEmpresaIdEmpresa")
-    private List<RepresentanteEmpresa> representanteEmpresaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancariaIdEmpresa")
-    private List<CuentaBancaria> cuentaBancariaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "liquidacionSueldoIdEmpresa")
-    private List<LiquidacionSueldo> liquidacionSueldoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reconocimientoDeudaIdEmpresa")
-    private List<ReconocimientoDeuda> reconocimientoDeudaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdEmpresa")
-    private List<Bus> busList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdEmpresa")
-    private List<RelacionLaboral> relacionLaboralList;
     @JoinColumn(name = "empresa_id_caja_compensacion", referencedColumnName = "caja_compensacion_id", nullable = false)
     @ManyToOne(optional = false)
     private CajaCompensacion empresaIdCajaCompensacion;
@@ -213,93 +195,12 @@ public class Empresa implements Serializable {
         this.empresaActiva = empresaActiva;
     }
 
-    @XmlTransient
-    public List<LiquidacionEmpresa> getLiquidacionEmpresaList() {
-        return liquidacionEmpresaList;
-    }
-
-    public void setLiquidacionEmpresaList(List<LiquidacionEmpresa> liquidacionEmpresaList) {
-        this.liquidacionEmpresaList = liquidacionEmpresaList;
-    }
-
-    @XmlTransient
-    public List<RepresentanteEmpresa> getRepresentanteEmpresaList() {
-        return representanteEmpresaList;
-    }
-
-    public void setRepresentanteEmpresaList(List<RepresentanteEmpresa> representanteEmpresaList) {
-        this.representanteEmpresaList = representanteEmpresaList;
-    }
-
-    @XmlTransient
-    public List<CuentaBancaria> getCuentaBancariaList() {
-        return cuentaBancariaList;
-    }
-
-    public void setCuentaBancariaList(List<CuentaBancaria> cuentaBancariaList) {
-        this.cuentaBancariaList = cuentaBancariaList;
-    }
-
-    @XmlTransient
-    public List<LiquidacionSueldo> getLiquidacionSueldoList() {
-        return liquidacionSueldoList;
-    }
-
-    public void setLiquidacionSueldoList(List<LiquidacionSueldo> liquidacionSueldoList) {
-        this.liquidacionSueldoList = liquidacionSueldoList;
-    }
-
-    @XmlTransient
-    public List<ReconocimientoDeuda> getReconocimientoDeudaList() {
-        return reconocimientoDeudaList;
-    }
-
-    public void setReconocimientoDeudaList(List<ReconocimientoDeuda> reconocimientoDeudaList) {
-        this.reconocimientoDeudaList = reconocimientoDeudaList;
-    }
-
-    @XmlTransient
-    public List<MovimientoMes> getMovimientoMesList() {
-        return movimientoMesList;
-    }
-
-    public void setMovimientoMesList(List<MovimientoMes> movimientoMesList) {
-        this.movimientoMesList = movimientoMesList;
-    }
-
-    @XmlTransient
-    public List<Bus> getBusList() {
-        return busList;
-    }
-
-    public void setBusList(List<Bus> busList) {
-        this.busList = busList;
-    }
-
-    @XmlTransient
-    public List<RelacionLaboral> getRelacionLaboralList() {
-        return relacionLaboralList;
-    }
-
-    public void setRelacionLaboralList(List<RelacionLaboral> relacionLaboralList) {
-        this.relacionLaboralList = relacionLaboralList;
-    }
-
     public CajaCompensacion getEmpresaIdCajaCompensacion() {
         return empresaIdCajaCompensacion;
     }
 
     public void setEmpresaIdCajaCompensacion(CajaCompensacion empresaIdCajaCompensacion) {
         this.empresaIdCajaCompensacion = empresaIdCajaCompensacion;
-    }
-
-    @XmlTransient
-    public List<PlanCuenta> getPlanCuentaList() {
-        return planCuentaList;
-    }
-
-    public void setPlanCuentaList(List<PlanCuenta> planCuentaList) {
-        this.planCuentaList = planCuentaList;
     }
 
     public Cuenta getEmpresaIdCuenta() {

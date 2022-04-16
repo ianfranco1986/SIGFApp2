@@ -7,8 +7,6 @@
     <class>com.areatecnica.sigf.entities.AbonoLiquidacion</class>
     <class>com.areatecnica.sigf.entities.AdministracionMensual</class>
     <class>com.areatecnica.sigf.entities.AsignacionFamiliar</class>
-    <class>com.areatecnica.sigf.entities.AuditEntry</class>
-    <class>com.areatecnica.sigf.entities.AuditField</class>
     <class>com.areatecnica.sigf.entities.Banco</class>
     <class>com.areatecnica.sigf.entities.Boleto</class>
     <class>com.areatecnica.sigf.entities.Bus</class>
@@ -183,10 +181,13 @@
     <class>com.areatecnica.sigf.entities.Cliente</class>
     <class>com.areatecnica.sigf.entities.TipoMovimiento</class>
     <class>com.areatecnica.sigf.entities.TipoRecaudacionExtra</class>
+    <class>com.areatecnica.sigf.audit.AuditField</class>
+    <class>com.areatecnica.sigf.audit.AuditEntry</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.jdbc.native-sql" value="true"/>
-      <property name="eclipselink.logging.level" value="SEVERE"/>
+      <property name="eclipselink.logging.logger" value="JavaLogger"/>
+      <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
     </properties>
   </persistence-unit>
 </persistence>

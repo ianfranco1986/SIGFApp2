@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.areatecnica.sigf.entities.Cuenta;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -22,8 +23,8 @@ import com.areatecnica.sigf.entities.Cuenta;
 @Stateless
 public class ValorMinutoFacade extends AbstractFacade<ValorMinuto> {
 
-    @PersistenceContext(unitName = "com.areatecnica_SIGFapp_war_1PU")
-    private EntityManager em;
+    
+    private EntityManager em = Persistence.createEntityManagerFactory( "com.areatecnica_SIGFapp_war_1PU").createEntityManager();
 
     @Override
     protected EntityManager getEntityManager() {

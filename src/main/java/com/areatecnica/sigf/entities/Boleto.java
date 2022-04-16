@@ -54,6 +54,11 @@ public class Boleto implements Serializable {
     private String boletoNombre;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "boleto_sigla", nullable = false, length = 45)
+    private String boletoSigla;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "boleto_orden", nullable = false)
     private int boletoOrden;
     @Basic(optional = false)
@@ -79,9 +84,10 @@ public class Boleto implements Serializable {
         this.boletoId = boletoId;
     }
 
-    public Boleto(Integer boletoId, String boletoNombre, int boletoOrden, boolean boletoActivo) {
+    public Boleto(Integer boletoId, String boletoNombre, String boletoSigla, int boletoOrden, boolean boletoActivo) {
         this.boletoId = boletoId;
         this.boletoNombre = boletoNombre;
+        this.boletoSigla = boletoSigla;
         this.boletoOrden = boletoOrden;
         this.boletoActivo = boletoActivo;
     }
@@ -124,6 +130,14 @@ public class Boleto implements Serializable {
 
     public void setBoletoIdCuenta(Cuenta boletoIdCuenta) {
         this.boletoIdCuenta = boletoIdCuenta;
+    }
+
+    public void setBoletoSigla(String boletoSigla) {
+        this.boletoSigla = boletoSigla;
+    }
+
+    public String getBoletoSigla() {
+        return boletoSigla;
     }
 
     @XmlTransient

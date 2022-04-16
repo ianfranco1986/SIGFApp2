@@ -8,9 +8,9 @@
 
     <ui:composition>
 
-        <p:dialog id="RecaudacionEditDialog" widgetVar="RecaudacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Guía" closeOnEscape="true">
+        <p:dialog id="GuiaEditDlg" widgetVar="GuiaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Guía" closeOnEscape="true">
 
-            <h:form id="RecaudacionEditForm" onkeypress="return event.keyCode != 13">
+            <h:form id="GuiaEditForm" onkeypress="return event.keyCode != 13">
                 <h:panelGroup id="display" rendered="#{recaudacionGuiaController.selectedRecaudacion != null}">
                     <p:panelGrid>
 

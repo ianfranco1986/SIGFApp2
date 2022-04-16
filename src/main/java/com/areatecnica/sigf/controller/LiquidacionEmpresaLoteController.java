@@ -487,83 +487,84 @@ public class LiquidacionEmpresaLoteController implements Serializable {
             LinkedHashMap hashDescuentos = new LinkedHashMap();
 
             int i = 0;
-            for (Bus b : this.empresa.getBusList()) {
-                i++;
-                //System.err.println("Empresa:" + empresa.getEmpresaNombre() + " N° Bus:" + b.getBusNumero());
-                this.recaudacionItems = new IRecaudacionGuiaDaoImpl().findByBusBetweenFechaRecaudacion(b, from, to);
-                System.err.println("Tamaño de Guías:" + this.recaudacionItems.size() + " DESDE:" + from + " HASTA:" + to);
-                if (!this.recaudacionItems.isEmpty()) {
-                    System.err.println("Tamaño de Guías:" + this.recaudacionItems.size());
-                    for (RecaudacionGuia r : this.recaudacionItems) {
-
-                        switch (r.getRecaudacionGuiaIdEgreso().getEgresoId()) {
-                            case 1:
-                                this.administracion = this.administracion + r.getRecaudacionGuiaMonto();
-                                break;
-                            case 2:
-                                this.cuotaExtra = this.cuotaExtra + r.getRecaudacionGuiaMonto();
-                                break;
-                            case 3:
-                                this.imposiciones = this.imposiciones + r.getRecaudacionGuiaMonto();
-                                break;
-                            case 4:
-                                int aux = r.getRecaudacionGuiaMonto();
-
-                                int cantidad = aux / 5000;
-                                if (cantidad > 0) {
-                                    aux = aux - (cantidad * 500);
-
-                                    this.boletos = this.boletos + aux;
-                                }
-
-                                break;
-                        }
-
-                    }
-
-                }
-                
-//                hashMap.put("Empresario", empresa.getEmpresaNombre());
-//                hashMap.put("Admin.", administracion);
-//                hashMap.put("C.Extra", cuotaExtra);
-//                hashMap.put("Boletos", boletos);
-//                hashMap.put("Impos.", imposiciones);
-//                hashMap.put("", saldo)
-
-                this.recaudacionMinutoItems = new IRecaudacionMinutoDaoImpl().findRecibidosBusAndDate(b, from, to);
-                System.err.println("Tamaño de Minutos:" + this.recaudacionMinutoItems.size());
-                if (!this.recaudacionMinutoItems.isEmpty()) {
-                    for (RecaudacionMinuto rrm : this.recaudacionMinutoItems) {
-                        this.minutos = this.minutos + rrm.getRecaudacionMinutoMonto();
-                    }
-                }
-
-                this.totalAdministracion = this.totalAdministracion + this.administracion;
-                this.totalMinutos = this.totalMinutos + this.minutos;
-                this.totalCuotaExtra = this.totalCuotaExtra + this.cuotaExtra;
-                this.totalBoletos = this.totalBoletos + this.boletos;
-                this.totalImposiciones = this.totalImposiciones + this.imposiciones;
-                //
-
-                this.administracion = 0;
-                this.cuotaExtra = 0;
-                this.imposiciones = 0;
-                this.boletos = 0;
-                this.minutos = 0;
-
-//                this.cargoBusItems = new CargoBusDaoImpl().findByBusBetweenDates(b, from, to);
+            //corregir
+//            for (Bus b : this.empresa.getBusList()) {
+//                i++;
+//                //System.err.println("Empresa:" + empresa.getEmpresaNombre() + " N° Bus:" + b.getBusNumero());
+//                this.recaudacionItems = new IRecaudacionGuiaDaoImpl().findByBusBetweenFechaRecaudacion(b, from, to);
+//                System.err.println("Tamaño de Guías:" + this.recaudacionItems.size() + " DESDE:" + from + " HASTA:" + to);
+//                if (!this.recaudacionItems.isEmpty()) {
+//                    System.err.println("Tamaño de Guías:" + this.recaudacionItems.size());
+//                    for (RecaudacionGuia r : this.recaudacionItems) {
 //
-//                for (CargoBus c : this.cargoBusItems) {
-//                    this.cargosVarios = this.cargosVarios + c.getCargoBusMontoFijo();
+//                        switch (r.getRecaudacionGuiaIdEgreso().getEgresoId()) {
+//                            case 1:
+//                                this.administracion = this.administracion + r.getRecaudacionGuiaMonto();
+//                                break;
+//                            case 2:
+//                                this.cuotaExtra = this.cuotaExtra + r.getRecaudacionGuiaMonto();
+//                                break;
+//                            case 3:
+//                                this.imposiciones = this.imposiciones + r.getRecaudacionGuiaMonto();
+//                                break;
+//                            case 4:
+//                                int aux = r.getRecaudacionGuiaMonto();
+//
+//                                int cantidad = aux / 5000;
+//                                if (cantidad > 0) {
+//                                    aux = aux - (cantidad * 500);
+//
+//                                    this.boletos = this.boletos + aux;
+//                                }
+//
+//                                break;
+//                        }
+//
+//                    }
+//
+//                }
+//                
+////                hashMap.put("Empresario", empresa.getEmpresaNombre());
+////                hashMap.put("Admin.", administracion);
+////                hashMap.put("C.Extra", cuotaExtra);
+////                hashMap.put("Boletos", boletos);
+////                hashMap.put("Impos.", imposiciones);
+////                hashMap.put("", saldo)
+//
+//                this.recaudacionMinutoItems = new IRecaudacionMinutoDaoImpl().findRecibidosBusAndDate(b, from, to);
+//                System.err.println("Tamaño de Minutos:" + this.recaudacionMinutoItems.size());
+//                if (!this.recaudacionMinutoItems.isEmpty()) {
+//                    for (RecaudacionMinuto rrm : this.recaudacionMinutoItems) {
+//                        this.minutos = this.minutos + rrm.getRecaudacionMinutoMonto();
+//                    }
 //                }
 //
-//                this.abonoBusItems = new AbonoBusDaoImpl().findByBusBetweenDates(b, from, to);
+//                this.totalAdministracion = this.totalAdministracion + this.administracion;
+//                this.totalMinutos = this.totalMinutos + this.minutos;
+//                this.totalCuotaExtra = this.totalCuotaExtra + this.cuotaExtra;
+//                this.totalBoletos = this.totalBoletos + this.boletos;
+//                this.totalImposiciones = this.totalImposiciones + this.imposiciones;
+//                //
 //
-//                for (AbonoBus c : this.abonoBusItems) {
-//                    this.abonosVarios = this.abonosVarios + c.getAbonoBusMontoFijo();
-//                }
-
-            }
+//                this.administracion = 0;
+//                this.cuotaExtra = 0;
+//                this.imposiciones = 0;
+//                this.boletos = 0;
+//                this.minutos = 0;
+//
+////                this.cargoBusItems = new CargoBusDaoImpl().findByBusBetweenDates(b, from, to);
+////
+////                for (CargoBus c : this.cargoBusItems) {
+////                    this.cargosVarios = this.cargosVarios + c.getCargoBusMontoFijo();
+////                }
+////
+////                this.abonoBusItems = new AbonoBusDaoImpl().findByBusBetweenDates(b, from, to);
+////
+////                for (AbonoBus c : this.abonoBusItems) {
+////                    this.abonosVarios = this.abonosVarios + c.getAbonoBusMontoFijo();
+////                }
+//
+//            }
 
             this.movimientos = new IMovimientoMesDaoImpl().findByEmpresaAndDates(empresa, from, to);
 

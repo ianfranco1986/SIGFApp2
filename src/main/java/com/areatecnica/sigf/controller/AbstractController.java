@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
@@ -20,6 +18,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.primefaces.model.Visibility;
 
 /**
@@ -47,6 +47,9 @@ public abstract class AbstractController<T> implements Serializable {
     private List<Boolean> listVisible;
     private List<String> searchColumnNameList;
     private List<String> columnNameList;
+    
+    
+
 
     private enum PersistAction {
         CREATE,
@@ -317,7 +320,8 @@ public abstract class AbstractController<T> implements Serializable {
                     }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                
+                //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
             }
         }
@@ -339,7 +343,7 @@ public abstract class AbstractController<T> implements Serializable {
             initializeEmbeddableKey();
             return newItem;
         } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

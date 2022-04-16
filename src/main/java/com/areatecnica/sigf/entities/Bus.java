@@ -5,14 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,14 +20,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "bus", catalog = "sigfdb", schema = "")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
@@ -61,7 +60,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Bus.findByBusTieneEgresoFlota", query = "SELECT b FROM Bus b WHERE b.busTieneEgresoFlota = :busTieneEgresoFlota")
     , @NamedQuery(name = "Bus.findByBusComparteServicio", query = "SELECT b FROM Bus b WHERE b.busComparteServicio = :busComparteServicio")
     , @NamedQuery(name = "Bus.findByBusActivo", query = "SELECT b FROM Bus b WHERE b.busActivo = :busActivo")})
-public class Bus implements Serializable {
+public class Bus extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -107,10 +106,6 @@ public class Bus implements Serializable {
     private Boolean busComparteServicio;
     @Column(name = "bus_activo")
     private Boolean busActivo;    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdBus")
-    private List<Despacho> despachoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdBus")
-    private List<VentaBoleto> ventaBoletoList;
     @JoinColumn(name = "bus_id_empresa", referencedColumnName = "empresa_id", nullable = false)
     @ManyToOne(optional = false)
     private Empresa busIdEmpresa;
@@ -135,22 +130,7 @@ public class Bus implements Serializable {
     @JoinColumn(name = "bus_id_unidad_negocio", referencedColumnName = "unidad_negocio_id", nullable = false)
     @ManyToOne(optional = false)
     private UnidadNegocio busIdUnidadNegocio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "descuentoExtraBusIdBus")
-    private List<DescuentoExtraBus> descuentoExtraBusList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaCombustibleIdBus")
-    private List<VentaCombustible> ventaCombustibleList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoBusIdBus")
-    private List<EgresoBus> egresoBusList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guiaIdBus")
-    private List<Guia> guiaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "registroMinutoDesdeIdBus")
-    private List<RegistroMinuto> registroMinutoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "registroMinutoHastaIdBus")
-    private List<RegistroMinuto> registroMinutoList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorBusIdBus")
-    private List<AdministradorBus> administradorBusList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programacionTrabajadorIdBus")
-    private List<ProgramacionTrabajador> programacionTrabajadorList;
+    
 
     public Bus() {
     }
@@ -278,24 +258,6 @@ public class Bus implements Serializable {
         this.busActivo = busActivo;
     }
 
-    @XmlTransient
-    public List<Despacho> getDespachoList() {
-        return despachoList;
-    }
-
-    public void setDespachoList(List<Despacho> despachoList) {
-        this.despachoList = despachoList;
-    }
-
-    @XmlTransient
-    public List<VentaBoleto> getVentaBoletoList() {
-        return ventaBoletoList;
-    }
-
-    public void setVentaBoletoList(List<VentaBoleto> ventaBoletoList) {
-        this.ventaBoletoList = ventaBoletoList;
-    }
-
     public Empresa getBusIdEmpresa() {
         return busIdEmpresa;
     }
@@ -358,78 +320,6 @@ public class Bus implements Serializable {
 
     public void setBusIdUnidadNegocio(UnidadNegocio busIdUnidadNegocio) {
         this.busIdUnidadNegocio = busIdUnidadNegocio;
-    }
-
-    @XmlTransient
-    public List<DescuentoExtraBus> getDescuentoExtraBusList() {
-        return descuentoExtraBusList;
-    }
-
-    public void setDescuentoExtraBusList(List<DescuentoExtraBus> descuentoExtraBusList) {
-        this.descuentoExtraBusList = descuentoExtraBusList;
-    }
-
-    @XmlTransient
-    public List<VentaCombustible> getVentaCombustibleList() {
-        return ventaCombustibleList;
-    }
-
-    public void setVentaCombustibleList(List<VentaCombustible> ventaCombustibleList) {
-        this.ventaCombustibleList = ventaCombustibleList;
-    }
-
-    @XmlTransient
-    public List<EgresoBus> getEgresoBusList() {
-        return egresoBusList;
-    }
-
-    public void setEgresoBusList(List<EgresoBus> egresoBusList) {
-        this.egresoBusList = egresoBusList;
-    }
-
-    @XmlTransient
-    public List<Guia> getGuiaList() {
-        return guiaList;
-    }
-
-    public void setGuiaList(List<Guia> guiaList) {
-        this.guiaList = guiaList;
-    }
-
-    @XmlTransient
-    public List<RegistroMinuto> getRegistroMinutoList() {
-        return registroMinutoList;
-    }
-
-    public void setRegistroMinutoList(List<RegistroMinuto> registroMinutoList) {
-        this.registroMinutoList = registroMinutoList;
-    }
-
-    @XmlTransient
-    public List<RegistroMinuto> getRegistroMinutoList1() {
-        return registroMinutoList1;
-    }
-
-    public void setRegistroMinutoList1(List<RegistroMinuto> registroMinutoList1) {
-        this.registroMinutoList1 = registroMinutoList1;
-    }
-
-    @XmlTransient
-    public List<AdministradorBus> getAdministradorBusList() {
-        return administradorBusList;
-    }
-
-    public void setAdministradorBusList(List<AdministradorBus> administradorBusList) {
-        this.administradorBusList = administradorBusList;
-    }
-
-    @XmlTransient
-    public List<ProgramacionTrabajador> getProgramacionTrabajadorList() {
-        return programacionTrabajadorList;
-    }
-
-    public void setProgramacionTrabajadorList(List<ProgramacionTrabajador> programacionTrabajadorList) {
-        this.programacionTrabajadorList = programacionTrabajadorList;
     }
 
     @Override

@@ -20,6 +20,8 @@ import com.areatecnica.sigf.entities.Terminal;
 import com.areatecnica.sigf.entities.Log;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import java.util.List;
+import java.util.logging.Logger;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -28,8 +30,9 @@ import java.util.List;
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {
 
-    @PersistenceContext(unitName = "com.areatecnica_SIGFapp_war_1PU")
-    private EntityManager em;
+    Logger log = Logger.getLogger(this.getClass().getName());
+
+    private EntityManager em = Persistence.createEntityManagerFactory("com.areatecnica_SIGFapp_war_1PU").createEntityManager();
 
     @Override
     protected EntityManager getEntityManager() {
@@ -135,5 +138,5 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         cajaRecaudacionList.size();
         return cajaRecaudacionList;
     }
-    
+
 }

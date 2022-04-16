@@ -20,7 +20,10 @@
     </h:head>
 
     <h:body styleClass="#{guestPreferences.inputStyleClass}">
-
+        <p:dialog appendTo="@(body)" modal="true" resizable="false" closable="false" header="#{myBundle.pleaseWait}" widgetVar="Loading" width="300">
+            <center>#{myBundle.loading}
+                <p:graphicImage value="/resources/images/ajaxloadingbar.gif"/></center>
+        </p:dialog>
         <div class="layout-wrapper #{guestPreferences.getMenu()}">
             <p:growl id="growl" life="5000" />
             <ui:include src="./topbar.xhtml" />
