@@ -39,15 +39,16 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "Egreso.findAll", query = "SELECT e FROM Egreso e")
-    , @NamedQuery(name = "Egreso.findByEgresoId", query = "SELECT e FROM Egreso e WHERE e.egresoId = :egresoId")
-    , @NamedQuery(name = "Egreso.findByCuenta", query = "SELECT e FROM Egreso e WHERE e.egresoIdCuenta = :idCuenta")
-    , @NamedQuery(name = "Egreso.findByEgresoNombre", query = "SELECT e FROM Egreso e WHERE e.egresoNombre = :egresoNombre")
-    , @NamedQuery(name = "Egreso.findByEgresoValorDefecto", query = "SELECT e FROM Egreso e WHERE e.egresoValorDefecto = :egresoValorDefecto")
-    , @NamedQuery(name = "Egreso.findByEgresoPorcentaje", query = "SELECT e FROM Egreso e WHERE e.egresoPorcentaje = :egresoPorcentaje")
-    , @NamedQuery(name = "Egreso.findByEgresoNumeroOrden", query = "SELECT e FROM Egreso e WHERE e.egresoNumeroOrden = :egresoNumeroOrden")
-    , @NamedQuery(name = "Egreso.findByEgresoObligatorio", query = "SELECT e FROM Egreso e WHERE e.egresoObligatorio = :egresoObligatorio")
-    , @NamedQuery(name = "Egreso.findByEgresoActivo", query = "SELECT e FROM Egreso e WHERE e.egresoActivo = :egresoActivo")})
+    @NamedQuery(name = "Egreso.findAll", query = "SELECT e FROM Egreso e"),
+    @NamedQuery(name = "Egreso.findByEgresoId", query = "SELECT e FROM Egreso e WHERE e.egresoId = :egresoId"),
+    @NamedQuery(name = "Egreso.findByCuenta", query = "SELECT e FROM Egreso e WHERE e.egresoIdCuenta = :idCuenta"),
+    @NamedQuery(name = "Egreso.findAllActived", query = "SELECT e FROM Egreso e WHERE e.egresoActivo = true ORDER BY e.egresoNumeroOrden"),
+    @NamedQuery(name = "Egreso.findByEgresoNombre", query = "SELECT e FROM Egreso e WHERE e.egresoNombre = :egresoNombre"),
+    @NamedQuery(name = "Egreso.findByEgresoValorDefecto", query = "SELECT e FROM Egreso e WHERE e.egresoValorDefecto = :egresoValorDefecto"),
+    @NamedQuery(name = "Egreso.findByEgresoPorcentaje", query = "SELECT e FROM Egreso e WHERE e.egresoPorcentaje = :egresoPorcentaje"),
+    @NamedQuery(name = "Egreso.findByEgresoNumeroOrden", query = "SELECT e FROM Egreso e WHERE e.egresoNumeroOrden = :egresoNumeroOrden"),
+    @NamedQuery(name = "Egreso.findByEgresoObligatorio", query = "SELECT e FROM Egreso e WHERE e.egresoObligatorio = :egresoObligatorio"),
+    @NamedQuery(name = "Egreso.findByEgresoActivo", query = "SELECT e FROM Egreso e WHERE e.egresoActivo = :egresoActivo")})
 public class Egreso extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

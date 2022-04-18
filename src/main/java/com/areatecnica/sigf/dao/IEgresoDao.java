@@ -17,6 +17,8 @@ public interface IEgresoDao<T> extends IGenericDAO<T> {
 
     public List<Egreso> findAllByCuenta(Cuenta cuenta);
 
+    public List<Egreso> findAllActived();
+
     public Egreso getBoleto();
 
 }

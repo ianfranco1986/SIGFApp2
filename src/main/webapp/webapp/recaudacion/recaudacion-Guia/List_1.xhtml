@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Recaudación de Guías</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="GuiaListForm">
+            <p:card id="dashboard">
+                <div  class="dashboard p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-calendar"/>
+                                <span>Fecha</span>
+                            </div>
+                            <div class="overview-box-count">#{dynamicRecaudacionController.fechaCompleta}</div>
+                            <div class="overview-box-stats">Usuario</div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-dollar"/>
+                                <span>Total Recaudado</span>
+                            </div>
+                            <div class="overview-box-count">#{dynamicRecaudacionController.getFormatValue(dynamicRecaudacionController.totalRecaudacion)}</div>
+                            <div class="overview-box-stats">#{dynamicRecaudacionController.items.size()>0?dynamicRecaudacionController.items.size():0} Vouchers, (#{dynamicRecaudacionController.guiasAnuladas} Anuladas)</div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card ui-fluid">
+                    <div class="p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="fecha">Fecha</p:outputLabel>
+                            <p:datePicker id="fecha" value="#{dynamicRecaudacionController.fecha}">
+                                <p:ajax event="dateSelect" listener="#{dynamicRecaudacionController.load}"
+                                        update="@(.clase), GuiaListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            </p:datePicker>
+
+                        </div>
+                        <div class="p-field p-col">
+                            <p:outputLabel for="cajaRecaudacionIdCaja">Caja</p:outputLabel>
+                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{dynamicRecaudacionController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{dynamicRecaudacionController.cajaRecaudacionList}"
+                                               var="cajaId"
+                                               itemValue="#{cajaId}"
+                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                               />
+                                <p:ajax event="valueChange"  listener="#{dynamicRecaudacionController.load}" update="@(.clase), GuiaListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+
+                            </p:selectOneMenu>
+                        </div>
+
+
+                    </div>
+                </div>
+            </p:card>
+
+            <p:separator/>
+
+            <div class="card">
+                <p:toolbar styleClass="p-mb-4">
+                    <p:toolbarGroup>
+                        <p:commandButton id="delete-products-button" value="#{dynamicRecaudacionController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{dynamicRecaudacionController.deleteSelectedGuias}"
+                                         styleClass="ui-button-danger" disabled="#{!dynamicRecaudacionController.hasSelectedGuias()}" update="@this">
+                            <p:confirm header="Confirmación" message="¿Eliminar?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                            <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <div class="p-grid crud-demo">
+
+
+                    <p:dataTable id="datalist"                   
+                                 value="#{dynamicRecaudacionController.listOfMaps}"
+                                 lazy="false"
+                                 rowKey="#{item.id}"
+                                 var="item"
+                                 selection="#{dynamicRecaudacionController.selectedItems}"
+                                 rowSelectMode="add" 
+                                 reflow="true"
+                                 rowIndexVar="rowIndex"
+                                 widgetVar="datalistWidget"
+                                 rowStyleClass="#{item.total eq 0 ? 'cheap' : null}"
+                                 >
+
+
+
+                        <p:ajax event="rowSelect" update=":GuiaListForm:delete-products-button" />
+                        <p:ajax event="rowUnselect" update=":GuiaListForm:delete-products-button" />
+                        <p:ajax event="rowSelectCheckbox" update=":GuiaListForm:delete-products-button" />
+                        <p:ajax event="rowUnselectCheckbox" update=":GuiaListForm:delete-products-button" />
+                        <p:ajax event="toggleSelect" update=":GuiaListForm:delete-products-button" />
+
+
+                        <f:facet name="header">
+                            <div class="products-table-header">
+                                <span style="font-weight: bold"><h3>Administración Recaudación</h3></span>
+
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column selectionMode="multiple" exportable="false"></p:column>
+
+
+                        <p:column style="text-align: center; ">
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+                        <p:columns value="#{dynamicRecaudacionController.listOfMaps.get(0).keySet().toArray()}" var="key" headerText="#{dynamicRecaudacionController.resultsHeader.get(col)}" footerText="#{dynamicRecaudacionController.resultsTotals.get(col)}" columnIndexVar="col" style="text-align: center">
+                            <p:outputLabel value="#{dynamicRecaudacionController.getFormatValue(item[key])}">                            
+                            </p:outputLabel>
+                        </p:columns>
+
+                        <p:column exportable="false">
+                            <p:commandButton icon="pi pi-pencil" update="RecaudacionEditForm" oncomplete="PF('RecaudacionEditDialog').show()" 
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{item}" target="#{dynamicRecaudacionController.selectedHashMap}" />
+                            </p:commandButton>
+                            <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                <f:setPropertyActionListener value="#{item}" target="#{dynamicRecaudacionController.selectedHashMap}" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Anular las recaudaciones? " header="Confirmación" severity="warn">
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{dynamicRecaudacionController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                    </p:confirmDialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" width="300">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </div>
+
+            </div>
+
+
+
+            <p:card>
+                <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
+                <p:overlayPanel for="basic" style="width:350px">
+                    <p>OBSERVACIÓN: Permite editar o eliminar los valores de Administración, C.Extra e Imposiciones. No se permite modificar boletos</p>
+                </p:overlayPanel>
+            </p:card>
+
+
+
+
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+        <ui:include src="Edit.xhtml" />
+    </ui:define>
+</ui:composition>
