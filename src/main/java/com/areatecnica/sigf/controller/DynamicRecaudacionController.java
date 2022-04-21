@@ -18,6 +18,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import java.util.*;
+import java.util.Map.Entry;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -27,7 +28,7 @@ import javax.inject.Named;
 public class DynamicRecaudacionController implements Serializable {
 
     private List<Recaudacion> items;
-    private ArrayList<LinkedHashMap> selectedItems;
+    private List<LinkedHashMap> selectedItems;
 
     private List<RecaudacionGuia> recaudacionGuias;
     private List<Egreso> egresoList;
@@ -39,12 +40,12 @@ public class DynamicRecaudacionController implements Serializable {
     private CajaRecaudacion cajaRecaudacion;
 
     private LinkedHashMap selectedHashMap;
-    private ArrayList<LinkedHashMap> listOfMaps;
+    private List<LinkedHashMap> listOfMaps;
 
     private List<String> resultsHeader;// = service.getResultsValues(...);
     private List<String> resultsTotals;
     private Map folios;
-    private LinkedHashMap totales;
+    private LinkedHashMap<Integer, Integer> totales;
     private LinkedHashMap defaultTotal;
     private Date fecha;
 
@@ -59,12 +60,15 @@ public class DynamicRecaudacionController implements Serializable {
     @PostConstruct
     public void init() {
         this.fecha = new Date();
+        this.selectedItems = new ArrayList<>();
         this.cajaRecaudacionList = new ICajaRecaudacionDaoImpl().findAll();
         this.trabajadorList = new TrabajadorDaoImpl().findNandu();
         this.busList = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
     }
 
     public void load() {
+        this.totalRecaudacion = 0;
+        this.guiasAnuladas = 0;
         if (this.cajaRecaudacion != null) {
             createDynamicsColumns();
             createDynamicsRow();
@@ -72,35 +76,41 @@ public class DynamicRecaudacionController implements Serializable {
     }
 
     public void createDynamicsColumns() {
-        resultsHeader = new ArrayList<String>();
-        resultsTotals = new ArrayList<>();
+        resultsHeader = new ArrayList<>();
+
         defaultTotal = new LinkedHashMap();
 
         resultsHeader.add("Folio");
         defaultTotal.put("Folio", 0);
-        resultsTotals.add("");
 
         resultsHeader.add("G.SolyMar");
         defaultTotal.put("G.SolyMar", 0);
-        resultsTotals.add("");
 
         resultsHeader.add("NºBus");
         defaultTotal.put("NºBus", 0);
-        resultsTotals.add("");
 
         resultsHeader.add("NºConductor");
         defaultTotal.put("NºConductor", 0);
-        resultsTotals.add("");
 
-        List<Egreso> egresoList = new IEgresoDaoImpl().findAllActived();
+        this.egresoList = new IEgresoDaoImpl().findAllActived();
 
         for (Egreso e : egresoList) {
             resultsHeader.add(e.getEgresoNombre());
-            resultsTotals.add("0");
+
             defaultTotal.put(e.getEgresoNombre(), 0);
 
         }
+        resultsHeader.add("Total");
+        defaultTotal.put("Total", 0);
+    }
 
+    public void setResultTotals() {
+        this.resultsTotals = new ArrayList<>();
+        resultsTotals.add("");
+        resultsTotals.add("");
+        resultsTotals.add("");
+        resultsTotals.add("");
+        resultsTotals.add("");
     }
 
     public void createDynamicsRow() {
@@ -109,10 +119,12 @@ public class DynamicRecaudacionController implements Serializable {
         HashMap header = new HashMap();
         this.folios = new HashMap<Integer, Integer>();
         this.totales = new LinkedHashMap();
+        setResultTotals();
 
         this.items = new IRecaudacionDaoImpl().findByCajaFechaRecaudacion(cajaRecaudacion, fecha);
 
         if (!this.items.isEmpty()) {
+            //
             for (Recaudacion g : this.items) {
                 if (!g.getRecaudacionGuiaList().isEmpty()) {
                     LinkedHashMap hashMap = new LinkedHashMap(defaultTotal);
@@ -124,35 +136,58 @@ public class DynamicRecaudacionController implements Serializable {
                     hashMap.put("NºBus", g.getRecaudacionGuiaList().get(0).getRecaudacionGuiaIdGuia().getGuiaIdBus().getBusNumero());
                     hashMap.put("NºConductor", g.getRecaudacionGuiaList().get(0).getRecaudacionGuiaIdGuia().getGuiaIdTrabajador().getTrabajadorCodigo());
 
+                    int totalColumna = 0;
                     for (RecaudacionGuia rg : g.getRecaudacionGuiaList()) {
+
                         String key = rg.getRecaudacionGuiaIdEgreso().getEgresoNombre();
+                        int order = rg.getRecaudacionGuiaIdEgreso().getEgresoNumeroOrden();
                         hashMap.put(key, rg.getRecaudacionGuiaMonto());
-                        if (totales.containsKey(key)) {
-                            int aux = (int) totales.get(key);
+
+                        if (totales.containsKey(order)) {
+                            int aux = (int) totales.get(order);
                             aux += rg.getRecaudacionGuiaMonto();
-                            totales.put(key, aux);
+                            totales.put(order, aux);
                         } else {
-                            totales.put(key, rg.getRecaudacionGuiaMonto());
+                            totales.put(order, rg.getRecaudacionGuiaMonto());
                         }
+
+                        totalColumna += rg.getRecaudacionGuiaMonto();
+                        hashMap.put("Total", totalColumna);
+                    }
+                    if (totalColumna == 0) {
+                        this.guiasAnuladas++;
                     }
 
                     listOfMaps.add(hashMap);
                 }
             }
 
-            for (Object i : totales.values()) {
-                int totali = (int) i;
-                resultsTotals.add(String.valueOf(totali));
-                System.err.println("TOTALES:"+resultsTotals);
+            ArrayList aux = new ArrayList<>(totales.values());
+            System.err.println("CONTENIDO DE RESULTTOTALS PREVIO:" + resultsTotals + " tamaño: " + this.resultsTotals.size());
+            System.err.println("CONTENTIDO DE AUX:" + aux + " tamaño de aux:" + aux.size());
+            System.err.println("CONTENIDO DEL KEYSET:" + totales.keySet());
+            resultsTotals.addAll(aux);
+            //optimizar acá
+
+            for (Object i : totales.keySet()) {
+                int totali = (int) totales.get(i);
+                resultsTotals.set((3 + (int) i), nf.format(totali));
+
+                this.totalRecaudacion += totali;
             }
 
+            resultsTotals.set(resultsTotals.size() - 1, nf.format(this.totalRecaudacion));
+            System.err.println("TAMAÑO DE RESULTTOTALS;" + this.resultsTotals.size());
+            System.err.println("TAMAÑO DE headers;" + this.resultsHeader.size());
+            System.err.println("TAMAÑO DE TOTALES:" + this.totales.size());
+            System.err.println("CONTENIDO DE RESULTTOTALS: " + this.resultsTotals);
         } else {
-            System.err.println("NO SE HAN ENCONTRADO RESULTADOS");
+            for (Egreso e : egresoList) {
+                resultsTotals.add("");
+            }
+            resultsTotals.add("");
+            this.listOfMaps.add(defaultTotal);
         }
-
-//        for(LinkedHashMap a:this.listOfMaps){
-//            //System.err.println("VALOR :"+a);
-//        }
     }
 
     public List<Recaudacion> getItems() {
@@ -227,7 +262,7 @@ public class DynamicRecaudacionController implements Serializable {
         this.selectedHashMap = selectedHashMap;
     }
 
-    public ArrayList<LinkedHashMap> getListOfMaps() {
+    public List<LinkedHashMap> getListOfMaps() {
         return listOfMaps;
     }
 
@@ -299,7 +334,7 @@ public class DynamicRecaudacionController implements Serializable {
         this.guiasAnuladas = guiasAnuladas;
     }
 
-    public void setSelectedItems(ArrayList<LinkedHashMap> selectedItems) {
+    public void setSelectedItems(List<LinkedHashMap> selectedItems) {
         this.selectedItems = selectedItems;
     }
 
@@ -336,4 +371,22 @@ public class DynamicRecaudacionController implements Serializable {
     public void deleteSelectedGuias() {
         //Eliminar
     }
+    
+    public void print(){
+        System.err.println("cantidad de seleccionados:"+this.selectedItems.size()+" valor seleccionados:"+this.selectedItems);
+        System.err.println("linkedhashmap"+this.selectedHashMap);
+    }
+    
+    public void addRow(){
+        if(this.selectedHashMap!=null){
+            if(!this.getSelectedItems().contains(this.selectedHashMap)){
+                this.selectedItems.add(this.selectedHashMap);
+            }
+        }
+        System.err.println("SELECTED HASHMAP: "+this.selectedHashMap);
+        System.err.println("TAMAÑO ITEMS: "+this.selectedItems.size());
+        System.err.println("OBJETOS EN ITEMS: "+this.selectedItems);
+    }
+    
+    
 }

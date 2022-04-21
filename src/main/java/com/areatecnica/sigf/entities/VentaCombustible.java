@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Cacheable(false)
-@Table(name = "venta_combustible", catalog = "sigfdb", schema = "")
+@Table(name = "venta_combustible", catalog = "sigfdb_baquedano", schema = "")
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({

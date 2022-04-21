@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ianfr
  */
 @Entity
-@Table(name = "empresa", catalog = "sigfdb", schema = "", uniqueConstraints = {
+@Table(name = "empresa", catalog = "sigfdb_baquedano", schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"empresa_rut"})})
 @EntityListeners(AuditListener.class)
 @XmlRootElement

@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ianfr
  */
 @Entity
-@Table(name = "guia", catalog = "sigfdb", schema = "")
+@Table(name = "guia", catalog = "sigfdb_baquedano", schema = "")
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({

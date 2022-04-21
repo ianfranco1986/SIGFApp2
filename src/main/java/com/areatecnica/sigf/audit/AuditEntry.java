@@ -39,7 +39,7 @@ import org.eclipse.persistence.annotations.Noncacheable;
  * @author ianfr
  */
 @Entity
-@Table(name = "audit_entry", catalog = "sigfdb", schema = "")
+@Table(name = "audit_entry", catalog = "sigfdb_baquedano", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AuditEntry.findAll", query = "SELECT a FROM AuditEntry a"),

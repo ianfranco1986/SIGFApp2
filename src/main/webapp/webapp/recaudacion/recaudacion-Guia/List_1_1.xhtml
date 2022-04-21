@@ -90,19 +90,11 @@
                                  lazy="false"
                                  rowKey="#{item}"
                                  var="item"
-                                 selection="#{dynamicRecaudacionController.selectedItems}"
-                                 rowSelectMode="add"
                                  reflow="true"
                                  rowIndexVar="rowIndex"
                                  widgetVar="datalistWidget"
                                  >
 
-
-
-                        <p:ajax event="rowSelect" update=":GuiaListForm:delete-products-button" listener="#{dynamicRecaudacionController.print()}"/>
-                        <p:ajax event="rowUnselect" update=":GuiaListForm:delete-products-button" />
-                        <p:ajax event="rowSelectCheckbox" update=":GuiaListForm:delete-products-button" ></p:ajax>
-                        <p:ajax event="rowUnselectCheckbox" update=":GuiaListForm:delete-products-button" />
 
 
                         <f:facet name="header">
@@ -116,8 +108,6 @@
                             </div>
                         </f:facet>
 
-                        <p:column selectionMode="multiple" exportable="false"></p:column>
-
                         <p:column style="text-align: center; ">
                             <f:facet name="header">
                                 <h:outputText value="#"/>
@@ -125,15 +115,7 @@
                             <h:outputText value="#{rowIndex+1}"/>
                         </p:column>
 
-                        <p:columns 
-                            value="#{dynamicRecaudacionController.listOfMaps.get(0).keySet().toArray()}" 
-                            var="key" 
-                            headerText="#{dynamicRecaudacionController.resultsHeader.get(col)}" 
-                            footerText="#{dynamicRecaudacionController.resultsTotals.get(col)}" 
-                            columnIndexVar="col" 
-                            style="text-align: center"
-                            
-                            >
+                        <p:columns value="#{dynamicRecaudacionController.listOfMaps.get(0).keySet().toArray()}" var="key" headerText="#{dynamicRecaudacionController.resultsHeader.get(col)}" footerText="#{dynamicRecaudacionController.resultsTotals.get(col)}"   columnIndexVar="col" style="text-align: center">
                             <p:outputLabel value="#{col gt 3 ? dynamicRecaudacionController.getFormatValue(item[key]):item[key]}">                            
                             </p:outputLabel>
                         </p:columns>

@@ -21,12 +21,12 @@ import javax.validation.constraints.NotNull;
 @MappedSuperclass
 public class BaseEntity {
 
-    @Basic(optional = false)
+
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
 
-    @Basic(optional = false)
+
     @Column(name = "ultima_modificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ultimaModificacion;

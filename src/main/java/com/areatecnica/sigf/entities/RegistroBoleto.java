@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Cacheable(false)
 @EntityListeners(AuditListener.class)
-@Table(name = "registro_boleto", catalog = "sigfdb", schema = "")
+@Table(name = "registro_boleto", catalog = "sigfdb_baquedano", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RegistroBoleto.findAll", query = "SELECT r FROM RegistroBoleto r")

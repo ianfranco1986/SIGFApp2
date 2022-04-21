@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ianfr
  */
 @Entity
-@Table(name = "proceso_recaudacion", catalog = "sigfdb", schema = "")
+@Table(name = "proceso_recaudacion", catalog = "sigfdb_baquedano", schema = "")
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({

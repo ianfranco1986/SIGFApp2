@@ -172,17 +172,17 @@
 
                         </p:column>
 
-                        <p:column sortBy="#{item.cuotaExtra}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalCuotaExtra)}">
+                        <p:column sortBy="#{item.covid}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalCovid)}">
                             <f:facet name="header">
                                 <h:outputText value="C.Extra"/>
                             </f:facet>
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{item.cuotaExtra}">
+                                    <h:outputText value="#{item.covid}">
                                         <f:convertNumber />
                                     </h:outputText>
                                 </f:facet>
-                                <f:facet name="input"><p:inputText id="ce" value="#{item.cuotaExtra}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
+                                <f:facet name="input"><p:inputText id="ce" value="#{item.covid}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
 
                             </p:cellEditor>
                         </p:column>
@@ -202,6 +202,33 @@
                             </p:cellEditor>
                         </p:column>
 
+                        <p:column sortBy="#{item.boletos}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalBoletos)}">
+                            <f:facet name="header">
+                                <h:outputText value="Boletos"/>
+                            </f:facet>
+                            <h:outputText value="#{item.boletos}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.fam}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalFam)}">
+                            <f:facet name="header">
+                                <h:outputText value="Fam"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fam}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.varios}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalVarios)}">
+                            <f:facet name="header">
+                                <h:outputText value="Varios"/>
+                            </f:facet>
+                            <h:outputText value="#{item.varios}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
                         <p:column sortBy="#{item.total}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalRecaudacion)}">
                             <f:facet name="header">
                                 <h:outputText value="Total"/>
@@ -212,14 +239,6 @@
                         </p:column>
 
 
-                        <p:column sortBy="#{item.boletos}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalBoletos)}">
-                            <f:facet name="header">
-                                <h:outputText value="Boletos"/>
-                            </f:facet>
-                            <h:outputText value="#{item.boletos}">
-                                <f:convertNumber />
-                            </h:outputText>
-                        </p:column>
 
                         <p:column exportable="false">
                             <p:commandButton icon="pi pi-pencil" update="RecaudacionEditForm" oncomplete="PF('RecaudacionEditDialog').show()" 

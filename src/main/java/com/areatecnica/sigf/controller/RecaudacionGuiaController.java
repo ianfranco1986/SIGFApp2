@@ -59,7 +59,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     private ArrayList<String> resultsHeader;
     private List<String> resultsTotals;
     private int totalRecaudacion;
-    private RecaudacionGuiaHelper selectedItem; 
+    private RecaudacionGuiaHelper selectedItem;
 
     private List<Bus> busItems;
     private List<Trabajador> trabajadorItems;
@@ -72,9 +72,11 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     private NumberFormat nf = NumberFormat.getInstance();
 
     private int totalAdministracion = 0;
-    private int totalCuotaExtra = 0;
+    private int totalCovid = 0;
     private int totalBoletos = 0;
     private int totalImposiciones = 0;
+    private int totalFam = 0;
+    private int totalVarios = 0;
 
     private int cantidadBoletos = 0;
     private int guiasAnuladas = 0;
@@ -108,14 +110,16 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
     public void load() {
         if (this.cajaRecaudacion != null) {
-            
-            this.selectedItems = new  ArrayList<>();
-            
+
+            this.selectedItems = new ArrayList<>();
+
             this.boletos = new HashMap();
 
             this.totalAdministracion = 0;
             this.totalBoletos = 0;
-            this.totalCuotaExtra = 0;
+            this.totalCovid = 0;
+            this.totalVarios = 0; 
+            this.totalFam = 0; 
             this.totalImposiciones = 0;
             this.totalRecaudacion = 0;
             this.cantidadBoletos = 0;
@@ -139,7 +143,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                             this.guiasAnuladas++;
                         }
 
-                        this.totalCuotaExtra = this.totalCuotaExtra + h.cuotaExtra;
+                        this.totalCovid = this.totalCovid + h.covid;
                         this.totalImposiciones = this.totalImposiciones + h.imposiciones;
 
                         if (!g.getRecaudacionBoletoList().isEmpty()) {
@@ -169,11 +173,13 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                 this.model = new RecaudacionDataModel(new ArrayList<>());
                 this.totalAdministracion = 0;
                 this.totalBoletos = 0;
-                this.totalCuotaExtra = 0;
+                this.totalCovid = 0;
                 this.totalImposiciones = 0;
                 this.totalRecaudacion = 0;
+                this.totalVarios = 0; 
+                this.totalFam = 0; 
             }
-        } 
+        }
         //this.g = this.items.stream().filter(distinctByKey)
 
     }
@@ -234,8 +240,8 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
         return totalImposiciones;
     }
 
-    public int getTotalCuotaExtra() {
-        return totalCuotaExtra;
+    public int getTotalCovid() {
+        return totalCovid;
     }
 
     public int getTotalBoletos() {
@@ -254,6 +260,22 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
         this.cantidadBoletos = cantidadBoletos;
     }
 
+    public void setTotalVarios(int totalVarios) {
+        this.totalVarios = totalVarios;
+    }
+
+    public int getTotalVarios() {
+        return totalVarios;
+    }
+
+    public void setTotalFam(int totalFam) {
+        this.totalFam = totalFam;
+    }
+
+    public int getTotalFam() {
+        return totalFam;
+    }
+
     public int getGuiasAnuladas() {
         return guiasAnuladas;
     }
@@ -269,8 +291,6 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     public void setSelectedItem(RecaudacionGuiaHelper selectedItem) {
         this.selectedItem = selectedItem;
     }
-    
-    
 
     public String getFechaCompleta() {
         LocalDate date = LocalDate.from(this.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -289,12 +309,16 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
             this.totalAdministracion = this.totalAdministracion - selectedRecaudacion.administracion;
             this.totalBoletos = this.totalBoletos - selectedRecaudacion.boletos;
             this.totalImposiciones = this.totalImposiciones - selectedRecaudacion.imposiciones;
-            this.totalCuotaExtra = this.totalCuotaExtra - selectedRecaudacion.cuotaExtra;
+            this.totalFam = this.totalFam - selectedRecaudacion.fam; 
+            this.totalVarios = this.totalVarios - selectedRecaudacion.varios; 
+            this.totalCovid = this.totalCovid - selectedRecaudacion.covid;
 
             selectedRecaudacion.administracion = 0;
             selectedRecaudacion.boletos = 0;
             selectedRecaudacion.imposiciones = 0;
-            selectedRecaudacion.cuotaExtra = 0;
+            selectedRecaudacion.covid = 0;
+            selectedRecaudacion.fam = 0; 
+            selectedRecaudacion.varios = 0; 
             this.totalRecaudacion = this.totalRecaudacion - selectedRecaudacion.total;
 
             selectedRecaudacion.total = 0;
@@ -320,13 +344,19 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                         g.setRecaudacionGuiaMonto(temp.administracion);
                         break;
                     case 2:
-                        g.setRecaudacionGuiaMonto(temp.cuotaExtra);
+                        g.setRecaudacionGuiaMonto(temp.covid);
                         break;
                     case 3:
                         g.setRecaudacionGuiaMonto(temp.imposiciones);
                         break;
                     case 4:
                         g.setRecaudacionGuiaMonto(temp.boletos);
+                        break;
+                        case 5:
+                        g.setRecaudacionGuiaMonto(temp.fam);
+                        break;
+                        case 6:
+                        g.setRecaudacionGuiaMonto(temp.varios);
                         break;
                 }
             }
@@ -340,7 +370,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
         }
 
     }
-    
+
     public String getDeleteButtonMessage() {
         if (hasSelectedGuias()) {
             int size = this.selectedItems.size();
@@ -486,14 +516,16 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
     }
 
-    public class RecaudacionGuiaHelper implements Serializable{
+    public class RecaudacionGuiaHelper implements Serializable {
 
         private Integer id;
 
         private int administracion;
-        private int cuotaExtra;
+        private int covid;
         private int boletos;
         private int imposiciones;
+        private int fam;
+        private int varios;
         private int total;
 
         private Recaudacion recaudacion;
@@ -517,7 +549,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                         this.administracion = g.getRecaudacionGuiaMonto();
                         break;
                     case 2:
-                        this.cuotaExtra = g.getRecaudacionGuiaMonto();
+                        this.covid = g.getRecaudacionGuiaMonto();
                         break;
                     case 3:
                         this.imposiciones = g.getRecaudacionGuiaMonto();
@@ -525,10 +557,17 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                     case 4:
                         this.boletos = g.getRecaudacionGuiaMonto();
                         break;
+
+                    case 5:
+                        this.fam = g.getRecaudacionGuiaMonto();
+                        break;
+                    case 6:
+                        this.varios = g.getRecaudacionGuiaMonto();
+                        break;
                 }
 
             }
-            this.total = this.administracion + this.cuotaExtra + this.imposiciones + this.boletos;
+            this.total = this.administracion + this.covid + this.imposiciones + this.boletos;
         }
 
         public Guia getGuia() {
@@ -555,12 +594,12 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
             this.administracion = administracion;
         }
 
-        public int getCuotaExtra() {
-            return cuotaExtra;
+        public int getCovid() {
+            return covid;
         }
 
-        public void setCuotaExtra(int cuotaExtra) {
-            this.cuotaExtra = cuotaExtra;
+        public void setCovid(int covid) {
+            this.covid = covid;
         }
 
         public int getBoletos() {
@@ -577,6 +616,22 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
         public void setImposiciones(int imposiciones) {
             this.imposiciones = imposiciones;
+        }
+
+        public void setFam(int fam) {
+            this.fam = fam;
+        }
+
+        public int getFam() {
+            return fam;
+        }
+
+        public void setVarios(int varios) {
+            this.varios = varios;
+        }
+
+        public int getVarios() {
+            return varios;
         }
 
         public Recaudacion getRecaudacion() {

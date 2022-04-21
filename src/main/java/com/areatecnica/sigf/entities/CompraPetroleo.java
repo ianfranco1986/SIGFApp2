@@ -31,7 +31,7 @@ import javax.validation.constraints.NotNull;
  * @author ianfr
  */
 @Entity
-@Table(name = "compra_petroleo", catalog = "sigfdb", schema = "")
+@Table(name = "compra_petroleo", catalog = "sigfdb_baquedano", schema = "")
 @EntityListeners(AuditListener.class)
 @NamedQueries({
     @NamedQuery(name = "CompraPetroleo.findAll", query = "SELECT c FROM CompraPetroleo c"),

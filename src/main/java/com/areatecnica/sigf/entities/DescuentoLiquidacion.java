@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "descuento_liquidacion", catalog = "sigfdb", schema = "")
+@Table(name = "descuento_liquidacion", catalog = "sigfdb_baquedano", schema = "")
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
