@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "feriado_legal", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "feriado_legal")
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({

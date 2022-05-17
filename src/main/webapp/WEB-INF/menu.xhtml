@@ -64,90 +64,74 @@
                     </ul>
                 </ui:fragment>
 
-                <pu:menu widgetVar="me" styleClass="layout-main-menu">
+                <pu:menu widgetVar="me" styleClass="layout-main-menu" >
                     <p:submenu id="om_homepage" label="Favoritos" icon="pi pi-fw pi-home">
-                        <p:submenu id="om_dashboards" icon="pi pi-fw pi-home" label="Dashboards">
-                            <p:menuitem id="om_dashboard" value="General" icon="pi pi-fw pi-home" outcome="/webapp/dashboard"/>
-                            <p:menuitem id="om_dashboard_banking" value="Recaudación" icon="pi pi-fw pi-money-bill" outcome="/webapp/dashboard_banking"/>
-                        </p:submenu>
+
                     </p:submenu>
-                    <p:submenu id="om_datos" label="Mantención de Datos" icon="pi pi-fw pi-database">
-                        <p:menuitem id="om_buses" value="Buses" icon="pi pi-fw pi-car" outcome="/webapp/datos/bus/List.xhtml" />
-                        <p:menuitem id="om_trabajadores" value="Trabajadores" icon="pi pi-fw pi-users" outcome="/webapp/datos/trabajador/List.xhtml" />
-                        <p:menuitem id="om_empresas" value="Empresas" icon="pi pi-fw pi-id-card" outcome="/webapp/datos/empresa/List.xhtml" />
-                        <p:menuitem id="om_flotas" value="Flotas" icon="pi pi-fw pi-book" outcome="/webapp/datos/flota/List.xhtml" />
-                    </p:submenu>
+
                     <p:submenu id="om_recaudacion" label="Recaudación" icon="pi pi-fw pi-dollar">
-                        <p:menuitem id="om_guias" value="Ver o Editar R. de Guías " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/recaudacion-Guia/List.xhtml" />
-                        <p:menuitem id="om_guias2" value="Ver o Editar R. de Guías " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/recaudacion-Guia/List_1.xhtml" />
+                        <p:menuitem id="om_guias" value="R. de Guías " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/recaudacionGuias.xhtml" />
+                        <p:menuitem id="om_edicionguias" value="Edición de Guías " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/edicionGuia.xhtml" />
+                        <p:menuitem id="om_combustible" value="R. de Combustible " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/recaudacionCombustible.xhtml" />
+                        <p:menuitem id="om_minutos" value="R. de Minutos " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/recaudacionMinutos.xhtml" />
+                        <p:menuitem id="om_extra" value="R. de I.Extras " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/recaudacionExtra.xhtml" />
+                        <p:menuitem id="om_recaudacionboletos" value="R. de Boletos " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/recaudacionBoleto.xhtml" />
+                        <p:menuitem id="om_edicionboletos" value="Edición de Boletos " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/edicionBoleto.xhtml" />
+                        <p:menuitem id="om_busqueda_boleto" value="Búsqueda de Boletos" icon="pi pi-fw pi-search" outcome="/webapp/recaudacion/busqueda.xhtml" />
                     </p:submenu>
-                    <p:submenu id="om_utils" label="Utilities" icon="pi pi-fw pi-compass">
-                        <p:menuitem id="om_formlayout" value="Form Layout" icon="pi pi-fw pi-id-card" outcome="/webapp/formlayout" />
-                        <p:menuitem id="om_input" value="Input" icon="pi pi-fw pi-check-square" outcome="/webapp/input" />
-                        <p:menuitem id="om_floatlabel" value="Float Label" icon="pi pi-fw pi-bookmark" outcome="/webapp/floatlabel" />
-                        <p:menuitem id="om_invalidstate" value="Invalid State" icon="pi pi-fw pi-exclamation-circle" outcome="/webapp/invalidstate" />
-                        <p:menuitem id="om_button" value="Button" icon="pi pi-fw pi-mobile" outcome="/webapp/button" styleClass="rotated-icon"/>
-                        <p:menuitem id="om_table" value="Table" icon="pi pi-fw pi-table" outcome="/webapp/table" />
-                        <p:menuitem id="om_list" value="List" icon="pi pi-fw pi-list" outcome="/webapp/list" />
-                        <p:menuitem id="om_tree" value="Tree" icon="pi pi-fw pi-share-alt" outcome="/webapp/tree" />
-                        <p:menuitem id="om_panel" value="Panel" icon="pi pi-fw pi-tablet" outcome="/webapp/panel" />
-                        <p:menuitem id="om_overlay" value="Overlay" icon="pi pi-fw pi-clone" outcome="/webapp/overlay" />
-                        <p:menuitem id="om_menu" value="Menu" icon="pi pi-fw pi-bars" outcome="/webapp/menu" />
-                        <p:menuitem id="om_message" value="Message" icon="pi pi-fw pi-comment" outcome="/webapp/messages" />
-                        <p:menuitem id="om_file" value="File" icon="pi pi-fw pi-file" outcome="/webapp/file" />
-                        <p:menuitem id="om_chart" value="Chart" icon="pi pi-fw pi-chart-bar" outcome="/webapp/charts" />
-                        <p:menuitem id="om_media" value="Media" icon="pi pi-fw pi-image" outcome="/webapp/media" />
-                        <p:menuitem id="om_misc" value="Misc" icon="pi pi-fw pi-circle-off" outcome="/webapp/misc" />
-                        <p:menuitem id="om_display" value="Display" icon="pi pi-fw pi-desktop" outcome="/webapp/display" />
-                        <p:menuitem id="om_elevation" value="Elevation" icon="pi pi-fw pi-external-link" outcome="/webapp/elevation" />
-                        <p:menuitem id="om_flexbox" value="FlexBox" icon="pi pi-fw pi-directions" outcome="/webapp/flexbox" />
-                        <p:menuitem id="om_icons" value="Icons" icon="pi pi-fw pi-search" outcome="/webapp/icons" />
-                        <p:menuitem id="om_text" value="Text" icon="pi pi-fw pi-pencil" outcome="/webapp/text" />
-                        <p:menuitem id="om_widgets" value="Widgets" icon="pi pi-fw pi-star" outcome="/webapp/widgets" />
-                        <p:menuitem id="om_grid" value="Grid System" icon="pi pi-fw pi-th-large" outcome="/webapp/grid" />
-                        <p:menuitem id="om_spacing" value="Spacing" icon="pi pi-fw pi-arrow-right" outcome="/webapp/spacing" />
-                        <p:menuitem id="om_typography" value="Typography" icon="pi pi-fw pi-align-center" outcome="/webapp/typography" />
-                    </p:submenu>
-                    <p:submenu id="om_default" label="Pages" icon="pi pi-fw pi-briefcase">
-                        <p:menuitem id="om_crud" value="Crud" icon="pi pi-fw pi-pencil" outcome="/webapp/crud" />
-                        <p:menuitem id="om_calendar" value="Calendar" icon="pi pi-fw pi-calendar-plus" outcome="/webapp/calendar" />
-                        <p:menuitem id="om_chronoline" value="Chronoline" icon="pi pi-fw pi-calendar" outcome="/webapp/chronoline" />
-                        <p:menuitem id="om_landing" value="Landing" icon="pi pi-fw pi-globe" url="/webapp/landing.html" />
-                        <p:menuitem id="om_invoice" value="Invoice" icon="pi pi-fw pi-dollar" outcome="/webapp/invoice" />
-                        <p:menuitem id="om_wizard" value="Wizard" icon="pi pi-fw pi-star" outcome="/webapp/wizard" />
-                        <p:menuitem id="om_help" value="Help" icon="pi pi-fw pi-question-circle" outcome="/webapp/help" />
-                        <p:menuitem id="om_error" value="Error" icon="pi pi-fw pi-times-circle" outcome="/webapp/error" />
-                        <p:menuitem id="om_notfound" value="Not Found" icon="pi pi-fw pi-exclamation-circle" outcome="/webapp/notfound" />
-                        <p:menuitem id="om_access" value="Access Denied" icon="pi pi-fw pi-lock" outcome="/webapp/access" />
-                        <p:menuitem id="om_empty" value="Empty" icon="pi pi-fw pi-circle-off" outcome="/webapp/empty" />
-                    </p:submenu>
-                    <p:submenu id="om_hierarchy" label="Hierarchy" icon="pi pi-fw pi-align-left">
-                        <p:submenu id="om_sm1" label="Submenu 1" icon="pi pi-fw pi-align-left">
-                            <p:submenu id="om_sm11" label="Submenu 1.1" icon="pi pi-fw pi-align-left">
-                                <p:menuitem id="om_lnk111" value="Link 1.1.1" icon="pi pi-fw pi-align-left" url="#"/>
-                                <p:menuitem id="om_lnk112" value="Link 1.1.2" icon="pi pi-fw pi-align-left" url="#"/>
-                                <p:menuitem id="om_lnk113" value="Link 1.1.3" icon="pi pi-fw pi-align-left" url="#"/>
-                            </p:submenu>
-                            <p:submenu id="om_sm12" label="Submenu 1.2" icon="pi pi-fw pi-align-left">
-                                <p:menuitem id="om_lnk121" value="Link 1.2.1" icon="pi pi-fw pi-align-left" url="#"/>
-                            </p:submenu>
+                    <p:submenu label="Reportes" icon="pi pi-fw pi-print">
+                        <p:submenu label="Cajas" icon="pi pi-fw pi-print">
+                            <p:menuitem id="om_aio" value="General x Caja" outcome="/webapp/reportes/informesRecaudacion/recaudacionaio.xhtml" />
+                            <p:menuitem id="om_deudas" value="Deudas Vigentes" outcome="/webapp/reportes/informesRecaudacion/deudas.xhtml" />
+                            <p:menuitem id="om_resumen_inventario_caja" value="Resumen Inventario" outcome="/webapp/reportes/informesRecaudacion/resumeninventariocaja.xhtml" />
+                            <p:menuitem id="om_detalle_inventario_caja" value="Detalle Inventario" outcome="/webapp/reportes/informesRecaudacion/inventariocaja.xhtml" />
+                            <p:menuitem id="om_recaudacion_minuto_caja" value="Resumen R. de Minutos " outcome="/webapp/reportes/informesRecaudacion/registrominutobusresumen.xhtml" />
+                            <p:menuitem id="om_resumen_extras" value="Resumen Aportes Varios" outcome="/webapp/reportes/informesRecaudacion/recaudacionmensualextras.xhtml" />
                         </p:submenu>
-                        <p:submenu id="om_sm2" label="Submenu 2" icon="pi pi-fw pi-align-left">
-                            <p:submenu id="om_sm21" label="Submenu 2.1" icon="pi pi-fw pi-align-left">
-                                <p:menuitem id="om_lnk211" value="Link 2.1.1" icon="pi pi-fw pi-align-left" url="#"/>
-                                <p:menuitem id="om_lnk212" value="Link 2.1.2" icon="pi pi-fw pi-align-left" url="#"/>
-                            </p:submenu>
-                            <p:submenu id="om_sm22" label="Submenu 2.2" icon="pi pi-fw pi-align-left">
-                                <p:menuitem id="om_lnk221" value="Link 2.2.1" icon="pi pi-fw pi-align-left" url="#"/>
-                            </p:submenu>
+                        <p:submenu id="om_conductores" label="Conductores" icon="pi pi-fw pi-print">
+                            <p:menuitem id="om_detalle_imposiciones" value="Detalle de Imposiciones" outcome="/webapp/reportes/conductores/detalleconductor.xhtml" />
+                            <p:menuitem id="om_detalle_pagos" value="Detalle de Pagos" outcome="/webapp/reportes/conductores/detallepagosconductor.xhtml" />
+                            <p:menuitem id="om_resumen_imposiciones" value="Resumen de Imposiciones" outcome="/webapp/reportes/conductores/resumenconductor.xhtml" />
                         </p:submenu>
+                        <p:submenu label="Minutos" icon="pi pi-fw pi-print">
+                            <p:menuitem id="om_registro_minutos" value="R. Minutos x Fecha" outcome="/webapp/reportes/minutos/registrominutofecha.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="V.de Combustible" icon="pi pi-fw pi-print">
+                            <p:menuitem id="om_venta_bus" value="Detalle x Bus" outcome="/webapp/reportes/ventacombustible/ventaxbus.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="Liq. Empresas" icon="pi pi-fw pi-print">
+                            <p:menuitem id="om_general_mensual" value="General Mensual" outcome="/webapp/reportes/liquidacionempresa/recaudaciongeneral.xhtml" />
+                            <p:menuitem id="om_detalle_ingresos_bus" value="Detalle x Bus" outcome="/webapp/reportes/liquidacionempresa/detalleingresosbus.xhtml" />
+                            <p:menuitem id="om_fam_bus" value="Detalle Fam x Bus" outcome="/webapp/reportes/liquidacionempresa/detalleingresosbus.xhtml" />
+                            <p:menuitem id="om_resumen_ingresos_bus" value="Resumen x Bus" outcome="/webapp/reportes/liquidacionempresa/resumeningresosbus.xhtml" />
+                            <p:menuitem id="om_pago_minutos_bus" value="Cobro Minutos x Bus" outcome="/webapp/reportes/liquidacionempresa/detallecobrominutosbus.xhtml" />
+                            <p:menuitem id="om_cobro_minutos_bus" value="Pago Minutos x Bus" outcome="/webapp/reportes/liquidacionempresa/detallepagominutosbus.xhtml" />
+                        </p:submenu>
+
+
+
                     </p:submenu>
-                    <p:submenu id="om_getstarted" label="Start" icon="pi pi-fw pi-download">
-                        <p:menuitem id="om_buy" value="Buy Now" icon="pi pi-fw pi-shopping-cart" url="https://www.primefaces.org/store" />
-                        <p:menuitem id="om_doc" value="Documentation" icon="pi pi-fw pi-info-circle" outcome="/webapp/documentation"/>
-                    </p:submenu>
+                    <p:submenu label="General" >
+                        <p:submenu id="om_boletos" label="Inventario de Boletos" icon="pi pi-fw pi-ticket" expanded="false">
+                            <p:menuitem id="om_boletos_adquiridos" value="Boletos Adquiridos" outcome="/webapp/inventarioBoletos/boletosAdquiridos.xhtml" />
+                            <p:menuitem id="om_boletos_inventario_interno" value="Inventario Interno" outcome="/webapp/inventarioBoletos/inventarioInterno.xhtml" />
+                            <p:menuitem id="om_boletos_inventario_caja" value="Inventario Cajas" outcome="/webapp/inventarioBoletos/inventarioCajas.xhtml" />
+                            <p:menuitem id="om_boletos_traspaso_caja" value="Traspaso Cajas" outcome="/webapp/inventarioBoletos/traspasoCajas.xhtml" />
+                        </p:submenu>
+                        <p:submenu id="om_datos" label="Mantención de Datos" icon="pi pi-fw pi-database" expanded="false">
+                            <p:menuitem id="om_buses" value="Buses" icon="pi pi-fw pi-car" outcome="/webapp/datos/bus/List.xhtml" />
+                            <p:menuitem id="om_trabajadores" value="Trabajadores" icon="pi pi-fw pi-users" outcome="/webapp/datos/trabajador/List.xhtml" />
+                            <p:menuitem id="om_empresas" value="Empresas" icon="pi pi-fw pi-id-card" outcome="/webapp/datos/empresa/List.xhtml" />
+                            <p:menuitem id="om_flotas" value="Flotas" icon="pi pi-fw pi-book" outcome="/webapp/datos/flota/List.xhtml" />
+                        </p:submenu>
+                    </p:submenu>>
+
+
+
                 </pu:menu>
+
             </div>
         </div>
     </h:form>
+    <ui:include src="/webapp/reportes/detalleconductor.xhtml"/>
 </ui:composition>

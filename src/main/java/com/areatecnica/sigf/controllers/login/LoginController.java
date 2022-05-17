@@ -167,6 +167,8 @@ public class LoginController implements java.io.Serializable {
                     ipAddress = request.getRemoteAddr();
                 }
 
+                System.err.println("IP:"+ipAddress);
+                
                 form.setSessionId(request.getSession().getId());
                 form.setSessionCreatedTime(new Date(session.getCreationTime()));
                 form.setUserIpAdress(ipAddress);
@@ -176,7 +178,7 @@ public class LoginController implements java.io.Serializable {
                 CommonPage.addStaff(form, request.getSession().getId());
 
                 session.setAttribute("staff", usuario);
-                FacesContext.getCurrentInstance().getExternalContext().redirect("webapp/dashboard.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath()+"/webapp/dashboard.xhtml");
 
                 UsuarioSession usuarioSession = new UsuarioSession();
                 usuarioSession.setUsuarioSessionIdUsuario(usuario);
@@ -207,7 +209,7 @@ public class LoginController implements java.io.Serializable {
             eventBus.publish("/counter", String.valueOf(CommonPage.getUsuarioList().size()));*/
             loggedIn = false;
             usuario = null;
-            FacesContext.getCurrentInstance().getExternalContext().redirect("login2.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -225,7 +227,7 @@ public class LoginController implements java.io.Serializable {
 
     public void timeout() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("...loginpage.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("...login.xhtml");
 
     }
 

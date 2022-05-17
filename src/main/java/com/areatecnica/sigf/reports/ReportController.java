@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.reports;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.servlet.http.HttpServletResponse;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,12 +37,13 @@ public class ReportController implements Serializable {
 
     private StreamedContent media;
     private ByteArrayOutputStream outputStream;
+    private ByteArrayInputStream arrayInputStream;
     private Map<String, Object> map;
     private String path;
 
     public void generateReport(String path, Map<String, Object> map) {
         try {
-            this.path = path; 
+            this.path = path;
             outputStream = JasperReportUtil.getOutputStreamFromReport(map, getPathFileJasper());
             media = JasperReportUtil.getStreamContentFromOutputStream(outputStream, "application/pdf", getNameFilePdf());
         } catch (Exception e) {
@@ -65,17 +68,18 @@ public class ReportController implements Serializable {
     public String getNameFilePdf() {
         return path + ".pdf";
     }
-    
+
     public String getNameFileXls() {
         return path + ".xls";
     }
-    
+
+
     public void downloadFile(String path, Map<String, Object> map) {
         try {
-            this.path = path; 
+            this.path = path;
             outputStream = JasperReportUtil.getOutputStreamFromReport(map, getPathFileJasper());
             //media = JasperReportUtil.getStreamContentFromOutputStream(outputStream, "application/pdf", getNameFilePdf());
-            
+
             FacesContext facesContext = FacesContext.getCurrentInstance();
 
             HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
@@ -83,8 +87,6 @@ public class ReportController implements Serializable {
             response.setContentType("application/pdf");
             response.setHeader("Content-disposition", "inline; filename=" + getNameFilePdf());
 
-            
-            
             OutputStream output = response.getOutputStream();
             output.write(outputStream.toByteArray());
             output.close();
@@ -97,10 +99,10 @@ public class ReportController implements Serializable {
 
     public void downloadFileXls(String path, Map<String, Object> map) {
         try {
-            this.path = path; 
+            this.path = path;
             outputStream = JasperReportUtil.getOutputStreamFromReportXls(map, getPathFileJasper());
             //media = JasperReportUtil.getStreamContentFromOutputStream(outputStream, "application/pdf", getNameFilePdf());
-            
+
             FacesContext facesContext = FacesContext.getCurrentInstance();
 
             HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
@@ -108,8 +110,6 @@ public class ReportController implements Serializable {
             response.setContentType("application/pdf");
             response.setHeader("Content-disposition", "attachment; filename=" + getNameFileXls());
 
-            
-            
             OutputStream output = response.getOutputStream();
             output.write(outputStream.toByteArray());
             output.close();

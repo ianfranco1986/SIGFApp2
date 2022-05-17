@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Búsqueda de Boletos</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="GuiaListForm" class="form-height">
+            <p:panel>
+                <f:facet name="header">
+                    Búsqueda de Boletos
+                </f:facet>
+                <p:panelGrid columns="9" style="width: 100%;margin-bottom: 10px;">
+
+                    <p:outputLabel value="Serie:"/>
+                    <p:inputNumber value="#{ventaBoletoController.serie}" decimalPlaces="0" required="true" requiredMessage="Debe ingresar un valor" minValue="0"/>
+
+                    <p:commandButton id="value2" ajax="true" icon="pi pi-fw pi-search" value="Buscar" update="@(.clase), GuiaListForm:datalist, growl"  style="width:120px" actionListener="#{ventaBoletoController.find()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                    </p:commandButton>
+
+                </p:panelGrid>
+
+                <p:dataTable id="datalist"
+                             scrollHeight="500" 
+                             scrollable="false"                         
+                             value="#{ventaBoletoController.model}"
+                             selection="#{ventaBoletoController.selectedItem}"
+                             widgetVar="datalist"
+                             selectionMode="single"
+                             var="item"
+                             rowKey="#{item.ventaBoletoId}"
+                             rowIndexVar="rowIndex"
+                             emptyMessage="No se han encontrado registros"                         
+                             >
+
+
+                    <p:column style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="#"/>
+                        </f:facet>
+                        <h:outputText value="#{rowIndex+1}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.ventaBoletoFolioSolyMar}}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="Guía SolyMar"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ventaBoletoFolioSolyMar}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.ventaBoletoIdBus.busNumero}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="N° Bus"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ventaBoletoIdBus.busNumero}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="Cod.Trabajador"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.ventaBoletoIdTrabajador}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="Trabajador"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ventaBoletoIdTrabajador}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" style="text-align: center; " >
+                        <f:facet name="header">
+                            <h:outputText value="Tipo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}">
+                            <f:convertNumber />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" style="text-align: center; " >
+                        <f:facet name="header">
+                            <h:outputText value="Serie"/>
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}">
+                                    <f:convertNumber />
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input"><p:inputText id="impo" value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja.cajaRecaudacionNombre}" style="text-align: center; " >
+                        <f:facet name="header">
+                            <h:outputText value="Caja"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja.cajaRecaudacionNombre}">
+                            <f:convertNumber />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{item.ventaBoletoFecha}}" style="text-align: center; ">
+                        <f:facet name="header">
+                            <h:outputText value="Fecha Venta"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ventaBoletoFecha}">
+                            <f:convertDateTime pattern="dd/MM/yy"/>
+                        </h:outputText>
+                    </p:column>
+
+                </p:dataTable>
+            </p:panel>
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

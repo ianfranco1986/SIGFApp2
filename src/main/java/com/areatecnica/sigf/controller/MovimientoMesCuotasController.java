@@ -22,7 +22,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
-import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
 @Named(value = "movimientoMesCuotasController")
@@ -54,7 +53,7 @@ public class MovimientoMesCuotasController extends AbstractController<Movimiento
     private Date hasta;
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
-    private DateTime dateTime;
+//    private DateTime dateTime;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     private NumberFormat nf = NumberFormat.getInstance();
@@ -109,7 +108,7 @@ public class MovimientoMesCuotasController extends AbstractController<Movimiento
         if (this.fecha != null) {
             if (this.tipo == 1) {
                 this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findByEgreso();
-                this.items = new IMovimientoMesDaoImpl().findByEgresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+//                this.items = new IMovimientoMesDaoImpl().findByEgresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
                 this.model = new MovimientoMesDataModel(items);
                 if (this.items.isEmpty()) {
                     JsfUtil.addWarningMessage("No se han encontrado registros ");
@@ -120,7 +119,7 @@ public class MovimientoMesCuotasController extends AbstractController<Movimiento
             } else {
                 this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findByIngreso();
 
-                this.items = new IMovimientoMesDaoImpl().findByIngresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+//                this.items = new IMovimientoMesDaoImpl().findByIngresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
                 this.model = new MovimientoMesDataModel(items);
                 if (this.items.isEmpty()) {
                     JsfUtil.addWarningMessage("No se han encontrado registros ");
@@ -223,16 +222,16 @@ public class MovimientoMesCuotasController extends AbstractController<Movimiento
                 if (!this.selectedEmpresa.isEmpty()) {
                     for (Empresa e : this.selectedEmpresa) {
 
-                        DateTime fechaL = new DateTime(this.fechaLiquidacion);
-                        DateTime fechaM = new DateTime(this.fechaMovimiento);
+//                        DateTime fechaL = new DateTime(this.fechaLiquidacion);
+//                        DateTime fechaM = new DateTime(this.fechaMovimiento);
 
                         MovimientoMes movEmpresa = new MovimientoMes();
 
                         for (int i = 0; i < this.numeroCuotas; i++) {
 
                             movEmpresa.setMovimientoMesMvtoId(tipoMovimiento);
-                            movEmpresa.setMovimientoMesFechaLiquidacion(fechaL.plusMonths(i).toDate());
-                            movEmpresa.setMovimientoMesFechaMvto(fechaM.plusMonths(i).toDate());
+//                            movEmpresa.setMovimientoMesFechaLiquidacion(fechaL.plusMonths(i).toDate());
+//                            movEmpresa.setMovimientoMesFechaMvto(fechaM.plusMonths(i).toDate());
                             movEmpresa.setMovimientoMesCuentaBancoId(cuentaBancaria);
                             movEmpresa.setMovimientoMesNumeroDocumento(documento);
                             movEmpresa.setMovimientoMesMonto(this.getSelected().getMovimientoMesMonto());
@@ -437,14 +436,6 @@ public class MovimientoMesCuotasController extends AbstractController<Movimiento
         this.fecha = fecha;
     }
 
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
@@ -507,12 +498,12 @@ public class MovimientoMesCuotasController extends AbstractController<Movimiento
     }
 
     public void setFecha() {
-        try {
-            System.err.println("NUEVA FECHA:");
-            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-            this.dateTime = new DateTime(this.fecha);
-        } catch (ParseException ex) {
-        }
+//        try {
+//            System.err.println("NUEVA FECHA:");
+//            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+//            this.dateTime = new DateTime(this.fecha);
+//        } catch (ParseException ex) {
+//        }
     }
 
 }

@@ -26,7 +26,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
-import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
 @Named(value = "movimientoMesEmpresaController")
@@ -68,7 +67,7 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
     private Date hasta;
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
-    private DateTime dateTime;
+//    private DateTime dateTime;
 
     private String informe = "inf-liquidacion_empresa_grupal";
 
@@ -135,7 +134,7 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
 
             this.totalIngresos = this.administracion + this.cuotaExtra + this.imposiciones + this.boletos + this.minutos;
 
-            this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+//            this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
 
             this.model = new MovimientoMesDataModel(items);
             if (this.items.isEmpty()) {
@@ -241,7 +240,7 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
 
                     this.totalIngresos = this.administracion + this.cuotaExtra + this.imposiciones + this.boletos + this.minutos;
 
-                    this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+//                    this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
 
                     this.model = new MovimientoMesDataModel(items);
                     if (this.items.isEmpty()) {
@@ -282,7 +281,7 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
 
                     this.totalIngresos = this.administracion + this.cuotaExtra + this.imposiciones + this.boletos + this.minutos;
 
-                    this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+//                    this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
 
                     this.model = new MovimientoMesDataModel(items);
                     if (this.items.isEmpty()) {
@@ -326,16 +325,16 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
                 if (!this.selectedEmpresa.isEmpty()) {
                     for (Empresa e : this.selectedEmpresa) {
 
-                        DateTime fechaL = new DateTime(this.fechaLiquidacion);
-                        DateTime fechaM = new DateTime(this.fechaMovimiento);
+//                        DateTime fechaL = new DateTime(this.fechaLiquidacion);
+//                        DateTime fechaM = new DateTime(this.fechaMovimiento);
 
                         MovimientoMes movEmpresa = new MovimientoMes();
 
                         for (int i = 0; i < this.numeroCuotas; i++) {
 
                             movEmpresa.setMovimientoMesMvtoId(tipoMovimiento);
-                            movEmpresa.setMovimientoMesFechaLiquidacion(fechaL.plusMonths(i).toDate());
-                            movEmpresa.setMovimientoMesFechaMvto(fechaM.plusMonths(i).toDate());
+//                            movEmpresa.setMovimientoMesFechaLiquidacion(fechaL.plusMonths(i).toDate());
+//                            movEmpresa.setMovimientoMesFechaMvto(fechaM.plusMonths(i).toDate());
                             movEmpresa.setMovimientoMesCuentaBancoId(cuentaBancaria);
                             movEmpresa.setMovimientoMesNumeroDocumento(documento);
                             movEmpresa.setMovimientoMesMonto(this.getSelected().getMovimientoMesMonto());
@@ -617,14 +616,6 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
         this.fecha = fecha;
     }
 
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
@@ -735,15 +726,15 @@ public class MovimientoMesEmpresaController extends AbstractController<Movimient
     }
 
     public void setFecha() {
-        try {
-            System.err.println("NUEVA FECHA:");
-            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-            this.desde = this.fecha;
-
-            this.dateTime = new DateTime(this.fecha);
-            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
-        } catch (ParseException ex) {
-        }
+//        try {
+//            System.err.println("NUEVA FECHA:");
+//            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+//            this.desde = this.fecha;
+//
+//            this.dateTime = new DateTime(this.fecha);
+//            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
+//        } catch (ParseException ex) {
+//        }
     }
 
 }

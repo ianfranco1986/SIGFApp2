@@ -32,7 +32,6 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
 @Named(value = "compraController")
@@ -78,7 +77,6 @@ public class CompraController extends AbstractController<Compra> {
     private Date hasta;
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
-    private DateTime dateTime;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     private NumberFormat nf = NumberFormat.getInstance();
@@ -267,14 +265,14 @@ public class CompraController extends AbstractController<Compra> {
     }
 
     public void setFecha() {
-        try {
-            System.err.println("NUEVA FECHA:");
-            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-            this.dateTime = new DateTime(this.fecha);
-            this.desde = this.fecha;
-            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
-        } catch (ParseException ex) {
-        }
+//        try {
+//            System.err.println("NUEVA FECHA:");
+//            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+//            this.dateTime = new DateTime(this.fecha);
+//            this.desde = this.fecha;
+//            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
+//        } catch (ParseException ex) {
+//        }
     }
 
     public void calculaIva() {

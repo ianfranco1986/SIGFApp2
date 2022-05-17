@@ -27,7 +27,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import org.chartistjsf.model.chart.PieChartModel;
-import org.joda.time.DateTime;
+
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
@@ -59,7 +59,6 @@ public class BlankPageController implements Serializable {
 
     private Recaudacion ultimaRecaudacion;
     private Date from;
-    private DateTime to;
     private List<Name2DateValuePOJO> list;
     private List<VentaCombustible> ventaCombustibleItems; 
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,7 +85,7 @@ public class BlankPageController implements Serializable {
      */
     public BlankPageController() {
         this.from = new Date();
-        to = new DateTime(from);
+        
 
     }
 

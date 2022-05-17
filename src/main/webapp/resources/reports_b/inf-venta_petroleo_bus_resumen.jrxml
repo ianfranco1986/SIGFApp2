@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-VentasFecha" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="806aa414-a9dc-4e5d-b0b0-705f3270152d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="318"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="670"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idBus" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    SUM(venta_combustible_total) AS venta_combustible_total , 
+SUM(venta_combustible_cantidad) AS venta_combustible_cantidad, 
+    COUNT(venta_combustible_numero_boleta) AS cantidad, 
+    bus.bus_numero, 
+    bus.bus_patente, 
+bus.bus_anio, 
+    proceso_recaudacion.proceso_recaudacion_nombre, 
+    flota.flota_nombre, 
+    empresa.empresa_nombre
+
+FROM
+    venta_combustible
+        LEFT JOIN
+    bus ON venta_combustible_id_bus = bus.bus_id
+		LEFT JOIN 
+	proceso_recaudacion ON bus.bus_id_proceso_recaudacion = proceso_recaudacion.proceso_recaudacion_id
+		LEFT JOIN 
+	flota ON bus.bus_id_flota = flota.flota_id 
+		LEFT JOIN 
+	empresa ON bus.bus_id_empresa = empresa.empresa_id 
+
+WHERE venta_combustible_fecha BETWEEN $P{desde} AND  $P{hasta} AND  
+     $X{IN, venta_combustible.venta_combustible_id_bus, list} 
+GROUP BY     bus.bus_numero,     bus.bus_patente, 
+bus.bus_anio , proceso_recaudacion.proceso_recaudacion_nombre, 
+    flota.flota_nombre, 
+    empresa.empresa_nombre
+
+ORDER BY empresa.empresa_nombre, venta_combustible_total DESC]]>
+	</queryString>
+	<field name="venta_combustible_total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="venta_combustible_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venta_combustible"/>
+	</field>
+	<field name="venta_combustible_cantidad" class="java.lang.Double"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<field name="bus_numero" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="bus_numero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bus_patente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="bus_patente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bus_anio" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proceso_recaudacion_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="proceso_recaudacion_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proceso_recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="flota_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="flota_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="flota"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empresa_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="empresa_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="venta_combustible_total1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{venta_combustible_total}]]></variableExpression>
+	</variable>
+	<variable name="bus_numero1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{bus_numero}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="228" height="19" uuid="d1158167-453c-427f-9708-7a3255b758b3"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Buses Baquedano Ltda.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="252" y="0" width="320" height="25" uuid="8464c4a2-4cb0-43a2-93bc-9bd398e2b13e"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen Ventas de Petroleo x Bus]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="100" y="25" width="46" height="15" uuid="ce6e7a5f-48c6-4b57-8676-f53a89c890e2"/>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="151" y="25" width="16" height="15" uuid="f92de012-c2ec-47ae-9da4-91c4228ae145"/>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="167" y="25" width="60" height="15" uuid="dfd2b277-8440-4c3f-8170-5278df475c42"/>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="25" width="100" height="15" uuid="699d1358-f889-4f0b-8589-37115c88376b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="9" width="48" height="15" uuid="bdae9335-9de5-4775-9504-b3411dd45334"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Bus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="9" width="158" height="15" uuid="b07d10b1-cedc-4c2f-a4e1-72a886db79f4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94ef6370-dd21-421b-a9ef-c1b60999751c"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="9" width="99" height="15" uuid="b934a72d-ec51-4aa1-a9b1-1671a1e1cf8c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f12e8d8-6764-4fb3-9505-c152154d3811"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="9" width="68" height="15" uuid="865f0498-8524-4241-8248-f75c9aac3d44">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad (Lt)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="456" y="9" width="70" height="15" uuid="7ebdf130-acf8-4d88-b7dc-e2d6bfc7cf73">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="9" width="69" height="15" uuid="13152c9b-437c-480d-ba98-607e66af978c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a0c6911-ac3d-4fce-8c3d-7f11d6fc69c5"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Boletas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="388" y="0" width="68" height="15" uuid="df339466-e6a5-45c8-af07-c7494d448272">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{venta_combustible_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="456" y="0" width="70" height="15" uuid="cbddf3b4-6346-471d-9f1b-a7f3dbaf5177">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="391c1c8f-602c-440b-b30e-da04c44b1ef1"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{venta_combustible_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="0" width="99" height="15" uuid="d4558287-44be-4cc9-b436-11fde1ba1cc3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f12e8d8-6764-4fb3-9505-c152154d3811"/>
+				</reportElement>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{proceso_recaudacion_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="56" y="0" width="158" height="15" uuid="ac81a329-0dbd-4eea-ad61-0ec1e2a5c7f2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94ef6370-dd21-421b-a9ef-c1b60999751c"/>
+				</reportElement>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="48" height="15" uuid="83378703-be8f-447d-a709-08e64a771750">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
+				</reportElement>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{bus_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="319" y="0" width="69" height="15" uuid="34665e00-8e96-4193-92c3-655d01840bb2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5424feb8-2a35-42a5-877e-e32a56a5b9fd"/>
+				</reportElement>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="385" y="6" width="152" height="15" uuid="ce5f1469-f226-4802-9026-891627561302"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="537" y="6" width="34" height="15" uuid="7a8703bf-eee3-4105-98e0-5259bec13765"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="6" width="80" height="15" uuid="ddf42606-f4b2-42f5-af20-e73b8ef16d47">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="80" y="6" width="165" height="15" uuid="7cd33aa0-99b6-41b5-85bd-80a535d23a1f"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="317" y="0" width="139" height="20" uuid="033d59a1-e725-4210-9947-62bcf562fd14">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Total Ventas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="20" width="139" height="20" uuid="d847d091-ef73-416c-b8f5-d27990f36dd3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Nº de Ventas:]]></text>
+			</staticText>
+			<textField pattern="$ #,##0">
+				<reportElement x="456" y="0" width="70" height="20" uuid="9f3670ec-d5b6-403e-8342-2e3aa6bfdae7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{venta_combustible_total1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="20" width="70" height="20" uuid="e3eb0f29-46be-48d1-886e-c542187a2ebd"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{bus_numero1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+	<noData>
+		<band height="40">
+			<staticText>
+				<reportElement x="0" y="0" width="572" height="25" uuid="7e35f75d-08d5-4861-91d0-1d944d05f81d"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sin Ventas de Petroleo ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="220" y="25" width="46" height="15" uuid="dce3c516-9361-4350-a90b-369f2ade3587"/>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="287" y="25" width="60" height="15" uuid="ed916e0d-88d4-43bb-aba5-7c33aa300206"/>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="271" y="25" width="16" height="15" uuid="52243927-47b6-4663-88a4-e6764e2bf438"/>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

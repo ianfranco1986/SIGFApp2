@@ -69,14 +69,7 @@ public class ReportDetalleControllerIngresosBus implements Serializable {
         this.unidadItems.remove(0);
         this.unidadNegocio = this.unidadItems.get(0);
 
-        this.empresaItems = new ArrayList<>();
-
-//        corregir
-//        for (Empresa ee : new IEmpresaDaoImpl().findAll()) {
-//            if (!ee.getBusList().isEmpty()) {
-//                this.empresaItems.add(ee);
-//            }
-//        }
+        this.empresaItems = new IEmpresaDaoImpl().findAll();
 
         empresaItems.sort(Comparator.comparing(Empresa::getEmpresaNombre));
 
@@ -98,7 +91,6 @@ public class ReportDetalleControllerIngresosBus implements Serializable {
 
         Bus bus = null;
         if (!selectedItems.isEmpty()) {
-            System.err.println("TAMAÑO DE LOS ITEMS SELECTOS: " + selectedItems.size());
             bus = selectedItems.get(0);
             list = String.valueOf(bus.getBusId());
             array = new ArrayList<>();

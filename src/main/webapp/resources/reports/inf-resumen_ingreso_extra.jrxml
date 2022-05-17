@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-VentasFecha" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="806aa414-a9dc-4e5d-b0b0-705f3270152d">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="318"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="670"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -14,6 +15,9 @@
 	<parameter name="mes" class="java.lang.String"/>
 	<parameter name="nombreMes" class="java.lang.String"/>
 	<parameter name="anio" class="java.lang.String"/>
+	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="desde" class="java.util.Date"/>
+	<parameter name="hasta" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[SELECT 
     *
@@ -106,20 +110,6 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 		<groupHeader>
 			<band height="80">
 				<staticText>
-					<reportElement x="23" y="0" width="166" height="30" uuid="d9e19610-954d-46f4-9bd8-7009086ec52d"/>
-					<textElement>
-						<font fontName="SansSerif" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Ñandu Tur S.A.]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="24" y="30" width="546" height="15" uuid="04bea80b-ff0c-4f69-9dad-186898982658"/>
-					<textElement markup="none">
-						<font fontName="SansSerif" size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Resumen Recaudación Extra "+$F{caja_recaudacion_nombre}+ "  Mes: "+$P{nombreMes}+"  Año: "+$P{anio}]]></textFieldExpression>
-				</textField>
-				<staticText>
 					<reportElement x="181" y="55" width="99" height="15" uuid="96d49f3f-0fdb-4983-8afc-060852e8b6f4">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c409d6de-b00a-402d-abd6-a25b6946331f"/>
 					</reportElement>
@@ -167,6 +157,39 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 				<line>
 					<reportElement x="0" y="70" width="570" height="1" uuid="56ab0f0c-b08c-4c0d-892d-5c375c7b052f"/>
 				</line>
+				<staticText>
+					<reportElement x="311" y="0" width="261" height="25" uuid="56d33f87-fdad-4148-b653-9baf561274f1"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Resumen Recaudación Extras]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="151" y="25" width="16" height="15" uuid="dba82dfc-95b2-4fdc-8738-4d7628a1cdbc"/>
+					<text><![CDATA[al ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="25" width="100" height="15" uuid="e67ebd59-8e59-46fb-bcef-0440c96008e9"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Rango de Fechas:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="100" y="25" width="46" height="15" uuid="2ceef293-0e60-475a-8005-15838b04296f"/>
+					<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="167" y="25" width="60" height="15" uuid="20f5b15e-5977-422f-8cd4-968e0b41111c"/>
+					<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="180" height="19" uuid="07ab10b9-18fe-463a-bdb4-010b811cefcb"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ñandu Tur S.A.]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -312,18 +335,11 @@ ORDER BY caja_recaudacion.caja_recaudacion_nombre, tipo_recaudacion_extra_nombre
 	<noData>
 		<band height="34">
 			<textField>
-				<reportElement x="41" y="0" width="385" height="34" uuid="832be680-ca47-417d-9e3f-4a87cf907bfb"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+				<reportElement x="10" y="0" width="560" height="34" uuid="832be680-ca47-417d-9e3f-4a87cf907bfb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Sin Recaudación Extra en la Caja N°:"+$P{caja}+" el día: "]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="426" y="0" width="100" height="34" uuid="ed15e869-d3eb-47f9-a65f-dcccfcbdf6d3"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["No se han encontrado registros"]]></textFieldExpression>
 			</textField>
 		</band>
 	</noData>

@@ -5,12 +5,15 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ianfr
  */
 @Entity
-@Table(name = "inventario_interno", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "inventario_interno")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "InventarioInterno.findAll", query = "SELECT i FROM InventarioInterno i")
     , @NamedQuery(name = "InventarioInterno.findByInventarioInternoId", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoId = :inventarioInternoId")

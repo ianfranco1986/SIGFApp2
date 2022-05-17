@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="caja" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\OneDrive\\Nueva carpeta\\GitHub\\SIGFApp\\src\\main\\webapp\\resources\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    @rownum:=@rownum+1 AS numero, 
+    recaudacion.recaudacion_id,
+    recaudacion.recaudacion_identificador,
+    recaudacion.recaudacion_id_caja,
+    recaudacion.recaudacion_fecha,
+    recaudacion.recaudacion_hora, 
+    recaudacion.recaudacion_total,
+    caja_recaudacion.caja_recaudacion_nombre,
+    LAST_DAY($P{desde}) As hasta,
+    bus.bus_numero,
+    bus.bus_patente,
+    CONCAT(IF(trabajador.trabajador_codigo<10, '000', IF(trabajador.trabajador_codigo<100,'00', IF(trabajador.trabajador_codigo<1000,'0', '' ) )),trabajador.trabajador_codigo) AS trabajador_codigo, 
+    guia_folio, 
+    flota.flota_nombre, 
+    IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 3 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS imposiciones, 
+CONCAT(trabajador.trabajador_nombres, " ",  
+trabajador.trabajador_apellido_paterno, " ",  
+trabajador.trabajador_apellido_materno) AS nombre_trabajador
+
+FROM
+    recaudacion
+        LEFT JOIN
+    recaudacion_guia ON recaudacion.recaudacion_id = recaudacion_guia.recaudacion_guia_id_recaudacion
+        LEFT JOIN
+    guia ON recaudacion_guia.recaudacion_guia_id_guia = guia.guia_id
+        LEFT JOIN
+    bus ON guia.guia_id_bus = bus.bus_id
+        LEFT JOIN
+    trabajador ON guia.guia_id_trabajador = trabajador.trabajador_id
+        LEFT JOIN 
+    caja_recaudacion ON recaudacion.recaudacion_id_caja = caja_recaudacion.caja_recaudacion_id
+        LEFT JOIN
+    flota ON bus.bus_id_flota = flota.flota_id, (SELECT @rownum:=0) e
+WHERE
+    recaudacion.recaudacion_fecha BETWEEN $P{desde} AND LAST_DAY($P{desde})  AND   $X{IN, trabajador.trabajador_id, list}
+GROUP BY recaudacion.recaudacion_id, bus.bus_numero, bus.bus_patente, guia.guia_folio, flota.flota_nombre, trabajador.trabajador_codigo 
+HAVING (imposiciones)>0
+ORDER BY trabajador.trabajador_apellido_paterno, recaudacion.recaudacion_fecha]]>
+	</queryString>
+	<field name="numero" class="java.lang.Double"/>
+	<field name="recaudacion_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_identificador" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_id_caja" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_hora" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_total" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="caja_recaudacion_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hasta" class="java.sql.Date"/>
+	<field name="bus_numero" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bus_patente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="trabajador_codigo" class="java.lang.String"/>
+	<field name="guia_folio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="flota_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="imposiciones" class="java.lang.Long"/>
+	<field name="nombre_trabajador" class="java.lang.String"/>
+	<variable name="imposiciones_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{imposiciones}]]></variableExpression>
+	</variable>
+	<variable name="imposiciones_2" class="java.lang.Long" resetType="Group" resetGroup="bus" calculation="Sum">
+		<variableExpression><![CDATA[$F{imposiciones}]]></variableExpression>
+	</variable>
+	<group name="bus">
+		<groupExpression><![CDATA[$F{trabajador_codigo}]]></groupExpression>
+		<groupHeader>
+			<band height="44">
+				<staticText>
+					<reportElement x="0" y="28" width="52" height="12" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Folio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="335" y="28" width="66" height="12" uuid="048f827c-5999-477d-8ca3-6db440ee295f"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Impos. ($)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="109" y="28" width="55" height="12" uuid="a7cab6f6-2844-407a-a8fa-bf0a1177c313">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[G.Sol y Mar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="212" y="28" width="80" height="12" uuid="48d30d82-7ec7-4e84-bdc5-d6b627d40e7d"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° Bus ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="52" y="28" width="48" height="12" uuid="4f86a175-db04-46d5-8cd5-c362fb49780f"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="41" width="550" height="1" uuid="560e7689-b761-4c2a-a388-2459f3223b49"/>
+				</line>
+				<textField>
+					<reportElement x="52" y="8" width="374" height="14" uuid="15afba31-6800-4fb1-88c3-cebc12d2fb36"/>
+					<textFieldExpression><![CDATA["("+$F{trabajador_codigo}+") " +$F{nombre_trabajador}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="8" width="52" height="14" uuid="7cb55e0a-2438-4b9f-a69d-32128746b703"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Conductor: ]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="#,##0">
+					<reportElement x="335" y="4" width="66" height="12" uuid="14ffcf5f-d6aa-4af6-a976-b430afc6fcba"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{imposiciones_2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="164" y="4" width="94" height="12" uuid="7a8562a6-bc31-40c0-9bfa-0f8022f3d407"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total :]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Buses Baquedano Ltda.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="0" width="328" height="34" uuid="09f63724-548c-4a46-8844-a59ea8b995d4"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle Imposiciones x Conductor]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="90" y="19" width="56" height="15" uuid="75a61d61-c983-4e8b-8ca2-c24a4741f2c6"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="19" width="90" height="15" uuid="3968ab50-2c92-4faa-9e03-c50f5c041771"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="167" y="19" width="60" height="15" uuid="3b0b3fd0-2726-4dca-8e51-8ba85b8297a4"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="151" y="19" width="16" height="15" uuid="e76fbe4d-3fb5-4a73-bcce-264fa9407cff"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="52" height="12" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="335" y="0" width="66" height="12" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{imposiciones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="0" width="80" height="12" uuid="72640ce8-0ee5-4c8b-a34d-b58f6067cf2d"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bus_numero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="52" y="0" width="48" height="12" uuid="a5626c1d-e404-4621-a643-fe0277985330"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="0" width="55" height="12" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion_identificador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="80" height="15" uuid="c596a884-7fff-489a-bc13-0c8b02b3c85f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="386" y="5" width="152" height="15" uuid="7f0c13eb-56de-4c37-911f-b4890f59067b"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="80" y="5" width="165" height="15" uuid="5d5c0115-2ccc-44ca-9534-1e958ced523d"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="538" y="5" width="34" height="15" uuid="f9404e37-8fe2-4612-9bb6-c457e6be4901"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band/>
+	</noData>
+</jasperReport>

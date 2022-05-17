@@ -39,7 +39,7 @@ public class ReportControllerGuiaCajaFecha implements Serializable {
 
     @PostConstruct
     private void init() {
-        this.items = new ICajaRecaudacionDaoImpl().findAll();
+        this.items = new ICajaRecaudacionDaoImpl().findAllActive();
         this.fecha = new Date();
         this.informe = "inf-recaudacion_caja_fecha";
     }

@@ -99,9 +99,9 @@
 
 
 
-                        <p:ajax event="rowSelect" update=":GuiaListForm:delete-products-button" listener="#{dynamicRecaudacionController.print()}"/>
-                        <p:ajax event="rowUnselect" update=":GuiaListForm:delete-products-button" />
-                        <p:ajax event="rowSelectCheckbox" update=":GuiaListForm:delete-products-button" ></p:ajax>
+                        
+                        <p:ajax event="rowSelectCheckbox" update=":GuiaListForm:delete-products-button" listener="#{dynamicRecaudacionController.print()}">
+                        </p:ajax>
                         <p:ajax event="rowUnselectCheckbox" update=":GuiaListForm:delete-products-button" />
 
 

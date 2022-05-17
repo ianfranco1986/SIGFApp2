@@ -22,7 +22,6 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-import org.joda.time.DateTime;
 
 @Named(value = "detalleCartolaController")
 @ViewScoped
@@ -47,7 +46,7 @@ public class DetalleCartolaController extends AbstractController<DetalleCartola>
     private DetalleCartolaDataModel model;
 
     private Date fecha;
-    private DateTime dateTime;
+//    private DateTime dateTime;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 
     public DetalleCartolaController() {
@@ -210,14 +209,6 @@ public class DetalleCartolaController extends AbstractController<DetalleCartola>
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
     }
 
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {

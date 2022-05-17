@@ -9,7 +9,7 @@ package com.areatecnica.sigf.audit;
  * @author ianfrancoconcha
  */
 public enum AuditOperation {
-    UPDATE,
-    INSERT,
-    DELETE
+    EDICION,
+    INGRESO,
+    ELIMINACION
 }

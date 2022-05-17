@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Registro de Boletos Adquiridos</ui:define>
+
+    <ui:define name="content">
+
+                <p:panel >
+            <h3>Registro de Boletos Adquiridos</h3>
+            <h:panelGroup id="display">
+                <h:form id="CompraBoletoCreateForm">
+                    <p:focus context="compraBoletoFecha"/>
+                    <p:panelGrid columns="2"  style="width: 100%;margin-bottom: 20px;" id="detalle" >
+                        
+                        <h:outputLabel value="Fecha" for="compraBoletoFecha" />
+                        <p:calendar id="compraBoletoFecha" autocomplete="off" pattern="dd/MM/yyyy" value="#{compraBoletoController.selected.compraBoletoFecha}" title="#{myBundle.CreateCompraBoletoTitle_compraBoletoFecha}" required="true" requiredMessage="#{myBundle.CreateCompraBoletoRequiredMessage_compraBoletoFecha}" locale="es"/>
+
+                        <h:outputLabel value=""/>
+                        <h:panelGrid columns="6" id="detalleComprasPanel" >
+                            <h:outputLabel style="margin-left: 5px;" value="Tipo Boleto" />
+                            <h:outputLabel style="margin-left: 5px;" value="Identificador" />
+                            <h:outputLabel style="margin-left: 5px;" value="Serie" for="serie"/>
+                            <h:outputLabel style="margin-left: 5px;" value="N° Rollos" />
+                            <h:outputLabel style="margin-left: 5px;" value="Valor x Rollo" />
+                            <h:outputLabel style="margin-left: 5px;" value="Agregar"/>
+
+                            <p:selectOneMenu style="margin-right: 5px; margin-bottom: -2px;" id="idBoleto" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoIdBoleto}" requiredMessage="Debe seleccionar el tipo de boleto" required="true" converter="omnifaces.SelectItemsConverter" >
+                                <f:selectItem itemLabel="Seleccionar"/>                                
+                                <f:selectItems value="#{boletoController.items}"
+                                               var="boletoItem"
+                                               itemValue="#{boletoItem}"
+                                               itemLabel="#{boletoItem.boletoNombre}"
+                                               />
+                            </p:selectOneMenu>
+
+                            <p:inputText style="margin-left: 5px;" id="identificador" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoIdentificador}" required="true" requiredMessage="Debe ingresar el identificador" size="10" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" />
+
+                            <p:inputNumber decimalPlaces="0" style="margin-left: 5px;" id="serie" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoSerie}" required="true" requiredMessage="Debe ingresar la serie " size="10" maxlength="20" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" />
+
+                            <p:inputNumber id="cantidadRollos" decimalPlaces="0"  style="margin-left: 5px;" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoCantidadRollos}" required="true" requiredMessage="Debe ingresar la cantidad de rollos" onfocus="this.setSelectionRange(0, this.value.length)" autocomplete="off" size="10"/>
+
+                            <p:inputNumber id="valorXRollo" decimalPlaces="0"  style="margin-left: 5px;" value="#{compraBoletoController.detalleCompraBoleto.detalleCompraBoletoTotal}" size="10" maxlength="5" onfocus="this.setSelectionRange(0, this.value.length)" required="true" requiredMessage="Debe ingresar el valor del rollo" >
+                                <p:keyFilter mask="num" />
+                            </p:inputNumber>
+
+                            <p:commandButton id="addButton" style="margin-left: 5px;" value="Agregar" actionListener="#{compraBoletoController.addDetalleCompra}" styleClass="ui-priority-primary" update="DetalleCompraBoletoCreateForm:datalist, DetalleCompraBoletoCreateForm:totales, :growl, detalleComprasPanel, DetalleCompraBoletoCreateForm:saveButton" ajax="true">
+
+                            </p:commandButton>                        
+                        </h:panelGrid>
+                    </p:panelGrid>
+                </h:form>
+
+                <h:panelGroup>
+                    <h3>Detalle Boletos</h3>
+                    <h:form id="DetalleCompraBoletoCreateForm">
+                        <p:dataTable id="datalist"
+                                     value="#{compraBoletoController.model}" 
+                                     widgetVar="datalist"
+                                     var="item"
+                                     selection="#{compraBoletoController.selectedDetalleCompraBoleto}"
+                                     selectionMode="single"
+                                     rowKey="#{item.detalleCompraBoletoId}"                                 
+                                     rowIndexVar="rowIndex"
+                                     emptyMessage="No se han encontrado registros" 
+                                     style="width: 100%"
+                                     tableStyle="table-layout: auto">
+
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="N°"/>
+                                </f:facet>
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Tipo Boleto"/>
+                                </f:facet>
+                                <h:outputText value="#{item.detalleCompraBoletoIdBoleto.boletoNombre}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Identificador"/>
+                                </f:facet>
+                                <h:outputText value="#{item.detalleCompraBoletoIdentificador}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Serie"/>
+                                </f:facet>
+                                <h:outputText value="#{item.detalleCompraBoletoSerie}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="N° Rollos"/>
+                                </f:facet>
+                                <h:outputText value="#{item.detalleCompraBoletoCantidadRollos}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Total"/>
+                                </f:facet>
+                                <h:outputText value="#{item.detalleCompraBoletoTotal}">
+                                    <f:convertNumber currencyCode="$"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column style="width:45px;text-align: center">
+                                <p:commandButton update="datalist, :DetalleCompraBoletoCreateForm:totales" icon="pi pi-trash"  actionListener="#{compraBoletoController.deleteDetalle()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" class="ui-button-danger rounded-button">
+                                    <f:setPropertyActionListener value="#{item}" target="#{compraBoletoController.selectedDetalleCompraBoleto}" />
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:panelGrid  id="totales" style="width: 100%;margin-top: 10px;"  columns="2">
+                            <h3 style="text-align: right;">Total: #{compraBoletoController.totalFormatted}
+
+                            </h3>
+
+                            <f:facet name="footer">
+                                <p:commandButton id="saveButton" actionListener="#{compraBoletoController.saveNew}" value="#{myBundle.Save}" disabled="#{empty compraBoletoController.selected}" update="display,:growl, :CompraBoletoCreateForm:detalle, datalist" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" >
+                                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                                </p:commandButton>
+
+                                <p:commandButton value="#{myBundle.Cancel}" update="display" process="@this" immediate="true" resetValues="true"/>
+                            </f:facet>
+                        </p:panelGrid>
+                        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGroup>
+        </p:panel>
+    </ui:define>
+</ui:composition>

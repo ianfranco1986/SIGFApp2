@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ianfr
  */
 @Entity
-@Table(name = "plan_cuenta_sub_tipo", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "plan_cuenta_sub_tipo")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PlanCuentaSubTipo.findAll", query = "SELECT p FROM PlanCuentaSubTipo p"),

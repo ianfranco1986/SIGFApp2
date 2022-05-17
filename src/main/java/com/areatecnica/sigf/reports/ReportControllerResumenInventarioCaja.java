@@ -37,7 +37,7 @@ public class ReportControllerResumenInventarioCaja implements Serializable {
 
     @PostConstruct
     private void init() {
-        this.items = new ICajaRecaudacionDaoImpl().findAll();
+        this.items = new ICajaRecaudacionDaoImpl().findAllActive();
         this.informe = "inf-resumen_inventario_caja";
     }
 

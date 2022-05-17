@@ -23,8 +23,8 @@
 
                             </p:toolbarGroup>
                             <p:toolbarGroup align="right">
-                                <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
-                                    <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+                                <p:commandButton value="Exportar" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="xlsxstream" target="datalist" fileName="trabajadores"/>
                                 </p:commandButton>
                             </p:toolbarGroup>
                         </p:toolbar>
@@ -349,7 +349,7 @@
                                 </f:facet>
                                 <h:outputText value="#{item.trabajadorIdSindicato.sindicatoNombre}"/>
                             </p:column>
-                            
+
                             <p:column exportable="false">
                                 <p:commandButton icon="pi pi-search" update="TrabajadorViewForm, datalist" oncomplete="PF('TrabajadorViewDialog').show()" 
                                                  styleClass="edit-button rounded-button ui-button-info" process="@this">

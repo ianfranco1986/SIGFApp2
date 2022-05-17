@@ -4,7 +4,6 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
@@ -17,29 +16,24 @@ import com.areatecnica.sigf.entities.RecaudacionGuia;
 import com.areatecnica.sigf.entities.Trabajador;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
+import com.areatecnica.sigf.util.LocalDateConverter;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
 @Named(value = "ventaBoletoController")
 @ViewScoped
 public class VentaBoletoController extends AbstractController<VentaBoleto> {
 
-    @Inject
-    private EgresoController recaudacionGuiaIdEgresoController;
-    @Inject
-    private GuiaController recaudacionGuiaIdGuiaController;
-    @Inject
-    private RecaudacionController recaudacionGuiaIdRecaudacionController;
-
-    private Date fecha;
     private CajaRecaudacion cajaRecaudacion;
     private List<CajaRecaudacion> cajaRecaudacionItems;
     private int totalRecaudacion = 0;
@@ -60,6 +54,10 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
     private int totalImposiciones = 0;
     private int serie = 0;
 
+    private LocalDate date;
+    private LocalDateConverter dc;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
+
     public VentaBoletoController() {
         // Inform the Abstract parent controller of the concrete RecaudacionGuia Entity
         super(VentaBoleto.class);
@@ -67,8 +65,9 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
 
     @PostConstruct
     public void init() {
-        this.fecha = new Date();
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAll();
+        this.date = LocalDate.now();
+        this.dc = new LocalDateConverter(date);
+        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
         this.items = new ArrayList<>();
         this.boleto = new IEgresoDaoImpl().getBoleto();
     }
@@ -102,7 +101,8 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
             this.busItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
             this.trabajadorItems = new TrabajadorDaoImpl().findNandu();
 
-            this.items = new IVentaBoletoDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
+            
+            this.items = new IVentaBoletoDaoImpl().findByCajaDate(cajaRecaudacion, this.dc.getDate());
             if (!this.items.isEmpty()) {
                 this.totalRecaudacion = 0;
 
@@ -114,8 +114,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
 
                 this.totalRecaudacion = this.items.size();
 
-                this.guiaItems = new IGuiaDaoImpl().findBetweenFechaRecaudacion(new DateTime(this.fecha).minusDays(2).toDate(), this.fecha);
-                
+//                this.guiaItems = new IGuiaDaoImpl().findBetweenFechaRecaudacion(new DateTime(this.fecha).minusDays(2).toDate(), this.fecha);
             } else {
                 JsfUtil.addErrorMessage("No se han encontrado ventas ");
                 this.totalAdministracion = 0;
@@ -194,7 +193,8 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
         return totalAdministracion;
     }
 
-    public void delete() {
+    @Override
+    public void delete(ActionEvent e) {
         if (this.selectedItem != null) {
 
             int recaudacion_id = this.selectedItem.getVentaBoletoFolioRecaudacion();
@@ -205,17 +205,18 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
             if (valorBoleto > 0) {
                 r.setRecaudacionGuiaMonto(valorBoleto - 5000);
 
-                new IRecaudacionGuiaDaoImpl().update(r);
+                RecaudacionGuia rg = new IRecaudacionGuiaDaoImpl().update(r);
                 new IVentaBoletoDaoImpl().delete(selectedItem);
 
                 this.selectedItem = null;
-                JsfUtil.addSuccessMessage("Se ha cancelado la venta de boleto");
+                JsfUtil.addSuccessMessage("Se ha cancelado la venta de boleto #"+rg.getRecaudacionGuiaIdRecaudacion().getRecaudacionId());
+                load();
             } else {
                 JsfUtil.addErrorMessage("Ha ocurrido un error al actualizar la recaudación y la venta de boleto. Favor contactar al administrador");
             }
 
         } else {
-            JsfUtil.addErrorMessage("Debe seleccionar la recaudación");
+            JsfUtil.addErrorMessage("Debe seleccionar el boleto");
             this.selectedItem = null;
         }
     }
@@ -232,23 +233,6 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
             JsfUtil.addErrorMessage("Ha ocurrido un error al registrar los cambios");
         }
 
-    }
-
-    /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
-        recaudacionGuiaIdEgresoController.setSelected(null);
-        recaudacionGuiaIdGuiaController.setSelected(null);
-        recaudacionGuiaIdRecaudacionController.setSelected(null);
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public Date getFecha() {
-        return fecha;
     }
 
     public CajaRecaudacion getCajaRecaudacion() {
@@ -271,16 +255,21 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
         return nf.format(val);
     }
 
-    public void loadGuia() {
-
+    public void setDate(LocalDate date) {
+        this.date = date;
+        this.dc = new LocalDateConverter(date);
     }
 
-    public void findFolio() {
-
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void handleBusChange() {
+    public LocalDateConverter getDc() {
+        return dc;
+    }
 
+    public List<VentaBoleto> getItems() {
+        return items;
     }
 
 }

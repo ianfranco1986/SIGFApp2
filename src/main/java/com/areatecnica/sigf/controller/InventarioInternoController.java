@@ -7,6 +7,7 @@ import com.areatecnica.sigf.entities.InventarioInterno;
 import com.areatecnica.sigf.entities.InventarioCaja;
 import java.util.List;
 import com.areatecnica.sigf.facade.InventarioInternoFacade;
+import java.util.ArrayList;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -23,6 +24,7 @@ public class InventarioInternoController extends AbstractController<InventarioIn
     private List<Boleto> itemsBoletos;
 
     private List<InventarioInterno> items2;
+    private List<InventarioInterno> selectedItems;
 
     // Flags to indicate if child collections are empty
     private boolean isInventarioCajaListEmpty;
@@ -50,63 +52,32 @@ public class InventarioInternoController extends AbstractController<InventarioIn
         return itemsBoletos;
     }
 
-    /**
-     * Resets the "selected" attribute of any parent Entity controllers.
-     */
-    public void resetParents() {
-        inventarioInternoIdBoletoController.setSelected(null);
+    public List<InventarioInterno> getSelectedItems() {
+        return selectedItems;
     }
 
-    /**
-     * Set the "is[ChildCollection]Empty" property for OneToMany fields.
-     */
-    @Override
-    protected void setChildrenEmptyFlags() {
-        this.setIsInventarioCajaListEmpty();
+    public void setSelectedItems(List<InventarioInterno> selectedItems) {
+        this.selectedItems = selectedItems;
     }
 
-    /**
-     * Sets the "selected" attribute of the Boleto controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareInventarioInternoIdBoleto(ActionEvent event) {
-        InventarioInterno selected = this.getSelected();
-        if (selected != null && inventarioInternoIdBoletoController.getSelected() == null) {
-            inventarioInternoIdBoletoController.setSelected(selected.getInventarioInternoIdBoleto());
+    public String getDeleteButtonMessage() {
+        if (hasSelectedGuias()) {
+            int size = this.selectedItems.size();
+            return size > 1 ? size + " recaudaciones seleccionadas" : "1 recaudación seleccionada";
         }
+
+        return "Eliminar";
     }
 
-    public boolean getIsInventarioCajaListEmpty() {
-        return this.isInventarioCajaListEmpty;
+    public boolean hasSelectedGuias() {
+        return this.selectedItems != null && !this.selectedItems.isEmpty();
     }
 
-    private void setIsInventarioCajaListEmpty() {
-        InventarioInterno selected = this.getSelected();
-        if (selected != null) {
-            InventarioInternoFacade ejbFacade = (InventarioInternoFacade) this.getFacade();
-            this.isInventarioCajaListEmpty = ejbFacade.isInventarioCajaListEmpty(selected);
-        } else {
-            this.isInventarioCajaListEmpty = true;
+    public void deleteSelectedGuias() {
+        if (hasSelectedGuias()) {
+
+            this.selectedItems = new ArrayList<>();
         }
-    }
-
-    /**
-     * Sets the "items" attribute with a collection of InventarioCaja entities
-     * that are retrieved from InventarioInterno and returns the navigation
-     * outcome.
-     *
-     * @return navigation outcome for InventarioCaja page
-     */
-    public String navigateInventarioCajaList() {
-        InventarioInterno selected = this.getSelected();
-        if (selected != null) {
-            InventarioInternoFacade ejbFacade = (InventarioInternoFacade) this.getFacade();
-            List<InventarioCaja> selectedInventarioCajaList = ejbFacade.findInventarioCajaList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("InventarioCaja_items", selectedInventarioCajaList);
-        }
-        return "/app/inventarioCaja/index";
     }
 
 }

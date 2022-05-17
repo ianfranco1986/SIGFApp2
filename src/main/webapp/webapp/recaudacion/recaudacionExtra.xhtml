@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Recaudación de Ingresos Extras</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="RecaudacionExtraListForm" class="form-height">
+            <p:card id="dashboard">
+                <div  class="dashboard p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-calendar"/>
+                                <span>Fecha</span>
+                            </div>
+                            <div class="overview-box-count">#{recaudacionExtraController.fechaCompleta}</div>
+                            <div class="overview-box-stats">Usuario</div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-dollar"/>
+                                <span>Total Recaudado</span>
+                            </div>
+                            <div class="overview-box-count">#{recaudacionExtraController.getFormatValue(recaudacionExtraController.totalRecaudacion)}</div>
+                            <div class="overview-box-stats">#{recaudacionExtraController.items.size()>0?recaudacionExtraController.items.size():0} Vouchers)</div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card ui-fluid">
+                    <div class="p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="fecha">Fecha</p:outputLabel>
+                            <p:datePicker id="fecha" value="#{recaudacionExtraController.fecha}" locale="es">
+                                <p:ajax event="dateSelect" listener="#{recaudacionExtraController.load}"
+                                        update="@(.clase), RecaudacionExtraListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            </p:datePicker>
+
+                        </div>
+                        <div class="p-field p-col">
+                            <p:outputLabel for="cajaRecaudacionIdCaja">Caja</p:outputLabel>
+                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionExtraController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{recaudacionExtraController.cajaRecaudacionItems}"
+                                               var="cajaId"
+                                               itemValue="#{cajaId}"
+                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                               />
+                                <p:ajax event="valueChange"  listener="#{recaudacionExtraController.load}" update="@(.clase), RecaudacionExtraListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+
+                            </p:selectOneMenu>
+                        </div>
+
+
+                    </div>
+                </div>
+            </p:card>
+
+            <p:separator/>
+
+            <div class="card">
+                <p:toolbar styleClass="p-mb-4">
+                    <p:toolbarGroup>
+                        <p:commandButton id="delete-products-button" value="#{recaudacionExtraController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{recaudacionExtraController.deleteSelectedGuias}"
+                                         styleClass="ui-button-danger" disabled="#{!recaudacionExtraController.hasSelectedGuias()}" update=":RecaudacionExtraListForm:datalist,:growl, dashboard,delete-products-button">
+                            <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                            <p:dataExporter type="xlsxstream" target="datalist" fileName="recaudacion-extra"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <div class="p-grid crud-demo">
+
+
+                    <p:dataTable id="datalist"
+                                 value="#{recaudacionExtraController.items}"                     
+                                 selection="#{recaudacionExtraController.selectedItems}"
+                                 rowSelectMode="add" 
+                                 reflow="true"
+                                 widgetVar="datalistWidget"
+                                 var="item"
+                                 rowKey="#{item.recaudacionExtraId}"
+                                 
+                                 rowIndexVar="rowIndex"
+                                 emptyMessage="No se han encontrado registros"
+                                 style="padding-top: 10px;"
+                                 rowStyleClass="#{item.recaudacionExtraMonto eq 0 ? 'old' : null}" editable="true" >
+
+                         <p:ajax event="rowSelect" update=":RecaudacionExtraListForm:delete-products-button" />
+                        <p:ajax event="rowUnselect" update=":RecaudacionExtraListForm:delete-products-button" />
+                        <p:ajax event="rowSelectCheckbox" update=":RecaudacionExtraListForm:delete-products-button"/>
+                        <p:ajax event="rowUnselectCheckbox" update=":RecaudacionExtraListForm:delete-products-button" />
+                        <p:ajax event="toggleSelect" update=":RecaudacionExtraListForm:delete-products-button" />
+
+
+                        <f:facet name="header">
+                            <div class="products-table-header">
+                                <span style="font-weight: bold"><h3>Recaudación de Ingresos Extras</h3></span>
+
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column selectionMode="multiple" exportable="false" ></p:column>
+
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputLabel value="#{rowIndex+1}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionExtraIdTipo.tipoRecaudacionExtraNombre}" style="text-align: center; ">
+                            <f:facet name="header">
+                                <h:outputText value="Tipo"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.recaudacionExtraIdTipo.tipoRecaudacionExtraNombre}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="tipo" value="#{item.recaudacionExtraIdTipo}" style="width: 70%;" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                                                        <f:selectItems value="#{recaudacionExtraController.tipoRecaudacionExtraItems}" var="tipo"
+                                                                                       itemValue="#{tipo}"
+                                                                                       itemLabel="#{tipo.tipoRecaudacionExtraNombre}"
+                                                                                       />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionExtraDescripcion}" filterBy="#{item.recaudacionExtraDescripcion}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="Descripción"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.recaudacionExtraDescripcion}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="adin" value="#{item.recaudacionExtraDescripcion}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionExtraUsuario}" filterBy="#{item.recaudacionExtraUsuario}" style="text-align: center; ">
+                            <f:facet name="header">
+                                <h:outputText value="Detalle"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.recaudacionExtraUsuario}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="adin2" value="#{item.recaudacionExtraUsuario}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionExtraMonto}" footerText="#{recaudacionExtraController.getFormatValue(recaudacionExtraController.totalRecaudacion)}" filterBy="#{item.recaudacionExtraMonto}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="Monto"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.recaudacionExtraMonto}">
+                                        <f:convertNumber />
+                                    </h:outputText></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="adin3" value="#{item.recaudacionExtraMonto}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+                        
+                        <p:column exportable="false">
+                            <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                <f:setPropertyActionListener value="#{item}" target="#{recaudacionExtraController.selected}" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Cancelar? " header="Confirmación" severity="warn">
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{recaudacionExtraController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":RecaudacionExtraListForm:datalist,:growl, dashboard"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                    </p:confirmDialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" width="300">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </div>
+
+            </div>
+
+
+
+            <p:card>
+                <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
+                <p:overlayPanel for="basic" style="width:350px">
+                    <p>OBSERVACIÓN: </p>
+                </p:overlayPanel>
+            </p:card>
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -9,6 +9,7 @@ import com.areatecnica.sigf.entities.InventarioCaja;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import java.util.List;
 import com.areatecnica.sigf.facade.InventarioCajaFacade;
+import java.util.ArrayList;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -27,6 +28,7 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
     private List<Boleto> itemsBoletos;
     private List<CajaRecaudacion> itemsCajaRecaudacion;
     private List<InventarioCaja> items2;
+    private List<InventarioCaja> selectedItems;
 
     // Flags to indicate if child collections are empty
     private boolean isVentaBoletoListEmpty;
@@ -35,7 +37,7 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
         // Inform the Abstract parent controller of the concrete InventarioCaja Entity
         super(InventarioCaja.class);
         this.itemsBoletos = new IBoletoDaoImpl().findByCuenta(this.getUserCount());
-        this.itemsCajaRecaudacion = new ICajaRecaudacionDaoImpl().findAll();
+        this.itemsCajaRecaudacion = new ICajaRecaudacionDaoImpl().findAllActive();
 
         this.items2 = new IInventarioCajaDaoImpl().findByEstado(false, this.getUserCount());
     }
@@ -102,4 +104,33 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
         this.itemsCajaRecaudacion = itemsCajaRecaudacion;
     }
 
+    public void setSelectedItems(List<InventarioCaja> selectedItems) {
+        this.selectedItems = selectedItems;
+    }
+
+    public List<InventarioCaja> getSelectedItems() {
+        return selectedItems;
+    }
+
+    
+    public String getDeleteButtonMessage() {
+        if (hasSelectedGuias()) {
+            int size = this.selectedItems.size();
+            return size > 1 ? size + " recaudaciones seleccionadas" : "1 recaudación seleccionada";
+        }
+
+        return "Eliminar";
+    }
+
+    public boolean hasSelectedGuias() {
+        return this.selectedItems != null && !this.selectedItems.isEmpty();
+    }
+
+    public void deleteSelectedGuias() {
+        if (hasSelectedGuias()) {
+
+            this.selectedItems = new ArrayList<>();
+        }
+    }
+    
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui" 
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Reporte Completo x Caja</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="RegistroMinutoListForm">
+
+            <p:panel>
+                <p:spacer/>
+                <h3 style="text-align: center;">Reporte General x Caja</h3>
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="mes">Fecha</label>
+                        <p:datePicker id="fecha" value="#{reportControllerRecaudacionAIO.fecha}" locale="es">
+                        </p:datePicker>
+                    </div>
+                    <div class="p-field">
+                        <label for="mes">Caja</label>
+                        <p:selectOneMenu id="inventarioCajaIdCaja" value="#{reportControllerRecaudacionAIO.selected}" required="true" requiredMessage="Debe seleccionar la Caja Recaudación" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{reportControllerRecaudacionAIO.items}"
+                                           var="caja"
+                                           itemValue="#{caja}"
+                                           itemLabel="#{caja.cajaRecaudacionNombre}"
+                                           />
+                            <p:ajax event="valueChange" update="btn1, btn2, btn3, btn4, btn5, btn6, btn7"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="button"></label>
+                        <h:commandLink id="btn1" disabled="#{empty reportControllerRecaudacionAIO.selected}" value="Generar Reporte" 
+                                       actionListener="#{reportController.downloadFile(reportControllerRecaudacionAIO.informe, reportControllerRecaudacionAIO.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+                        <p:spacer/>
+                        <h:commandLink id="btn2" disabled="#{empty reportControllerRecaudacionAIO.selected}" value="Generar Arqueo" 
+                                       actionListener="#{reportController.downloadFile(reportControllerRecaudacionAIO.informeArqueo, reportControllerRecaudacionAIO.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+                        <p:spacer/>
+                        <h:commandLink id="btn3" disabled="#{empty reportControllerRecaudacionAIO.selected}" value="Generar Reporte de R. Guías" 
+                                       actionListener="#{reportController.downloadFile(reportControllerRecaudacionAIO.informeGuias, reportControllerRecaudacionAIO.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+
+                        <p:spacer/>
+                        <h:commandLink id="btn4" disabled="#{empty reportControllerRecaudacionAIO.selected}" value="Generar Reporte de R. Combustible" 
+                                       actionListener="#{reportController.downloadFile(reportControllerRecaudacionAIO.informePetroleo, reportControllerRecaudacionAIO.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+
+                        <p:spacer/>
+                        <h:commandLink id="btn5" disabled="#{empty reportControllerRecaudacionAIO.selected}" value="Generar Reporte de R. Minutos" 
+                                       actionListener="#{reportController.downloadFile(reportControllerRecaudacionAIO.informeMinutos, reportControllerRecaudacionAIO.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+
+                        <p:spacer/>
+                        <h:commandLink id="btn6" disabled="#{empty reportControllerRecaudacionAIO.selected}" value="Generar Reporte de R. Boletos" 
+                                       actionListener="#{reportController.downloadFile(reportControllerRecaudacionAIO.informeBoletos, reportControllerRecaudacionAIO.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+
+
+                        <p:spacer/>
+                        <h:commandLink id="btn7" disabled="#{empty reportControllerRecaudacionAIO.selected}" value="Generar Reporte de R.I.Extras " 
+                                       actionListener="#{reportController.downloadFile(reportControllerRecaudacionAIO.informeExtras, reportControllerRecaudacionAIO.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+
+                    </div>
+
+                    <div class="column-center">
+                        <p:media cache="false" rendered="#{reportControllerRecaudacionAIO.selected ne null}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
+                    </div>
+                </div>
+            </p:panel>
+
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>

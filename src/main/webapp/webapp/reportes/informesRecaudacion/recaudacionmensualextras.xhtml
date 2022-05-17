@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Recaudacion Mensual Aportes Varios</ui:define>
+
+    <ui:define name="content">
+        <h:form id="RegistroMinutoListForm">
+
+            <p:panel>
+                <p:spacer/>
+                <h3 style="text-align: center;">Detalle x Caja - Ingresos Extras</h3>
+                <div class="ui-fluid">
+                     <div class="p-field">
+                        <label for="mes">Mes/Año</label>
+                        <p:datePicker id="month" view="month" value="#{reportControllerIngresosExtrasMensual.date}"
+                                      pattern="MM/yyyy"
+                                      yearNavigator="true" yearRange="2022:2030" locale="es"/>
+                    </div>
+                </div>
+                   
+
+                    <p:outputLabel value=""/>
+                    <h:commandLink value="Generar Reporte" 
+                                   actionListener="#{reportController.downloadFile(reportControllerIngresosExtrasMensual.informe, reportControllerIngresosExtrasMensual.map)}" target="blank"  style="padding: .5em 1em;" styleClass="ui-button"/>
+
+                <div class="column-center">
+                    <p:media cache="false" rendered="#{reportControllerIngresosExtrasMensual.selected ne null}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
+                </div>
+            </p:panel>
+
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>

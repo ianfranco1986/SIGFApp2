@@ -12,6 +12,7 @@ import com.areatecnica.sigf.models.CartolaBancoDataModel;
 import com.areatecnica.sigf.models.DetalleCartolaDataModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +22,6 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-import org.joda.time.DateTime;
 
 @Named(value = "cartolaBancoController")
 @ViewScoped
@@ -37,9 +37,7 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
     private Empresa empresa;
     private DetalleCartola detalleCartola;
     private Date fecha;
-    private DateTime dateTime;
-    private int anio;
-    private int mes;
+    private LocalDate dateTime;
     private ICartolaBancoDao dao;
     private int saldo;
     private int saldoInicial;
@@ -63,8 +61,6 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
         super.initParams(); //To change body of generated methods, choose Tools | Templates.
         Calendar calendar = Calendar.getInstance();
 
-        this.anio = calendar.get(Calendar.YEAR);
-        this.mes = calendar.get(Calendar.MONTH) + 1;
         this.model = new CartolaBancoDataModel(new ArrayList<>());
         this.dao = new ICartolaBancoDaoImpl();
     }
@@ -73,9 +69,9 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
     public CartolaBanco prepareCreate(ActionEvent event) {
         if (cuentaBancaria != null) {
             super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
-            this.dateTime = new DateTime(fecha);
-            DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
-            CartolaBanco _aux = this.dao.fingByCuentaBancoFecha(cuentaBancaria, fecha, _maxDate.toDate());
+//            this.dateTime = new DateTime(fecha);
+//            DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
+            CartolaBanco _aux = null;//this.dao.fingByCuentaBancoFecha(cuentaBancaria, fecha, _maxDate.toDate());
 
             if (_aux != null) {
                 this.getSelected().setCartolaBancoSaldoInicial(_aux.getCartolaBancoSaldoFinal());
@@ -90,16 +86,6 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
             JsfUtil.addErrorMessage("Debe seleccionar la cuenta bancaria");
         }
         return this.getSelected();
-    }
-
-    public void setDate() {
-        String _auxFecha = "01/" + this.mes + "/" + this.anio;
-        try {
-            this.fecha = sdf.parse(_auxFecha);
-        } catch (ParseException exception) {
-            JsfUtil.addErrorMessage("Error al crear la fecha");
-        }
-        this.dao = new ICartolaBancoDaoImpl();
     }
 
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
@@ -136,19 +122,19 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
     }
 
     public void load() {
-        setDate();
-
-        this.dateTime = new DateTime(fecha);
-        DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
-
-        this.items = this.dao.findByCuentaBancariaBetweenDates(cuentaBancaria, fecha, _maxDate.toDate());
-
-        if (this.items.isEmpty()) {
-            JsfUtil.addErrorMessage("No se han encontrado cartolas");
-            this.model = new CartolaBancoDataModel(new ArrayList<>());
-        } else {
-            this.model = new CartolaBancoDataModel(this.items);
-        }
+//        setDate();
+//
+//        this.dateTime = new DateTime(fecha);
+//        DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
+//
+//        this.items = this.dao.findByCuentaBancariaBetweenDates(cuentaBancaria, fecha, _maxDate.toDate());
+//
+//        if (this.items.isEmpty()) {
+//            JsfUtil.addErrorMessage("No se han encontrado cartolas");
+//            this.model = new CartolaBancoDataModel(new ArrayList<>());
+//        } else {
+//            this.model = new CartolaBancoDataModel(this.items);
+//        }
     }
 
     public void loadDetalle() {
@@ -201,22 +187,6 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
 
     public List<DetalleCartola> getDetalleItems() {
         return detalleItems;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public int getAnio() {
-        return anio;
     }
 
     public void setEmpresa(Empresa empresa) {

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Edición de Boletos</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="GuiaListForm">
+            <p:card>
+                <h3 style="text-align: center;">Seleccione Bus/Tipo de Boleto</h3>
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="numeroBus">Nº Bus</label>
+                        <p:selectOneMenu id="numeroBus" value="#{edicionVentaBoletoController.bus}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{edicionVentaBoletoController.busItems}"
+                                           var="busItem"
+                                           itemValue="#{busItem}"
+                                           itemLabel="#{busItem.busNumero}"
+                                           />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="p-field">
+                        <label for="tipoBoleto">Boleto</label>
+                        <p:selectOneMenu id="tipoBoleto" value="#{edicionVentaBoletoController.selectedBoleto}" required="true" requiredMessage="Debe seleccionar un tipo de boleto" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{edicionVentaBoletoController.boletoItems}"
+                                           var="boletoItem"
+                                           itemValue="#{boletoItem}"
+                                           itemLabel="#{boletoItem.boletoNombre}"
+                                           />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="p-field">
+                        <label for="tipoBoleto"></label>
+                        <p:commandButton id="value2" ajax="true" icon="pi pi-search" value="Buscar" update="@(.clase), GuiaListForm:detail, :growl" actionListener="#{edicionVentaBoletoController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        </p:commandButton>
+                    </div>
+                </div>
+            </p:card>
+            <p:separator/>
+            <p:card id="detail">
+                <h3 style="text-align: center;">Datos de la Venta</h3>
+                <div class="p-grid">
+                    <div class="p-col-3">
+                        <div class="box p-shadow-2"><h6>Nº Venta</h6>
+                            <label>#{edicionVentaBoletoController.ventaBoleto.ventaBoletoId}</label>
+                        </div>
+                    </div>
+                    <div class="p-col-3">
+                        <div class="box p-shadow-2"><h6>Fecha</h6>
+                            <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoFecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="p-col-3">
+                        <div class="box p-shadow-2"><h6>Recaudación</h6>
+                            <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoFolioRecaudacion}" />
+                        </div>
+                    </div>
+                    <div class="p-col-3">
+                        <div class="box p-shadow-2"><h6>G.Sol y Mar</h6>
+                            <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoFolioSolyMar}" />
+                        </div>
+                    </div>
+                    <div class="p-col-6">
+                        <div class="box p-shadow-2"><h6>Boleto</h6>
+                            <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" />
+                        </div>
+                    </div>
+                    <div class="p-col-6">
+                        <div class="box p-shadow-2"><h6>Serie</h6>
+                            <h:outputText value="#{edicionVentaBoletoController.ventaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoSerie}" />
+                        </div>
+                    </div>
+                </div>
+            </p:card>
+
+
+
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+        <p:separator/>
+        <h:form id="form2">
+
+            <p:card id="boletoserie">
+                <h3 style="text-align: center;">Selección nuevo Boleto/Serie</h3>
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="numeroBus">Caja</label>
+                        <p:selectOneMenu id="cajaRecaudacion" value="#{edicionVentaBoletoController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar una caja para obtener su inventario" converter="omnifaces.SelectItemsConverter" style="font-size: 15px;">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{edicionVentaBoletoController.cajaRecaudacionItems}"
+                                           var="cajaItem"
+                                           itemValue="#{cajaItem}"
+                                           itemLabel="#{cajaItem.cajaRecaudacionNombre}"
+                                           />
+                            <p:ajax event="valueChange" listener="#{edicionVentaBoletoController.findInventario()}" update=":growl, serieNueva"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="numeroBus">Boleto</label>
+                        <p:selectOneMenu id="tipoBoletoNuevo" value="#{edicionVentaBoletoController.newBoleto}" required="true" requiredMessage="Debe seleccionar un tipo de boleto" converter="omnifaces.SelectItemsConverter" style="font-size: 15px;">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{edicionVentaBoletoController.boletoItems}"
+                                           var="boletoItem"
+                                           itemValue="#{boletoItem}"
+                                           itemLabel="#{boletoItem.boletoNombre}"
+                                           />
+                            <p:ajax event="valueChange" listener="#{edicionVentaBoletoController.findInventario()}" update="serieNueva, :growl"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="numeroBus">Serie</label>
+                        <p:selectOneMenu id="serieNueva" value="#{edicionVentaBoletoController.inventario}" required="true" requiredMessage="Debe seleccionar una serie disponible" converter="omnifaces.SelectItemsConverter" style="font-size: 15px;" >
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{edicionVentaBoletoController.inventarioCajaItems}"
+                                           var="inventarioItem"
+                                           itemValue="#{inventarioItem}"
+                                           itemLabel="#{inventarioItem.inventarioCajaSerie}"
+                                           />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field p-col">
+                        <h:outputText value="" />
+                        <p:commandButton id="value3" ajax="true" icon="pi pi-save" value="Cambiar Boleto" update="@(.clase), GuiaListForm:detail, growl, boletoserie" styleClass="btn btn-primary" actionListener="#{edicionVentaBoletoController.save}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" resetValues="true">
+                            <p:confirm header="Confirmación" message="¿Actualizar venta de boleto?" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </div>
+                </div>
+
+            </p:card>
+
+            <p:separator/>
+            <p:card>
+                <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
+                <p:overlayPanel for="basic">
+                    <p>OBSERVACIÓN: Permite corregir una venta de boletos. Debe seleccionar el bus involucrado en la venta y el tipo de boleto que desea modificar para buscar la ÚLTIMA VENTA REALIZADA</p>
+                </p:overlayPanel>
+            </p:card>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

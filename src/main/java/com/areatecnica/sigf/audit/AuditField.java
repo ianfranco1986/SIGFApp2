@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "audit_field", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "audit_field")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AuditField.findAll", query = "SELECT a FROM AuditField a")
@@ -54,6 +54,7 @@ public class AuditField implements Serializable {
     private AuditEntry auditEntryId;
 
     public AuditField() {
+        this.fieldOldValue = "";
     }
 
     public AuditField(Integer id) {

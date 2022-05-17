@@ -48,7 +48,7 @@ public class JasperReportUtil {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "nandu", ".TrustNo1.");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "root", ".TrustNo1.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class JasperReportUtil {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "nandu", ".TrustNo1.");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "root", ".TrustNo1.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

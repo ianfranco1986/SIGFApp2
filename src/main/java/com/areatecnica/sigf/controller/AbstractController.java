@@ -18,8 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.apache.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.primefaces.model.Visibility;
 
 /**

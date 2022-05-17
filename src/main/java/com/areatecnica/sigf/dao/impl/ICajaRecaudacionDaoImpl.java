@@ -29,6 +29,15 @@ public class ICajaRecaudacionDaoImpl extends GenericDAOImpl<CajaRecaudacion> imp
             return null;
         }
     }
+    
+    @Override
+    public List<CajaRecaudacion> findAllActive() {
+        try {
+            return this.entityManager.createNamedQuery("CajaRecaudacion.findAllActive").getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 
     @Override
     public CajaRecaudacion create(CajaRecaudacion t) {

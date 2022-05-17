@@ -11,7 +11,6 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-import org.joda.time.DateTime;
 
 @Named(value = "trabajadorController")
 @ViewScoped
@@ -75,8 +74,10 @@ public class TrabajadorController extends AbstractController<Trabajador> {
         this.setLimitedByCuenta(Boolean.TRUE);
         this.setNamedQuery("Trabajador.findAllByCuenta");
         Calendar calendar = Calendar.getInstance();
-        DateTime dateTime = new DateTime(calendar.get(Calendar.YEAR) - 20, 1, 1, 0, 0);
-        this.minFechaNacimiento = dateTime.toDate();
+//        DateTime dateTime = new DateTime(calendar.get(Calendar.YEAR) - 20, 1, 1, 0, 0);
+//        this.minFechaNacimiento = dateTime.toDate();
+
+        this.setItems(new TrabajadorDaoImpl().findAll());
     }
 
     @Override

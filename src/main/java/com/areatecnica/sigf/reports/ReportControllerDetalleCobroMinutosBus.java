@@ -69,14 +69,7 @@ public class ReportControllerDetalleCobroMinutosBus implements Serializable {
         this.unidadItems.remove(0);
         this.unidadNegocio = this.unidadItems.get(0);
 
-        this.empresaItems = new ArrayList<>();
-
-        for (Empresa ee : new IEmpresaDaoImpl().findAll()) {
-            //corregir
-//            if (!ee.getBusList().isEmpty()) {
-//                this.empresaItems.add(ee);
-//            }
-        }
+       this.empresaItems = new IEmpresaDaoImpl().findAll();
 
         empresaItems.sort(Comparator.comparing(Empresa::getEmpresaNombre));
 

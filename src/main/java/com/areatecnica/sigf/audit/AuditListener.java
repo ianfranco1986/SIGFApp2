@@ -4,7 +4,6 @@
  */
 package com.areatecnica.sigf.audit;
 
-
 import com.areatecnica.sigf.entities.Usuario;
 import java.util.Collection;
 import java.util.Date;
@@ -47,19 +46,19 @@ public class AuditListener extends DescriptorEventAdapter implements SessionCust
     @Override
     public void aboutToInsert(DescriptorEvent event) {
         staff = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
-        processEvent(event, AuditOperation.INSERT);
+        processEvent(event, AuditOperation.INGRESO);
     }
 
     @Override
     public void aboutToUpdate(DescriptorEvent event) {
         staff = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
-        processEvent(event, AuditOperation.UPDATE);
+        processEvent(event, AuditOperation.EDICION);
     }
 
     @Override
     public void aboutToDelete(DescriptorEvent event) {
         staff = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
-        processEvent(event, AuditOperation.DELETE);
+        processEvent(event, AuditOperation.ELIMINACION);
     }
 
     public void processEvent(DescriptorEvent event, AuditOperation operation) {
@@ -67,7 +66,7 @@ public class AuditListener extends DescriptorEventAdapter implements SessionCust
 
         for (String table : (List<String>) event.getDescriptor().getTableNames()) {
 
-            if (operation == AuditOperation.UPDATE) {
+            if (operation == AuditOperation.EDICION) {
                 processWriteEvent(event, operation, date, table);
             } else {
                 processAuditEvent(event, operation, date, table);
@@ -91,16 +90,18 @@ public class AuditListener extends DescriptorEventAdapter implements SessionCust
         Collection<AuditField> fields = new LinkedList<AuditField>();
         WriteObjectQuery query = (WriteObjectQuery) event.getQuery();
         List<ChangeRecord> changes = query.getObjectChangeSet().getChanges();
-
         for (ChangeRecord change : changes) {
             if (change instanceof DirectToFieldChangeRecord) {
                 DirectToFieldChangeRecord fieldChange = (DirectToFieldChangeRecord) change;
                 AuditField field = new AuditField();
                 field.setAuditEntryId(entry);
-                field.setFieldName(fieldChange.getAttribute());
-                field.setFieldOldValue(fieldChange.getOldValue().toString());
-                field.setFieldValue(fieldChange.getNewValue().toString());
-                fields.add(field);
+                if (!fieldChange.getAttribute().equals("ultimaModificacion")) {
+                    field.setFieldName(fieldChange.getAttribute());
+                    field.setFieldOldValue(fieldChange.getOldValue().toString());
+                    field.setFieldValue(fieldChange.getNewValue().toString());
+                    fields.add(field);
+                }
+
             }
         }
 

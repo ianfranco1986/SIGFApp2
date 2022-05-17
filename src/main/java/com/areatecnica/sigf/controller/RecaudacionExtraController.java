@@ -7,13 +7,19 @@ import com.areatecnica.sigf.dao.impl.ITipoRecaudacionExtraDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Recaudacion;
 import com.areatecnica.sigf.entities.RecaudacionExtra;
+import com.areatecnica.sigf.entities.RecaudacionMinuto;
 import com.areatecnica.sigf.entities.TipoRecaudacionExtra;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.models.RecaudacionExtraDataModel;
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -32,9 +38,12 @@ public class RecaudacionExtraController implements Serializable {
     private Recaudacion recaudacion;
     private List<CajaRecaudacion> cajaRecaudacionItems;
     private List<RecaudacionExtra> items;
-    private List<TipoRecaudacionExtra> tipoRecaudacionExtraItems; 
+    private List<RecaudacionExtra> selectedItems;
+    private List<TipoRecaudacionExtra> tipoRecaudacionExtraItems;
 
     private int totalRecaudacion;
+    LocalDate f;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
 
     private NumberFormat nf = NumberFormat.getInstance();
 
@@ -45,7 +54,7 @@ public class RecaudacionExtraController implements Serializable {
     @PostConstruct
     public void init() {
         this.fecha = new Date();
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAll();
+        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
         this.tipoRecaudacionExtraItems = new ITipoRecaudacionExtraDaoImpl().findAll();
     }
 
@@ -143,6 +152,14 @@ public class RecaudacionExtraController implements Serializable {
         return tipoRecaudacionExtraItems;
     }
 
+    public void setSelectedItems(List<RecaudacionExtra> selectedItems) {
+        this.selectedItems = selectedItems;
+    }
+
+    public List<RecaudacionExtra> getSelectedItems() {
+        return selectedItems;
+    }
+
     public void delete() {
         if (this.selected != null) {
             new IRecaudacionExtraDaoImpl().delete(this.selected);
@@ -150,6 +167,8 @@ public class RecaudacionExtraController implements Serializable {
             this.items.remove(this.selected);
 
             JsfUtil.addSuccessMessage("Se ha anulado la recaudación");
+            load();
+            this.selected = null; 
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar la recaudación");
         }
@@ -170,6 +189,60 @@ public class RecaudacionExtraController implements Serializable {
             System.err.println("ERROR:" + e.toString());
         }
 
+    }
+
+    public String getFechaCompleta() {
+        LocalDate date = LocalDate.from(this.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        return date.format(formatter);
+    }
+
+    public void deleteSelectedGuias() {
+        if (hasSelectedGuias()) {
+            for (RecaudacionExtra r : this.selectedItems) {
+
+                try {
+
+                    Recaudacion rr = r.getRecaudacionExtraIdRecaudacion();
+
+                    String folios = "";
+
+                    for (RecaudacionExtra m : rr.getRecaudacionExtraList()) {
+
+                        new IRecaudacionExtraDaoImpl().delete(m);
+
+                        this.items.remove(m);
+
+//                        folios = folios + ", " + m.getRecaudacionMinutoIdRegistroMinuto().getRegistroMinutoId();
+//                        m.getRecaudacionMinutoIdRegistroMinuto().setRegistroMinutoRecaudado(Boolean.FALSE);
+//                        new IRegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
+//                        this.items.remove(m);
+//                        new IRecaudacionMinutoDaoImpl().delete(m);
+                        JsfUtil.addSuccessMessage("Se ha eliminado la recaudación de I.Extras #" + rr.getRecaudacionId());
+                    }
+
+                } catch (NullPointerException e) {
+                    JsfUtil.addErrorMessage("Se ha producido un error: " + e.getLocalizedMessage());
+                    this.setSelected(null);
+                }
+
+            }
+            this.items.removeAll(this.selectedItems);
+            this.selectedItems = new ArrayList<>();
+            load();
+        }
+    }
+
+    public String getDeleteButtonMessage() {
+        if (hasSelectedGuias()) {
+            int size = this.selectedItems.size();
+            return size > 1 ? size + " recaudaciones seleccionadas" : "1 recaudación seleccionada";
+        }
+
+        return "Eliminar";
+    }
+
+    public boolean hasSelectedGuias() {
+        return this.selectedItems != null && !this.selectedItems.isEmpty();
     }
 
 }

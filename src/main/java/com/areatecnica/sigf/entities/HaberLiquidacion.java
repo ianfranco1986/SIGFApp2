@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "haber_liquidacion", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "haber_liquidacion")
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({

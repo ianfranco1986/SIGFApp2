@@ -13,8 +13,13 @@ import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.models.RecaudacionCombustibleDataModel;
 import com.areatecnica.sigf.models.VentaCombustibleModel;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -24,18 +29,24 @@ import javax.faces.event.ActionEvent;
 @ViewScoped
 public class RecaudacionCombustibleController extends AbstractController<RecaudacionCombustible> {
 
-    private List<CajaRecaudacion> cajasItems;
-    private List<RecaudacionCombustible> items;
+    private List<CajaRecaudacion> cajasRecaudacionItems;
+    private List<RecaudacionCombustible> itemsRecaudacion;
+    private List<RecaudacionCombustible> selectedItems;
     private RecaudacionCombustibleDataModel recaudacionCombustibleDataModel;
+    private RecaudacionCombustible selectedItem;
     private VentaCombustibleModel deudasModel;
     private VentaCombustible ventaCombustible;
     private CajaRecaudacion cajaRecaudacion;
     private Date fecha;
     private int totalRecaudacion = 0;
+    private int guiasAnuladas = 0;
+
     private boolean print;
     private Privilegio privilegio;
 
     private NumberFormat nf = NumberFormat.getInstance();
+    LocalDate f;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
 
     public RecaudacionCombustibleController() {
         // Inform the Abstract parent controller of the concrete RecaudacionCombustible Entity
@@ -46,18 +57,18 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
     @PostConstruct
     private void init() {
         this.fecha = new Date();
-        this.cajasItems = new ICajaRecaudacionDaoImpl().findAll();
+        this.cajasRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
         this.privilegio = new IPrivilegioDaoImpl().findById(89);
     }
 
     public void load() {
         if (this.cajaRecaudacion != null) {
-            this.items = new IRecaudacionCombustibleDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
+            this.itemsRecaudacion = new IRecaudacionCombustibleDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
 
-            if (!this.items.isEmpty()) {
-                this.recaudacionCombustibleDataModel = new RecaudacionCombustibleDataModel(items);
+            if (!this.itemsRecaudacion.isEmpty()) {
+                this.recaudacionCombustibleDataModel = new RecaudacionCombustibleDataModel(itemsRecaudacion);
                 this.totalRecaudacion = 0;
-                for (RecaudacionCombustible r : this.items) {
+                for (RecaudacionCombustible r : this.itemsRecaudacion) {
                     this.totalRecaudacion = this.totalRecaudacion + r.getRecaudacionCombustibleMonto();
                 }
             } else {
@@ -70,30 +81,76 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
     }
 
     public void delete(ActionEvent event) {
-        if (this.getSelected() != null) {
+        if (this.selectedItem != null) {
             try {
-                this.items.remove(this.getSelected());
-                this.ventaCombustible = this.getSelected().getRecaudacionCombustibleIdVentaCombustible();
+                this.ventaCombustible = this.selectedItem.getRecaudacionCombustibleIdVentaCombustible();
 
                 this.ventaCombustible.setVentaCombustibleRecaudado(Boolean.FALSE);
 
                 new IVentaCombustibleDaoImpl().update(ventaCombustible);
 
+                this.setSelected(selectedItem);
                 super.delete(event);
-
-                
                 this.setSelected(null);
                 JsfUtil.addSuccessMessage("Se ha eliminado la recaudación");
+                this.itemsRecaudacion.remove(this.selectedItem);
 
             } catch (NullPointerException e) {
+                JsfUtil.addErrorMessage("Se ha producido un error: " + e.getLocalizedMessage());
                 this.setSelected(null);
             }
-
+            load();
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar una recaudación");
             this.setSelected(null);
         }
 
+    }
+
+    public String getDeleteButtonMessage() {
+        if (hasSelectedGuias()) {
+            int size = this.selectedItems.size();
+            return size > 1 ? size + " recaudaciones seleccionadas" : "1 recaudación seleccionada";
+        }
+
+        return "Eliminar";
+    }
+
+    public boolean hasSelectedGuias() {
+        return this.selectedItems != null && !this.selectedItems.isEmpty();
+    }
+
+    public void deleteSelectedGuias() {
+        if (hasSelectedGuias()) {
+            for (RecaudacionCombustible r : this.selectedItems) {
+
+                try {
+                    
+                    r.getRecaudacionCombustibleIdVentaCombustible().setVentaCombustibleRecaudado(Boolean.FALSE);
+                    r.getRecaudacionCombustibleIdRecaudacion().setRecaudacionTotal(0);
+                    
+                    RecaudacionCombustible aux = new IRecaudacionCombustibleDaoImpl().update(r);
+                    
+                    
+                    JsfUtil.addSuccessMessage("Se ha eliminado la recaudación de combustible #"+aux.getRecaudacionCombustibleIdRecaudacion().getRecaudacionId());
+                    
+                    new IRecaudacionCombustibleDaoImpl().delete(aux);
+
+                } catch (NullPointerException e) {
+                    JsfUtil.addErrorMessage("Se ha producido un error: " + e.getLocalizedMessage());
+                    this.setSelected(null);
+                }
+
+            }
+            this.itemsRecaudacion.removeAll(this.selectedItems);
+            this.selectedItems = new ArrayList<>();
+            load();
+        }
+    }
+
+    public String getFechaCompleta() {
+        LocalDate date = LocalDate.from(this.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        return date.format(formatter);
     }
 
     /**
@@ -133,20 +190,20 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
         return nf.format(val);
     }
 
-    public List<CajaRecaudacion> getCajasItems() {
-        return cajasItems;
+    public List<CajaRecaudacion> getCajaRecaudacionItems() {
+        return cajasRecaudacionItems;
     }
 
-    public void setCajasItems(List<CajaRecaudacion> cajasItems) {
-        this.cajasItems = cajasItems;
+    public void setCajaRecaudacionItems(List<CajaRecaudacion> cajasItems) {
+        this.cajasRecaudacionItems = cajasItems;
     }
 
-    public List<RecaudacionCombustible> getItems() {
-        return items;
+    public List<RecaudacionCombustible> getItemsRecaudacion() {
+        return itemsRecaudacion;
     }
 
-    public void setItems(List<RecaudacionCombustible> items) {
-        this.items = items;
+    public void setItemsRecaudacion(List<RecaudacionCombustible> itemsRecaudacion) {
+        this.itemsRecaudacion = itemsRecaudacion;
     }
 
     public RecaudacionCombustibleDataModel getRecaudacionCombustibleDataModel() {
@@ -195,6 +252,30 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
 
     public boolean isPrint() {
         return print;
+    }
+
+    public int getGuiasAnuladas() {
+        return guiasAnuladas;
+    }
+
+    public void setGuiasAnuladas(int guiasAnuladas) {
+        this.guiasAnuladas = guiasAnuladas;
+    }
+
+    public RecaudacionCombustible getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(RecaudacionCombustible selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
+    public List<RecaudacionCombustible> getSelectedItems() {
+        return selectedItems;
+    }
+
+    public void setSelectedItems(List<RecaudacionCombustible> selectedItems) {
+        this.selectedItems = selectedItems;
     }
 
 }

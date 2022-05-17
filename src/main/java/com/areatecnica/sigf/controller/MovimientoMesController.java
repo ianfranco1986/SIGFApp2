@@ -21,7 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
-import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
 @Named(value = "movimientoMesController")
@@ -51,7 +50,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     private Date hasta;
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
-    private DateTime dateTime;
+//    private DateTime dateTime;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     private NumberFormat nf = NumberFormat.getInstance();
@@ -105,7 +104,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         if (this.fecha != null) {
             if (this.tipo == 1) {
                 this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findByEgreso();
-                this.items = new IMovimientoMesDaoImpl().findByEgresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+//                this.items = new IMovimientoMesDaoImpl().findByEgresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
                 this.model = new MovimientoMesDataModel(items);
                 if (this.items.isEmpty()) {
                     JsfUtil.addWarningMessage("No se han encontrado registros ");
@@ -116,7 +115,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
             } else {
                 this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findByIngreso();
 
-                this.items = new IMovimientoMesDaoImpl().findByIngresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+//                this.items = new IMovimientoMesDaoImpl().findByIngresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
                 this.model = new MovimientoMesDataModel(items);
                 if (this.items.isEmpty()) {
                     JsfUtil.addWarningMessage("No se han encontrado registros ");
@@ -387,14 +386,6 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         this.fecha = fecha;
     }
 
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
@@ -457,12 +448,12 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     }
 
     public void setFecha() {
-        try {
-            System.err.println("NUEVA FECHA:");
-            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-            this.dateTime = new DateTime(this.fecha);
-        } catch (ParseException ex) {
-        }
+//        try {
+//            System.err.println("NUEVA FECHA:");
+//            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+//            this.dateTime = new DateTime(this.fecha);
+//        } catch (ParseException ex) {
+//        }
     }
 
 }

@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ianfr
  */
 @Entity
-@Table(name = "servicio", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "servicio")
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)

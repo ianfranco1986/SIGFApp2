@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "valor_uf", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "valor_uf")
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({

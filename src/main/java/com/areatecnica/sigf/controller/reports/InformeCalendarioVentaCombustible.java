@@ -17,13 +17,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.json.JsonArray;
-import javax.json.JsonValue;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-import org.joda.time.DateTime;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
@@ -39,7 +34,7 @@ public class InformeCalendarioVentaCombustible implements Serializable {
     private int mes;
     private int anio;
     private Date fecha;
-    private DateTime dateTime;
+
 
     private ScheduleModel eventModel;
 
@@ -68,22 +63,22 @@ public class InformeCalendarioVentaCombustible implements Serializable {
     public void load() {
         setDate();
         if (this.fecha != null) {
-            this.dateTime = new DateTime(fecha);
-            DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
-
-            client = ClientBuilder.newClient();
-            target = client.target("http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/getResumenVentas/" + sdfM.format(fecha))
-                    .queryParam("fecha", sdfM.format(fecha));
-
-            Response response = target.request().get();
-
-            System.err.println("TEMAAA"+response);
-            
-            JsonArray array = response.readEntity(JsonArray.class);
-
-            for (JsonValue a : array) {
-                System.err.println("VALOR:" + a.toString());
-            }
+//            this.dateTime = new DateTime(fecha);
+//            DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
+//
+//            client = ClientBuilder.newClient();
+//            target = client.target("http://localhost:8080/SIGFRest-1.0/webresources/ventacombustible/getResumenVentas/" + sdfM.format(fecha))
+//                    .queryParam("fecha", sdfM.format(fecha));
+//
+//            Response response = target.request().get();
+//
+//            System.err.println("TEMAAA"+response);
+//            
+//            JsonArray array = response.readEntity(JsonArray.class);
+//
+//            for (JsonValue a : array) {
+//                System.err.println("VALOR:" + a.toString());
+//            }
 
             //this.items = new IVentaCombustibleDaoImpl().findBetweenDates(fecha, _maxDate.toDate());
             int i = 0;
@@ -147,14 +142,6 @@ public class InformeCalendarioVentaCombustible implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
     }
 
 }

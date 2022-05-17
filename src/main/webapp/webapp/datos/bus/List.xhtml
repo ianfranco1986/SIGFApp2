@@ -14,6 +14,7 @@
         <h:form id="BusListForm">
             <div class="p-grid crud-demo">
                 <div class="p-col-12">
+
                     <div class="card">
                         <p:growl id="messages" showDetail="true" />
 
@@ -24,8 +25,8 @@
 
                             </p:toolbarGroup>
                             <p:toolbarGroup align="right">
-                                <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
-                                    <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+                                <p:commandButton value="Exportar" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="xlsxstream" target="datalist" fileName="buses"/>
                                 </p:commandButton>
                             </p:toolbarGroup>
                         </p:toolbar>
@@ -40,7 +41,8 @@
                                      selection="#{busController.selected}"
                                      reflow="true"
                                      rowIndexVar="rowIndex"
-                                     widgetVar="datalistWidget">
+                                     widgetVar="datalistWidget"
+                                     allowUnsorting="true" sortMode="single" >
                             <!--
                                      To enable Lazy Loading, please copy/replace the following lines above,
                                      and be sure to replace the word HASH with the # symbol:
@@ -67,6 +69,7 @@
 
                             <p:column selectionMode="single" style="width:16px;text-align:center"/>
 
+
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="#"/>
@@ -75,150 +78,18 @@
                             </p:column>
 
 
-                            <p:column sortBy="#{item.busNumero}" filterBy="#{item.busNumero}">
-                                <f:facet name="header">
-                                    <h:outputText value="#{myBundle.ListBusTitle_busNumero}"/>
-                                </f:facet>
-                                <h:outputText value="#{item.busNumero}"/>
-                            </p:column>
-
-
-                            <p:column sortBy="#{item.busPatente}" filterBy="#{item.busPatente}">
-                                <f:facet name="header">
-                                    <h:outputText value="#{myBundle.ListBusTitle_busPatente}"/>
-                                </f:facet>
-                                <h:outputText value="#{item.busPatente}"/>
-                            </p:column>
-
-                            <p:column sortBy="#{item.busAnio}" filterBy="#{item.busAnio}">
-                                <f:facet name="header">
-                                    <h:outputText value="Año"/>
-                                </f:facet>
-                                <h:outputText value="#{item.busAnio}"/>
-                            </p:column>
+                            <p:column field="busNumero" headerText="Nº" sortOrder="desc"  filterable="true"/>
+                            <p:column field="busPatente" headerText="PPU" filterable="true"/>
+                            <p:column field="busAnio" headerText="Año" filterable="true"/>
+                            <p:column field="busFechaRevisionTecnica" headerText="R.Técnica" filterable="true"/>
+                            <p:column field="busIdEmpresa.empresaNombre" headerText="Empresa" filterable="true"/>
+                            <p:column field="busIdFlota.flotaNombre" headerText="Flota" filterable="true"/>
+                            <p:column field="busIdGrupoServicio.grupoServicioIdentificador" headerText="Grupo/Servicio" filterable="true"/>
+                            <p:column field="busIdEstadoBus.estadoBusNombre" headerText="Estado" filterable="true"/>
 
 
 
 
-                            <ui:remove>
-                                <p:column sortBy="#{item.busFechaRevisionTecnica}" filterBy="#{item.busFechaRevisionTecnica}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busFechaRevisionTecnica}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.busFechaRevisionTecnica}">
-                                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                                    </h:outputText>
-                                </p:column>
-                            </ui:remove>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busNumeroMotor}" filterBy="#{item.busNumeroMotor}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busNumeroMotor}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.busNumeroMotor}"/>
-                                </p:column>
-                            </ui:remove>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busNumeroChasis}" filterBy="#{item.busNumeroChasis}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busNumeroChasis}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.busNumeroChasis}"/>
-                                </p:column>
-                            </ui:remove>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busCarroceria}" filterBy="#{item.busCarroceria}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busCarroceria}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.busCarroceria}"/>
-                                </p:column>
-                            </ui:remove>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busTieneEgresoIndividual}" filterBy="#{item.busTieneEgresoIndividual}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busTieneEgresoIndividual}"/>
-                                    </f:facet>
-                                    <h:selectBooleanCheckbox id="busTieneEgresoIndividual" value="#{item.busTieneEgresoIndividual}" title="#{myBundle.EditBusTitle_busTieneEgresoIndividual}"  disabled="true"/>
-                                </p:column>
-                            </ui:remove>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busTieneEgresoFlota}" filterBy="#{item.busTieneEgresoFlota}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busTieneEgresoFlota}"/>
-                                    </f:facet>
-                                    <h:selectBooleanCheckbox id="busTieneEgresoFlota" value="#{item.busTieneEgresoFlota}" title="#{myBundle.EditBusTitle_busTieneEgresoFlota}"  disabled="true"/>
-                                </p:column>
-                            </ui:remove>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busComparteServicio}" filterBy="#{item.busComparteServicio}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busComparteServicio}"/>
-                                    </f:facet>
-                                    <h:selectBooleanCheckbox id="busComparteServicio" value="#{item.busComparteServicio}" title="#{myBundle.EditBusTitle_busComparteServicio}"  disabled="true"/>
-                                </p:column>
-                            </ui:remove>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busActivo}" filterBy="#{item.busActivo}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busActivo}"/>
-                                    </f:facet>
-                                    <h:selectBooleanCheckbox id="busActivo" value="#{item.busActivo}" title="#{myBundle.EditBusTitle_busActivo}"  disabled="true"/>
-                                </p:column>
-                            </ui:remove>
-
-                            <p:column sortBy="#{item.busIdEmpresa.empresaNombre}" filterBy="#{item.busIdEmpresa.empresaNombre}">
-                                <f:facet name="header">
-                                    <h:outputText value="#{myBundle.ListBusTitle_busIdEmpresa}"/>
-                                </f:facet>
-                                <h:outputText value="#{item.busIdEmpresa.empresaNombre}"/>
-                            </p:column>
-
-                            <p:column sortBy="#{item.busIdFlota.flotaNombre}" filterBy="#{item.busIdFlota.flotaNombre}">
-                                <f:facet name="header">
-                                    <h:outputText value="#{myBundle.ListBusTitle_busIdFlota}"/>
-                                </f:facet>
-                                <h:outputText value="#{item.busIdFlota.flotaNombre}"/>
-                            </p:column>
-
-
-                            <p:column sortBy="#{item.busIdGrupoServicio.grupoServicioIdentificador}" filterBy="#{item.busIdGrupoServicio.grupoServicioIdentificador}">
-                                <f:facet name="header">
-                                    <h:outputText value="#{myBundle.ListBusTitle_busIdGrupoServicio}"/>
-                                </f:facet>
-                                <h:outputText value="#{item.busIdGrupoServicio.grupoServicioIdentificador}"/>
-                            </p:column>
-
-                            <ui:remove>
-                                <p:column sortBy="#{item.busIdModelo.modeloMarcaBusId}" filterBy="#{item.busIdModelo.modeloMarcaBusId}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busIdModelo}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.busIdModelo.modeloMarcaBusId}"/>
-                                </p:column>
-                            </ui:remove>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busIdProcesoRecaudacion.procesoRecaudacionId}" filterBy="#{item.busIdProcesoRecaudacion.procesoRecaudacionId}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busIdProcesoRecaudacion}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.busIdProcesoRecaudacion.procesoRecaudacionId}"/>
-                                </p:column>
-                            </ui:remove>
-                            <p:column sortBy="#{item.busIdEstadoBus.estadoBusNombre}" filterBy="#{item.busIdEstadoBus.estadoBusNombre}">
-                                <f:facet name="header">
-                                    <h:outputText value="Estado"/>
-                                </f:facet>
-                                <h:outputText value="#{item.busIdEstadoBus.estadoBusNombre}"/>
-                            </p:column>
-                            <ui:remove>
-                                <p:column sortBy="#{item.busIdUnidadNegocio.unidadNegocioId}" filterBy="#{item.busIdUnidadNegocio.unidadNegocioId}">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{myBundle.ListBusTitle_busIdUnidadNegocio}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.busIdUnidadNegocio.unidadNegocioId}"/>
-                                </p:column>
-                            </ui:remove>
 
                             <p:column exportable="false">
                                 <p:commandButton icon="pi pi-search" update="BusViewForm, datalist" oncomplete="PF('BusViewDialog').show()" 
@@ -248,6 +119,8 @@
                     <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
                 </div>
             </div>
+
+
         </h:form>
         <ui:include src="Create.xhtml" />
         <ui:include src="View.xhtml" />

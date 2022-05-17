@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import org.joda.time.DateTime;
+//import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
 @Named(value = "facturaViewController")
@@ -37,7 +37,7 @@ public class FacturaViewController extends AbstractController<Factura> {
     private Date hasta;
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
-    private DateTime dateTime;
+//    private DateTime dateTime;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     private NumberFormat nf = NumberFormat.getInstance();
@@ -255,13 +255,13 @@ public class FacturaViewController extends AbstractController<Factura> {
     }
 
     public void setFecha() {
-        try {
-            System.err.println("NUEVA FECHA:");
-            this.desde = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-            this.dateTime = new DateTime(this.desde);
-            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
-        } catch (ParseException ex) {
-        }
+//        try {
+//            System.err.println("NUEVA FECHA:");
+//            this.desde = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+//            this.dateTime = new DateTime(this.desde);
+//            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
+//        } catch (ParseException ex) {
+//        }
     }
 
 }

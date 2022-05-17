@@ -45,7 +45,7 @@ public class ReportControllerCrosstabLiquidacion implements Serializable {
 
     @PostConstruct
     private void init() {
-        this.items = new ICajaRecaudacionDaoImpl().findAll();
+        this.items = new ICajaRecaudacionDaoImpl().findAllActive();
         this.items.add(0, new CajaRecaudacion(0, "Todas", true, true));
 
         this.informe = "inf-crosstab_liquidacion_empresa";

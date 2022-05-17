@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Detalle Ingresos x Bus</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="RegistroMinutoListForm">
+
+            <p:panel>
+                <p:spacer/>
+                <h3 style="text-align: center;">Detalle Ingresos x Bus </h3>
+
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="desde">Desde</label>
+                        <p:calendar id="desde" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportDetalleControllerIngresosBus.desde}" required="true" requiredMessage="Debe ingresar la fecha desde" />
+
+                    </div>
+                    <div class="p-field">
+                        <label for="hasta">Hasta</label>
+                        <p:calendar id="hasta" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportDetalleControllerIngresosBus.hasta}" required="true" requiredMessage="Debe ingresar la fecha hasta" />
+
+                    </div>
+                    <div class="p-field">
+                        <label for="busEmpresa">Empresa</label>
+                        <p:selectOneMenu id="busEmpresa" value="#{reportDetalleControllerIngresosBus.empresa}" converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="Todas"/>
+                            <f:selectItems value="#{reportDetalleControllerIngresosBus.empresaItems}"
+                                           var="busIdFlotaItem"
+                                           itemValue="#{busIdFlotaItem}"
+                                           itemLabel="#{busIdFlotaItem.empresaNombre}"
+                                           
+                                           />
+                            <p:ajax event="valueChange" update="busMultiple" listener="#{reportDetalleControllerIngresosBus.handleEmpresaChange}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="busUnidadNegocio">Unidad</label>
+                        <p:selectOneMenu id="busUnidadNegocio" value="#{reportDetalleControllerIngresosBus.unidadNegocio}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Todas"/>
+                            <f:selectItems value="#{reportDetalleControllerIngresosBus.unidadItems}"
+                                           var="busIdUnidadNegocioItem"
+                                           itemValue="#{busIdUnidadNegocioItem}"
+                                           itemLabel="#{busIdUnidadNegocioItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
+                                           />
+                            <p:ajax event="valueChange" update="busMultiple" listener="#{reportDetalleControllerIngresosBus.handleUnidadChange()}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="busMultiple">Bus(es)</label>
+                        <p:selectCheckboxMenu id="busMultiple" value="#{reportDetalleControllerIngresosBus.selectedItems}" label="" multiple="true" converter="omnifaces.SelectItemsConverter" 
+                                              filter="true" filterMatchMode="startsWith" panelStyle="width: 100rem" scrollHeight="250"
+>
+                            <f:selectItems value="#{reportDetalleControllerIngresosBus.items}" 
+                                           var="bus"
+                                           itemValue="#{bus}"
+                                           itemLabel="#{bus.busNumero} - #{bus.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>                    
+                        </p:selectCheckboxMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="mes"></label>
+                        <h:commandLink value="Generar Reporte" 
+                                       actionListener="#{reportController.downloadFile(reportDetalleControllerIngresosBus.informe, reportDetalleControllerIngresosBus.map)}" target="blank"  style="padding: .5em 1em;" styleClass="ui-button"/>
+
+                    </div>
+                </div>
+
+                <div class="column-center">
+                    <p:media cache="false" rendered="#{empty reportDetalleControllerIngresosBus.selectedItems}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

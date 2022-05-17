@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Detalle Inventario Boletos x Cajas</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="RegistroMinutoListForm">
+
+            <p:panel>
+                <p:spacer/>
+                <h3 style="text-align: center;">Detalle Inventario Boletos x Cajas </h3>
+
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="mes">Caja</label>
+                        <p:selectOneMenu id="inventarioCajaIdCaja" value="#{reportControllerInventarioCaja.selected}" required="true" requiredMessage="Debe seleccionar la Caja Recaudación" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{reportControllerInventarioCaja.items}"
+                                           var="caja"
+                                           itemValue="#{caja}"
+                                           itemLabel="#{caja.cajaRecaudacionNombre}"
+                                           />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="p-field">
+                        <label />
+                        <h:commandLink value="Generar Reporte" 
+                                       actionListener="#{reportController.downloadFile(reportControllerInventarioCaja.informe, reportControllerInventarioCaja.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+                    </div>
+                </div>
+
+                <div class="column-center">
+                    <p:media cache="false" rendered="#{reportControllerInventarioCaja.selected ne null}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
+                </div>
+            </p:panel>
+
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>

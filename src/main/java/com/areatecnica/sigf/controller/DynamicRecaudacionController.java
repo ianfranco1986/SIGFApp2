@@ -61,7 +61,7 @@ public class DynamicRecaudacionController implements Serializable {
     public void init() {
         this.fecha = new Date();
         this.selectedItems = new ArrayList<>();
-        this.cajaRecaudacionList = new ICajaRecaudacionDaoImpl().findAll();
+        this.cajaRecaudacionList = new ICajaRecaudacionDaoImpl().findAllActive();
         this.trabajadorList = new TrabajadorDaoImpl().findNandu();
         this.busList = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
     }
@@ -115,7 +115,7 @@ public class DynamicRecaudacionController implements Serializable {
 
     public void createDynamicsRow() {
         //Inicio de array de listas ordenadas que contendrá c/u de las recaudaciones
-        this.listOfMaps = new ArrayList<LinkedHashMap>();
+        this.listOfMaps = new  ArrayList<LinkedHashMap>();
         HashMap header = new HashMap();
         this.folios = new HashMap<Integer, Integer>();
         this.totales = new LinkedHashMap();

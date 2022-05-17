@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "parametro_interpolacion", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "parametro_interpolacion")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ParametroInterpolacion.findAll", query = "SELECT p FROM ParametroInterpolacion p")

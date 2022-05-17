@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[2019-05-01]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    bus.bus_numero, 
+    @recibe:=registro_minuto_pr_bus($P{desde} ,  $P{hasta}, bus.bus_id) AS recibe, 
+    @paga:=registro_minuto_pp_bus($P{desde} ,  $P{hasta}, bus.bus_id) AS  paga, 
+    (@recibe-@paga) AS saldo
+FROM
+    bus
+WHERE
+    $X{IN, bus.bus_id, list} AND bus.bus_numero <> 0 ORDER BY bus.bus_numero]]>
+	</queryString>
+	<field name="bus_numero" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="bus_numero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="recibe" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="recibe"/>
+	</field>
+	<field name="paga" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="paga"/>
+	</field>
+	<field name="saldo" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="saldo"/>
+	</field>
+	<variable name="registro_minuto_monto1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{paga}]]></variableExpression>
+	</variable>
+	<variable name="recibido_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{recibe}]]></variableExpression>
+	</variable>
+	<variable name="saldo_final" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="221" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Buses Baquedano Ltda.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="0" width="287" height="19" uuid="09f63724-548c-4a46-8844-a59ea8b995d4"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen Registro de Minutos
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="30" width="16" height="15" uuid="9509ae6d-23b2-4f2f-9696-b2db6a221e44"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="100" height="15" uuid="41d24009-f8e9-4486-b421-02d5718337e9"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="100" y="30" width="46" height="15" uuid="b8258413-aa6b-4d41-a711-59bfc9db82df"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="167" y="30" width="60" height="15" uuid="fb8f1aa2-740e-4754-abbc-8cd8bd6c541e"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="0" width="63" height="20" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Bus ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="0" width="70" height="20" uuid="a7cab6f6-2844-407a-a8fa-bf0a1177c313">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pagado ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="70" height="20" uuid="c1dab8d9-847b-4089-9978-5a73fbd69858">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recibido ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="424" y="0" width="70" height="20" uuid="c4bd1fea-9834-4d4b-915c-bcbfd593635d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo ($)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="25" y="0" width="63" height="15" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bus_numero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="157" y="0" width="70" height="15" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{paga}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="300" y="0" width="70" height="15" uuid="2cf7ac49-c89a-41b6-b8e4-9b5c6dcc3fa0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{recibe}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="424" y="0" width="70" height="15" uuid="62e10d28-c355-44fc-b901-8b3b743c5ea8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="370" y="7" width="152" height="15" uuid="5e10b687-9c64-42bd-b646-3dbebb1a24d2"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="522" y="7" width="34" height="15" uuid="aa6163c1-bb8e-436a-9010-2919e931335c"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="7" width="80" height="15" uuid="1d3584a2-706f-4921-ad45-7e8e638d4105">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="80" y="7" width="165" height="15" uuid="f74368eb-5f9d-4831-9385-6b210f5b8e62"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,###.###">
+				<reportElement x="157" y="0" width="70" height="20" uuid="6dc7d4cb-1acc-4e93-a875-7efcb7039e65"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{registro_minuto_monto1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="57" y="0" width="100" height="20" uuid="7e64eeb3-ee84-41db-ad5f-5ba7c1e7208f"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totales :]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="300" y="0" width="70" height="20" uuid="f50f86b2-2c73-4bcf-8f1f-b621f84e423a"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$V{recibido_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="424" y="0" width="70" height="20" uuid="e0565ace-d229-4761-8262-8d8fe9ab1906"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$V{saldo_final}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="19" uuid="227680a1-b7fb-4dae-b2fb-495a0d38ef26"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sin Registro de Minutos ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="19" width="555" height="15" uuid="dde5bf72-3197-44c5-a6c3-f3d03e7e7572"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

@@ -14,7 +14,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import org.joda.time.DateTime;
 
 @Named(value = "controlVentaPetroleoController")
 @ViewScoped
@@ -24,7 +23,7 @@ public class ControlVentaPetroleoController extends AbstractController<ControlVe
     private int mes;
     private int anio;
     private Date fecha;
-    private DateTime dateTime;
+//    private DateTime dateTime;
     private Usuario currentUser;
 
     private final static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
@@ -47,20 +46,20 @@ public class ControlVentaPetroleoController extends AbstractController<ControlVe
     }
 
     public void load() {
-        setDate();
-        if (this.fecha != null) {
-            this.dateTime = new DateTime(fecha);
-            DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
-            this.items = new IControlVentaPetroleoDaoImpl().findByDates(fecha, _maxDate.toDate(), this.currentUser.getUsuarioIdCuenta());
-
-            if (this.items.isEmpty()) {
-                JsfUtil.addSuccessMessage("No se han encontrado registros");
-                this.items = new ArrayList();
-            } else {
-                JsfUtil.addSuccessMessage("Mostrando registros a la fecha");
-            }
-
-        }
+//        setDate();
+//        if (this.fecha != null) {
+//            this.dateTime = new DateTime(fecha);
+//            DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
+//            this.items = new IControlVentaPetroleoDaoImpl().findByDates(fecha, _maxDate.toDate(), this.currentUser.getUsuarioIdCuenta());
+//
+//            if (this.items.isEmpty()) {
+//                JsfUtil.addSuccessMessage("No se han encontrado registros");
+//                this.items = new ArrayList();
+//            } else {
+//                JsfUtil.addSuccessMessage("Mostrando registros a la fecha");
+//            }
+//
+//        }
     }
 
     public void setDate() {

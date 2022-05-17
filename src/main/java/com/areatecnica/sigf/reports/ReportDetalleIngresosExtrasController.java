@@ -8,11 +8,10 @@ package com.areatecnica.sigf.reports;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
+import com.areatecnica.sigf.util.LocalDateConverter;
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +26,12 @@ import javax.faces.view.ViewScoped;
 @Named(value = "reportControllerIngresosExtrasMensual")
 @ViewScoped
 public class ReportDetalleIngresosExtrasController implements Serializable {
-
+    
+    private LocalDate date;
+    private LocalDateConverter dc;
     private List<CajaRecaudacion> items;
     private CajaRecaudacion selected;
-    private Date fecha;
     private String informe;
-    private int mes;
-    private int anio;
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/01");
 
     /**
@@ -45,67 +43,24 @@ public class ReportDetalleIngresosExtrasController implements Serializable {
 
     @PostConstruct
     private void init() {
-        this.items = new ICajaRecaudacionDaoImpl().findAll();
+        this.date = LocalDate.now();
+        this.items = new ICajaRecaudacionDaoImpl().findAllActive();
         this.items.add(0, new CajaRecaudacion(0, "Todas", true, true));
 
         this.informe = "inf-resumen_ingreso_extra";
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-
-        this.mes = calendar.get(Calendar.MONTH) + 1;
-        this.anio = calendar.get(Calendar.YEAR);
-        setFecha();
-        System.err.println("primera fecha: " + this.fecha);
+        
     }
 
-    public String nombreMes(int mes) {
-        switch (mes) {
-
-            case 1:
-                return "Enero";
-            case 2:
-                return "Febrero";
-            case 3:
-                return "Marzo";
-            case 4:
-                return "Abril";
-            case 5:
-                return "Mayo";
-            case 6:
-                return "Junio";
-            case 7:
-                return "Julio";
-            case 8:
-                return "Agosto";
-            case 9:
-                return "Septiembre";
-            case 10:
-                return "Octubre";
-            case 11:
-                return "Noviembre";
-            case 12:
-                return "Diciembre";
-        }
-        return "";
-    }
 
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap();
 
-        map.put("fecha", this.fecha);
-        map.put("nombreMes", nombreMes(mes));
-        map.put("anio", String.valueOf(anio));
-        //map.put("caja", selected.getCajaRecaudacionId());
+        map.put("fechaCompleta", this.dc.getMonthYearString());
+        map.put("fecha", this.dc.getDate());
+        map.put("desde", this.dc.getDate());
+        map.put("hasta", this.dc.getLastDayOfMonth());
 
         return map;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public CajaRecaudacion getSelected() {
@@ -142,29 +97,12 @@ public class ReportDetalleIngresosExtrasController implements Serializable {
         JsfUtil.addErrorMessage("No se encuentran registros");
     }
 
-    public int getAnio() {
-        return anio;
+    public void setDate(LocalDate date) {
+        this.date = date;
+        this.dc = new LocalDateConverter(date);
     }
 
-    public void setAnio(int anio) {
-        this.anio = anio;
+    public LocalDate getDate() {
+        return date;
     }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public void setFecha() {
-        try {
-
-            this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
-            System.err.println("NUEVA FECHA: " + this.fecha);
-        } catch (ParseException ex) {
-        }
-    }
-
 }

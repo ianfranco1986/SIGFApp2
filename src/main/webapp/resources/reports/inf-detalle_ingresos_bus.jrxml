@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
@@ -42,7 +42,7 @@
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 1 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS administracion, 
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 2 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS cuotaextra, 
     IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 3 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS imposiciones, 
-    IFNULL((SELECT IFNULL(IF((recaudacion_guia.recaudacion_guia_monto)>0, ((recaudacion_guia.recaudacion_guia_monto)-((recaudacion_guia.recaudacion_guia_monto)/5000*(IF(recaudacion.recaudacion_fecha < '2021-12-01', 700,750)))), 0), 0) FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 4 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS boletos
+    IFNULL((SELECT IFNULL(IF((recaudacion_guia.recaudacion_guia_monto)>0, ((recaudacion_guia.recaudacion_guia_monto)-((recaudacion_guia.recaudacion_guia_monto)/5000*(IF(recaudacion.recaudacion_fecha < '2022-04-01', 750,800)))), 0), 0) FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 4 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS boletos 
 FROM
     recaudacion
         LEFT JOIN

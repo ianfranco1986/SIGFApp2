@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import org.joda.time.DateTime;
 
 /**
  *
@@ -56,7 +55,7 @@ public class LiquidacionEmpresaLoteController implements Serializable {
     private Date desde;
     private Date hasta;
     private Date fecha;
-    private DateTime dateTime;
+//    private DateTime dateTime;
     private int mes;
     private int anio;
     private int totalAdministracion = 0;
@@ -83,8 +82,8 @@ public class LiquidacionEmpresaLoteController implements Serializable {
     @PostConstruct
     public void init() {
         this.fecha = new Date();
-        this.dateTime = new DateTime(fecha);
-        DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
+//        this.dateTime = new DateTime(fecha);
+//        DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
 
         Calendar calendar = Calendar.getInstance();
 
@@ -95,7 +94,7 @@ public class LiquidacionEmpresaLoteController implements Serializable {
         setFecha();
         System.err.println("primera fecha: " + this.fecha);
         this.desde = this.fecha;
-        this.hasta = _maxDate.toDate();
+//        this.hasta = _maxDate.toDate();
     }
 
     public Map<String, Object> getMap() {
@@ -411,18 +410,18 @@ public class LiquidacionEmpresaLoteController implements Serializable {
     }
 
     public void setFecha() {
-        try {
-
-            this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
-
-            this.dateTime = new DateTime(fecha);
-            DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
-            this.desde = this.fecha;
-            this.hasta = _maxDate.toDate();
-
-        } catch (ParseException ex) {
-
-        }
+//        try {
+//
+//            this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
+//
+//            this.dateTime = new DateTime(fecha);
+//            DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
+//            this.desde = this.fecha;
+//            this.hasta = _maxDate.toDate();
+//
+//        } catch (ParseException ex) {
+//
+//        }
     }
 
     public String getFormatValue(int val) {

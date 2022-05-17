@@ -5,11 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "recaudacion_combustible", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "recaudacion_combustible")
+@EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({

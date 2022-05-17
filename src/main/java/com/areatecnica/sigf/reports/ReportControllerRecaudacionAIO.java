@@ -28,7 +28,13 @@ public class ReportControllerRecaudacionAIO implements Serializable {
     private List<CajaRecaudacion> items;
     private CajaRecaudacion selected;
     private Date fecha;
-    private String informe;
+    private final String informe = "inf-recaudacion_caja_general";
+    private final String informeArqueo = "inf-recaudacion_arqueo_caja";
+    private final String informeGuias = "inf-recaudacion_caja_fecha";
+    private final String informePetroleo = "inf-recaudacion_petroleo_caja_fecha";
+    private final String informeMinutos = "inf-recaudacion_minuto_caja_fecha";
+    private final String informeBoletos = "inf-recaudacion_boleto_caja";
+    private final String informeExtras = "inf-recaudacion_extra_caja_fecha";
 
     /**
      * Creates a new instance of ReportControllerGuiaCajaFecha
@@ -39,9 +45,8 @@ public class ReportControllerRecaudacionAIO implements Serializable {
 
     @PostConstruct
     private void init() {
-        this.items = new ICajaRecaudacionDaoImpl().findAll();
+        this.items = new ICajaRecaudacionDaoImpl().findAllActive();
         this.fecha = new Date();
-        this.informe = "inf-recaudacion_caja_general";
     }
 
     public Map<String, Object> getMap() {
@@ -79,12 +84,32 @@ public class ReportControllerRecaudacionAIO implements Serializable {
         this.items = items;
     }
 
-    public void setInforme(String informe) {
-        this.informe = informe;
-    }
-
     public String getInforme() {
         return informe;
+    }
+
+    public String getInformeArqueo() {
+        return informeArqueo;
+    }
+    
+    public String getInformeGuias() {
+        return informeGuias;
+    }
+
+    public String getInformePetroleo() {
+        return informePetroleo;
+    }
+
+    public String getInformeMinutos() {
+        return informeMinutos;
+    }
+
+    public String getInformeBoletos() {
+        return informeBoletos;
+    }
+
+    public String getInformeExtras() {
+        return informeExtras;
     }
 
     public void falta() {

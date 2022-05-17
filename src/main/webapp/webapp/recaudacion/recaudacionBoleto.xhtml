@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Edición de Boletos</ui:define>
+
+    <ui:define name="content">
+        <h:form id="GuiaListForm" class="form-height">
+
+            <p:card id="dashboard">
+                <div  class="dashboard p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-calendar"/>
+                                <span>Fecha</span>
+                            </div>
+                            <div class="overview-box-count">#{ventaBoletoController.dc.currentDateName}</div>
+                            <div class="overview-box-stats">Usuario</div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-dollar"/>
+                                <span>Total Recaudado</span>
+                            </div>
+                            <div class="overview-box-count">#{ventaBoletoController.getFormatValue(ventaBoletoController.totalBoletos)}</div>
+                            <div class="overview-box-stats">(#{ventaBoletoController.items.size()>0?ventaBoletoController.items.size():0} Vouchers)</div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card ui-fluid">
+                    <div class="p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="fecha">Fecha</p:outputLabel>
+                            <p:datePicker id="fecha" value="#{ventaBoletoController.date}" locale="es">
+                                <p:ajax event="dateSelect" listener="#{ventaBoletoController.load}"
+                                        update="@(.clase), GuiaListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            </p:datePicker>
+
+                        </div>
+                        <div class="p-field p-col">
+                            <p:outputLabel for="cajaRecaudacionIdCaja">Caja</p:outputLabel>
+
+                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{ventaBoletoController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{ventaBoletoController.cajaRecaudacionItems}"
+                                               var="cajaId"
+                                               itemValue="#{cajaId}"
+                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                               />
+                                <p:ajax event="valueChange"  listener="#{ventaBoletoController.load}" update="@(.clase), GuiaListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+
+                            </p:selectOneMenu>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </p:card>
+
+            <p:separator/>
+            <div class="card">
+                <div class="p-grid crud-demo">
+
+
+
+                    <h3 style="text-align: center;">Recaudación de Boletos</h3>
+
+
+                    <p:dataTable id="datalist"
+                                 scrollHeight="500" 
+                                 scrollable="false"                         
+                                 value="#{ventaBoletoController.items}"
+                                 selection="#{ventaBoletoController.selectedItem}"
+                                 widgetVar="datalist"
+                                 selectionMode="single"
+                                 var="item"
+                                 rowKey="#{item.ventaBoletoId}"
+                                 rowIndexVar="rowIndex"
+                                 emptyMessage="No se han encontrado registros"  
+                                 editable="true" 
+                                 >
+
+                        <p:ajax event="rowEdit" listener="#{ventaBoletoController.onRowEdit}" update=":growl" />
+
+                       
+
+                        <p:column style="text-align: center; ">
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaBoletoFolioRecaudacion}" style="text-align: center; ">
+                            <f:facet name="header">
+                                <h:outputText value="Folio"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaBoletoFolioRecaudacion}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaBoletoFolioSolyMar}}" style="text-align: center; ">
+                            <f:facet name="header">
+                                <h:outputText value="G.SolyMar"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.ventaBoletoFolioSolyMar}"/></f:facet>
+
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="conductor" value="#{item.guia}" style="width: 70%;" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                        <f:selectItems  value="#{ventaBoletoController.guiaItems}"
+                                                        var="guiaItem" 
+                                                        itemValue="#{guiaItem}"
+                                                        itemLabel="#{guiaItem.guiaFolio}"
+                                                        />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaBoletoIdBus.busNumero}" style="text-align: center; ">
+                            <f:facet name="header">
+                                <h:outputText value="N° Bus"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaBoletoIdBus.busNumero}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}" style="text-align: center; " footerText="Total">
+                            <f:facet name="header">
+                                <h:outputText value="Trabajador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaBoletoIdTrabajador.trabajadorCodigo}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaBoletoValor}" style="text-align: center; " footerText="#{ventaBoletoController.getFormatValue(ventaBoletoController.totalBoletos)}">
+                            <f:facet name="header">
+                                <h:outputText value="Monto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaBoletoValor}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" style="text-align: center; " >
+                            <f:facet name="header">
+                                <h:outputText value="Tipo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" style="text-align: center; " >
+                            <f:facet name="header">
+                                <h:outputText value="Serie"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}">
+                                        <f:convertNumber />
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input"><p:inputText id="impo" value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column exportable="false">
+                            <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                <f:setPropertyActionListener value="#{item}" target="#{ventaBoletoController.selectedItem}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Cancelar? " header="Confirmación" severity="warn">
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{ventaBoletoController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":GuiaListForm:datalist,:growl, dashboard"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                    </p:confirmDialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" width="300">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </div>
+            </div>
+
+            <p:card>
+                <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
+                <p:overlayPanel for="basic" style="width:350px">
+                    <p>OBSERVACIÓN: Cancelar la venta de boletos seleccionada, actualizará el total de la recaudación asociada al folio y devolverá el boleto al inventario de la caja</p>
+                </p:overlayPanel>
+            </p:card>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -66,7 +66,7 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> {
 
 @Override
     public List<Trabajador> findAll(){
-        return em.createNamedQuery("Trabajador.findAll2").getResultList();
+        return em.createNamedQuery("Trabajador.findAll").getResultList();
     }
 
     public List<HaberTrabajador> findHaberTrabajadorList(Trabajador entity) {

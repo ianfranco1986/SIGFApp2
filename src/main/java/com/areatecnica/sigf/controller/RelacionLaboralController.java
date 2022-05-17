@@ -15,7 +15,6 @@ import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-import org.joda.time.DateTime;
 
 @Named(value = "relacionLaboralController")
 @ViewScoped
@@ -41,7 +40,7 @@ public class RelacionLaboralController extends AbstractController<RelacionLabora
     private int anio;
     private Date desde;
     private Date hasta;
-    private DateTime dateTime;
+//    private DateTime dateTime;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     private NumberFormat nf = NumberFormat.getInstance();
 
@@ -116,14 +115,6 @@ public class RelacionLaboralController extends AbstractController<RelacionLabora
         this.hasta = hasta;
     }
 
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public NumberFormat getNf() {
         return nf;
     }
@@ -133,14 +124,14 @@ public class RelacionLaboralController extends AbstractController<RelacionLabora
     }
 
     public void setFecha() {
-        try {
-            System.err.println("NUEVA FECHA:");
-            this.desde = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-            this.dateTime = new DateTime(this.desde);
-            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
-        } catch (ParseException ex) {
-
-        }
+//        try {
+//            System.err.println("NUEVA FECHA:");
+//            this.desde = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+//            this.dateTime = new DateTime(this.desde);
+//            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
+//        } catch (ParseException ex) {
+//
+//        }
     }
 
 }

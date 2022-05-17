@@ -6,9 +6,7 @@ import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
-import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Guia;
@@ -25,20 +23,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.RowEditEvent;
 
 @Named(value = "recaudacionGuiaController")
 @ViewScoped
@@ -104,8 +97,8 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     @PostConstruct
     public void init() {
         this.fecha = new Date();
-        this.itemsRecaudacion = new ArrayList<RecaudacionGuiaHelper>();
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAll();
+        this.itemsRecaudacion = new ArrayList<>();
+        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
     }
 
     public void load() {
@@ -118,8 +111,8 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
             this.totalAdministracion = 0;
             this.totalBoletos = 0;
             this.totalCovid = 0;
-            this.totalVarios = 0; 
-            this.totalFam = 0; 
+            this.totalVarios = 0;
+            this.totalFam = 0;
             this.totalImposiciones = 0;
             this.totalRecaudacion = 0;
             this.cantidadBoletos = 0;
@@ -145,6 +138,8 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
                         this.totalCovid = this.totalCovid + h.covid;
                         this.totalImposiciones = this.totalImposiciones + h.imposiciones;
+                        this.totalFam = this.totalFam + h.fam;
+                        this.totalVarios = this.totalVarios + h.varios;
 
                         if (!g.getRecaudacionBoletoList().isEmpty()) {
                             for (RecaudacionBoleto rb : g.getRecaudacionBoletoList()) {
@@ -176,8 +171,8 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                 this.totalCovid = 0;
                 this.totalImposiciones = 0;
                 this.totalRecaudacion = 0;
-                this.totalVarios = 0; 
-                this.totalFam = 0; 
+                this.totalVarios = 0;
+                this.totalFam = 0;
             }
         }
         //this.g = this.items.stream().filter(distinctByKey)
@@ -297,78 +292,135 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
         return date.format(formatter);
     }
 
-    public void delete() {
-        if (this.selectedRecaudacion != null) {
-            Recaudacion g = selectedRecaudacion.recaudacion;
+    public void delete(ActionEvent event) {
+        if (this.selectedItem != null) {
+            Recaudacion g = selectedItem.recaudacion;
             for (RecaudacionGuia rg : g.getRecaudacionGuiaList()) {
                 rg.setRecaudacionGuiaMonto(0);
-                new IRecaudacionGuiaDaoImpl().update(rg);
             }
-            this.selectedRecaudacion.total = 0;
 
-            this.totalAdministracion = this.totalAdministracion - selectedRecaudacion.administracion;
-            this.totalBoletos = this.totalBoletos - selectedRecaudacion.boletos;
-            this.totalImposiciones = this.totalImposiciones - selectedRecaudacion.imposiciones;
-            this.totalFam = this.totalFam - selectedRecaudacion.fam; 
-            this.totalVarios = this.totalVarios - selectedRecaudacion.varios; 
-            this.totalCovid = this.totalCovid - selectedRecaudacion.covid;
+            this.totalAdministracion = this.totalAdministracion - selectedItem.administracion;
+            this.totalBoletos = this.totalBoletos - selectedItem.boletos;
+            this.totalImposiciones = this.totalImposiciones - selectedItem.imposiciones;
+            this.totalFam = this.totalFam - selectedItem.fam;
+            this.totalVarios = this.totalVarios - selectedItem.varios;
+            this.totalCovid = this.totalCovid - selectedItem.covid;
 
-            selectedRecaudacion.administracion = 0;
-            selectedRecaudacion.boletos = 0;
-            selectedRecaudacion.imposiciones = 0;
-            selectedRecaudacion.covid = 0;
-            selectedRecaudacion.fam = 0; 
-            selectedRecaudacion.varios = 0; 
-            this.totalRecaudacion = this.totalRecaudacion - selectedRecaudacion.total;
+            selectedItem.administracion = 0;
+            selectedItem.boletos = 0;
+            selectedItem.imposiciones = 0;
+            selectedItem.covid = 0;
+            selectedItem.fam = 0;
+            selectedItem.varios = 0;
+            this.totalRecaudacion = this.totalRecaudacion - selectedItem.total;
 
-            selectedRecaudacion.total = 0;
+            selectedItem.total = 0;
 
-            JsfUtil.addSuccessMessage("Se ha anulado la recaudación");
-            this.selectedRecaudacion = null;
+            Recaudacion rr = new IRecaudacionDaoImpl().update(g);
+            g.setRecaudacionTotal(0);
+            if (rr != null) {
+                JsfUtil.addSuccessMessage("Se ha cancelado la recaudacion #" + rr.getRecaudacionId());
+            } else {
+                JsfUtil.addErrorMessage("Ha ocurrido un error");
+            }
+
+            this.selectedItem = null;
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar la recaudación");
-            this.selectedRecaudacion = null;
+            this.selectedItem = null;
         }
     }
 
-    public void onRowEdit(RowEditEvent event) {
-        RecaudacionGuiaHelper temp = null;
-        try {
-            temp = (RecaudacionGuiaHelper) event.getObject();
-            System.err.println("RECAUDACIÓN:" + temp.recaudacion.toString());
-            System.err.println("GUIA:" + temp.guia.toString());
+    public void saveRecaudacion() {
+        if (this.selectedItem != null) {
+            try {
+                int total = 0;
+                for (RecaudacionGuia g : selectedItem.recaudacion.getRecaudacionGuiaList()) {
+                    int diferencia = 0;
+                    switch (g.getRecaudacionGuiaIdEgreso().getEgresoId()) {
+                        case 1:
+                            diferencia = g.getRecaudacionGuiaMonto() - selectedItem.administracion;
 
-            for (RecaudacionGuia g : temp.recaudacion.getRecaudacionGuiaList()) {
-                switch (g.getRecaudacionGuiaIdEgreso().getEgresoId()) {
-                    case 1:
-                        g.setRecaudacionGuiaMonto(temp.administracion);
-                        break;
-                    case 2:
-                        g.setRecaudacionGuiaMonto(temp.covid);
-                        break;
-                    case 3:
-                        g.setRecaudacionGuiaMonto(temp.imposiciones);
-                        break;
-                    case 4:
-                        g.setRecaudacionGuiaMonto(temp.boletos);
-                        break;
+                            if (diferencia == 0) {
+                                break;
+                            }
+                            this.totalAdministracion -= diferencia;
+
+                            g.setRecaudacionGuiaMonto(selectedItem.administracion);
+                            System.err.println("SE ACTUALIZÓ ADMIN:" + this.totalAdministracion);
+                            break;
+                        case 2:
+                            diferencia = g.getRecaudacionGuiaMonto() - selectedItem.covid;
+
+                            if (diferencia == 0) {
+                                break;
+                            }
+                            this.totalCovid -= diferencia;
+                            g.setRecaudacionGuiaMonto(selectedItem.covid);
+                            System.err.println("SE ACTUALIZÓ COVID:" + this.totalCovid);
+
+                            break;
+                        case 3:
+                            diferencia = g.getRecaudacionGuiaMonto() - selectedItem.imposiciones;
+
+                            if (diferencia == 0) {
+                                break;
+                            }
+                            this.totalImposiciones -= diferencia;
+                            g.setRecaudacionGuiaMonto(selectedItem.imposiciones);
+                            System.err.println("SE ACTUALIZÓ IMPOS.:" + this.totalImposiciones);
+
+                            break;
+                        case 4:
+                            diferencia = g.getRecaudacionGuiaMonto() - selectedItem.boletos;
+
+                            if (diferencia == 0) {
+                                break;
+                            }
+                            this.totalBoletos -= diferencia;
+                            g.setRecaudacionGuiaMonto(selectedItem.boletos);
+                            System.err.println("SE ACTUALIZÓ BOLETOS:" + this.totalBoletos);
+
+                            break;
                         case 5:
-                        g.setRecaudacionGuiaMonto(temp.fam);
-                        break;
+                            diferencia = g.getRecaudacionGuiaMonto() - selectedItem.fam;
+
+                            if (diferencia == 0) {
+                                break;
+                            }
+                            this.totalFam -= diferencia;
+                            g.setRecaudacionGuiaMonto(selectedItem.fam);
+                            System.err.println("SE ACTUALIZÓ FAM:" + this.totalFam);
+
+                            break;
                         case 6:
-                        g.setRecaudacionGuiaMonto(temp.varios);
-                        break;
+                            diferencia = g.getRecaudacionGuiaMonto() - selectedItem.varios;
+
+                            if (diferencia == 0) {
+                                break;
+                            }
+                            this.totalVarios -= diferencia;
+                            g.setRecaudacionGuiaMonto(selectedItem.varios);
+                            System.err.println("SE ACTUALIZÓ VARIOS:" + this.totalVarios);
+
+                            break;
+                    }
+                    total += g.getRecaudacionGuiaMonto();
                 }
+                this.setTotal();
+                this.selectedItem.setTotal(total);
+                new IRecaudacionDaoImpl().update(selectedItem.recaudacion);
+                new IGuiaDaoImpl().update(selectedItem.guia);
+                JsfUtil.addSuccessMessage("Se ha actualizado la Recaudación: " + selectedItem.recaudacion.getRecaudacionId());
+
+            } catch (Exception e) {
+                JsfUtil.addErrorMessage("Ha ocurrido un error al registrar los cambios");
             }
-
-            new IRecaudacionDaoImpl().update(temp.recaudacion);
-            new IGuiaDaoImpl().update(temp.guia);
-            JsfUtil.addSuccessMessage("Se ha actualizado la Recaudación: " + temp.recaudacion.getRecaudacionId());
-
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage("Ha ocurrido un error al registrar los cambios");
         }
+    }
 
+    public void setTotal() {
+        this.totalRecaudacion = this.totalAdministracion + this.totalBoletos + this.totalCovid + this.totalFam + this.totalImposiciones + this.totalVarios;
     }
 
     public String getDeleteButtonMessage() {
@@ -385,7 +437,40 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     }
 
     public void deleteSelectedGuias() {
-        //Eliminar
+        if (hasSelectedGuias()) {
+            for (RecaudacionGuiaHelper r : this.selectedItems) {
+
+                if (r.total != 0) {
+                    for (RecaudacionGuia rg : r.recaudacion.getRecaudacionGuiaList()) {
+                        rg.setRecaudacionGuiaMonto(0);
+                    }
+
+                    this.totalAdministracion = this.totalAdministracion - r.administracion;
+                    this.totalBoletos = this.totalBoletos - r.boletos;
+                    this.totalImposiciones = this.totalImposiciones - r.imposiciones;
+                    this.totalFam = this.totalFam - r.fam;
+                    this.totalVarios = this.totalVarios - r.varios;
+                    this.totalCovid = this.totalCovid - r.covid;
+
+                    r.administracion = 0;
+                    r.boletos = 0;
+                    r.imposiciones = 0;
+                    r.covid = 0;
+                    r.fam = 0;
+                    r.varios = 0;
+                    this.totalRecaudacion = this.totalRecaudacion - r.total;
+
+                    r.total = 0;
+
+                    Recaudacion rr = new IRecaudacionDaoImpl().update(r.recaudacion);
+                    r.setTotal(0);
+                    JsfUtil.addSuccessMessage("Se ha cancelado la recaudacion #" + rr.getRecaudacionId());
+                } else {
+                    JsfUtil.addWarningMessage("La recaudacion # " + r.recaudacion.getRecaudacionId() + " ya se encuentra anulada");
+                }
+            }
+            this.selectedItems = new ArrayList<>();
+        }
     }
 
     /**
@@ -567,7 +652,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                 }
 
             }
-            this.total = this.administracion + this.covid + this.imposiciones + this.boletos;
+            this.total = this.administracion + this.covid + this.imposiciones + this.boletos + this.fam + this.varios;
         }
 
         public Guia getGuia() {

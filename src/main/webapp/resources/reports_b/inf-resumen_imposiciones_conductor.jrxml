@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="caja" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaCompleta" class="java.lang.String"/>
+	<parameter name="lista" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    @rownum:=@rownum+1 AS numero, 
+	LAST_DAY($P{desde}) AS hasta, 
+    @imp:=IFNULL((SELECT SUM(recaudacion_guia.recaudacion_guia_monto) FROM recaudacion_guia LEFT JOIN recaudacion ON recaudacion_guia.recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id LEFT JOIN guia ON recaudacion_guia.recaudacion_guia_id_guia = guia.guia_id WHERE recaudacion_guia_id_egreso = 3 AND recaudacion.recaudacion_fecha BETWEEN $P{desde} AND LAST_DAY($P{hasta}) AND guia.guia_id_trabajador = trabajador.trabajador_id), 0) AS imposiciones, 
+CONCAT(trabajador.trabajador_apellido_paterno, " ",  
+trabajador.trabajador_apellido_materno , " ", trabajador.trabajador_nombres
+) AS nombre_trabajador, CONCAT(IF(trabajador.trabajador_codigo<10, '000', IF(trabajador.trabajador_codigo<100,'00', IF(trabajador.trabajador_codigo<1000,'0', '' ) )),trabajador.trabajador_codigo) AS trabajador_codigo
+FROM
+    trabajador         
+       , (SELECT @rownum:=0) e
+WHERE trabajador.trabajador_id IN (SELECT guia.guia_id_trabajador FROM guia WHERE guia.guia_fecha BETWEEN $P{desde} AND LAST_DAY($P{desde}))
+HAVING imposiciones > 0
+ORDER BY trabajador.trabajador_apellido_paterno]]>
+	</queryString>
+	<field name="numero" class="java.lang.Double"/>
+	<field name="hasta" class="java.sql.Date"/>
+	<field name="imposiciones" class="java.math.BigDecimal"/>
+	<field name="nombre_trabajador" class="java.lang.String"/>
+	<field name="trabajador_codigo" class="java.lang.String"/>
+	<variable name="imposiciones_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{imposiciones}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement x="354" y="56" width="66" height="13" uuid="048f827c-5999-477d-8ca3-6db440ee295f"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Impos.($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="56" width="72" height="13" uuid="48d30d82-7ec7-4e84-bdc5-d6b627d40e7d"/>
+				<box rightPadding="5"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Conductor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="69" width="550" height="1" uuid="9885b1da-5cf5-4e35-bef5-7a1d7127c829"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="179" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Buses Baquedano Ltda.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="0" width="358" height="34" uuid="12b2e43a-c6d7-4140-8be8-e2262975641d"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen Imposiciones x Conductor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="56" width="268" height="13" uuid="fe9c927b-ae9d-40e8-9ced-f1696e6f9e05"/>
+				<box rightPadding="5"/>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="90" y="19" width="50" height="15" uuid="e0ebb2b1-692a-4118-bee3-7b08d530220d"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="140" y="19" width="16" height="15" uuid="dcd039ac-2abf-443d-971b-bbb3eed1c8b7"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="156" y="19" width="56" height="15" uuid="c08aa506-6937-46b1-adf6-b03992a01a34"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="19" width="90" height="15" uuid="3248447f-eb18-4ba7-9bb8-f1ffa996a54c"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0" isBlankWhenNull="false">
+				<reportElement x="354" y="0" width="66" height="15" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{imposiciones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="72" height="15" uuid="72640ce8-0ee5-4c8b-a34d-b58f6067cf2d"/>
+				<box rightPadding="0"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trabajador_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="0" width="268" height="15" uuid="73bda2b0-4ba3-43c4-ad89-bfdb7eb90480"/>
+				<box rightPadding="0"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_trabajador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="81" y="8" width="165" height="15" uuid="e6eef364-c2a9-4b76-a889-49c67cc3f40d"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="386" y="8" width="152" height="15" uuid="3816cec7-6b16-497e-b3d6-95ea1e9c1edb"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="8" width="80" height="15" uuid="dd62de6a-ee25-4877-a6e6-008250490c44">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="538" y="8" width="34" height="15" uuid="ab6885aa-2483-43fe-b8d6-ac54b3c80849"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="14" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="354" y="0" width="66" height="14" uuid="4c0b0661-ceab-432f-a98c-48a5c34a8d0b"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{imposiciones_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="352" height="13" uuid="a23d8aba-bb98-4757-892a-24772ecf97b0"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

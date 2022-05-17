@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RecaudacionEditDialog" widgetVar="RecaudacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Edición Recaudación" closeOnEscape="true">
+
+            <h:form id="RecaudacionEditForm" onkeypress="return event.keyCode != 13">
+                <div class="p-grid nested-grid" style="width: 30vw;">
+                    <div class="p-col-4" >
+                        <div class="p-text-center"><h3>Folio</h3></div>
+                        <div class="p-text-center"><h1>#{recaudacionGuiaController.selectedItem.recaudacion.recaudacionId}</h1></div>
+                    </div>
+                    <div class="p-col-8">
+                        <div class="p-grid">
+                            <div class="p-col-6">
+                                <div class="p-text-right"><h4>G.Sol y Mar:</h4></div>
+                            </div>
+                            <div class="p-col-6">
+                                <div class="p-text-left"><h4>#{recaudacionGuiaController.selectedItem.guia.guiaFolio}</h4></div>
+                            </div>
+                            <div class="p-col-6">
+                                <div class="p-text-right"><h4>Nº Bus:</h4></div>
+                            </div>
+                            <div class="p-col-6">
+                                <div class="p-text-left"><h4>#{recaudacionGuiaController.selectedItem.guia.guiaIdBus.busNumero}</h4></div>
+                            </div>
+                            <div class="p-col-12">
+                                <div class="p-text-center"><h4>#{recaudacionGuiaController.selectedItem.guia.guiaIdTrabajador} (#{recaudacionGuiaController.selectedItem.guia.guiaIdTrabajador.trabajadorCodigo})</h4></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card" style="width: 100%;">
+                        <p:tabView>
+                            <p:tab title="Detalle Recaudación">
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <label for="admin" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Admin.</label>
+                                        <div class="p-col-12 p-md-10"><p:inputNumber id="admin" value="#{recaudacionGuiaController.selectedItem.administracion}" minValue="0" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" /></div>
+                                    </div>
+                                    <div class="p-field p-grid">
+                                        <label for="covid" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Covid</label>
+                                        <div class="p-col-12 p-md-10"><p:inputNumber id="covid" type="text" value="#{recaudacionGuiaController.selectedItem.covid}" minValue="0" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" /></div>
+                                    </div>
+                                    <div class="p-field p-grid">
+                                        <label for="imposiciones" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Impos.</label>
+                                        <div class="p-col-12 p-md-10"><p:inputNumber id="imposiciones" type="text" value="#{recaudacionGuiaController.selectedItem.imposiciones}" minValue="0" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" /></div>
+                                    </div>
+                                    <div class="p-field p-grid">
+                                        <label for="boletos" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Boletos</label>
+                                        <div class="p-col-12 p-md-10"><p:inputNumber id="boletos" type="text" value="#{recaudacionGuiaController.selectedItem.boletos}" minValue="0" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" /></div>
+                                    </div>
+                                    <div class="p-field p-grid">
+                                        <label for="fam" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Fam</label>
+                                        <div class="p-col-12 p-md-10"><p:inputNumber id="fam" type="text" value="#{recaudacionGuiaController.selectedItem.fam}" minValue="0" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" /></div>
+                                    </div>
+                                    <div class="p-field p-grid">
+                                        <label for="varios" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Varios</label>
+                                        <div class="p-col-12 p-md-10"><p:inputNumber id="varios" type="text" value="#{recaudacionGuiaController.selectedItem.varios}" minValue="0" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" /></div>
+                                    </div>
+
+                                </div>
+                            </p:tab>
+                            <p:tab title="Compras de Boletos" disabled="#{empty recaudacionGuiaController.selected.recaudacionGuiaIdRecaudacion.recaudacionBoletoList}">
+                                <p class="p-m-0">
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
+                                    illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+                                    odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                                </p>
+                            </p:tab>
+
+                        </p:tabView>
+                        <div class="p-text-right">
+                            <p:commandButton 
+                                actionListener="#{recaudacionGuiaController.saveRecaudacion}" 
+                                value="Guardar" 
+                                icon="pi pi-save" 
+                                update=":GuiaListForm:datalist,:growl, :GuiaListForm:dashboard"                     
+                                oncomplete="handleSubmit(xhr,status,args,PF('RecaudacionEditDialog'));"
+                                styleClass="p-mr-2 p-mb-2" 
+                                >
+                                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                            </p:commandButton>
+                            <p:commandButton 
+                                value="Cancelar" 
+                                icon="pi pi-ban" 
+                                class="ui-button-secondary"
+                                oncomplete="PF('RecaudacionEditDialog').hide()" 
+                                update="growl" 
+                                process="@this" 
+                                immediate="true" 
+                                resetValues="true"
+                                styleClass="p-mr-2"
+                                />
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+
+</html>

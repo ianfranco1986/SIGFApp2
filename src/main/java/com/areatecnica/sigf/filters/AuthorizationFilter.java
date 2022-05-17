@@ -42,12 +42,12 @@ public class AuthorizationFilter implements Filter {
         String reqURI = req.getRequestURI();
 
         try {
-            if (reqURI.indexOf("/login2.xhtml") >= 0 || (ses != null && ses.getAttribute("staff") != null)
+            if (reqURI.indexOf("/login.xhtml") >= 0 || (ses != null && ses.getAttribute("staff") != null)
                     || reqURI.contains("javax.faces.resource")) {
                 chain.doFilter(request, response);
             } else // user didn't log in but asking for a page that is not allowed so take user to login page
             {
-                res.sendRedirect(req.getContextPath() + "/login2.xhtml");  // Anonymous user. Redirect to login page
+                res.sendRedirect(req.getContextPath() + "/login.xhtml");  // Anonymous user. Redirect to login page
                 System.err.println("CONTEXT :" + req.getContextPath());
                 req.removeAttribute("staff");
             }

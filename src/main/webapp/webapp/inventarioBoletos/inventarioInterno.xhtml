@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Inventario Interno</ui:define>
+
+    <ui:define name="content">
+        <h:form id="InventarioInternoListForm">
+
+            <p:card id="dashboard">
+                <div  class="dashboard p-grid">
+                    <div class="p-col-12 p-md-8 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-ticket"/>
+                                <span>Directo</span>
+                            </div>
+                            <div class="overview-box-count"></div>
+                            <div class="overview-box-stats"></div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-8 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-ticket"/>
+                                <span>Plan Viña</span>
+                            </div>
+                            <div class="overview-box-count"></div>
+                            <div class="overview-box-stats"></div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-8 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-ticket"/>
+                                <span>Local</span>
+                            </div>
+                            <div class="overview-box-count"></div>
+                            <div class="overview-box-stats"></div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-8 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-ticket"/>
+                                <span>Esc. Directo</span>
+                            </div>
+                            <div class="overview-box-count"></div>
+                            <div class="overview-box-stats"></div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-8 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-ticket"/>
+                                <span>Esc. Local</span>
+                            </div>
+                            <div class="overview-box-count"></div>
+                            <div class="overview-box-stats"></div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-8 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-ticket"/>
+                                <span>AM.Directo</span>
+                            </div>
+                            <div class="overview-box-count"></div>
+                            <div class="overview-box-stats"></div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-8 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-ticket"/>
+                                <span>AM.Plan Viña</span>
+                            </div>
+                            <div class="overview-box-count"></div>
+                            <div class="overview-box-stats"></div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-8 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-ticket"/>
+                                <span>AM.Local</span>
+                            </div>
+                            <div class="overview-box-count"></div>
+                            <div class="overview-box-stats"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card ui-fluid">
+                    <div class="p-formgrid p-grid">
+                        <div class="p-field p-col">
+
+
+
+                        </div>
+                        <div class="p-field p-col">
+
+                        </div>
+                    </div>
+                </div>
+            </p:card>
+
+            <p:separator/>
+
+            <div class="card">
+                <p:toolbar styleClass="p-mb-4">
+                    <p:toolbarGroup>
+                        <p:commandButton id="delete-products-button" value="#{inventarioInternoController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{inventarioInternoController.deleteSelectedGuias}"
+                                         styleClass="ui-button-danger" disabled="#{!inventarioInternoController.hasSelectedGuias()}" update=":InventarioInternoListForm:datalist,:growl, dashboard,delete-products-button">
+                            <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                            <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <div class="p-grid crud-demo">
+                    <p:dataTable id="datalist"
+                                 value="#{inventarioInternoController.items2}"
+                                 lazy="false"
+                                 rowKey="#{item.inventarioInternoId}"
+                                 var="item"
+                                 paginator="true"
+                                 rows="100"
+                                 rowSelectMode="add" 
+                                 reflow="true"
+                                 selection="#{inventarioInternoController.selectedItems}"
+                                 widgetVar="datalistWidget" 
+                                 emptyMessage="No se han encontrado registros"
+                                 rowIndexVar="rowIndex">
+
+                        <p:ajax event="rowSelect" update=":InventarioInternoListForm:delete-products-button" />
+                        <p:ajax event="rowUnselect" update=":InventarioInternoListForm:delete-products-button" />
+                        <p:ajax event="rowSelectCheckbox" update=":InventarioInternoListForm:delete-products-button"/>
+                        <p:ajax event="rowUnselectCheckbox" update=":InventarioInternoListForm:delete-products-button" />
+                        <p:ajax event="toggleSelect" update=":InventarioInternoListForm:delete-products-button" />
+
+
+                        <f:facet name="header">
+                            <div class="products-table-header">
+                                <span style="font-weight: bold"><h3>Inventario Interno</h3></span>
+
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column selectionMode="multiple" exportable="false" ></p:column>
+
+                        <p:column filterBy="#{item.inventarioInternoIdBoleto.boletoNombre}" headerText="Boleto">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('datalistWidget').filter()" >
+                                    <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{inventarioInternoController.itemsBoletos}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{item.inventarioInternoIdBoleto.boletoNombre}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+
+
+
+                        <p:column sortBy="#{item.inventarioInternoSerie}" filterBy="#{item.inventarioInternoSerie}">
+                            <f:facet name="header">
+                                <h:outputText value="Serie"/>
+                            </f:facet>
+                            <h:outputText value="#{item.inventarioInternoSerie}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.inventarioInternoIdentificador}" filterBy="#{item.inventarioInternoIdentificador}">
+                            <f:facet name="header">
+                                <h:outputText value="Identificador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.inventarioInternoIdentificador}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ingreso"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaCreacion}"/>
+                        </p:column>
+
+                        <p:column exportable="false">
+
+                            <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist,:growl" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                <f:setPropertyActionListener value="#{item}" target="#{inventarioInternoController.selected}" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Cancelar? " header="Confirmación" severity="warn">
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{inventarioInternoController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":InventarioInternoListForm:datalist,:growl, dashboard"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                    </p:confirmDialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" width="300">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </div>
+
+            </div>
+
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

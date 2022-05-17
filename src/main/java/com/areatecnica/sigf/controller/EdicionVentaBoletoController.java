@@ -1,25 +1,21 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.IBoletoDao;
 import com.areatecnica.sigf.dao.impl.IBoletoDaoImpl;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IVentaBoletoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.InventarioCaja;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
 import java.io.Serializable;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -66,7 +62,7 @@ public class EdicionVentaBoletoController implements Serializable {
         this.busItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
         this.boletoItems = new IBoletoDaoImpl().findAll();
 
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAll();
+        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
 
     }
 
@@ -89,6 +85,8 @@ public class EdicionVentaBoletoController implements Serializable {
 
     public void save() {
         if (this.inventario != null) {
+            this.inventario.setInventarioCajaEstado(Boolean.TRUE);
+            InventarioCaja ic = new IInventarioCajaDaoImpl().update(inventario);
             this.ventaBoleto.setVentaBoletoIdInventarioCaja(inventario);
             VentaBoleto aux = new IVentaBoletoDaoImpl().update(ventaBoleto);
 
@@ -107,9 +105,7 @@ public class EdicionVentaBoletoController implements Serializable {
     public void findInventario() {
         if (this.newBoleto != null && this.cajaRecaudacion != null) {
             this.inventarioCajaItems = new IInventarioCajaDaoImpl().findByBoletoEstado(cajaRecaudacion, newBoleto, Boolean.FALSE);
-        } else {
-            //JsfUtil.addErrorMessage("Error al buscar el inventario, boleto: " + this.newBoleto + " caja:" + this.cajaRecaudacion);
-        }
+        } 
     }
 
     public void setCajaRecaudacionItems(List<CajaRecaudacion> cajaRecaudacionItems) {

@@ -17,5 +17,7 @@ public interface ICajaRecaudacionDao<T> extends IGenericDAO<T> {
 
     public List<CajaRecaudacion> findAllByUser(Usuario usuario);
     
+    public List<CajaRecaudacion> findAllActive();
+    
     public CajaRecaudacion findById(int id);
 }

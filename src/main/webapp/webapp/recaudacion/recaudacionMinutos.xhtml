@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Recaudación de Minutos</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="MinutosListForm" class="form-height">
+            <p:card id="dashboard">
+                <div  class="dashboard p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-calendar"/>
+                                <span>Fecha</span>
+                            </div>
+                            <div class="overview-box-count">#{recaudacionMinutoController.fechaCompleta}</div>
+                            <div class="overview-box-stats">Usuario</div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-dollar"/>
+                                <span>Total Recaudado</span>
+                            </div>
+                            <div class="overview-box-count">#{recaudacionMinutoController.getFormatValue(recaudacionMinutoController.totalRecaudacion)}</div>
+                            <div class="overview-box-stats">#{recaudacionMinutoController.items.size()>0?recaudacionMinutoController.items.size():0} Vouchers)</div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card ui-fluid">
+                    <div class="p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="fecha">Fecha</p:outputLabel>
+                            <p:datePicker id="fecha" value="#{recaudacionMinutoController.fecha}" locale="es">
+                                <p:ajax event="dateSelect" listener="#{recaudacionMinutoController.load}"
+                                        update="@(.clase), MinutosListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" />
+                            </p:datePicker>
+
+                        </div>
+                        <div class="p-field p-col">
+                            <p:outputLabel for="cajaRecaudacionIdCaja">Caja</p:outputLabel>
+                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionMinutoController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{recaudacionMinutoController.cajaRecaudacionItems}"
+                                               var="cajaId"
+                                               itemValue="#{cajaId}"
+                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                               />
+                                <p:ajax event="valueChange"  listener="#{recaudacionMinutoController.load}" update="@(.clase), MinutosListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+
+                            </p:selectOneMenu>
+                        </div>
+
+
+                    </div>
+                </div>
+            </p:card>
+            <p:separator/>
+
+            <div class="card">
+                <p:toolbar styleClass="p-mb-4">
+                    <p:toolbarGroup>
+                        <p:commandButton id="delete-products-button" value="#{recaudacionMinutoController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{recaudacionMinutoController.deleteSelectedGuias}"
+                                         styleClass="ui-button-danger" disabled="#{!recaudacionMinutoController.hasSelectedGuias()}" update=":MinutosListForm:datalist,:growl, dashboard,delete-products-button">
+                            <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                            <p:dataExporter type="xlsxstream" target="datalist" fileName="recaudacion-minutos"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <div class="p-grid crud-demo">
+
+                    <p:dataTable id="datalist"
+                                 value="#{recaudacionMinutoController.items}"                     
+                                 selection="#{recaudacionMinutoController.selectedItems}"
+                                 widgetVar="datalistWidget"
+                                 var="item"
+                                 rowKey="#{item.recaudacionMinutoIdRecaudacion}"
+                                 rowSelectMode="add" 
+                                 reflow="true"
+                                 rowIndexVar="rowIndex"
+                                 emptyMessage="No se han encontrado registros"
+                                 style="padding-top: 10px;" sortBy="#{item.recaudacionMinutoIdRecaudacion.recaudacionId}">
+
+
+                        <p:ajax event="rowSelect" update=":MinutosListForm:delete-products-button, datalist" listener="#{recaudacionMinutoController.selectAll}" >
+                            <f:setPropertyActionListener value="#{item}" target="#{recaudacionMinutoController.selected}" />
+                        </p:ajax>
+                        <p:ajax event="rowUnselect" update=":MinutosListForm:delete-products-button, datalist" listener="#{recaudacionMinutoController.deSelectAll}" >
+                            <f:setPropertyActionListener value="#{item}" target="#{recaudacionMinutoController.selected}" />
+                        </p:ajax>
+                        <p:ajax event="rowSelectCheckbox" update=":MinutosListForm:delete-products-button, datalist" listener="#{recaudacionMinutoController.selectAll}" >
+                            <f:setPropertyActionListener value="#{item}" target="#{recaudacionMinutoController.selected}" />
+                        </p:ajax>
+                        <p:ajax event="rowUnselectCheckbox" update=":MinutosListForm:delete-products-button, datalist" listener="#{recaudacionMinutoController.deSelectAll}" >
+                            <f:setPropertyActionListener value="#{item}" target="#{recaudacionMinutoController.selected}" />
+                        </p:ajax>
+                        <p:ajax event="toggleSelect" update=":MinutosListForm:delete-products-button" />
+
+
+                        <f:facet name="header">
+                            <div class="products-table-header">
+                                <span style="font-weight: bold"><h3>Recaudación de Minutos</h3></span>
+
+                            </div>
+                        </f:facet>
+
+                        <p:headerRow field="recaudacionMinutoIdRecaudacion.recaudacionId"
+                                     expandable="true">
+
+                            <p:column colspan="6">
+                                <div class="p-d-inline-flex p-ai-center" style="vertical-align: middle">
+                                    <h:outputText styleClass="p-ml-2" value="#{item.recaudacionMinutoIdRecaudacion.recaudacionId}"/>
+                                </div>
+                            </p:column>
+                        </p:headerRow>
+
+
+                        <p:column selectionMode="multiple" exportable="false" ></p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionMinutoIdRegistroMinuto.registroMinutoDesdeIdBus.busNumero}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="N° Bus Paga"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionMinutoIdRegistroMinuto.registroMinutoDesdeIdBus.busNumero}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionMinutoIdRegistroMinuto.registroMinutoHastaIdBus.busNumero}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="N° Bus Recibe"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionMinutoIdRegistroMinuto.registroMinutoHastaIdBus.busNumero}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionMinutoIdRegistroMinuto.registroMinutoFechaMinuto}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="F. Minuto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionMinutoIdRegistroMinuto.registroMinutoFechaMinuto}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionMinutoMonto}" footerText="#{recaudacionMinutoController.getFormatValue(recaudacionMinutoController.totalRecaudacion)}" style="text-align: center;" >
+                            <f:facet name="header">
+                                <h:outputText value="Monto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionMinutoMonto}" >
+                                <f:convertNumber currencySymbol="$" />
+                            </h:outputText>                
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionMinutoIdRecaudacion.recaudacionHora}" style="text-align: center;" >
+                            <f:facet name="header">
+                                <h:outputText value="Hora Recaudación"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionMinutoIdRecaudacion.recaudacionHora}" >
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>                
+                        </p:column>
+
+
+                    </p:dataTable>
+                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Cancelar? " header="Confirmación" severity="warn">
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{recaudacionMinutoController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":MinutosListForm:datalist,:growl, dashboard"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                    </p:confirmDialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" width="300">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </div>
+
+            </div>
+
+            <p:card>
+                <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
+                <p:overlayPanel for="basic" style="width:350px">
+                    <p>OBSERVACIÓN: Permite editar o eliminar los valores de Administración, C.Extra e Imposiciones. No se permite modificar boletos</p>
+                </p:overlayPanel>
+            </p:card>
+
+
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

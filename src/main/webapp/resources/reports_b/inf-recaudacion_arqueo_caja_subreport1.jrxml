@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inf-recaudacion_arqueo_caja_subreport1" pageWidth="752" pageHeight="572" orientation="Landscape" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8a726334-a70f-45a2-98a0-b8088cb45033">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="resumenId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT detalle_deposito_recaudacion_id,
+    detalle_deposito_recaudacion_id_resumen,
+    detalle_deposito_recaudacion_id_cuenta,
+    detalle_deposito_recaudacion_deposito,
+    detalle_deposito_recaudacion_total,
+    detalle_deposito_recaudacion_detalle,
+    detalle_deposito_recaudacion_sello,
+    detalle_deposito_recaudacion_numero,
+    detalle_deposito_recaudacion_ctv, 
+    cuenta_bancaria.cuenta_bancaria_nombre_titular, 
+	cuenta_bancaria_numero
+FROM detalle_deposito_recaudacion LEFT JOIN cuenta_bancaria ON detalle_deposito_recaudacion.detalle_deposito_recaudacion_id_cuenta = cuenta_bancaria.cuenta_bancaria_id
+WHERE detalle_deposito_recaudacion.detalle_deposito_recaudacion_id_resumen = $P{resumenId};]]>
+	</queryString>
+	<field name="detalle_deposito_recaudacion_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_deposito_recaudacion_id_resumen" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_deposito_recaudacion_id_cuenta" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_deposito_recaudacion_deposito" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_deposito_recaudacion_total" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_deposito_recaudacion_detalle" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_deposito_recaudacion_sello" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_deposito_recaudacion_numero" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_deposito_recaudacion_ctv" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cuenta_bancaria_nombre_titular" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cuenta_bancaria_numero" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="detalle_deposito_recaudacion_total_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{detalle_deposito_recaudacion_total}]]></variableExpression>
+	</variable>
+	<variable name="detalle_deposito_recaudacion_numero_1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{detalle_deposito_recaudacion_numero}]]></variableExpression>
+	</variable>
+	<variable name="detalle_deposito_recaudacion_ctv_1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{detalle_deposito_recaudacion_ctv}]]></variableExpression>
+	</variable>
+	<variable name="detalle_deposito_recaudacion_deposito_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{detalle_deposito_recaudacion_deposito}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="5" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="78" height="15" uuid="2a64a41e-b86e-4bc2-8a00-f62a198a5d5e"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Depósito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="0" width="80" height="15" uuid="b58cb084-60f5-425e-b7cf-a1f81ed4d882"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="0" width="167" height="15" uuid="f211ae92-bda2-43ca-a145-553c50f632e9"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="0" width="67" height="15" uuid="449cc5f4-4be8-48af-a991-5cfd876483e0"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cuenta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="0" width="56" height="15" uuid="85f91f3d-ae06-4d2f-bbcc-cbb8bd48a68a"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sello]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="0" width="62" height="15" uuid="d1464f4b-055a-4b7c-992f-1cb96001af1f"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bolsa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="0" width="63" height="15" uuid="4aec4411-ae2a-4706-92cf-528deb278ee2"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CTV]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="78" height="15" uuid="0a236077-9358-4c90-973f-93f4e9eeff5f"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_deposito_recaudacion_deposito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="78" y="0" width="80" height="15" uuid="32c0492c-d713-460b-a4c9-6f45466c4143"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_deposito_recaudacion_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="158" y="0" width="167" height="15" uuid="48b13b9e-f42f-4524-a0d1-3cc4b4789088"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_deposito_recaudacion_detalle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="0" width="67" height="15" uuid="4a7c2c77-bf31-4b0e-bfa6-53cd3ddd7fbc"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuenta_bancaria_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="0" width="56" height="15" uuid="bedcba32-c80c-4350-a373-c900d42dc25c"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_deposito_recaudacion_sello}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="0" width="62" height="15" uuid="9e774d3d-5ff2-436c-a144-608fdc1a905b"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_deposito_recaudacion_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="0" width="63" height="15" uuid="ba806fc7-0478-49c5-b2b1-e5ee7e9998a2"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_deposito_recaudacion_ctv}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="40" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="78" y="10" width="80" height="15" uuid="e3ccc42d-f9a2-4b40-b3cf-0c00d722f7f4"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{detalle_deposito_recaudacion_total_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="78" height="15" uuid="e5c9c9b7-6879-4ef1-b0f7-8a4710d3061d"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="236" y="10" width="80" height="15" uuid="6b588bcb-9ae3-4255-bb45-d033851d63db"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{detalle_deposito_recaudacion_numero_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="158" y="10" width="78" height="15" uuid="b038597a-90be-4dc8-a087-b932c36c49ff"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Bolsas : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="25" width="78" height="15" uuid="abd2cd47-1a1b-46eb-87c2-042df1feba0a"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° CTV : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="236" y="25" width="80" height="15" uuid="3f4e3dfa-e547-4d11-84eb-dd2c49a3701d"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{detalle_deposito_recaudacion_ctv_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="25" width="78" height="15" uuid="d8d395a0-3068-4525-a675-cc409118ae1a"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Depósitos : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="78" y="25" width="80" height="15" uuid="b96cbc6d-15f1-4c4b-a882-310ad1030f78"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{detalle_deposito_recaudacion_deposito_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

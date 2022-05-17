@@ -33,12 +33,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ianfr
  */
 @Entity
-@Table(name = "caja_recaudacion", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "caja_recaudacion")
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "CajaRecaudacion.findAll", query = "SELECT c FROM CajaRecaudacion c")
+    @NamedQuery(name = "CajaRecaudacion.findAll", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionActiva = true")
+    , @NamedQuery(name = "CajaRecaudacion.findAllActive", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionActiva = true ORDER BY c.cajaRecaudacionNombre")
     , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionId", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionId = :cajaRecaudacionId")
     , @NamedQuery(name = "CajaRecaudacion.findAllByCuenta", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionIdCuenta = :idCuenta")
     , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionNombre", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionNombre = :cajaRecaudacionNombre")

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Recaudación de Combustible</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="VentaCombustibleListForm">
+            <p:card id="dashboard">
+                <div  class="dashboard p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-2">
+                            <div class="overview-box-title">
+                                <i class="pi pi-calendar"/>
+                                <span>Fecha</span>
+                            </div>
+                            <div class="overview-box-count">#{recaudacionCombustibleController.fechaCompleta}</div>
+                            <div class="overview-box-stats">Usuario</div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-3">
+                        <div class="widget-overview overview-box-3">
+                            <div class="overview-box-title">
+                                <i class="pi pi-dollar"/>
+                                <span>Total Recaudado</span>
+                            </div>
+                            <div class="overview-box-count">#{recaudacionCombustibleController.getFormatValue(recaudacionCombustibleController.totalRecaudacion)}</div>
+                            <div class="overview-box-stats">#{recaudacionCombustibleController.itemsRecaudacion.size()>0?recaudacionCombustibleController.itemsRecaudacion.size():0} Vouchers)</div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card ui-fluid">
+                    <div class="p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="fecha">Fecha</p:outputLabel>
+                            <p:datePicker id="fecha" value="#{recaudacionCombustibleController.fecha}" locale="es">
+                                <p:ajax event="dateSelect" listener="#{recaudacionCombustibleController.load}"
+                                        update="@(.clase), VentaCombustibleListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            </p:datePicker>
+
+                        </div>
+                        <div class="p-field p-col">
+                            <p:outputLabel for="cajaRecaudacionIdCaja">Caja</p:outputLabel>
+                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionCombustibleController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{recaudacionCombustibleController.cajaRecaudacionItems}"
+                                               var="cajaId"
+                                               itemValue="#{cajaId}"
+                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                               />
+                                <p:ajax event="valueChange"  listener="#{recaudacionCombustibleController.load}" update="@(.clase), VentaCombustibleListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+
+                            </p:selectOneMenu>
+                        </div>
+
+
+                    </div>
+                </div>
+            </p:card>
+            
+            <p:separator/>
+
+            <div class="card">
+                <p:toolbar styleClass="p-mb-4">
+                    <p:toolbarGroup>
+                        <p:commandButton id="delete-products-button" value="#{recaudacionCombustibleController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{recaudacionCombustibleController.deleteSelectedGuias}"
+                                         styleClass="ui-button-danger" disabled="#{!recaudacionCombustibleController.hasSelectedGuias()}" update=":VentaCombustibleListForm:datalist,:growl, dashboard,delete-products-button">
+                            <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                            <p:dataExporter type="xlsxstream" target="datalist" fileName="recaudacion-combustible"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <div class="p-grid crud-demo">
+
+
+
+                    <p:dataTable id="datalist"
+                                 value="#{recaudacionCombustibleController.itemsRecaudacion}"                     
+                                 lazy="false"
+                                 rowKey="#{item.recaudacionCombustibleId}"
+                                 var="item"
+                                 selection="#{recaudacionCombustibleController.selectedItems}"
+                                 rowSelectMode="add" 
+                                 reflow="true"
+                                 rowIndexVar="rowIndex"
+                                 widgetVar="datalistWidget"
+                                 >
+
+                        <p:ajax event="rowSelect" update=":VentaCombustibleListForm:delete-products-button" />
+                        <p:ajax event="rowUnselect" update=":VentaCombustibleListForm:delete-products-button" />
+                        <p:ajax event="rowSelectCheckbox" update=":VentaCombustibleListForm:delete-products-button"/>
+                        <p:ajax event="rowUnselectCheckbox" update=":VentaCombustibleListForm:delete-products-button" />
+                        <p:ajax event="toggleSelect" update=":VentaCombustibleListForm:delete-products-button" />
+
+
+                        <f:facet name="header">
+                            <div class="products-table-header">
+                                <span style="font-weight: bold"><h3>Recaudación de Combustible</h3></span>
+
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column selectionMode="multiple" exportable="false" ></p:column>
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionCombustibleIdRecaudacion.recaudacionId}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="Folio"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionCombustibleIdRecaudacion.recaudacionId}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionCombustibleIdVentaCombustible.ventaCombustibleNumeroBoleta}"  style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="N° Boleta"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionCombustibleIdVentaCombustible.ventaCombustibleNumeroBoleta}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionCombustibleIdVentaCombustible.ventaCombustibleFecha}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="Fecha"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionCombustibleIdVentaCombustible.ventaCombustibleFecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionCombustibleIdVentaCombustible.ventaCombustibleIdBus.busNumero}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="N° Bus"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionCombustibleIdVentaCombustible.ventaCombustibleIdBus.busNumero}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionCombustibleIdVentaCombustible.ventaCombustibleIdBus.busIdUnidadNegocio.unidadNegocioNumero}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="Operador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionCombustibleIdVentaCombustible.ventaCombustibleIdBus.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionCombustibleMonto}" footerText="#{recaudacionCombustibleController.getFormatValue(recaudacionCombustibleController.totalRecaudacion)}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="Monto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionCombustibleMonto}" >
+                                <f:convertNumber currencySymbol="$" />
+                            </h:outputText>                
+                        </p:column>
+
+                        <p:column sortBy="#{item.recaudacionCombustibleIdRecaudacion.recaudacionHora}" style="text-align: center;">
+                            <f:facet name="header">
+                                <h:outputText value="Hora Recaudación"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recaudacionCombustibleIdRecaudacion.recaudacionHora}" >
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>                
+                        </p:column>
+
+                        <p:column exportable="false">
+                            <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                <f:setPropertyActionListener value="#{item}" target="#{recaudacionCombustibleController.selectedItem}" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Cancelar? " header="Confirmación" severity="warn">
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{recaudacionCombustibleController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":VentaCombustibleListForm:datalist,:growl, dashboard"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                    </p:confirmDialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" width="300">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </div>
+
+            </div>
+
+
+
+            <p:card>
+                <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
+                <p:overlayPanel for="basic" style="width:350px">
+                    <p>OBSERVACIÓN: </p>
+                </p:overlayPanel>
+            </p:card>
+
+
+            <p:panel id="noprint" style="visibility: hidden">
+                <h:panelGrid id="ficha">
+                    <h:outputLabel value="Recaudación Petroleo" style="text-align: center;font-size: 25px; width: 100%;"/>
+                    <h:outputLabel value="Ñandu Tur S.A." style="text-align: center;font-size: 15px;width: 100%;"/>
+
+                    <h:panelGrid id="f" style="maring-top: 20px;" columns="2">
+                        <h:outputLabel value="Fecha:" style="width: 70px;"/>
+                        <h:outputLabel value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion.recaudacionFecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputLabel>
+
+                        <h:outputLabel value="Caja:" style="width: 70px; "/>
+                        <h:outputLabel value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion.recaudacionIdCaja.cajaRecaudacionNombre}" style="width: 70px;"/>
+
+                        <h:outputLabel value="N° Bus:" style="width: 70px; font-size: 20px;"/>
+                        <h:outputLabel value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdVentaCombustible.ventaCombustibleIdBus.busNumero}" style="font-size: 20px;"/>
+
+                    </h:panelGrid>
+
+                    <table style="width:100%">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Monto</th>
+                        </tr>
+                        <ui:repeat value="#{recaudacionCombustibleController.selected.recaudacionCombustibleIdRecaudacion.recaudacionCombustibleList}" var="egreso" >
+                            <tr>                        
+                                <td>
+                                    <h:outputLabel value="#{egreso.recaudacionCombustibleIdVentaCombustible.ventaCombustibleFecha}" style="width: 70px; font-size: 20px;">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputLabel>
+                                </td>
+                                <td>
+                                    <h:outputLabel value="#{egreso.recaudacionCombustibleMonto}" style="width: 70px; font-size: 20px;"/>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+
+                    </table>
+
+                </h:panelGrid>
+
+            </p:panel>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

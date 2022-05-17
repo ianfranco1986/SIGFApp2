@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "egreso_proceso_recaudacion", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "egreso_proceso_recaudacion")
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @Cacheable(false)

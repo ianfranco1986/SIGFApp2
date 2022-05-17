@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ianfr
  */
 @Entity
-@Table(name = "impuesto_segunda_categoria", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "impuesto_segunda_categoria")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ImpuestoSegundaCategoria.findAll", query = "SELECT i FROM ImpuestoSegundaCategoria i")

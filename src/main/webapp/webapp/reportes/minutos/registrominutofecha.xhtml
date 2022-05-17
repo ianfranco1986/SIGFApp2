@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Registro de Minutos x Fecha</ui:define>
+
+    <ui:define name="content">
+        <h:form id="RegistroMinutoListForm">
+
+            <p:panel>
+                <h3 style="text-align: center;">Registro de Minutos x Fecha (Nuevo)</h3>
+
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="desde">Desde</label>
+                        <p:calendar id="desde" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerMinutoFechaNuevo.desde}" required="true" requiredMessage="Debe ingresar la fecha desde" />
+
+                    </div>
+                    <div class="p-field">
+                        <label for="hasta">Hasta</label>
+                        <p:calendar id="hasta" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerMinutoFechaNuevo.hasta}" required="true" requiredMessage="Debe ingresar la fecha hasta" />
+
+                    </div>
+                    <div class="p-field">
+                        <label for="busIdFlota">Flota</label>
+                        <p:selectOneMenu id="busIdFlota" value="#{reportControllerMinutoFechaNuevo.flota}" converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="Todas"/>
+                            <f:selectItems value="#{flotaController.items}"
+                                           var="busIdFlotaItem"
+                                           itemValue="#{busIdFlotaItem}"
+                                           itemLabel="#{busIdFlotaItem.flotaNombre}"
+                                           />
+                            <p:ajax event="valueChange" update="multiple" listener="#{reportControllerMinutoFechaNuevo.handleFlotaChange}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="busMultiple">Bus(es)</label>
+                        <p:selectCheckboxMenu id="multiple" value="#{reportControllerMinutoFechaNuevo.selectedItems}" label="Cities" multiple="true" converter="omnifaces.SelectItemsConverter" 
+                                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                            <f:selectItems value="#{reportControllerMinutoFechaNuevo.items}" 
+                                           var="bus"
+                                           itemValue="#{bus}"
+                                           itemLabel="#{bus.busNumero} - #{bus.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>                    
+                        </p:selectCheckboxMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="mes"></label>
+                        <h:commandLink value="Generar Reporte" 
+                                       actionListener="#{reportController.downloadFile(reportControllerMinutoFechaNuevo.informe, reportControllerMinutoFechaNuevo.map)}" target="blank"  style="padding: .5em 1em;" styleClass="ui-button"/>
+
+                    </div>
+                </div>    
+
+
+                <div class="column-center">
+                    <p:media cache="false" rendered="#{empty reportControllerMinutoFechaNuevo.selectedItems}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
+                </div>
+            </p:panel>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

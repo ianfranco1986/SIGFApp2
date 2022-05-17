@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ianfr
  */
 @Entity
-@Table(name = "mutual", catalog = "sigfdb_baquedano", schema = "")
+@Table(name = "mutual")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Mutual.findAll", query = "SELECT m FROM Mutual m")

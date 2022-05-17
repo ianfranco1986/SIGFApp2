@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="78"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Crosstab Data Text"/>
+	<queryString>
+		<![CDATA[SELECT 
+    CONCAT(boleto.boleto_orden, ' -  ', boleto.boleto_nombre) AS boleto_nombre,
+    inventario_caja.inventario_caja_id_caja,
+    caja_recaudacion.caja_recaudacion_nombre
+FROM
+    inventario_caja
+        LEFT JOIN
+    caja_recaudacion ON caja_recaudacion.caja_recaudacion_id = inventario_caja.inventario_caja_id_caja
+        LEFT JOIN
+    inventario_interno ON inventario_caja.inventario_caja_id_inventario_interno = inventario_interno.inventario_interno_id
+        LEFT JOIN
+    boleto ON inventario_interno.inventario_interno_id_boleto = boleto.boleto_id
+WHERE
+    inventario_caja.inventario_caja_estado = 0
+    ORDER BY  boleto_orden ASC]]>
+	</queryString>
+	<field name="boleto_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="boleto_nombre"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inventario_caja_id_caja" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="inventario_caja_id_caja"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventario_caja"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="caja_recaudacion_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="caja_recaudacion_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caja_recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="66" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="59" width="550" height="1" uuid="9885b1da-5cf5-4e35-bef5-7a1d7127c829"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="170" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A. ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="19" width="100" height="20" uuid="f230d77d-5981-49a7-9356-fc24ced358e3"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="323" y="0" width="249" height="34" uuid="12b2e43a-c6d7-4140-8be8-e2262975641d"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inventario Boletos x Caja]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="386" y="7" width="152" height="15" uuid="6ab728d9-9927-475a-8cc0-d39c41dc962a"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="538" y="7" width="34" height="15" uuid="030b7bbb-7bb8-4db2-a176-fc1f356439a2"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="7" width="80" height="15" uuid="f8e66622-849a-4996-b9a1-cc0842e560d1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy h:mm a">
+				<reportElement x="80" y="7" width="165" height="15" uuid="fb7e9a4f-a58d-4521-bfd0-a5ea98da2955"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="44" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="0" width="572" height="44" uuid="16601682-9074-4716-ab03-1f032d986008"/>
+				<rowGroup name="boleto_nombre" width="120" totalPosition="End">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{boleto_nombre}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#C3CFD9" mode="Opaque">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="120" height="25" uuid="2383373c-12cc-4149-b5c2-e7f4d659944b"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Left"/>
+								<textFieldExpression><![CDATA[$V{boleto_nombre}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#E6F3FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="120" height="25" uuid="add32ad8-ae98-4b00-9c34-c8b84f3fb8ef"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<text><![CDATA[Total x Caja]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="caja_recaudacion_nombre" height="30" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{caja_recaudacion_nombre}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#C3CFD9" mode="Opaque">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="30" uuid="b58b9212-b639-456f-ab08-42fd794ddc52"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$V{caja_recaudacion_nombre}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#E6F3FF" mode="Opaque">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="a3ffc7ab-45f4-4c9f-a11c-a0a487e950c1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total x Tipo]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="boleto_nombreMeasure" class="java.lang.Integer" calculation="Count">
+					<measureExpression><![CDATA[$F{boleto_nombre}]]></measureExpression>
+				</measure>
+				<crosstabCell width="70" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="5bd93438-8df7-4bb8-b7d7-e0c87b04faa8"/>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$V{boleto_nombreMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="70" height="25" rowTotalGroup="boleto_nombre">
+					<cellContents backcolor="#E6F3FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="75d72680-758a-4ce7-a08c-b846a9e2da55"/>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$V{boleto_nombreMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="100" columnTotalGroup="caja_recaudacion_nombre">
+					<cellContents backcolor="#E6F3FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="100" height="25" uuid="e2d2649e-1ef4-4870-85c8-d82ccbee9440"/>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$V{boleto_nombreMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="100" rowTotalGroup="boleto_nombre" columnTotalGroup="caja_recaudacion_nombre">
+					<cellContents backcolor="#E6F3FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="100" height="25" uuid="27d370d6-e747-4b53-a198-3a29e3ead387"/>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$V{boleto_nombreMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="571" height="23" uuid="0a4711cc-3336-4e97-84d9-6ad49226864f"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sin Inventario de Boletos ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="23" width="571" height="20" uuid="85c8a6b0-1655-448c-a735-0c557ed0d227"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

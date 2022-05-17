@@ -23,7 +23,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
-import org.joda.time.DateTime;
 import org.primefaces.event.RowEditEvent;
 
 @Named(value = "movimientoMesViewController")
@@ -53,7 +52,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
     private Date hasta;
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
-    private DateTime dateTime;
+//    private DateTime dateTime;
 
     private String informeCuenta = "inf-detalle_movimiento_cuenta";
     private String informeTipo = "inf-detalle_movimiento_tipo";
@@ -107,7 +106,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
     public void load() {
         setFecha();
         if (this.fecha != null) {
-            this.items = new IMovimientoMesDaoImpl().findByDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
+//            this.items = new IMovimientoMesDaoImpl().findByDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
             this.model = new MovimientoMesDataModel(items);
             if (this.items.isEmpty()) {
                 JsfUtil.addWarningMessage("No se han encontrado registros " + desde + " -- " + hasta);
@@ -477,14 +476,6 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
         this.fecha = fecha;
     }
 
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
@@ -543,14 +534,14 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
     }
 
     public void setFecha() {
-        try {
-            System.err.println("NUEVA FECHA:");
-            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-            this.desde = this.fecha;
-            this.dateTime = new DateTime(this.fecha);
-            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
-        } catch (ParseException ex) {
-        }
+//        try {
+//            System.err.println("NUEVA FECHA:");
+//            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
+//            this.desde = this.fecha;
+//            this.dateTime = new DateTime(this.fecha);
+//            this.hasta = this.dateTime.dayOfMonth().withMaximumValue().toDate();
+//        } catch (ParseException ex) {
+//        }
     }
 
 }

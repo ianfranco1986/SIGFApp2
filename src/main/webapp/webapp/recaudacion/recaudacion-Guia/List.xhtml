@@ -41,7 +41,7 @@
                     <div class="p-formgrid p-grid">
                         <div class="p-field p-col">
                             <p:outputLabel for="fecha">Fecha</p:outputLabel>
-                            <p:datePicker id="fecha" value="#{recaudacionGuiaController.fecha}">
+                            <p:datePicker id="fecha" value="#{recaudacionGuiaController.fecha}" locale="es">
                                 <p:ajax event="dateSelect" listener="#{recaudacionGuiaController.load}"
                                         update="@(.clase), GuiaListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                             </p:datePicker>
@@ -72,8 +72,8 @@
                 <p:toolbar styleClass="p-mb-4">
                     <p:toolbarGroup>
                         <p:commandButton id="delete-products-button" value="#{recaudacionGuiaController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{recaudacionGuiaController.deleteSelectedGuias}"
-                                         styleClass="ui-button-danger" disabled="#{!recaudacionGuiaController.hasSelectedGuias()}" update="@this">
-                            <p:confirm header="Confirmación" message="¿Eliminar?" icon="pi pi-exclamation-triangle" />
+                                         styleClass="ui-button-danger" disabled="#{!recaudacionGuiaController.hasSelectedGuias()}" update=":GuiaListForm:datalist,:growl, dashboard,delete-products-button">
+                            <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
@@ -102,14 +102,14 @@
 
                         <p:ajax event="rowSelect" update=":GuiaListForm:delete-products-button" />
                         <p:ajax event="rowUnselect" update=":GuiaListForm:delete-products-button" />
-                        <p:ajax event="rowSelectCheckbox" update=":GuiaListForm:delete-products-button" />
+                        <p:ajax event="rowSelectCheckbox" update=":GuiaListForm:delete-products-button"/>
                         <p:ajax event="rowUnselectCheckbox" update=":GuiaListForm:delete-products-button" />
                         <p:ajax event="toggleSelect" update=":GuiaListForm:delete-products-button" />
 
 
                         <f:facet name="header">
                             <div class="products-table-header">
-                                <span style="font-weight: bold"><h3>Administración Recaudación</h3></span>
+                                <span style="font-weight: bold"><h3>Recaudación de Guías</h3></span>
 
                                 <span class="filter-container ui-input-icon-left">
                                     <i class="pi pi-search"></i>
@@ -118,7 +118,7 @@
                             </div>
                         </f:facet>
 
-                        <p:column selectionMode="multiple" exportable="false"></p:column>
+                        <p:column selectionMode="multiple" exportable="false" ></p:column>
 
 
                         <p:column style="text-align: center; ">
@@ -211,24 +211,6 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:column sortBy="#{item.fam}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalFam)}">
-                            <f:facet name="header">
-                                <h:outputText value="Fam"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fam}">
-                                <f:convertNumber />
-                            </h:outputText>
-                        </p:column>
-
-                        <p:column sortBy="#{item.varios}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalVarios)}">
-                            <f:facet name="header">
-                                <h:outputText value="Varios"/>
-                            </f:facet>
-                            <h:outputText value="#{item.varios}">
-                                <f:convertNumber />
-                            </h:outputText>
-                        </p:column>
-
                         <p:column sortBy="#{item.total}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalRecaudacion)}">
                             <f:facet name="header">
                                 <h:outputText value="Total"/>
@@ -245,14 +227,14 @@
                                              styleClass="edit-button rounded-button ui-button-success" process="@this">
                                 <f:setPropertyActionListener value="#{item}" target="#{recaudacionGuiaController.selectedItem}" />
                             </p:commandButton>
-                            <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                            <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist,:growl" process="@this" oncomplete="PF('deleteProductDialog').show()" >
                                 <f:setPropertyActionListener value="#{item}" target="#{recaudacionGuiaController.selectedItem}" />
                             </p:commandButton>
                         </p:column>
 
                     </p:dataTable>
-                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Anular las recaudaciones? " header="Confirmación" severity="warn">
-                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{recaudacionGuiaController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Cancelar? " header="Confirmación" severity="warn">
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{recaudacionGuiaController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":GuiaListForm:datalist,:growl, dashboard"/>
                         <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
                     </p:confirmDialog>
 
@@ -269,7 +251,7 @@
             <p:card>
                 <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
                 <p:overlayPanel for="basic" style="width:350px">
-                    <p>OBSERVACIÓN: Permite editar o eliminar los valores de Administración, C.Extra e Imposiciones. No se permite modificar boletos</p>
+                    <p>OBSERVACIÓN: Cancelar la recaudación de minutos seleccionada, devolverá el total de minutos asociados a la recaudación al listado de deudores</p>
                 </p:overlayPanel>
             </p:card>
 
