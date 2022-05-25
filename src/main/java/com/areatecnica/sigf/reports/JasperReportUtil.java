@@ -5,14 +5,6 @@
  */
 package com.areatecnica.sigf.reports;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -21,8 +13,16 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -48,7 +48,7 @@ public class JasperReportUtil {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "root", ".TrustNo1.");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "nandu", ".TrustNo1.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class JasperReportUtil {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "root", ".TrustNo1.");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sigfdb?useSSL=false", "nandu", ".TrustNo1.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

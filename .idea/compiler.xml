@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SIGFapp" />
+        <module name="SIGFApp2" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SIGFApp2" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
       <module name="SIGFapp" options="-endorseddirs C:\Users\ianfr\OneDrive\Documentos\Projects\Java\SIGFApp\target/endorsed" />
     </option>
   </component>

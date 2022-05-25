@@ -7,6 +7,7 @@ package com.areatecnica.sigf.validators;
 
 import com.areatecnica.sigf.dao.ITrabajadorDao;
 import com.areatecnica.sigf.entities.Usuario;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -21,9 +22,9 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("rutValidator")
 public class RutValidator implements Validator {
 
-    private FacesMessage msg;
+    private final FacesMessage msg;
     private ITrabajadorDao trabajadorDao;
-    private Usuario usuario;
+    private final Usuario usuario;
 
     public RutValidator() {
         this.msg = new FacesMessage("Rut Mal Formado", "Error de validación");

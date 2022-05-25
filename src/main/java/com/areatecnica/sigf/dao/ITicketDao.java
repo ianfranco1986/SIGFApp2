@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Ticket;
 import com.areatecnica.sigf.entities.Usuario;
+
 import java.util.List;
 
 /**
@@ -15,6 +16,6 @@ import java.util.List;
  */
 public interface ITicketDao<T> extends IGenericDAO<T> {
 
-    public List<Ticket> findAllByUser(Usuario usuario);
+    List<Ticket> findAllByUser(Usuario usuario);
 
 }

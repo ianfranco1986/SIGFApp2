@@ -6,11 +6,9 @@
 package com.areatecnica.sigf.facade;
 
 import com.areatecnica.sigf.entities.Bus;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.ejb.Stateless;
 import javax.persistence.Persistence;
 
 /**
@@ -20,7 +18,7 @@ import javax.persistence.Persistence;
 @Stateless
 public class BusFacade extends AbstractFacade<Bus> {
 
-    private EntityManager em = Persistence.createEntityManagerFactory("com.areatecnica_SIGFapp_war_1PU").createEntityManager();
+    private final EntityManager em = Persistence.createEntityManagerFactory("com.areatecnica_SIGFapp_war_1PU").createEntityManager();
 
     @Override
     protected EntityManager getEntityManager() {

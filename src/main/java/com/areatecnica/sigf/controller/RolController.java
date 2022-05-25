@@ -3,12 +3,12 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.entities.Rol;
 import com.areatecnica.sigf.entities.RolMenu;
 import com.areatecnica.sigf.entities.Usuario;
-import java.util.List;
 import com.areatecnica.sigf.facade.RolFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "rolController")
 @ViewScoped

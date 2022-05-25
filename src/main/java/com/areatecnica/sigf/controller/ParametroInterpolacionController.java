@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.ParametroInterpolacion;
-import com.areatecnica.sigf.facade.ParametroInterpolacionFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @Named(value = "parametroInterpolacionController")
 @ViewScoped

@@ -8,12 +8,12 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.IVentaBoletoDao;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
+import com.areatecnica.sigf.entities.VentaBoleto;
+
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
 
 /**
  *

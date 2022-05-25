@@ -6,30 +6,14 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.PostUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -237,10 +221,7 @@ public class VentaBoleto extends BaseEntity implements Serializable {
             return false;
         }
         VentaBoleto other = (VentaBoleto) object;
-        if ((this.ventaBoletoId == null && other.ventaBoletoId != null) || (this.ventaBoletoId != null && !this.ventaBoletoId.equals(other.ventaBoletoId))) {
-            return false;
-        }
-        return true;
+        return (this.ventaBoletoId != null || other.ventaBoletoId == null) && (this.ventaBoletoId == null || this.ventaBoletoId.equals(other.ventaBoletoId));
     }
 
     @Override

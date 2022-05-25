@@ -13,7 +13,9 @@
 
         <h:form id="GuiaListForm">
             <p:card id="dashboard">
+                <span style="font-weight: bold"><h3>Recaudación de Guías</h3></span>
                 <div  class="dashboard p-grid">
+                    
                     <div class="p-col-12 p-md-6 p-lg-3">
                         <div class="widget-overview overview-box-2">
                             <div class="overview-box-title">
@@ -37,38 +39,39 @@
 
 
                 </div>
-                <div class="card ui-fluid">
-                    <div class="p-formgrid p-grid">
-                        <div class="p-field p-col">
-                            <p:outputLabel for="fecha">Fecha</p:outputLabel>
-                            <p:datePicker id="fecha" value="#{recaudacionGuiaController.fecha}" locale="es">
-                                <p:ajax event="dateSelect" listener="#{recaudacionGuiaController.load}"
-                                        update="@(.clase), GuiaListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                            </p:datePicker>
-
-                        </div>
-                        <div class="p-field p-col">
-                            <p:outputLabel for="cajaRecaudacionIdCaja">Caja</p:outputLabel>
-                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionGuiaController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                <f:selectItems value="#{recaudacionGuiaController.cajaRecaudacionItems}"
-                                               var="cajaId"
-                                               itemValue="#{cajaId}"
-                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
-                                               />
-                                <p:ajax event="valueChange"  listener="#{recaudacionGuiaController.load}" update="@(.clase), GuiaListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-
-                            </p:selectOneMenu>
-                        </div>
-
+                <p:separator/>
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label>Fecha</label>
+                        
+                        <p:datePicker id="fecha" value="#{recaudacionGuiaController.fecha}" locale="es">
+                            <p:ajax event="dateSelect" listener="#{recaudacionGuiaController.load}"
+                                    update="@(.clase), GuiaListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:datePicker>
 
                     </div>
+                    <div class="p-field">
+                        <label>Caja</label>
+                        <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionGuiaController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recaudacionGuiaController.cajaRecaudacionItems}"
+                                           var="cajaId"
+                                           itemValue="#{cajaId}"
+                                           itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                           />
+                            <p:ajax event="valueChange"  listener="#{recaudacionGuiaController.load}" update="@(.clase), GuiaListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+
+                        </p:selectOneMenu>
+                    </div>
+
+
                 </div>
+
             </p:card>
 
             <p:separator/>
 
-            <div class="card">
+            <p:card>
                 <p:toolbar styleClass="p-mb-4">
                     <p:toolbarGroup>
                         <p:commandButton id="delete-products-button" value="#{recaudacionGuiaController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{recaudacionGuiaController.deleteSelectedGuias}"
@@ -109,7 +112,7 @@
 
                         <f:facet name="header">
                             <div class="products-table-header">
-                                <span style="font-weight: bold"><h3>Recaudación de Guías</h3></span>
+                                
 
                                 <span class="filter-container ui-input-icon-left">
                                     <i class="pi pi-search"></i>
@@ -242,7 +245,7 @@
 
                         <p:column exportable="false">
                             <p:commandButton icon="pi pi-pencil" update="RecaudacionEditForm" oncomplete="PF('RecaudacionEditDialog').show()" 
-                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                             styleClass="edit-button rounded-button ui-button-warning" process="@this">
                                 <f:setPropertyActionListener value="#{item}" target="#{recaudacionGuiaController.selectedItem}" />
                             </p:commandButton>
                             <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist,:growl" process="@this" oncomplete="PF('deleteProductDialog').show()" >
@@ -262,9 +265,9 @@
                     </p:confirmDialog>
                 </div>
 
-            </div>
+            </p:card>
 
-
+            <p:separator/>
 
             <p:card>
                 <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>

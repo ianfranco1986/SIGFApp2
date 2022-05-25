@@ -6,20 +6,11 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  *
@@ -125,10 +116,7 @@ public class RecaudacionGuia extends BaseEntity implements Serializable {
             return false;
         }
         RecaudacionGuia other = (RecaudacionGuia) object;
-        if ((this.recaudacionGuiaId == null && other.recaudacionGuiaId != null) || (this.recaudacionGuiaId != null && !this.recaudacionGuiaId.equals(other.recaudacionGuiaId))) {
-            return false;
-        }
-        return true;
+        return (this.recaudacionGuiaId != null || other.recaudacionGuiaId == null) && (this.recaudacionGuiaId == null || this.recaudacionGuiaId.equals(other.recaudacionGuiaId));
     }
 
     @Override

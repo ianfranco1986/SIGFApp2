@@ -5,11 +5,8 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.entities.Boleto;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.RecaudacionCombustible;
-import com.areatecnica.sigf.entities.Terminal;
+import com.areatecnica.sigf.entities.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,25 +17,25 @@ import java.util.List;
  */
 public interface IRecaudacionCombustibleDao<T> extends IGenericDAO<T> {
 
-    public List<RecaudacionCombustible> findTodos();
+    List<RecaudacionCombustible> findTodos();
 
-    public List<RecaudacionCombustible> findByDate(Date fecha);
+    List<RecaudacionCombustible> findByDate(Date fecha);
 
-    public List<RecaudacionCombustible> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta);
+    List<RecaudacionCombustible> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta);
 
-    public List<RecaudacionCombustible> findByBusAndDate(Bus bus);
+    List<RecaudacionCombustible> findByBusAndDate(Bus bus);
 
-    public List<RecaudacionCombustible> findByDefaultBus();
+    List<RecaudacionCombustible> findByDefaultBus();
 
-    public List<RecaudacionCombustible> findByBusSinRecaudar(Bus bus);
+    List<RecaudacionCombustible> findByBusSinRecaudar(Bus bus);
 
-    public RecaudacionCombustible findByBus(Bus bus, Boleto boleto);
+    RecaudacionCombustible findByBus(Bus bus, Boleto boleto);
 
-    public List<RecaudacionCombustible> findByTerminalDate(Terminal terminal, Date fecha);
+    List<RecaudacionCombustible> findByTerminalDate(Terminal terminal, Date fecha);
 
-    public int findLastNumeroBoleta(Terminal terminal);
+    int findLastNumeroBoleta(Terminal terminal);
 
-    public void update2(RecaudacionCombustible venta);
+    void update2(RecaudacionCombustible venta);
 
-    public void detach(RecaudacionCombustible venta);
+    void detach(RecaudacionCombustible venta);
 }

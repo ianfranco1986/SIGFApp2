@@ -1,22 +1,14 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.Surtidor;
-import com.areatecnica.sigf.entities.Usuario;
-import com.areatecnica.sigf.entities.LiquidacionSueldo;
-import com.areatecnica.sigf.entities.Trabajador;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.RelacionLaboral;
-import com.areatecnica.sigf.entities.GrupoServicio;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Servicio;
-import java.util.List;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.facade.TerminalFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "terminalController")
 @ViewScoped

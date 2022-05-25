@@ -1,11 +1,12 @@
 package com.areatecnica.sigf.dao;
 
-import java.util.List;
-import java.util.Map;
+import org.primefaces.model.SortOrder;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.primefaces.model.SortOrder;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -36,9 +37,9 @@ public interface IGenericDAO<T> extends java.io.Serializable {
 
     List<T> findAll();
 
-    public Predicate getFilterCondition(CriteriaBuilder cb, Root<T> root, Map<String, Object> filters,List<String> columnNameList);
+    Predicate getFilterCondition(CriteriaBuilder cb, Root<T> root, Map<String, Object> filters,List<String> columnNameList);
 
-    public List<T> loadLazy(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters,List<String> columnNameList);
+    List<T> loadLazy(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters,List<String> columnNameList);
 
-    public int count(Map<String, Object> filters,List<String> columnNameList);
+    int count(Map<String, Object> filters,List<String> columnNameList);
 }

@@ -6,10 +6,10 @@
 package com.areatecnica.sigf.validators;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.ITrabajadorDao;
 import com.areatecnica.sigf.dao.impl.IProveedorDaoImpl;
 import com.areatecnica.sigf.entities.Proveedor;
 import com.areatecnica.sigf.entities.Usuario;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -24,8 +24,8 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("rutValidatorProveedor")
 public class RutValidatorProveedor implements Validator {
 
-    private FacesMessage msg;
-    private Usuario usuario;
+    private final FacesMessage msg;
+    private final Usuario usuario;
 
     public RutValidatorProveedor() {
         this.msg = new FacesMessage("Error de validación", "Error de validación");

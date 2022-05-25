@@ -6,7 +6,6 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Proveedor;
-import java.util.List;
 
 /**
  *
@@ -14,7 +13,7 @@ import java.util.List;
  */
 public interface IProveedorDao<T> extends IGenericDAO<T> {
 
-    public Proveedor findByRut(String rut);
+    Proveedor findByRut(String rut);
 
 
 

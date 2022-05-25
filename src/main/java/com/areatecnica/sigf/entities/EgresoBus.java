@@ -6,23 +6,12 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  *
@@ -157,10 +146,7 @@ public class EgresoBus extends BaseEntity implements Serializable {
             return false;
         }
         EgresoBus other = (EgresoBus) object;
-        if ((this.egresoBusId == null && other.egresoBusId != null) || (this.egresoBusId != null && !this.egresoBusId.equals(other.egresoBusId))) {
-            return false;
-        }
-        return true;
+        return (this.egresoBusId != null || other.egresoBusId == null) && (this.egresoBusId == null || this.egresoBusId.equals(other.egresoBusId));
     }
 
     @Override

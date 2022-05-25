@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.EgresoCajaRecaudacion;
+
 import java.util.List;
 
 /**
@@ -16,6 +17,6 @@ import java.util.List;
  */
 public interface IEgresoCajaRecaudacionDao<T> extends IGenericDAO<T> {
     
-    public List<EgresoCajaRecaudacion> findAllByCajaRecaudacion(CajaRecaudacion cajaRecaudacion);
+    List<EgresoCajaRecaudacion> findAllByCajaRecaudacion(CajaRecaudacion cajaRecaudacion);
     
 }

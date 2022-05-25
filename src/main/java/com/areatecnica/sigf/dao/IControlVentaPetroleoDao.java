@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.ControlVentaPetroleo;
 import com.areatecnica.sigf.entities.Cuenta;
+
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface IControlVentaPetroleoDao<T> extends IGenericDAO<T> {
 
-    public ControlVentaPetroleo findById(int id);
+    ControlVentaPetroleo findById(int id);
 
-    public List<ControlVentaPetroleo> findByDates(Date from, Date to, Cuenta cuenta);
+    List<ControlVentaPetroleo> findByDates(Date from, Date to, Cuenta cuenta);
 }

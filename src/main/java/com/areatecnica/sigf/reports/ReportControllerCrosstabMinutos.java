@@ -8,17 +8,14 @@ package com.areatecnica.sigf.reports;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+import java.util.*;
 
 /**
  *
@@ -174,7 +171,7 @@ public class ReportControllerCrosstabMinutos implements Serializable {
     public void setFecha() {
         try {
 
-            this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
+            this.fecha = sdf.parse(this.anio + "/" + this.mes + "/01");
             System.err.println("NUEVA FECHA: " + this.fecha);
         } catch (ParseException ex) {
         }

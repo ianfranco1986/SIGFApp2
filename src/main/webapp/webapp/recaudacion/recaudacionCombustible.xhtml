@@ -13,6 +13,7 @@
 
         <h:form id="VentaCombustibleListForm">
             <p:card id="dashboard">
+                <span style="font-weight: bold"><h3>Recaudación de Combustible</h3></span>
                 <div  class="dashboard p-grid">
                     <div class="p-col-12 p-md-6 p-lg-3">
                         <div class="widget-overview overview-box-2">
@@ -34,41 +35,40 @@
                             <div class="overview-box-stats">#{recaudacionCombustibleController.itemsRecaudacion.size()>0?recaudacionCombustibleController.itemsRecaudacion.size():0} Vouchers)</div>
                         </div>
                     </div>
-
-
                 </div>
-                <div class="card ui-fluid">
-                    <div class="p-formgrid p-grid">
-                        <div class="p-field p-col">
-                            <p:outputLabel for="fecha">Fecha</p:outputLabel>
-                            <p:datePicker id="fecha" value="#{recaudacionCombustibleController.fecha}" locale="es">
-                                <p:ajax event="dateSelect" listener="#{recaudacionCombustibleController.load}"
-                                        update="@(.clase), VentaCombustibleListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                            </p:datePicker>
+                <p:separator/>
+                <div class="ui-fluid">
 
-                        </div>
-                        <div class="p-field p-col">
-                            <p:outputLabel for="cajaRecaudacionIdCaja">Caja</p:outputLabel>
-                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionCombustibleController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                <f:selectItems value="#{recaudacionCombustibleController.cajaRecaudacionItems}"
-                                               var="cajaId"
-                                               itemValue="#{cajaId}"
-                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
-                                               />
-                                <p:ajax event="valueChange"  listener="#{recaudacionCombustibleController.load}" update="@(.clase), VentaCombustibleListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-
-                            </p:selectOneMenu>
-                        </div>
-
+                    <div class="p-field">
+                        <label>Fecha</label>
+                        <p:datePicker id="fecha" value="#{recaudacionCombustibleController.fecha}" locale="es">
+                            <p:ajax event="dateSelect" listener="#{recaudacionCombustibleController.load}"
+                                    update="@(.clase), VentaCombustibleListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:datePicker>
 
                     </div>
+                    <div class="p-field">
+                        <label>Caja</label>
+                        <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionCombustibleController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recaudacionCombustibleController.cajaRecaudacionItems}"
+                                           var="cajaId"
+                                           itemValue="#{cajaId}"
+                                           itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                           />
+                            <p:ajax event="valueChange"  listener="#{recaudacionCombustibleController.load}" update="@(.clase), VentaCombustibleListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+
+                        </p:selectOneMenu>
+                    </div>
+
+
+
                 </div>
             </p:card>
-            
+
             <p:separator/>
 
-            <div class="card">
+            <p:card>
                 <p:toolbar styleClass="p-mb-4">
                     <p:toolbarGroup>
                         <p:commandButton id="delete-products-button" value="#{recaudacionCombustibleController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{recaudacionCombustibleController.deleteSelectedGuias}"
@@ -107,7 +107,7 @@
 
                         <f:facet name="header">
                             <div class="products-table-header">
-                                <span style="font-weight: bold"><h3>Recaudación de Combustible</h3></span>
+
 
                                 <span class="filter-container ui-input-icon-left">
                                     <i class="pi pi-search"></i>
@@ -199,9 +199,9 @@
                     </p:confirmDialog>
                 </div>
 
-            </div>
+            </p:card>
 
-
+            <p:separator/>
 
             <p:card>
                 <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>

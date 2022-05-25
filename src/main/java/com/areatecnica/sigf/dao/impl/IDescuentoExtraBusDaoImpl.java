@@ -8,8 +8,9 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.IDescuentoExtraBusDao;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.DescuentoExtraBus;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

@@ -12,111 +12,13 @@
     <ui:define name="content">
 
         <h:form id="InventarioCajaListForm">
-            <p:card id="dashboard">
-                <div  class="dashboard p-grid">
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-2">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Directo</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-3">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Plan Viña</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-2">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Local</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-3">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Esc. Directo</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-2">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Esc. Local</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-3">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>AM.Directo</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-2">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>AM.Plan Viña</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-3">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>AM.Local</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="card ui-fluid">
-                    <div class="p-formgrid p-grid">
-                        <div class="p-field p-col">
-
-
-
-                        </div>
-                        <div class="p-field p-col">
-
-                        </div>
-                    </div>
-                </div>
-            </p:card>
-
-            <p:separator/>
 
             <div class="card">
                 <p:toolbar styleClass="p-mb-4">
                     <p:toolbarGroup>
                         <p:commandButton id="delete-products-button" value="#{inventarioCajaController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{inventarioCajaController.deleteSelectedGuias}"
-                                         styleClass="ui-button-danger" disabled="#{!inventarioCajaController.hasSelectedGuias()}" update=":InventarioCajaListForm:datalist,:growl, dashboard,delete-products-button">
+                                         styleClass="ui-button-danger" disabled="#{!inventarioCajaController.hasSelectedGuias()}" update=":InventarioCajaListForm:datalist,:growl, delete-products-button">
                             <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
                     </p:toolbarGroup>
@@ -133,6 +35,7 @@
                                  rowKey="#{item.inventarioCajaId}"
                                  var="item"
                                  paginator="true"
+                                 paginatorPosition="bottom"
                                  rowSelectMode="add" 
                                  selection="#{inventarioCajaController.selectedItems}"
                                  widgetVar="datalistWidget"
@@ -147,7 +50,7 @@
                                  lazy="true"
                                  rowKey="HASH{item.inventarioCajaId}"  <<< Remove this line
                         -->
-                        
+
                         <p:ajax event="rowSelect" update=":InventarioCajaListForm:delete-products-button" />
                         <p:ajax event="rowUnselect" update=":InventarioCajaListForm:delete-products-button" />
                         <p:ajax event="rowSelectCheckbox" update=":InventarioCajaListForm:delete-products-button"/>
@@ -157,7 +60,7 @@
 
                         <f:facet name="header">
                             <div class="products-table-header">
-                                <span style="font-weight: bold"><h3>Inventario Interno</h3></span>
+                                <span style="font-weight: bold"><h3>Inventario Cajas</h3></span>
 
                                 <span class="filter-container ui-input-icon-left">
                                     <i class="pi pi-search"></i>
@@ -166,10 +69,10 @@
                             </div>
                         </f:facet>
 
-                        <p:column selectionMode="multiple" exportable="false" ></p:column>
-                        
-                        
-                        <p:column sortBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" headerText="Boleto" filterBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}">
+
+
+
+                        <p:column sortBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" headerText="Boleto" filterBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" groupRow="true">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('datalistWidget').filter()" >
                                     <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" noSelectionOption="true" />
@@ -179,35 +82,9 @@
                             <h:outputText value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
                         </p:column>
 
-                        <p:column >
-                            <f:facet name="header">
-                                <h:outputText value="#"/>
-                            </f:facet>
-                            <h:outputText value="#{rowIndex+1}"/>
-                        </p:column>
 
 
-
-                        <p:column sortBy="#{item.inventarioCajaSerie}" filterBy="#{item.inventarioCajaSerie}">
-                            <f:facet name="header">
-                                <h:outputText value="Serie"/>
-                            </f:facet>
-                            <h:outputText value="#{item.inventarioCajaSerie}"/>
-                        </p:column>
-
-
-                        <p:column sortBy="#{item.inventarioCajaIdentificador}" filterBy="#{item.inventarioCajaIdentificador}">
-                            <f:facet name="header">
-                                <h:outputText value="Identificador"/>
-                            </f:facet>
-                            <h:outputText value="#{item.inventarioCajaIdentificador}"/>
-                        </p:column>
-
-
-
-
-
-                        <p:column sortBy="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}" filterBy="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}" headerText="Caja" >
+                        <p:column sortBy="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}" filterBy="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}" headerText="Caja" groupRow="true">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('datalistWidget').filter()" >
                                     <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" noSelectionOption="true" />
@@ -217,10 +94,41 @@
                             <h:outputText value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombre}"/>
                         </p:column>
 
+                        <p:column selectionMode="multiple" exportable="false" ></p:column>
+
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.inventarioCajaSerie}" filterBy="#{item.inventarioCajaSerie}">
+                            <f:facet name="header">
+                                <h:outputText value="Serie"/>
+                            </f:facet>
+                            <h:outputText value="#{item.inventarioCajaSerie}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.inventarioCajaIdentificador}" filterBy="#{item.inventarioCajaIdentificador}">
+                            <f:facet name="header">
+                                <h:outputText value="Identificador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.inventarioCajaIdentificador}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ingreso"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaCreacion}">
+                                <f:convertDateTime pattern="dd-MM-yy HH:mm"/>
+                            </h:outputText>
+                        </p:column>
 
                     </p:dataTable>
                     <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Cancelar? " header="Confirmación" severity="warn">
-                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{inventarioCajaController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":InventarioCajaListForm:datalist,:growl, dashboard"/>
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{inventarioCajaController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":InventarioCajaListForm:datalist,:growl"/>
                         <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
                     </p:confirmDialog>
 

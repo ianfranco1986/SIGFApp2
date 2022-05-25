@@ -5,14 +5,8 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.EstadoBus;
-import com.areatecnica.sigf.entities.Flota;
-import com.areatecnica.sigf.entities.GrupoServicio;
-import com.areatecnica.sigf.entities.ProcesoRecaudacion;
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.UnidadNegocio;
+import com.areatecnica.sigf.entities.*;
+
 import java.util.List;
 
 /**
@@ -21,23 +15,23 @@ import java.util.List;
  */
 public interface IBusDao<T> extends IGenericDAO<T> {
 
-    public int findMaxNumeroUnidad(UnidadNegocio unidadNegocio);
+    int findMaxNumeroUnidad(UnidadNegocio unidadNegocio);
 
-    public List<Bus> findByUnidad(UnidadNegocio unidadNegocio);
+    List<Bus> findByUnidad(UnidadNegocio unidadNegocio);
 
-    public List<Bus> findByProceso(ProcesoRecaudacion procesoRecaudacion);
+    List<Bus> findByProceso(ProcesoRecaudacion procesoRecaudacion);
 
-    public List<Bus> findByGrupoServicio(GrupoServicio grupoServicio);
+    List<Bus> findByGrupoServicio(GrupoServicio grupoServicio);
 
-    public List<Bus> findAllByTerminal(Terminal terminal);
+    List<Bus> findAllByTerminal(Terminal terminal);
     
-    public List<Bus> findByEmpresa(Empresa empresa);
+    List<Bus> findByEmpresa(Empresa empresa);
     
-    public List<Bus> findByEmpresaUnidad(Empresa empresa, UnidadNegocio unidad);
+    List<Bus> findByEmpresaUnidad(Empresa empresa, UnidadNegocio unidad);
 
-    public List<Bus> findAllByFlota(Flota flota);
+    List<Bus> findAllByFlota(Flota flota);
 
-    public List<Bus> findAllByFlotaUnidad(Flota flota, UnidadNegocio negocio);
+    List<Bus> findAllByFlotaUnidad(Flota flota, UnidadNegocio negocio);
 
-    public Bus findDefaultBus(EstadoBus estadoBus);
+    Bus findDefaultBus(EstadoBus estadoBus);
 }

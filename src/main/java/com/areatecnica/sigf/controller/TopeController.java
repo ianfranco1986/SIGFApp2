@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.Tope;
-import com.areatecnica.sigf.facade.TopeFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @Named(value = "topeController")
 @ViewScoped

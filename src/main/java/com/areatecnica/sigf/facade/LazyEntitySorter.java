@@ -1,7 +1,8 @@
 package com.areatecnica.sigf.facade;
 
-import java.util.Comparator;
 import org.primefaces.model.SortOrder;
+
+import java.util.Comparator;
 
 /**
  *

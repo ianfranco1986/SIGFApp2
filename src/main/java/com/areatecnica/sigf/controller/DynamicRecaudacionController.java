@@ -4,24 +4,18 @@
  */
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
+import com.areatecnica.sigf.dao.impl.*;
 import com.areatecnica.sigf.entities.*;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-
 import java.util.*;
-import java.util.Map.Entry;
-import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
 
 @Named(value = "dynamicRecaudacionController")
 @ViewScoped
@@ -55,7 +49,7 @@ public class DynamicRecaudacionController implements Serializable {
 
     LocalDate f;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
 
     @PostConstruct
     public void init() {
@@ -144,7 +138,7 @@ public class DynamicRecaudacionController implements Serializable {
                         hashMap.put(key, rg.getRecaudacionGuiaMonto());
 
                         if (totales.containsKey(order)) {
-                            int aux = (int) totales.get(order);
+                            int aux = totales.get(order);
                             aux += rg.getRecaudacionGuiaMonto();
                             totales.put(order, aux);
                         } else {
@@ -170,7 +164,7 @@ public class DynamicRecaudacionController implements Serializable {
             //optimizar acá
 
             for (Object i : totales.keySet()) {
-                int totali = (int) totales.get(i);
+                int totali = totales.get(i);
                 resultsTotals.set((3 + (int) i), nf.format(totali));
 
                 this.totalRecaudacion += totali;

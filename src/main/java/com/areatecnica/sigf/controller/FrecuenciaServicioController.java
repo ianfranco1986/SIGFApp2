@@ -1,11 +1,11 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.FrecuenciaServicio;
-import com.areatecnica.sigf.facade.FrecuenciaServicioFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "frecuenciaServicioController")
 @ViewScoped

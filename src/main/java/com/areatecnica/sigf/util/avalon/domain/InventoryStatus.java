@@ -20,7 +20,7 @@ public enum InventoryStatus {
     OUTOFSTOCK("Out of Stock"), 
     LOWSTOCK("Low Stock");
  
-    private String text;
+    private final String text;
  
     InventoryStatus(String text) {
         this.text = text;

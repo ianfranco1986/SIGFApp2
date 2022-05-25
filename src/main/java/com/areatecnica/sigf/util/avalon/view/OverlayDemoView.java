@@ -15,16 +15,14 @@
  */
 package com.areatecnica.sigf.util.avalon.view;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.areatecnica.sigf.util.avalon.domain.Customer;
 import com.areatecnica.sigf.util.avalon.service.CustomerService;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named
 @RequestScoped

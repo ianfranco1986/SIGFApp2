@@ -6,16 +6,16 @@
 package com.areatecnica.sigf.facade;
 
 import com.areatecnica.sigf.entities.OperadorTransporte;
+import com.areatecnica.sigf.entities.RelacionLaboral;
+import com.areatecnica.sigf.entities.RepresentanteLegal;
+import com.areatecnica.sigf.entities.UnidadNegocio;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.OperadorTransporte_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.RepresentanteLegal;
-import com.areatecnica.sigf.entities.RelacionLaboral;
-import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.util.List;
 
 /**

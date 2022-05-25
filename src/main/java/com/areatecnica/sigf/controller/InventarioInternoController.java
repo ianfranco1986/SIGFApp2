@@ -4,15 +4,12 @@ import com.areatecnica.sigf.dao.impl.IBoletoDaoImpl;
 import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.InventarioInterno;
-import com.areatecnica.sigf.entities.InventarioCaja;
-import java.util.List;
-import com.areatecnica.sigf.facade.InventarioInternoFacade;
-import java.util.ArrayList;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named(value = "inventarioInternoController")
 @ViewScoped

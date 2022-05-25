@@ -1,13 +1,10 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.LiquidacionEmpresa;
-import java.util.List;
-import com.areatecnica.sigf.facade.LiquidacionEmpresaFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "liquidacionEmpresaController")
 @ViewScoped

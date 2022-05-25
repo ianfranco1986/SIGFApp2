@@ -15,16 +15,14 @@
  */
 package com.areatecnica.sigf.util.avalon.view;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.areatecnica.sigf.util.avalon.service.DocumentService;
 import org.primefaces.model.TreeNode;
 
-import java.io.Serializable;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
 
 @Named
 @ViewScoped

@@ -1,26 +1,25 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.entities.EgresoFlota;
-
 import com.areatecnica.sigf.dao.IEgresoDao;
 import com.areatecnica.sigf.dao.IEgresoFlotaDao;
 import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEgresoFlotaDaoImpl;
 import com.areatecnica.sigf.entities.Egreso;
+import com.areatecnica.sigf.entities.EgresoFlota;
 import com.areatecnica.sigf.entities.Flota;
 import com.areatecnica.sigf.facade.EgresoFlotaFacade;
 import com.areatecnica.sigf.models.EgresoFlotaDataModel;
+import org.primefaces.event.ReorderEvent;
+
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import org.primefaces.event.ReorderEvent;
 
 @Named(value = "egresoFlotaController")
 @ViewScoped

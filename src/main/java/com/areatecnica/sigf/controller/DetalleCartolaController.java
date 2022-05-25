@@ -13,15 +13,16 @@ import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.DetalleCartola;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.models.DetalleCartolaDataModel;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 
 @Named(value = "detalleCartolaController")
 @ViewScoped

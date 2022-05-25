@@ -12,5 +12,5 @@ import com.areatecnica.sigf.entities.Usuario;
  * @author ianfr
  */
 public interface ILoginDao<T> extends IGenericDAO<T>{
-    public Usuario login(String rut, String pass);
+    Usuario login(String rut, String pass);
 }

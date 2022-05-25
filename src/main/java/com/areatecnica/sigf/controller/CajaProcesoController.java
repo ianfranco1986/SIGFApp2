@@ -9,14 +9,14 @@ import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.facade.CajaProcesoFacade;
 import com.areatecnica.sigf.models.ProcesoCajaRecaudacionDataModel;
+
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 @Named(value = "cajaProcesoController")
 @ViewScoped

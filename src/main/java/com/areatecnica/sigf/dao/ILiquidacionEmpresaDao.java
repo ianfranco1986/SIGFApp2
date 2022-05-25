@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.LiquidacionEmpresa;
+
 import java.util.Date;
 
 /**
@@ -15,6 +16,6 @@ import java.util.Date;
  */
 public interface ILiquidacionEmpresaDao<T> extends IGenericDAO<T> {
 
-    public LiquidacionEmpresa findByEmpresaBetweenDate(Empresa empresa, Date from, Date to);
+    LiquidacionEmpresa findByEmpresaBetweenDate(Empresa empresa, Date from, Date to);
 
 }

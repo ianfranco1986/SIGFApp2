@@ -8,11 +8,12 @@ package com.areatecnica.sigf.controller.reports;
 import com.areatecnica.sigf.dao.IBusDao;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  *

@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.MetodoPago;
-import com.areatecnica.sigf.facade.MetodoPagoFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @Named(value = "metodoPagoController")
 @ViewScoped

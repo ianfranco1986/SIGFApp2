@@ -5,25 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -114,10 +102,7 @@ public class Calle implements Serializable {
             return false;
         }
         Calle other = (Calle) object;
-        if ((this.calleId == null && other.calleId != null) || (this.calleId != null && !this.calleId.equals(other.calleId))) {
-            return false;
-        }
-        return true;
+        return (this.calleId != null || other.calleId == null) && (this.calleId == null || this.calleId.equals(other.calleId));
     }
 
     @Override

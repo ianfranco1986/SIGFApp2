@@ -6,15 +6,15 @@
 package com.areatecnica.sigf.facade;
 
 import com.areatecnica.sigf.entities.HaberLiquidacion;
+import com.areatecnica.sigf.entities.HaberTrabajador;
+import com.areatecnica.sigf.entities.LiquidacionSueldo;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.HaberLiquidacion_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.HaberTrabajador;
-import com.areatecnica.sigf.entities.LiquidacionSueldo;
 
 /**
  *

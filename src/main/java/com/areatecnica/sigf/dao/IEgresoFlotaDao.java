@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.Flota;
+
 import java.util.List;
 
 /**
@@ -16,6 +17,6 @@ import java.util.List;
  */
 public interface IEgresoFlotaDao<T> extends IGenericDAO<T> {
     
-    public List<Egreso> findAllByFlota(Flota flota);
+    List<Egreso> findAllByFlota(Flota flota);
     
 }

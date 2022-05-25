@@ -16,12 +16,12 @@ import java.util.Locale;
  */
 public class LocalDateConverter {
 
-    private ZoneId defaultZoneId = ZoneId.systemDefault();
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
-    private DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MMMM'/'yyyy", new Locale("es", "PE"));
+    private final ZoneId defaultZoneId = ZoneId.systemDefault();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
+    private final DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MMMM'/'yyyy", new Locale("es", "PE"));
 
-    private LocalDate date;
-    private Date toDate;
+    private final LocalDate date;
+    private final Date toDate;
 
     public LocalDateConverter(LocalDate date) {
         this.date = date;
@@ -32,6 +32,10 @@ public class LocalDateConverter {
         return this.toDate;
     }
 
+    public Date getFirstDateOfMonth() {
+        return Date.from(date.withDayOfMonth(1).atStartOfDay(defaultZoneId).toInstant());
+    }
+    
     public Date getLastDayOfMonth() {
         return Date.from(date.withDayOfMonth(date.getMonth().length(date.isLeapYear())).atStartOfDay(defaultZoneId).toInstant());
     }
@@ -41,7 +45,7 @@ public class LocalDateConverter {
     }
 
     public String getCurrentDateName() {
-        return date.format(formatter).toUpperCase();
+        return date.format(formatter);
     }
 
 }

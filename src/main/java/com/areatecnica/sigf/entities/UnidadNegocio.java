@@ -6,27 +6,14 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -187,10 +174,7 @@ public class UnidadNegocio extends BaseEntity implements Serializable {
             return false;
         }
         UnidadNegocio other = (UnidadNegocio) object;
-        if ((this.unidadNegocioId == null && other.unidadNegocioId != null) || (this.unidadNegocioId != null && !this.unidadNegocioId.equals(other.unidadNegocioId))) {
-            return false;
-        }
-        return true;
+        return (this.unidadNegocioId != null || other.unidadNegocioId == null) && (this.unidadNegocioId == null || this.unidadNegocioId.equals(other.unidadNegocioId));
     }
 
     @Override

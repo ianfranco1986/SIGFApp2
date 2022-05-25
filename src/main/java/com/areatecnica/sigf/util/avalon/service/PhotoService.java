@@ -23,12 +23,13 @@
  */
 package com.areatecnica.sigf.util.avalon.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.areatecnica.sigf.util.avalon.domain.Photo;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import com.areatecnica.sigf.util.avalon.domain.Photo;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @ApplicationScoped

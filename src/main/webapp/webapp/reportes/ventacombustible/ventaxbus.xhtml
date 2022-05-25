@@ -13,20 +13,17 @@
         <h:form id="RegistroMinutoListForm">
 
             <p:panel>
-                <p:spacer/>
-                <h3 style="text-align: center;">Ventas de Petroleo x Bus (Detalle)</h3>
+                <h3>Ventas de Petroleo x Bus (Detalle)</h3>
 
                 <div class="ui-fluid">
                     <div class="p-field">
                         <label for="desde">Desde</label>
-                        <p:calendar id="desde" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerPetroleoBusMes.desde}" required="true" requiredMessage="Debe ingresar la fecha desde" />
-
+                        <p:datePicker id="desde" value="#{reportControllerPetroleoBusMes.desde}" locale="es" autocomplete="off" required="true" requiredMessage="Debe ingresar la fecha desde" />
                     </div>
 
                     <div class="p-field">
                         <label for="desde">Hasta</label>
-                        <p:calendar id="hasta" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerPetroleoBusMes.hasta}" required="true" requiredMessage="Debe ingresar la fecha hasta" />
-
+                        <p:datePicker id="hasta" value="#{reportControllerPetroleoBusMes.hasta}" locale="es" autocomplete="off" required="true" requiredMessage="Debe ingresar la fecha hasta" />
                     </div>
 
                     <div class="p-field">

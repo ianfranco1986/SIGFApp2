@@ -1,18 +1,14 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.Egreso;
-import com.areatecnica.sigf.entities.EgresoCajaRecaudacion;
-import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
-import com.areatecnica.sigf.entities.EgresoBus;
-import com.areatecnica.sigf.entities.EgresoFlota;
-import java.util.List;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.facade.EgresoFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "egresoController")
 @ViewScoped

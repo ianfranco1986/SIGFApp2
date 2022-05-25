@@ -6,20 +6,19 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.entities.Usuario;
 import com.areatecnica.sigf.entities.Cuenta;
+import com.areatecnica.sigf.entities.Usuario;
+import com.areatecnica.sigf.util.LocalDateConverter;
+
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  *
@@ -29,18 +28,15 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class ReportControllerLibroVentaCombustible implements Serializable {
 
-    private Date fecha;
-    private Date desde;
-    private Date hasta;
     private String informe = "inf-libro_venta_petroleo";
-    private int mes;
-    private int anio;
     private String list;
-    private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/01");
     private List<Integer> array;
     private Boolean tipoInforme;
     private Usuario currentUser;
     private Cuenta userCount;
+
+    private LocalDate date;
+    private LocalDateConverter dc;
 
     /**
      * Creates a new instance of ReportControllerGuiaCajaFecha
@@ -52,95 +48,26 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
     @PostConstruct
     private void init() {
         this.tipoInforme = Boolean.TRUE;
-        //this.items = new IBusDaoImpl().findAll();
-
-        this.currentUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
-        this.userCount = this.currentUser.getUsuarioIdCuenta();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-
-        this.mes = calendar.get(Calendar.MONTH) + 1;
-        this.anio = calendar.get(Calendar.YEAR);
-        setFecha();
-        System.err.println("primera fecha: " + this.fecha);
-        this.desde = this.fecha;
-        this.hasta = this.fecha;
-
+        this.date = LocalDate.now();
     }
 
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap();
 
-        map.put("fechaCompleta", getFechaCompleta());
-        map.put("fecha", desde);
-        map.put("idCuenta", this.currentUser.getUsuarioIdCuenta());
+        map.put("fechaCompleta", this.dc.getMonthYearString());
+        map.put("fecha", this.dc.getDate());
+        map.put("idCuenta", JsfUtil.getCurrentUser().getUsuarioIdCuenta());
 
         return map;
     }
 
-    public Date getDesde() {
-        return desde;
+    public void setDate(LocalDate date) {
+        this.date = date;
+        this.dc = new LocalDateConverter(date);
     }
 
-    public void setDesde(Date desde) {
-        this.desde = desde;
-    }
-
-    public Date getHasta() {
-        return hasta;
-    }
-
-    public void setHasta(Date hasta) {
-        this.hasta = hasta;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    private String getFechaCompleta() {
-        String fechaCompleta = "";
-        switch (mes) {
-            case 1:
-                fechaCompleta = "Enero ";
-                break;
-            case 2:
-                fechaCompleta = "Febrero ";
-                break;
-            case 3:
-                fechaCompleta = "Marzo ";
-                break;
-            case 4:
-                fechaCompleta = "Abril ";
-                break;
-            case 5:
-                fechaCompleta = "Mayo ";
-                break;
-            case 6:
-                fechaCompleta = "Junio ";
-                break;
-            case 7:
-                fechaCompleta = "Julio ";
-                break;
-            case 8:
-                fechaCompleta = "Agosto ";
-                break;
-            case 9:
-                fechaCompleta = "Septiembre ";
-                break;
-            case 10:
-                fechaCompleta = "Octubre ";
-                break;
-            case 11:
-                fechaCompleta = "Noviembre ";
-                break;
-            case 12:
-                fechaCompleta = "Diciembre ";
-                break;
-
-        }
-
-        return fechaCompleta + " " + anio;
+    public LocalDate getDate() {
+        return date;
     }
 
     public void setTipoInforme(Boolean tipoInforme) {
@@ -149,10 +76,6 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
 
     public Boolean getTipoInforme() {
         return tipoInforme;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public void setInforme(String informe) {
@@ -165,31 +88,6 @@ public class ReportControllerLibroVentaCombustible implements Serializable {
 
     public void falta() {
         JsfUtil.addErrorMessage("No se encuentran registros");
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public void setFecha() {
-        try {
-            this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
-            this.desde = this.fecha;
-            this.hasta = this.fecha;
-        } catch (ParseException ex) {
-        }
     }
 
 }

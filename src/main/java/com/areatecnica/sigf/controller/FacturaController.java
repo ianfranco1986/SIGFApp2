@@ -1,31 +1,18 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICuentaMayorDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IFacturaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
-import com.areatecnica.sigf.entities.Cliente;
-import com.areatecnica.sigf.entities.CuentaBancaria;
-import com.areatecnica.sigf.entities.CuentaMayor;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.Factura;
-import com.areatecnica.sigf.entities.MovimientoMes;
+import com.areatecnica.sigf.dao.impl.*;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.FacturaDataModel;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.primefaces.event.RowEditEvent;
+
 import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import org.primefaces.event.RowEditEvent;
+import javax.inject.Named;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Named(value = "facturaController")
 @ViewScoped
@@ -49,7 +36,7 @@ public class FacturaController extends AbstractController<Factura> {
     private int iva = 0;
     private int folio = 0;
 
-    private String informe = "inf-comprobante_ingreso";
+    private final String informe = "inf-comprobante_ingreso";
 
     private int documento;
     private Date desde;

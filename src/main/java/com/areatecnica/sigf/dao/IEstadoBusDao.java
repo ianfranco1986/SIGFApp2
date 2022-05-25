@@ -14,7 +14,7 @@ import com.areatecnica.sigf.entities.EstadoBus;
  */
 public interface IEstadoBusDao<T> extends IGenericDAO<T> {
     
-    public EstadoBus findById(int id);
+    EstadoBus findById(int id);
     
     
 }

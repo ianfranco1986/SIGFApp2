@@ -7,9 +7,10 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.ITipoMovimientoDao;
 import com.areatecnica.sigf.entities.TipoMovimiento;
+
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

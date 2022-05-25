@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Cuenta;
+
 import java.util.List;
 
 /**
@@ -15,6 +16,6 @@ import java.util.List;
  */
 public interface IBoletoDao<T> extends IGenericDAO<T> {
     
-    public List<Boleto> findByCuenta(Cuenta cuenta);
+    List<Boleto> findByCuenta(Cuenta cuenta);
     
 }

@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.TipoMovimiento;
+
 import java.util.List;
 
 /**
@@ -14,10 +15,10 @@ import java.util.List;
  */
 public interface ITipoMovimientoDao<T> extends IGenericDAO<T> {
 
-    public TipoMovimiento findById(int id);
+    TipoMovimiento findById(int id);
 
-    public List<TipoMovimiento> findByIngreso();
+    List<TipoMovimiento> findByIngreso();
 
-    public List<TipoMovimiento> findByEgreso();
+    List<TipoMovimiento> findByEgreso();
 
 }

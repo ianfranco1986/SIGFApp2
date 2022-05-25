@@ -5,34 +5,20 @@
  */
 package com.areatecnica.sigf.controller;
 
+import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.*;
 import com.areatecnica.sigf.dao.impl.*;
 import com.areatecnica.sigf.entities.*;
-import com.areatecnica.sigf.entities.Egreso;
-import com.areatecnica.sigf.entities.Recaudacion;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
-import com.areatecnica.sigf.models.RecaudacionDataModel;
-import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionDaoImpl;
-import com.areatecnica.sigf.models.DigitacionDataModel; 
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.LinkedHashMap;
-import javax.inject.Named;
-import java.util.Map;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.logging.Level;
+import com.areatecnica.sigf.models.DigitacionDataModel;
+
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  *
@@ -84,7 +70,7 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
     private IVentaCombustibleDao ventaCombustibleDao;
     private static String pattern = "###,###.###";
     private static DecimalFormat decimalFormat = new DecimalFormat(pattern);
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private ServletOutputStream servletOutputStream;
 
@@ -453,9 +439,6 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
         return recaudacionGuiaList;
     }
 
-    /**
-     * @param recaudacionEgresoList the recaudacionEgresoList to set
-     */
     public void setRecaudacionGuiaList(List<RecaudacionGuia> recaudacionGuiaList) {
         this.recaudacionGuiaList = recaudacionGuiaList;
     }
@@ -1100,16 +1083,7 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
 
 //    private class ReportCustomizer extends DefaultAdhocReportCustomizer {
 //
-//        /**
-//         *
-//         * If you want to add some fixed content to a report that is not needed
-//         * to store in the xml file.
-//         *
-//         * For example you can add default page header, footer, default
-//         * fonts,...
-//         *
-//         */
-//        @Override
+
 //
 //        public void customize(ReportBuilder<?> report, AdhocReport adhocReport) throws DRException {
 //            super.customize(report, adhocReport);

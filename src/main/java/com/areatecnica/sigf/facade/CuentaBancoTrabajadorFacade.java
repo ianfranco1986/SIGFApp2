@@ -5,16 +5,16 @@
  */
 package com.areatecnica.sigf.facade;
 
+import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.CuentaBancoTrabajador;
+import com.areatecnica.sigf.entities.Trabajador;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.CuentaBancoTrabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.CuentaBancaria;
-import com.areatecnica.sigf.entities.Trabajador;
 
 /**
  *

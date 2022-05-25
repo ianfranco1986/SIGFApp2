@@ -13,6 +13,6 @@ import com.areatecnica.sigf.entities.Cliente;
  */
 public interface IClienteDao<T> extends IGenericDAO<T> {
     
-    public Cliente findByRut(String rut);
+    Cliente findByRut(String rut);
     
 }

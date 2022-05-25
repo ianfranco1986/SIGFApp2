@@ -1,13 +1,10 @@
 package com.areatecnica.sigf.facade;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
+
+import java.util.*;
 
 /**
  * Specific implementation of LazyDataModel supporting the facade pattern

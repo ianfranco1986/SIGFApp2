@@ -9,8 +9,9 @@ import com.areatecnica.sigf.dao.ICajaProcesoDao;
 import com.areatecnica.sigf.entities.CajaProceso;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

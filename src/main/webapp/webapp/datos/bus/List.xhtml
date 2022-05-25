@@ -16,6 +16,8 @@
                 <div class="p-col-12">
 
                     <div class="card">
+                        <span style="font-weight: bold"><h3>Buses</h3></span>
+
                         <p:growl id="messages" showDetail="true" />
 
                         <p:toolbar styleClass="p-mb-4">
@@ -38,37 +40,21 @@
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      rows="100"
+                                     selectionMode="single"
                                      selection="#{busController.selected}"
-                                     reflow="true"
                                      rowIndexVar="rowIndex"
                                      widgetVar="datalistWidget"
-                                     allowUnsorting="true" sortMode="single" >
-                            <!--
-                                     To enable Lazy Loading, please copy/replace the following lines above,
-                                     and be sure to replace the word HASH with the # symbol:
-                            
-                                     value="HASH{busController.lazyItems}"
-                                     lazy="true"
-                                     rowKey="HASH{item.busId}"  <<< Remove this line
-                            -->
-
-
-                            <p:ajax event="rowToggle" listener="#{busController.onRowToggle}" />
+                                     allowUnsorting="true" sortMode="single">      
 
 
                             <f:facet name="header">
-                                <div class="products-table-header">
-                                    <span style="font-weight: bold"><h3>Buses</h3></span>
-
-                                    <span class="filter-container ui-input-icon-left">
+                                <div class="products-table-header ">
+                                    <span class="filter-container ui-input-icon-left ">
                                         <i class="pi pi-search"></i>
                                         <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
                                     </span>
                                 </div>
                             </f:facet>
-
-                            <p:column selectionMode="single" style="width:16px;text-align:center"/>
-
 
                             <p:column>
                                 <f:facet name="header">
@@ -78,14 +64,14 @@
                             </p:column>
 
 
-                            <p:column field="busNumero" headerText="Nº" sortOrder="desc"  filterable="true"/>
-                            <p:column field="busPatente" headerText="PPU" filterable="true"/>
-                            <p:column field="busAnio" headerText="Año" filterable="true"/>
-                            <p:column field="busFechaRevisionTecnica" headerText="R.Técnica" filterable="true"/>
-                            <p:column field="busIdEmpresa.empresaNombre" headerText="Empresa" filterable="true"/>
-                            <p:column field="busIdFlota.flotaNombre" headerText="Flota" filterable="true"/>
-                            <p:column field="busIdGrupoServicio.grupoServicioIdentificador" headerText="Grupo/Servicio" filterable="true"/>
-                            <p:column field="busIdEstadoBus.estadoBusNombre" headerText="Estado" filterable="true"/>
+                            <p:column field="busNumero" headerText="Nº" />
+                            <p:column field="busPatente" headerText="PPU"/>
+                            <p:column field="busAnio" headerText="Año"/>
+                            <p:column field="busFechaRevisionTecnica" headerText="R.Técnica" />
+                            <p:column field="busIdEmpresa.empresaNombre" headerText="Empresa"/>
+                            <p:column field="busIdFlota.flotaNombre" headerText="Flota" />
+                            <p:column field="busIdGrupoServicio.grupoServicioIdentificador" headerText="Grupo/Servicio" />
+                            <p:column field="busIdEstadoBus.estadoBusNombre" headerText="Estado" />
 
 
 
@@ -97,7 +83,7 @@
                                     <f:setPropertyActionListener value="#{item}" target="#{busController.selected}" />
                                 </p:commandButton>
                                 <p:commandButton icon="pi pi-pencil" update="BusEditForm, datalist" oncomplete="PF('BusEditDialog').show()" 
-                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                                 styleClass="edit-button rounded-button ui-button-warning" process="@this">
                                     <f:setPropertyActionListener value="#{item}" target="#{busController.selected}" />
                                 </p:commandButton>
                                 <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >

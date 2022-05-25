@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.TipoNomina;
-import com.areatecnica.sigf.facade.TipoNominaFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @Named(value = "tipoNominaController")
 @ViewScoped

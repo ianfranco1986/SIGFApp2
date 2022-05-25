@@ -5,23 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -101,10 +91,7 @@ public class TipoMovimientoPersonal implements Serializable {
             return false;
         }
         TipoMovimientoPersonal other = (TipoMovimientoPersonal) object;
-        if ((this.tipoMovimientoPersonalId == null && other.tipoMovimientoPersonalId != null) || (this.tipoMovimientoPersonalId != null && !this.tipoMovimientoPersonalId.equals(other.tipoMovimientoPersonalId))) {
-            return false;
-        }
-        return true;
+        return (this.tipoMovimientoPersonalId != null || other.tipoMovimientoPersonalId == null) && (this.tipoMovimientoPersonalId == null || this.tipoMovimientoPersonalId.equals(other.tipoMovimientoPersonalId));
     }
 
     @Override

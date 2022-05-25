@@ -12,19 +12,14 @@ import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.UnidadNegocio;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+import java.util.*;
 
 /**
  *
@@ -322,7 +317,7 @@ public class ReportControllerDetalleCobroMinutosBus implements Serializable {
     public void setFecha() {
         try {
 
-            this.fecha = this.sdf.parse(this.anio + "/" + this.mes + "/01");
+            this.fecha = sdf.parse(this.anio + "/" + this.mes + "/01");
         } catch (ParseException ex) {
         }
     }

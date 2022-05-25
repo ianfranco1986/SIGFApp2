@@ -5,11 +5,8 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Cuenta;
-import com.areatecnica.sigf.entities.Egreso;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
+import com.areatecnica.sigf.entities.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,13 +17,13 @@ import java.util.List;
  */
 public interface IRecaudacionGuiaDao<T> extends IGenericDAO<T> {
 
-    public RecaudacionGuia findByCuentaFolio(Cuenta cuenta, int folio);
+    RecaudacionGuia findByCuentaFolio(Cuenta cuenta, int folio);
     
-    public RecaudacionGuia findByRecaudacionEgreso(int recaudacion, Egreso egreso);
+    RecaudacionGuia findByRecaudacionEgreso(int recaudacion, Egreso egreso);
 
-    public List<RecaudacionGuia> findByBusBetweenFechaRecaudacion(Bus bus, Date inicio, Date termino);
+    List<RecaudacionGuia> findByBusBetweenFechaRecaudacion(Bus bus, Date inicio, Date termino);
     
-    public List<RecaudacionGuia> findByCajaFecha(CajaRecaudacion caja, Date fecha);
+    List<RecaudacionGuia> findByCajaFecha(CajaRecaudacion caja, Date fecha);
     
 
 }

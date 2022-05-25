@@ -8,29 +8,16 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.ILiquidacionEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionMinutoDaoImpl;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.LiquidacionEmpresa;
-import com.areatecnica.sigf.entities.MovimientoMes;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
-import com.areatecnica.sigf.entities.RecaudacionMinuto;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.RecaudacionLiquidacionLoteDataModel;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
+import java.util.*;
 
 /**
  *
@@ -100,13 +87,13 @@ public class LiquidacionEmpresaLoteController implements Serializable {
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap();
 
-        String list = "";
+        StringBuilder list = new StringBuilder();
 
         if (generarLiquidacionNoMovimiento) {
-            list = String.valueOf(this.items.get(0).empresa.getEmpresaId());
+            list = new StringBuilder(String.valueOf(this.items.get(0).empresa.getEmpresaId()));
 
             for (LiquidacionHelper l : this.items.subList(0, this.items.size())) {
-                list = list + "," + l.empresa.getEmpresaId();
+                list.append(",").append(l.empresa.getEmpresaId());
             }
         } else {
             List<LiquidacionHelper> copy = new ArrayList<>();
@@ -117,19 +104,18 @@ public class LiquidacionEmpresaLoteController implements Serializable {
                 }
             }
 
-            list = String.valueOf(copy.get(0).empresa.getEmpresaId());
+            list = new StringBuilder(String.valueOf(copy.get(0).empresa.getEmpresaId()));
 
             for (LiquidacionHelper l : copy.subList(0, copy.size())) {
-                list = list + "," + l.empresa.getEmpresaId();
+                list.append(",").append(l.empresa.getEmpresaId());
             }
         }
 
-        System.err.println("LISTA:" + list);
 
         map.put("fechaCompleta", getFechaCompleta());
         map.put("desde", desde);
         map.put("hasta", hasta);
-        map.put("list", list);
+        map.put("list", list.toString());
 
         return map;
     }
@@ -429,7 +415,7 @@ public class LiquidacionEmpresaLoteController implements Serializable {
 
     }
 
-    public class LiquidacionHelper {
+    public static class LiquidacionHelper {
 
         private Integer id;
         private Empresa empresa;
@@ -462,7 +448,7 @@ public class LiquidacionEmpresaLoteController implements Serializable {
         private int cargosVarios = 0;
         private int totalCargos = 0;
         private int total = 0;
-        private int totalFinal = 0;
+        private final int totalFinal = 0;
 
         private int buses;
 

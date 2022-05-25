@@ -5,18 +5,14 @@
  */
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.Administrador;
-import com.areatecnica.sigf.entities.AdministradorBus;
-import com.areatecnica.sigf.entities.AdministradorFlota;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Cuenta;
-import com.areatecnica.sigf.entities.Usuario;
+import com.areatecnica.sigf.entities.*;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  *

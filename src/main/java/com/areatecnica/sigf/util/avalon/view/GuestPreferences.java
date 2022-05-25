@@ -18,13 +18,13 @@ package com.areatecnica.sigf.util.avalon.view;
 import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.Serializable;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Named
 @SessionScoped

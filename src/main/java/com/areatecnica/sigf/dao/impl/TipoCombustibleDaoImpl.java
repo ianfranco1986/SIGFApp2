@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.ITipoCombustibleDao;
 import com.areatecnica.sigf.entities.TipoCombustible;
+
 import javax.persistence.NoResultException;
 
 /**

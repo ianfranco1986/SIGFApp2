@@ -2,13 +2,14 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.JornadaLaboral;
 import com.areatecnica.sigf.entities.JornadaTrabajador;
-import java.util.List;
 import com.areatecnica.sigf.facade.JornadaLaboralFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "jornadaLaboralController")
 @ViewScoped

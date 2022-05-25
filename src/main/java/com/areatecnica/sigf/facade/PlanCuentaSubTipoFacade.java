@@ -5,16 +5,15 @@
  */
 package com.areatecnica.sigf.facade;
 
+import com.areatecnica.sigf.entities.CuentaMayor;
 import com.areatecnica.sigf.entities.PlanCuentaSubTipo;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.PlanCuentaSubTipo_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.PlanCuenta;
-import com.areatecnica.sigf.entities.CuentaMayor;
 import java.util.List;
 
 /**

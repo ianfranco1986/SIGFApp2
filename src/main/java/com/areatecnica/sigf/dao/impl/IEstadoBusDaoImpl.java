@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IEstadoBusDao;
 import com.areatecnica.sigf.entities.EstadoBus;
+
 import javax.persistence.NoResultException;
 
 /**

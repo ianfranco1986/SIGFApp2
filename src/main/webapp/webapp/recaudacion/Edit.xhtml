@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -36,7 +35,11 @@
 
                         </div>
                     </div>
+                    <p:separator/>
+                    <p:separator/>
+                    <p:separator/>
                     <div class="card" style="width: 100%;">
+                        <p:separator/>
                         <p:tabView>
                             <p:tab title="Detalle Recaudación">
                                 <div class="ui-fluid">
@@ -87,7 +90,7 @@
                                 process="@this" 
                                 immediate="true" 
                                 resetValues="true"
-                                styleClass="p-mr-2"
+                                styleClass="ui-button-danger p-mr-2"
                                 />
                         </div>
                     </div>

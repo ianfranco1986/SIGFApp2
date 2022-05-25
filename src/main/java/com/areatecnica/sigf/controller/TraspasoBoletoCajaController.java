@@ -8,22 +8,24 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IInventarioCajaDao;
 import com.areatecnica.sigf.dao.IInventarioInternoDao;
+import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.InventarioCaja;
 import com.areatecnica.sigf.entities.InventarioInterno;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJBException;
-import javax.faces.event.ActionEvent;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 
 /**
  *
@@ -43,9 +45,9 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
     private List<InventarioInterno> inventarioInternoList;
     private List<InventarioCaja> inventarioCajaList;
     private List<InventarioInterno> inventarioCajaSelectedItems;
-    private IInventarioInternoDao inventarioInternoDao;
-    private IInventarioCajaDao dao;
     private InventarioCaja selectedInventario;
+    
+    private List<CajaRecaudacion> cajaRecaudacionItems; 
 
     private Date fecha;
 
@@ -65,9 +67,17 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
 //        this.getSelected().setInventarioCajaFechaIngreso(new Date());
         this.inventarioInternoList = new ArrayList<>();
         this.inventarioCajaList = new ArrayList<>();
-        this.inventarioInternoDao = new IInventarioInternoDaoImpl();
-        this.dao = new IInventarioCajaDaoImpl();
         this.fecha = new Date();
+        
+        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
+    }
+
+    public List<CajaRecaudacion> getCajaRecaudacionItems() {
+        return cajaRecaudacionItems;
+    }
+
+    public void setCajaRecaudacionItems(List<CajaRecaudacion> cajaRecaudacionItems) {
+        this.cajaRecaudacionItems = cajaRecaudacionItems;
     }
 
     /**
@@ -152,11 +162,9 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
 
     public void handleBoletoChange(ActionEvent event) {
         if (this.boletoItem != null) {
-            this.inventarioInternoList = this.inventarioInternoDao.findByBoletoEstado(this.boletoItem, Boolean.FALSE);
+            this.inventarioInternoList = new IInventarioInternoDaoImpl().findByBoletoEstado(this.boletoItem, Boolean.FALSE);
             for (InventarioCaja c : this.inventarioCajaList) {
-                if (this.inventarioInternoList.contains(c.getInventarioCajaIdInventarioInterno())) {
-                    this.inventarioInternoList.remove(c.getInventarioCajaIdInventarioInterno());
-                }
+                this.inventarioInternoList.remove(c.getInventarioCajaIdInventarioInterno());
             }
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar un boleto");
@@ -196,8 +204,8 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
         for (InventarioCaja i : this.inventarioCajaList) {
             i.getInventarioCajaIdInventarioInterno().setInventarioInternoEstado(Boolean.TRUE);
             try {
-                this.inventarioInternoDao.update(i.getInventarioCajaIdInventarioInterno());
-                this.dao.update(i);
+                new IInventarioInternoDaoImpl().update(i.getInventarioCajaIdInventarioInterno());
+                new IInventarioCajaDaoImpl().update(i);
                 JsfUtil.addSuccessMessage("Se han registrado los cambios");
             } catch (EJBException ex) {
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));

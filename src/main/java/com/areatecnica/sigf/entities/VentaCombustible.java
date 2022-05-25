@@ -6,29 +6,14 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -42,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "VentaCombustible.findAll", query = "SELECT v FROM VentaCombustible v")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleId", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleId = :ventaCombustibleId")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleTerminalSinRecaudar", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleIdSurtidor.surtidorIdTerminal = :surtidorIdTerminal AND v.ventaCombustibleRecaudado = 0 ORDER BY v.ventaCombustibleNumeroBoleta ASC")
+    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleTerminalSinRecaudar", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleIdSurtidor.surtidorIdTerminal = :surtidorIdTerminal AND v.ventaCombustibleRecaudado = false ORDER BY v.ventaCombustibleNumeroBoleta ASC")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleFecha", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha = :ventaCombustibleFecha ORDER BY v.ventaCombustibleNumeroBoleta DESC")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleFechaBus", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha = :ventaCombustibleFecha AND v.ventaCombustibleIdBus = :ventaCombustibleIdBus")
     , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleBetweenDates", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha BETWEEN :from AND :to ORDER BY v.ventaCombustibleFecha ASC")        
@@ -221,10 +206,7 @@ public class VentaCombustible extends BaseEntity implements Serializable {
             return false;
         }
         VentaCombustible other = (VentaCombustible) object;
-        if ((this.ventaCombustibleId == null && other.ventaCombustibleId != null) || (this.ventaCombustibleId != null && !this.ventaCombustibleId.equals(other.ventaCombustibleId))) {
-            return false;
-        }
-        return true;
+        return (this.ventaCombustibleId != null || other.ventaCombustibleId == null) && (this.ventaCombustibleId == null || this.ventaCombustibleId.equals(other.ventaCombustibleId));
     }
 
     @Override

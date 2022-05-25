@@ -5,11 +5,8 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.entities.Boleto;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.RecaudacionMinuto;
-import com.areatecnica.sigf.entities.Terminal;
+import com.areatecnica.sigf.entities.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,24 +17,24 @@ import java.util.List;
  */
 public interface IRecaudacionMinutoDao<T> extends IGenericDAO<T> {
 
-    public List<RecaudacionMinuto> findTodos();
+    List<RecaudacionMinuto> findTodos();
     
-    public List<RecaudacionMinuto> findByDate(Date fecha);
+    List<RecaudacionMinuto> findByDate(Date fecha);
     
-    public List<RecaudacionMinuto> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta);
+    List<RecaudacionMinuto> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta);
 
-    public List<RecaudacionMinuto> findByBusAndDate(Bus bus, Date from, Date to);
+    List<RecaudacionMinuto> findByBusAndDate(Bus bus, Date from, Date to);
     
-    public List<RecaudacionMinuto> findRecibidosBusAndDate(Bus bus, Date from, Date to);
+    List<RecaudacionMinuto> findRecibidosBusAndDate(Bus bus, Date from, Date to);
 
-    public List<RecaudacionMinuto> findByDefaultBus();
+    List<RecaudacionMinuto> findByDefaultBus();
 
-    public List<RecaudacionMinuto> findByBusSinRecaudar(Bus bus);
+    List<RecaudacionMinuto> findByBusSinRecaudar(Bus bus);
     
-    public RecaudacionMinuto findByBus(Bus bus, Boleto boleto);
+    RecaudacionMinuto findByBus(Bus bus, Boleto boleto);
     
-    public List<RecaudacionMinuto> findByTerminalDate(Terminal terminal, Date fecha);
+    List<RecaudacionMinuto> findByTerminalDate(Terminal terminal, Date fecha);
     
-    public int findLastNumeroBoleta(Terminal terminal);
+    int findLastNumeroBoleta(Terminal terminal);
 
 }

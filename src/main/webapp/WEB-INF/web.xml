@@ -16,10 +16,6 @@
         <filter-name>AuthorizationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <context-param>
-        <param-name>org.omnifaces.SOCKET_ENDPOINT_ENABLED</param-name>
-        <param-value>true</param-value>
-    </context-param>
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
         <filter-class>com.areatecnica.sigf.filters.AuthorizationFilter</filter-class>
@@ -120,6 +116,6 @@
     </error-page>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/faces/views/login.xhtml?faces-redirect=true</location>
+        <location>/errorPage/viewExpired.xhtml</location>
     </error-page>
 </web-app>

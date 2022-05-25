@@ -6,9 +6,10 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Cuenta;
-import com.areatecnica.sigf.entities.DetalleCartola;
 import com.areatecnica.sigf.entities.CuentaBancaria;
+import com.areatecnica.sigf.entities.DetalleCartola;
 import com.areatecnica.sigf.entities.Empresa;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,14 +19,14 @@ import java.util.List;
  */
 public interface IDetalleCartolaDao<T> extends IGenericDAO<T> {
 
-    public List<DetalleCartola> findByEmpresa(Empresa empresa, Date from, Date to);
+    List<DetalleCartola> findByEmpresa(Empresa empresa, Date from, Date to);
 
-    public List<DetalleCartola> findAllByCuenta(Cuenta cuenta);
+    List<DetalleCartola> findAllByCuenta(Cuenta cuenta);
 
-    public List<DetalleCartola> findByCuentaBancariaBetweenDates(CuentaBancaria cuentaBancaria, Date from, Date to);
+    List<DetalleCartola> findByCuentaBancariaBetweenDates(CuentaBancaria cuentaBancaria, Date from, Date to);
 
-    public List<DetalleCartola> findLastByCuentaBancaria(CuentaBancaria cuentaBancaria);
+    List<DetalleCartola> findLastByCuentaBancaria(CuentaBancaria cuentaBancaria);
 
-    public DetalleCartola fingByCuentaBancoFecha(CuentaBancaria cuenta, Date from, Date to);
+    DetalleCartola fingByCuentaBancoFecha(CuentaBancaria cuenta, Date from, Date to);
 
 }

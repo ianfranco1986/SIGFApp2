@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
+
 import java.util.List;
 
 /**
@@ -15,5 +16,5 @@ import java.util.List;
  */
 public interface IDetalleCompraBoletoDao<T> extends IGenericDAO<T> {
     
-    public List<DetalleCompraBoleto> findByCompraBoleto(CompraBoleto compraBoleto);
+    List<DetalleCompraBoleto> findByCompraBoleto(CompraBoleto compraBoleto);
 }

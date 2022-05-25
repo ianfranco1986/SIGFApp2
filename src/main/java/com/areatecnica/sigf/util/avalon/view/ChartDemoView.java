@@ -38,6 +38,7 @@ import org.primefaces.model.charts.hbar.HorizontalBarChartModel;
 import org.primefaces.model.charts.line.LineChartDataSet;
 import org.primefaces.model.charts.line.LineChartModel;
 import org.primefaces.model.charts.line.LineChartOptions;
+import org.primefaces.model.charts.optionconfig.animation.Animation;
 import org.primefaces.model.charts.optionconfig.elements.Elements;
 import org.primefaces.model.charts.optionconfig.elements.ElementsLine;
 import org.primefaces.model.charts.optionconfig.legend.Legend;
@@ -62,7 +63,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.primefaces.model.charts.optionconfig.animation.Animation;
 
 @Named
 @RequestScoped

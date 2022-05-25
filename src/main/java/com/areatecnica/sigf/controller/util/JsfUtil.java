@@ -1,14 +1,25 @@
 package com.areatecnica.sigf.controller.util;
 
-import java.util.Iterator;
-import java.util.List;
+import com.areatecnica.sigf.entities.Usuario;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.FacesContext;
+import java.util.Iterator;
+import java.util.List;
+import javax.annotation.PostConstruct;
 
 public class JsfUtil {
+
+    private static Usuario currentUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
+
+    public JsfUtil() {
+    }
+
+    public static Usuario getCurrentUser() {
+        return currentUser;
+    }
 
     public static void addErrorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
@@ -31,8 +42,8 @@ public class JsfUtil {
         FacesContext.getCurrentInstance().validationFailed(); // Invalidate JSF page if we raise an error message
 
     }
-    
-    public static void addWarningMessage(String msg){
+
+    public static void addWarningMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         FacesContext.getCurrentInstance().validationFailed(); // Invalidate JSF page if we raise an error message

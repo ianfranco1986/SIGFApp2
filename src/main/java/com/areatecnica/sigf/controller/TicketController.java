@@ -2,11 +2,11 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.dao.impl.ITicketDaoImpl;
 import com.areatecnica.sigf.entities.Ticket;
-import java.util.List;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "ticketController")
 @ViewScoped

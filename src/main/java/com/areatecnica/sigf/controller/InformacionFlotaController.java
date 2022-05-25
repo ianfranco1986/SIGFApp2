@@ -9,12 +9,13 @@ import com.areatecnica.sigf.entities.Administrador;
 import com.areatecnica.sigf.entities.AdministradorFlota;
 import com.areatecnica.sigf.entities.Flota;
 import com.areatecnica.sigf.entities.Usuario;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  *

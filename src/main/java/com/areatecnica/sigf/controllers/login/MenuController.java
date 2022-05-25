@@ -6,13 +6,14 @@ import com.areatecnica.sigf.dao.impl.IRolMenuDaoImpl;
 import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.entities.RolMenu;
 import com.areatecnica.sigf.entities.Usuario;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *

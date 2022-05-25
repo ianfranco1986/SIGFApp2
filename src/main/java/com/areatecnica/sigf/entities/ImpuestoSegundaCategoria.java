@@ -5,18 +5,10 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  *
@@ -121,10 +113,7 @@ public class ImpuestoSegundaCategoria extends BaseEntity implements Serializable
             return false;
         }
         ImpuestoSegundaCategoria other = (ImpuestoSegundaCategoria) object;
-        if ((this.impuestoSegundaCategoriaId == null && other.impuestoSegundaCategoriaId != null) || (this.impuestoSegundaCategoriaId != null && !this.impuestoSegundaCategoriaId.equals(other.impuestoSegundaCategoriaId))) {
-            return false;
-        }
-        return true;
+        return (this.impuestoSegundaCategoriaId != null || other.impuestoSegundaCategoriaId == null) && (this.impuestoSegundaCategoriaId == null || this.impuestoSegundaCategoriaId.equals(other.impuestoSegundaCategoriaId));
     }
 
     @Override

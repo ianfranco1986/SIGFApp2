@@ -1,37 +1,19 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICompraPetroleoDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICuentaMayorDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
-import com.areatecnica.sigf.dao.impl.IProveedorDaoImpl;
-import com.areatecnica.sigf.dao.impl.TipoCombustibleDaoImpl;
-import com.areatecnica.sigf.entities.CompraPetroleo;
-import com.areatecnica.sigf.entities.CuentaBancaria;
-import com.areatecnica.sigf.entities.CuentaMayor;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.MovimientoMes;
-import com.areatecnica.sigf.entities.Proveedor;
-import com.areatecnica.sigf.entities.TipoCombustible;
-import com.areatecnica.sigf.entities.TipoDocumento;
+import com.areatecnica.sigf.dao.impl.*;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.CompraPetroleoDataModel;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 import org.primefaces.event.RowEditEvent;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Named(value = "compraPetroleoController")
 @ViewScoped
@@ -59,7 +41,7 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
     private Proveedor proveedor;
     private Empresa empresaNandu;
 
-    private String informe = "inf-comprobante_egreso_petroleo";
+    private final String informe = "inf-comprobante_egreso_petroleo";
 
     private int folio;
     private int mes;

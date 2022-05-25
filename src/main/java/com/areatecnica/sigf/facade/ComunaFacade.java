@@ -5,18 +5,14 @@
  */
 package com.areatecnica.sigf.facade;
 
-import com.areatecnica.sigf.entities.Comuna;
+import com.areatecnica.sigf.entities.*;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.Comuna_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.Calle;
-import com.areatecnica.sigf.entities.Trabajador;
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.Ciudad;
 import java.util.List;
 
 /**

@@ -13,6 +13,6 @@ import com.areatecnica.sigf.entities.Privilegio;
  */
 public interface IPrivilegioDao<T> extends IGenericDAO<T> {
 
-    public Privilegio findById(int id);
+    Privilegio findById(int id);
 
 }

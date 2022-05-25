@@ -8,8 +8,9 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.IRolMenuDao;
 import com.areatecnica.sigf.entities.Rol;
 import com.areatecnica.sigf.entities.RolMenu;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

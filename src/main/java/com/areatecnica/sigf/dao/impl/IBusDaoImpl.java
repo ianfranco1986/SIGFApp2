@@ -6,16 +6,10 @@
 package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IBusDao;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.EstadoBus;
-import com.areatecnica.sigf.entities.Flota;
-import com.areatecnica.sigf.entities.GrupoServicio;
-import com.areatecnica.sigf.entities.ProcesoRecaudacion;
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.UnidadNegocio;
-import java.util.List;
+import com.areatecnica.sigf.entities.*;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

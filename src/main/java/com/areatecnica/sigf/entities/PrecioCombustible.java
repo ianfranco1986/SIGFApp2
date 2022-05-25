@@ -5,25 +5,11 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -54,7 +40,6 @@ public class PrecioCombustible extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "precio_combustible_fecha_precio_combustible", nullable = false)
     @Temporal(TemporalType.DATE)
-    @OrderBy("precioCombustibleFechaPrecioCombustible DESC")
     private Date precioCombustibleFechaPrecioCombustible;
     @JoinColumn(name = "precio_combustible_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
     @ManyToOne(optional = false)
@@ -130,10 +115,7 @@ public class PrecioCombustible extends BaseEntity implements Serializable {
             return false;
         }
         PrecioCombustible other = (PrecioCombustible) object;
-        if ((this.precioCombustibleId == null && other.precioCombustibleId != null) || (this.precioCombustibleId != null && !this.precioCombustibleId.equals(other.precioCombustibleId))) {
-            return false;
-        }
-        return true;
+        return (this.precioCombustibleId != null || other.precioCombustibleId == null) && (this.precioCombustibleId == null || this.precioCombustibleId.equals(other.precioCombustibleId));
     }
 
     @Override

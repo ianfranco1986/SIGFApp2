@@ -6,9 +6,10 @@
 package com.areatecnica.sigf.models;
 
 import com.areatecnica.sigf.entities.VentaBoleto;
-import java.util.List;
-import javax.faces.model.ListDataModel;
 import org.primefaces.model.SelectableDataModel;
+
+import javax.faces.model.ListDataModel;
+import java.util.List;
 
 /**
  *

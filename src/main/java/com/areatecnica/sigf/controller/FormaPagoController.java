@@ -2,12 +2,12 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.FormaPago;
 import com.areatecnica.sigf.entities.Trabajador;
-import java.util.List;
 import com.areatecnica.sigf.facade.FormaPagoFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "formaPagoController")
 @ViewScoped

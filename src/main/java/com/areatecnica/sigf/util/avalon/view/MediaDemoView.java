@@ -15,8 +15,11 @@
  */
 package com.areatecnica.sigf.util.avalon.view;
 
+import com.areatecnica.sigf.util.avalon.domain.Photo;
 import com.areatecnica.sigf.util.avalon.domain.Product;
+import com.areatecnica.sigf.util.avalon.service.PhotoService;
 import com.areatecnica.sigf.util.avalon.service.ProductService;
+import org.primefaces.model.ResponsiveOption;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -24,9 +27,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
-import org.primefaces.model.ResponsiveOption;
-import com.areatecnica.sigf.util.avalon.domain.Photo;
-import com.areatecnica.sigf.util.avalon.service.PhotoService;
 
 @Named
 @RequestScoped

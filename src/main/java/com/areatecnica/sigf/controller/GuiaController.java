@@ -10,12 +10,13 @@ import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.Trabajador;
 import com.areatecnica.sigf.models.GuiaDataModel;
 import com.areatecnica.sigf.util.LocalDateConverter;
+import org.primefaces.event.RowEditEvent;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.time.LocalDate;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import org.primefaces.event.RowEditEvent;
 
 @Named(value = "guiaController")
 @ViewScoped
@@ -95,7 +96,7 @@ public class GuiaController extends AbstractController<Guia> {
 
     public void load() {
         if (this.date != null && this.bus != null) {
-            this.items = new IGuiaDaoImpl().findByBusBetweenFecha(bus, this.dc.getDate(), this.dc.getLastDayOfMonth());
+            this.items = new IGuiaDaoImpl().findByBusBetweenFecha(bus, this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
             System.err.println("FECHAs:"+this.dc.getDate()+"/"+this.dc.getLastDayOfMonth());
             if (!this.items.isEmpty()) {
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " guías del bus n° " + this.bus.getBusNumero() + " para el periodo " + this.dc.getMonthYearString());

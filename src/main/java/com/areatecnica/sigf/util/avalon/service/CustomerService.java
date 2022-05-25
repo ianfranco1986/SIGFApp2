@@ -15,18 +15,17 @@
  */
 package com.areatecnica.sigf.util.avalon.service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
-
 import com.areatecnica.sigf.util.avalon.domain.Country;
 import com.areatecnica.sigf.util.avalon.domain.Customer;
 import com.areatecnica.sigf.util.avalon.domain.CustomerStatus;
 import com.areatecnica.sigf.util.avalon.domain.Representative;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Named
 @ApplicationScoped

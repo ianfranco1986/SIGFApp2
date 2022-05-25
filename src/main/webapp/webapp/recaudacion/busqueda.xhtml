@@ -5,7 +5,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui"
                 template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">Búsqueda de Boletos</ui:define>
@@ -14,18 +13,23 @@
 
         <h:form id="GuiaListForm" class="form-height">
             <p:panel>
-                <f:facet name="header">
+                <h3>
                     Búsqueda de Boletos
-                </f:facet>
-                <p:panelGrid columns="9" style="width: 100%;margin-bottom: 10px;">
+                </h3>                    
 
-                    <p:outputLabel value="Serie:"/>
-                    <p:inputNumber value="#{ventaBoletoController.serie}" decimalPlaces="0" required="true" requiredMessage="Debe ingresar un valor" minValue="0"/>
+                <div class="ui-fluid">
 
-                    <p:commandButton id="value2" ajax="true" icon="pi pi-fw pi-search" value="Buscar" update="@(.clase), GuiaListForm:datalist, growl"  style="width:120px" actionListener="#{ventaBoletoController.find()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                    </p:commandButton>
+                    <div class="p-field">
+                        <label>Serie</label>
+                        <p:inputNumber value="#{ventaBoletoController.serie}" decimalPlaces="0" required="true" requiredMessage="Debe ingresar un valor" minValue="0"/>
+                    </div>
+                    <div class="p-field">
+                        <label></label>
+                        <p:commandButton id="value2" ajax="true" icon="pi pi-fw pi-search" value="Buscar" update="@(.clase), GuiaListForm:datalist, growl"  actionListener="#{ventaBoletoController.find()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        </p:commandButton>
+                    </div>
 
-                </p:panelGrid>
+                </div>
 
                 <p:dataTable id="datalist"
                              scrollHeight="500" 

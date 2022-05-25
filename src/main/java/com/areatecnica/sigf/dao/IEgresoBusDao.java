@@ -5,9 +5,9 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.dao.*;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Egreso;
+
 import java.util.List;
 
 /**
@@ -17,6 +17,6 @@ import java.util.List;
  */
 public interface IEgresoBusDao<T> extends IGenericDAO<T> {
     
-    public List<Egreso> findAllByBus(Bus bus);
+    List<Egreso> findAllByBus(Bus bus);
     
 }

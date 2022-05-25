@@ -13,6 +13,6 @@ import com.areatecnica.sigf.entities.TipoCombustible;
  */
 public interface ITipoCombustibleDao<T> extends IGenericDAO<T> {
 
-    public TipoCombustible findTipoCombustibleDefecto();
+    TipoCombustible findTipoCombustibleDefecto();
 
 }

@@ -15,19 +15,16 @@
  */
 package com.areatecnica.sigf.util.avalon.view;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.areatecnica.sigf.util.avalon.domain.Product;
 import com.areatecnica.sigf.util.avalon.service.ProductService;
-
 import org.primefaces.model.DualListModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @RequestScoped

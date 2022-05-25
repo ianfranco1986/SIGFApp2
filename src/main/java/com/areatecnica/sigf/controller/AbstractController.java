@@ -1,24 +1,24 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.facade.AbstractFacade;
-import com.areatecnica.sigf.facade.LazyEntityDataModel;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.Usuario;
+import com.areatecnica.sigf.facade.AbstractFacade;
+import com.areatecnica.sigf.facade.LazyEntityDataModel;
+import org.primefaces.model.Visibility;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
-
 import java.util.ResourceBundle;
-import javax.ejb.EJBException;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import org.primefaces.model.Visibility;
 
 /**
  * Represents an abstract shell of to be used as JSF Controller to be used in
@@ -41,7 +41,6 @@ public abstract class AbstractController<T> implements Serializable {
     private Usuario currentUser;
     private Cuenta userCount;
     private Boolean limitedByCuenta;
-    private String namedQuery;
     private List<Boolean> listVisible;
     private List<String> searchColumnNameList;
     private List<String> columnNameList;
@@ -122,8 +121,6 @@ public abstract class AbstractController<T> implements Serializable {
     protected void setEmbeddableKeys() {
         // Nothing to do if entity does not have any embeddable key.
     }
-
-    ;
 
     /**
      * Sets the concrete embedded key of an Entity that uses composite keys.
@@ -410,7 +407,6 @@ public abstract class AbstractController<T> implements Serializable {
     }
 
     public void setNamedQuery(String namedQuery) {
-        this.namedQuery = namedQuery;
     }
 
     public Cuenta getUserCount() {

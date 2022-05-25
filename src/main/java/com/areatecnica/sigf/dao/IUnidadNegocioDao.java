@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.UnidadNegocio;
+
 import java.util.List;
 
 /**
@@ -16,10 +17,10 @@ import java.util.List;
  */
 public interface IUnidadNegocioDao<T> extends IGenericDAO<T> {
 
-    public UnidadNegocio findById(int idUnidadNegocio);
+    UnidadNegocio findById(int idUnidadNegocio);
     
-    public List<UnidadNegocio> findByCuenta(Cuenta cuenta);
+    List<UnidadNegocio> findByCuenta(Cuenta cuenta);
     
-    public List<UnidadNegocio> findNandu();
+    List<UnidadNegocio> findNandu();
     
 }

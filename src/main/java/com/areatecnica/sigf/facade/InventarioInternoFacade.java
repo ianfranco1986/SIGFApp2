@@ -5,16 +5,16 @@
  */
 package com.areatecnica.sigf.facade;
 
+import com.areatecnica.sigf.entities.Boleto;
+import com.areatecnica.sigf.entities.InventarioCaja;
 import com.areatecnica.sigf.entities.InventarioInterno;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.InventarioInterno_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.Boleto;
-import com.areatecnica.sigf.entities.InventarioCaja;
 import java.util.List;
 
 /**

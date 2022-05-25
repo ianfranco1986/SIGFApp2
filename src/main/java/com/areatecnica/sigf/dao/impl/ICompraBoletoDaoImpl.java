@@ -8,9 +8,10 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.ICompraBoletoDao;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.Cuenta;
+
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

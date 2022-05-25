@@ -1,14 +1,15 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.HaberTrabajador;
 import com.areatecnica.sigf.entities.HaberLiquidacion;
-import java.util.List;
+import com.areatecnica.sigf.entities.HaberTrabajador;
 import com.areatecnica.sigf.facade.HaberTrabajadorFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "haberTrabajadorController")
 @ViewScoped

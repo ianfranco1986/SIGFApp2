@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IClienteDao;
 import com.areatecnica.sigf.entities.Cliente;
+
 import javax.persistence.NoResultException;
 
 /**

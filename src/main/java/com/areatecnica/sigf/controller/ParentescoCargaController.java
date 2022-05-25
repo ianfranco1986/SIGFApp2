@@ -1,13 +1,13 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.ParentescoCarga;
 import com.areatecnica.sigf.entities.CargaTrabajador;
-import java.util.List;
+import com.areatecnica.sigf.entities.ParentescoCarga;
 import com.areatecnica.sigf.facade.ParentescoCargaFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "parentescoCargaController")
 @ViewScoped

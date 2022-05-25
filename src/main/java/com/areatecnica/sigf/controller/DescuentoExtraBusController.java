@@ -7,20 +7,17 @@ import com.areatecnica.sigf.dao.IFlotaDao;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IDescuentoExtraBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IFlotaDaoImpl;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.DescuentoExtra;
-import com.areatecnica.sigf.entities.DescuentoExtraBus;
-import com.areatecnica.sigf.entities.Flota;
-import com.areatecnica.sigf.entities.RecaudacionDescuentoExtra;
-import java.util.List;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.facade.DescuentoExtraBusFacade;
 import com.areatecnica.sigf.models.DescuentoExtraBusDataModel;
+
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "descuentoExtraBusController")
 @ViewScoped

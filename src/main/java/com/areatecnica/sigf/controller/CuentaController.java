@@ -1,50 +1,14 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.Cuenta;
-import com.areatecnica.sigf.entities.HorarioJornada;
-import com.areatecnica.sigf.entities.Boleto;
-import com.areatecnica.sigf.entities.PeriodoFrecuencia;
-import com.areatecnica.sigf.entities.ValorMinuto;
-import com.areatecnica.sigf.entities.RepresentanteLegal;
-import com.areatecnica.sigf.entities.Banco;
-import com.areatecnica.sigf.entities.TipoControl;
-import com.areatecnica.sigf.entities.CentroCosto;
-import com.areatecnica.sigf.entities.Usuario;
-import com.areatecnica.sigf.entities.AsignacionFamiliar;
-import com.areatecnica.sigf.entities.InstitucionSalud;
-import com.areatecnica.sigf.entities.Flota;
-import com.areatecnica.sigf.entities.Egreso;
-import com.areatecnica.sigf.entities.TipoObservacion;
-import com.areatecnica.sigf.entities.TipoHaberTrabajador;
-import com.areatecnica.sigf.entities.Trabajador;
-import com.areatecnica.sigf.entities.PrecioCombustible;
-import com.areatecnica.sigf.entities.InstitucionApv;
-import com.areatecnica.sigf.entities.TipoContrato;
-import com.areatecnica.sigf.entities.DescuentoExtra;
-import com.areatecnica.sigf.entities.Sindicato;
-import com.areatecnica.sigf.entities.CompraBoleto;
-import com.areatecnica.sigf.entities.TipoDescuentoTrabajador;
-import com.areatecnica.sigf.entities.InstitucionPrevision;
-import com.areatecnica.sigf.entities.GrupoServicio;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.CompraPetroleo;
-import com.areatecnica.sigf.entities.Mutual;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.UnidadNegocio;
-import com.areatecnica.sigf.entities.ProcesoRecaudacion;
-import com.areatecnica.sigf.entities.Servicio;
-import com.areatecnica.sigf.entities.TipoTrabajador;
-import com.areatecnica.sigf.entities.CajaCompensacion;
-import com.areatecnica.sigf.entities.Control;
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.Departamento;
-import java.util.List;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.facade.CuentaFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "cuentaController")
 @ViewScoped

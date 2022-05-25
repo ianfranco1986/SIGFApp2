@@ -10,8 +10,9 @@ import com.areatecnica.sigf.dao.IRegistroBoletoDao;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.RegistroBoleto;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

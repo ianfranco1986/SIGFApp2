@@ -1,17 +1,21 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.IPrivilegioDao;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IPrivilegioDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionCombustibleDaoImpl;
 import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
+import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.entities.RecaudacionCombustible;
 import com.areatecnica.sigf.entities.VentaCombustible;
-import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.models.RecaudacionCombustibleDataModel;
 import com.areatecnica.sigf.models.VentaCombustibleModel;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -20,10 +24,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
 
 @Named(value = "recaudacionCombustibleController")
 @ViewScoped
@@ -44,9 +44,9 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
     private boolean print;
     private Privilegio privilegio;
 
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
     LocalDate f;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
 
     public RecaudacionCombustibleController() {
         // Inform the Abstract parent controller of the concrete RecaudacionCombustible Entity

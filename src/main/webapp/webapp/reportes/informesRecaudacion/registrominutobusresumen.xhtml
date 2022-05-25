@@ -15,17 +15,17 @@
 
             <p:panel>
                 <p:spacer/>
-                <h3 style="text-align: center;">Recaudación Minuto x Bus (Resumen)</h3>
+                <h3>Recaudación Minuto x Bus (Resumen)</h3>
 
                 <div class="ui-fluid">
                     <div class="p-field">
                         <label for="desde">Desde</label>
-                        <p:calendar id="desde" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerMinutosBusMesResumen.desde}" required="true" requiredMessage="Debe ingresar la fecha desde" />
+                        <p:datePicker id="desde" value="#{reportControllerMinutosBusMesResumen.desde}" locale="es" autocomplete="off" required="true" requiredMessage="Debe ingresar la fecha desde" />
 
                     </div>
                     <div class="p-field">
                         <label for="hasta">Hasta</label>
-                        <p:calendar id="hasta" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerMinutosBusMesResumen.hasta}" required="true" requiredMessage="Debe ingresar la fecha hasta" />
+                        <p:datePicker id="hasta" value="#{reportControllerMinutosBusMesResumen.hasta}" locale="es" autocomplete="off" required="true" requiredMessage="Debe ingresar la fecha hasta" />
 
                     </div>
                     <div class="p-field">

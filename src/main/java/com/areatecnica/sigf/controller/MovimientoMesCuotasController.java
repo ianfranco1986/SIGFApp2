@@ -5,24 +5,20 @@ import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
 import com.areatecnica.sigf.dao.impl.ITipoMovimientoDaoImpl;
-import com.areatecnica.sigf.entities.CartolaBanco;
-import com.areatecnica.sigf.entities.CuentaBancaria;
-import com.areatecnica.sigf.entities.MovimientoMes;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.TipoMovimiento;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.MovimientoMesDataModel;
+import org.primefaces.event.RowEditEvent;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import org.primefaces.event.RowEditEvent;
 
 @Named(value = "movimientoMesCuotasController")
 @ViewScoped
@@ -56,7 +52,7 @@ public class MovimientoMesCuotasController extends AbstractController<Movimiento
 //    private DateTime dateTime;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
 
     public MovimientoMesCuotasController() {
         // Inform the Abstract parent controller of the concrete MovimientoMes Entity

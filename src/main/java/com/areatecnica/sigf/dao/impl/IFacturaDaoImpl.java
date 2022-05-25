@@ -7,10 +7,11 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IFacturaDao;
 import com.areatecnica.sigf.entities.Factura;
+
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

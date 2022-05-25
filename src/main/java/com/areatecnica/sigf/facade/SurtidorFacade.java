@@ -6,14 +6,15 @@
 package com.areatecnica.sigf.facade;
 
 import com.areatecnica.sigf.entities.Surtidor;
+import com.areatecnica.sigf.entities.Terminal;
+import com.areatecnica.sigf.entities.VentaCombustible;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.VentaCombustible;
 import java.util.List;
 
 /**

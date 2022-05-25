@@ -6,26 +6,14 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -117,10 +105,7 @@ public class CajaCompensacion extends BaseEntity implements Serializable {
             return false;
         }
         CajaCompensacion other = (CajaCompensacion) object;
-        if ((this.cajaCompensacionId == null && other.cajaCompensacionId != null) || (this.cajaCompensacionId != null && !this.cajaCompensacionId.equals(other.cajaCompensacionId))) {
-            return false;
-        }
-        return true;
+        return (this.cajaCompensacionId != null || other.cajaCompensacionId == null) && (this.cajaCompensacionId == null || this.cajaCompensacionId.equals(other.cajaCompensacionId));
     }
 
     @Override

@@ -2,13 +2,12 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.Empresa;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named(value = "cuentaBancariaController")
 @ViewScoped
@@ -20,6 +19,9 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
     private boolean isCuentaBancoProcesoListEmpty;
     private boolean isCuentaBancoEmpresaListEmpty;
     private boolean isCuentaBancoTrabajadorListEmpty;
+
+    private List<CuentaBancaria> items;
+
 
     public CuentaBancariaController() {
         // Inform the Abstract parent controller of the concrete CuentaBancaria Entity
@@ -126,8 +128,7 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
         return this.isCuentaBancoTrabajadorListEmpty;
     }
 
-    @Override
-    public Collection<CuentaBancaria> getItems() {
+    public List<CuentaBancaria> getItems() {
 
         List<Empresa> empresas = this.getUserCount().getEmpresaList();
 
@@ -143,7 +144,11 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
             this.setItems(new ArrayList());
         }
 
-        return getItems();
+        return this.items;
+    }
+
+    public void setItems(List<CuentaBancaria> list){
+        this.items = list;
     }
 
 //    private void setIsCuentaBancoTrabajadorListEmpty() {

@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.Egreso;
+
 import java.util.List;
 
 /**
@@ -15,10 +16,10 @@ import java.util.List;
  */
 public interface IEgresoDao<T> extends IGenericDAO<T> {
 
-    public List<Egreso> findAllByCuenta(Cuenta cuenta);
+    List<Egreso> findAllByCuenta(Cuenta cuenta);
 
-    public List<Egreso> findAllActived();
+    List<Egreso> findAllActived();
 
-    public Egreso getBoleto();
+    Egreso getBoleto();
 
 }

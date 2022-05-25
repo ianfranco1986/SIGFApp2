@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.DescuentoExtraBus;
+
 import java.util.List;
 
 /**
@@ -15,8 +16,8 @@ import java.util.List;
  */
 public interface IDescuentoExtraBusDao<T> extends IGenericDAO<T> {
     
-    public List<DescuentoExtraBus> findByBus(Bus bus);
+    List<DescuentoExtraBus> findByBus(Bus bus);
     
-    public List<DescuentoExtraBus> findByDescuentoExtra(DescuentoExtraBus extra);
+    List<DescuentoExtraBus> findByDescuentoExtra(DescuentoExtraBus extra);
         
 }

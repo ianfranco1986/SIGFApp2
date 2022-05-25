@@ -5,18 +5,10 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  *
@@ -98,10 +90,7 @@ public class ParametroCesantia extends BaseEntity implements Serializable {
             return false;
         }
         ParametroCesantia other = (ParametroCesantia) object;
-        if ((this.parametroCesantiaId == null && other.parametroCesantiaId != null) || (this.parametroCesantiaId != null && !this.parametroCesantiaId.equals(other.parametroCesantiaId))) {
-            return false;
-        }
-        return true;
+        return (this.parametroCesantiaId != null || other.parametroCesantiaId == null) && (this.parametroCesantiaId == null || this.parametroCesantiaId.equals(other.parametroCesantiaId));
     }
 
     @Override

@@ -9,8 +9,9 @@ import com.areatecnica.sigf.dao.ITrabajadorDao;
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.Terminal;
 import com.areatecnica.sigf.entities.Trabajador;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

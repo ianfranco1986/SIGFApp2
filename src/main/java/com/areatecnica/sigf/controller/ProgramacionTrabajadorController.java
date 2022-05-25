@@ -1,11 +1,11 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.ProgramacionTrabajador;
-import com.areatecnica.sigf.facade.ProgramacionTrabajadorFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "programacionTrabajadorController")
 @ViewScoped

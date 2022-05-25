@@ -6,22 +6,11 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  *
@@ -113,10 +102,7 @@ public class RecaudacionBoleto extends BaseEntity implements Serializable {
             return false;
         }
         RecaudacionBoleto other = (RecaudacionBoleto) object;
-        if ((this.recaudacionBoletoId == null && other.recaudacionBoletoId != null) || (this.recaudacionBoletoId != null && !this.recaudacionBoletoId.equals(other.recaudacionBoletoId))) {
-            return false;
-        }
-        return true;
+        return (this.recaudacionBoletoId != null || other.recaudacionBoletoId == null) && (this.recaudacionBoletoId == null || this.recaudacionBoletoId.equals(other.recaudacionBoletoId));
     }
 
     @Override

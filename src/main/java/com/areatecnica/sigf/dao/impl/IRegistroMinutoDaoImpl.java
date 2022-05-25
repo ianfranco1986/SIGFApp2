@@ -9,9 +9,10 @@ import com.areatecnica.sigf.dao.IRegistroMinutoDao;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.RegistroMinuto;
 import com.areatecnica.sigf.entities.Terminal;
+
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

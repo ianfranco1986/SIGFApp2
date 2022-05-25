@@ -6,25 +6,12 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -148,10 +135,7 @@ public class CtvResumen extends BaseEntity implements Serializable {
             return false;
         }
         CtvResumen other = (CtvResumen) object;
-        if ((this.ctvResumenId == null && other.ctvResumenId != null) || (this.ctvResumenId != null && !this.ctvResumenId.equals(other.ctvResumenId))) {
-            return false;
-        }
-        return true;
+        return (this.ctvResumenId != null || other.ctvResumenId == null) && (this.ctvResumenId == null || this.ctvResumenId.equals(other.ctvResumenId));
     }
 
     @Override

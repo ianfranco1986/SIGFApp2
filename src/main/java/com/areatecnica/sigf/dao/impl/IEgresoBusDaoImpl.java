@@ -9,8 +9,9 @@ import com.areatecnica.sigf.dao.IEgresoBusDao;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.EgresoBus;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

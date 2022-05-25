@@ -7,31 +7,19 @@ package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.dao.IRecaudacionGuiaDao;
 import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
-import com.areatecnica.sigf.entities.Administrador;
-import com.areatecnica.sigf.entities.AdministradorBus;
-import com.areatecnica.sigf.entities.AdministradorFlota;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Recaudacion;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
-import com.areatecnica.sigf.entities.Trabajador;
-import com.areatecnica.sigf.entities.Usuario;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.TableModelConductor;
 import com.areatecnica.sigf.util.CurrentDate;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  *
@@ -41,19 +29,19 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class InformeProduccionConductorController implements Serializable {
 
-    private Usuario currentUser;
+    private final Usuario currentUser;
     private List<Bus> items;
     private List<Trabajador> conductoresItems;
-    private List<RecaudacionGuia> recaudacion;
-    private List<TableModelConductor> data;
-    private IRecaudacionGuiaDao dao;
+    private final List<RecaudacionGuia> recaudacion;
+    private final List<TableModelConductor> data;
+    private final IRecaudacionGuiaDao dao;
     private Date fecha;
     private int mes;
     private int anio;
     private CurrentDate currentDate;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private Map sumas;
-    private Map hashConductor;
+    private final Map hashConductor;
 
     /**
      * Creates a new instance of InformeRegistroBoletoController

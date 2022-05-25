@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.TipoRecaudacionExtra;
+
 import java.util.List;
 
 /**
@@ -15,6 +16,6 @@ import java.util.List;
  */
 public interface ITipoRecaudacionExtraDao<T> extends IGenericDAO<T> {
 
-    public List<TipoRecaudacionExtra> findByCuenta(Cuenta cuenta);
+    List<TipoRecaudacionExtra> findByCuenta(Cuenta cuenta);
 
 }

@@ -3,16 +3,13 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.dao.IFlotaDao;
 import com.areatecnica.sigf.dao.impl.IFlotaDaoImpl;
 import com.areatecnica.sigf.entities.Flota;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.EgresoFlota;
 import java.util.List;
-import com.areatecnica.sigf.facade.FlotaFacade;
+
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "flotaController")
 @ViewScoped
@@ -22,6 +19,8 @@ public class FlotaController extends AbstractController<Flota> {
 
     @Inject
     private CuentaController flotaIdCuentaController;
+
+    private List<Flota> items;
 
     // Flags to indicate if child collections are empty
     private boolean isBusListEmpty;
@@ -38,7 +37,7 @@ public class FlotaController extends AbstractController<Flota> {
     @Override
     public void initParams() {
         this.dao = new IFlotaDaoImpl();
-        this.setItems(this.dao.findByCuenta(this.getUserCount()));
+        this.items = this.dao.findByCuenta(this.getUserCount());
     }
 
     @Override
@@ -53,6 +52,14 @@ public class FlotaController extends AbstractController<Flota> {
      */
     public void resetParents() {
         flotaIdCuentaController.setSelected(null);
+    }
+
+    public List<Flota> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Flota> items) {
+        this.items = items;
     }
 
 }

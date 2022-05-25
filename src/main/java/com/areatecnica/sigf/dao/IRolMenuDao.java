@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Rol;
 import com.areatecnica.sigf.entities.RolMenu;
+
 import java.util.List;
 
 /**
@@ -16,6 +17,6 @@ import java.util.List;
  */
 public interface IRolMenuDao<T> extends IGenericDAO<T> {
 
-    public List<RolMenu> findAllByRol(Rol rol);
+    List<RolMenu> findAllByRol(Rol rol);
 
 }

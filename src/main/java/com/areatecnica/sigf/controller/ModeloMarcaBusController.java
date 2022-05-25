@@ -1,14 +1,15 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.ModeloMarcaBus;
 import com.areatecnica.sigf.entities.Bus;
-import java.util.List;
+import com.areatecnica.sigf.entities.ModeloMarcaBus;
 import com.areatecnica.sigf.facade.ModeloMarcaBusFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "modeloMarcaBusController")
 @ViewScoped

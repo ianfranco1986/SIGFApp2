@@ -5,17 +5,16 @@ import com.areatecnica.sigf.dao.ICompraBoletoDao;
 import com.areatecnica.sigf.dao.impl.ICompraBoletoDaoImpl;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
-import java.util.List;
-import com.areatecnica.sigf.facade.CompraBoletoFacade;
 import com.areatecnica.sigf.facade.InventarioInternoFacade;
 import com.areatecnica.sigf.models.DetalleCompraBoletosDataModel;
-import java.text.DecimalFormat;
+
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.text.DecimalFormat;
+import java.util.List;
 
 @Named(value = "compraBoletoDetalleController")
 @ViewScoped

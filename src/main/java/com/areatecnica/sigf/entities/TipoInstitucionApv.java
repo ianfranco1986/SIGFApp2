@@ -5,23 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -101,10 +91,7 @@ public class TipoInstitucionApv implements Serializable {
             return false;
         }
         TipoInstitucionApv other = (TipoInstitucionApv) object;
-        if ((this.tipoInstitucionApvId == null && other.tipoInstitucionApvId != null) || (this.tipoInstitucionApvId != null && !this.tipoInstitucionApvId.equals(other.tipoInstitucionApvId))) {
-            return false;
-        }
-        return true;
+        return (this.tipoInstitucionApvId != null || other.tipoInstitucionApvId == null) && (this.tipoInstitucionApvId == null || this.tipoInstitucionApvId.equals(other.tipoInstitucionApvId));
     }
 
     @Override

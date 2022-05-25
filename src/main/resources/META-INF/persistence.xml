@@ -3,9 +3,6 @@
   <persistence-unit name="com.areatecnica_SIGFapp_war_1PU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>java:/MySqlDSNandu</jta-data-source>
-    <class>com.areatecnica.sigf.entities.AbonoBus</class>
-    <class>com.areatecnica.sigf.entities.AbonoLiquidacion</class>
-    <class>com.areatecnica.sigf.entities.AdministracionMensual</class>
     <class>com.areatecnica.sigf.entities.AsignacionFamiliar</class>
     <class>com.areatecnica.sigf.entities.Banco</class>
     <class>com.areatecnica.sigf.entities.Boleto</class>
@@ -17,8 +14,6 @@
     <class>com.areatecnica.sigf.entities.CalleServicio</class>
     <class>com.areatecnica.sigf.entities.CargaRetroactiva</class>
     <class>com.areatecnica.sigf.entities.CargaTrabajador</class>
-    <class>com.areatecnica.sigf.entities.CargoBus</class>
-    <class>com.areatecnica.sigf.entities.CargoLiquidacion</class>
     <class>com.areatecnica.sigf.entities.CausalFiniquito</class>
     <class>com.areatecnica.sigf.entities.CentroCosto</class>
     <class>com.areatecnica.sigf.entities.Ciudad</class>
@@ -41,9 +36,7 @@
     <class>com.areatecnica.sigf.entities.DescuentoTrabajador</class>
     <class>com.areatecnica.sigf.entities.Despacho</class>
     <class>com.areatecnica.sigf.entities.DetalleCompraBoleto</class>
-    <class>com.areatecnica.sigf.entities.DetalleIntervalosMensual</class>
     <class>com.areatecnica.sigf.entities.DetalleResumenCheque</class>
-    <class>com.areatecnica.sigf.entities.DetalleResumenRecaudacion</class>
     <class>com.areatecnica.sigf.entities.DiaFestivo</class>
     <class>com.areatecnica.sigf.entities.Egreso</class>
     <class>com.areatecnica.sigf.entities.EgresoBus</class>
@@ -72,7 +65,6 @@
     <class>com.areatecnica.sigf.entities.InstitucionApv</class>
     <class>com.areatecnica.sigf.entities.InstitucionPrevision</class>
     <class>com.areatecnica.sigf.entities.InstitucionSalud</class>
-    <class>com.areatecnica.sigf.entities.IntervalosAdministracion</class>
     <class>com.areatecnica.sigf.entities.InventarioCaja</class>
     <class>com.areatecnica.sigf.entities.InventarioInterno</class>
     <class>com.areatecnica.sigf.entities.JornadaLaboral</class>
@@ -80,7 +72,6 @@
     <class>com.areatecnica.sigf.entities.LicenciaMedica</class>
     <class>com.areatecnica.sigf.entities.LiquidacionEmpresa</class>
     <class>com.areatecnica.sigf.entities.LiquidacionSueldo</class>
-    <class>com.areatecnica.sigf.entities.Log</class>
     <class>com.areatecnica.sigf.entities.MarcaBus</class>
     <class>com.areatecnica.sigf.entities.Menu</class>
     <class>com.areatecnica.sigf.entities.MovimientoMes</class>
@@ -88,7 +79,6 @@
     <class>com.areatecnica.sigf.entities.ModeloMarcaBus</class>
     <class>com.areatecnica.sigf.entities.MonedaPactadaInstitucionSalud</class>
     <class>com.areatecnica.sigf.entities.Mutual</class>
-    <class>com.areatecnica.sigf.entities.NumeralSurtidor</class>
     <class>com.areatecnica.sigf.entities.ObservacionTipoCuenta</class>
     <class>com.areatecnica.sigf.entities.ObservacionTrabajador</class>
     <class>com.areatecnica.sigf.entities.OperadorTransporte</class>
@@ -123,9 +113,7 @@
     <class>com.areatecnica.sigf.entities.Surtidor</class>
     <class>com.areatecnica.sigf.entities.TarifaGrupoServicio</class>
     <class>com.areatecnica.sigf.entities.Terminal</class>
-    <class>com.areatecnica.sigf.entities.TipoAbono</class>
     <class>com.areatecnica.sigf.entities.TipoCargaFamiliar</class>
-    <class>com.areatecnica.sigf.entities.TipoCargo</class>
     <class>com.areatecnica.sigf.entities.TipoCombustible</class>
     <class>com.areatecnica.sigf.entities.TipoContrato</class>
     <class>com.areatecnica.sigf.entities.TipoControl</class>

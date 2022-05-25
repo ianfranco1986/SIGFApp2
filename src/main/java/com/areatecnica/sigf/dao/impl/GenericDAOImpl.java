@@ -1,9 +1,8 @@
 package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IGenericDAO;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
+import org.primefaces.model.SortOrder;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,7 +10,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.primefaces.model.SortOrder;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  *

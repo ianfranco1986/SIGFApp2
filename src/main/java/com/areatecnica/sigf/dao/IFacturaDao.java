@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Factura;
+
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
  */
 public interface IFacturaDao<T> extends IGenericDAO<T> {
     
-    public Factura findById(int id);
+    Factura findById(int id);
     
-    public Factura findByFolio(int folio);
+    Factura findByFolio(int folio);
     
-    public List<Factura> findBetweenDates(Date from, Date to);
+    List<Factura> findBetweenDates(Date from, Date to);
 }

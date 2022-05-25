@@ -1,13 +1,10 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.TipoPlanCuenta;
-import com.areatecnica.sigf.entities.PlanCuenta;
-import java.util.List;
 import com.areatecnica.sigf.facade.TipoPlanCuentaFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "tipoPlanCuentaController")
 @ViewScoped

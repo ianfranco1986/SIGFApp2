@@ -6,17 +6,13 @@
 package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IRecaudacionGuiaDao;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Cuenta;
-import com.areatecnica.sigf.entities.Egreso;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
+import com.areatecnica.sigf.entities.*;
+
+import javax.persistence.NoResultException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

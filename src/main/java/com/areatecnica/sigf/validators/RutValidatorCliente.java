@@ -9,6 +9,7 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IClienteDaoImpl;
 import com.areatecnica.sigf.entities.Cliente;
 import com.areatecnica.sigf.entities.Usuario;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -23,8 +24,8 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("rutValidatorCliente")
 public class RutValidatorCliente implements Validator {
 
-    private FacesMessage msg;
-    private Usuario usuario;
+    private final FacesMessage msg;
+    private final Usuario usuario;
 
     public RutValidatorCliente() {
         this.msg = new FacesMessage("Error de validación", "Error de validación");

@@ -5,23 +5,11 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -159,10 +147,7 @@ public class LiquidacionEmpresa extends BaseEntity implements Serializable {
             return false;
         }
         LiquidacionEmpresa other = (LiquidacionEmpresa) object;
-        if ((this.liquidacionEmpresaId == null && other.liquidacionEmpresaId != null) || (this.liquidacionEmpresaId != null && !this.liquidacionEmpresaId.equals(other.liquidacionEmpresaId))) {
-            return false;
-        }
-        return true;
+        return (this.liquidacionEmpresaId != null || other.liquidacionEmpresaId == null) && (this.liquidacionEmpresaId == null || this.liquidacionEmpresaId.equals(other.liquidacionEmpresaId));
     }
 
     @Override

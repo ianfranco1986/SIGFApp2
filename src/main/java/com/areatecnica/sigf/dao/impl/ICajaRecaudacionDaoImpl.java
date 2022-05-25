@@ -8,8 +8,9 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.ICajaRecaudacionDao;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Usuario;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

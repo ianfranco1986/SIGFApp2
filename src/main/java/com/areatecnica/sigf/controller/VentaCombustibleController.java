@@ -3,31 +3,23 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IVentaCombustibleDao;
 import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
-import com.areatecnica.sigf.entities.VentaCombustible;
 import com.areatecnica.sigf.entities.RecaudacionCombustible;
-import java.util.List;
+import com.areatecnica.sigf.entities.VentaCombustible;
 import com.areatecnica.sigf.facade.VentaCombustibleFacade;
 import com.areatecnica.sigf.util.CurrentDate;
+
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
+import java.util.*;
 
 @Named(value = "ventaCombustibleController")
 @ViewScoped
 public class VentaCombustibleController extends AbstractController<VentaCombustible> {
 
-    
     // Flags to indicate if child collections are empty
     private boolean isRecaudacionCombustibleListEmpty;
 
@@ -35,8 +27,9 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
     private int mes;
     private int anio;
     private CurrentDate currentDate;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    private SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+    private float precio;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
     private static final String pattern = "###,###";
     private static final DecimalFormat decimalFormat = new DecimalFormat(pattern);
     private List<VentaCombustible> items;
@@ -73,7 +66,6 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         return map;
     }
 
-    
     public boolean getIsRecaudacionCombustibleListEmpty() {
         return this.isRecaudacionCombustibleListEmpty;
     }
@@ -119,7 +111,9 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
             if (!this.items.isEmpty()) {
                 for (VentaCombustible v : this.items) {
                     this.total = this.total + v.getVentaCombustibleTotal();
+
                 }
+                this.precio = this.items.get(0).getVentaCombustiblePrecio();
             }
 
         } else {
@@ -133,6 +127,14 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
 
     public String getInforme() {
         return informe;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+    public float getPrecio() {
+        return precio;
     }
 
     /**
@@ -151,8 +153,6 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         }
         return "/app/recaudacionCombustible/index";
     }
-
-   
 
 //    public void setFecha() {
 //        try {

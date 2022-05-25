@@ -5,11 +5,11 @@
  */
 package com.areatecnica.sigf.models;
 
-import com.areatecnica.sigf.controller.RecaudacionGuiaController;
 import com.areatecnica.sigf.entities.Recaudacion;
-import java.util.List;
-import javax.faces.model.ListDataModel;
 import org.primefaces.model.SelectableDataModel;
+
+import javax.faces.model.ListDataModel;
+import java.util.List;
 
 /**
  *

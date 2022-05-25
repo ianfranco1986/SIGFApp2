@@ -1,10 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.FiniquitoRelacionLaboral;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "finiquitoRelacionLaboralController")
 @ViewScoped

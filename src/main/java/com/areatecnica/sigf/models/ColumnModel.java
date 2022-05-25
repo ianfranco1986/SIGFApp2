@@ -13,10 +13,10 @@ import java.time.temporal.Temporal;
  */
 public class ColumnModel implements Serializable {
 
-        private String header;
-        private String property;
+        private final String header;
+        private final String property;
         private String type;
-        private Class<?> klazz;
+        private final Class<?> klazz;
 
         public ColumnModel(String header, String property, Class klazz) {
             this.header = header;

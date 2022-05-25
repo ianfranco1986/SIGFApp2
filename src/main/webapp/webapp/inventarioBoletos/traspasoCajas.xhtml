@@ -11,32 +11,32 @@
 
     <ui:define name="content">
 
-        <p:panel header="Traspaso de Boletos a Cajas">
+        <p:panel>
+
+
+
+
             <h:panelGroup id="display">
                 <h:form id="CompraBoletoCreateForm">
-                    <p:focus context="inventarioCajaIdCaja"/>
-                    <p:panelGrid columns="2"  style="width: 100%;">                        
-                        <h:outputLabel value="Fecha" for="compraBoletoFecha" />
-                        <h:outputLabel id="compraBoletoFecha" value="#{traspasoBoletoCajaController.fecha}"  >
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputLabel>
-
-                        <h:outputLabel value="Caja" for="inventarioCajaIdCaja" />
-                        <p:selectOneMenu id="inventarioCajaIdCaja" value="#{traspasoBoletoCajaController.selected.inventarioCajaIdCaja}" required="true" requiredMessage="Debe seleccionar la Caja Recaudación" converter="omnifaces.SelectItemsConverter">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cajaRecaudacionController.items}"
-                                           var="inventarioCajaIdCajaItem"
-                                           itemValue="#{inventarioCajaIdCajaItem}"
-                                           itemLabel="#{inventarioCajaIdCajaItem.cajaRecaudacionNombre}"
-                                           />
-                        </p:selectOneMenu>
-
-                        <h:outputLabel value=""/>
-                        <h:panelGrid columns="3" id="detalleTraspasoPanel" >
-                            <h:outputLabel style="margin-left: 5px;" value="Tipo Boleto" for="idBoleto" />                            
-                            <h:outputLabel style="margin-left: 5px;" value="Inventario" for="inventarioCajaIdInventarioInterno"/>
-                            <h:outputLabel style="margin-left: 5px;" value="Agregar" for="addButton"/>
-
+                    <p:focus context="cajaRecaudacionIdCaja"/>
+                    <div class="ui-fluid">
+                        <div class="p-field">
+                            <label>Fecha</label>
+                            <p:datePicker id="fecha" value="#{traspasoBoletoCajaController.fecha}" locale="es" autocomplete="off"/>
+                        </div>
+                        <div class="p-field">
+                            <label>Caja</label>
+                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{traspasoBoletoCajaController.selected.inventarioCajaIdCaja}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{traspasoBoletoCajaController.cajaRecaudacionItems}"
+                                               var="cajaId"
+                                               itemValue="#{cajaId}"
+                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field">
+                            <label>Boleto</label>
                             <p:selectOneMenu style="margin-right: 5px; margin-bottom: -2px;" id="idBoleto" value="#{traspasoBoletoCajaController.boletoItem}" requiredMessage="Debe seleccionar el tipo de boleto" required="true" converter="omnifaces.SelectItemsConverter" >
                                 <f:selectItem itemLabel="Seleccionar"/>                                
                                 <f:selectItems value="#{boletoController.items}"
@@ -46,20 +46,24 @@
                                                />
                                 <p:ajax event="valueChange" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" update="inventarioCajaIdInventarioInterno" listener="#{traspasoBoletoCajaController.handleBoletoChange(event)}" global="false"/>
                             </p:selectOneMenu>
-
-                            <p:selectCheckboxMenu label="Seleccionar..." id="inventarioCajaIdInventarioInterno" value="#{traspasoBoletoCajaController.inventarioCajaSelectedItems}" required="true" requiredMessage="Debe seleccionar el boleto del inventario" style="margin-left: 5px;" converter="omnifaces.SelectItemsConverter" panelStyle="width:250px" multiple="true">
+                        </div>
+                        <div class="p-field">
+                            <label>Inventario</label>
+                            <p:selectCheckboxMenu id="inventarioCajaIdInventarioInterno" value="#{traspasoBoletoCajaController.inventarioCajaSelectedItems}" required="true" requiredMessage="Debe seleccionar el boleto del inventario" style="margin-left: 5px;" converter="omnifaces.SelectItemsConverter" panelStyle="width:250px" multiple="true">
                                 <f:selectItems value="#{traspasoBoletoCajaController.inventarioInternoList}"
                                                var="inventarioCajaIdInventarioInternoItem"
                                                itemValue="#{inventarioCajaIdInventarioInternoItem}"
                                                itemLabel="#{inventarioCajaIdInventarioInternoItem.inventarioInternoIdentificador}#{inventarioCajaIdInventarioInternoItem.inventarioInternoSerie}"
                                                />
                             </p:selectCheckboxMenu>
+                        </div>
+                        <div class="p-field">
+                            <label></label>
+                            <p:commandButton  styleClass="btn btn-primary"  style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{traspasoBoletoCajaController.addInventarioCaja(event)}" update="DetalleCompraBoletoCreateForm:datalist, :growl, inventarioCajaIdInventarioInterno, DetalleCompraBoletoCreateForm:saveButton">
 
-                            <p:commandButton  styleClass="btn btn-primary"  style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{traspasoBoletoCajaController.addInventarioCaja(event)}" update="DetalleCompraBoletoCreateForm:datalist, :growl, detalleTraspasoPanel, inventarioCajaIdInventarioInterno, DetalleCompraBoletoCreateForm:saveButton">
-
-                            </p:commandButton>                        
-                        </h:panelGrid>
-                    </p:panelGrid>
+                            </p:commandButton> 
+                        </div>
+                    </div>
                 </h:form>
 
                 <h:panelGroup>

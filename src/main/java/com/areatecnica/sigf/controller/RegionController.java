@@ -1,14 +1,14 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.Region;
 import com.areatecnica.sigf.entities.Ciudad;
+import com.areatecnica.sigf.entities.Region;
 import com.areatecnica.sigf.entities.UnidadNegocio;
-import java.util.List;
 import com.areatecnica.sigf.facade.RegionFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "regionController")
 @ViewScoped

@@ -5,28 +5,14 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -41,8 +27,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvto", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesFechaMvto = :movimientoMesFechaMvto"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaLiquidacion", query = "SELECT m FROM MovimientoMes m WHERE m.movimientoMesFechaLiquidacion = :movimientoMesFechaLiquidacion"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesCuenta", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesCuentaBancoId = :movimientoMesCuentaId ORDER BY d.movimientoMesId ASC"),
-    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesIngresos", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesTipoMvtoId.tipoMovimientoAbono = 1 ORDER BY d.movimientoMesId ASC"),
-    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesEgresos", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesTipoMvtoId.tipoMovimientoDescuento = 1 ORDER BY d.movimientoMesId ASC"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesIngresos", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesTipoMvtoId.tipoMovimientoAbono = true ORDER BY d.movimientoMesId ASC"),
+    @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesEgresos", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesTipoMvtoId.tipoMovimientoDescuento = true ORDER BY d.movimientoMesId ASC"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesEmpresa", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesEmpresaId = :movimientoMesEmpresaId ORDER BY d.movimientoMesId ASC"),
     @NamedQuery(name = "MovimientoMes.findByMovimientoMesFechaMvtoDatesTipo", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesFechaMvto BETWEEN :from AND :to AND d.movimientoMesTipoMvtoId = :movimientoMesMvtoId ORDER BY d.movimientoMesId ASC"),
     @NamedQuery(name = "MovimientoMes.findLastByCuenta", query = "SELECT d FROM MovimientoMes d WHERE d.movimientoMesCuentaBancoId = :movimientoMesCuentaId ORDER BY d.movimientoMesNumeroDocumento DESC"),
@@ -261,10 +247,7 @@ public class MovimientoMes extends BaseEntity implements Serializable {
             return false;
         }
         MovimientoMes other = (MovimientoMes) object;
-        if ((this.movimientoMesId == null && other.movimientoMesId != null) || (this.movimientoMesId != null && !this.movimientoMesId.equals(other.movimientoMesId))) {
-            return false;
-        }
-        return true;
+        return (this.movimientoMesId != null || other.movimientoMesId == null) && (this.movimientoMesId == null || this.movimientoMesId.equals(other.movimientoMesId));
     }
 
     @Override

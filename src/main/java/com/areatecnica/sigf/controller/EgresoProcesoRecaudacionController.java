@@ -2,25 +2,25 @@ package com.areatecnica.sigf.controller;
 
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion;
-
 import com.areatecnica.sigf.dao.IEgresoDao;
 import com.areatecnica.sigf.dao.IEgresoProcesoRecaudacionDao;
 import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
 import com.areatecnica.sigf.dao.impl.IEgresoProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.entities.Egreso;
+import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.facade.EgresoProcesoRecaudacionFacade;
 import com.areatecnica.sigf.models.EgresoProcesoRecaudacionDataModel;
+import org.primefaces.event.ReorderEvent;
+
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
-import org.primefaces.event.ReorderEvent;
 
 @Named(value = "egresoProcesoRecaudacionController")
 @ViewScoped

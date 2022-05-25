@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.ILoginAdministradorDao;
 import com.areatecnica.sigf.entities.Administrador;
+
 import javax.persistence.NoResultException;
 
 /**

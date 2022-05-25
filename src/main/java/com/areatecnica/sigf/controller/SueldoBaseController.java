@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.SueldoBase;
-import com.areatecnica.sigf.facade.SueldoBaseFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @Named(value = "sueldoBaseController")
 @ViewScoped

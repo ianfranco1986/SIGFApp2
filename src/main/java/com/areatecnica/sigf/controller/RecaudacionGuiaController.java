@@ -1,37 +1,21 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Guia;
-import com.areatecnica.sigf.entities.Recaudacion;
-import com.areatecnica.sigf.entities.RecaudacionBoleto;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
-import com.areatecnica.sigf.entities.Trabajador;
+import com.areatecnica.sigf.dao.impl.*;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.RecaudacionDataModel;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
+import java.util.*;
 
 @Named(value = "recaudacionGuiaController")
 @ViewScoped
@@ -62,7 +46,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     private List<RecaudacionGuiaHelper> itemsRecaudacion;
 
     private RecaudacionGuiaHelper selectedRecaudacion;
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
 
     private int totalAdministracion = 0;
     private int totalCovid = 0;
@@ -87,7 +71,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     List<RecaudacionGuia> g;
 
     LocalDate f;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
 
     public RecaudacionGuiaController() {
         // Inform the Abstract parent controller of the concrete RecaudacionGuia Entity
@@ -147,7 +131,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
                                 String nombreBoleto = rb.getRecaudacionBoletoIdVentaBoleto().getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoSigla();
                                 if (this.boletos.containsKey(nombreBoleto)) {
-                                    this.boletos.put(nombreBoleto, (Integer) this.boletos.get(nombreBoleto) + 1);
+                                    this.boletos.put(nombreBoleto, this.boletos.get(nombreBoleto) + 1);
                                 } else {
                                     this.boletos.put(nombreBoleto, 1);
                                 }
@@ -157,7 +141,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                     }
                 }
 
-                boletos.forEach((k, v) -> this.cadenaBoletos = this.cadenaBoletos + k + ":" + String.valueOf(v) + " ");
+                boletos.forEach((k, v) -> this.cadenaBoletos = this.cadenaBoletos + k + ":" + v + " ");
 
                 this.model = new RecaudacionDataModel(this.itemsRecaudacion);
 
@@ -601,7 +585,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
     }
 
-    public class RecaudacionGuiaHelper implements Serializable {
+    public static class RecaudacionGuiaHelper implements Serializable {
 
         private Integer id;
 

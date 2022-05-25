@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.DiaFestivo;
-import com.areatecnica.sigf.facade.DiaFestivoFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @Named(value = "diaFestivoController")
 @ViewScoped

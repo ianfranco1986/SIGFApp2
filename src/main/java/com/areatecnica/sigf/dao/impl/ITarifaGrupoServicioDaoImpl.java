@@ -8,9 +8,9 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.ITarifaGrupoServicioDao;
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.TarifaGrupoServicio;
-import java.util.Date;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

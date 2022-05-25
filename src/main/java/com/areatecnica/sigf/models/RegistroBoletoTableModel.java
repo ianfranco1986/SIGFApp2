@@ -9,9 +9,10 @@ package com.areatecnica.sigf.models;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.RegistroBoleto;
 import com.areatecnica.sigf.entities.VueltaGuia;
+
+import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.table.AbstractTableModel;
 
 /**
  *

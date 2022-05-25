@@ -14,6 +14,8 @@
 
         <h:form id="RecaudacionExtraListForm" class="form-height">
             <p:card id="dashboard">
+                <span style="font-weight: bold"><h3>Recaudación de Ingresos Extras</h3></span>
+
                 <div  class="dashboard p-grid">
                     <div class="p-col-12 p-md-6 p-lg-3">
                         <div class="widget-overview overview-box-2">
@@ -32,44 +34,42 @@
                                 <span>Total Recaudado</span>
                             </div>
                             <div class="overview-box-count">#{recaudacionExtraController.getFormatValue(recaudacionExtraController.totalRecaudacion)}</div>
-                            <div class="overview-box-stats">#{recaudacionExtraController.items.size()>0?recaudacionExtraController.items.size():0} Vouchers)</div>
+                            <div class="overview-box-stats">(#{recaudacionExtraController.items.size()>0?recaudacionExtraController.items.size():0} Vouchers)</div>
                         </div>
                     </div>
 
 
                 </div>
-                <div class="card ui-fluid">
-                    <div class="p-formgrid p-grid">
-                        <div class="p-field p-col">
-                            <p:outputLabel for="fecha">Fecha</p:outputLabel>
-                            <p:datePicker id="fecha" value="#{recaudacionExtraController.fecha}" locale="es">
-                                <p:ajax event="dateSelect" listener="#{recaudacionExtraController.load}"
-                                        update="@(.clase), RecaudacionExtraListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                            </p:datePicker>
-
-                        </div>
-                        <div class="p-field p-col">
-                            <p:outputLabel for="cajaRecaudacionIdCaja">Caja</p:outputLabel>
-                            <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionExtraController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                <f:selectItems value="#{recaudacionExtraController.cajaRecaudacionItems}"
-                                               var="cajaId"
-                                               itemValue="#{cajaId}"
-                                               itemLabel="#{cajaId.cajaRecaudacionNombre}"
-                                               />
-                                <p:ajax event="valueChange"  listener="#{recaudacionExtraController.load}" update="@(.clase), RecaudacionExtraListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-
-                            </p:selectOneMenu>
-                        </div>
-
+                <p:separator/>
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label>Fecha</label>
+                        <p:datePicker id="fecha" value="#{recaudacionExtraController.fecha}" locale="es">
+                            <p:ajax event="dateSelect" listener="#{recaudacionExtraController.load}"
+                                    update="@(.clase), RecaudacionExtraListForm:datalist,growl, dashboard" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:datePicker>
 
                     </div>
+                    <div class="p-field">
+                        <label>Caja</label>
+                        <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{recaudacionExtraController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recaudacionExtraController.cajaRecaudacionItems}"
+                                           var="cajaId"
+                                           itemValue="#{cajaId}"
+                                           itemLabel="#{cajaId.cajaRecaudacionNombre}"
+                                           />
+                            <p:ajax event="valueChange"  listener="#{recaudacionExtraController.load}" update="@(.clase), RecaudacionExtraListForm:datalist, growl, dashboard"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+
+                        </p:selectOneMenu>
+                    </div>
+
                 </div>
             </p:card>
 
             <p:separator/>
 
-            <div class="card">
+            <p:card>
                 <p:toolbar styleClass="p-mb-4">
                     <p:toolbarGroup>
                         <p:commandButton id="delete-products-button" value="#{recaudacionExtraController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{recaudacionExtraController.deleteSelectedGuias}"
@@ -94,22 +94,22 @@
                                  widgetVar="datalistWidget"
                                  var="item"
                                  rowKey="#{item.recaudacionExtraId}"
-                                 
+
                                  rowIndexVar="rowIndex"
                                  emptyMessage="No se han encontrado registros"
                                  style="padding-top: 10px;"
                                  rowStyleClass="#{item.recaudacionExtraMonto eq 0 ? 'old' : null}" editable="true" >
 
-                         <p:ajax event="rowSelect" update=":RecaudacionExtraListForm:delete-products-button" />
+                        <p:ajax event="rowSelect" update=":RecaudacionExtraListForm:delete-products-button" />
                         <p:ajax event="rowUnselect" update=":RecaudacionExtraListForm:delete-products-button" />
                         <p:ajax event="rowSelectCheckbox" update=":RecaudacionExtraListForm:delete-products-button"/>
                         <p:ajax event="rowUnselectCheckbox" update=":RecaudacionExtraListForm:delete-products-button" />
                         <p:ajax event="toggleSelect" update=":RecaudacionExtraListForm:delete-products-button" />
-
+                        <p:ajax event="rowEdit" listener="#{recaudacionExtraController.onRowEdit}" update=":growl" />
+                        <p:ajax event="rowEditCancel" update=":growl" />
 
                         <f:facet name="header">
                             <div class="products-table-header">
-                                <span style="font-weight: bold"><h3>Recaudación de Ingresos Extras</h3></span>
 
                                 <span class="filter-container ui-input-icon-left">
                                     <i class="pi pi-search"></i>
@@ -148,27 +148,27 @@
 
                         </p:column>
 
-                        <p:column sortBy="#{item.recaudacionExtraDescripcion}" filterBy="#{item.recaudacionExtraDescripcion}" style="text-align: center;">
+                        <p:column sortBy="#{item.recaudacionExtraDescripcion}" filterBy="#{item.recaudacionExtraDescripcion}" style="text-align: center;width: 240px;">
                             <f:facet name="header">
                                 <h:outputText value="Descripción"/>
                             </f:facet>
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{item.recaudacionExtraDescripcion}"/></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText id="adin" value="#{item.recaudacionExtraDescripcion}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/>
+                                    <p:inputText id="adin" value="#{item.recaudacionExtraDescripcion}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>
 
                         </p:column>
 
-                        <p:column sortBy="#{item.recaudacionExtraUsuario}" filterBy="#{item.recaudacionExtraUsuario}" style="text-align: center; ">
+                        <p:column sortBy="#{item.recaudacionExtraUsuario}" filterBy="#{item.recaudacionExtraUsuario}" style="text-align: center;width: 240px;">
                             <f:facet name="header">
                                 <h:outputText value="Detalle"/>
                             </f:facet>
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{item.recaudacionExtraUsuario}"/></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText id="adin2" value="#{item.recaudacionExtraUsuario}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/>
+                                    <p:inputText id="adin2" value="#{item.recaudacionExtraUsuario}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>
 
@@ -183,7 +183,7 @@
                                         <f:convertNumber />
                                     </h:outputText></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText id="adin3" value="#{item.recaudacionExtraMonto}" onfocus="this.setSelectionRange(0, this.value.length)" style="width:70%"/>
+                                    <p:inputNumber id="adin3" value="#{item.recaudacionExtraMonto}"  style="width:50%" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -191,7 +191,7 @@
                         <p:column style="width:35px">
                             <p:rowEditor />
                         </p:column>
-                        
+
                         <p:column exportable="false">
                             <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
                                 <f:setPropertyActionListener value="#{item}" target="#{recaudacionExtraController.selected}" />
@@ -210,13 +210,13 @@
                     </p:confirmDialog>
                 </div>
 
-            </div>
+            </p:card>
 
-
+            <p:separator/>
 
             <p:card>
                 <p:commandButton id="basic" value="Información" type="button" styleClass="ui-button-secondary" icon="pi pi-exclamation-circle"/>
-                <p:overlayPanel for="basic" style="width:350px">
+                <p:overlayPanel for="basic">
                     <p>OBSERVACIÓN: </p>
                 </p:overlayPanel>
             </p:card>

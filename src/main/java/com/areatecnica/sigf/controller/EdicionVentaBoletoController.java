@@ -1,34 +1,25 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IBoletoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IVentaBoletoDaoImpl;
-import com.areatecnica.sigf.entities.Boleto;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Egreso;
-import com.areatecnica.sigf.entities.InventarioCaja;
-import com.areatecnica.sigf.entities.VentaBoleto;
+import com.areatecnica.sigf.dao.impl.*;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
+import org.primefaces.event.RowEditEvent;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import org.primefaces.event.RowEditEvent;
 
 @Named(value = "edicionVentaBoletoController")
 @ViewScoped
 public class EdicionVentaBoletoController implements Serializable {
 
     private Date fecha;
-    private int totalRecaudacion = 0;
+    private final int totalRecaudacion = 0;
 
     private List<VentaBoleto> items;
     private List<InventarioCaja> inventarioCajaItems;
@@ -44,12 +35,12 @@ public class EdicionVentaBoletoController implements Serializable {
     private Boleto selectedBoleto;
     private Boleto newBoleto;
 
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
 
-    private int totalAdministracion = 0;
-    private int totalCuotaExtra = 0;
-    private int totalBoletos = 0;
-    private int totalImposiciones = 0;
+    private final int totalAdministracion = 0;
+    private final int totalCuotaExtra = 0;
+    private final int totalBoletos = 0;
+    private final int totalImposiciones = 0;
     private int serie = 0;
 
     public EdicionVentaBoletoController() {

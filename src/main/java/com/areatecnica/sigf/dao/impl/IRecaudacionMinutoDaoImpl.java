@@ -6,16 +6,12 @@
 package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IRecaudacionMinutoDao;
-import com.areatecnica.sigf.entities.Boleto;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.RecaudacionMinuto;
-import com.areatecnica.sigf.entities.Terminal;
+import com.areatecnica.sigf.entities.*;
+
+import javax.persistence.NoResultException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

@@ -5,15 +5,15 @@
  */
 package com.areatecnica.sigf.facade;
 
+import com.areatecnica.sigf.entities.FrecuenciaServicio;
 import com.areatecnica.sigf.entities.TipoDemanda;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.TipoDemanda_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.FrecuenciaServicio;
 import java.util.List;
 
 /**

@@ -1,33 +1,52 @@
 package com.areatecnica.sigf.controller;
 
+import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.UnidadNegocio;
-import java.util.List;
-import com.areatecnica.sigf.facade.BusFacade;
-import com.areatecnica.sigf.models.BusDataModel;
-import java.util.ArrayList;
-import javax.faces.application.FacesMessage;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "busController")
 @ViewScoped
 public class BusController extends AbstractController<Bus> {
 
-    private BusDataModel model;
+    private List<Bus> items;
+    private Bus selected;
 
     public BusController() {
         // Inform the Abstract parent controller of the concrete Bus Entity
         super(Bus.class);
 
         //this.getItems().removeIf(e -> e.getBusId() == 1);
+    }
+
+    @PostConstruct
+    public void init() {
+        this.items = new IBusDaoImpl().findAll();
+        this.items.removeIf(e -> e.getBusId() == 1);
+    }
+
+    public List<Bus> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Bus> items) {
+        this.items = items;
+    }
+
+    public void setSelected(Bus selected) {
+        this.selected = selected;
+    }
+
+    public Bus getSelected() {
+        return this.selected;
     }
 
     /**
@@ -50,10 +69,8 @@ public class BusController extends AbstractController<Bus> {
         this.getSelected().setBusNumero(new IBusDaoImpl().findMaxNumeroUnidad(unidad));
     }
 
-
     public void deletet(ActionEvent evt) {
-        this.delete(evt);
-
+        JsfUtil.addErrorMessage("Error al eliminar el bus ");
     }
 
     public boolean hasSelectedProducts() {
@@ -68,9 +85,31 @@ public class BusController extends AbstractController<Bus> {
         return "Debe seleccionar un bus";
     }
 
-    @Override
     public void save(ActionEvent event) {
-        super.save(event);
+        if (this.selected != null) {
+            Bus bus = new IBusDaoImpl().update(this.selected);
+            if (bus != null) {
+                JsfUtil.addSuccessMessage("Se ha actualizado el bus");
+            } else {
+                JsfUtil.addErrorMessage("Error al registrar los cambios");
+            }
+        } else {
+            JsfUtil.addErrorMessage("Error al registrar los cambios ");
+        }
+
+    }
+
+    public void saveNew(ActionEvent event) {
+        if (this.selected != null) {
+            Bus bus = new IBusDaoImpl().create(this.selected);
+            if (bus != null) {
+                JsfUtil.addSuccessMessage("Se ha registrado el bus");
+            } else {
+                JsfUtil.addErrorMessage("Error al registrar los cambios");
+            }
+        } else {
+            JsfUtil.addErrorMessage("Error al registrar los cambios ");
+        }
     }
 
     public void onRowToggle(ToggleEvent event) {
@@ -81,13 +120,4 @@ public class BusController extends AbstractController<Bus> {
 //            }
         }
     }
-
-    public void setModel(BusDataModel model) {
-        this.model = model;
-    }
-
-    public BusDataModel getModel() {
-        return model;
-    }
-
 }

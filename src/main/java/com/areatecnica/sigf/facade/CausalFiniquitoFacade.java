@@ -6,14 +6,14 @@
 package com.areatecnica.sigf.facade;
 
 import com.areatecnica.sigf.entities.CausalFiniquito;
+import com.areatecnica.sigf.entities.FiniquitoRelacionLaboral;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.CausalFiniquito_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.FiniquitoRelacionLaboral;
 import java.util.List;
 
 /**

@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.facade;
 
 import com.areatecnica.sigf.entities.ParametroInterpolacion;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

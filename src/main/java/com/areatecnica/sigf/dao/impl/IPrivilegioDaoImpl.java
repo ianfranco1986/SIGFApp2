@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IPrivilegioDao;
 import com.areatecnica.sigf.entities.Privilegio;
+
 import javax.persistence.NoResultException;
 
 /**

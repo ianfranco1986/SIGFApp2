@@ -9,7 +9,17 @@ import com.areatecnica.sigf.entities.Recaudacion;
 import com.areatecnica.sigf.entities.VentaCombustible;
 import com.areatecnica.sigf.util.Name2DateValuePOJO;
 import com.areatecnica.sigf.util.Name2ValuePOJO;
-import com.areatecnica.sigf.util.Name3ValuePOJO;
+import org.chartistjsf.model.chart.PieChartModel;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.LineChartModel;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
@@ -19,18 +29,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import org.chartistjsf.model.chart.PieChartModel;
-
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.LineChartModel;
 
 /**
  *
@@ -50,7 +48,7 @@ public class BlankPageController implements Serializable {
     private int totalMinutos = 0;
     private int numeroImposiciones = 0;
     private int totalVentaPetroleo = 0;
-    private int totalVentaPetroleoAnterior = 0;
+    private final int totalVentaPetroleoAnterior = 0;
     private int numeroDeudasPetroleo = 0;
     private String numeroDeudasBusPetroleo = "0";
     private int totalVentaPrestadores = 0;
@@ -58,7 +56,7 @@ public class BlankPageController implements Serializable {
     private float cantidadLitros = 0;
 
     private Recaudacion ultimaRecaudacion;
-    private Date from;
+    private final Date from;
     private List<Name2DateValuePOJO> list;
     private List<VentaCombustible> ventaCombustibleItems; 
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

@@ -5,20 +5,14 @@
  */
 package com.areatecnica.sigf.facade;
 
-import com.areatecnica.sigf.entities.Egreso;
+import com.areatecnica.sigf.entities.*;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.Egreso_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.Cuenta;
-import com.areatecnica.sigf.entities.EgresoCajaRecaudacion;
-import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
-import com.areatecnica.sigf.entities.EgresoBus;
-import com.areatecnica.sigf.entities.EgresoFlota;
 import java.util.List;
 
 /**

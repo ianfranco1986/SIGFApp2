@@ -3,7 +3,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
@@ -13,11 +12,11 @@
 
         <h:form id="RegistroMinutoListForm">
 
-        <p:panel>
-            <p:spacer/>
-            <h3 style="text-align: center;">Recaudación General </h3>
-            
-            <div class="ui-fluid">
+            <p:panel>
+                <p:spacer/>
+                <h3>Recaudación General </h3>
+
+                <div class="ui-fluid">
                     <div class="p-field">
                         <label for="mes">Mes/Año</label>
                         <p:datePicker id="month" view="month" value="#{reportControllerGeneralMensual.date}"
@@ -30,10 +29,10 @@
                                        actionListener="#{reportController.downloadFile(reportControllerGeneralMensual.informe, reportControllerGeneralMensual.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>                  
                     </div>
                 </div>
-        </p:panel>
+            </p:panel>
 
 
 
-    </h:form>
+        </h:form>
     </ui:define>
 </ui:composition>

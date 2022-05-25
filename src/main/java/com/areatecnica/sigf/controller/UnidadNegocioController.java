@@ -1,18 +1,15 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.UnidadNegocio;
-import com.areatecnica.sigf.entities.ContratoUnidad;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.ValorRolloUnidad;
-import com.areatecnica.sigf.entities.Servicio;
-import java.util.List;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.facade.UnidadNegocioFacade;
-import java.util.Collection;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.Collection;
+import java.util.List;
 
 @Named(value = "unidadNegocioController")
 @ViewScoped

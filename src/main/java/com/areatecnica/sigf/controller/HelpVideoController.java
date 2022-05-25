@@ -8,13 +8,14 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.entities.Menu;
 import com.areatecnica.sigf.entities.RolMenu;
 import com.areatecnica.sigf.entities.Usuario;
+
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  *

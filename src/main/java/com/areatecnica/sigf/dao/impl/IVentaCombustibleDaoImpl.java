@@ -6,17 +6,13 @@
 package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IVentaCombustibleDao;
-import com.areatecnica.sigf.entities.Boleto;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Flota;
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.VentaCombustible;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.util.DatePlusValueHelper;
-import java.util.Date;
-import java.util.List;
+
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.Date;
+import java.util.List;
 
 /**
  *

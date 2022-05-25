@@ -5,19 +5,19 @@
  */
 package com.areatecnica.sigf.reports;
 
+import org.primefaces.model.StreamedContent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Map;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import javax.servlet.http.HttpServletResponse;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *

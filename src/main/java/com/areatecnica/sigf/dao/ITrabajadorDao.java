@@ -8,6 +8,7 @@ package com.areatecnica.sigf.dao;
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.Terminal;
 import com.areatecnica.sigf.entities.Trabajador;
+
 import java.util.List;
 
 /**
@@ -16,14 +17,14 @@ import java.util.List;
  */
 public interface ITrabajadorDao<T> extends IGenericDAO<T> {
     
-    public int findMaxCodigoCuenta(Cuenta cuenta);
+    int findMaxCodigoCuenta(Cuenta cuenta);
     
-    public List<Trabajador> findByTerminal(Terminal terminal);
+    List<Trabajador> findByTerminal(Terminal terminal);
     
-    public List<Trabajador> findNandu();
+    List<Trabajador> findNandu();
     
-    public Trabajador findByTrabajadorRutAndCuenta(String rut, Cuenta cuenta);
+    Trabajador findByTrabajadorRutAndCuenta(String rut, Cuenta cuenta);
     
-    public Trabajador findByDefaultTrabajador(Integer id, Cuenta cuenta);
+    Trabajador findByDefaultTrabajador(Integer id, Cuenta cuenta);
     
 }

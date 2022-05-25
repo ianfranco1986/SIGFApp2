@@ -5,23 +5,11 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -154,10 +142,7 @@ public class FiniquitoRelacionLaboral extends BaseEntity implements Serializable
             return false;
         }
         FiniquitoRelacionLaboral other = (FiniquitoRelacionLaboral) object;
-        if ((this.finiquitoRelacionLaboralId == null && other.finiquitoRelacionLaboralId != null) || (this.finiquitoRelacionLaboralId != null && !this.finiquitoRelacionLaboralId.equals(other.finiquitoRelacionLaboralId))) {
-            return false;
-        }
-        return true;
+        return (this.finiquitoRelacionLaboralId != null || other.finiquitoRelacionLaboralId == null) && (this.finiquitoRelacionLaboralId == null || this.finiquitoRelacionLaboralId.equals(other.finiquitoRelacionLaboralId));
     }
 
     @Override

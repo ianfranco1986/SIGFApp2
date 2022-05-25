@@ -6,18 +6,17 @@ import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRegistroMinutoDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.RegistroMinuto;
 import com.areatecnica.sigf.entities.RecaudacionMinuto;
-import java.util.List;
+import com.areatecnica.sigf.entities.RegistroMinuto;
 import com.areatecnica.sigf.facade.RegistroMinutoFacade;
-import java.util.Date;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 import org.primefaces.event.RowEditEvent;
+
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.Date;
+import java.util.List;
 
 @Named(value = "registroMinutoController")
 @ViewScoped

@@ -1,14 +1,14 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.Menu;
-import com.areatecnica.sigf.entities.RolMenu;
 import com.areatecnica.sigf.entities.Privilegio;
-import java.util.List;
+import com.areatecnica.sigf.entities.RolMenu;
 import com.areatecnica.sigf.facade.MenuFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "menuController2")
 @ViewScoped

@@ -3,7 +3,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
@@ -14,21 +13,22 @@
 
             <p:panel>
                 <p:spacer/>
-                <h3 style="text-align: center;">Detalle x Caja - Ingresos Extras</h3>
+                <h3>Resumen Aportes Varios</h3>
                 <div class="ui-fluid">
-                     <div class="p-field">
-                        <label for="mes">Mes/Año</label>
+                    <div class="p-field">
+                        <label for="month">Mes/Año</label>
                         <p:datePicker id="month" view="month" value="#{reportControllerIngresosExtrasMensual.date}"
                                       pattern="MM/yyyy"
                                       yearNavigator="true" yearRange="2022:2030" locale="es"/>
                     </div>
+                    <div class="p-field">
+                        <label></label>
+                        <h:commandLink value="Generar Reporte" 
+                               actionListener="#{reportController.downloadFile(reportControllerIngresosExtrasMensual.informe, reportControllerIngresosExtrasMensual.map)}" target="blank"  style="padding: .5em 1em;" styleClass="ui-button"/>
+
+                    </div>
                 </div>
-                   
-
-                    <p:outputLabel value=""/>
-                    <h:commandLink value="Generar Reporte" 
-                                   actionListener="#{reportController.downloadFile(reportControllerIngresosExtrasMensual.informe, reportControllerIngresosExtrasMensual.map)}" target="blank"  style="padding: .5em 1em;" styleClass="ui-button"/>
-
+                
                 <div class="column-center">
                     <p:media cache="false" rendered="#{reportControllerIngresosExtrasMensual.selected ne null}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
                 </div>

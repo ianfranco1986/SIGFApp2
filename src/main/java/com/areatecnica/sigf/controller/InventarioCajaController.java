@@ -6,15 +6,13 @@ import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.InventarioCaja;
-import com.areatecnica.sigf.entities.VentaBoleto;
-import java.util.List;
-import com.areatecnica.sigf.facade.InventarioCajaFacade;
-import java.util.ArrayList;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
+
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named(value = "inventarioCajaController")
 @ViewScoped

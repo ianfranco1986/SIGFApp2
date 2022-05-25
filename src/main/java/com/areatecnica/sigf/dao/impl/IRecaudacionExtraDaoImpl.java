@@ -9,10 +9,11 @@ import com.areatecnica.sigf.dao.IRecaudacionExtraDao;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.RecaudacionExtra;
 import com.areatecnica.sigf.entities.Terminal;
+
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

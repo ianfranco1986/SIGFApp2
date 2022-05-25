@@ -6,7 +6,6 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.TipoDocumento;
-import java.util.List;
 
 /**
  *
@@ -14,7 +13,7 @@ import java.util.List;
  */
 public interface ITipoDocumentoDao<T> extends IGenericDAO<T> {
 
-    public TipoDocumento findById(int id);
+    TipoDocumento findById(int id);
 
     
 

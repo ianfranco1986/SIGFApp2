@@ -8,6 +8,7 @@ package com.areatecnica.sigf.dao;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.RegistroMinuto;
 import com.areatecnica.sigf.entities.Terminal;
+
 import java.util.Date;
 import java.util.List;
 
@@ -17,17 +18,17 @@ import java.util.List;
  */
 public interface IRegistroMinutoDao<T> extends IGenericDAO<T> {
     
-    public List<RegistroMinuto> findByDate(Date fecha);
+    List<RegistroMinuto> findByDate(Date fecha);
     
-    public List<RegistroMinuto> findByBusPagaDate(Bus bus, Date fecha);
+    List<RegistroMinuto> findByBusPagaDate(Bus bus, Date fecha);
     
-    public List<RegistroMinuto> findByBusSinRecaudar(Bus bus);
+    List<RegistroMinuto> findByBusSinRecaudar(Bus bus);
     
-    public List<RegistroMinuto> findByBusRecibeDate(Bus bus, Date fecha);
+    List<RegistroMinuto> findByBusRecibeDate(Bus bus, Date fecha);
     
-    public List<RegistroMinuto> findBySinRecaudar();
+    List<RegistroMinuto> findBySinRecaudar();
     
-    public List<RegistroMinuto> findByTerminalSinRecaudar(Terminal terminal);
+    List<RegistroMinuto> findByTerminalSinRecaudar(Terminal terminal);
 
-    public List<RegistroMinuto> findByBusPagaDates(Bus selected, Date fecha, Date maxDate);
+    List<RegistroMinuto> findByBusPagaDates(Bus selected, Date fecha, Date maxDate);
 }

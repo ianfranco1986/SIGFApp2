@@ -12,111 +12,12 @@
     <ui:define name="content">
         <h:form id="InventarioInternoListForm">
 
-            <p:card id="dashboard">
-                <div  class="dashboard p-grid">
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-2">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Directo</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-3">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Plan Viña</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-2">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Local</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-3">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Esc. Directo</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-2">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>Esc. Local</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-3">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>AM.Directo</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-2">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>AM.Plan Viña</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-                    <div class="p-col-12 p-md-8 p-lg-3">
-                        <div class="widget-overview overview-box-3">
-                            <div class="overview-box-title">
-                                <i class="pi pi-ticket"/>
-                                <span>AM.Local</span>
-                            </div>
-                            <div class="overview-box-count"></div>
-                            <div class="overview-box-stats"></div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="card ui-fluid">
-                    <div class="p-formgrid p-grid">
-                        <div class="p-field p-col">
-
-
-
-                        </div>
-                        <div class="p-field p-col">
-
-                        </div>
-                    </div>
-                </div>
-            </p:card>
-
-            <p:separator/>
 
             <div class="card">
                 <p:toolbar styleClass="p-mb-4">
                     <p:toolbarGroup>
                         <p:commandButton id="delete-products-button" value="#{inventarioInternoController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{inventarioInternoController.deleteSelectedGuias}"
-                                         styleClass="ui-button-danger" disabled="#{!inventarioInternoController.hasSelectedGuias()}" update=":InventarioInternoListForm:datalist,:growl, dashboard,delete-products-button">
+                                         styleClass="ui-button-danger" disabled="#{!inventarioInternoController.hasSelectedGuias()}" update=":InventarioInternoListForm:datalist,:growl, delete-products-button">
                             <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
                     </p:toolbarGroup>
@@ -159,9 +60,7 @@
                             </div>
                         </f:facet>
 
-                        <p:column selectionMode="multiple" exportable="false" ></p:column>
-
-                        <p:column filterBy="#{item.inventarioInternoIdBoleto.boletoNombre}" headerText="Boleto">
+                        <p:column filterBy="#{item.inventarioInternoIdBoleto.boletoNombre}" headerText="Boleto" groupRow="true">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('datalistWidget').filter()" >
                                     <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" noSelectionOption="true" />
@@ -171,15 +70,14 @@
                             <h:outputText value="#{item.inventarioInternoIdBoleto.boletoNombre}"/>
                         </p:column>
 
+                        <p:column selectionMode="multiple" exportable="false" ></p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#"/>
                             </f:facet>
                             <h:outputText value="#{rowIndex+1}"/>
                         </p:column>
-
-
-
 
                         <p:column sortBy="#{item.inventarioInternoSerie}" filterBy="#{item.inventarioInternoSerie}">
                             <f:facet name="header">
@@ -200,7 +98,9 @@
                             <f:facet name="header">
                                 <h:outputText value="Ingreso"/>
                             </f:facet>
-                            <h:outputText value="#{item.fechaCreacion}"/>
+                            <h:outputText value="#{item.fechaCreacion}">
+                                <f:convertDateTime pattern="dd-MM-yy HH:mm"/>
+                            </h:outputText>
                         </p:column>
 
                         <p:column exportable="false">
@@ -212,7 +112,7 @@
 
                     </p:dataTable>
                     <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Cancelar? " header="Confirmación" severity="warn">
-                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{inventarioInternoController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":InventarioInternoListForm:datalist,:growl, dashboard"/>
+                        <p:commandButton value="Si" icon="pi pi-check" actionListener="#{inventarioInternoController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update=":InventarioInternoListForm:datalist,:growl"/>
                         <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
                     </p:confirmDialog>
 

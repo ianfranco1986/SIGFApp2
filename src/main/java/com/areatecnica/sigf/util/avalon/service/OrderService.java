@@ -15,17 +15,16 @@
  */
 package com.areatecnica.sigf.util.avalon.service;
 
+import com.areatecnica.sigf.util.avalon.domain.Order;
+import com.areatecnica.sigf.util.avalon.domain.OrderStatus;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
-
-import com.areatecnica.sigf.util.avalon.domain.Order;
-import com.areatecnica.sigf.util.avalon.domain.OrderStatus;
 
 @Named
 @ApplicationScoped

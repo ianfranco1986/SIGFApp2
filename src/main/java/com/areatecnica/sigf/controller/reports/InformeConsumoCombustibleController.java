@@ -7,28 +7,20 @@ package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.dao.IVentaCombustibleDao;
 import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
-import com.areatecnica.sigf.entities.Administrador;
-import com.areatecnica.sigf.entities.AdministradorBus;
-import com.areatecnica.sigf.entities.AdministradorFlota;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Usuario;
-import com.areatecnica.sigf.entities.VentaCombustible;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.util.CurrentDate;
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  *
@@ -38,7 +30,7 @@ import org.primefaces.model.chart.LineChartSeries;
 @ViewScoped
 public class InformeConsumoCombustibleController implements Serializable {
 
-    private Usuario currentUser;
+    private final Usuario currentUser;
     private List<Bus> items;
     private Bus selected;
     private List<VentaCombustible> ventasItems;
@@ -47,7 +39,7 @@ public class InformeConsumoCombustibleController implements Serializable {
     private int mes;
     private int anio;
     private CurrentDate currentDate;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private LineChartModel chartModel;
 
     /**

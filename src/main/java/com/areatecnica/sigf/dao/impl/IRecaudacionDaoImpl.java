@@ -6,17 +6,11 @@
 package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IRecaudacionDao;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Cuenta;
-import com.areatecnica.sigf.entities.GrupoServicio;
-import com.areatecnica.sigf.entities.ProcesoRecaudacion;
-import com.areatecnica.sigf.entities.Recaudacion;
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.Trabajador;
+import com.areatecnica.sigf.entities.*;
+
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

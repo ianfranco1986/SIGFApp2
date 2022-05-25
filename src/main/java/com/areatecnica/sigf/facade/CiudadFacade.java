@@ -6,15 +6,15 @@
 package com.areatecnica.sigf.facade;
 
 import com.areatecnica.sigf.entities.Ciudad;
+import com.areatecnica.sigf.entities.Comuna;
+import com.areatecnica.sigf.entities.Region;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.Ciudad_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.Region;
-import com.areatecnica.sigf.entities.Comuna;
 import java.util.List;
 
 /**

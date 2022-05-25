@@ -2,12 +2,12 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.EstadoCivil;
 import com.areatecnica.sigf.entities.Trabajador;
-import java.util.List;
 import com.areatecnica.sigf.facade.EstadoCivilFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "estadoCivilController")
 @ViewScoped

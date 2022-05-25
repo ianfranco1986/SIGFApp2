@@ -4,21 +4,18 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IFacturaDaoImpl;
 import com.areatecnica.sigf.entities.Factura;
 import com.areatecnica.sigf.models.FacturaDataModel;
+import org.primefaces.event.RowEditEvent;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.faces.event.ActionEvent;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-//import org.joda.time.DateTime;
-import org.primefaces.event.RowEditEvent;
 
 @Named(value = "facturaViewController")
 @ViewScoped
@@ -40,7 +37,7 @@ public class FacturaViewController extends AbstractController<Factura> {
 //    private DateTime dateTime;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
 
     public FacturaViewController() {
         // Inform the Abstract parent controller of the concrete CargoLiquidacion Entity

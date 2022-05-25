@@ -4,12 +4,13 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRecaudacionMinutoDaoImpl;
 import com.areatecnica.sigf.dao.impl.IRegistroMinutoDaoImpl;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Privilegio;
-import com.areatecnica.sigf.entities.Recaudacion;
-import com.areatecnica.sigf.entities.RecaudacionMinuto;
-import com.areatecnica.sigf.entities.RegistroMinuto;
-import com.areatecnica.sigf.models.RecaudacionMinutoDataModel;
+import com.areatecnica.sigf.entities.*;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -18,11 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 
 @Named(value = "recaudacionMinutoController")
 @ViewScoped
@@ -39,9 +35,9 @@ public class RecaudacionMinutoController extends AbstractController<RecaudacionM
     private Privilegio privilegio;
     private int guiasAnuladas = 0;
 
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
     LocalDate f;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
 
     @Inject
     private RegistroMinutoController recaudacionMinutoIdRegistroMinutoController;
@@ -84,10 +80,10 @@ public class RecaudacionMinutoController extends AbstractController<RecaudacionM
 
                 Recaudacion r = this.getSelected().getRecaudacionMinutoIdRecaudacion();
 
-                String folios = "";
+                StringBuilder folios = new StringBuilder();
 
                 for (RecaudacionMinuto m : r.getRecaudacionMinutoList()) {
-                    folios = folios + ", " + m.getRecaudacionMinutoIdRegistroMinuto().getRegistroMinutoId();
+                    folios.append(", ").append(m.getRecaudacionMinutoIdRegistroMinuto().getRegistroMinutoId());
                     m.getRecaudacionMinutoIdRegistroMinuto().setRegistroMinutoRecaudado(Boolean.FALSE);
                     new IRegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
                     this.items.remove(m);

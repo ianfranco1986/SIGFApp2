@@ -9,8 +9,9 @@ import com.areatecnica.sigf.dao.IEgresoProcesoRecaudacionDao;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

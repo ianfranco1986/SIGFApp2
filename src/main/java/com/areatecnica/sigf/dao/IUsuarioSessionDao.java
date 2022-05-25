@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Usuario;
 import com.areatecnica.sigf.entities.UsuarioSession;
+
 import java.util.List;
 
 /**
@@ -16,12 +17,12 @@ import java.util.List;
  */
 public interface IUsuarioSessionDao<T> extends IGenericDAO<T> {
     
-    public List<UsuarioSession> findAllByUsuario(Usuario usuario);
+    List<UsuarioSession> findAllByUsuario(Usuario usuario);
         
-    public UsuarioSession findById(int id);
+    UsuarioSession findById(int id);
 
     
-    public void ingresar(UsuarioSession usuarioSession);
+    void ingresar(UsuarioSession usuarioSession);
     
     
     

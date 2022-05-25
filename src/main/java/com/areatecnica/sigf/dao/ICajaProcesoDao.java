@@ -8,6 +8,7 @@ package com.areatecnica.sigf.dao;
 import com.areatecnica.sigf.entities.CajaProceso;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
+
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface ICajaProcesoDao<T> extends IGenericDAO<T> {
     
-    public List<CajaProceso> findByCaja(CajaRecaudacion cajaRecaudacion);
+    List<CajaProceso> findByCaja(CajaRecaudacion cajaRecaudacion);
     
-    public CajaProceso findByCajaProceso(CajaRecaudacion cajaRecaudacion, ProcesoRecaudacion procesoRecaudacion);
+    CajaProceso findByCajaProceso(CajaRecaudacion cajaRecaudacion, ProcesoRecaudacion procesoRecaudacion);
 }

@@ -5,12 +5,12 @@
  */
 package com.areatecnica.sigf.util;
 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -51,7 +51,7 @@ public class Name2DateValuePOJO implements Serializable {
 
     public int getDayPart() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd");
-        Date date = (Date) name;
+        Date date = name;
         return Integer.parseInt(sdf.format(date));
     }
 

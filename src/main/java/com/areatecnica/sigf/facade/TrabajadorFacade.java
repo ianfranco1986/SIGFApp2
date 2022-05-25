@@ -5,44 +5,14 @@
  */
 package com.areatecnica.sigf.facade;
 
-import com.areatecnica.sigf.entities.Trabajador;
+import com.areatecnica.sigf.entities.*;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.Trabajador_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.HaberTrabajador;
-import com.areatecnica.sigf.entities.CargaTrabajador;
-import com.areatecnica.sigf.entities.TrabajadorAdicionalSalud;
-import com.areatecnica.sigf.entities.Despacho;
-import com.areatecnica.sigf.entities.VentaBoleto;
-import com.areatecnica.sigf.entities.LiquidacionSueldo;
-import com.areatecnica.sigf.entities.Cuenta;
-import com.areatecnica.sigf.entities.InstitucionApv;
-import com.areatecnica.sigf.entities.AsignacionFamiliar;
-import com.areatecnica.sigf.entities.CentroCosto;
-import com.areatecnica.sigf.entities.Comuna;
-import com.areatecnica.sigf.entities.TipoCotizacionTrabajador;
-import com.areatecnica.sigf.entities.EstadoCivil;
-import com.areatecnica.sigf.entities.FormaPago;
-import com.areatecnica.sigf.entities.InstitucionPrevision;
-import com.areatecnica.sigf.entities.Terminal;
-import com.areatecnica.sigf.entities.InstitucionSalud;
-import com.areatecnica.sigf.entities.Sindicato;
-import com.areatecnica.sigf.entities.ReconocimientoDeuda;
-import com.areatecnica.sigf.entities.RelacionLaboral;
-import com.areatecnica.sigf.entities.CargaRetroactiva;
-import com.areatecnica.sigf.entities.CuentaBancoTrabajador;
-import com.areatecnica.sigf.entities.LicenciaMedica;
-import com.areatecnica.sigf.entities.HoraExtraTrabajador;
-import com.areatecnica.sigf.entities.DescuentoTrabajador;
-import com.areatecnica.sigf.entities.Guia;
-import com.areatecnica.sigf.entities.FeriadoLegal;
-import com.areatecnica.sigf.entities.JornadaTrabajador;
-import com.areatecnica.sigf.entities.ControlAsistencia;
-import com.areatecnica.sigf.entities.ObservacionTrabajador;
 import java.util.List;
 
 /**

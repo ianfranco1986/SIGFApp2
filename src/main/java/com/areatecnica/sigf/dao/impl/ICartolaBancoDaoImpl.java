@@ -7,12 +7,12 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.ICartolaBancoDao;
 import com.areatecnica.sigf.entities.CartolaBanco;
-import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.Empresa;
+
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
 
 /**
  *

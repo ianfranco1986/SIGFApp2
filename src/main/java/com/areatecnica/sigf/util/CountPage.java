@@ -2,18 +2,8 @@ package com.areatecnica.sigf.util;
 
 import com.areatecnica.sigf.dao.IVentaCombustibleDao;
 import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
-import com.areatecnica.sigf.entities.Administrador;
-import com.areatecnica.sigf.entities.AdministradorBus;
-import com.areatecnica.sigf.entities.AdministradorFlota;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Usuario;
-import com.areatecnica.sigf.entities.VentaCombustible;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.areatecnica.sigf.entities.*;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -21,6 +11,12 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -502,9 +498,7 @@ public final class CountPage implements java.io.Serializable {
         return cajaRecaudacionCount;
     }
 
-    /**
-     * @param cajaTerminalCount the cajaTerminalCount to set
-     */
+
     public void setCajaRecaudacionCount(int cajaRecaudacionCount) {
         this.cajaRecaudacionCount = cajaRecaudacionCount;
     }

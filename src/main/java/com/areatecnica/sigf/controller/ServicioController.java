@@ -1,19 +1,14 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.Servicio;
-import com.areatecnica.sigf.entities.CalleServicio;
-import com.areatecnica.sigf.entities.Despacho;
-import com.areatecnica.sigf.entities.FrecuenciaServicio;
-import com.areatecnica.sigf.entities.ControlServicio;
-import com.areatecnica.sigf.entities.HorarioServicio;
-import com.areatecnica.sigf.entities.RegistroBoleto;
-import java.util.List;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.facade.ServicioFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "servicioController")
 @ViewScoped

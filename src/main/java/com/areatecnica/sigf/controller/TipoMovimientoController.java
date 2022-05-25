@@ -1,9 +1,10 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.TipoMovimiento;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @Named(value = "tipoMovimientoController")
 @ViewScoped

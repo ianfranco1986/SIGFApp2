@@ -1,28 +1,28 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.IEgresoDao;
 import com.areatecnica.sigf.dao.IEgresoCajaRecaudacionDao;
-import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
+import com.areatecnica.sigf.dao.IEgresoDao;
 import com.areatecnica.sigf.dao.impl.IEgresoCajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.EgresoCajaRecaudacion;
 import com.areatecnica.sigf.facade.EgresoCajaRecaudacionFacade;
 import com.areatecnica.sigf.models.EgresoCajaRecaudacionDataModel;
+import org.primefaces.event.ReorderEvent;
+import org.primefaces.event.TransferEvent;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import org.primefaces.event.ReorderEvent;
-import org.primefaces.event.TransferEvent;
 
 @Named(value = "egresoCajaRecaudacionController")
 @ViewScoped
@@ -73,9 +73,6 @@ public class EgresoCajaRecaudacionController extends AbstractController<EgresoCa
         return cajaRecaudacion;
     }
 
-    /**
-     * @param Caja Recaudacion the Caja Recaudación to set
-     */
     public void setCajaRecaudacion(CajaRecaudacion cajaRecaudacion) {
         this.cajaRecaudacion = cajaRecaudacion;
     }

@@ -6,26 +6,13 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -41,11 +28,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Bus.findByBusUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio AND b.busIdFlota = :busIdFlota ORDER BY b.busIdUnidadNegocio.unidadNegocioNumero DESC, b.busNumero ASC")
     , @NamedQuery(name = "Bus.findByProcesoRecaudacion", query = "SELECT b FROM Bus b WHERE b.busIdProcesoRecaudacion = :busIdProcesoRecaudacion ORDER BY b.busNumero ASC")
     , @NamedQuery(name = "Bus.findByFlota", query = "SELECT b FROM Bus b WHERE b.busIdFlota = :busIdFlota ORDER BY b.busNumero")
-    , @NamedQuery(name = "Bus.findByEmpresa", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa AND b.busActivo = 1 ORDER BY b.busNumero")
+    , @NamedQuery(name = "Bus.findByEmpresa", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa AND b.busActivo = true ORDER BY b.busNumero")
     , @NamedQuery(name = "Bus.findByEmpresaUnidad", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa and b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero")
     , @NamedQuery(name = "Bus.findByBusIdUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero ASC")
     , @NamedQuery(name = "Bus.findAllByCuenta", query = "SELECT b FROM Bus b WHERE b.busIdTerminal.terminalIdCuenta = :idCuenta ORDER BY b.busNumero ASC")
-    , @NamedQuery(name = "Bus.findByBusId", query = "SELECT b FROM Bus b WHERE b.busId = :busId")
+        , @NamedQuery(name = "Bus.findDefaultBus", query = "SELECT b FROM Bus b WHERE b.busIdEstadoBus = :busIdEstadoBus")
+        , @NamedQuery(name = "Bus.findByGrupoServicio", query = "SELECT b FROM Bus b WHERE b.busIdGrupoServicio = :busIdGrupoServicio AND b.busActivo = true ORDER BY b.busNumero")
+        , @NamedQuery(name = "Bus.findByTerminal", query = "SELECT b FROM Bus b WHERE b.busIdTerminal = :busIdTerminal AND b.busActivo = true ORDER BY b.busNumero")
+        , @NamedQuery(name = "Bus.findByBusId", query = "SELECT b FROM Bus b WHERE b.busId = :busId")
     , @NamedQuery(name = "Bus.findByBusNumero", query = "SELECT b FROM Bus b WHERE b.busNumero = :busNumero")
     , @NamedQuery(name = "Bus.findByBusPatente", query = "SELECT b FROM Bus b WHERE b.busPatente = :busPatente")
     , @NamedQuery(name = "Bus.findMaxNumeroUnidad", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero DESC")
@@ -336,10 +326,7 @@ public class Bus extends BaseEntity implements Serializable {
             return false;
         }
         Bus other = (Bus) object;
-        if ((this.busId == null && other.busId != null) || (this.busId != null && !this.busId.equals(other.busId))) {
-            return false;
-        }
-        return true;
+        return (this.busId != null || other.busId == null) && (this.busId == null || this.busId.equals(other.busId));
     }
 
     @Override

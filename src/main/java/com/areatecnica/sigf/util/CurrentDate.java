@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.util;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,7 +18,7 @@ import java.util.Date;
  */
 public class CurrentDate {
 
-    private Calendar calendar;
+    private final Calendar calendar;
     private static SimpleDateFormat sdf;
     private Date date;
     private int month;

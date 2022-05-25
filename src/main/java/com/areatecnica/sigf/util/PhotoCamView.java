@@ -5,16 +5,17 @@
  */
 package com.areatecnica.sigf.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import org.primefaces.event.CaptureEvent;
+
 import javax.faces.FacesException;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.imageio.stream.FileImageOutputStream;
-import org.primefaces.event.CaptureEvent;
+import javax.inject.Named;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 
 /**
  *

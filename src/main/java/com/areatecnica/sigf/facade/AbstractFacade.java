@@ -6,13 +6,14 @@
 package com.areatecnica.sigf.facade;
 
 import com.areatecnica.sigf.entities.Cuenta;
-import java.util.List;
-import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,7 +22,7 @@ import javax.persistence.criteria.Root;
  */
 public abstract class AbstractFacade<T> {
 
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -188,9 +189,9 @@ public abstract class AbstractFacade<T> {
                 } else {
                     javax.persistence.criteria.Expression<?> filterExpression = getCastExpression((String) filters.get(s), fieldTypeName, cb);
                     if (filterExpression != null) {
-                        predicates.add(cb.equal((javax.persistence.criteria.Expression<?>) pkFieldPath, filterExpression));
+                        predicates.add(cb.equal(pkFieldPath, filterExpression));
                     } else {
-                        predicates.add(cb.equal((javax.persistence.criteria.Expression<?>) pkFieldPath, filters.get(s)));
+                        predicates.add(cb.equal(pkFieldPath, filters.get(s)));
                     }
                 }
             }

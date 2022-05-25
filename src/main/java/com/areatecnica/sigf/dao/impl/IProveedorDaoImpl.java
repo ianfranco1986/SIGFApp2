@@ -7,7 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IProveedorDao;
 import com.areatecnica.sigf.entities.Proveedor;
-import java.util.List;
+
 import javax.persistence.NoResultException;
 
 /**

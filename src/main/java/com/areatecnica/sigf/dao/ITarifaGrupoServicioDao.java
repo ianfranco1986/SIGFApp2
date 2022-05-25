@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.TarifaGrupoServicio;
+
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface ITarifaGrupoServicioDao<T> extends IGenericDAO<T> {
 
-    public List<TarifaGrupoServicio> findAllByGrupoServicio(GrupoServicio grupoServicio);
+    List<TarifaGrupoServicio> findAllByGrupoServicio(GrupoServicio grupoServicio);
     
-    public List<TarifaGrupoServicio> findAllByCuenta();
+    List<TarifaGrupoServicio> findAllByCuenta();
 }

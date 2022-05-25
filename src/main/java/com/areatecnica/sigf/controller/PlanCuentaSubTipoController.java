@@ -1,14 +1,13 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.entities.PlanCuentaSubTipo;
-import com.areatecnica.sigf.entities.PlanCuenta;
 import com.areatecnica.sigf.entities.CuentaMayor;
-import java.util.List;
+import com.areatecnica.sigf.entities.PlanCuentaSubTipo;
 import com.areatecnica.sigf.facade.PlanCuentaSubTipoFacade;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "planCuentaSubTipoController")
 @ViewScoped

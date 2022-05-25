@@ -15,9 +15,6 @@
  */
 package com.areatecnica.sigf.util.avalon.view;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.areatecnica.sigf.util.avalon.domain.Customer;
 import com.areatecnica.sigf.util.avalon.domain.Product;
 import com.areatecnica.sigf.util.avalon.service.CustomerService;
@@ -26,11 +23,12 @@ import com.areatecnica.sigf.util.avalon.service.ProductService;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.List;
 
 @Named
 @ViewScoped

@@ -7,28 +7,20 @@ package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.dao.IGuiaDao;
 import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
-import com.areatecnica.sigf.entities.Administrador;
-import com.areatecnica.sigf.entities.AdministradorBus;
-import com.areatecnica.sigf.entities.AdministradorFlota;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Guia;
-import com.areatecnica.sigf.entities.Usuario;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.EstructuraRegistroBoletoÑandu;
 import com.areatecnica.sigf.models.RegistroBoletoTableModel;
 import com.areatecnica.sigf.util.CurrentDate;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  *
@@ -38,7 +30,7 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class InformeRegistroBoletoController implements Serializable {
 
-    private Usuario currentUser;
+    private final Usuario currentUser;
     private List<Bus> items;
     private Bus selected;
     private List<Guia> guiaItems;
@@ -49,7 +41,7 @@ public class InformeRegistroBoletoController implements Serializable {
     private int mes;
     private int anio;
     private CurrentDate currentDate;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates a new instance of InformeRegistroBoletoController

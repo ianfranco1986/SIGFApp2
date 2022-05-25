@@ -4,57 +4,77 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
 
-    <h:form id="RegistroMinutoListForm">
+    <ui:define name="title">Ventas de Combustible x Bus (Resumen)</ui:define>
 
+    <ui:define name="content">
+        <h:form id="RegistroMinutoListForm">
         <p:panel>
-            <p:spacer/>
-            <h3 style="text-align: center;">Ventas de Petroleo x Bus (Resumen)</h3>
-            <p:panelGrid columns="2" style="width: 100%; margin-bottom: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
-                <h:outputLabel for="desde" value="Desde:" />
-                <p:calendar id="desde" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerPetroleoBusMesResumen.desde}" required="true" requiredMessage="Debe ingresar la fecha desde" />
+            <h3>Ventas de Combustible x Bus (Resumen)</h3>
+            
+            <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="desde">Desde</label>
+                        <p:datePicker id="desde" value="#{reportControllerPetroleoBusMesResumen.desde}" locale="es" autocomplete="off" required="true" requiredMessage="Debe ingresar la fecha desde" />
+                    </div>
 
-                <h:outputLabel for="hasta" value="Hasta:" />
-                <p:calendar id="hasta" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{reportControllerPetroleoBusMesResumen.hasta}" required="true" requiredMessage="Debe ingresar la fecha hasta" />
+                    <div class="p-field">
+                        <label for="desde">Hasta</label>
+                        <p:datePicker id="hasta" value="#{reportControllerPetroleoBusMesResumen.hasta}" locale="es" autocomplete="off" required="true" requiredMessage="Debe ingresar la fecha hasta" />
+                    </div>
 
-                <p:outputLabel value="Empresa" for="busIdFlota" />
-                <p:selectOneMenu id="busIdFlota" value="#{reportControllerPetroleoBusMesResumen.empresa}" converter="omnifaces.SelectItemsConverter" >
-                    <f:selectItem itemLabel="Todas"/>
-                    <f:selectItems value="#{reportControllerPetroleoBusMesResumen.empresaItems}"
-                                   var="busIdFlotaItem"
-                                   itemValue="#{busIdFlotaItem}"
-                                   itemLabel="#{busIdFlotaItem.empresaNombre}"
-                                   />
-                    <p:ajax event="valueChange" update="multiple" listener="#{reportControllerPetroleoBusMesResumen.handleEmpresaChange}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                </p:selectOneMenu>
+                    <div class="p-field">
+                        <label for="desde">Empresa</label>
+                        <p:selectOneMenu id="busIdFlota" value="#{reportControllerPetroleoBusMesResumen.empresa}" converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="Todas"/>
+                            <f:selectItems value="#{empresaController.items}"
+                                           var="busIdFlotaItem"
+                                           itemValue="#{busIdFlotaItem}"
+                                           itemLabel="#{busIdFlotaItem.empresaNombre}"
+                                           />
+                            <p:ajax event="valueChange" update="multiple" listener="#{reportControllerPetroleoBusMesResumen.handleEmpresaChange}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:selectOneMenu>
+                    </div>
 
-                <p:outputLabel value="Unidad" for="busIdUnidadNegocio" />
-                <p:selectOneMenu id="busIdUnidadNegocio" value="#{reportControllerPetroleoBusMesResumen.unidadNegocio}" converter="omnifaces.SelectItemsConverter">
-                    <f:selectItem itemLabel="Todas"/>
-                    <f:selectItems value="#{reportControllerPetroleoBusMesResumen.unidadItems}"
-                                   var="busIdUnidadNegocioItem"
-                                   itemValue="#{busIdUnidadNegocioItem}"
-                                   itemLabel="#{busIdUnidadNegocioItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
-                                   />
-                    <p:ajax event="valueChange" update="multiple" listener="#{reportControllerPetroleoBusMesResumen.handleUnidadChange()}"  onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                </p:selectOneMenu>
+                    <div class="p-field">
+                        <label for="desde">Unidad de Negocio</label>
+                        <p:selectOneMenu id="busIdUnidadNegocio" value="#{reportControllerPetroleoBusMesResumen.unidadNegocio}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="Todas"/>
+                            <f:selectItems value="#{reportControllerPetroleoBusMesResumen.unidadItems}"
+                                           var="busIdUnidadNegocioItem"
+                                           itemValue="#{busIdUnidadNegocioItem}"
+                                           itemLabel="#{busIdUnidadNegocioItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
+                                           />
+                            <p:ajax event="valueChange" update="multiple" listener="#{reportControllerPetroleoBusMesResumen.handleUnidadChange()}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:selectOneMenu>
+                    </div>
 
-                <h:outputLabel for="multiple" value="Buses:" />
-                <p:selectCheckboxMenu id="multiple" value="#{reportControllerPetroleoBusMesResumen.selectedItems}" label="Cities" multiple="true" converter="omnifaces.SelectItemsConverter" 
-                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{reportControllerPetroleoBusMesResumen.items}" 
-                                   var="bus"
-                                   itemValue="#{bus}"
-                                   itemLabel="#{bus.busNumero} - #{bus.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>                    
-                </p:selectCheckboxMenu>
+                    <div class="p-field">
+                        <label for="desde">Bus(es)</label>
+                        <p:selectCheckboxMenu id="multiple" value="#{reportControllerPetroleoBusMesResumen.selectedItems}" label="" multiple="true" converter="omnifaces.SelectItemsConverter" 
+                                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
 
+                            <f:selectItems value="#{reportControllerPetroleoBusMes.items}" 
+                                           var="bus"
+                                           itemValue="#{bus}"
+                                           itemLabel="#{bus.busNumero} - #{bus.busIdUnidadNegocio.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>                    
+                        </p:selectCheckboxMenu>
+                    </div>
 
-                <p:outputLabel value=""/>
-                <h:commandLink value="Generar Reporte" 
-                               actionListener="#{reportController.downloadFile(reportControllerPetroleoBusMesResumen.informe, reportControllerPetroleoBusMesResumen.map)}" target="blank"  styleClass="btn btn-primary" />
+                    <div class="p-field">
+                        <label/>
+                        <p:selectBooleanCheckbox value="#{reportControllerPetroleoBusMesResumen.tipoInforme}" itemLabel="Imprimir sólo deudas?"/>
+                    </div>
 
-            </p:panelGrid>
+                    <div class="p-field">
+                        <label>
+                        </label>
+                        <h:commandLink value="Generar Reporte" 
+                                       actionListener="#{reportController.downloadFile(reportControllerPetroleoBusMesResumen.informe, reportControllerPetroleoBusMesResumen.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+                    </div>
+                </div>
             <div class="column-center">
                 <p:media cache="false" rendered="#{empty reportControllerPetroleoBusMesResumen.selectedItems}" width="100%" height="600" value="#{reportController.media}" player="pdf"/>
             </div>
@@ -63,5 +83,5 @@
 
 
     </h:form>
-
+</ui:define>
 </ui:composition>

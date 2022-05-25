@@ -1,19 +1,19 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IControlVentaPetroleoDaoImpl;
 import com.areatecnica.sigf.entities.ControlVentaPetroleo;
 import com.areatecnica.sigf.entities.Usuario;
+
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 @Named(value = "controlVentaPetroleoController")
 @ViewScoped
@@ -24,7 +24,7 @@ public class ControlVentaPetroleoController extends AbstractController<ControlVe
     private int anio;
     private Date fecha;
 //    private DateTime dateTime;
-    private Usuario currentUser;
+    private final Usuario currentUser;
 
     private final static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 

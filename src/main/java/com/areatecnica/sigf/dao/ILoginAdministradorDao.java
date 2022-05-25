@@ -12,5 +12,5 @@ import com.areatecnica.sigf.entities.Administrador;
  * @author ianfr
  */
 public interface ILoginAdministradorDao<T> extends IGenericDAO<T>{
-    public Administrador login(String rut, String pass);
+    Administrador login(String rut, String pass);
 }

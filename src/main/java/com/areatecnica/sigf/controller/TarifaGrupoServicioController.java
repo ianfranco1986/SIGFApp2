@@ -1,11 +1,10 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.TarifaGrupoServicio;
-import com.areatecnica.sigf.facade.TarifaGrupoServicioFacade;
-import javax.inject.Named;
+
 import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "tarifaGrupoServicioController")
 @ViewScoped

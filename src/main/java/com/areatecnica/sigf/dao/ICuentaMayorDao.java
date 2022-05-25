@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.CuentaMayor;
+
 import java.util.List;
 
 /**
@@ -14,6 +15,6 @@ import java.util.List;
  */
 public interface ICuentaMayorDao<T> extends IGenericDAO<T> {
 
-    public List<CuentaMayor> findALL();
+    List<CuentaMayor> findALL();
 
 }

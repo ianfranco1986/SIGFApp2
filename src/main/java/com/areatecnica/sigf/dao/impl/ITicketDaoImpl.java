@@ -8,8 +8,9 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.ITicketDao;
 import com.areatecnica.sigf.entities.Ticket;
 import com.areatecnica.sigf.entities.Usuario;
-import java.util.List;
+
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  *

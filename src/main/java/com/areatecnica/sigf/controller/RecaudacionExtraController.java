@@ -7,10 +7,13 @@ import com.areatecnica.sigf.dao.impl.ITipoRecaudacionExtraDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Recaudacion;
 import com.areatecnica.sigf.entities.RecaudacionExtra;
-import com.areatecnica.sigf.entities.RecaudacionMinuto;
 import com.areatecnica.sigf.entities.TipoRecaudacionExtra;
-import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.models.RecaudacionExtraDataModel;
+import org.primefaces.event.RowEditEvent;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -20,11 +23,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import org.primefaces.event.RowEditEvent;
 
 @Named(value = "recaudacionExtraController")
 @ViewScoped
@@ -43,9 +41,9 @@ public class RecaudacionExtraController implements Serializable {
 
     private int totalRecaudacion;
     LocalDate f;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
 
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
 
     public RecaudacionExtraController() {
 
@@ -75,6 +73,93 @@ public class RecaudacionExtraController implements Serializable {
             }
         }
     }
+    
+    public void delete() {
+        if (this.selected != null) {
+            new IRecaudacionExtraDaoImpl().delete(this.selected);
+
+            this.items.remove(this.selected);
+
+            JsfUtil.addSuccessMessage("Se ha anulado la recaudación");
+            load();
+            this.selected = null; 
+        } else {
+            JsfUtil.addErrorMessage("Debe seleccionar la recaudación");
+        }
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        RecaudacionExtra temp = null;
+        try {
+            temp = (RecaudacionExtra) event.getObject();
+
+            new IRecaudacionExtraDaoImpl().update(temp);
+            JsfUtil.addSuccessMessage("Se ha actualizado la Recaudación: " + temp.getRecaudacionExtraIdRecaudacion().getRecaudacionId());
+
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Ha dd dddd error al registrar los cambios" + e);
+            System.err.println("ERROR:" + e.getMessage());
+            System.err.println("ERROR:" + e.getLocalizedMessage());
+            System.err.println("ERROR:" + e);
+        }
+
+    }
+
+    public String getFechaCompleta() {
+        LocalDate date = LocalDate.from(this.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        return date.format(formatter);
+    }
+
+    public void deleteSelectedGuias() {
+        if (hasSelectedGuias()) {
+            for (RecaudacionExtra r : this.selectedItems) {
+
+                try {
+
+                    Recaudacion rr = r.getRecaudacionExtraIdRecaudacion();
+
+                    String folios = "";
+
+                    for (RecaudacionExtra m : rr.getRecaudacionExtraList()) {
+
+                        new IRecaudacionExtraDaoImpl().delete(m);
+
+                        this.items.remove(m);
+
+//                        folios = folios + ", " + m.getRecaudacionMinutoIdRegistroMinuto().getRegistroMinutoId();
+//                        m.getRecaudacionMinutoIdRegistroMinuto().setRegistroMinutoRecaudado(Boolean.FALSE);
+//                        new IRegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
+//                        this.items.remove(m);
+//                        new IRecaudacionMinutoDaoImpl().delete(m);
+                        JsfUtil.addSuccessMessage("Se ha eliminado la recaudación de I.Extras #" + rr.getRecaudacionId());
+                    }
+
+                } catch (NullPointerException e) {
+                    JsfUtil.addErrorMessage("Se ha producido un error: " + e.getLocalizedMessage());
+                    this.setSelected(null);
+                }
+
+            }
+            this.items.removeAll(this.selectedItems);
+            this.selectedItems = new ArrayList<>();
+            load();
+        }
+    }
+
+    public String getDeleteButtonMessage() {
+        if (hasSelectedGuias()) {
+            int size = this.selectedItems.size();
+            return size > 1 ? size + " recaudaciones seleccionadas" : "1 recaudación seleccionada";
+        }
+
+        return "Eliminar";
+    }
+
+    public boolean hasSelectedGuias() {
+        return this.selectedItems != null && !this.selectedItems.isEmpty();
+    }
+    
+     
 
     public void setSelected(RecaudacionExtra selected) {
         this.selected = selected;
@@ -160,89 +245,6 @@ public class RecaudacionExtraController implements Serializable {
         return selectedItems;
     }
 
-    public void delete() {
-        if (this.selected != null) {
-            new IRecaudacionExtraDaoImpl().delete(this.selected);
-
-            this.items.remove(this.selected);
-
-            JsfUtil.addSuccessMessage("Se ha anulado la recaudación");
-            load();
-            this.selected = null; 
-        } else {
-            JsfUtil.addErrorMessage("Debe seleccionar la recaudación");
-        }
-    }
-
-    public void onRowEdit(RowEditEvent event) {
-        RecaudacionExtra temp = null;
-        try {
-            temp = (RecaudacionExtra) event.getObject();
-
-            new IRecaudacionExtraDaoImpl().update(temp);
-            JsfUtil.addSuccessMessage("Se ha actualizado la Recaudación: " + temp.getRecaudacionExtraIdRecaudacion().getRecaudacionId());
-
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage("Ha dd dddd error al registrar los cambios" + e.toString());
-            System.err.println("ERROR:" + e.getMessage());
-            System.err.println("ERROR:" + e.getLocalizedMessage());
-            System.err.println("ERROR:" + e.toString());
-        }
-
-    }
-
-    public String getFechaCompleta() {
-        LocalDate date = LocalDate.from(this.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        return date.format(formatter);
-    }
-
-    public void deleteSelectedGuias() {
-        if (hasSelectedGuias()) {
-            for (RecaudacionExtra r : this.selectedItems) {
-
-                try {
-
-                    Recaudacion rr = r.getRecaudacionExtraIdRecaudacion();
-
-                    String folios = "";
-
-                    for (RecaudacionExtra m : rr.getRecaudacionExtraList()) {
-
-                        new IRecaudacionExtraDaoImpl().delete(m);
-
-                        this.items.remove(m);
-
-//                        folios = folios + ", " + m.getRecaudacionMinutoIdRegistroMinuto().getRegistroMinutoId();
-//                        m.getRecaudacionMinutoIdRegistroMinuto().setRegistroMinutoRecaudado(Boolean.FALSE);
-//                        new IRegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
-//                        this.items.remove(m);
-//                        new IRecaudacionMinutoDaoImpl().delete(m);
-                        JsfUtil.addSuccessMessage("Se ha eliminado la recaudación de I.Extras #" + rr.getRecaudacionId());
-                    }
-
-                } catch (NullPointerException e) {
-                    JsfUtil.addErrorMessage("Se ha producido un error: " + e.getLocalizedMessage());
-                    this.setSelected(null);
-                }
-
-            }
-            this.items.removeAll(this.selectedItems);
-            this.selectedItems = new ArrayList<>();
-            load();
-        }
-    }
-
-    public String getDeleteButtonMessage() {
-        if (hasSelectedGuias()) {
-            int size = this.selectedItems.size();
-            return size > 1 ? size + " recaudaciones seleccionadas" : "1 recaudación seleccionada";
-        }
-
-        return "Eliminar";
-    }
-
-    public boolean hasSelectedGuias() {
-        return this.selectedItems != null && !this.selectedItems.isEmpty();
-    }
+    
 
 }

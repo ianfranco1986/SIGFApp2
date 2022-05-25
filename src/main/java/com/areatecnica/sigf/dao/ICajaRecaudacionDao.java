@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Usuario;
+
 import java.util.List;
 
 /**
@@ -15,9 +16,9 @@ import java.util.List;
  */
 public interface ICajaRecaudacionDao<T> extends IGenericDAO<T> {
 
-    public List<CajaRecaudacion> findAllByUser(Usuario usuario);
+    List<CajaRecaudacion> findAllByUser(Usuario usuario);
     
-    public List<CajaRecaudacion> findAllActive();
+    List<CajaRecaudacion> findAllActive();
     
-    public CajaRecaudacion findById(int id);
+    CajaRecaudacion findById(int id);
 }

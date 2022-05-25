@@ -5,16 +5,15 @@
  */
 package com.areatecnica.sigf.facade;
 
+import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.ValorMinuto;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.ValorMinuto_;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.Cuenta;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -24,7 +23,7 @@ import javax.persistence.Persistence;
 public class ValorMinutoFacade extends AbstractFacade<ValorMinuto> {
 
     
-    private EntityManager em = Persistence.createEntityManagerFactory( "com.areatecnica_SIGFapp_war_1PU").createEntityManager();
+    private final EntityManager em = Persistence.createEntityManagerFactory( "com.areatecnica_SIGFapp_war_1PU").createEntityManager();
 
     @Override
     protected EntityManager getEntityManager() {

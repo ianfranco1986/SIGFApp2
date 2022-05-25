@@ -1,34 +1,22 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
-import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
-import com.areatecnica.sigf.dao.impl.IVentaBoletoDaoImpl;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Egreso;
-import com.areatecnica.sigf.entities.Guia;
-import com.areatecnica.sigf.entities.RecaudacionGuia;
-import com.areatecnica.sigf.entities.Trabajador;
-import com.areatecnica.sigf.entities.VentaBoleto;
+import com.areatecnica.sigf.dao.impl.*;
+import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
 import com.areatecnica.sigf.util.LocalDateConverter;
+import org.primefaces.event.RowEditEvent;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import javax.annotation.PostConstruct;
-import javax.faces.event.ActionEvent;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import org.primefaces.event.RowEditEvent;
 
 @Named(value = "ventaBoletoController")
 @ViewScoped
@@ -46,7 +34,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
     private VentaBoletoRecaudacionDataModel model;
     private Egreso boleto;
 
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final NumberFormat nf = NumberFormat.getInstance();
 
     private int totalAdministracion = 0;
     private int totalCuotaExtra = 0;

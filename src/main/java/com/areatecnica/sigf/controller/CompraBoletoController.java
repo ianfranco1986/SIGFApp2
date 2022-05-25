@@ -7,41 +7,36 @@ import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
 import com.areatecnica.sigf.entities.InventarioInterno;
-import java.util.List;
-import com.areatecnica.sigf.facade.InventarioInternoFacade;
-import com.areatecnica.sigf.models.DetalleCompraBoletosDataModel;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
+import java.util.List;
+import java.util.Random;
 
 @Named(value = "compraBoletoController")
 @ViewScoped
 public class CompraBoletoController extends AbstractController<CompraBoleto> {
 
-    @Inject
-    private CuentaController compraBoletoIdCuentaController;
-
-    @Inject
-    private InventarioInternoFacade inventarioInternoFacade;
-
+//    @Inject
+//    private CuentaController compraBoletoIdCuentaController;
+//
+//    @Inject
+//    private InventarioInternoFacade inventarioInternoFacade;
+    private List<CompraBoleto> items;
+    private CompraBoleto selected;
     private DetalleCompraBoleto detalleCompraBoleto;
-    private DetalleCompraBoleto selectedDetalleCompraBoleto;
-    private List<DetalleCompraBoleto> itemsDetalleCompraBoleto;
+    private DetalleCompraBoleto selectedItem;
     private ICompraBoletoDao compraBoletoDao;
-    private DetalleCompraBoletosDataModel model;
     private int totalCompra;
     private String totalFormatted;
 
     private static final String pattern = "###,###.###";
     private static final DecimalFormat decimalFormat = new DecimalFormat(pattern);
-
-    // Flags to indicate if child collections are empty
-    private boolean isDetalleCompraBoletoListEmpty;
 
     public CompraBoletoController() {
         // Inform the Abstract parent controller of the concrete CompraBoleto Entity
@@ -51,110 +46,20 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     @PostConstruct
     @Override
     public void initParams() {
-        super.initParams(); //To change body of generated methods, choose Tools | Templates.
-        if (this.getSelected() == null) {
-            this.setSelected(prepareCreate(null));
-            this.getSelected().setCompraBoletoFecha(new Date());
-            this.getSelected().setCompraBoletoTotal(0);
+
+        if (this.selected == null) {
+            this.selected = prepareCreate(null);
+            this.selected.setCompraBoletoFecha(new Date());
+            this.selected.setCompraBoletoTotal(0);
+            this.selected.setDetalleCompraBoletoList(new ArrayList<DetalleCompraBoleto>());
 
             this.detalleCompraBoleto = new DetalleCompraBoleto();
-            this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
+            this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.selected);
 
-            this.itemsDetalleCompraBoleto = new ArrayList<DetalleCompraBoleto>();
-            this.model = new DetalleCompraBoletosDataModel(itemsDetalleCompraBoleto);
+            this.selectedItem = new DetalleCompraBoleto();
             this.totalCompra = 0;
         }
 
-    }
-
-    @Override
-    public CompraBoleto prepareCreate(ActionEvent event) {
-        super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
-        this.getSelected().setCompraBoletoIdCuenta(this.getUserCount());
-
-        return this.getSelected();
-    }
-
-    @Override
-    public void save(ActionEvent event) {
-        super.save(event); //To change body of generated methods, choose Tools | Templates.
-
-    }
-
-    @Override
-    public void saveNew(ActionEvent event) {
-        //super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
-        this.getSelected().setDetalleCompraBoletoList(itemsDetalleCompraBoleto);
-        new ICompraBoletoDaoImpl().update(this.getSelected());
-//                            this.getSelected().setCompraBoletoTotal(this.getSelected().getCompraBoletoTotal() + total);
-        int totalCompra = 0;
-        System.err.println("Guardando....");
-
-        List<InventarioInterno> inventarioInterno = new ArrayList<>();
-        for (DetalleCompraBoleto d : this.getSelected().getDetalleCompraBoletoList()) {
-            System.err.println("Tamaño de Detalle de Boletos: ...." + this.getSelected().getDetalleCompraBoletoList().size());
-
-            int serieInicial = Integer.parseInt(d.getDetalleCompraBoletoSerie());
-            totalCompra = totalCompra + d.getDetalleCompraBoletoTotal();
-            for (int i = 0; i < d.getDetalleCompraBoletoCantidadRollos(); i++) {
-
-                InventarioInterno ii = new InventarioInterno();
-                ii.setInventarioInternoEstado(Boolean.FALSE);
-
-                ii.setInventarioInternoIdBoleto(d.getDetalleCompraBoletoIdBoleto());
-                ii.setInventarioInternoIdentificador(d.getDetalleCompraBoletoIdentificador());
-                ii.setInventarioInternoSerie(serieInicial);
-                serieInicial += 1000;
-
-                new IInventarioInternoDaoImpl().update(ii);
-                System.err.println("Llega al update");
-                inventarioInterno.add(ii);
-            }
-
-        }
-
-        this.getSelected().setDetalleCompraBoletoList(new ArrayList());
-        this.setSelected(null);
-
-        this.setSelected(super.prepareCreate(null));
-        this.getSelected().setCompraBoletoIdCuenta(this.getUserCount());
-        this.detalleCompraBoleto = new DetalleCompraBoleto();
-        this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
-        this.getSelected().setCompraBoletoFecha(new Date());
-        this.getSelected().setCompraBoletoTotal(totalCompra);
-        this.getSelected().setDetalleCompraBoletoList(new ArrayList<DetalleCompraBoleto>());
-
-        this.model = new DetalleCompraBoletosDataModel(this.getSelected().getDetalleCompraBoletoList());
-        JsfUtil.addSuccessMessage("Se ha agregado una nueva Compra de Boletos");
-        JsfUtil.addSuccessMessage("Se ha actualizado el Inventario Interno");
-    }
-
-    /**
-     * @return the detalleCompraBoleto
-     */
-    public DetalleCompraBoleto getDetalleCompraBoleto() {
-        return detalleCompraBoleto;
-    }
-
-    /**
-     * @param detalleCompraBoleto the detalleCompraBoleto to set
-     */
-    public void setDetalleCompraBoleto(DetalleCompraBoleto detalleCompraBoleto) {
-        this.detalleCompraBoleto = detalleCompraBoleto;
-    }
-
-    /**
-     * @return the itemsDetalleCompraBoleto
-     */
-    public List<DetalleCompraBoleto> getItemsDetalleCompraBoleto() {
-        return itemsDetalleCompraBoleto;
-    }
-
-    /**
-     * @param itemsDetalleCompraBoleto the itemsDetalleCompraBoleto to set
-     */
-    public void setItemsDetalleCompraBoleto(List<DetalleCompraBoleto> itemsDetalleCompraBoleto) {
-        this.itemsDetalleCompraBoleto = itemsDetalleCompraBoleto;
     }
 
     public void addDetalleCompra(ActionEvent event) {
@@ -165,15 +70,19 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
                 if (!this.detalleCompraBoleto.getDetalleCompraBoletoIdentificador().equals("")) {
                     if (!this.detalleCompraBoleto.getDetalleCompraBoletoSerie().equals("")) {
                         if (this.detalleCompraBoleto.getDetalleCompraBoletoCantidadRollos() > 0 || this.detalleCompraBoleto.getDetalleCompraBoletoTotal() > 0) {
-                            valorRollo = this.detalleCompraBoleto.getDetalleCompraBoletoTotal();
-                            cantidad = this.detalleCompraBoleto.getDetalleCompraBoletoCantidadRollos();
-                            int total = valorRollo * cantidad;
 
-                            this.detalleCompraBoleto.setDetalleCompraBoletoTotal(total);
-                            this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
+                            DetalleCompraBoleto b = new DetalleCompraBoleto();
+                            b.setDetalleCompraBoletoId(new Random().nextInt());
+                            b.setDetalleCompraBoletoIdBoleto(this.detalleCompraBoleto.getDetalleCompraBoletoIdBoleto());
+                            b.setDetalleCompraBoletoCantidadRollos(this.detalleCompraBoleto.getDetalleCompraBoletoCantidadRollos());
+                            b.setDetalleCompraBoletoIdCompraBoleto(this.detalleCompraBoleto.getDetalleCompraBoletoIdCompraBoleto());
+                            b.setDetalleCompraBoletoIdentificador(this.detalleCompraBoleto.getDetalleCompraBoletoIdentificador());
+                            b.setDetalleCompraBoletoSerie(this.detalleCompraBoleto.getDetalleCompraBoletoSerie());
+                            b.setDetalleCompraBoletoTotal(this.detalleCompraBoleto.getDetalleCompraBoletoTotal() * this.detalleCompraBoleto.getDetalleCompraBoletoCantidadRollos());
+                            b.setDetalleCompraBoletoIdCompraBoleto(this.selected);
 
-                            this.itemsDetalleCompraBoleto.add(detalleCompraBoleto);
-                            this.totalCompra = this.totalCompra + total;
+                            this.selected.getDetalleCompraBoletoList().add(b);
+                            this.totalCompra = this.totalCompra + b.getDetalleCompraBoletoTotal();
                         } else {
                             JsfUtil.addErrorMessage("Debe ingresar un valor Mayor que cero");
                         }
@@ -198,33 +107,129 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     }
 
     public void deleteDetalle() {
-        if (this.selectedDetalleCompraBoleto != null) {
+        if (this.selectedItem != null) {
 
-            this.totalCompra = this.totalCompra - this.selectedDetalleCompraBoleto.getDetalleCompraBoletoTotal();
-            this.itemsDetalleCompraBoleto.remove(this.selectedDetalleCompraBoleto);
-            this.selectedDetalleCompraBoleto = null;
+            this.totalCompra = this.totalCompra - this.selectedItem.getDetalleCompraBoletoTotal();
+            this.selected.getDetalleCompraBoletoList().remove(this.selectedItem);
+            this.selectedItem = null;
             JsfUtil.addSuccessMessage("Se ha eliminado la fila");
+            this.selectedItem = new DetalleCompraBoleto();
+        } else {
+            JsfUtil.addErrorMessage("Error al eliminar el boleto");
         }
     }
 
     public void findFolio() {
         this.compraBoletoDao = new ICompraBoletoDaoImpl();
-        CompraBoleto compraBoleto = this.compraBoletoDao.findByFolioFactura(this.getSelected().getCompraBoletoFolioFactura());
+        CompraBoleto compraBoleto = this.compraBoletoDao.findByFolioFactura(this.selected.getCompraBoletoFolioFactura());
         if (compraBoleto != null) {
-            JsfUtil.addErrorMessage("La factura N° " + this.getSelected().getCompraBoletoFolioFactura() + " ya se encuentra ingresada");
+            JsfUtil.addErrorMessage("La factura N° " + this.selected.getCompraBoletoFolioFactura() + " ya se encuentra ingresada");
         }
     }
 
+    @Override
+    public void save(ActionEvent event) {
+        super.save(event); //To change body of generated methods, choose Tools | Templates.
+
+    }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+        //super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
+        new ICompraBoletoDaoImpl().update(this.selected);
+//                            this.getSelected().setCompraBoletoTotal(this.getSelected().getCompraBoletoTotal() + total);
+        int totalCompra = 0;
+        System.err.println("Guardando....");
+
+        List<InventarioInterno> inventarioInterno = new ArrayList<>();
+        for (DetalleCompraBoleto d : this.selected.getDetalleCompraBoletoList()) {
+            System.err.println("Tamaño de Detalle de Boletos: ...." + this.selected.getDetalleCompraBoletoList().size());
+
+            int serieInicial = Integer.parseInt(d.getDetalleCompraBoletoSerie());
+            totalCompra = totalCompra + d.getDetalleCompraBoletoTotal();
+            for (int i = 0; i < d.getDetalleCompraBoletoCantidadRollos(); i++) {
+
+                InventarioInterno ii = new InventarioInterno();
+                ii.setInventarioInternoEstado(Boolean.FALSE);
+
+                ii.setInventarioInternoIdBoleto(d.getDetalleCompraBoletoIdBoleto());
+                ii.setInventarioInternoIdentificador(d.getDetalleCompraBoletoIdentificador());
+                ii.setInventarioInternoSerie(serieInicial);
+                serieInicial += 1000;
+
+                new IInventarioInternoDaoImpl().update(ii);
+                System.err.println("Llega al update");
+                inventarioInterno.add(ii);
+            }
+
+        }
+
+        this.selected = null;
+        this.selected = new CompraBoleto();
+
+        this.selected.setDetalleCompraBoletoList(new ArrayList());
+        this.selected.setCompraBoletoIdCuenta(this.getUserCount());
+        this.selected.setCompraBoletoFecha(new Date());
+        this.selected.setCompraBoletoTotal(0);
+
+        this.detalleCompraBoleto = new DetalleCompraBoleto();
+        this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.selected);
+
+        JsfUtil.addSuccessMessage("Se ha agregado una nueva Compra de Boletos");
+        JsfUtil.addSuccessMessage("Se ha actualizado el Inventario Interno");
+    }
+
+    public String getDeleteButtonMessage() {
+        if (hasSelectedGuias()) {
+            int size = this.items.size();
+            return size > 1 ? size + " filas seleccionadas" : "1 fila seleccionada";
+        }
+
+        return "Eliminar";
+    }
+
+    public boolean hasSelectedGuias() {
+        return this.items != null && !this.items.isEmpty();
+    }
+
+    public void deleteSelectedGuias() {
+        if (hasSelectedGuias()) {
+            JsfUtil.addSuccessMessage("Acá se va a implementar el borrado ...");
+        }
+    }
+
+    /**
+     * @return the detalleCompraBoleto
+     */
+    public DetalleCompraBoleto getDetalleCompraBoleto() {
+        return detalleCompraBoleto;
+    }
+
+    /**
+     * @param detalleCompraBoleto the detalleCompraBoleto to set
+     */
+    public void setDetalleCompraBoleto(DetalleCompraBoleto detalleCompraBoleto) {
+        this.detalleCompraBoleto = detalleCompraBoleto;
+    }
+
     public void load() {
-        JsfUtil.addErrorMessage("Boleto:" + this.selectedDetalleCompraBoleto.getDetalleCompraBoletoSerie());
+        JsfUtil.addErrorMessage("Boleto:" + this.detalleCompraBoleto.getDetalleCompraBoletoSerie());
     }
 
-    public void setModel(DetalleCompraBoletosDataModel model) {
-        this.model = model;
+    public DetalleCompraBoleto getSelectedItem() {
+        return selectedItem;
     }
 
-    public DetalleCompraBoletosDataModel getModel() {
-        return model;
+    public void setSelectedItem(DetalleCompraBoleto selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
+    public CompraBoleto getSelected() {
+        return this.selected;
+    }
+
+    public void setSelected(CompraBoleto selected) {
+        this.selected = selected;
     }
 
     public int getTotalCompra() {
@@ -235,14 +240,14 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
         this.totalCompra = totalCompra;
     }
 
-    public void setSelectedDetalleCompraBoleto(DetalleCompraBoleto selectedDetalleCompraBoleto) {
-        this.selectedDetalleCompraBoleto = selectedDetalleCompraBoleto;
+    public List<CompraBoleto> getItems() {
+        return items;
     }
 
-    public DetalleCompraBoleto getSelectedDetalleCompraBoleto() {
-        return selectedDetalleCompraBoleto;
+    public void setItems(List<CompraBoleto> items) {
+        this.items = items;
     }
-
+    
     public void setTotalFormatted(String totalFormatted) {
         this.totalFormatted = totalFormatted;
     }
@@ -251,5 +256,4 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
         this.totalFormatted = "$ " + decimalFormat.format(this.totalCompra);
         return totalFormatted;
     }
-
 }

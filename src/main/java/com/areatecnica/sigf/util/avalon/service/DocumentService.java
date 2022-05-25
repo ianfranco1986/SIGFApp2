@@ -15,10 +15,10 @@
  */
 package com.areatecnica.sigf.util.avalon.service;
 
+import com.areatecnica.sigf.util.avalon.domain.Document;
 import org.primefaces.model.CheckboxTreeNode;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
-import com.areatecnica.sigf.util.avalon.domain.Document;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;

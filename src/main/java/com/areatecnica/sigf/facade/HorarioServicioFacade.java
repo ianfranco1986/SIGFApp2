@@ -5,17 +5,17 @@
  */
 package com.areatecnica.sigf.facade;
 
+import com.areatecnica.sigf.entities.ControlHorarioServicio;
 import com.areatecnica.sigf.entities.HorarioServicio;
+import com.areatecnica.sigf.entities.Servicio;
+import com.areatecnica.sigf.entities.TipoEstacionalidad;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import com.areatecnica.sigf.entities.HorarioServicio_;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.areatecnica.sigf.entities.ControlHorarioServicio;
-import com.areatecnica.sigf.entities.TipoEstacionalidad;
-import com.areatecnica.sigf.entities.Servicio;
 import java.util.List;
 
 /**

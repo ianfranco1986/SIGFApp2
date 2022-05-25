@@ -6,23 +6,12 @@
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  *
@@ -158,10 +147,7 @@ public class EgresoCajaRecaudacion extends BaseEntity implements Serializable {
             return false;
         }
         EgresoCajaRecaudacion other = (EgresoCajaRecaudacion) object;
-        if ((this.egresoCajaRecaudacionId == null && other.egresoCajaRecaudacionId != null) || (this.egresoCajaRecaudacionId != null && !this.egresoCajaRecaudacionId.equals(other.egresoCajaRecaudacionId))) {
-            return false;
-        }
-        return true;
+        return (this.egresoCajaRecaudacionId != null || other.egresoCajaRecaudacionId == null) && (this.egresoCajaRecaudacionId == null || this.egresoCajaRecaudacionId.equals(other.egresoCajaRecaudacionId));
     }
 
     @Override

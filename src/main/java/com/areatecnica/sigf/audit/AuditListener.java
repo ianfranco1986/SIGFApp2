@@ -5,11 +5,6 @@
 package com.areatecnica.sigf.audit;
 
 import com.areatecnica.sigf.entities.Usuario;
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import javax.faces.context.FacesContext;
 import org.eclipse.persistence.config.DescriptorCustomizer;
 import org.eclipse.persistence.config.SessionCustomizer;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
@@ -20,6 +15,12 @@ import org.eclipse.persistence.queries.WriteObjectQuery;
 import org.eclipse.persistence.sessions.Session;
 import org.eclipse.persistence.sessions.changesets.ChangeRecord;
 import org.eclipse.persistence.sessions.changesets.DirectToFieldChangeRecord;
+
+import javax.faces.context.FacesContext;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *

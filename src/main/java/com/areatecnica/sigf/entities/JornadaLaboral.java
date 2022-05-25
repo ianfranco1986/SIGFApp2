@@ -5,23 +5,13 @@
  */
 package com.areatecnica.sigf.entities;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -210,10 +200,7 @@ public class JornadaLaboral extends BaseEntity implements Serializable {
             return false;
         }
         JornadaLaboral other = (JornadaLaboral) object;
-        if ((this.jornadaLaboralId == null && other.jornadaLaboralId != null) || (this.jornadaLaboralId != null && !this.jornadaLaboralId.equals(other.jornadaLaboralId))) {
-            return false;
-        }
-        return true;
+        return (this.jornadaLaboralId != null || other.jornadaLaboralId == null) && (this.jornadaLaboralId == null || this.jornadaLaboralId.equals(other.jornadaLaboralId));
     }
 
     @Override

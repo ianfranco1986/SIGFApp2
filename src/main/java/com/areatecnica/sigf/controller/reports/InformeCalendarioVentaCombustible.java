@@ -7,20 +7,21 @@ package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.util.DatePlusValueHelper;
-import java.text.NumberFormat;
+import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.ScheduleModel;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.WebTarget;
-import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.ScheduleModel;
 
 /**
  *

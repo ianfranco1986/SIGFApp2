@@ -5,22 +5,13 @@
  */
 package com.areatecnica.sigf.controller.reports;
 
-import com.areatecnica.sigf.entities.Administrador;
-import com.areatecnica.sigf.entities.AdministradorBus;
-import com.areatecnica.sigf.entities.AdministradorFlota;
-import com.areatecnica.sigf.entities.Bus;
-import com.areatecnica.sigf.entities.Empresa;
-import com.areatecnica.sigf.entities.Usuario;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.areatecnica.sigf.entities.*;
+
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  *
@@ -32,8 +23,8 @@ public class InformeEmpresaController implements Serializable {
 
     private List<Empresa> itemsEmpresas;
     private Empresa selected;
-    private Usuario currentUser;
-    private List<Bus> buses;
+    private final Usuario currentUser;
+    private final List<Bus> buses;
 
     /**
      * Creates a new instance of InformeEmpresaController

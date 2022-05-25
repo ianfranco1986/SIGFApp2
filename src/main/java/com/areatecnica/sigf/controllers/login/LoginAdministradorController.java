@@ -9,12 +9,7 @@ import com.areatecnica.sigf.entities.Usuario;
 import com.areatecnica.sigf.facade.UsuarioSessionFacade;
 import com.areatecnica.sigf.util.AdministradorForm;
 import com.areatecnica.sigf.util.CommonPage;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -22,6 +17,12 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -102,10 +103,6 @@ public class LoginAdministradorController implements java.io.Serializable {
         return usuario;
     }
 
-    /**
-     *
-     * @param Usuario
-     */
     public void setUsuario(Administrador usuario) {
         this.usuario = usuario;
     }

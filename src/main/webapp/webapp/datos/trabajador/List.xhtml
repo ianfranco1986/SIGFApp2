@@ -12,8 +12,11 @@
     <ui:define name="content">
         <h:form id="TrabajadorListForm">
             <div class="p-grid crud-demo">
+
                 <div class="p-col-12">
                     <div class="card">
+                        <span style="font-weight: bold"><h3>Trabajadores</h3></span>
+
                         <p:growl id="messages" showDetail="true" />
 
                         <p:toolbar styleClass="p-mb-4">
@@ -54,7 +57,6 @@
 
                             <f:facet name="header">
                                 <div class="products-table-header">
-                                    <span style="font-weight: bold"><h3>Trabajadores</h3></span>
 
                                     <span class="filter-container ui-input-icon-left">
                                         <i class="pi pi-search"></i>
@@ -62,8 +64,6 @@
                                     </span>
                                 </div>
                             </f:facet>
-
-                            <p:column selectionMode="single" style="width:16px;text-align:center"/>
 
                             <p:column>
                                 <f:facet name="header">
@@ -356,7 +356,7 @@
                                     <f:setPropertyActionListener value="#{item}" target="#{trabajadorController.selected}" />
                                 </p:commandButton>
                                 <p:commandButton icon="pi pi-pencil" update="TrabajadorEditForm, datalist" oncomplete="PF('TrabajadorEditDialog').show()" 
-                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                                 styleClass="edit-button rounded-button ui-button-warning" process="@this">
                                     <f:setPropertyActionListener value="#{item}" target="#{trabajadorController.selected}" />
                                 </p:commandButton>
                                 <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >

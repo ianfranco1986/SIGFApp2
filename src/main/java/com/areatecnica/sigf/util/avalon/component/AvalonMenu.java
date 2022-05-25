@@ -15,18 +15,15 @@
  */
 package com.areatecnica.sigf.util.avalon.component;
 
-import javax.faces.component.UIComponent;
+import org.primefaces.component.api.Widget;
 import org.primefaces.component.menu.AbstractMenu;
-import javax.faces.context.FacesContext;
+
+import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ComponentSystemEvent;
-import javax.faces.event.ComponentSystemEventListener;
-import javax.faces.event.ListenerFor;
-import javax.faces.event.PostAddToViewEvent;
-import org.primefaces.component.api.Widget;
+import javax.faces.context.FacesContext;
+import javax.faces.event.*;
 
 @ListenerFor(sourceClass = AvalonMenu.class, systemEventClass = PostAddToViewEvent.class)
 public class AvalonMenu extends AbstractMenu implements Widget,ComponentSystemEventListener {

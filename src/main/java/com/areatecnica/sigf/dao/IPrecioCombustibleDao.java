@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.PrecioCombustible;
+
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface IPrecioCombustibleDao<T> extends IGenericDAO<T> {
     
-    public PrecioCombustible findLastPrecio(Cuenta cuenta);
+    PrecioCombustible findLastPrecio(Cuenta cuenta);
     
-    public List<PrecioCombustible> findPrecioBetweenDates(Cuenta cuenta, Date from, Date to);
+    List<PrecioCombustible> findPrecioBetweenDates(Cuenta cuenta, Date from, Date to);
 }

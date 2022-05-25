@@ -6,10 +6,11 @@
 package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.entities.Trabajador;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  *

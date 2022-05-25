@@ -1,11 +1,12 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.entities.PrecioCombustible;
-import java.util.Date;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.Date;
 
 @Named(value = "precioCombustibleController")
 @ViewScoped
