@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.dao.IVentaCombustibleDao;
-import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
+import com.areatecnica.sigf.dao.impl.VentaCombustibleDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.util.CurrentDate;
 import org.primefaces.model.chart.Axis;
@@ -93,7 +93,7 @@ public class InformeConsumoCombustibleControllerFlota implements Serializable {
 
     public void handleBusChange() {
         if (this.selected != null) {
-            this.ventaCombustibleDao = new IVentaCombustibleDaoImpl();
+            this.ventaCombustibleDao = new VentaCombustibleDaoImpl();
             this.ventasItems = this.ventaCombustibleDao.findByBusBetweenDates(selected, this.fecha, this.currentDate.getMaxDate());
             setChart();
         }
@@ -102,7 +102,7 @@ public class InformeConsumoCombustibleControllerFlota implements Serializable {
     public void load() {
         if (!this.items.isEmpty()) {
             for (Bus b : this.items) {
-                this.ventaCombustibleDao = new IVentaCombustibleDaoImpl();
+                this.ventaCombustibleDao = new VentaCombustibleDaoImpl();
                 this.ventasItems = this.ventaCombustibleDao.findByBusBetweenDates(selected, this.fecha, this.currentDate.getMaxDate());
                 setChart();
             }
@@ -251,7 +251,7 @@ public class InformeConsumoCombustibleControllerFlota implements Serializable {
             LineChartSeries serie = new LineChartSeries();
             serie.setSmoothLine(true);
 
-            this.ventaCombustibleDao = new IVentaCombustibleDaoImpl();
+            this.ventaCombustibleDao = new VentaCombustibleDaoImpl();
             this.ventasItems = this.ventaCombustibleDao.findByBusBetweenDates(b, this.currentDate.date(), this.currentDate.getMaxDate());
             serie.setLabel("Bus: " + b.getBusNumero());
             for (VentaCombustible v : this.ventasItems) {

@@ -171,6 +171,7 @@
     <class>com.areatecnica.sigf.entities.TipoRecaudacionExtra</class>
     <class>com.areatecnica.sigf.audit.AuditField</class>
     <class>com.areatecnica.sigf.audit.AuditEntry</class>
+    <class>com.areatecnica.sigf.entities.CuentaUnica</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.jdbc.native-sql" value="true"/>

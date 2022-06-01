@@ -79,8 +79,8 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
         this.fechaLiquidacion = new Date();
         this.proveedorItems = new ArrayList();
 
-        Proveedor enel = new IProveedorDaoImpl().findByRut("920110002");
-        Proveedor copec = new IProveedorDaoImpl().findByRut("995200007");
+        Proveedor enel = new ProveedorDaoImpl().findByRut("920110002");
+        Proveedor copec = new ProveedorDaoImpl().findByRut("995200007");
 
         this.proveedorItems.add(enel);
         this.proveedorItems.add(copec);

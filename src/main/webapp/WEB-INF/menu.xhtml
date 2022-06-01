@@ -1,9 +1,9 @@
 <ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:pu="http://primefaces.org/avalon">
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/avalon">
 
     <h:form id="menuform">
         <div class="layout-menu-container #{guestPreferences.menuClass}">
@@ -129,8 +129,26 @@
                             <p:menuitem id="om_venta_combustible_precio" value="Precio" icon="pi pi-fw pi-dollar" outcome="/webapp/bomba/precioCombustible/List.xhtml" />
 
                         </p:submenu>
-                    </p:submenu>>
 
+                    </p:submenu>>
+                    <p:submenu label="Contabilidad" >
+                        <p:submenu id="om_adm_compras" label="Compras" icon="pi pi-fw pi-shopping-cart" expanded="false">
+                            <p:menuitem id="om_compra_combustible" value="Compras de Comb." icon="pi pi-fw pi-car" outcome="/webapp/bomba/ventaCombustible/List.xhtml" />
+                            <p:menuitem id="om_compras" value="Registro" icon="pi pi-shopping-cart" outcome="/webapp/compras/registro/List.xhtml" />
+                            <p:menuitem id="om_proveedores" value="Proveedores" icon="pi pi-users" outcome="/webapp/compras/proveedor/List.xhtml" />
+
+                        </p:submenu>
+                        <p:submenu id="om_adm_ventas" label="Ventas" icon="pi pi-fw pi-shopping-cart" expanded="false">
+
+                        </p:submenu>
+                        
+                        <p:submenu id="om_adm_banco" label="Bancos" icon="pi pi-fw pi-shopping-cart" expanded="false">
+
+                        </p:submenu>
+                        <p:submenu id="Avanzado" label="Avanzado" icon="pi pi-fw pi-shopping-cart" expanded="false">
+                            <p:menuitem id="om_plan_cuentas" value="Plan" icon="pi pi-fw pi-car" outcome="/webapp/contabilidad/avanzado/cuentas/planCuentas.xhtml" />
+                        </p:submenu>
+                    </p:submenu>
 
 
                 </pu:menu>

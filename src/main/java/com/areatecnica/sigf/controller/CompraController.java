@@ -5,6 +5,7 @@ import com.areatecnica.sigf.dao.impl.*;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.CompraDataModel;
 import com.areatecnica.sigf.reports.ReportController;
+import com.areatecnica.sigf.util.LocalDateConverter;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +14,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @Named(value = "compraController")
@@ -39,6 +40,7 @@ public class CompraController extends AbstractController<Compra> {
     private List<TipoDocumento> tipoDocumentoItems;
     private List<CuentaMayor> cuentaMayorItems;
     private List<Compra> items;
+    private List<Compra> selectedItems;
     private List<Proveedor> proveedorItems;
     private List<CuentaBancaria> cuentaItems;
     private Proveedor proveedor;
@@ -49,18 +51,17 @@ public class CompraController extends AbstractController<Compra> {
     private String title = defaultTitle;
 
     private int folio;
-    private int mes;
-    private int anio;
+
     private int tipo;
     private int documento;
     private int finalID;
-    private Date fecha;
-    private Date desde;
-    private Date hasta;
+
     private Date fechaMovimiento;
     private Date fechaLiquidacion;
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+    private LocalDate date;
+    private LocalDateConverter dc;
+
     private NumberFormat nf = NumberFormat.getInstance();
 
     public CompraController() {
@@ -72,36 +73,28 @@ public class CompraController extends AbstractController<Compra> {
     @Override
     public void initParams() {
         //super.initParams(); //To change body of generated methods, choose Tools | Templates.
+        this.setDate(LocalDate.now());
 
-        Calendar cal = Calendar.getInstance();
-        this.mes = cal.get(Calendar.MONTH) + 1;
-        this.anio = cal.get(Calendar.YEAR);
         this.fechaMovimiento = new Date();
         this.fechaLiquidacion = new Date();
-        this.proveedorItems = new IProveedorDaoImpl().findAll();
+        this.proveedorItems = new ProveedorDaoImpl().findAll();
         this.tipoMoviento = new ITipoMovimientoDaoImpl().findById(1);
-
-        this.fecha = new Date();
-        setFecha();
-        this.desde = this.fecha;
-        this.hasta = new Date();
 
         this.prepareCreate(null);
         this.proveedor = new Proveedor();
 
         this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
         this.empresaNandu = new IEmpresaDaoImpl().findById(7);
-        //load();
+        load();
     }
 
     public void load() {
         setTitle(defaultTitle);
-        setFecha();
-        System.err.println("FECHA DE BUSQUEDA DE FACTURAS:" + desde + " - " + hasta);
-        this.items = new ICompraDaoImpl().findCompraBetweenDates(desde, hasta);
+
+        this.items = new CompraDaoImpl().findCompraBetweenDates(this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
 
         this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
-        
+
         this.tipoDocumentoItems = new ITipoDocumentoDaoImpl().findAll();
 
         if (this.items.isEmpty()) {
@@ -140,7 +133,7 @@ public class CompraController extends AbstractController<Compra> {
             mov.setMovimientoMesEmpresaId(empresaNandu);
             mov.setMovimientoMesCuentaBancoId(cuentaBancaria);
             mov.setMovimientoMesFechaMvto(this.getSelected().getCompraFechaDocumento());
-            mov.setMovimientoMesFechaLiquidacion(this.desde);
+            mov.setMovimientoMesFechaLiquidacion(this.dc.getFirstDateOfMonth());
             mov.setMovimientoMesMonto(this.getSelected().getCompraTotal());
 
             String descripcion = this.getSelected().getCompraTipoDocumentoId().getTipoDocumentoSigla() + ": " + this.proveedor.getProveedorNombre() + " - " + this.getSelected().getCompraDescripcion();
@@ -151,7 +144,7 @@ public class CompraController extends AbstractController<Compra> {
 
             this.getSelected().setCompraMovimientoId(mov);
 
-            Compra t = new ICompraDaoImpl().create(this.getSelected());
+            Compra t = new CompraDaoImpl().create(this.getSelected());
 
             if (t != null) {
                 this.finalID = t.getCompraId();
@@ -191,7 +184,7 @@ public class CompraController extends AbstractController<Compra> {
             this.setProveedor(this.getSelected().getCompraProveedorId());
             this.setCuentaMayor(this.getSelected().getCompraCuentaMayorId());
             this.setTipoDocumento(this.getSelected().getCompraTipoDocumentoId());
-            
+
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar la compra");
         }
@@ -199,10 +192,10 @@ public class CompraController extends AbstractController<Compra> {
 
     public void onRowEdit(RowEditEvent event) {
         Compra temp = (Compra) event.getObject();
-        
+
         try {
 
-            new ICompraDaoImpl().update(temp);
+            new CompraDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado el registro");
             //getTotals();
         } catch (Exception e) {
@@ -215,7 +208,7 @@ public class CompraController extends AbstractController<Compra> {
         if (this.getSelected() != null) {
 
             this.items.remove(this.getSelected());
-            new ICompraDaoImpl().delete(this.getSelected());
+            new CompraDaoImpl().delete(this.getSelected());
             this.prepareCreate(event);
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar un movimiento");
@@ -226,6 +219,23 @@ public class CompraController extends AbstractController<Compra> {
         this.proveedor = new Proveedor();
 
         return this.proveedor;
+    }
+
+    public String getDeleteButtonMessage() {
+        if (hasSelectedGuias()) {
+            int size = this.selectedItems.size();
+            return size > 1 ? size + " filas seleccionadas" : "1 fila seleccionada";
+        }
+
+        return "Eliminar";
+    }
+
+    public boolean hasSelectedGuias() {
+        return this.selectedItems != null && !this.selectedItems.isEmpty();
+    }
+
+    public void deleteSelectedGuias() {
+
     }
 
     /**
@@ -277,7 +287,7 @@ public class CompraController extends AbstractController<Compra> {
 
     public void saveNewProveedor() {
         if (this.proveedor != null) {
-            new IProveedorDaoImpl().create(proveedor);
+            new ProveedorDaoImpl().create(proveedor);
             this.proveedorItems.add(proveedor);
 
             this.getSelected().setCompraProveedorId(proveedor);
@@ -372,10 +382,6 @@ public class CompraController extends AbstractController<Compra> {
         this.folio = folio;
     }
 
-    public int getMes() {
-        return mes;
-    }
-
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
@@ -384,48 +390,12 @@ public class CompraController extends AbstractController<Compra> {
         return proveedor;
     }
 
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
-    }
-
     public int getTipo() {
         return tipo;
     }
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public Date getDesde() {
-        return desde;
-    }
-
-    public void setDesde(Date desde) {
-        this.desde = desde;
-    }
-
-    public Date getHasta() {
-        return hasta;
-    }
-
-    public void setHasta(Date hasta) {
-        this.hasta = hasta;
     }
 
     public Date getFechaMovimiento() {
@@ -442,6 +412,14 @@ public class CompraController extends AbstractController<Compra> {
 
     public void setFechaLiquidacion(Date fechaLiquidacion) {
         this.fechaLiquidacion = fechaLiquidacion;
+    }
+
+    public List<Compra> getSelectedItems() {
+        return selectedItems;
+    }
+
+    public void setSelectedItems(List<Compra> selectedItems) {
+        this.selectedItems = selectedItems;
     }
 
     public NumberFormat getNf() {
@@ -475,5 +453,14 @@ public class CompraController extends AbstractController<Compra> {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+        this.dc = new LocalDateConverter(date);
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 }

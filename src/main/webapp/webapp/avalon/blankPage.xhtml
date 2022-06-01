@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <h:form id="form">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-cogs">                        
+                    </i>                    
+                </div>
+            </div>
+
+
+            <div class="panel-body" style="height: 70%;position: absolute;overflow-y: scroll">
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-filing-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Día</span>
+                                <span class="info-box-number"><small>$ </small>#{blankPageController.formattedValue(blankPageController.totalRecaudacion)}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+
+                            <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Mes</span>
+                                <span class="info-box-number"><small>$ </small>#{blankPageController.formattedValue(blankPageController.totalRecaudacionMes)}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+
+                    <!-- fix for small devices only -->
+                    <div class="clearfix visible-sm-block"></div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-money"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Última Recaudación</span>
+                                <span class="info-box-number">#{blankPageController.ultimaRecaudacion.recaudacionIdCaja.cajaRecaudacionNombre} <br/> $ #{blankPageController.formattedValue(blankPageController.ultimaRecaudacion.recaudacionTotal.toString())}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">N° de Imposiciones</span>
+                                <span class="info-box-number">#{blankPageController.numeroImposiciones}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Resumen Recaudación Mensual</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                    <div class="btn-group">
+                                        <!--<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-wrench"></i></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Separated link</a></li>
+                                        </ul>-->
+                                    </div>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="text-center">
+                                            <strong>#{blankPageController.nombreMes}</strong>
+                                        </p>
+                                        <!--<p:chart  type="line" model="" style="width:100%;" responsive="true"/>
+
+                                        <!<div class="chart">
+                                            Sales Chart Canvas
+                                            <canvas id="salesChart" style="height: 180px; width: 1072px;" width="1072" height="180">
+                                                                                            
+                                            </canvas>
+                                        </div>
+                                        -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-4">
+                                        <p class="text-center">
+                                            <strong>Detalle Recaudación</strong>
+                                        </p>
+
+                                        <div class="progress-group">
+                                            <span class="progress-text">Administración</span>
+
+                                            <div class="progress sm">
+                                            </div>
+                                        </div>
+                                        <!-- /.progress-group -->
+                                        <div class="progress-group">
+                                            <span class="progress-text">Cuota Extra</span>
+
+                                            <div class="progress sm">
+                                            </div>
+                                        </div>
+                                        <!-- /.progress-group -->
+                                        <div class="progress-group">
+                                            <span class="progress-text">Imposiciones</span>
+                                            
+                                            <div class="progress sm">
+                                             </div>
+                                        </div>
+                                        <!-- /.progress-group -->
+                                        <div class="progress-group">
+                                            <span class="progress-text">Boletos</span>
+                                           
+                                            <div class="progress sm">
+                                              </div>
+                                        </div>
+                                        <!-- /.progress-group -->
+
+                                        <!-- /.progress-group -->
+                                        <div class="progress-group">
+                                            <span class="progress-text">Combustible</span>
+                                           
+                                            <div class="progress sm">
+                                              </div>
+                                        </div>
+                                        <!-- /.progress-group -->
+
+                                        <!-- /.progress-group -->
+                                        <div class="progress-group">
+                                            <span class="progress-text">Minutos</span>
+                                           
+                                            <div class="progress sm">
+                                              </div>
+                                        </div>
+                                        <!-- /.progress-group -->
+
+                                        <!-- /.progress-group -->
+                                        <div class="progress-group">
+                                            <span class="progress-text">Varios</span>
+                                         
+                                            <div class="progress sm">
+                                                </div>
+                                        </div>
+                                        <!-- /.progress-group -->
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- ./box-body -->
+                            <div class="box-footer" style="visibility: hidden;">
+                                <div class="row">
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="description-block border-right">
+                                            <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
+                                            <h5 class="description-header">$35,210.43</h5>
+                                            <span class="description-text">TOTAL REVENUE</span>
+                                        </div>
+                                        <!-- /.description-block -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="description-block border-right">
+                                            <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                                            <h5 class="description-header">$10,390.90</h5>
+                                            <span class="description-text">TOTAL COST</span>
+                                        </div>
+                                        <!-- /.description-block -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="description-block border-right">
+                                            <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+                                            <h5 class="description-header">$24,813.53</h5>
+                                            <span class="description-text">TOTAL PROFIT</span>
+                                        </div>
+                                        <!-- /.description-block -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="description-block">
+                                            <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                                            <h5 class="description-header">1200</h5>
+                                            <span class="description-text">GOAL COMPLETIONS</span>
+                                        </div>
+                                        <!-- /.description-block -->
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+
+                <div class="row" >
+                    <!-- Left col -->
+                    <div class="col-md-8">
+                        <!-- MAP & BOX PANE -->
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Últimas Ventas de Petroleo</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body no-padding">
+                                <div class="row">
+                                    <div>
+                                        <div class="pad">
+                                            <p:dataTable id="datalist"
+                                                         value="#{blankPageController.ventaCombustibleItems}"                                                         
+                                                         rowKey="#{item.ventaCombustibleId}"
+                                                         var="item"                                                         
+                                                         rows="10"                                                         
+                                                         selectionMode="single"
+                                                         selection="#{ventaCombustibleController.selected}"                                                         
+                                                         widgetVar="datalistWidget"
+                                                         reflow="true"
+                                                         emptyMessage="No se han encontrado registros"
+                                                         rowIndexVar="rowIndex" 
+                                                         style="margin-left: 5%; margin-right:5%;">
+                                                <!--
+                                                         To enable Lazy Loading, please copy/replace the following lines above,
+                                                         and be sure to replace the word HASH with the # symbol:
+                                                
+                                                         value="HASH{ventaCombustibleController.lazyItems}"
+                                                         lazy="true"
+                                                         rowKey="HASH{item.ventaCombustibleId}"  <<< Remove this line
+                                                -->
+
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="#"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{rowIndex+1}"/>
+                                                </p:column>
+
+
+                                                <p:column sortBy="#{item.ventaCombustibleNumeroBoleta}" filterBy="#{item.ventaCombustibleNumeroBoleta}">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="N° Boleta"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.ventaCombustibleNumeroBoleta}"/>
+                                                </p:column>
+
+                                                <p:column sortBy="#{item.ventaCombustibleIdBus.busNumero}" filterBy="#{item.ventaCombustibleIdBus.busNumero}">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleIdBus}"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.ventaCombustibleIdBus.busNumero}"/>
+                                                </p:column>
+
+                                                <p:column sortBy="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}" filterBy="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Proceso"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}"/>
+                                                </p:column>
+
+                                                <p:column sortBy="#{item.ventaCombustibleHora}" filterBy="#{item.ventaCombustibleHora}">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleHora}"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.ventaCombustibleHora}">
+                                                        <f:convertDateTime pattern="HH:mm:ss" />
+                                                    </h:outputText>
+                                                </p:column>
+
+                                                <p:column sortBy="#{item.ventaCombustibleCantidad}" filterBy="#{item.ventaCombustibleCantidad}">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleCantidad}"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.ventaCombustibleCantidad}"/>
+                                                </p:column>
+
+
+                                                <p:column sortBy="#{item.ventaCombustibleTotal}" filterBy="#{item.ventaCombustibleTotal}">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleTotal}"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.ventaCombustibleTotal}">
+                                                        <f:convertNumber currencyCode="$" currencySymbol="$"/>
+                                                    </h:outputText>
+                                                </p:column>
+
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-3 col-sm-4" style="visibility: hidden">
+                                        <div class="pad box-pane-right bg-green" style="min-height: 280px">
+                                            <div class="description-block margin-bottom">
+                                                <div class="sparkbar pad" data-color="#fff"><canvas style="display: inline-block; width: 34px; height: 30px; vertical-align: top;" width="34" height="30"></canvas></div>
+                                                <h5 class="description-header">8390</h5>
+                                                <span class="description-text">Visits</span>
+                                            </div>
+                                            <!-- /.description-block -->
+                                            <div class="description-block margin-bottom">
+                                                <div class="sparkbar pad" data-color="#fff"><canvas style="display: inline-block; width: 34px; height: 30px; vertical-align: top;" width="34" height="30"></canvas></div>
+                                                <h5 class="description-header">30%</h5>
+                                                <span class="description-text">Referrals</span>
+                                            </div>
+                                            <!-- /.description-block -->
+                                            <div class="description-block">
+                                                <div class="sparkbar pad" data-color="#fff"><canvas style="display: inline-block; width: 34px; height: 30px; vertical-align: top;" width="34" height="30"></canvas></div>
+                                                <h5 class="description-header">70%</h5>
+                                                <span class="description-text">Organic</span>
+                                            </div>
+                                            <!-- /.description-block -->
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                        <div class="row" style="visibility: hidden">
+                            <div class="col-md-6">
+                                <!-- DIRECT CHAT -->
+                                <div class="box box-warning direct-chat direct-chat-warning" >
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Extra N° 1</h3>
+
+                                        <div class="box-tools pull-right">
+                                            <span data-toggle="tooltip" title="" class="badge bg-yellow" data-original-title="tooltip"></span>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-widget="chat-pane-toggle" data-original-title="Contacts">
+                                                <i class="fa fa-comments"></i></button>
+                                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <!-- Conversations are loaded here -->
+
+                                        <!--/.direct-chat-messages-->
+
+                                        <!-- Contacts are loaded here -->
+                                        <div class="direct-chat-contacts" style="visibility: hidden;">
+                                            <ul class="contacts-list">
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="#" alt="User Image"/>
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Count Dracula
+                                                                <small class="contacts-list-date pull-right">2/28/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">How have you been? I was...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="#" alt="User Image"/>
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Sarah Doe
+                                                                <small class="contacts-list-date pull-right">2/23/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">I will be waiting for...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="#" alt="User Image"/>
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Nadia Jolie
+                                                                <small class="contacts-list-date pull-right">2/20/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">I'll call you back at...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="#" alt="User Image"/>
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Nora S. Vans
+                                                                <small class="contacts-list-date pull-right">2/10/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">Where is your new...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="#" alt="User Image"/>
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                John K.
+                                                                <small class="contacts-list-date pull-right">1/27/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">Can I take a look at...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="#" alt="User Image"/>
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Kenneth M.
+                                                                <small class="contacts-list-date pull-right">1/4/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">Never mind I found...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                            </ul>
+                                            <!-- /.contatcts-list -->
+                                        </div>
+                                        <!-- /.direct-chat-pane -->
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer">
+                                        <form action="#" method="post">
+                                            <div class="input-group">
+                                                <input name="message" placeholder="Buscar ..." class="form-control" type="text"/>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-warning btn-flat">Send</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.box-footer-->
+                                </div>
+                                <!--/.direct-chat -->
+                            </div>
+                            <!-- /.col -->
+
+                            <div class="col-md-6" style="visibility: hidden">
+                                <!-- USERS LIST -->
+                                <div class="box box-danger">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Extra N° 2</h3>
+
+                                        <div class="box-tools pull-right">
+                                            <span class="label label-danger"></span>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body no-padding" style="visibility: hidden">
+                                        <ul class="users-list clearfix">
+                                            <li>
+                                                <img src="#" alt="User Image"/>
+                                                <a class="users-list-name" href="#">Alexander Pierce</a>
+                                                <span class="users-list-date">Today</span>
+                                            </li>
+                                            <li>
+                                                <img src="#" alt="User Image"/>
+                                                <a class="users-list-name" href="#">Norman</a>
+                                                <span class="users-list-date">Yesterday</span>
+                                            </li>
+                                            <li>
+                                                <img src="#" alt="User Image"/>
+                                                <a class="users-list-name" href="#">Jane</a>
+                                                <span class="users-list-date">12 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="#" alt="User Image"/>
+                                                <a class="users-list-name" href="#">John</a>
+                                                <span class="users-list-date">12 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="#" alt="User Image"/>
+                                                <a class="users-list-name" href="#">Alexander</a>
+                                                <span class="users-list-date">13 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="#" alt="User Image"/>
+                                                <a class="users-list-name" href="#">Sarah</a>
+                                                <span class="users-list-date">14 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="#" alt="User Image"/>
+                                                <a class="users-list-name" href="#">Nora</a>
+                                                <span class="users-list-date">15 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="#" alt="User Image"/>
+                                                <a class="users-list-name" href="#">Nadia</a>
+                                                <span class="users-list-date">15 Jan</span>
+                                            </li>
+                                        </ul>
+                                        <!-- /.users-list -->
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer text-center">
+                                        <a href="javascript:void(0)" class="uppercase">Link</a>
+                                    </div>
+                                    <!-- /.box-footer -->
+                                </div>
+                                <!--/.box -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+
+
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-md-4" >
+                        <!-- Info Boxes Style 2 -->
+                        <div class="info-box bg-yellow">
+                            <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Venta de Petroleo</span>
+                                <span class="info-box-number">$ #{blankPageController.formattedValue(blankPageController.totalVentaPetroleo)}</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 0%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    #{blankPageController.leyendaVentaPetroleo}
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="info-box bg-green">
+                            <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">N° de Deudas de Petroleo</span>
+                                <span class="info-box-number">#{blankPageController.formattedValue(blankPageController.numeroDeudasPetroleo)}</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 0%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    #{blankPageController.leyendaBusDeudasPetroleo}
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="info-box bg-red">
+                            <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Venta Prestadores de Servicio</span>
+                                <span class="info-box-number">$ #{blankPageController.formattedValue(blankPageController.totalVentaPrestadores)}</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 0%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    #{(blankPageController.totalVentaPrestadores eq 0)?"No existen Ventas a Prestadores":""}
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="info-box bg-aqua">
+                            <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Litros x Ventas al Día</span>
+                                <span class="info-box-number">#{blankPageController.cantidadLitros}</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 0%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    #{(blankPageController.totalVentaPrestadores lt 1)?"No existen Ventas a la fecha":""}
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+
+            </div>
+
+        </h:form>
+
+    </ui:composition>
+    <script type="text/javascript">
+        $('#tbl').puidatatable({
+            columns: [],
+            datasource: function (callback) {
+                $.ajax({
+                    type: "GET",
+                    url: 'showcase/resources/data/cars-large.json',
+                    dataType: "json",
+                    context: this,
+                    success: function (response) {
+                        callback.call(this, response);
+                    }
+                });
+            },
+            ...
+        });
+    </script>
+
+
+</html>

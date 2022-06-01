@@ -13,7 +13,7 @@
 
         <h:form id="PrecioCombustibleListForm">
 
-            <h3 style="text-align: center;">Precios de Combustible</h3>
+            <h3>Precios de Combustible</h3>
 
             <p:separator/>
             <p:card>
@@ -38,8 +38,8 @@
                              rowKey="#{item.precioCombustibleId}"
                              var="item"
                              paginator="true"
+                             paginatorPosition="bottom"
                              rows="100"
-                             rowsPerPageTemplate="100, 200, 500"
                              selectionMode="single"
                              selection="#{precioCombustibleController.selected}"
                              filteredValue="#{precioCombustibleController.filteredItems}" 

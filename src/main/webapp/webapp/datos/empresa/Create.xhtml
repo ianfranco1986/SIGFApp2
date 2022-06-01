@@ -40,7 +40,7 @@
                         <p:inputText id="empresaPorcentajeMutual" value="#{empresaController.selected.empresaPorcentajeMutual}" title="#{myBundle.CreateEmpresaTitle_empresaPorcentajeMutual}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaPorcentajeMutual}"/>
 
                         <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaIdCajaCompensacion}" for="empresaIdCajaCompensacion" />
-                        <p:selectOneMenu id="empresaIdCajaCompensacion" value="#{empresaController.selected.empresaIdCajaCompensacion}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaIdCajaCompensacion}" converter="cajaCompensacionConverter">
+                        <p:selectOneMenu id="empresaIdCajaCompensacion" value="#{empresaController.selected.empresaIdCajaCompensacion}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaIdCajaCompensacion}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{cajaCompensacionController.items}"
                                            var="empresaIdCajaCompensacionItem"
@@ -51,7 +51,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaIdMutual}" for="empresaIdMutual" />
-                        <p:selectOneMenu id="empresaIdMutual" value="#{empresaController.selected.empresaIdMutual}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaIdMutual}" converter="mutualConverter">
+                        <p:selectOneMenu id="empresaIdMutual" value="#{empresaController.selected.empresaIdMutual}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_empresaIdMutual}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{mutualController.items}"
                                            var="empresaIdMutualItem"

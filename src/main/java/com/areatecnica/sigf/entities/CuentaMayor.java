@@ -24,7 +24,7 @@ import java.util.List;
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CuentaMayor.findAll", query = "SELECT c FROM CuentaMayor c ORDER BY c.cuentaMayorNombre "),
+    @NamedQuery(name = "CuentaMayor.findAll", query = "SELECT c FROM CuentaMayor c ORDER BY c.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorId", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorId = :cuentaMayorId"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorNombre", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorNombre = :cuentaMayorNombre"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorCompras", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorCompras = :cuentaMayorCompras"),
@@ -48,6 +48,15 @@ public class CuentaMayor extends BaseEntity implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "cuenta_mayor_nombre")
     private String cuentaMayorNombre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "cuenta_mayor_codigo")
+    private String cuentaMayorCodigo;
+    @Column(name = "cuenta_mayor_descripcion")
+    private String cuentaMayorDescripcion;
+    @Column(name = "cuenta_mayor_codigo_analisis")
+    private Boolean cuentaMayorCodigoAnalisis;
     @Column(name = "cuenta_mayor_compras")
     private Boolean cuentaMayorCompras;
     @Column(name = "cuenta_mayor_honorarios")
@@ -64,6 +73,9 @@ public class CuentaMayor extends BaseEntity implements Serializable {
     private Boolean cuentaMayorBanco;
     @Column(name = "cuenta_mayor_activos_fijos")
     private Boolean cuentaMayorActivosFijos;
+    @JoinColumn(name = "cuenta_mayor_unica_id", referencedColumnName = "cuenta_unica_id", nullable = false)
+    @ManyToOne(optional = false)
+    private CuentaUnica cuentaMayorUnicaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraCuentaMayorId")
     private List<Compra> compraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anticipoCuentaMayorId")
@@ -85,9 +97,11 @@ public class CuentaMayor extends BaseEntity implements Serializable {
         this.cuentaMayorId = cuentaMayorId;
     }
 
-    public CuentaMayor(Integer cuentaMayorId, String cuentaMayorNombre) {
+    public CuentaMayor(Integer cuentaMayorId, String cuentaMayorNombre, String cuentaMayorCodigo, String cuentaMayorDescripcion) {
         this.cuentaMayorId = cuentaMayorId;
         this.cuentaMayorNombre = cuentaMayorNombre;
+        this.cuentaMayorCodigo = cuentaMayorCodigo;
+        this.cuentaMayorDescripcion = cuentaMayorDescripcion;
     }
 
     public Integer getCuentaMayorId() {
@@ -104,6 +118,30 @@ public class CuentaMayor extends BaseEntity implements Serializable {
 
     public void setCuentaMayorNombre(String cuentaMayorNombre) {
         this.cuentaMayorNombre = cuentaMayorNombre;
+    }
+
+    public String getCuentaMayorCodigo() {
+        return cuentaMayorCodigo;
+    }
+
+    public void setCuentaMayorCodigo(String cuentaMayorCodigo) {
+        this.cuentaMayorCodigo = cuentaMayorCodigo;
+    }
+
+    public String getCuentaMayorDescripcion() {
+        return cuentaMayorDescripcion;
+    }
+
+    public void setCuentaMayorDescripcion(String cuentaMayorDescripcion) {
+        this.cuentaMayorDescripcion = cuentaMayorDescripcion;
+    }
+
+    public Boolean getCuentaMayorCodigoAnalisis() {
+        return cuentaMayorCodigoAnalisis;
+    }
+
+    public void setCuentaMayorCodigoAnalisis(Boolean cuentaMayorCodigoAnalisis) {
+        this.cuentaMayorCodigoAnalisis = cuentaMayorCodigoAnalisis;
     }
 
     public Boolean getCuentaMayorCompras() {
@@ -170,6 +208,14 @@ public class CuentaMayor extends BaseEntity implements Serializable {
         this.cuentaMayorActivosFijos = cuentaMayorActivosFijos;
     }
 
+    public CuentaUnica getCuentaMayorUnicaId() {
+        return cuentaMayorUnicaId;
+    }
+
+    public void setCuentaMayorUnicaId(CuentaUnica cuentaMayorUnicaId) {
+        this.cuentaMayorUnicaId = cuentaMayorUnicaId;
+    }
+
     @XmlTransient
     public List<Compra> getCompraList() {
         return compraList;
@@ -222,6 +268,11 @@ public class CuentaMayor extends BaseEntity implements Serializable {
     public void setCompraPetroleoList(List<CompraPetroleo> compraPetroleoList) {
         this.compraPetroleoList = compraPetroleoList;
     }
+    
+    @XmlTransient
+    public boolean getCuentaMayorAuxiliar(){
+        return (this.cuentaMayorRemuneraciones || this.cuentaMayorHonorarios || this.cuentaMayorCompras || this.cuentaMayorVentas || this.cuentaMayorBanco || this.cuentaMayorActivosFijos); 
+    }
 
     @Override
     public int hashCode() {
@@ -244,5 +295,5 @@ public class CuentaMayor extends BaseEntity implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.CuentaMayor[ cuentaMayorId=" + cuentaMayorId + " ]";
     }
-    
+
 }

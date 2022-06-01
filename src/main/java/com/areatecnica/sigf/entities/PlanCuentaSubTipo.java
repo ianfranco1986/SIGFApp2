@@ -21,8 +21,9 @@ import java.util.List;
 @Table(name = "plan_cuenta_sub_tipo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PlanCuentaSubTipo.findAll", query = "SELECT p FROM PlanCuentaSubTipo p"),
+    @NamedQuery(name = "PlanCuentaSubTipo.findAll", query = "SELECT p FROM PlanCuentaSubTipo p ORDER BY p.planCuentaSubTipoId"),
     @NamedQuery(name = "PlanCuentaSubTipo.findByPlanCuentaSubTipoId", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoId = :planCuentaSubTipoId"),
+    @NamedQuery(name = "PlanCuentaSubTipo.findByTipoPlan", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoIdTipoPlan = :planCuentaSubTipoIdTipoPlan ORDER BY p.planCuentaSubTipoCodigo ASC"),
     @NamedQuery(name = "PlanCuentaSubTipo.findByPlanCuentaSubTipoNombre", query = "SELECT p FROM PlanCuentaSubTipo p WHERE p.planCuentaSubTipoNombre = :planCuentaSubTipoNombre")})
 public class PlanCuentaSubTipo extends BaseEntity implements Serializable {
 
@@ -37,6 +38,14 @@ public class PlanCuentaSubTipo extends BaseEntity implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "plan_cuenta_sub_tipo_nombre")
     private String planCuentaSubTipoNombre;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "plan_cuenta_sub_tipo_codigo_tipo", nullable = false)
+    private int planCuentaSubTipoCodigoTipo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "plan_cuenta_sub_tipo_codigo", nullable = false)
+    private String planCuentaSubTipoCodigo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaMayorSubTipoId")
     private List<CuentaMayor> cuentaMayorList;
     @JoinColumn(name = "plan_cuenta_sub_tipo_id_plan", referencedColumnName = "plan_cuenta_id")
@@ -53,9 +62,11 @@ public class PlanCuentaSubTipo extends BaseEntity implements Serializable {
         this.planCuentaSubTipoId = planCuentaSubTipoId;
     }
 
-    public PlanCuentaSubTipo(Integer planCuentaSubTipoId, String planCuentaSubTipoNombre) {
+    public PlanCuentaSubTipo(Integer planCuentaSubTipoId, String planCuentaSubTipoNombre, int planCuentaSubTipoCodigoTipo, String planCuentaSubTipoCodigo) {
         this.planCuentaSubTipoId = planCuentaSubTipoId;
         this.planCuentaSubTipoNombre = planCuentaSubTipoNombre;
+        this.planCuentaSubTipoCodigo = planCuentaSubTipoCodigo;
+        this.planCuentaSubTipoCodigoTipo = planCuentaSubTipoCodigoTipo;
     }
 
     public Integer getPlanCuentaSubTipoId() {
@@ -99,6 +110,22 @@ public class PlanCuentaSubTipo extends BaseEntity implements Serializable {
         this.planCuentaSubTipoIdTipoPlan = planCuentaSubTipoIdTipoPlan;
     }
 
+    public String getPlanCuentaSubTipoCodigo() {
+        return planCuentaSubTipoCodigo;
+    }
+
+    public void setPlanCuentaSubTipoCodigo(String planCuentaSubTipoCodigo) {
+        this.planCuentaSubTipoCodigo = planCuentaSubTipoCodigo;
+    }
+
+    public void setPlanCuentaSubTipoCodigoTipo(int planCuentaSubTipoCodigoTipo) {
+        this.planCuentaSubTipoCodigoTipo = planCuentaSubTipoCodigoTipo;
+    }
+
+    public int getPlanCuentaSubTipoCodigoTipo() {
+        return planCuentaSubTipoCodigoTipo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -120,5 +147,5 @@ public class PlanCuentaSubTipo extends BaseEntity implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.PlanCuentaSubTipo[ planCuentaSubTipoId=" + planCuentaSubTipoId + " ]";
     }
-    
+
 }

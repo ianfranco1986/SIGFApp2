@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Registro de Compras</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="Selector" >
+            <p:panel style="width: 100%;margin-bottom: 20px;" id="selector">
+                <h3>Compras</h3>
+
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="mes">Mes/Año</label>
+                        <p:datePicker id="month" view="month" value="#{compraController.date}"
+                                      pattern="MM/yyyy"
+                                      yearNavigator="true" yearRange="2022:2030" locale="es">
+                            <p:ajax update=":CompraListForm:datalist, growl" listener="#{compraController.load()}" event="valueChange"/>
+                        </p:datePicker>
+                    </div>                    
+                </div>
+            </p:panel>
+
+        </h:form>
+
+        <h:form id="CompraListForm">
+            <div class="p-grid crud-demo">
+                <div class="p-col-12">
+
+                    <div class="card">                        
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Nuevo" icon="pi pi-plus"  actionListener="#{compraController.prepareCreate}" update=":CompraCreateForm" oncomplete="PF('CompraCreateDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" />
+
+
+                                <p:commandButton id="delete-products-button" value="#{compraController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{compraController.deleteSelectedGuias}"
+                                                 styleClass="ui-button-danger" disabled="#{!compraController.hasSelectedGuias()}" update=":CompraListForm:datalist,:growl, delete-products-button">
+                                    <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                            </p:toolbarGroup>
+
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Exportar" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="xlsxstream" target="datalist" fileName="compras"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <p:dataTable id="datalist"
+                                     widgetVar="datalistWidget"
+                                     value="#{compraController.items}"
+                                     lazy="false"
+                                     rowKey="#{item.compraId}"
+                                     var="item"
+                                     rowSelectMode="add" 
+                                     reflow="true"
+                                     selection="#{compraController.selectedItems}"
+                                     emptyMessage="No se han encontrado registros"
+                                     rowIndexVar="rowIndex"
+                                     >
+                            <!--
+                                     To enable Lazy Loading, please copy/replace the following lines above,
+                                     and be sure to replace the word HASH with the # symbol:
+                            
+                                     value="HASH{compraController.lazyItems}"
+                                     lazy="true"
+                                     rowKey="HASH{item.compraId}"  <<< Remove this line
+                            -->
+
+                            <p:ajax event="rowSelect" update=":CompraListForm:delete-products-button" />
+                            <p:ajax event="rowUnselect" update=":CompraListForm:delete-products-button" />
+                            <p:ajax event="rowSelectCheckbox" update=":CompraListForm:delete-products-button"/>
+                            <p:ajax event="rowUnselectCheckbox" update=":CompraListForm:delete-products-button" />
+                            <p:ajax event="toggleSelect" update=":CompraListForm:delete-products-button" />
+
+
+                            <f:facet name="header">
+                                <div class="products-table-header ">
+                                    <span class="filter-container ui-input-icon-left ">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+                            <p:column selectionMode="multiple" exportable="false" ></p:column>
+
+                            <p:column width="20">
+                                <f:facet name="header">
+                                    <h:outputText value="#"/>
+                                </f:facet>
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.compraFolio}" width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Folio"/>
+                                </f:facet>
+                                <h:outputText value="#{item.compraFolio}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.compraFechaDocumento}" width="65">
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha"/>
+                                </f:facet>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.compraFechaDocumento}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:calendar id="fechaDocumento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{item.compraFechaDocumento}" required="true" requiredMessage="Debe ingresar la fecha de la factura" />
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column sortBy="#{item.compraCuentaMayorId.cuentaMayorNombre}" >
+                                <f:facet name="header">
+                                    <h:outputText value="Cuenta"/>
+                                </f:facet>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.compraCuentaMayorId.cuentaMayorNombre}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu id="cuenta" value="#{item.compraCuentaMayorId}" required="true" requiredMessage="Debe seleccionar la Cuenta" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                            <f:selectItems value="#{compraController.cuentaMayorItems}"
+                                                           var="cuentaMayorItem"
+                                                           itemValue="#{cuentaMayorItem}"
+                                                           itemLabel="#{cuentaMayorItem.cuentaMayorNombre})"
+                                                           />
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column sortBy="#{item.compraProveedorId.proveedorNombre}" >
+                                <f:facet name="header">
+                                    <h:outputText value="Proveedor"/>
+                                </f:facet>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.compraProveedorId.proveedorNombre}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu id="proveedor" value="#{item.compraProveedorId}" required="true" requiredMessage="Debe seleccionar el Proveedor" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/> 
+                                            <f:selectItems value="#{compraController.proveedorItems}"
+                                                           var="proveedorItem"
+                                                           itemValue="#{proveedorItem}"
+                                                           itemLabel="#{proveedorItem.proveedorNombre})"
+                                                           />
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column sortBy="#{item.compraTipoDocumentoId.tipoDocumentoSigla}" width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="Doc."/>
+                                </f:facet>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.compraTipoDocumentoId.tipoDocumentoSigla}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu id="tipoDocumento" value="#{item.compraTipoDocumentoId}" required="true" requiredMessage="Debe seleccionar el Tipo del Documento" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/> 
+                                            <f:selectItems value="#{compraController.tipoDocumentoItems}"
+                                                           var="tipoDocumentoItem"
+                                                           itemValue="#{tipoDocumentoItem}"
+                                                           itemLabel="#{tipoDocumentoItem.tipoDocumentoSigla})"
+                                                           />
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column sortBy="#{item.compraDescripcion}" width="210">
+                                <f:facet name="header">
+                                    <h:outputText value="Descripción"/>
+                                </f:facet>
+                                <h:outputText value="#{item.compraDescripcion}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.compraTotal}" >
+                                <f:facet name="header">
+                                    <h:outputText value="Total"/>
+                                </f:facet>
+                                <h:outputText value="#{item.compraTotal}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column exportable="false">
+                                <p:commandButton icon="pi pi-search" update="CompraViewForm, datalist" oncomplete="PF('CompraViewDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-info" process="@this" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{compraController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-pencil" update="CompraEditForm, datalist" oncomplete="PF('CompraEditDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-warning" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{compraController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{compraController.selected}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Eliminar el Bus? " header="Confirmación" severity="warn">
+                            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{compraController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </div>
+            </div>
+        </h:form>
+        <ui:include src="compra.xhtml" />
+        <ui:include src="View.xhtml" />
+        <ui:include src="Edit.xhtml" />
+    </ui:define>
+</ui:composition>

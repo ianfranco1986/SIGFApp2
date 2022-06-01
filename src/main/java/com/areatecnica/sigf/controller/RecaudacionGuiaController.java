@@ -394,7 +394,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                 this.setTotal();
                 this.selectedItem.setTotal(total);
                 new IRecaudacionDaoImpl().update(selectedItem.recaudacion);
-                new IGuiaDaoImpl().update(selectedItem.guia);
+                new GuiaDaoImpl().update(selectedItem.guia);
                 JsfUtil.addSuccessMessage("Se ha actualizado la Recaudación: " + selectedItem.recaudacion.getRecaudacionId());
 
             } catch (Exception e) {

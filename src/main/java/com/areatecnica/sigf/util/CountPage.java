@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.util;
 
 import com.areatecnica.sigf.dao.IVentaCombustibleDao;
-import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
+import com.areatecnica.sigf.dao.impl.VentaCombustibleDaoImpl;
 import com.areatecnica.sigf.entities.*;
 
 import javax.annotation.PostConstruct;
@@ -252,7 +252,7 @@ public final class CountPage implements java.io.Serializable {
     }
 
     private int findComprasPetroleo(List<Bus> items) {
-        IVentaCombustibleDao dao = new IVentaCombustibleDaoImpl();
+        IVentaCombustibleDao dao = new VentaCombustibleDaoImpl();
         int total = 0;
         for (Bus b : items) {
             List<VentaCombustible> ventas = dao.findByBusAndDate(b, new Date());

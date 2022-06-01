@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IFacturaDaoImpl;
+import com.areatecnica.sigf.dao.impl.FacturaDaoImpl;
 import com.areatecnica.sigf.entities.Factura;
 import com.areatecnica.sigf.models.FacturaDataModel;
 import org.primefaces.event.RowEditEvent;
@@ -64,7 +64,7 @@ public class FacturaViewController extends AbstractController<Factura> {
 
     public void loadDocumento() {
         if (this.folio > 0) {
-            Factura factura = new IFacturaDaoImpl().findByFolio(folio);
+            Factura factura = new FacturaDaoImpl().findByFolio(folio);
             if (factura != null) {
                 this.items = new ArrayList<>();
                 this.items.add(factura);
@@ -86,7 +86,7 @@ public class FacturaViewController extends AbstractController<Factura> {
             this.neto = 0;
             this.iva = 0;
 
-            this.items = new IFacturaDaoImpl().findBetweenDates(this.desde, this.hasta);
+            this.items = new FacturaDaoImpl().findBetweenDates(this.desde, this.hasta);
             this.model = new FacturaDataModel(items);
 
             if (!this.items.isEmpty()) {
@@ -144,7 +144,7 @@ public class FacturaViewController extends AbstractController<Factura> {
                 this.iva = this.iva + f.getFacturaIva();
             }
 
-            new IFacturaDaoImpl().update(temp);
+            new FacturaDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado el registro");
         } catch (Exception e) {
             JsfUtil.addErrorMessage("Ha ocurrido un error al guardar los cambios");

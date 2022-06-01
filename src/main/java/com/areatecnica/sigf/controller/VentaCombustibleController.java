@@ -2,7 +2,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IVentaCombustibleDao;
-import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
+import com.areatecnica.sigf.dao.impl.VentaCombustibleDaoImpl;
 import com.areatecnica.sigf.entities.RecaudacionCombustible;
 import com.areatecnica.sigf.entities.VentaCombustible;
 import com.areatecnica.sigf.facade.VentaCombustibleFacade;
@@ -104,7 +104,7 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
             this.currentDate = new CurrentDate();
             this.currentDate.setDate(fecha);
 
-            this.dao = new IVentaCombustibleDaoImpl();
+            this.dao = new VentaCombustibleDaoImpl();
             this.total = 0;
             this.items = this.dao.findByDate(fecha);
 

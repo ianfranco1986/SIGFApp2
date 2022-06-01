@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.dao.IFlotaDao;
-import com.areatecnica.sigf.dao.impl.IFlotaDaoImpl;
+import com.areatecnica.sigf.dao.impl.FlotaDaoImpl;
 import com.areatecnica.sigf.entities.Flota;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class FlotaController extends AbstractController<Flota> {
     @PostConstruct
     @Override
     public void initParams() {
-        this.dao = new IFlotaDaoImpl();
+        this.dao = new FlotaDaoImpl();
         this.items = this.dao.findByCuenta(this.getUserCount());
     }
 

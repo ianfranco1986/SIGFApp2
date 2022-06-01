@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CuentaMayorViewDlg" widgetVar="CuentaMayorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="Ficha Cuenta" closeOnEscape="true">
+
+            <h:form id="CuentaMayorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{cuentaMayorController.selected != null}">
+
+                        <h:outputText value="#"/>
+                        <h:outputText value="#{cuentaMayorController.selected.cuentaMayorId}" title="#{myBundle.ViewCuentaMayorTitle_cuentaMayorId}"/>
+
+                        <h:outputText value="Nombre"/>
+                        <h:outputText value="#{cuentaMayorController.selected.cuentaMayorNombre}" title="#{myBundle.ViewCuentaMayorTitle_cuentaMayorNombre}"/>
+
+                        <h:outputText value="Sub-Tipo"/>
+                        <h:outputText value="#{cuentaMayorController.selected.cuentaMayorSubTipoId.planCuentaSubTipoNombre}"/>
+
+                        <p:outputLabel value="Pertenece a:" />
+                        <h:panelGroup>
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <p:outputLabel value="Compras" for="cuentaMayorCompras" />
+                                <p:selectBooleanCheckbox disabled="true" id="cuentaMayorCompras" value="#{cuentaMayorController.selected.cuentaMayorCompras}" />
+
+                                <p:outputLabel value="Honorarios" for="cuentaMayorHonorarios" />
+                                <p:selectBooleanCheckbox disabled="true" id="cuentaMayorHonorarios" value="#{cuentaMayorController.selected.cuentaMayorHonorarios}" />
+
+                                <p:outputLabel value="Remuneraciones" for="cuentaMayorRemuneraciones" />
+                                <p:selectBooleanCheckbox disabled="true" id="cuentaMayorRemuneraciones" value="#{cuentaMayorController.selected.cuentaMayorRemuneraciones}" />
+
+                                <p:outputLabel value="Tesorería" for="cuentaMayorTesoreria" />
+                                <p:selectBooleanCheckbox disabled="true" id="cuentaMayorTesoreria" value="#{cuentaMayorController.selected.cuentaMayorTesoreria}" />
+
+                                <p:outputLabel value="Presupuesto" for="cuentaMayorPresupuesto" />
+                                <p:selectBooleanCheckbox disabled="true" id="cuentaMayorPresupuesto" value="#{cuentaMayorController.selected.cuentaMayorPresupuesto}" />
+
+                                <p:outputLabel value="Ventas" for="cuentaMayorVentas" />
+                                <p:selectBooleanCheckbox disabled="true" id="cuentaMayorVentas" value="#{cuentaMayorController.selected.cuentaMayorVentas}" />
+
+                                <p:outputLabel value="Banco" for="cuentaMayorBanco" />
+                                <p:selectBooleanCheckbox disabled="true" id="cuentaMayorBanco" value="#{cuentaMayorController.selected.cuentaMayorBanco}" />
+
+                                <p:outputLabel value="Activos Fijos" for="cuentaMayorActivosFijos" />
+                                <p:selectBooleanCheckbox disabled="true" id="cuentaMayorActivosFijos" value="#{cuentaMayorController.selected.cuentaMayorActivosFijos}" />
+                            </h:panelGrid>
+                        </h:panelGroup>
+
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CuentaMayorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
+import com.areatecnica.sigf.dao.impl.GuiaDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.Guia;
@@ -73,7 +73,7 @@ public class GuiaGrupalController extends AbstractController<Guia> {
                 g.setGuiaFolio(folioInicio);
                 g.setGuiaIdBus(b);
 
-                Guia aux = new IGuiaDaoImpl().findLastGuiaByBusFecha(b, fecha);
+                Guia aux = new GuiaDaoImpl().findLastGuiaByBusFecha(b, fecha);
 
                 if (aux != null) {
                     g.setGuiaIdTrabajador(aux.getGuiaIdTrabajador());

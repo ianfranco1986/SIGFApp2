@@ -41,6 +41,7 @@ public class TipoPlanCuenta implements Serializable {
     private List<PlanCuentaSubTipo> planCuentaSubTipoList;
 
     public TipoPlanCuenta() {
+        this.tipoPlanCuentaId = 0; 
     }
 
     public TipoPlanCuenta(Integer tipoPlanCuentaId) {

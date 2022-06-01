@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.validators;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IProveedorDaoImpl;
+import com.areatecnica.sigf.dao.impl.ProveedorDaoImpl;
 import com.areatecnica.sigf.entities.Proveedor;
 import com.areatecnica.sigf.entities.Usuario;
 
@@ -54,7 +54,7 @@ public class RutValidatorProveedor implements Validator {
                     throw new ValidatorException(msg);
                 }
 
-                Proveedor proveedor = new IProveedorDaoImpl().findByRut(rut);
+                Proveedor proveedor = new ProveedorDaoImpl().findByRut(rut);
 
                 if (proveedor != null) {
                     FacesMessage msg2 = new FacesMessage("Rut ya registrado", "Error de validación");

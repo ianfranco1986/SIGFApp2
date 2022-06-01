@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CuentaMayorEditDlg" widgetVar="CuentaMayorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="Edición Cuenta" closeOnEscape="true">
+
+            <h:form id="CuentaMayorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cuentaMayorController.selected != null}">
+                        <p:outputLabel value="Nombre" for="cuentaMayorNombre" />
+                        <p:inputText id="cuentaMayorNombre" value="#{cuentaMayorController.selected.cuentaMayorNombre}" title="#{myBundle.CreateCuentaMayorTitle_cuentaMayorNombre}" required="true" requiredMessage="#{myBundle.CreateCuentaMayorRequiredMessage_cuentaMayorNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Sub Tipo" for="cuentaMayorSubTipoId" />
+                        <p:selectOneMenu id="cuentaMayorSubTipoId" value="#{cuentaMayorController.selected.cuentaMayorSubTipoId}" required="true" requiredMessage="#{myBundle.CreateCuentaMayorRequiredMessage_cuentaMayorSubTipoId}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{planCuentaSubTipoController.items}"
+                                           var="cuentaMayorSubTipoIdItem"
+                                           itemValue="#{cuentaMayorSubTipoIdItem}"
+                                           itemLabel="#{cuentaMayorSubTipoIdItem.planCuentaSubTipoNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Pertenece a:" />
+                        <h:panelGroup>
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <p:outputLabel value="Compras" for="cuentaMayorCompras" />
+                                <p:selectBooleanCheckbox id="cuentaMayorCompras" value="#{cuentaMayorController.selected.cuentaMayorCompras}" />
+
+                                <p:outputLabel value="Honorarios" for="cuentaMayorHonorarios" />
+                                <p:selectBooleanCheckbox id="cuentaMayorHonorarios" value="#{cuentaMayorController.selected.cuentaMayorHonorarios}" />
+
+                                <p:outputLabel value="Remuneraciones" for="cuentaMayorRemuneraciones" />
+                                <p:selectBooleanCheckbox id="cuentaMayorRemuneraciones" value="#{cuentaMayorController.selected.cuentaMayorRemuneraciones}" />
+
+                                <p:outputLabel value="Tesorería" for="cuentaMayorTesoreria" />
+                                <p:selectBooleanCheckbox id="cuentaMayorTesoreria" value="#{cuentaMayorController.selected.cuentaMayorTesoreria}" />
+
+                                <p:outputLabel value="Presupuesto" for="cuentaMayorPresupuesto" />
+                                <p:selectBooleanCheckbox id="cuentaMayorPresupuesto" value="#{cuentaMayorController.selected.cuentaMayorPresupuesto}" />
+
+                                <p:outputLabel value="Ventas" for="cuentaMayorVentas" />
+                                <p:selectBooleanCheckbox id="cuentaMayorVentas" value="#{cuentaMayorController.selected.cuentaMayorVentas}" />
+
+                                <p:outputLabel value="Banco" for="cuentaMayorBanco" />
+                                <p:selectBooleanCheckbox id="cuentaMayorBanco" value="#{cuentaMayorController.selected.cuentaMayorBanco}" />
+
+                                <p:outputLabel value="Activos Fijos" for="cuentaMayorActivosFijos" />
+                                <p:selectBooleanCheckbox id="cuentaMayorActivosFijos" value="#{cuentaMayorController.selected.cuentaMayorActivosFijos}" />
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cuentaMayorController.save}" value="#{myBundle.Save}" update="display,:CuentaMayorListForm:datalist,:CuentaMayorListForm:CuentaMayorDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CuentaMayorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CuentaMayorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

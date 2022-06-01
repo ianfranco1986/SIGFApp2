@@ -95,7 +95,7 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
         this.setResumenRecaudacion(new ResumenRecaudacion());
         this.getResumenRecaudacion().setResumenRecaudacionCerrado(Boolean.FALSE);
         this.setEstadoProceso(Boolean.FALSE);
-        this.ventaCombustibleDao = new IVentaCombustibleDaoImpl();
+        this.ventaCombustibleDao = new VentaCombustibleDaoImpl();
         this.registroMinutoDao = new IRegistroMinutoDaoImpl();
     }
 

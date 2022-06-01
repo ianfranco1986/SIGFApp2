@@ -70,7 +70,7 @@ public class FacturaController extends AbstractController<Factura> {
         this.cliente = new Cliente();
         this.prepareCreate(null);
         this.getSelected().setFacturaFecha(new Date());
-        this.folio = new IFacturaDaoImpl().findLastFolio();
+        this.folio = new FacturaDaoImpl().findLastFolio();
         this.getSelected().setFacturaFolio(folio + 1);
 
         this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
@@ -113,7 +113,7 @@ public class FacturaController extends AbstractController<Factura> {
             this.neto = 0;
             this.iva = 0;
 
-            this.items = new IFacturaDaoImpl().findBetweenDates(this.desde, this.hasta);
+            this.items = new FacturaDaoImpl().findBetweenDates(this.desde, this.hasta);
             this.model = new FacturaDataModel(items);
 
             //items.stream().filter(factura->factura.getFacturaDetalle().equals("COSA")).map(Factura::getFacturaFolio).forEach(System.out::println);
@@ -158,7 +158,7 @@ public class FacturaController extends AbstractController<Factura> {
 
             this.getSelected().setFacturaMovimientoId(mov);
 
-            Factura t = new IFacturaDaoImpl().create(this.getSelected());
+            Factura t = new FacturaDaoImpl().create(this.getSelected());
 
             if (t != null) {
                 this.finalID = t.getFacturaId();
@@ -191,7 +191,7 @@ public class FacturaController extends AbstractController<Factura> {
                 this.iva = this.iva + f.getFacturaIva();
             }
 
-            new IFacturaDaoImpl().update(temp);
+            new FacturaDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado el registro");
         } catch (Exception e) {
             JsfUtil.addErrorMessage("Ha ocurrido un error al guardar los cambios");

@@ -60,7 +60,7 @@ public class EdicionVentaBoletoController implements Serializable {
     public void load() {
         if (this.bus != null && this.selectedBoleto != null) {
 
-            this.ventaBoleto = new IVentaBoletoDaoImpl().findByBusBoletoEstado(bus, selectedBoleto);
+            this.ventaBoleto = new VentaBoletoDaoImpl().findByBusBoletoEstado(bus, selectedBoleto);
 
             if (this.ventaBoleto != null) {
                 JsfUtil.addSuccessMessage("Se encontró la Venta Nº : " + this.ventaBoleto.getVentaBoletoId());
@@ -79,7 +79,7 @@ public class EdicionVentaBoletoController implements Serializable {
             this.inventario.setInventarioCajaEstado(Boolean.TRUE);
             InventarioCaja ic = new IInventarioCajaDaoImpl().update(inventario);
             this.ventaBoleto.setVentaBoletoIdInventarioCaja(inventario);
-            VentaBoleto aux = new IVentaBoletoDaoImpl().update(ventaBoleto);
+            VentaBoleto aux = new VentaBoletoDaoImpl().update(ventaBoleto);
 
             if (aux != null) {
                 JsfUtil.addSuccessMessage("Se ha actualizado la serie: "+this.inventario.getInventarioCajaSerie()+" ("+this.inventario.getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoNombre()+") para la Venta Nº "+this.ventaBoleto.getVentaBoletoId());
@@ -208,7 +208,7 @@ public class EdicionVentaBoletoController implements Serializable {
         try {
             temp = (VentaBoleto) event.getObject();
 
-            new IVentaBoletoDaoImpl().update(temp);
+            new VentaBoletoDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado la Venta de Boleto: " + temp.getVentaBoletoNumeroBoleta());
 
         } catch (Exception e) {

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompraViewDlg" widgetVar="CompraViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCompraTitle}" closeOnEscape="true">
+
+            <h:form id="CompraViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{compraController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraId}"/>
+                        <h:outputText value="#{compraController.selected.compraId}" title="#{myBundle.ViewCompraTitle_compraId}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraFechaDocumento}"/>
+                        <h:outputText value="#{compraController.selected.compraFechaDocumento}" title="#{myBundle.ViewCompraTitle_compraFechaDocumento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraFechaAcuse}"/>
+                        <h:outputText value="#{compraController.selected.compraFechaAcuse}" title="#{myBundle.ViewCompraTitle_compraFechaAcuse}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraFechaRecepcion}"/>
+                        <h:outputText value="#{compraController.selected.compraFechaRecepcion}" title="#{myBundle.ViewCompraTitle_compraFechaRecepcion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraFolio}"/>
+                        <h:outputText value="#{compraController.selected.compraFolio}" title="#{myBundle.ViewCompraTitle_compraFolio}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraDescripcion}"/>
+                        <h:outputText value="#{compraController.selected.compraDescripcion}" title="#{myBundle.ViewCompraTitle_compraDescripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraNeto}"/>
+                        <h:outputText value="#{compraController.selected.compraNeto}" title="#{myBundle.ViewCompraTitle_compraNeto}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraExento}"/>
+                        <h:outputText value="#{compraController.selected.compraExento}" title="#{myBundle.ViewCompraTitle_compraExento}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraIva}"/>
+                        <h:outputText value="#{compraController.selected.compraIva}" title="#{myBundle.ViewCompraTitle_compraIva}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraOtrosImpuestos}"/>
+                        <h:outputText value="#{compraController.selected.compraOtrosImpuestos}" title="#{myBundle.ViewCompraTitle_compraOtrosImpuestos}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraTotal}"/>
+                        <h:outputText value="#{compraController.selected.compraTotal}" title="#{myBundle.ViewCompraTitle_compraTotal}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraProveedorId}"/>
+                        <h:outputText value="#{compraController.selected.compraProveedorId.proveedorId}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompraLabel_compraTipoDocumentoId}"/>
+                        <h:outputText value="#{compraController.selected.compraTipoDocumentoId.tipoDocumentoId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CompraViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

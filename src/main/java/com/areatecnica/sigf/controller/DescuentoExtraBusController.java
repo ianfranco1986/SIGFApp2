@@ -6,7 +6,7 @@ import com.areatecnica.sigf.dao.IDescuentoExtraBusDao;
 import com.areatecnica.sigf.dao.IFlotaDao;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.IDescuentoExtraBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.IFlotaDaoImpl;
+import com.areatecnica.sigf.dao.impl.FlotaDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.facade.DescuentoExtraBusFacade;
 import com.areatecnica.sigf.models.DescuentoExtraBusDataModel;
@@ -52,7 +52,7 @@ public class DescuentoExtraBusController extends AbstractController<DescuentoExt
 
     @PostConstruct
     private void init() {
-        this.flotaDao = new IFlotaDaoImpl();
+        this.flotaDao = new FlotaDaoImpl();
         this.flotaItems = this.flotaDao.findByCuenta(this.getUserCount());
         this.dao = new IDescuentoExtraBusDaoImpl();
         this.items = this.dao.findAll();

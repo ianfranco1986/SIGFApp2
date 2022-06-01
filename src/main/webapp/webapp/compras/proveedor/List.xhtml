@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Proveedores</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="ProveedorListForm">
+            <div class="p-grid crud-demo">
+                <div class="p-col-12">
+
+                    <div class="card">
+                        <span style="font-weight: bold"><h3>Proveedores</h3></span>
+
+                        <p:growl id="messages" showDetail="true" />
+
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Nuevo" icon="pi pi-plus"  actionListener="#{proveedorController.prepareCreate}" update=":ProveedorCreateForm" oncomplete="PF('ProveedorCreateDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" />
+
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Exportar" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="xlsxstream" target="datalist" fileName="proveedores"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <p:dataTable id="datalist"
+                                     value="#{proveedorController.items}"
+                                     lazy="false"
+                                     rowKey="#{item.proveedorId}"
+                                     var="item"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     rows="10"
+                                     selectionMode="single"
+                                     selection="#{proveedorController.selected}"
+                                     filteredValue="#{proveedorController.filteredItems}"
+                                     rowIndexVar="rowIndex" emptyMessage="No se han encontrado registros">
+                            <!--
+                                     To enable Lazy Loading, please copy/replace the following lines above,
+                                     and be sure to replace the word HASH with the # symbol:
+                            
+                                     value="HASH{proveedorController.lazyItems}"
+                                     lazy="true"
+                                     rowKey="HASH{item.proveedorId}"  <<< Remove this line
+                            -->
+
+                            <f:facet name="header">
+                                <div class="products-table-header">
+
+                                    <span class="filter-container ui-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#"/>
+                                </f:facet>
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.proveedorRut}" filterBy="#{item.proveedorRut}">
+                                <f:facet name="header">
+                                    <h:outputText value="Rut"/>
+                                </f:facet>
+                                <h:outputText value="#{item.proveedorRut}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.proveedorNombre}" filterBy="#{item.proveedorNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{item.proveedorNombre}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.proveedorEmail}" filterBy="#{item.proveedorEmail}">
+                                <f:facet name="header">
+                                    <h:outputText value="Email"/>
+                                </f:facet>
+                                <h:outputText value="#{item.proveedorEmail}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.proveedorGiro}" filterBy="#{item.proveedorGiro}">
+                                <f:facet name="header">
+                                    <h:outputText value="Giro"/>
+                                </f:facet>
+                                <h:outputText value="#{item.proveedorGiro}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.proveedorComunaId.comunaNombre}" filterBy="#{item.proveedorComunaId.comunaNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Comuna"/>
+                                </f:facet>
+                                <h:outputText value="#{item.proveedorComunaId.comunaNombre}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.proveedorTelefono}" filterBy="#{item.proveedorTelefono}">
+                                <f:facet name="header">
+                                    <h:outputText value="Telefono"/>
+                                </f:facet>
+                                <h:outputText value="#{item.proveedorTelefono}"/>
+                            </p:column>
+
+                            <p:column exportable="false">
+                                <p:commandButton icon="pi pi-search" update="ProveedorViewForm, datalist" oncomplete="PF('ProveedorViewDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-info" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{proveedorController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-pencil" update="ProveedorEditForm, datalist" oncomplete="PF('ProveedorEditDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-warning" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{proveedorController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{proveedorController.selected}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Eliminar el Proveedor? " header="Confirmación" severity="warn">
+                            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{proveedorController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </div>
+            </div>
+
+        </h:form>
+        <ui:include src="Create.xhtml" />
+        <ui:include src="View.xhtml" />
+        <ui:include src="Edit.xhtml" />
+    </ui:define>
+</ui:composition>

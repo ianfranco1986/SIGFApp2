@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <script>
+        $(function () {
+            PF('bui').show();
+        });
+    </script>
+    <h:form id="Selector" >
+        <p:panel style="width: 100%;margin-bottom: 20px;" id="selector">
+            <h5 style="text-align: center;">Periodo</h5>
+            <p:panelGrid columns="8" style="width: 100%; margin-top: 20px;"  columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank" >
+
+                <h:outputLabel for="mes" value="Mes:" />
+                <p:selectOneMenu id="mes" value="#{compraPetroleoController.mes}" style="width:125px">
+                    <f:selectItem itemLabel="Enero" itemValue="1" />
+                    <f:selectItem itemLabel="Febrero" itemValue="2" />
+                    <f:selectItem itemLabel="Marzo" itemValue="3" />
+                    <f:selectItem itemLabel="Abril" itemValue="4" />
+                    <f:selectItem itemLabel="Mayo" itemValue="5" />
+                    <f:selectItem itemLabel="Junio" itemValue="6" />
+                    <f:selectItem itemLabel="Julio" itemValue="7" />
+                    <f:selectItem itemLabel="Agosto" itemValue="8" />
+                    <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                    <f:selectItem itemLabel="Octubre" itemValue="10" />
+                    <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                    <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                </p:selectOneMenu>
+
+
+                <h:outputLabel for="anio" value="Año:" />
+                <p:inputText id="anio" value="#{compraPetroleoController.anio}" size="5" />
+
+                <p:commandButton value="Buscar" actionListener="#{compraPetroleoController.load}" styleClass="btn btn-primary" update="CompraPetroleoCreateForm:registro, CompraPetroleoListForm:datalist, :growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" oncomplete="PF('bui').hide()">
+
+                </p:commandButton>
+
+            </p:panelGrid>
+        </p:panel>
+
+    </h:form>
+    <h:form id="CompraPetroleoCreateForm">
+
+        <p:panel id="registro" >
+            <h3 style="text-align: center;">Registro de Compras de Petróleo</h3>
+            <p:focus context="compraFolio"/>
+            <p:panelGrid columns="4" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+                <p:outputLabel value="Folio" for="compraFolio" />
+                <p:inputText id="compraFolio" value="#{compraPetroleoController.selected.compraPetroleoFolio}" autocomplete="off"/>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="Fecha" for="compraFechaDocumento" />
+                <p:calendar id="compraFechaDocumento" pattern="dd/MM/yyyy" value="#{compraPetroleoController.selected.compraPetroleoFecha}"  />
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+
+                <p:outputLabel value="Proveedor" for="compraProveedorId" />
+                <h:panelGroup>
+                    <p:selectOneMenu id="compraProveedorId"  style="width: 90%" value="#{compraPetroleoController.proveedor}" required="true" requiredMessage="Debe seleccionar el Proveedor" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{compraPetroleoController.proveedorItems}"
+                                       var="compraProveedorIdItem"
+                                       itemValue="#{compraProveedorIdItem}"
+                                       itemLabel="#{compraProveedorIdItem.proveedorNombre}"
+                                       />
+
+                    </p:selectOneMenu>
+                </h:panelGroup>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="Tipo Documento" for="compraTipoDocumentoId" />
+                <p:selectOneMenu id="compraTipoDocumentoId" value="#{compraPetroleoController.selected.compraPetroleoTipoDocumentoId}" required="true" requiredMessage="Debe seleccionar el tipo de documento" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{tipoDocumentoController.items}"
+                                   var="compraTipoDocumentoIdItem"
+                                   itemValue="#{compraTipoDocumentoIdItem}"
+                                   itemLabel="#{compraTipoDocumentoIdItem.tipoDocumentoNombre}"
+                                   />
+                </p:selectOneMenu>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="Cuenta Mayor" for="compraCuentaId" />
+                <p:selectOneMenu id="compraCuentaId" value="#{compraPetroleoController.cuentaMayor}" required="true" requiredMessage="Debe seleccionar la cuenta"  converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                    <f:selectItems value="#{compraPetroleoController.cuentaMayorItems}"
+                                   var="compraCuentaIdItem"
+                                   itemValue="#{compraCuentaIdItem}"
+                                   itemLabel="#{compraCuentaIdItem.cuentaMayorNombre}"
+                                   />
+                </p:selectOneMenu>
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="Base Afecta" for="compraNeto" />
+                <p:inputNumber minValue="0" id="compraNeto" decimalPlaces="0" value="#{compraPetroleoController.selected.compraPetroleoBaseAfecta}" onfocus="this.setSelectionRange(0, this.value.length)" >
+                    <p:ajax event="blur" listener="#{compraPetroleoController.calculaIva()}" update="compraIva, compraTotal"/>
+                </p:inputNumber>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="IEV" for="compraExento" />
+                <p:inputNumber minValue="0" id="compraExento" decimalPlaces="0"  value="#{compraPetroleoController.selected.compraPetroleoIev}" onfocus="this.setSelectionRange(0, this.value.length)">
+                    <p:ajax event="blur" listener="#{compraPetroleoController.calculaTotal()}" update="compraTotal"/>
+                </p:inputNumber>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="IEF" for="compraIEF" />
+                <p:inputNumber minValue="0"  id="compraIEF" decimalPlaces="0"  value="#{compraPetroleoController.selected.compraPetroleoIef}" onfocus="this.setSelectionRange(0, this.value.length)">
+                    <p:ajax event="blur" listener="#{compraPetroleoController.calculaTotal()}" update="compraTotal"/>
+                </p:inputNumber>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="IVA" for="compraIva" />
+                <p:inputNumber minValue="0" id="compraIva" decimalPlaces="0"  value="#{compraPetroleoController.selected.compraPetroleoIva}" onfocus="this.setSelectionRange(0, this.value.length)">
+                    <p:ajax event="blur" listener="#{compraPetroleoController.calculaTotal()}" update="compraTotal"/>
+                </p:inputNumber>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="Total ($)" for="compraTotal" />
+                <p:inputNumber minValue="0" id="compraTotal" decimalPlaces="0"  value="#{compraPetroleoController.selected.compraPetroleoTotal}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+
+
+                <p:outputLabel value="N° Litros Surtidor 1 " for="litrossurtido1" />
+                <p:inputNumber minValue="0"  id="litrossurtido1" decimalPlaces="0"  value="#{compraPetroleoController.selected.compraPetroleoSurtidorN1}" onfocus="this.setSelectionRange(0, this.value.length)">
+                    <p:ajax event="blur" listener="#{compraPetroleoController.handleSurtidor1Change()}" update="litros4"/>
+                </p:inputNumber>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="N° Litros Surtidor 2 " for="litrossurtido2" />
+                <p:inputNumber minValue="0"  id="litrossurtido2" decimalPlaces="0"  value="#{compraPetroleoController.selected.compraPetroleoSurtidorN2}" onfocus="this.setSelectionRange(0, this.value.length)">
+                    <p:ajax event="blur" listener="#{compraPetroleoController.handleSurtidor1Change()}" update="litros4"/>
+                </p:inputNumber>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+
+                <p:outputLabel value="Total Litros " for="litros4" />
+                <p:inputNumber minValue="0"  id="litros4" decimalPlaces="0"  value="#{compraPetroleoController.selected.compraPetroleoCantidadLitros}" onfocus="this.setSelectionRange(0, this.value.length)">
+
+                </p:inputNumber>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+
+            </p:panelGrid>
+
+            <h3 style="text-align: center;">Contabilizar</h3>
+            <p:separator />
+
+            <p:panelGrid columns="4" style="width: 100%; margin-top: 20px;" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank">
+
+
+                <p:outputLabel value="Fecha" for="fechaMovimiento" />
+                <p:calendar id="fechaMovimiento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{compraPetroleoController.fechaMovimiento}" required="true" requiredMessage="Debe ingresar la fecha del movimiento" />
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="Cuenta Banco" for="cuenta" />
+                <h:panelGroup>
+                    <p:selectOneMenu id="cuenta" value="#{compraPetroleoController.cuentaBancaria}" required="true" requiredMessage="Debe seleccionar la Empresa" converter="omnifaces.SelectItemsConverter" >
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{compraPetroleoController.cuentaItems}"
+                                       var="cuenta"
+                                       itemValue="#{cuenta}"
+                                       itemLabel="#{cuenta.cuentaBancariaNombreTitular} - #{cuenta.cuentaBancariaNumero}"
+                                       />
+                        <p:ajax event="valueChange" update="detalleCartolaNumeroDocumento" listener="#{compraPetroleoController.handleCuentaChange()}"/>
+                    </p:selectOneMenu>
+                    <p:tooltip id="toolcuenta" for="cuenta" value="Seleccione la cuenta bancaria del documento (cheque)" position="top"/>
+                </h:panelGroup>
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:outputLabel value="N° Documento " for="detalleCartolaNumeroDocumento" />
+                <p:inputText id="detalleCartolaNumeroDocumento" value="#{compraPetroleoController.documento}" required="true" requiredMessage="Debe ingresar el N° del documento" size="15" maxlength="10" onfocus="this.setSelectionRange(0, this.value.length)" />
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+
+                <p:commandButton actionListener="#{compraPetroleoController.saveNew}" value="#{myBundle.Save}" update=":CompraPetroleoCreateForm:registro, :CompraPetroleoListForm:datalist,:growl" resetValues="true" ajax="true" onsuccess="document.getElementById('CompraPetroleoCreateForm:link').click();">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <h:commandLink id="link" value="Generar Reporte" style="visibility: hidden" actionListener="#{reportController.downloadFile(compraPetroleoController.informe, compraPetroleoController.map)}" target="blank"/>
+            </p:panelGrid>
+
+        </p:panel>
+        <p:blockUI block="registro" widgetVar="bui"/>
+
+    </h:form>
+    <h:form id="CompraPetroleoListForm">
+        <p:panel style="margin-top: 20px; width: 100%" id="detalleCartola">
+            <h3>Detalle Movimientos</h3>
+            <p:dataTable id="datalist"
+                         value="#{compraPetroleoController.model}"
+                         lazy="false"
+                         rowKey="#{item.compraPetroleoId}"
+                         var="item"
+                         stickyHeader="true"
+                         selectionMode="single"
+                         selection="#{compraPetroleoController.selected}"
+                         emptyMessage="No se han encontrado registros"
+                         rowIndexVar="rowIndex"
+                         editable="true">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{compraPetroleoController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.compraId}"  <<< Remove this line
+                -->
+
+                <p:ajax event="rowEdit" listener="#{compraPetroleoController.onRowEdit}" update=":growl" />
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#"/>
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.compraPetroleoFolio}" filterBy="#{item.compraPetroleoFolio}">
+                    <f:facet name="header">
+                        <h:outputText value="Folio"/>
+                    </f:facet>
+                    <h:outputText value="#{item.compraPetroleoFolio}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="#{item.compraPetroleoFecha}" filterBy="#{item.compraPetroleoFecha}">
+                    <f:facet name="header">
+                        <h:outputText value="Fecha"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.compraPetroleoFecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:calendar id="fechaDocumento" pattern="dd/MM/yy" onfocus="this.setSelectionRange(0, 2)" locale="es" value="#{item.compraPetroleoFecha}" required="true" requiredMessage="Debe ingresar la fecha de la factura" />
+                        </f:facet>
+                    </p:cellEditor>
+
+                </p:column>
+
+                <p:column sortBy="#{item.compraPetroleoProveedorId.proveedorNombre}" filterBy="#{item.compraPetroleoProveedorId.proveedorNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Proveedor"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.compraPetroleoProveedorId.proveedorNombre}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu id="proveedor" value="#{item.compraPetroleoProveedorId}" required="true" requiredMessage="Debe seleccionar el Proveedor" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/> 
+                                <f:selectItems value="#{compraPetroleoController.proveedorItems}"
+                                               var="proveedorItem"
+                                               itemValue="#{proveedorItem}"
+                                               itemLabel="#{proveedorItem.proveedorNombre})"
+                                               />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+
+                </p:column>
+
+                <p:column sortBy="#{item.compraPetroleoCantidadLitros}" filterBy="#{item.compraPetroleoCantidadLitros}">
+                    <f:facet name="header">
+                        <h:outputText value="Total Litros"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.compraPetroleoCantidadLitros}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputNumber minValue="0"  id="litros" decimalPlaces="0"  value="#{item.compraPetroleoCantidadLitros}" onfocus="this.setSelectionRange(0, this.value.length)"></p:inputNumber>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{item.compraPetroleoSurtidorN1}" filterBy="#{item.compraPetroleoSurtidorN1}">
+                    <f:facet name="header">
+                        <h:outputText value="SN°1(Lt)"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.compraPetroleoSurtidorN1}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputNumber minValue="0"  id="litros2" decimalPlaces="0"  value="#{item.compraPetroleoSurtidorN1}" onfocus="this.setSelectionRange(0, this.value.length)"></p:inputNumber>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{item.compraPetroleoSurtidorN2}" filterBy="#{item.compraPetroleoSurtidorN2}">
+                    <f:facet name="header">
+                        <h:outputText value="SN°2(Lt)"/>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.compraPetroleoSurtidorN2}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputNumber minValue="0"  id="litros3" decimalPlaces="0"  value="#{item.compraPetroleoSurtidorN2}" onfocus="this.setSelectionRange(0, this.value.length)"></p:inputNumber>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:55px;text-align: center">
+                    <h:commandLink id="link2"  styleClass="btn btn-primary"  actionListener="#{reportController.downloadFile(compraPetroleoController.informe, compraPetroleoController.map)}" target="blank">
+                        <f:setPropertyActionListener value="#{item}" target="#{compraPetroleoController.selected}"  />
+                        <h:outputText value="" class="ui-icon ui-icon-print"/>
+                    </h:commandLink>
+                </p:column>
+
+                <p:column style="width:35px">
+                    <p:rowEditor />
+                </p:column>
+
+                <p:column style="width:45px;text-align: center">
+                    <p:commandButton update="CompraPetroleoListForm:datalist, :growl" icon="fa fa-trash" actionListener="#{compraPetroleoController.delete}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <f:setPropertyActionListener value="#{item}" target="#{compraPetroleoController.selected}"  />
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+    <p:dialog id="ProveedorCreateDlg" widgetVar="ProveedorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registro Nuevo Proveedor" closeOnEscape="true">
+
+        <h:form id="ProveedorCreateForm">
+
+            <h:panelGroup id="display" rendered="#{compraPetroleoController.proveedor != null}">
+                <p:panelGrid columns="2" columnClasses="column">
+
+                    <p:outputLabel value="Rut" for="proveedorRut" />
+                    <p:inputText id="proveedorRut" value="#{compraPetroleoController.proveedor.proveedorRut}" title="#{myBundle.CreateProveedorTitle_proveedorRut}" required="true" requiredMessage="#{myBundle.CreateProveedorRequiredMessage_proveedorRut}" size="45" maxlength="45" validator="rutValidatorProveedor"/>
+
+                    <p:outputLabel value="Nombre" for="proveedorNombre" />
+                    <p:inputText id="proveedorNombre" value="#{compraPetroleoController.proveedor.proveedorNombre}" title="#{myBundle.CreateProveedorTitle_proveedorNombre}" required="true" requiredMessage="#{myBundle.CreateProveedorRequiredMessage_proveedorNombre}" size="45" maxlength="45"/>
+
+                    <p:outputLabel value="Giro" for="proveedorGiro" />
+                    <p:inputText id="proveedorGiro" value="#{compraPetroleoController.proveedor.proveedorGiro}" title="#{myBundle.CreateProveedorTitle_proveedorGiro}" size="45" maxlength="45"/>
+
+                    <p:outputLabel value="Dirección" for="proveedorDireccion" />
+                    <p:inputText id="proveedorDireccion" value="#{compraPetroleoController.proveedor.proveedorDireccion}" title="#{myBundle.CreateProveedorTitle_proveedorDireccion}" size="45" maxlength="45"/>
+
+                    <p:outputLabel value="Comuna" for="proveedorComunaId" />
+                    <p:selectOneMenu id="proveedorComunaId" value="#{compraPetroleoController.proveedor.proveedorComunaId}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_trabajadorIdComuna}" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{comunaController.items}"
+                                       var="trabajadorIdComunaItem"
+                                       itemValue="#{trabajadorIdComunaItem}"
+                                       itemLabel="#{trabajadorIdComunaItem.comunaNombre}"
+                                       />
+
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Teléfono" for="proveedorTelefono" />
+                    <p:inputText id="proveedorTelefono" value="#{compraPetroleoController.proveedor.proveedorTelefono}" title="#{myBundle.CreateProveedorTitle_proveedorTelefono}" size="45" maxlength="45"/>
+
+                    <p:outputLabel value="Email" for="proveedorEmail" />
+                    <p:inputText id="proveedorEmail" value="#{compraPetroleoController.proveedor.proveedorEmail}" title="#{myBundle.CreateProveedorTitle_proveedorEmail}" size="45" maxlength="45"/>
+                </p:panelGrid>
+                <p:commandButton actionListener="#{compraPetroleoController.saveNewProveedor}" value="#{myBundle.Save}" update="display,:CompraPetroleoCreateForm:compraProveedorId,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProveedorCreateDialog'));">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+
+                <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ProveedorCreateDialog').hide()" update="display, :CompraPetroleoCreateForm:compraProveedorId" process="@this" immediate="true" resetValues="true"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>

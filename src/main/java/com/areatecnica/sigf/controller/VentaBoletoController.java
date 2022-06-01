@@ -63,7 +63,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
     public void find() {
         if (this.serie > 0) {
             System.err.println("SERIE:" + this.serie);
-            this.selectedItem = new IVentaBoletoDaoImpl().findBySerie(this.serie);
+            this.selectedItem = new VentaBoletoDaoImpl().findBySerie(this.serie);
 
             if (this.selectedItem != null) {
                 this.items = new ArrayList<>();
@@ -90,7 +90,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
             this.trabajadorItems = new TrabajadorDaoImpl().findNandu();
 
             
-            this.items = new IVentaBoletoDaoImpl().findByCajaDate(cajaRecaudacion, this.dc.getDate());
+            this.items = new VentaBoletoDaoImpl().findByCajaDate(cajaRecaudacion, this.dc.getDate());
             if (!this.items.isEmpty()) {
                 this.totalRecaudacion = 0;
 
@@ -194,7 +194,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
                 r.setRecaudacionGuiaMonto(valorBoleto - 5000);
 
                 RecaudacionGuia rg = new IRecaudacionGuiaDaoImpl().update(r);
-                new IVentaBoletoDaoImpl().delete(selectedItem);
+                new VentaBoletoDaoImpl().delete(selectedItem);
 
                 this.selectedItem = null;
                 JsfUtil.addSuccessMessage("Se ha cancelado la venta de boleto #"+rg.getRecaudacionGuiaIdRecaudacion().getRecaudacionId());
@@ -214,7 +214,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
         try {
             temp = (VentaBoleto) event.getObject();
 
-            new IVentaBoletoDaoImpl().update(temp);
+            new VentaBoletoDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado la Venta de Boleto: " + temp.getVentaBoletoNumeroBoleta());
 
         } catch (Exception e) {

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SubTipoCreateDialog" widgetVar="SubTipoCreateDialog" modal="true" resizable="false"  appendTo="@(body)" header="Sub-Tipos" closeOnEscape="true" width="800" height="600">
+
+            <h:form id="SubTipoListForm">
+                <div class="p-grid crud-demo">
+                    <div class="p-col-12">
+                        <div class="card">
+                            <div class="ui-fluid">
+                                <div class="p-field">
+                                    <label for="numeroBus">Tipo</label>
+                                    <p:selectOneMenu id="numeroBus" value="#{cuentaMayorController.tipoPlanCuenta}" required="true" requiredMessage="Debe seleccionar el Tipo" converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                        <f:selectItems value="#{cuentaMayorController.tipoPlanCuentaItems}"
+                                                       var="item"
+                                                       itemValue="#{item}"
+                                                       itemLabel="#{item.tipoPlanCuentaNombre}"
+                                                       />
+                                        <p:ajax event="valueChange" listener="#{cuentaMayorController.handleCuentaChange}" update="datalist, codigoTipo, codigo"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="p-field">
+                                    <label for="codigoTipo">Código Tipo</label>
+                                    <p:inputText id="codigoTipo" value="#{cuentaMayorController.tipoPlanCuenta.tipoPlanCuentaId}"/>
+                                </div>
+                                <div class="p-field">
+                                    <label for="codigo">Código</label>
+                                    <p:inputText id="codigo" value="#{cuentaMayorController.subTipo.planCuentaSubTipoCodigo}"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card">
+                            <p:growl id="messages" showDetail="true" />
+
+                            <p:toolbar styleClass="p-mb-4">
+                                <p:toolbarGroup>
+
+                                </p:toolbarGroup>
+                                <p:toolbarGroup align="right">
+                                    <p:commandButton value="Exportar" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                        <p:dataExporter type="xlsxstream" target="datalist" fileName="Plan de Cuentas"/>
+                                    </p:commandButton>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                            <p:dataTable id="datalist"
+                                         value="#{cuentaMayorController.subTipoItems}"
+                                         lazy="false"
+                                         rowKey="#{item.planCuentaSubTipoId}"
+                                         var="item"
+                                         selectionMode="single"
+                                         selection="#{cuentaMayorController.subTipo}"
+                                         emptyMessage="No se han encontrado registros">
+
+                                <p:column sortBy="#{item.planCuentaSubTipoCodigo}" filterBy="#{item.planCuentaSubTipoCodigo}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.planCuentaSubTipoCodigo}"/>
+                                </p:column>
+
+
+                                <p:column sortBy="#{item.planCuentaSubTipoNombre}" filterBy="#{item.planCuentaSubTipoNombre}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.planCuentaSubTipoNombre}"/>
+                                </p:column>
+
+                                <p:column sortBy="#{item.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}" filterBy="#{item.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Tipo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}"/>
+                                </p:column>
+
+
+                            </p:dataTable>
+                            <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Eliminar la Cuenta? " header="Confirmación" severity="warn">
+                                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{cuentaMayorController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                            </p:confirmDialog>
+
+                            <p:confirmDialog global="true" showEffect="fade" width="300">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                            </p:confirmDialog>
+                        </div>
+                        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -22,7 +22,7 @@
                         <p:inputText id="precioCombustibleValor" value="#{precioCombustibleController.selected.precioCombustibleValor}" required="true" requiredMessage="Debe ingresar el precio "/>
 
                         <p:outputLabel value="Combustible" for="precioCombustibleIdTipoCombustible" />
-                        <p:selectOneMenu id="precioCombustibleIdTipoCombustible" value="#{precioCombustibleController.selected.precioCombustibleIdTipoCombustible}" required="true" requiredMessage="#{myBundle.CreatePrecioCombustibleRequiredMessage_precioCombustibleIdTipoCombustible}" converter="tipoCombustibleConverter">
+                        <p:selectOneMenu id="precioCombustibleIdTipoCombustible" value="#{precioCombustibleController.selected.precioCombustibleIdTipoCombustible}" required="true" requiredMessage="#{myBundle.CreatePrecioCombustibleRequiredMessage_precioCombustibleIdTipoCombustible}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{tipoCombustibleController.items}"
                                            var="precioCombustibleIdTipoCombustibleItem"

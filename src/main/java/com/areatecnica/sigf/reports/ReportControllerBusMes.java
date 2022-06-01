@@ -7,7 +7,7 @@ package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.dao.IBusDao;
 import com.areatecnica.sigf.dao.IUnidadNegocioDao;
-import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
+import com.areatecnica.sigf.dao.impl.UnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.util.CurrentDate;
 
@@ -44,7 +44,7 @@ public class ReportControllerBusMes implements Serializable {
     @PostConstruct
     private void init() {
 
-        this.unidadNegocioDao = new IUnidadNegocioDaoImpl();
+        this.unidadNegocioDao = new UnidadNegocioDaoImpl();
         this.items = this.unidadNegocioDao.findById(2).getBusList();
 
         Calendar calendar = Calendar.getInstance();

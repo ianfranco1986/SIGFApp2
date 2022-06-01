@@ -2,9 +2,9 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IPrivilegioDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionCombustibleDaoImpl;
-import com.areatecnica.sigf.dao.impl.IVentaCombustibleDaoImpl;
+import com.areatecnica.sigf.dao.impl.PrivilegioDaoImpl;
+import com.areatecnica.sigf.dao.impl.RecaudacionCombustibleDaoImpl;
+import com.areatecnica.sigf.dao.impl.VentaCombustibleDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.entities.RecaudacionCombustible;
@@ -58,12 +58,12 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
     private void init() {
         this.fecha = new Date();
         this.cajasRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
-        this.privilegio = new IPrivilegioDaoImpl().findById(89);
+        this.privilegio = new PrivilegioDaoImpl().findById(89);
     }
 
     public void load() {
         if (this.cajaRecaudacion != null) {
-            this.itemsRecaudacion = new IRecaudacionCombustibleDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
+            this.itemsRecaudacion = new RecaudacionCombustibleDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
 
             if (!this.itemsRecaudacion.isEmpty()) {
                 this.recaudacionCombustibleDataModel = new RecaudacionCombustibleDataModel(itemsRecaudacion);
@@ -87,7 +87,7 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
 
                 this.ventaCombustible.setVentaCombustibleRecaudado(Boolean.FALSE);
 
-                new IVentaCombustibleDaoImpl().update(ventaCombustible);
+                new VentaCombustibleDaoImpl().update(ventaCombustible);
 
                 this.setSelected(selectedItem);
                 super.delete(event);
@@ -129,12 +129,12 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
                     r.getRecaudacionCombustibleIdVentaCombustible().setVentaCombustibleRecaudado(Boolean.FALSE);
                     r.getRecaudacionCombustibleIdRecaudacion().setRecaudacionTotal(0);
                     
-                    RecaudacionCombustible aux = new IRecaudacionCombustibleDaoImpl().update(r);
+                    RecaudacionCombustible aux = new RecaudacionCombustibleDaoImpl().update(r);
                     
                     
                     JsfUtil.addSuccessMessage("Se ha eliminado la recaudación de combustible #"+aux.getRecaudacionCombustibleIdRecaudacion().getRecaudacionId());
                     
-                    new IRecaudacionCombustibleDaoImpl().delete(aux);
+                    new RecaudacionCombustibleDaoImpl().delete(aux);
 
                 } catch (NullPointerException e) {
                     JsfUtil.addErrorMessage("Se ha producido un error: " + e.getLocalizedMessage());

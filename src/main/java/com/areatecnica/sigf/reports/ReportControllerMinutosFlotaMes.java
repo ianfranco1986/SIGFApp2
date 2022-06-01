@@ -7,7 +7,7 @@ package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.dao.IFlotaDao;
 import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
+import com.areatecnica.sigf.dao.impl.UnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.Flota;
@@ -47,7 +47,7 @@ public class ReportControllerMinutosFlotaMes implements Serializable {
 
     @PostConstruct
     private void init() {
-        this.busItems = new IUnidadNegocioDaoImpl().findById(2).getBusList();
+        this.busItems = new UnidadNegocioDaoImpl().findById(2).getBusList();
         this.items = new ArrayList<>();
 
         this.itemsEmpresa = new IEmpresaDaoImpl().findByNandu();

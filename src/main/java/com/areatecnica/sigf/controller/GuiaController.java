@@ -2,7 +2,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
+import com.areatecnica.sigf.dao.impl.GuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
@@ -96,7 +96,7 @@ public class GuiaController extends AbstractController<Guia> {
 
     public void load() {
         if (this.date != null && this.bus != null) {
-            this.items = new IGuiaDaoImpl().findByBusBetweenFecha(bus, this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
+            this.items = new GuiaDaoImpl().findByBusBetweenFecha(bus, this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
             System.err.println("FECHAs:"+this.dc.getDate()+"/"+this.dc.getLastDayOfMonth());
             if (!this.items.isEmpty()) {
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " guías del bus n° " + this.bus.getBusNumero() + " para el periodo " + this.dc.getMonthYearString());
@@ -123,7 +123,7 @@ public class GuiaController extends AbstractController<Guia> {
 
         try {
             aux = (Guia) event.getObject();
-            new IGuiaDaoImpl().update(aux);
+            new GuiaDaoImpl().update(aux);
             JsfUtil.addSuccessMessage("Se ha actualizado la guía ");
         } catch (Exception e) {
             JsfUtil.addErrorMessage("Error al guardar la guía");

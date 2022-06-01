@@ -7,7 +7,7 @@ package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.IUnidadNegocioDaoImpl;
+import com.areatecnica.sigf.dao.impl.UnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Flota;
 import com.areatecnica.sigf.entities.UnidadNegocio;
@@ -57,7 +57,7 @@ public class ReportControllerMinutosBusMesResumen implements Serializable {
     private void init() {
         this.tipoInforme = Boolean.TRUE;
         //this.items = new IBusDaoImpl().findAll();
-        this.unidadItems = new IUnidadNegocioDaoImpl().findAll();
+        this.unidadItems = new UnidadNegocioDaoImpl().findAll();
         this.unidadItems.remove(0);
         this.unidadNegocio = this.unidadItems.get(0);
 

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Plan de Cuentas</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="CuentaMayorListForm">
+            <div class="p-grid crud-demo">
+                <div class="p-col-12">
+
+                    <div class="card">
+                        <span style="font-weight: bold"><h3>Plan de Cuentas</h3></span>
+
+                        <p:growl id="messages" showDetail="true" />
+
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Cuenta Mayor" icon="pi pi-plus"  actionListener="#{cuentaMayorController.prepareCreate}" update=":CuentaMayorCreateForm" oncomplete="PF('CuentaMayorCreateDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" />
+                                <p:commandButton value="Sub-tipos" icon="pi pi-pencil"  actionListener="#{cuentaMayorController.prepareCreateSubTipo}" update=":SubTipoListForm" oncomplete="PF('SubTipoCreateDialog').show()"
+                                                 styleClass="ui-button-info" style="margin-right: .5rem" />
+                                
+
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Exportar" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="xlsxstream" target="datalist" fileName="Plan de Cuentas"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                        <p:dataTable id="datalist"
+                                     value="#{cuentaMayorController.items}"
+                                     lazy="false"
+                                     rowKey="#{item.cuentaMayorId}"
+                                     var="item"
+                                     reflow="true"
+                                     selectionMode="single"
+                                     selection="#{cuentaMayorController.selected}"
+                                     emptyMessage="No se han encontrado registros"
+                                     widgetVar="datalistWidget">
+                            <!--
+                                     To enable Lazy Loading, please copy/replace the following lines above,
+                                     and be sure to replace the word HASH with the # symbol:
+                            
+                                     value="HASH{cuentaMayorController.lazyItems}"
+                                     lazy="true"
+                                     rowKey="HASH{item.cuentaMayorId}"  <<< Remove this line
+                            -->
+
+
+                            <f:facet name="header">
+                                <div class="products-table-header ">
+                                    <span class="filter-container ui-input-icon-left ">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+
+                            <p:column groupRow="true" width="150" filterBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Tipo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId}    #{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}"/>
+                            </p:column>
+
+
+
+                            <p:column groupRow="true" filterBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Sub-Tipo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId}#{item.cuentaMayorSubTipoId.planCuentaSubTipoCodigo} #{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorNombre}" width="350" filterBy="#{item.cuentaMayorNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Cuenta Mayor"/>
+                                </f:facet>
+                                <h:outputText value="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId}#{item.cuentaMayorSubTipoId.planCuentaSubTipoCodigo}#{item.cuentaMayorCodigo} #{item.cuentaMayorNombre}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorCompras}">
+                                <f:facet name="header">
+                                    <h:outputText value="Cod. Análisis"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorCompras" value="#{item.cuentaMayorCodigoAnalisis}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorCompras}">
+                                <f:facet name="header">
+                                    <h:outputText value="Libro Auxiliar"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorAuxiliar" value="#{item.cuentaMayorAuxiliar}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorCompras}">
+                                <f:facet name="header">
+                                    <h:outputText value="Cuenta Única"/>
+                                </f:facet>
+                                <h:outputText id="cuentaMayorUnica" value="#{item.cuentaMayorUnicaId.cuentaUnicaNombre}"  />
+                            </p:column>
+                            
+                            <p:column exportable="false">
+                                <p:commandButton icon="pi pi-search" update="CuentaMayorViewForm, datalist" oncomplete="PF('CuentaMayorViewDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-info" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{cuentaMayorController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-pencil" update="CuentaMayorEditForm, datalist" oncomplete="PF('CuentaMayorEditDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-warning" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{cuentaMayorController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{cuentaMayorController.selected}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Eliminar la Cuenta? " header="Confirmación" severity="warn">
+                            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{cuentaMayorController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </div>
+            </div>
+        </h:form>
+        <ui:include src="subTipos.xhtml"/>
+        <ui:include src="createCuentaMayor.xhtml"/>
+        <ui:include src="editCuentaMayor.xhtml"/>
+        <ui:include src="viewCuentaMayor.xhtml"/>
+    </ui:define>
+</ui:composition>

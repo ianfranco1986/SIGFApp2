@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.dao.IGuiaDao;
-import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
+import com.areatecnica.sigf.dao.impl.GuiaDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.EstructuraRegistroBoletoÑandu;
 import com.areatecnica.sigf.models.RegistroBoletoTableModel;
@@ -79,7 +79,7 @@ public class InformeRegistroBoletoController implements Serializable {
 
     public void handleBusChange() {
         if (this.selected != null) {
-            this.guiaDao = new IGuiaDaoImpl();
+            this.guiaDao = new GuiaDaoImpl();
             this.guiaItems = this.guiaDao.findByBusBetweenFecha(selected, this.fecha, this.currentDate.getMaxDate());
             this.model = new RegistroBoletoTableModel();
         }

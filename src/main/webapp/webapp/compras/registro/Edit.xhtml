@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CompraEditDlg" widgetVar="CompraEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCompraTitle}" closeOnEscape="true">
+
+            <h:form id="CompraEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{compraController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCompraLabel_compraId}" for="compraId" />
+                        <h:outputText id="compraId" value="#{compraController.selected.compraId}" />
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraFechaDocumento}" for="compraFechaDocumento" />
+                        <p:calendar id="compraFechaDocumento" pattern="MM/dd/yyyy" value="#{compraController.selected.compraFechaDocumento}" title="#{myBundle.EditCompraTitle_compraFechaDocumento}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraFechaAcuse}" for="compraFechaAcuse" />
+                        <p:calendar id="compraFechaAcuse" pattern="MM/dd/yyyy" value="#{compraController.selected.compraFechaAcuse}" title="#{myBundle.EditCompraTitle_compraFechaAcuse}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraFechaRecepcion}" for="compraFechaRecepcion" />
+                        <p:calendar id="compraFechaRecepcion" pattern="MM/dd/yyyy" value="#{compraController.selected.compraFechaRecepcion}" title="#{myBundle.EditCompraTitle_compraFechaRecepcion}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraFolio}" for="compraFolio" />
+                        <p:inputText id="compraFolio" value="#{compraController.selected.compraFolio}" title="#{myBundle.EditCompraTitle_compraFolio}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraDescripcion}" for="compraDescripcion" />
+                        <p:inputText id="compraDescripcion" value="#{compraController.selected.compraDescripcion}" title="#{myBundle.EditCompraTitle_compraDescripcion}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraNeto}" for="compraNeto" />
+                        <p:inputText id="compraNeto" value="#{compraController.selected.compraNeto}" title="#{myBundle.EditCompraTitle_compraNeto}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraExento}" for="compraExento" />
+                        <p:inputText id="compraExento" value="#{compraController.selected.compraExento}" title="#{myBundle.EditCompraTitle_compraExento}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraIva}" for="compraIva" />
+                        <p:inputText id="compraIva" value="#{compraController.selected.compraIva}" title="#{myBundle.EditCompraTitle_compraIva}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraOtrosImpuestos}" for="compraOtrosImpuestos" />
+                        <p:inputText id="compraOtrosImpuestos" value="#{compraController.selected.compraOtrosImpuestos}" title="#{myBundle.EditCompraTitle_compraOtrosImpuestos}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraTotal}" for="compraTotal" />
+                        <p:inputText id="compraTotal" value="#{compraController.selected.compraTotal}" title="#{myBundle.EditCompraTitle_compraTotal}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraCuentaId}" for="compraCuentaId" />
+                        <p:selectOneMenu id="compraCuentaId" value="#{compraController.selected.compraCuentaMayorId}" required="true" requiredMessage="#{myBundle.EditCompraRequiredMessage_compraCuentaId}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaMayorController.items}"
+                                           var="compraCuentaIdItem"
+                                           itemValue="#{compraCuentaIdItem}"
+                                           itemLabel="#{compraCuentaIdItem.cuentaMayorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraProveedorId}" for="compraProveedorId" />
+                        <p:selectOneMenu id="compraProveedorId" value="#{compraController.selected.compraProveedorId}" required="true" requiredMessage="#{myBundle.EditCompraRequiredMessage_compraProveedorId}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{proveedorController.items}"
+                                           var="compraProveedorIdItem"
+                                           itemValue="#{compraProveedorIdItem}"
+                                           itemLabel="#{compraProveedorIdItem.proveedorId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraTipoDocumentoId}" for="compraTipoDocumentoId" />
+                        <p:selectOneMenu id="compraTipoDocumentoId" value="#{compraController.selected.compraTipoDocumentoId}" required="true" requiredMessage="#{myBundle.EditCompraRequiredMessage_compraTipoDocumentoId}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoDocumentoController.items}"
+                                           var="compraTipoDocumentoIdItem"
+                                           itemValue="#{compraTipoDocumentoIdItem}"
+                                           itemLabel="#{compraTipoDocumentoIdItem.tipoDocumentoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{compraController.save}" value="#{myBundle.Save}" update="display,:CompraListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CompraEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CompraEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
