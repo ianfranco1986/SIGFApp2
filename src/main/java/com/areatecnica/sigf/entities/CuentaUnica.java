@@ -23,8 +23,12 @@ import java.util.List;
 @Table(name = "cuenta_unica")
 @EntityListeners(AuditListener.class)
 @XmlRootElement
+@Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "CuentaUnica.findAll", query = "SELECT c FROM CuentaUnica c ORDER BY c.cuentaUnicaNombre ")}
+    @NamedQuery(name = "CuentaUnica.findAll", query = "SELECT c FROM CuentaUnica c ORDER BY c.cuentaUnicaNombre "), 
+    @NamedQuery(name = "CuentaUnica.findAllActivated", query = "SELECT c FROM CuentaUnica c WHERE c.cuentaUnicaActivo = true"),
+    @NamedQuery(name = "CuentaUnica.findAllDeactivated", query = "SELECT c FROM CuentaUnica c WHERE c.cuentaUnicaActivo = false")
+}
     )
 public class CuentaUnica extends BaseEntity implements Serializable {
 
@@ -39,6 +43,8 @@ public class CuentaUnica extends BaseEntity implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "cuenta_unica_nombre")
     private String cuentaUnicaNombre;
+    @Column(name = "cuenta_unica_activo")
+    private boolean cuentaUnicaActivo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaMayorUnicaId")
     private List<CuentaMayor> cuentaMayorList;
     
@@ -68,6 +74,14 @@ public class CuentaUnica extends BaseEntity implements Serializable {
 
     public void setCuentaUnicaNombre(String cuentaUnicaNombre) {
         this.cuentaUnicaNombre = cuentaUnicaNombre;
+    }
+
+    public void setCuentaUnicaActivo(boolean cuentaUnicaActivo) {
+        this.cuentaUnicaActivo = cuentaUnicaActivo;
+    }
+
+    public boolean getCuentaUnicaActivo() {
+        return cuentaUnicaActivo;
     }
 
     @XmlTransient

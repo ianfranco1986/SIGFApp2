@@ -36,7 +36,7 @@ public class TipoPlanCuenta implements Serializable {
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "tipo_plan_cuenta_nombre")
-    private String tipoPlanCuentaNombre;
+        private String tipoPlanCuentaNombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaSubTipoIdTipoPlan")
     private List<PlanCuentaSubTipo> planCuentaSubTipoList;
 

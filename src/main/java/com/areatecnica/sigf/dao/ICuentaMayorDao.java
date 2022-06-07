@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.CuentaMayor;
+import com.areatecnica.sigf.entities.PlanCuentaSubTipo;
 
 import java.util.List;
 
@@ -16,5 +17,6 @@ import java.util.List;
 public interface ICuentaMayorDao<T> extends IGenericDAO<T> {
 
     List<CuentaMayor> findALL();
+    List<CuentaMayor> findBySubTipo(PlanCuentaSubTipo cuentaSubTipo);
 
 }

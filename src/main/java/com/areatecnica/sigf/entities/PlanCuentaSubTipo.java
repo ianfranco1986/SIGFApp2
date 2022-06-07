@@ -56,6 +56,8 @@ public class PlanCuentaSubTipo extends BaseEntity implements Serializable {
     private TipoPlanCuenta planCuentaSubTipoIdTipoPlan;
 
     public PlanCuentaSubTipo() {
+        this.planCuentaSubTipoCodigo = "";
+        this.planCuentaSubTipoNombre = "";
     }
 
     public PlanCuentaSubTipo(Integer planCuentaSubTipoId) {

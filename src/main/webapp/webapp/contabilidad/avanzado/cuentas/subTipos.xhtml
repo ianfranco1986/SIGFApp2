@@ -7,13 +7,13 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:dialog id="SubTipoCreateDialog" widgetVar="SubTipoCreateDialog" modal="true" resizable="false"  appendTo="@(body)" header="Sub-Tipos" closeOnEscape="true" width="800" height="600">
+        <p:dialog id="SubTipoCreateDialog" widgetVar="SubTipoCreateDialog" modal="true" resizable="false"  appendTo="@(body)" header="Sub-Tipos | Plan Contable" closeOnEscape="true" width="800" height="800">
 
             <h:form id="SubTipoListForm">
                 <div class="p-grid crud-demo">
                     <div class="p-col-12">
                         <div class="card">
-                            <div class="ui-fluid">
+                            <div id="fluid" class="ui-fluid">
                                 <div class="p-field">
                                     <label for="numeroBus">Tipo</label>
                                     <p:selectOneMenu id="numeroBus" value="#{cuentaMayorController.tipoPlanCuenta}" required="true" requiredMessage="Debe seleccionar el Tipo" converter="omnifaces.SelectItemsConverter">
@@ -28,12 +28,44 @@
                                 </div>
                                 <div class="p-field">
                                     <label for="codigoTipo">Código Tipo</label>
-                                    <p:inputText id="codigoTipo" value="#{cuentaMayorController.tipoPlanCuenta.tipoPlanCuentaId}"/>
+                                    <p:inputText id="codigoTipo" value="#{cuentaMayorController.tipoPlanCuenta.tipoPlanCuentaId}" disabled="true"/>
                                 </div>
                                 <div class="p-field">
                                     <label for="codigo">Código</label>
-                                    <p:inputText id="codigo" value="#{cuentaMayorController.subTipo.planCuentaSubTipoCodigo}"/>
+                                    <p:inputText id="codigo" value="#{cuentaMayorController.codigo}" disabled="true"/>
                                 </div>
+                                <div class="p-field">
+                                    <label for="nombre">Nombre</label>
+                                    <p:inputText id="nombre" value="#{cuentaMayorController.nombre}" required="true" requiredMessage="Debe ingresar un nombre">
+                                        <p:ajax event="blur" update=":growl" listener="#{cuentaMayorController.setValorNombre()}"/>
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="p-text-right">
+                                <p:commandButton 
+                                    actionListener="#{cuentaMayorController.saveNewSubTipo(event)}" 
+                                    value="Guardar" 
+                                    icon="pi pi-save" 
+                                    process="@this"
+                                    update=":SubTipoListForm:datalist, numeroBus, codigoTipo, codigo, nombre,:growl, :CuentaMayorListForm:datalist" 
+                                    styleClass="p-mr-2 p-mb-2" 
+                                    >
+                                    <p:confirm 
+                                        header="#{myBundle.ConfirmationHeader}" 
+                                        message="#{myBundle.ConfirmCreateMessage}" 
+                                        icon="ui-icon-alert"/>
+                                </p:commandButton>
+
+                                <p:commandButton 
+                                    value="Cancelar" 
+                                    icon="pi pi-ban" 
+                                    class="ui-button-secondary"
+                                    update="growl" 
+                                    process="@this" 
+                                    immediate="true" 
+                                    resetValues="true"        
+                                    styleClass="ui-button-danger p-mr-2"
+                                    />
                             </div>
                         </div>
 
@@ -58,13 +90,24 @@
                                          var="item"
                                          selectionMode="single"
                                          selection="#{cuentaMayorController.subTipo}"
-                                         emptyMessage="No se han encontrado registros">
+                                         emptyMessage="No se han encontrado registros"
+                                         editable="true">
+
+                                <p:ajax event="rowEdit" listener="#{cuentaMayorController.onRowEdit}" update=":growl" />
+
 
                                 <p:column sortBy="#{item.planCuentaSubTipoCodigo}" filterBy="#{item.planCuentaSubTipoCodigo}">
                                     <f:facet name="header">
                                         <h:outputText value="#"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.planCuentaSubTipoCodigo}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.planCuentaSubTipoCodigo}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText id="cod" value="#{item.planCuentaSubTipoCodigo}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
 
 
@@ -72,16 +115,43 @@
                                     <f:facet name="header">
                                         <h:outputText value="Nombre"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.planCuentaSubTipoNombre}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.planCuentaSubTipoNombre}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText id="b" value="#{item.planCuentaSubTipoNombre}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
 
                                 <p:column sortBy="#{item.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}" filterBy="#{item.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}">
                                     <f:facet name="header">
                                         <h:outputText value="Tipo"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">                                    
+                                            <h:outputText value="#{item.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu 
+                                                id="bus2" 
+                                                value="#{item.planCuentaSubTipoIdTipoPlan}" 
+                                                style="width: 70%;" 
+                                                converter="omnifaces.SelectItemsConverter" 
+                                                >
+                                                <f:selectItems value="#{cuentaMayorController.tipoPlanCuentaItems}" var="it"
+                                                               itemValue="#{it}"
+                                                               itemLabel="#{it.tipoPlanCuentaNombre}"
+                                                               />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
 
+                                <p:column style="width:35px">
+                                    <p:rowEditor  styleClass="edit-button rounded-button ui-button-success"/>
+                                </p:column>
 
                             </p:dataTable>
                             <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Eliminar la Cuenta? " header="Confirmación" severity="warn">
@@ -93,6 +163,8 @@
                                 <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
                                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
                             </p:confirmDialog>
+
+
                         </div>
                         <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
                     </div>

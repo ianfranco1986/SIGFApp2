@@ -39,7 +39,7 @@ PrimeFaces.locales['es'] = {
         day: 'Día',
         allDayText: 'Todo el día',
         today: 'Hoy',
-        clear: 'Claro'
+        clear: 'Borrar'
     };
 
 PrimeFaces.widget.Avalon = PrimeFaces.widget.BaseWidget.extend({

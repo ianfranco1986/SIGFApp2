@@ -1,5 +1,6 @@
 package com.areatecnica.sigf.dao.impl;
 
+import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IGenericDAO;
 import org.primefaces.model.SortOrder;
 
@@ -12,7 +13,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -42,7 +48,12 @@ public class GenericDAOImpl<T> implements IGenericDAO<T> {
         try {
             beginTransaction();
             System.err.println("DAO:CREATE");
-            this.entityManager.persist(t);
+            if (validate(t)) {
+                this.entityManager.persist(t);
+            } else {
+                rollback();
+                return null;
+            }
             commit();
         } catch (Exception e) {
             rollback();
@@ -63,7 +74,12 @@ public class GenericDAOImpl<T> implements IGenericDAO<T> {
         try {
             beginTransaction();
             System.err.println("DAO:UPDATE");
-            merge = this.entityManager.merge(t);
+            if (validate(t)) {
+                merge = this.entityManager.merge(t);
+            } else {
+                rollback();
+                return null;
+            }
             commit();
         } catch (Exception e) {
             rollback();
@@ -206,5 +222,24 @@ public class GenericDAOImpl<T> implements IGenericDAO<T> {
 
     public void detach(T t) {
         entityManager.detach(t);
+    }
+
+    public boolean validate(T t) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<T>> constraintViolations = validator.validate(t);
+
+        if (!constraintViolations.isEmpty()) {
+            System.out.println("Constraint Violations occurred..");
+            for (ConstraintViolation<T> contraints : constraintViolations) {
+                System.out.println(contraints.getRootBeanClass().getSimpleName()
+                        + "." + contraints.getPropertyPath() + " " + contraints.getMessage());
+                JsfUtil.addErrorMessage(contraints.getRootBeanClass().getSimpleName()
+                        + "." + contraints.getPropertyPath() + " " + contraints.getMessage());
+            }
+            return false;
+        }
+        return true;
     }
 }

@@ -35,10 +35,12 @@ public class CompraController extends AbstractController<Compra> {
     private TipoDocumento tipoDocumento;
     private TipoMovimiento tipoMoviento;
     private CuentaMayor cuentaMayor;
+    private CuentaMayor cuentaMayorContabilidad;
     private MovimientoMes movimiento;
     private CuentaBancaria cuentaBancaria;
     private List<TipoDocumento> tipoDocumentoItems;
     private List<CuentaMayor> cuentaMayorItems;
+    private List<CuentaMayor> cuentaMayorItemsContabilidad;
     private List<Compra> items;
     private List<Compra> selectedItems;
     private List<Proveedor> proveedorItems;
@@ -49,6 +51,8 @@ public class CompraController extends AbstractController<Compra> {
     private final String informe = "inf-comprobante_egreso";
     private final String defaultTitle = "Registro de Compras";
     private String title = defaultTitle;
+
+    private boolean contabilizar;
 
     private int folio;
 
@@ -93,7 +97,9 @@ public class CompraController extends AbstractController<Compra> {
 
         this.items = new CompraDaoImpl().findCompraBetweenDates(this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
 
-        this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
+        this.cuentaMayorItems = new ICuentaMayorDaoImpl().findByCompras();
+        
+        this.cuentaMayorItemsContabilidad = new ICuentaMayorDaoImpl().findByBanco();
 
         this.tipoDocumentoItems = new ITipoDocumentoDaoImpl().findAll();
 
@@ -342,6 +348,14 @@ public class CompraController extends AbstractController<Compra> {
         this.tipoDocumento = tipoDocumento;
     }
 
+    public void setCuentaMayorContabilidad(CuentaMayor cuentaMayorContabilidad) {
+        this.cuentaMayorContabilidad = cuentaMayorContabilidad;
+    }
+
+    public CuentaMayor getCuentaMayorContabilidad() {
+        return cuentaMayorContabilidad;
+    }
+
     public CuentaMayor getCuentaMayor() {
         return cuentaMayor;
     }
@@ -428,6 +442,22 @@ public class CompraController extends AbstractController<Compra> {
 
     public void setNf(NumberFormat nf) {
         this.nf = nf;
+    }
+
+    public void setContabilizar(boolean contabilizar) {
+        this.contabilizar = contabilizar;
+    }
+
+    public boolean getContabilizar() {
+        return contabilizar;
+    }
+
+    public List<CuentaMayor> getCuentaMayorItemsContabilidad() {
+        return cuentaMayorItemsContabilidad;
+    }
+
+    public void setCuentaMayorItemsContabilidad(List<CuentaMayor> cuentaMayorItemsContabilidad) {
+        this.cuentaMayorItemsContabilidad = cuentaMayorItemsContabilidad;
     }
 
     public Map<String, Object> getMap() {

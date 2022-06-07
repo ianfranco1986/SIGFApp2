@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="CompraCreateDlg" widgetVar="CompraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registro de Compra" closeOnEscape="true" width="80%">
+            <h:form id="CompraCreateForm">
+                <div class="card" style="padding: 0px;">
+
+                    <div class="card" style="padding: 0px;">
+                        <div class="p-grid">
+                                                            <p:divider align="left" >
+                                    <b>Factura</b>
+                                </p:divider>
+                            <div class="p-col-7">
+
+                                <div class="p-col-12 ">
+                                    <div class="ui-fluid p-formgrid p-grid">
+                                        <div class="p-field p-col-12 p-md-4">
+                                            <label>F. Acuse</label>
+                                            <p:datePicker id="acuse3" tabindex="1" placeholder="F.Acuse" showButtonBar="true" triggerButtonIcon="true" />
+                                        </div>
+                                        <div class="p-field p-col-12 p-md-4">
+                                            <label>F.Documento</label>
+                                            <p:datePicker id="fecha3" type="text"  tabindex="2" placeholder="F.Documento" showButtonBar="true" />
+                                        </div>
+                                        <div class="p-field p-col-12 p-md-4">
+                                            <label>F.Recepción</label>
+                                            <p:datePicker id="recepcion3"  tabindex="3" placeholder="F.Recepción" showButtonBar="true" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-fluid p-formgrid p-grid">
+                                        <div class="p-field p-col-12 p-md-3">
+                                            <label>N° Documento</label>
+                                            <p:inputText id="zip" type="text" autocomplete="off"  tabindex="4" placeholder="N° de Docto."/>
+                                        </div>
+                                        <div class="p-field p-col-12 p-md-1">
+                                            <label style="visibility: hidden;">Buscar</label>
+                                            <p:commandButton icon="pi pi-search" />
+                                        </div>
+                                        <div class="p-field p-col-12 p-md-5">
+                                            <label>Tipo Documento</label>
+                                            <p:selectOneMenu id="compraTipoDocumentoId" tabindex="5" value="#{compraController.tipoDocumento}" required="true" requiredMessage="Debe seleccionar el tipo de documento" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                                <f:selectItem itemLabel="Tipo de Documento"/>
+                                                <f:selectItems value="#{compraController.tipoDocumentoItems}"
+                                                               var="compraTipoDocumentoIdItem"
+                                                               itemValue="#{compraTipoDocumentoIdItem}"
+                                                               itemLabel="#{compraTipoDocumentoIdItem.tipoDocumentoNombre}"
+                                                               />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="ui-fluid p-formgrid p-grid">
+                                        <div class="p-field p-col-12 p-md-8">
+                                            <label>Proveedor</label>
+
+                                            <p:selectOneMenu id="compraProveedorId" tabindex="6" value="#{compraController.proveedor}" required="true" requiredMessage="Debe seleccionar el Proveedor" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                                <f:selectItem itemLabel="Proveedor"/>
+                                                <f:selectItems value="#{compraController.proveedorItems}"
+                                                               var="compraProveedorIdItem"
+                                                               itemValue="#{compraProveedorIdItem}"
+                                                               itemLabel="#{compraProveedorIdItem.proveedorNombre}"
+                                                               />
+                                            </p:selectOneMenu>
+
+                                        </div>
+                                        <div class="p-field p-col-12 p-md-1">
+                                            <label style="visibility: hidden;">Agregar</label>
+                                            <p:commandButton id="createButton" tabindex="-1" icon="pi pi-plus"  actionListener="#{compraController.prepareCreateProveedor}" update=":ProveedorCreateForm" oncomplete="PF('ProveedorCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                        </div>
+                                    </div>
+                                    <div class="ui-fluid p-formgrid p-grid">
+                                        <div class="p-field p-col-12 p-md-9">
+                                            <label>Glosa</label>
+                                            <p:inputTextarea rows="4" cols="33" placeholder="Glosa" tabindex="7"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-1">
+
+                            </div>
+                            <div class="p-col">
+                                <p:divider>
+
+                                </p:divider>
+                                <div class="p-col-12 ">
+                                    <label style="visibility: hidden">espaciador</label>
+                                    <div class="ui-fluid p-formgrid p-grid">
+
+                                        <div class="p-field p-grid">
+                                            <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="IVA uso común"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="Compra de supermercado"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="Es activos fijos"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="Sin derecho crédito fiscal"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="Ley N° 18.211"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="Compra que no corresponde incluir"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="p-col">
+                                <p:divider align="left" >
+                                    <b>Montos</b>
+                                </p:divider>
+                                <div class="p-col-12 ">
+                                    <div class="ui-fluid p-formgrid p-grid">
+                                        <div class="p-field p-grid">
+                                            <label>Neto</label>
+                                            <p:inputNumber id="neto" decimalPlaces="0"  tabindex="8"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <label>Exento</label>
+                                            <p:inputNumber id="exento" decimalPlaces="0"  tabindex="8"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <label>IVA</label>
+                                            <p:inputNumber id="iva" decimalPlaces="0"  tabindex="8"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <label>Otros. Impuestos</label>
+                                            <p:inputNumber id="otros" decimalPlaces="0"  tabindex="8"/>
+                                        </div>
+                                        <div class="p-field p-grid">
+                                            <label>Total</label>
+                                            <p:inputNumber id="total" decimalPlaces="0"  tabindex="8"/>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <p:divider align="left" >
+                    <b>Cuentas</b>
+                </p:divider>
+
+                <div class="p-grid">
+                    <div class="p-col-9">
+                        <div class="p-col-12 ">
+
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col-12 p-md-6">
+                                    <p:selectOneMenu id="cuenta" tabindex="6" value="#{compraController.cuentaMayor}" required="true" requiredMessage="Debe seleccionar una Cuenta" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="Cuentas"/>
+                                        <f:selectItems value="#{compraController.cuentaMayorItems}"
+                                                       var="cuenta"
+                                                       itemValue="#{cuenta}"
+                                                       itemLabel="#{cuenta.cuentaMayorNombre}"
+                                                       />
+                                    </p:selectOneMenu>
+
+                                </div>
+                                <div class="p-field p-col-12 p-md-1">
+                                    <p:commandButton id="creat2eButton" tabindex="-1" icon="pi pi-plus"  actionListener="#{compraController.prepareCreateProveedor}" update=":ProveedorCreateForm" oncomplete="PF('ProveedorCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                </div>
+                            </div>
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col-12 p-md-8">
+                                    <p:inputText placeholder="Glosa" tabindex="7"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-3">
+
+                    </div>
+                </div>
+
+                <p:divider align="left">
+                    <b>Contabilizar</b>
+                </p:divider>
+
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
+                    cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+                    Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+
+
+            </h:form>
+
+        </p:dialog>
+        <p:dialog id="ProveedorCreateDlg" widgetVar="ProveedorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registro Nuevo Proveedor" closeOnEscape="true">
+
+            <h:form id="ProveedorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{compraController.proveedor != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="Rut" for="proveedorRut" />
+                        <p:inputText id="proveedorRut" value="#{compraController.proveedor.proveedorRut}" title="#{myBundle.CreateProveedorTitle_proveedorRut}" required="true" requiredMessage="#{myBundle.CreateProveedorRequiredMessage_proveedorRut}" size="45" maxlength="45" validator="rutValidatorProveedor"/>
+
+                        <p:outputLabel value="Nombre" for="proveedorNombre" />
+                        <p:inputText id="proveedorNombre" value="#{compraController.proveedor.proveedorNombre}" title="#{myBundle.CreateProveedorTitle_proveedorNombre}" required="true" requiredMessage="#{myBundle.CreateProveedorRequiredMessage_proveedorNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Giro" for="proveedorGiro" />
+                        <p:inputText id="proveedorGiro" value="#{compraController.proveedor.proveedorGiro}" title="#{myBundle.CreateProveedorTitle_proveedorGiro}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Dirección" for="proveedorDireccion" />
+                        <p:inputText id="proveedorDireccion" value="#{compraController.proveedor.proveedorDireccion}" title="#{myBundle.CreateProveedorTitle_proveedorDireccion}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Comuna" for="proveedorComunaId" />
+                        <p:selectOneMenu id="proveedorComunaId" value="#{compraController.proveedor.proveedorComunaId}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_trabajadorIdComuna}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{comunaController.items}"
+                                           var="trabajadorIdComunaItem"
+                                           itemValue="#{trabajadorIdComunaItem}"
+                                           itemLabel="#{trabajadorIdComunaItem.comunaNombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Teléfono" for="proveedorTelefono" />
+                        <p:inputText id="proveedorTelefono" value="#{compraController.proveedor.proveedorTelefono}" title="#{myBundle.CreateProveedorTitle_proveedorTelefono}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Email" for="proveedorEmail" />
+                        <p:inputText id="proveedorEmail" value="#{compraController.proveedor.proveedorEmail}" title="#{myBundle.CreateProveedorTitle_proveedorEmail}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{compraController.saveNewProveedor}" value="#{myBundle.Save}" update="display,:CompraCreateForm:compraProveedorId,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProveedorCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ProveedorCreateDialog').hide()" update="display, :CompraCreateForm:compraProveedorId" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
+

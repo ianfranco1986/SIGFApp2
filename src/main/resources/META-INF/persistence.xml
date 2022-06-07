@@ -172,6 +172,11 @@
     <class>com.areatecnica.sigf.audit.AuditField</class>
     <class>com.areatecnica.sigf.audit.AuditEntry</class>
     <class>com.areatecnica.sigf.entities.CuentaUnica</class>
+    <class>com.areatecnica.sigf.entities.DetalleVoucher</class>
+    <class>com.areatecnica.sigf.entities.TipoComprobanteVoucher</class>
+    <class>com.areatecnica.sigf.entities.TipoDctoVoucher</class>
+    <class>com.areatecnica.sigf.entities.Voucher</class>
+    <class>com.areatecnica.sigf.entities.DetalleCompraCuenta</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.jdbc.native-sql" value="true"/>

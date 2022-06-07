@@ -8,30 +8,61 @@
 
     <ui:composition>
 
-        <p:dialog id="CuentaMayorCreateDialog" widgetVar="CuentaMayorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Cuenta" closeOnEscape="true">
+        <p:dialog id="CuentaMayorCreateDialog" widgetVar="CuentaMayorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Cuenta Mayor | Plan Contable" closeOnEscape="true">
 
             <h:form id="CuentaMayorCreateForm">
 
-                <h:panelGroup id="display" rendered="#{cuentaMayorController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
-
-                        <p:outputLabel value="Nombre" for="cuentaMayorNombre" />
-                        <p:inputText id="cuentaMayorNombre" value="#{cuentaMayorController.selected.cuentaMayorNombre}" title="#{myBundle.CreateCuentaMayorTitle_cuentaMayorNombre}" required="true" requiredMessage="#{myBundle.CreateCuentaMayorRequiredMessage_cuentaMayorNombre}" size="45" maxlength="45"/>
-
-                        <p:outputLabel value="Sub Tipo" for="cuentaMayorSubTipoId" />
-                        <p:selectOneMenu id="cuentaMayorSubTipoId" value="#{cuentaMayorController.selected.cuentaMayorSubTipoId}" required="true" requiredMessage="#{myBundle.CreateCuentaMayorRequiredMessage_cuentaMayorSubTipoId}" converter="omnifaces.SelectItemsConverter">
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="tipoCuenta">Tipo Cuenta</label>
+                        <p:selectOneMenu id="tipoCuenta" value="#{cuentaMayorController.tipoPlanCuenta}" required="true" requiredMessage="Debe seleccionar una cuenta" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{planCuentaSubTipoController.items}"
-                                           var="cuentaMayorSubTipoIdItem"
-                                           itemValue="#{cuentaMayorSubTipoIdItem}"
-                                           itemLabel="#{cuentaMayorSubTipoIdItem.planCuentaSubTipoNombre}"
+                            <f:selectItems value="#{cuentaMayorController.tipoPlanCuentaItems}"
+                                           var="cuenta"
+                                           itemValue="#{cuenta}"
+                                           itemLabel="#{cuenta.tipoPlanCuentaNombre}"
                                            />
-
+                            <p:ajax event="valueChange" update="subTipo" listener="#{cuentaMayorController.handleTipoCuentaChange()}"/>
                         </p:selectOneMenu>
-
-                        <p:outputLabel value="Pertenece a:" />
+                    </div>
+                    <div class="p-field">
+                        <label for="subTipo">Sub-Tipo</label>
+                        <p:selectOneMenu id="subTipo" value="#{cuentaMayorController.subTipo}" required="true" requiredMessage="Debe seleccionar un Subtipo" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaMayorController.subTipoItems}"
+                                           var="subtipo"
+                                           itemValue="#{subtipo}"
+                                           itemLabel="#{subtipo.planCuentaSubTipoNombre}"
+                                           />
+                            <p:ajax event="valueChange" update="codigo,:growl, cuentaMayorNombre" listener="#{cuentaMayorController.handleSubTipoCuentaChange()}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="codigo">Código</label>
+                        <p:inputText id="codigo" value="#{cuentaMayorController.selected.cuentaMayorCodigo}" required="true" requiredMessage="Debe ingresar un código" maxlength="45" disabled="true"/>
+                    </div>
+                    <div class="p-field">
+                        <label for="cuentaMayorNombre">Nombre</label>
+                        <p:inputText id="cuentaMayorNombre" value="#{cuentaMayorController.nombre}" required="true" requiredMessage="Debe ingresar un nombre" maxlength="45" autocomplete="off">
+                            <p:ajax event="blur" listener="#{cuentaMayorController.setValorNombre()}"/>
+                        </p:inputText>
+                    </div>
+                    <div class="p-field">
+                        <label for="cuentaUnica">Cuenta Única</label>
+                        <p:selectOneMenu id="cuentaUnica" value="#{cuentaMayorController.cuentaUnica}" required="true" requiredMessage="Debe seleccionar una cuenta" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentaMayorController.cuentaUnicaItems}"
+                                           var="cuentaUnica"
+                                           itemValue="#{cuentaUnica}"
+                                           itemLabel="#{cuentaUnica.cuentaUnicaNombre}"
+                                           />
+                            <p:ajax event="valueChange" listener="#{cuentaMayorController.setValorNombre()}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label>Pertenece a</label>
                         <h:panelGroup>
-                            <h:panelGrid columns="2" style="width: 100%">
+                            <h:panelGrid columns="4" style="width: 100%">
                                 <p:outputLabel value="Compras" for="cuentaMayorCompras" />
                                 <p:selectBooleanCheckbox id="cuentaMayorCompras" value="#{cuentaMayorController.selected.cuentaMayorCompras}" />
 
@@ -57,14 +88,39 @@
                                 <p:selectBooleanCheckbox id="cuentaMayorActivosFijos" value="#{cuentaMayorController.selected.cuentaMayorActivosFijos}" />
                             </h:panelGrid>
                         </h:panelGroup>
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{cuentaMayorController.saveNew}" value="#{myBundle.Save}" update="display,:CuentaMayorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CuentaMayorCreateDialog'));">
-                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </div>
+
+
+                </div>
+
+                <div class="p-text-right">
+                    <p:commandButton 
+                        actionListener="#{cuentaMayorController.saveNew}" 
+                        value="Guardar" 
+                        icon="pi pi-save" 
+                        update=":CuentaMayorListForm:datalist,:growl" 
+                        
+                        oncomplete="handleSubmit(xhr,status,args,PF('CuentaMayorCreateDialog'));"
+                        styleClass="p-mr-2 p-mb-2" 
+                        >
+                        <p:confirm 
+                            header="#{myBundle.ConfirmationHeader}" 
+                            message="#{myBundle.ConfirmCreateMessage}" 
+                            icon="ui-icon-alert"/>
                     </p:commandButton>
 
-                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CuentaMayorCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
-                </h:panelGroup>
-
+                    <p:commandButton 
+                        value="Cancelar" 
+                        icon="pi pi-ban" 
+                        class="ui-button-secondary"
+                        oncomplete="PF('CuentaMayorCreateDialog').hide()" 
+                        update="growl" 
+                        process="@this" 
+                        immediate="true" 
+                        resetValues="true"        
+                        styleClass="ui-button-danger p-mr-2"
+                        />
+                </div>
             </h:form>
 
         </p:dialog>

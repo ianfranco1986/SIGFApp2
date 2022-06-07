@@ -7,7 +7,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
-    <ui:define name="title">Plan de Cuentas</ui:define>
+    <ui:define name="title">Plan Contable</ui:define>
 
     <ui:define name="content">
 
@@ -16,17 +16,20 @@
                 <div class="p-col-12">
 
                     <div class="card">
-                        <span style="font-weight: bold"><h3>Plan de Cuentas</h3></span>
+                        <span style="font-weight: bold"><h3>Plan Contable</h3></span>
 
                         <p:growl id="messages" showDetail="true" />
 
-                        <p:toolbar styleClass="p-mb-4">
+                        <p:toolbar id="toolbar" styleClass="p-mb-4">
                             <p:toolbarGroup>
-                                <p:commandButton value="Cuenta Mayor" icon="pi pi-plus"  actionListener="#{cuentaMayorController.prepareCreate}" update=":CuentaMayorCreateForm" oncomplete="PF('CuentaMayorCreateDialog').show()"
+                                <p:commandButton value="Agregar" icon="pi pi-plus"  actionListener="#{cuentaMayorController.prepareCreate}" update=":CuentaMayorCreateForm" oncomplete="PF('CuentaMayorCreateDialog').show()"
                                                  styleClass="ui-button-success" style="margin-right: .5rem" />
+                                <p:commandButton value="Editar" icon="pi pi-pencil" update="CuentaMayorEditForm, datalist" oncomplete="PF('CuentaMayorEditDialog').show()" 
+                                                 styleClass="edit-button ui-button-warning" process="@this" disabled="#{empty cuentaMayorController.selected}">
+                                </p:commandButton>
                                 <p:commandButton value="Sub-tipos" icon="pi pi-pencil"  actionListener="#{cuentaMayorController.prepareCreateSubTipo}" update=":SubTipoListForm" oncomplete="PF('SubTipoCreateDialog').show()"
                                                  styleClass="ui-button-info" style="margin-right: .5rem" />
-                                
+
 
                             </p:toolbarGroup>
                             <p:toolbarGroup align="right">
@@ -54,6 +57,11 @@
                                      lazy="true"
                                      rowKey="HASH{item.cuentaMayorId}"  <<< Remove this line
                             -->
+
+                            <p:ajax event="rowSelect" listener="#{cuentaMayorController.onEditCuenta}" update=":CuentaMayorListForm:toolbar"/>
+                            <p:ajax event="rowUnselect" update=":CuentaMayorListForm:toolbar" />
+                            <p:ajax event="toggleSelect" update=":CuentaMayorListForm:toolbar" />
+
 
 
                             <f:facet name="header">
@@ -109,18 +117,20 @@
                                 </f:facet>
                                 <h:outputText id="cuentaMayorUnica" value="#{item.cuentaMayorUnicaId.cuentaUnicaNombre}"  />
                             </p:column>
-                            
+
                             <p:column exportable="false">
                                 <p:commandButton icon="pi pi-search" update="CuentaMayorViewForm, datalist" oncomplete="PF('CuentaMayorViewDialog').show()" 
                                                  styleClass="edit-button rounded-button ui-button-info" process="@this">
                                     <f:setPropertyActionListener value="#{item}" target="#{cuentaMayorController.selected}" />
                                 </p:commandButton>
-                                <p:commandButton icon="pi pi-pencil" update="CuentaMayorEditForm, datalist" oncomplete="PF('CuentaMayorEditDialog').show()" 
-                                                 styleClass="edit-button rounded-button ui-button-warning" process="@this">
+
+                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist, :growl" actionListener="#{cuentaMayorController.delete}" process="@this" >
                                     <f:setPropertyActionListener value="#{item}" target="#{cuentaMayorController.selected}" />
-                                </p:commandButton>
-                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
-                                    <f:setPropertyActionListener value="#{item}" target="#{cuentaMayorController.selected}" />
+                                    <p:confirm 
+                                        header="Confirmación" 
+                                        message="¿Desea eliminar la cuenta?" 
+                                        icon="ui-icon-alert"
+                                        />
                                 </p:commandButton>
                             </p:column>
 

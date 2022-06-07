@@ -25,16 +25,17 @@ import java.util.List;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CuentaMayor.findAll", query = "SELECT c FROM CuentaMayor c ORDER BY c.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId"),
+    @NamedQuery(name = "CuentaMayor.findBySubTipo", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorSubTipoId = :cuentaMayorSubTipoId ORDER BY c.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorId", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorId = :cuentaMayorId"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorNombre", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorNombre = :cuentaMayorNombre"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorCompras", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorCompras = :cuentaMayorCompras"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorHonorarios", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorHonorarios = :cuentaMayorHonorarios"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorRemuneraciones", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorRemuneraciones = :cuentaMayorRemuneraciones"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorTesoreria", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorTesoreria = :cuentaMayorTesoreria"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorPresupuesto", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorPresupuesto = :cuentaMayorPresupuesto"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorVentas", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorVentas = :cuentaMayorVentas"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorBanco", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorBanco = :cuentaMayorBanco"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorActivosFijos", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorActivosFijos = :cuentaMayorActivosFijos")})
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorCompras", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorCompras = true"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorHonorarios", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorHonorarios = true"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorRemuneraciones", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorRemuneraciones = true"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorTesoreria", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorTesoreria = true"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorPresupuesto", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorPresupuesto = true"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorVentas", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorVentas = true"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorBanco", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorBanco = true"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorActivosFijos", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorActivosFijos = true")})
 public class CuentaMayor extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,7 +75,7 @@ public class CuentaMayor extends BaseEntity implements Serializable {
     @Column(name = "cuenta_mayor_activos_fijos")
     private Boolean cuentaMayorActivosFijos;
     @JoinColumn(name = "cuenta_mayor_unica_id", referencedColumnName = "cuenta_unica_id", nullable = false)
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private CuentaUnica cuentaMayorUnicaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraCuentaMayorId")
     private List<Compra> compraList;
