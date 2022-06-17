@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controllers.login;
 
 import com.areatecnica.sigf.dao.IRolMenuDao;
-import com.areatecnica.sigf.dao.impl.IRolMenuDaoImpl;
+import com.areatecnica.sigf.dao.impl.RolMenuDaoImpl;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -66,7 +66,7 @@ public class MenuAdministradorController implements java.io.Serializable {
 
     public List<Menu> getMenuList() {
 
-        dao = new IRolMenuDaoImpl();
+        dao = new RolMenuDaoImpl();
 
         
         

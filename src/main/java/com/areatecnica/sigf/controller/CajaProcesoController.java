@@ -3,7 +3,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.ICajaProcesoDao;
-import com.areatecnica.sigf.dao.impl.ICajaProcesoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CajaProcesoDaoImpl;
 import com.areatecnica.sigf.entities.CajaProceso;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
@@ -116,7 +116,7 @@ public class CajaProcesoController extends AbstractController<CajaProceso> {
 
     public void find(ActionEvent event) {
         if (this.cajaRecaudacion != null) {
-            this.cajaProcesoDao = new ICajaProcesoDaoImpl();
+            this.cajaProcesoDao = new CajaProcesoDaoImpl();
 
             this.setItems(new ArrayList<CajaProceso>());
             //BUSCAR LOS PROCESOS QUE ESTÉN ASOCIADOS A LA CUENTA 

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Tipo de Abonos</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="TipoAbonoListForm">
+            <div class="p-grid crud-demo">
+                <div class="p-col-12">
+
+                    <div class="card">
+                        <span style="font-weight: bold"><h3>Tipos de Abonos</h3></span>
+
+                        <p:growl id="messages" showDetail="true" />
+
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Nuevo" icon="pi pi-plus"  actionListener="#{tipoAbonoController.prepareCreate}" update=":TipoAbonoCreateForm" oncomplete="PF('TipoAbonoCreateDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" />
+
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Exportar" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="xlsxstream" target="datalist" fileName="Tipos de Abonos"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <p:dataTable id="datalist"
+                                     value="#{tipoAbonoController.items}"
+                                     lazy="false"
+                                     rowKey="#{item.tipoAbonoId}"
+                                     var="item"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     rows="100"
+                                     selectionMode="single"
+                                     selection="#{tipoAbonoController.selected}"
+                                     widgetVar="datalistWidget" reflow="true" emptyMessage="No se han encontrado registros">
+                            <!--
+                                     To enable Lazy Loading, please copy/replace the following lines above,
+                                     and be sure to replace the word HASH with the # symbol:
+                            
+                                     value="HASH{tipoAbonoController.lazyItems}"
+                                     lazy="true"
+                                     rowKey="HASH{item.tipoAbonoId}"  <<< Remove this line
+                            -->
+
+
+                            <f:facet name="header">
+                                <div class="products-table-header ">
+                                    <span class="filter-container ui-input-icon-left ">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#"/>
+                                </f:facet>
+                                <h:outputText value="#{item.tipoAbonoId}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.tipoAbonoNombre}" filterBy="#{item.tipoAbonoNombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{item.tipoAbonoNombre}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.tipoAbonoMontoDefecto}" filterBy="#{item.tipoAbonoMontoDefecto}">
+                                <f:facet name="header">
+                                    <h:outputText value="Monto x Defecto"/>
+                                </f:facet>
+                                <h:outputText value="#{item.tipoAbonoMontoDefecto}">
+                                    <f:convertNumber type="currency" currencySymbol="$ "/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column exportable="false">
+                                <p:commandButton icon="pi pi-search" update="TipoAbonoViewForm, datalist" oncomplete="PF('TipoAbonoViewDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-info" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{tipoAbonoController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-pencil" update="TipoAbonoEditForm, datalist" oncomplete="PF('TipoAbonoEditDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-warning" process="@this">
+                                    <f:setPropertyActionListener value="#{item}" target="#{tipoAbonoController.selected}" />
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{tipoAbonoController.selected}" />
+                                </p:commandButton>
+                            </p:column>
+
+
+                        </p:dataTable>
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Eliminar el TipoAbono? " header="Confirmación" severity="warn">
+                            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{tipoAbonoController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+
+                    </div>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </div>
+            </div>
+        </h:form>
+        <ui:include src="Create.xhtml" />
+        <ui:include src="View.xhtml" />
+        <ui:include src="Edit.xhtml" />
+    </ui:define>
+</ui:composition>

@@ -6,6 +6,8 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Compra;
+import com.areatecnica.sigf.entities.Proveedor;
+import com.areatecnica.sigf.entities.TipoDocumento;
 
 import java.util.Date;
 import java.util.List;
@@ -18,4 +20,6 @@ public interface ICompraDao<T> extends IGenericDAO<T> {
 
     List<Compra> findCompraBetweenDates(Date from, Date to);
 
+    Compra findByFolioProveedorTipo(int folio, Proveedor proveedor, TipoDocumento tipo);
+    
 }

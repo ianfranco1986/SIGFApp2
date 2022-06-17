@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.dao.IRegistroMinutoDao;
-import com.areatecnica.sigf.dao.impl.IRegistroMinutoDaoImpl;
+import com.areatecnica.sigf.dao.impl.RegistroMinutoDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.util.CurrentDate;
 import org.primefaces.model.chart.Axis;
@@ -87,7 +87,7 @@ public class InformePagoMinutosController implements Serializable {
 
     public void handleBusChange() {
         if (this.selected != null) {
-            this.registoMinutoDao = new IRegistroMinutoDaoImpl();
+            this.registoMinutoDao = new RegistroMinutoDaoImpl();
             this.registroMinutosItems = this.registoMinutoDao.findByBusPagaDates(selected, this.fecha, this.currentDate.getMaxDate());
             setChart();
         }

@@ -2,7 +2,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.ICompraBoletoDao;
-import com.areatecnica.sigf.dao.impl.ICompraBoletoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CompraBoletoDaoImpl;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
 import com.areatecnica.sigf.facade.InventarioInternoFacade;
@@ -62,7 +62,7 @@ public class CompraBoletoDetalleController extends AbstractController<CompraBole
 //            this.model = new DetalleCompraBoletosDataModel(itemsDetalleCompraBoleto);
 //            this.totalCompra = 0;
 //        }
-        this.items2 = new ICompraBoletoDaoImpl().findAll();
+        this.items2 = new CompraBoletoDaoImpl().findAll();
     }
 
     public void setItems2(List<CompraBoleto> items2) {

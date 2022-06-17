@@ -1,24 +1,37 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.areatecnica.sigf.entities;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
- * @author ianfr
+ * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "honorario")
-@XmlRootElement
+@EntityListeners(AuditListener.class)
+@Table(name = "honorario", catalog = "sigfdb", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Honorario.findAll", query = "SELECT h FROM Honorario h"),
     @NamedQuery(name = "Honorario.findByHonorarioId", query = "SELECT h FROM Honorario h WHERE h.honorarioId = :honorarioId"),
@@ -42,35 +55,27 @@ public class Honorario extends BaseEntity implements Serializable {
     @Column(name = "honorario_fecha")
     @Temporal(TemporalType.DATE)
     private Date honorarioFecha;
-    @Size(max = 200)
     @Column(name = "honorario_detalle")
     private String honorarioDetalle;
     @Column(name = "honorario_tiene_retencion")
     private Short honorarioTieneRetencion;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "honorario_total")
     private int honorarioTotal;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "honorario_retencion")
     private int honorarioRetencion;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "honorario_liquido")
     private int honorarioLiquido;
-    @JoinColumn(name = "honorario_cuenta_mayor_id", referencedColumnName = "cuenta_mayor_id")
-    @ManyToOne(optional = false)
-    private CuentaMayor honorarioCuentaMayorId;
     @JoinColumn(name = "honorario_emisor_id", referencedColumnName = "emisor_boleta_id")
     @ManyToOne(optional = false)
     private EmisorBoleta honorarioEmisorId;
-    @JoinColumn(name = "honorario_movimiento_id", referencedColumnName = "movimiento_mes_id")
-    @ManyToOne(optional = false)
-    private MovimientoMes honorarioMovimientoId;
     @JoinColumn(name = "honorario_tipo_boleta_id", referencedColumnName = "tipo_boleta_honorario_id")
     @ManyToOne(optional = false)
     private TipoBoletaHonorario honorarioTipoBoletaId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarHonorarioHonorarioId")
+    private List<AuxiliarHonorarios> auxiliarHonorariosList;
 
     public Honorario() {
     }
@@ -150,14 +155,6 @@ public class Honorario extends BaseEntity implements Serializable {
         this.honorarioLiquido = honorarioLiquido;
     }
 
-    public CuentaMayor getHonorarioCuentaMayorId() {
-        return honorarioCuentaMayorId;
-    }
-
-    public void setHonorarioCuentaMayorId(CuentaMayor honorarioCuentaMayorId) {
-        this.honorarioCuentaMayorId = honorarioCuentaMayorId;
-    }
-
     public EmisorBoleta getHonorarioEmisorId() {
         return honorarioEmisorId;
     }
@@ -166,20 +163,20 @@ public class Honorario extends BaseEntity implements Serializable {
         this.honorarioEmisorId = honorarioEmisorId;
     }
 
-    public MovimientoMes getHonorarioMovimientoId() {
-        return honorarioMovimientoId;
-    }
-
-    public void setHonorarioMovimientoId(MovimientoMes honorarioMovimientoId) {
-        this.honorarioMovimientoId = honorarioMovimientoId;
-    }
-
     public TipoBoletaHonorario getHonorarioTipoBoletaId() {
         return honorarioTipoBoletaId;
     }
 
     public void setHonorarioTipoBoletaId(TipoBoletaHonorario honorarioTipoBoletaId) {
         this.honorarioTipoBoletaId = honorarioTipoBoletaId;
+    }
+
+    public List<AuxiliarHonorarios> getAuxiliarHonorariosList() {
+        return auxiliarHonorariosList;
+    }
+
+    public void setAuxiliarHonorariosList(List<AuxiliarHonorarios> auxiliarHonorariosList) {
+        this.auxiliarHonorariosList = auxiliarHonorariosList;
     }
 
     @Override
@@ -196,7 +193,10 @@ public class Honorario extends BaseEntity implements Serializable {
             return false;
         }
         Honorario other = (Honorario) object;
-        return (this.honorarioId != null || other.honorarioId == null) && (this.honorarioId == null || this.honorarioId.equals(other.honorarioId));
+        if ((this.honorarioId == null && other.honorarioId != null) || (this.honorarioId != null && !this.honorarioId.equals(other.honorarioId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override

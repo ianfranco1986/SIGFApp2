@@ -2,7 +2,7 @@ package com.areatecnica.sigf.controllers.login;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IRolMenuDao;
-import com.areatecnica.sigf.dao.impl.IRolMenuDaoImpl;
+import com.areatecnica.sigf.dao.impl.RolMenuDaoImpl;
 import com.areatecnica.sigf.entities.Privilegio;
 import com.areatecnica.sigf.entities.RolMenu;
 import com.areatecnica.sigf.entities.Usuario;
@@ -84,7 +84,7 @@ public class MenuController implements java.io.Serializable {
 
     public List<Menu> getMenuList() {
 
-        dao = new IRolMenuDaoImpl();
+        dao = new RolMenuDaoImpl();
 
         if (menuList == null) {
             menuList = new ArrayList<Menu>();

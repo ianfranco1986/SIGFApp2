@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.BusDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import org.primefaces.event.ToggleEvent;
@@ -29,7 +29,7 @@ public class BusController extends AbstractController<Bus> {
 
     @PostConstruct
     public void init() {
-        this.items = new IBusDaoImpl().findAll();
+        this.items = new BusDaoImpl().findAll();
         this.items.removeIf(e -> e.getBusId() == 1);
     }
 
@@ -66,7 +66,7 @@ public class BusController extends AbstractController<Bus> {
 
     public void findMaxByUnidad() {
         UnidadNegocio unidad = this.getSelected().getBusIdUnidadNegocio();
-        this.getSelected().setBusNumero(new IBusDaoImpl().findMaxNumeroUnidad(unidad));
+        this.getSelected().setBusNumero(new BusDaoImpl().findMaxNumeroUnidad(unidad));
     }
 
     public void deletet(ActionEvent evt) {
@@ -87,7 +87,7 @@ public class BusController extends AbstractController<Bus> {
 
     public void save(ActionEvent event) {
         if (this.selected != null) {
-            Bus bus = new IBusDaoImpl().update(this.selected);
+            Bus bus = new BusDaoImpl().update(this.selected);
             if (bus != null) {
                 JsfUtil.addSuccessMessage("Se ha actualizado el bus");
             } else {
@@ -101,7 +101,7 @@ public class BusController extends AbstractController<Bus> {
 
     public void saveNew(ActionEvent event) {
         if (this.selected != null) {
-            Bus bus = new IBusDaoImpl().create(this.selected);
+            Bus bus = new BusDaoImpl().create(this.selected);
             if (bus != null) {
                 JsfUtil.addSuccessMessage("Se ha registrado el bus");
             } else {

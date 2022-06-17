@@ -2,7 +2,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.ICartolaBancoDao;
-import com.areatecnica.sigf.dao.impl.ICartolaBancoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CartolaBancoDaoImpl;
 import com.areatecnica.sigf.entities.CartolaBanco;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.DetalleCartola;
@@ -62,7 +62,7 @@ public class CartolaBancoController extends AbstractController<CartolaBanco> {
         Calendar calendar = Calendar.getInstance();
 
         this.model = new CartolaBancoDataModel(new ArrayList<>());
-        this.dao = new ICartolaBancoDaoImpl();
+        this.dao = new CartolaBancoDaoImpl();
     }
 
     @Override

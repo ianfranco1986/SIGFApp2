@@ -1,0 +1,345 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Liquidación de Empresas</ui:define>
+
+    <ui:define name="content">
+        <h:form id="LiquidacionForm">
+
+            <h3>Liquidación de Empresas</h3>
+            <p:focus for="idEmpresa"/>  
+
+
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="mes">Empresa</label>
+                    <p:selectOneMenu id="idEmpresa" value="#{registroLiquidacionEmpresaController.empresa}" required="true" requiredMessage="Debe seleccionar una empresa}" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{empresaController.items}"
+                                       var="busIdEmpresaItem"
+                                       itemValue="#{busIdEmpresaItem}"
+                                       itemLabel="#{busIdEmpresaItem.empresaNombre}"
+                                       />
+                        <p:ajax event="valueChange" update=":DataForm:resumen,:CreateAbonoForm, :ListAbonoForm,:CreateCargoForm, :ListCargoForm, :ResultadoForm:resultado, growl" listener="#{registroLiquidacionEmpresaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="mes">Mes/Año</label>
+                    <p:datePicker id="month" view="month" value="#{registroLiquidacionEmpresaController.date}"
+                                  pattern="MM/yyyy"
+                                  yearNavigator="true" yearRange="2022:2030" locale="es">
+                        <p:ajax event="valueChange" update=":DataForm:resumen, :CreateAbonoForm, :ListAbonoForm,:CreateCargoForm, :ListCargoForm, :ResultadoForm:resultado, growl" listener="#{registroLiquidacionEmpresaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    </p:datePicker>
+                </div>
+
+            </div>
+
+
+        </h:form>
+
+
+        <div class="dashboard-banking">
+            <h:form id="DataForm">
+                <p:card id="resumen">
+                    <div class="p-grid overview-boxes">
+                        <div class="p-col-12 p-md-4 p-lg-2">
+                            <div class="overview clearfix">
+                                <div class="overview-icon">
+                                    <p:graphicImage name="images/dashboard-banking/icon-money.png" library="avalon-layout" width="52" styleClass="icon-transfer" />
+                                </div>
+
+                                <div class="overview-text">
+                                    <span class="overview-title">Administración</span>
+                                    <span class="overview-subtitle"><h3>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalAdministracion)}</h3></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-4 p-lg-2">
+                            <div class="overview clearfix">
+                                <div class="overview-icon">
+                                    <p:graphicImage name="images/dashboard-banking/icon-money.png" library="avalon-layout" width="52" styleClass="icon-creditcards" />
+                                </div>
+
+                                <div class="overview-text">
+                                    <span class="overview-title">Cuotas Extras</span>
+                                    <span class="overview-subtitle"><h3>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalCuotaExtra)}</h3></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-4 p-lg-2">
+                            <div class="overview clearfix">
+                                <div class="overview-icon">
+                                    <p:graphicImage name="images/dashboard-banking/icon-money.png" library="avalon-layout" width="52" styleClass="icon-cardtransfer" />
+                                </div>
+
+                                <div class="overview-text">
+                                    <span class="overview-title">Imposiciones</span>
+                                    <span class="overview-subtitle"><h3>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalImposiciones)}</h3></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-4 p-lg-2">
+                            <div class="overview clearfix">
+                                <div class="overview-icon">
+                                    <p:graphicImage name="images/dashboard-banking/icon-money.png" library="avalon-layout" width="52" styleClass="icon-receivemoney" />
+                                </div>
+
+                                <div class="overview-text">
+                                    <span class="overview-title">Dev. Boletos</span>
+                                    <span class="overview-subtitle"><h3>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalBoletos)}</h3></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-4 p-lg-2">
+                            <div class="overview clearfix">
+                                <div class="overview-icon">
+                                    <p:graphicImage name="images/dashboard-banking/icon-money.png" library="avalon-layout" width="52" styleClass="icon-transactions" />
+                                </div>
+
+                                <div class="overview-text">
+                                    <span class="overview-title">Minutos (Recibidos)</span>
+                                    <span class="overview-subtitle"><h3>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalMinutos)}</h3></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-4 p-lg-2">
+                            <div class="overview clearfix">
+                                <div class="overview-icon">
+                                    <p:graphicImage name="images/dashboard-banking/icon-money.png" library="avalon-layout" width="52" styleClass="icon-ticket" />
+                                </div>
+
+                                <div class="overview-text">
+                                    <span class="overview-title">Total Recaudación</span>
+                                    <span class="overview-subtitle"><h3>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalRecaudacion)}</h3></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p:card>
+            </h:form>
+            <p:separator/>
+            <div class="p-grid financial-overview">
+                <div class="p-col-12 p-md-12 p-lg-6">
+                    <div class="card">
+                        <h4 style="text-align: center;">Abonos</h4>
+                        <h:form id="CreateAbonoForm">
+                            <div id="createAbono" class="ui-fluid">
+                                <div class="p-field">
+                                    <p:selectOneMenu id="tipoAbonoItems" value="#{registroLiquidacionEmpresaController.tipoAbono}" converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="Tipo"/>
+                                        <f:selectItems value="#{registroLiquidacionEmpresaController.tipoAbonoItems}"
+                                                       var="tipoAbono"
+                                                       itemValue="#{tipoAbono}"
+                                                       itemLabel="#{tipoAbono.tipoAbonoNombre}"
+                                                       />
+                                        <p:ajax event="valueChange" update=":growl, montoAbono" listener="#{registroLiquidacionEmpresaController.handleTipoAbonoChange}" oncomplete="PF('descripcionAbono').getJQ().focus();"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="p-field">
+                                    <p:inputText id="descripcionAbono" widgetVar="descripcionAbono" placeholder="Descripción" value="#{registroLiquidacionEmpresaController.descripcionAbono}" autocomplete="off" required="true" requiredMessage="Debe ingresar una descripción" 
+                                                 >
+                                        <p:ajax event="keydown" update="montoAbono" oncomplete="PF('montoAbono').getJQ().focus();"/>
+                                    </p:inputText>
+
+                                </div>
+                                <div class="p-field">
+                                    <p:inputNumber id="montoAbono" widgetVar="montoAbono" placeholder="Monto" value="#{registroLiquidacionEmpresaController.montoAbono}" autocomplete="off" required="true" requiredMessage="Debe ingresar un valor" />
+                                </div>
+
+                                <div class="p-field">
+                                    <p:commandButton 
+                                        actionListener="#{registroLiquidacionEmpresaController.saveNewAbono}" 
+                                        value="Guardar" 
+                                        icon="pi pi-save" 
+                                        update=":ListAbonoForm:cellAbonos, :ResultadoForm:resultado, :growl" 
+                                        styleClass="p-mr-2 p-mb-2"
+                                        ajax="true"
+                                        >
+                                        <p:confirm 
+                                            header="#{myBundle.ConfirmationHeader}" 
+                                            message="#{myBundle.ConfirmCreateMessage}" 
+                                            icon="ui-icon-alert"/>
+                                    </p:commandButton>
+
+                                </div>
+                            </div>   
+                        </h:form>
+
+                        <h:form id="ListAbonoForm">
+                            <div class="panel-inner">
+                                <p:dataTable 
+                                    id="cellAbonos" 
+                                    var="abono" 
+                                    value="#{registroLiquidacionEmpresaController.abonoLiquidacionItems}" 
+                                    editable="true"
+                                    editMode="cell" 
+                                    widgetVar="cellAbonos">
+
+                                    <p:ajax event="cellEdit" listener="#{registroLiquidacionEmpresaController.onCellEdit}" update=":growl"/>
+
+                                    <p:column headerText="Cod." width="20">
+                                        <h:outputText value="#{abono.abonoLiquidacionTipoId.tipoAbonoId}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Tipo" width="130">
+                                        <h:outputText value="#{abono.abonoLiquidacionTipoId.tipoAbonoNombre}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Descripción" width="200">
+                                        <h:outputText value="#{abono.abonoLiquidacionDescripcion}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Valor">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{abono.abonoLiquidacionMonto}">
+                                                    <f:convertNumber type="currency" currencySymbol="$ "/>
+                                                </h:outputText>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputNumber value="#{abono.abonoLiquidacionMonto}" style="width:50%" label="Monto" symbol="$" />
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </h:form>
+
+                    </div>
+                </div>
+
+                <div class="p-col-12 p-md-12 p-lg-6 ">
+                    <div class="card">
+                        <h4 style="text-align: center;">Cargos</h4>
+                        <h:form id="CreateCargoForm">
+                            <div class="ui-fluid">
+                                <div class="p-field">
+                                    <p:selectOneMenu id="tipoCargoItems" value="#{registroLiquidacionEmpresaController.tipoCargo}" converter="omnifaces.SelectItemsConverter" >
+                                        <f:selectItem itemLabel="Tipo"/>
+                                        <f:selectItems value="#{registroLiquidacionEmpresaController.tipoCargoItems}"
+                                                       var="tipoCargo"
+                                                       itemValue="#{tipoCargo}"
+                                                       itemLabel="#{tipoCargo.tipoCargoNombre}"
+                                                       />
+                                        <p:ajax event="valueChange" update=":growl, montoCargo" listener="#{registroLiquidacionEmpresaController.handleTipoCargoChange}" oncomplete="PF('descripcionCargo').getJQ().focus();"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="p-field">
+                                    <p:inputText id="descripcionCargo" placeholder="Descripción" widgetVar="descripcionCargo" value="#{registroLiquidacionEmpresaController.descripcionCargo}" autocomplete="off" required="true" requiredMessage="Debe ingresar una descripción" onkeypress="if (event.keyCode == 13) {
+                                                PF('montoCargo').getJQ().focus();
+                                            }"/>
+                                </div>
+                                <div class="p-field">
+                                    <p:inputNumber id="montoCargo" placeholder="Monto" widgetVar="montoCargo" value="#{registroLiquidacionEmpresaController.montoCargo}" autocomplete="off" required="true" requiredMessage="Debe ingresar un valor" />
+                                </div>
+
+                                <div class="p-field">
+                                    <p:commandButton 
+                                        actionListener="#{registroLiquidacionEmpresaController.saveNewCargo}" 
+                                        value="Guardar" 
+                                        icon="pi pi-save" 
+                                        update="ListCargoForm:cellCargos,:ResultadoForm:resultado, :growl, " 
+                                        styleClass="p-mr-2 p-mb-2" 
+                                        >
+                                        <p:confirm 
+                                            header="#{myBundle.ConfirmationHeader}" 
+                                            message="#{myBundle.ConfirmCreateMessage}" 
+                                            icon="ui-icon-alert"/>
+                                    </p:commandButton>
+
+                                </div>
+                            </div>
+                        </h:form>
+
+                        <h:form id="ListCargoForm">
+                            <div class="panel-inner">
+                                <p:dataTable 
+                                    id="cellCargos" 
+                                    var="cargo" 
+                                    value="#{registroLiquidacionEmpresaController.cargoLiquidacionItems}" 
+                                    editable="true"
+                                    editMode="cell" 
+                                    widgetVar="cellCargos">
+
+                                    <p:ajax event="cellEdit" listener="#{registroLiquidacionEmpresaController.onCellEdit}" update=":growl"/>
+
+                                    <p:column headerText="Cod." width="20">
+                                        <h:outputText value="#{cargo.cargoLiquidacionCargoId.tipoCargoId}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Tipo" width="130">
+                                        <h:outputText value="#{cargo.cargoLiquidacionCargoId.tipoCargoNombre}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Descripción" width="200">
+                                        <h:outputText value="#{cargo.cargoLiquidacionDescripcion}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Valor">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{cargo.cargoLiquidacionMonto}">
+                                                    <f:convertNumber type="currency" currencySymbol="$ "/>
+                                                </h:outputText>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputNumber value="#{cargo.cargoLiquidacionMonto}" style="width:90%" label="Monto" symbol="$"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+
+                        </h:form>
+
+                    </div>
+                </div>
+            </div>
+            
+            <h:form id="ResultadoForm">
+                <p:card id="resultado">
+                    <div class="p-grid financial-overview">
+                        <div class="p-col-12 p-md-12 p-lg-6">
+                            <div class="financial-overview-total">
+                                <span class="financial-overview-total-label"><h4>Total Abonos</h4></span>
+                                <span class="financial-overview-total-value"><h4>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalIngresos)}</h4></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-6">
+                            <div class="financial-overview-total">
+                                <span class="financial-overview-total-label"><h4>Total Cargos</h4></span>
+                                <span class="financial-overview-total-value"><h4>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalEgresos)}</h4></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="p-grid financial-overview">
+                        <div class="p-col-12 p-md-12 p-lg-12">
+                            <div class="financial-overview-total">
+                                <span class="financial-overview-total-label"><h2>Saldo</h2></span>
+                                <span class="financial-overview-total-value"><h2>$ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.saldo)}</h2></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </p:card>
+
+            </h:form>
+        </div>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </ui:define>
+</ui:composition>

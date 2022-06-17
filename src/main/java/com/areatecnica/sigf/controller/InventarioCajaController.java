@@ -1,8 +1,8 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.dao.impl.IBoletoDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
+import com.areatecnica.sigf.dao.impl.BoletoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.InventarioCajaDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.InventarioCaja;
@@ -34,10 +34,10 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
     public InventarioCajaController() {
         // Inform the Abstract parent controller of the concrete InventarioCaja Entity
         super(InventarioCaja.class);
-        this.itemsBoletos = new IBoletoDaoImpl().findByCuenta(this.getUserCount());
-        this.itemsCajaRecaudacion = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.itemsBoletos = new BoletoDaoImpl().findByCuenta(this.getUserCount());
+        this.itemsCajaRecaudacion = new CajaRecaudacionDaoImpl().findAllActive();
 
-        this.items2 = new IInventarioCajaDaoImpl().findByEstado(false, this.getUserCount());
+        this.items2 = new InventarioCajaDaoImpl().findByEstado(false, this.getUserCount());
     }
 
     public List<InventarioCaja> getItems2() {

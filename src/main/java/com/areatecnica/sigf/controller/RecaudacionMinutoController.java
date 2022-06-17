@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionMinutoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRegistroMinutoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.RecaudacionMinutoDaoImpl;
+import com.areatecnica.sigf.dao.impl.RegistroMinutoDaoImpl;
 import com.areatecnica.sigf.entities.*;
 
 import javax.annotation.PostConstruct;
@@ -50,14 +50,14 @@ public class RecaudacionMinutoController extends AbstractController<RecaudacionM
     @PostConstruct
     public void init() {
         this.fecha = new Date();
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.cajaRecaudacionItems = new CajaRecaudacionDaoImpl().findAllActive();
         this.privilegio = new Privilegio();
     }
 
     public void load() {
         if (this.cajaRecaudacion != null) {
 
-            this.items = new IRecaudacionMinutoDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
+            this.items = new RecaudacionMinutoDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
             if (!this.items.isEmpty()) {
                 this.totalRecaudacion = 0;
                 for (RecaudacionMinuto r : this.items) {
@@ -85,9 +85,9 @@ public class RecaudacionMinutoController extends AbstractController<RecaudacionM
                 for (RecaudacionMinuto m : r.getRecaudacionMinutoList()) {
                     folios.append(", ").append(m.getRecaudacionMinutoIdRegistroMinuto().getRegistroMinutoId());
                     m.getRecaudacionMinutoIdRegistroMinuto().setRegistroMinutoRecaudado(Boolean.FALSE);
-                    new IRegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
+                    new RegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
                     this.items.remove(m);
-                    new IRecaudacionMinutoDaoImpl().delete(m);
+                    new RecaudacionMinutoDaoImpl().delete(m);
                 }
 
                 //this.registroMinuto = this.getSelected().getRecaudacionMinutoIdRegistroMinuto();
@@ -228,9 +228,9 @@ public class RecaudacionMinutoController extends AbstractController<RecaudacionM
                     for (RecaudacionMinuto m : rr.getRecaudacionMinutoList()) {
                         folios = folios + ", " + m.getRecaudacionMinutoIdRegistroMinuto().getRegistroMinutoId();
                         m.getRecaudacionMinutoIdRegistroMinuto().setRegistroMinutoRecaudado(Boolean.FALSE);
-                        new IRegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
+                        new RegistroMinutoDaoImpl().update(m.getRecaudacionMinutoIdRegistroMinuto());
                         this.items.remove(m);
-                        new IRecaudacionMinutoDaoImpl().delete(m);
+                        new RecaudacionMinutoDaoImpl().delete(m);
                         JsfUtil.addSuccessMessage("Se ha eliminado la recaudación de minutos #" + rr.getRecaudacionId());
                     }
 

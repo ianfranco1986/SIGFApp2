@@ -80,6 +80,12 @@ public class Proveedor extends BaseEntity implements Serializable {
         this.proveedorRut = proveedorRut;
         this.proveedorNombre = proveedorNombre;
     }
+    
+    public Proveedor(String proveedorRut, String proveedorNombre, Comuna comuna) {
+        this.proveedorRut = proveedorRut;
+        this.proveedorNombre = proveedorNombre;
+        this.proveedorComunaId = comuna; 
+    }
 
     public Integer getProveedorId() {
         return proveedorId;

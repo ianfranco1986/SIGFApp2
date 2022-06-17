@@ -7,6 +7,12 @@
     color: #ffffff !important;
 }
 
+.compra {
+    background-color: #6ba6d9 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
 .custom-marker {
     display: flex;
     width: 2rem;
@@ -63,6 +69,22 @@
 .order-badge.order-returned {
     background: #ECCFFF;
     color: #694382;
+}
+.compra {
+    border-radius: 2px;
+    padding: 0.25em 0.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+.compra.compra-registrada {
+    background: #C8E6C9;
+    color: #256029;
+}
+.compra.compra-noregistrada {
+    background: #FFCDD2;
+    color: #C63737;
 }
 
 .product-badge {
@@ -328,20 +350,20 @@ pre {
     float: left;
     font-weight: 600;
     color: #777;
-    font-size: 16px;
+    font-size: 19px;
 }
 .dashboard-banking .financial-overview .financial-overview-total-value {
     float: right;
     font-size: 19px;
-    font-weight: bold;
+    font-weight: 600;
     text-align: right;
     color: #337ab7;
 }
 .dashboard-banking .financial-overview .financial-overview-total-value::before {
-    font-size: 14px;
+    font-size: 19px;
     font-weight: bold;
     line-height: 17px;
-    content: "$";
+    
     color: #6ba6d9;
 }
 .dashboard-banking .financial-overview .financial-overview-line {

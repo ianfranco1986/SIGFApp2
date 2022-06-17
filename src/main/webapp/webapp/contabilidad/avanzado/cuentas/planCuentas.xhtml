@@ -48,7 +48,8 @@
                                      selectionMode="single"
                                      selection="#{cuentaMayorController.selected}"
                                      emptyMessage="No se han encontrado registros"
-                                     widgetVar="datalistWidget">
+                                     widgetVar="datalistWidget"
+                                     >
                             <!--
                                      To enable Lazy Loading, please copy/replace the following lines above,
                                      and be sure to replace the word HASH with the # symbol:
@@ -74,7 +75,7 @@
                             </f:facet>
 
 
-                            <p:column groupRow="true" width="150" filterBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}">
+                            <p:column groupRow="true" width="100" filterBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaNombre}">
                                 <f:facet name="header">
                                     <h:outputText value="Tipo"/>
                                 </f:facet>
@@ -83,37 +84,86 @@
 
 
 
-                            <p:column groupRow="true" filterBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}">
+                            <p:column groupRow="true" filterBy="#{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}" width="150">
                                 <f:facet name="header">
                                     <h:outputText value="Sub-Tipo"/>
                                 </f:facet>
                                 <h:outputText value="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId}#{item.cuentaMayorSubTipoId.planCuentaSubTipoCodigo} #{item.cuentaMayorSubTipoId.planCuentaSubTipoNombre}"/>
                             </p:column>
 
-                            <p:column sortBy="#{item.cuentaMayorNombre}" width="350" filterBy="#{item.cuentaMayorNombre}">
+                            <p:column sortBy="#{item.cuentaMayorNombre}" filterBy="#{item.cuentaMayorNombre}" width="300">
                                 <f:facet name="header">
                                     <h:outputText value="Cuenta Mayor"/>
                                 </f:facet>
                                 <h:outputText value="#{item.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId}#{item.cuentaMayorSubTipoId.planCuentaSubTipoCodigo}#{item.cuentaMayorCodigo} #{item.cuentaMayorNombre}"/>
                             </p:column>
 
-                            <p:column sortBy="#{item.cuentaMayorCompras}">
+                            <p:column sortBy="#{item.cuentaMayorCc}" width="30">
                                 <f:facet name="header">
-                                    <h:outputText value="Cod. Análisis"/>
+                                    <h:outputText value="CC"/>
                                 </f:facet>
-                                <h:selectBooleanCheckbox id="cuentaMayorCompras" value="#{item.cuentaMayorCodigoAnalisis}"  disabled="true"/>
+                                <h:selectBooleanCheckbox id="cuentaMayorCc" value="#{item.cuentaMayorCc}"  disabled="true" label="Centro de Costos"/>
                             </p:column>
 
-                            <p:column sortBy="#{item.cuentaMayorCompras}">
+                            <p:column sortBy="#{item.cuentaMayorCompras}" width="30">
                                 <f:facet name="header">
-                                    <h:outputText value="Libro Auxiliar"/>
+                                    <h:outputText value="COM"/>
                                 </f:facet>
-                                <h:selectBooleanCheckbox id="cuentaMayorAuxiliar" value="#{item.cuentaMayorAuxiliar}"  disabled="true"/>
+                                <h:selectBooleanCheckbox id="cuentaMayorCompras" value="#{item.cuentaMayorCompras}"  disabled="true"/>
                             </p:column>
 
-                            <p:column sortBy="#{item.cuentaMayorCompras}">
+                            <p:column sortBy="#{item.cuentaMayorRemuneraciones}" width="30">
                                 <f:facet name="header">
-                                    <h:outputText value="Cuenta Única"/>
+                                    <h:outputText value="REM"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorRem" value="#{item.cuentaMayorRemuneraciones}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorPresupuesto}" width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="PRE"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorPresupuesto" value="#{item.cuentaMayorPresupuesto}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorBanco}" width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="BAN"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorBanco" value="#{item.cuentaMayorBanco}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorHonorarios}" width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="HON"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorHonorarios" value="#{item.cuentaMayorHonorarios}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorTesoreria}" width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="TES"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorTesoreria" value="#{item.cuentaMayorTesoreria}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorCompras}" width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="VEN"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorVentas" value="#{item.cuentaMayorVentas}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorActivosFijos}" width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="AF"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="cuentaMayorActivosFijos" value="#{item.cuentaMayorActivosFijos}"  disabled="true"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.cuentaMayorUnicaId}" width="100">
+                                <f:facet name="header">
+                                    <h:outputText value="C.Única"/>
                                 </f:facet>
                                 <h:outputText id="cuentaMayorUnica" value="#{item.cuentaMayorUnicaId.cuentaUnicaNombre}"  />
                             </p:column>

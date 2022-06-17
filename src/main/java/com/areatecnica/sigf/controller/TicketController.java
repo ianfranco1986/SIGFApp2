@@ -1,6 +1,6 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.dao.impl.ITicketDaoImpl;
+import com.areatecnica.sigf.dao.impl.TicketDaoImpl;
 import com.areatecnica.sigf.entities.Ticket;
 
 import javax.faces.event.ActionEvent;
@@ -18,7 +18,7 @@ public class TicketController extends AbstractController<Ticket> {
     public TicketController() {
         // Inform the Abstract parent controller of the concrete Ticket Entity
         super(Ticket.class);
-        this.items = new ITicketDaoImpl().findAllByUser(this.getCurrentUser());
+        this.items = new TicketDaoImpl().findAllByUser(this.getCurrentUser());
     }
 
     public List<Ticket> getItems() {

@@ -2,6 +2,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.*;
+import com.areatecnica.sigf.dto.CompraDTO;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.CompraDataModel;
 import com.areatecnica.sigf.reports.ReportController;
@@ -23,13 +24,7 @@ public class CompraController extends AbstractController<Compra> {
 
     @Inject
     private ReportController reportController;
-    @Inject
-    private CuentaMayorController compraCuentaIdController;
-    @Inject
-    private ProveedorController compraProveedorIdController;
-    @Inject
-    private TipoDocumentoController compraTipoDocumentoIdController;
-
+    
     private CompraDataModel model;
 
     private TipoDocumento tipoDocumento;
@@ -45,6 +40,7 @@ public class CompraController extends AbstractController<Compra> {
     private List<Compra> selectedItems;
     private List<Proveedor> proveedorItems;
     private List<CuentaBancaria> cuentaItems;
+    private List<CompraDTO> dtoItems; 
     private Proveedor proveedor;
     private Empresa empresaNandu;
 
@@ -82,13 +78,13 @@ public class CompraController extends AbstractController<Compra> {
         this.fechaMovimiento = new Date();
         this.fechaLiquidacion = new Date();
         this.proveedorItems = new ProveedorDaoImpl().findAll();
-        this.tipoMoviento = new ITipoMovimientoDaoImpl().findById(1);
+        this.tipoMoviento = new TipoMovimientoDaoImpl().findById(1);
 
         this.prepareCreate(null);
         this.proveedor = new Proveedor();
 
-        this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
-        this.empresaNandu = new IEmpresaDaoImpl().findById(7);
+        this.cuentaItems = new CuentaBancariaDaoImpl().findAll();
+        this.empresaNandu = new EmpresaDaoImpl().findById(7);
         load();
     }
 
@@ -97,11 +93,11 @@ public class CompraController extends AbstractController<Compra> {
 
         this.items = new CompraDaoImpl().findCompraBetweenDates(this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
 
-        this.cuentaMayorItems = new ICuentaMayorDaoImpl().findByCompras();
+        this.cuentaMayorItems = new CuentaMayorDaoImpl().findByCompras();
         
-        this.cuentaMayorItemsContabilidad = new ICuentaMayorDaoImpl().findByBanco();
+        this.cuentaMayorItemsContabilidad = new CuentaMayorDaoImpl().findByBanco();
 
-        this.tipoDocumentoItems = new ITipoDocumentoDaoImpl().findAll();
+        this.tipoDocumentoItems = new TipoDocumentoDaoImpl().findAll();
 
         if (this.items.isEmpty()) {
             JsfUtil.addWarningMessage("No se han encontrado registros");
@@ -116,7 +112,7 @@ public class CompraController extends AbstractController<Compra> {
 
     public void handleCuentaChange() {
         if (this.cuentaBancaria != null) {
-            MovimientoMes movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            MovimientoMes movimientoDocumento = new MovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
             if (movimientoDocumento == null) {
                 movimientoDocumento = new MovimientoMes();
                 movimientoDocumento.setMovimientoMesNumeroDocumento(1);
@@ -130,7 +126,6 @@ public class CompraController extends AbstractController<Compra> {
         if (this.getSelected() != null) {
 
             this.getSelected().setCompraProveedorId(proveedor);
-            this.getSelected().setCompraCuentaMayorId(cuentaMayor);
             this.getSelected().setCompraTipoDocumentoId(tipoDocumento);
 
             MovimientoMes mov = new MovimientoMes();
@@ -148,7 +143,6 @@ public class CompraController extends AbstractController<Compra> {
             mov.setMovimientoMesTipoDocumento(documento);
             mov.setMovimientoMesNumeroDocumento(this.documento);
 
-            this.getSelected().setCompraMovimientoId(mov);
 
             Compra t = new CompraDaoImpl().create(this.getSelected());
 
@@ -174,7 +168,7 @@ public class CompraController extends AbstractController<Compra> {
         this.getSelected().setCompraFechaDocumento(new Date());
         this.getSelected().setCompraFechaAcuse(new Date());
         this.getSelected().setCompraFechaRecepcion(new Date());
-        this.getSelected().setCompraIva(0);
+        this.getSelected().setCompraIvaRecuperable(0);
         this.getSelected().setCompraNeto(0);
         this.getSelected().setCompraExento(0);
         this.getSelected().setCompraOtrosImpuestos(0);
@@ -186,9 +180,7 @@ public class CompraController extends AbstractController<Compra> {
     public void prepareUpdate(ActionEvent event) {
         if (this.getSelected() != null) {
             this.setTitle("Actualizando Compra N°: " + this.getSelected().getCompraFolio());
-            this.setCuentaBancaria(this.getSelected().getCompraMovimientoId().getMovimientoMesCuentaBancoId());
             this.setProveedor(this.getSelected().getCompraProveedorId());
-            this.setCuentaMayor(this.getSelected().getCompraCuentaMayorId());
             this.setTipoDocumento(this.getSelected().getCompraTipoDocumentoId());
 
         } else {
@@ -276,14 +268,14 @@ public class CompraController extends AbstractController<Compra> {
     public void calculaIva() {
         if (this.getSelected().getCompraNeto() > 0) {
             Double d = this.getSelected().getCompraNeto() * 0.19;
-            this.getSelected().setCompraIva(d.intValue());
-            this.getSelected().setCompraTotal(this.getSelected().getCompraIva() + this.getSelected().getCompraNeto());
+            this.getSelected().setCompraIvaRecuperable(d.intValue());
+            this.getSelected().setCompraTotal(this.getSelected().getCompraIvaRecuperable()+ this.getSelected().getCompraNeto());
         }
     }
 
     public void calculaTotal() {
         if (this.getSelected().getCompraNeto() > 0) {
-            this.getSelected().setCompraTotal(this.getSelected().getCompraIva() + this.getSelected().getCompraNeto() + this.getSelected().getCompraOtrosImpuestos() + this.getSelected().getCompraExento());
+            this.getSelected().setCompraTotal(this.getSelected().getCompraIvaRecuperable()+ this.getSelected().getCompraNeto() + this.getSelected().getCompraOtrosImpuestos() + this.getSelected().getCompraExento());
         }
     }
 

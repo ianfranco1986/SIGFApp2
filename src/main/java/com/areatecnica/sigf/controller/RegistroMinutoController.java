@@ -2,9 +2,9 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IRegistroMinutoDao;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRegistroMinutoDaoImpl;
+import com.areatecnica.sigf.dao.impl.BusDaoImpl;
+import com.areatecnica.sigf.dao.impl.ProcesoRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.RegistroMinutoDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.RecaudacionMinuto;
 import com.areatecnica.sigf.entities.RegistroMinuto;
@@ -41,10 +41,10 @@ public class RegistroMinutoController extends AbstractController<RegistroMinuto>
     @PostConstruct
     @Override
     public void initParams() {
-        this.dao = new IRegistroMinutoDaoImpl();
+        this.dao = new RegistroMinutoDaoImpl();
         this.fecha = new Date();
-        this.fromBusItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
-        this.toBusItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
+        this.fromBusItems = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
+        this.toBusItems = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
     }
 
     public void load() {
@@ -110,7 +110,7 @@ public class RegistroMinutoController extends AbstractController<RegistroMinuto>
         RegistroMinuto temp = (RegistroMinuto) event.getObject();
 
         try {
-            new IRegistroMinutoDaoImpl().update(temp);
+            new RegistroMinutoDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado el registro");
         } catch (Exception e) {
             JsfUtil.addErrorMessage("Ha ocurrido un error al guardar los cambios");

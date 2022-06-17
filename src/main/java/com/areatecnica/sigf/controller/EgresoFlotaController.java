@@ -3,8 +3,8 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IEgresoDao;
 import com.areatecnica.sigf.dao.IEgresoFlotaDao;
-import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEgresoFlotaDaoImpl;
+import com.areatecnica.sigf.dao.impl.EgresoDaoImpl;
+import com.areatecnica.sigf.dao.impl.EgresoFlotaDaoImpl;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.EgresoFlota;
 import com.areatecnica.sigf.entities.Flota;
@@ -123,8 +123,8 @@ public class EgresoFlotaController extends AbstractController<EgresoFlota> {
 
     public void find(ActionEvent event) {
         if (this.flota != null) {
-            this.egresoDao = new IEgresoDaoImpl();
-            this.egresoFlotaDao = new IEgresoFlotaDaoImpl();
+            this.egresoDao = new EgresoDaoImpl();
+            this.egresoFlotaDao = new EgresoFlotaDaoImpl();
             this.egresoFlotaIdEgresoController.setItems(this.egresoDao.findAllByCuenta(this.getUserCount()));
             this.selectedItems = this.egresoFlotaDao.findAllByFlota(flota);
             this.setModel(new EgresoFlotaDataModel(selectedItems));

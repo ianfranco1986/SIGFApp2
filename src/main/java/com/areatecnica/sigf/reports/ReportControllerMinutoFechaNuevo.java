@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.BusDaoImpl;
 import com.areatecnica.sigf.dao.impl.UnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Flota;
@@ -267,15 +267,15 @@ public class ReportControllerMinutoFechaNuevo implements Serializable {
         this.selectedItems = new ArrayList<>();
         if (this.flota != null) {
             if (this.unidadNegocio != null) {
-                this.items = new IBusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
+                this.items = new BusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findAllByFlota(flota);
+                this.items = new BusDaoImpl().findAllByFlota(flota);
             }
         } else {
             if (this.unidadNegocio != null) {
-                this.items = new IBusDaoImpl().findByUnidad(unidadNegocio);
+                this.items = new BusDaoImpl().findByUnidad(unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findAll();
+                this.items = new BusDaoImpl().findAll();
             }
         }
     }
@@ -284,14 +284,14 @@ public class ReportControllerMinutoFechaNuevo implements Serializable {
         this.selectedItems = new ArrayList<>();
         if (this.unidadNegocio != null) {
             if (this.flota != null) {
-                this.items = new IBusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
+                this.items = new BusDaoImpl().findAllByFlotaUnidad(flota, unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findByUnidad(unidadNegocio);
+                this.items = new BusDaoImpl().findByUnidad(unidadNegocio);
             }
         } else if (this.flota != null) {
-            this.items = new IBusDaoImpl().findAllByFlota(flota);
+            this.items = new BusDaoImpl().findAllByFlota(flota);
         } else {
-            this.items = new IBusDaoImpl().findAll();
+            this.items = new BusDaoImpl().findAll();
         }
     }
 

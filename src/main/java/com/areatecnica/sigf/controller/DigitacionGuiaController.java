@@ -80,7 +80,7 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
      */
     @PostConstruct
     public void init() {
-        this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
+        this.cajaRecaudacionDao = new CajaRecaudacionDaoImpl();
         this.setCajaRecaudacionList((List<CajaRecaudacion>) this.cajaRecaudacionDao.findAll());
 
         if (this.getCajaRecaudacionList().size() == 1) {
@@ -96,7 +96,7 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
         this.getResumenRecaudacion().setResumenRecaudacionCerrado(Boolean.FALSE);
         this.setEstadoProceso(Boolean.FALSE);
         this.ventaCombustibleDao = new VentaCombustibleDaoImpl();
-        this.registroMinutoDao = new IRegistroMinutoDaoImpl();
+        this.registroMinutoDao = new RegistroMinutoDaoImpl();
     }
 
     public DigitacionGuiaController() {
@@ -711,7 +711,7 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
             }
         }
 
-        this.recaudacionDao = new IRecaudacionDaoImpl();
+        this.recaudacionDao = new RecaudacionDaoImpl();
         this.recaudacionItems = this.recaudacionDao.findByProcesoCajaFechaRecaudacion(procesoRecaudacion, cajaRecaudacion, fechaRecaudacion);
         JsfUtil.addSuccessMessage("Cantidad de Guías Registradas: " + this.recaudacionItems.size());
 
@@ -764,7 +764,7 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
         this.setBusesList(busesProceso(this.procesoRecaudacion));
         JsfUtil.addSuccessMessage("N° de Buses en el Proceso: " + this.getBusesList().size());
 
-        this.resumenRecaudacionDao = new IResumenRecaudacionDaoImpl();
+        this.resumenRecaudacionDao = new ResumenRecaudacionDaoImpl();
         this.resumenRecaudacion = this.resumenRecaudacionDao.findByCajaProcesoDate(cajaRecaudacion, procesoRecaudacion, fechaRecaudacion);
 
 //        if (this.resumenRecaudacion == null) {
@@ -810,7 +810,7 @@ public class DigitacionGuiaController extends AbstractController<Recaudacion> {
     }
 
     private List<Bus> busesProceso(ProcesoRecaudacion procesoRecaudacion) {
-        this.busDao = new IBusDaoImpl();
+        this.busDao = new BusDaoImpl();
         return this.busDao.findByProceso(procesoRecaudacion);
     }
 

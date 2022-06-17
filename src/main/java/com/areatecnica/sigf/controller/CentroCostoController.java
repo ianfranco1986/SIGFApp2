@@ -41,19 +41,6 @@ public class CentroCostoController extends AbstractController<CentroCosto> {
         this.setIsTrabajadorListEmpty();
     }
 
-    /**
-     * Sets the "selected" attribute of the Cuenta controller in order to
-     * display its data in its View dialog.
-     *
-     * @param event Event object for the widget that triggered an action
-     */
-    public void prepareCentroCostoIdCuenta(ActionEvent event) {
-        CentroCosto selected = this.getSelected();
-        if (selected != null && centroCostoIdCuentaController.getSelected() == null) {
-            centroCostoIdCuentaController.setSelected(selected.getCentroCostoIdCuenta());
-        }
-    }
-
     public boolean getIsTrabajadorListEmpty() {
         return this.isTrabajadorListEmpty;
     }
@@ -66,22 +53,6 @@ public class CentroCostoController extends AbstractController<CentroCosto> {
         } else {
             this.isTrabajadorListEmpty = true;
         }
-    }
-
-    /**
-     * Sets the "items" attribute with a collection of Trabajador entities that
-     * are retrieved from CentroCosto and returns the navigation outcome.
-     *
-     * @return navigation outcome for Trabajador page
-     */
-    public String navigateTrabajadorList() {
-        CentroCosto selected = this.getSelected();
-        if (selected != null) {
-            CentroCostoFacade ejbFacade = (CentroCostoFacade) this.getFacade();
-            List<Trabajador> selectedTrabajadorList = ejbFacade.findTrabajadorList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Trabajador_items", selectedTrabajadorList);
-        }
-        return "/app/trabajador/index";
     }
 
 }

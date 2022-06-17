@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../templateTesoreria.xhtml">
+
+    <ui:define name="content" class="ui-corner-all" >
+
+        <p:panel id="CargoBusCreateDlg" widgetVar="CargoBusCreateDialog" header="Traspaso de Cargos x Mes">
+
+            <h:form id="CargoBusCreateForm">
+
+                <h:panelGroup id="display" >
+                    <p:focus context="tipoCargo"/>
+                    <h:panelGrid columns="2" columnClasses="column">
+                        <p:outputLabel for="mes" value="Mes:" />
+                        <p:selectOneMenu id="mes" value="#{traspasoCargoBusController.mes}" style="width:125px">
+                            <f:selectItem itemLabel="Enero" itemValue="1" />
+                            <f:selectItem itemLabel="Febrero" itemValue="2" />
+                            <f:selectItem itemLabel="Marzo" itemValue="3" />
+                            <f:selectItem itemLabel="Abril" itemValue="4" />
+                            <f:selectItem itemLabel="Mayo" itemValue="5" />
+                            <f:selectItem itemLabel="Junio" itemValue="6" />
+                            <f:selectItem itemLabel="Julio" itemValue="7" />
+                            <f:selectItem itemLabel="Agosto" itemValue="8" />
+                            <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                            <f:selectItem itemLabel="Octubre" itemValue="10" />
+                            <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                            <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                            <p:ajax listener="#{traspasoCargoBusController.setDate}" event="valueChange" update="growl, tipoCargo, CargoBusListForm:datalist" global="false"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="anio" value="Año:" />
+                        <p:inputText id="anio" value="#{traspasoCargoBusController.anio}" size="5" >
+                            <p:ajax event="valueChange" listener="#{traspasoCargoBusController.setDate}" />
+                        </p:inputText>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoBusLabel_tipoCargo}" for="tipoCargo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoCargo" value="#{traspasoCargoBusController.selected.tipoCargo}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_tipoCargo}" converter="tipoCargoConverter">
+                                <f:selectItem itemLabel=""/>
+                                <f:selectItems value="#{traspasoCargoBusController.tipoCargoItems}"
+                                               var="tipoCargoItem"
+                                               itemValue="#{tipoCargoItem}"
+                                               itemLabel="#{tipoCargoItem}"
+                                               />
+                                <p:ajax event="valueChange" listener="#{traspasoCargoBusController.loadCargos}" update="CargoBusListForm:datalist" global="false"/>
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="F. Cargo" for="fechaInicioCargoBus" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaInicioCargoBus" pattern="dd/MM/yyyy" value="#{traspasoCargoBusController.fechaCargo}" title="#{myBundle.CreateCargoBusTitle_fechaInicioCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_fechaInicioCargoBus}" onfocus="this.setSelectionRange(0, 2)">
+                                <p:ajax event="blur" listener="#{traspasoCargoBusController.loadFecha}" update="CargoBusListForm:datalist" global="false"/>
+                            </p:calendar> 
+                        </h:panelGroup>
+
+                        <p:outputLabel value="Descripción:" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{traspasoCargoBusController.selected.descripcion}" title="#{myBundle.CreateAbonoBusTitle_montoAbonoBus}"  onfocus="this.setSelectionRange(0, this.value.length)" >
+                                <p:ajax event="blur" listener="#{traspasoCargoBusController.loadDescripcion}" update="CargoBusListForm:datalist" global="false"/>
+                            </p:inputText>                            
+                        </h:panelGroup>
+
+                        <p:outputLabel value="N° Cuota:" for="numeroCuotasCargoBus" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroCuotasCargoBus" value="#{traspasoCargoBusController.selected.numeroCuotasCargoBus}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)">
+                                <p:ajax event="blur" listener="#{traspasoCargoBusController.loadNumeroCuotas}" update="CargoBusListForm:datalist" global="false"/>
+                            </p:inputText>                            
+                        </h:panelGroup>
+
+                        <p:outputLabel value="Total Cuotas:" for="totalCuotas" />
+                        <h:panelGroup>
+                            <p:inputText id="totalCuotas" value="#{traspasoCargoBusController.selected.totalCuotasCargoBus}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)">
+                                <p:ajax event="blur" listener="#{traspasoCargoBusController.loadTotalCuotas}" update="CargoBusListForm:datalist" global="false"/>
+                            </p:inputText>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="Indefinido:" for="indefinido" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="indefinido" value="#{traspasoCargoBusController.selected.activoCargoBus}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)">
+                                <p:ajax event="blur" listener="#{traspasoCargoBusController.loadActivo}" update="CargoBusListForm:datalist" global="false"/>
+                            </p:selectBooleanCheckbox>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="Monto" for="montoCargoBus" />
+                        <h:panelGroup>
+                            <p:inputText id="montoCargoBus" value="#{traspasoCargoBusController.selected.montoCargoBus}" title="#{myBundle.CreateCargoBusTitle_montoCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_montoCargoBus}" onfocus="this.setSelectionRange(0, this.value.length)">
+                                <p:ajax event="blur" listener="#{traspasoCargoBusController.loadMonto}" update="CargoBusListForm:datalist" global="false"/>
+                            </p:inputText>
+                        </h:panelGroup>
+
+                    </h:panelGrid>
+                    <p:commandButton actionListener="#{traspasoCargoBusController.saveNew}" value="#{myBundle.Save}" update="display,:CargoBusListForm:datalist,:growl" >
+                        <p:confirm header="¿Realizar traspaso de cargos?" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:panel>
+
+        <h:form id="CargoBusListForm">
+
+            <p:panel style="margin-top: 10px;">
+                <p:contextMenu id="CargoBusDataTableContextMenu" for="datalist">                    
+                    <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CargoBusListForm:deleteButton').click();" icon="ui-icon-trash"/>                    
+                </p:contextMenu>
+                <p:dataTable id="datalist"
+                             value="#{traspasoCargoBusController.items}"
+                             lazy="false"
+                             rowKey="#{item.idCargoBus}"
+                             var="item"                             
+                             rowIndexVar="rowIndex" 
+                             selectionMode="single"
+                             selection="#{traspasoCargoBusController.rowSelected}" 
+                             emptyMessage="No se han encontrado registros"
+                             tableStyle="table-layout: auto" >
+
+                    <p:ajax event="rowSelect"   update="@form:deleteButton,@form:CargoBusDataTableContextMenu" listener="#{traspasoCargoBusController.resetParents}" global="false"/>
+                    <p:ajax event="rowUnselect" update="@form:deleteButton,@form:CargoBusDataTableContextMenu" listener="#{traspasoCargoBusController.resetParents}" global="false"/>
+
+                    <f:facet name="header">
+                        Cargos Registrados
+                    </f:facet>
+
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="N°"/>
+                        </f:facet>
+                        <h:outputText value="#{rowIndex+1}"/>
+                    </p:column>
+
+                    <p:column filterBy="#{item.bus.numeroBus}" filterStyle="width:20px;" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListCargoBusTitle_bus}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.numeroBus}"/>
+                    </p:column>
+
+                    <p:column filterBy="#{item.bus.unidadNegocio.numeroUnidadNegocio}" style="text-align: center;" filterStyle="width:20px;">
+                        <f:facet name="header">
+                            <h:outputText value="Unidad"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.unidadNegocio.numeroUnidadNegocio}"/>
+                    </p:column>
+
+                    <p:column filterBy="#{item.bus.patente}" style="text-align: center;" filterStyle="width:40px;">
+                        <f:facet name="header">
+                            <h:outputText value="Patente"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.patente}"/>
+                    </p:column>
+
+                    <p:column filterBy="#{item.bus.flota}" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Flota"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.flota}"/>
+                    </p:column>
+
+                    <p:column filterBy="#{item.bus.empresa}" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Empresa"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bus.empresa}"/>
+                    </p:column>
+
+                    <p:column filterBy="#{item.tipoCargo}" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Cargo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.tipoCargo}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                        <f:facet name="header">
+                            <h:outputText value="Descripción"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descripcion}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.fechaInicioCargoBus}" filterBy="#{item.fechaInicioCargoBus}" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Fecha"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaInicioCargoBus}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{item.numeroCuotasCargoBus}" filterBy="#{item.numeroCuotasCargoBus}" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="N° Cuotas"/>
+                        </f:facet>
+                        <h:outputText value="#{item.numeroCuotasCargoBus}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.totalCuotasCargoBus}" filterBy="#{item.totalCuotasCargoBus}" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Total Cuotas"/>
+                        </f:facet>
+                        <h:outputText value="#{item.totalCuotasCargoBus}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.montoCargoBus}" filterBy="#{item.montoCargoBus}" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="Monto"/>
+                        </f:facet>
+                        <h:outputText value="#{item.montoCargoBus}">
+                            <f:convertNumber currencySymbol="$"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column filterBy="#{item.fechaIngresoCargoBus}" style="text-align: center;">
+                        <f:facet name="header">
+                            <h:outputText value="F.Ingreso"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaIngresoCargoBus}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Remover?" actionListener="#{traspasoCargoBusController.remove}" update=":growl,datalist" disabled="#{empty traspasoCargoBusController.rowSelected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+
+            </p:panel>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </ui:define> 
+</ui:composition>
+
+

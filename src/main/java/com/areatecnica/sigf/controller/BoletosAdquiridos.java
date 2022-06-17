@@ -5,8 +5,8 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICompraBoletoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CompraBoletoDaoImpl;
+import com.areatecnica.sigf.dao.impl.InventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
@@ -233,11 +233,11 @@ public class BoletosAdquiridos implements Serializable {
         this.compraBoletos.setCompraBoletoFecha(fecha);
         this.compraBoletos.setCompraBoletoTotal(totalCompra);
 
-        CompraBoleto c = new ICompraBoletoDaoImpl().create(this.compraBoletos);
+        CompraBoleto c = new CompraBoletoDaoImpl().create(this.compraBoletos);
 
         if (c != null) {
             for (InventarioInterno i : this.listToSave) {
-                new IInventarioInternoDaoImpl().create(i);
+                new InventarioInternoDaoImpl().create(i);
             }
 
         }

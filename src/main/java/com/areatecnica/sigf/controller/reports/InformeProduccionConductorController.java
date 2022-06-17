@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.dao.IRecaudacionGuiaDao;
-import com.areatecnica.sigf.dao.impl.IRecaudacionGuiaDaoImpl;
+import com.areatecnica.sigf.dao.impl.RecaudacionGuiaDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.TableModelConductor;
 import com.areatecnica.sigf.util.CurrentDate;
@@ -75,7 +75,7 @@ public class InformeProduccionConductorController implements Serializable {
 
         this.hashConductor = new HashMap();
         this.recaudacion = new ArrayList<>();
-        this.dao = new IRecaudacionGuiaDaoImpl();
+        this.dao = new RecaudacionGuiaDaoImpl();
         this.data = new ArrayList<>();
 
         load();

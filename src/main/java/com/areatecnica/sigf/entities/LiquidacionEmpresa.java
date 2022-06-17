@@ -1,33 +1,46 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.areatecnica.sigf.entities;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
- * @author ianfr
+ * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "liquidacion_empresa")
-@XmlRootElement
+@Table(name = "liquidacion_empresa", catalog = "sigfdb", schema = "")
 @NamedQueries({
     @NamedQuery(name = "LiquidacionEmpresa.findAll", query = "SELECT l FROM LiquidacionEmpresa l"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaId", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaId = :liquidacionEmpresaId"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaFechaLiquidacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaLiquidacion = :liquidacionEmpresaFechaLiquidacion"),
-    @NamedQuery(name = "LiquidacionEmpresa.findByEmpresaFecha", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to AND l.liquidacionEmpresaIdEmpresa = :liquidacionEmpresaIdEmpresa"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByEmpresaFechaLiquidacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaLiquidacion = :fecha AND l.liquidacionEmpresaIdEmpresa =:liquidacionEmpresaIdEmpresa"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaFechaPago", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaFechaPago = :liquidacionEmpresaFechaPago"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalAbonos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalAbonos = :liquidacionEmpresaTotalAbonos"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaTotalCargos", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaTotalCargos = :liquidacionEmpresaTotalCargos"),
-    @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaSaldo", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaSaldo = :liquidacionEmpresaSaldo")})
-public class LiquidacionEmpresa extends BaseEntity implements Serializable {
+    @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaSaldo", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaSaldo = :liquidacionEmpresaSaldo"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByFechaCreacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "LiquidacionEmpresa.findByUltimaModificacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.ultimaModificacion = :ultimaModificacion")})
+public class LiquidacionEmpresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,32 +49,40 @@ public class LiquidacionEmpresa extends BaseEntity implements Serializable {
     @Column(name = "liquidacion_empresa_id")
     private Integer liquidacionEmpresaId;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "liquidacion_empresa_fecha_liquidacion")
     @Temporal(TemporalType.DATE)
     private Date liquidacionEmpresaFechaLiquidacion;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "liquidacion_empresa_fecha_pago")
     @Temporal(TemporalType.DATE)
     private Date liquidacionEmpresaFechaPago;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "liquidacion_empresa_total_abonos")
     private int liquidacionEmpresaTotalAbonos;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "liquidacion_empresa_total_cargos")
     private int liquidacionEmpresaTotalCargos;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "liquidacion_empresa_saldo")
     private int liquidacionEmpresaSaldo;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Column(name = "ultima_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date ultimaModificacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoLiquidacionLiquidacionEmpresaId")
+    private List<CargoLiquidacion> cargoLiquidacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abonoLiquidacionLiquidacionEmpresaId")
+    private List<AbonoLiquidacion> abonoLiquidacionList;
     @JoinColumn(name = "liquidacion_empresa_id_empresa", referencedColumnName = "empresa_id")
     @ManyToOne(optional = false)
     private Empresa liquidacionEmpresaIdEmpresa;
 
     public LiquidacionEmpresa() {
+        this.liquidacionEmpresaSaldo = 0; 
+        this.liquidacionEmpresaTotalAbonos = 0; 
+        this.liquidacionEmpresaTotalCargos = 0; 
     }
 
     public LiquidacionEmpresa(Integer liquidacionEmpresaId) {
@@ -125,6 +146,38 @@ public class LiquidacionEmpresa extends BaseEntity implements Serializable {
         this.liquidacionEmpresaSaldo = liquidacionEmpresaSaldo;
     }
 
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getUltimaModificacion() {
+        return ultimaModificacion;
+    }
+
+    public void setUltimaModificacion(Date ultimaModificacion) {
+        this.ultimaModificacion = ultimaModificacion;
+    }
+
+    public List<CargoLiquidacion> getCargoLiquidacionList() {
+        return cargoLiquidacionList;
+    }
+
+    public void setCargoLiquidacionList(List<CargoLiquidacion> cargoLiquidacionList) {
+        this.cargoLiquidacionList = cargoLiquidacionList;
+    }
+
+    public List<AbonoLiquidacion> getAbonoLiquidacionList() {
+        return abonoLiquidacionList;
+    }
+
+    public void setAbonoLiquidacionList(List<AbonoLiquidacion> abonoLiquidacionList) {
+        this.abonoLiquidacionList = abonoLiquidacionList;
+    }
+
     public Empresa getLiquidacionEmpresaIdEmpresa() {
         return liquidacionEmpresaIdEmpresa;
     }
@@ -147,12 +200,15 @@ public class LiquidacionEmpresa extends BaseEntity implements Serializable {
             return false;
         }
         LiquidacionEmpresa other = (LiquidacionEmpresa) object;
-        return (this.liquidacionEmpresaId != null || other.liquidacionEmpresaId == null) && (this.liquidacionEmpresaId == null || this.liquidacionEmpresaId.equals(other.liquidacionEmpresaId));
+        if ((this.liquidacionEmpresaId == null && other.liquidacionEmpresaId != null) || (this.liquidacionEmpresaId != null && !this.liquidacionEmpresaId.equals(other.liquidacionEmpresaId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
         return "com.areatecnica.sigf.entities.LiquidacionEmpresa[ liquidacionEmpresaId=" + liquidacionEmpresaId + " ]";
     }
-
+    
 }

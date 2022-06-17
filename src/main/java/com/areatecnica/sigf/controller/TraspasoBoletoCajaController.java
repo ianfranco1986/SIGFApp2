@@ -8,9 +8,9 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IInventarioCajaDao;
 import com.areatecnica.sigf.dao.IInventarioInternoDao;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.InventarioCajaDaoImpl;
+import com.areatecnica.sigf.dao.impl.InventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.InventarioCaja;
@@ -69,7 +69,7 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
         this.inventarioCajaList = new ArrayList<>();
         this.fecha = new Date();
         
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.cajaRecaudacionItems = new CajaRecaudacionDaoImpl().findAllActive();
     }
 
     public List<CajaRecaudacion> getCajaRecaudacionItems() {
@@ -162,7 +162,7 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
 
     public void handleBoletoChange(ActionEvent event) {
         if (this.boletoItem != null) {
-            this.inventarioInternoList = new IInventarioInternoDaoImpl().findByBoletoEstado(this.boletoItem, Boolean.FALSE);
+            this.inventarioInternoList = new InventarioInternoDaoImpl().findByBoletoEstado(this.boletoItem, Boolean.FALSE);
             for (InventarioCaja c : this.inventarioCajaList) {
                 this.inventarioInternoList.remove(c.getInventarioCajaIdInventarioInterno());
             }
@@ -204,8 +204,8 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
         for (InventarioCaja i : this.inventarioCajaList) {
             i.getInventarioCajaIdInventarioInterno().setInventarioInternoEstado(Boolean.TRUE);
             try {
-                new IInventarioInternoDaoImpl().update(i.getInventarioCajaIdInventarioInterno());
-                new IInventarioCajaDaoImpl().update(i);
+                new InventarioInternoDaoImpl().update(i.getInventarioCajaIdInventarioInterno());
+                new InventarioCajaDaoImpl().update(i);
                 JsfUtil.addSuccessMessage("Se han registrado los cambios");
             } catch (EJBException ex) {
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));

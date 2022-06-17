@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.dao.IEmpresaDao;
-import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
+import com.areatecnica.sigf.dao.impl.EmpresaDaoImpl;
 import com.areatecnica.sigf.entities.Empresa;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class EmpresaController extends AbstractController<Empresa> {
         super(Empresa.class);
         this.setLimitedByCuenta(Boolean.TRUE);
         this.setNamedQuery("Empresa.findAllByCuenta");
-        this.dao = new IEmpresaDaoImpl();
+        this.dao = new EmpresaDaoImpl();
         this.items = this.dao.findByCuenta(this.getUserCount());
     }
 

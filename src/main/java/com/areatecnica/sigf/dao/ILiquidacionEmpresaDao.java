@@ -16,6 +16,6 @@ import java.util.Date;
  */
 public interface ILiquidacionEmpresaDao<T> extends IGenericDAO<T> {
 
-    LiquidacionEmpresa findByEmpresaBetweenDate(Empresa empresa, Date from, Date to);
+    LiquidacionEmpresa findByEmpresaFechaLiquidacion(Empresa empresa, Date date);
 
 }

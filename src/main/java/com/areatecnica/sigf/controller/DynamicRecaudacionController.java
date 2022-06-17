@@ -55,9 +55,9 @@ public class DynamicRecaudacionController implements Serializable {
     public void init() {
         this.fecha = new Date();
         this.selectedItems = new ArrayList<>();
-        this.cajaRecaudacionList = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.cajaRecaudacionList = new CajaRecaudacionDaoImpl().findAllActive();
         this.trabajadorList = new TrabajadorDaoImpl().findNandu();
-        this.busList = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
+        this.busList = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
     }
 
     public void load() {
@@ -86,7 +86,7 @@ public class DynamicRecaudacionController implements Serializable {
         resultsHeader.add("NºConductor");
         defaultTotal.put("NºConductor", 0);
 
-        this.egresoList = new IEgresoDaoImpl().findAllActived();
+        this.egresoList = new EgresoDaoImpl().findAllActived();
 
         for (Egreso e : egresoList) {
             resultsHeader.add(e.getEgresoNombre());
@@ -115,7 +115,7 @@ public class DynamicRecaudacionController implements Serializable {
         this.totales = new LinkedHashMap();
         setResultTotals();
 
-        this.items = new IRecaudacionDaoImpl().findByCajaFechaRecaudacion(cajaRecaudacion, fecha);
+        this.items = new RecaudacionDaoImpl().findByCajaFechaRecaudacion(cajaRecaudacion, fecha);
 
         if (!this.items.isEmpty()) {
             //

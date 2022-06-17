@@ -2,7 +2,7 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.CuentaUnicaDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICuentaMayorDaoImpl;
+import com.areatecnica.sigf.dao.impl.CuentaMayorDaoImpl;
 import com.areatecnica.sigf.dao.impl.PlanCuentaSubTipoDaoImpl;
 import com.areatecnica.sigf.dao.impl.TipoPlanCuentaDaoImpl;
 import com.areatecnica.sigf.entities.Compra;
@@ -48,7 +48,7 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
     public CuentaMayorController() {
         // Inform the Abstract parent controller of the concrete CuentaMayor Entity
         super(CuentaMayor.class);
-        this.items = new ICuentaMayorDaoImpl().findALL();
+        this.items = new CuentaMayorDaoImpl().findALL();
         this.subTipo = new PlanCuentaSubTipo();
 
         if (!this.items.isEmpty()) {
@@ -173,7 +173,7 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
             this.selected.setCuentaMayorSubTipoId(subTipo);
             this.selected.setCuentaMayorUnicaId(cuentaUnica);
 
-            CuentaMayor m = new ICuentaMayorDaoImpl().create(selected);
+            CuentaMayor m = new CuentaMayorDaoImpl().create(selected);
 
             if (m != null) {
 
@@ -189,7 +189,7 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
 //                }
 //
 //                JsfUtil.addSuccessMessage("Se ha agregado la cuenta");
-                this.items = new ICuentaMayorDaoImpl().findALL();
+                this.items = new CuentaMayorDaoImpl().findALL();
                 this.cuentaUnicaItems = new CuentaUnicaDaoImpl().find();
                 this.selected = null; 
             } else {
@@ -213,7 +213,7 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
                 this.subTipoItems.add(s);
                 JsfUtil.addSuccessMessage("Se ha agregado un subtipo");
                 this.subTipo = new PlanCuentaSubTipo();
-                this.items = new ICuentaMayorDaoImpl().findALL();
+                this.items = new CuentaMayorDaoImpl().findALL();
                 this.codigo = "";
                 this.nombre = "";
                 this.tipoPlanCuenta = null;
@@ -226,7 +226,7 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
 
     public void save(ActionEvent event) {
         if (this.selected != null) {
-            CuentaMayor m = new ICuentaMayorDaoImpl().update(this.selected);
+            CuentaMayor m = new CuentaMayorDaoImpl().update(this.selected);
 
             if (m != null) {
                 JsfUtil.addSuccessMessage("Se ha editado la cuenta");
@@ -261,7 +261,7 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
 ////                    }
 //                }
 
-                this.items = new ICuentaMayorDaoImpl().findALL();
+                this.items = new CuentaMayorDaoImpl().findALL();
                 this.cuentaUnicaItems = new CuentaUnicaDaoImpl().find();
                 this.selected = null;
             } else {
@@ -298,9 +298,9 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
     public void delete(ActionEvent event) {
         if (this.selected != null) {
             CuentaUnica c = this.selected.getCuentaMayorUnicaId();
-            boolean validate = new ICuentaMayorDaoImpl().remove(selected);
+            boolean validate = new CuentaMayorDaoImpl().remove(selected);
             if (validate) {
-                this.items = new ICuentaMayorDaoImpl().findALL();
+                this.items = new CuentaMayorDaoImpl().findALL();
                 if (c.getCuentaUnicaId() != 1) {
                     c.setCuentaUnicaActivo(Boolean.FALSE);
                     CuentaUnica d = new CuentaUnicaDaoImpl().update(c);
@@ -344,7 +344,7 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
     public void handleSubTipoCuentaChange() {
         if (this.subTipo != null) {
 
-            this.itemsCuentaMayor = new ICuentaMayorDaoImpl().findBySubTipo(subTipo);
+            this.itemsCuentaMayor = new CuentaMayorDaoImpl().findBySubTipo(subTipo);
 
             if (!this.itemsCuentaMayor.isEmpty()) {
                 CuentaMayor c = this.itemsCuentaMayor.get(this.itemsCuentaMayor.size() - 1);
@@ -382,21 +382,7 @@ public class CuentaMayorController extends AbstractController<CuentaMayor> {
         return this.isCompraListEmpty;
     }
 
-    /**
-     * Sets the "items" attribute with a collection of Compra entities that are
-     * retrieved from CuentaMayor and returns the navigation outcome.
-     *
-     * @return navigation outcome for Compra page
-     */
-    public String navigateCompraList() {
-        CuentaMayor selected = this.getSelected();
-        if (selected != null) {
-            CuentaMayorFacade ejbFacade = (CuentaMayorFacade) this.getFacade();
-            List<Compra> selectedCompraList = ejbFacade.findCompraList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Compra_items", selectedCompraList);
-        }
-        return "/app/compra/index";
-    }
+   
 
     /**
      * Sets the "selected" attribute of the PlanCuentaSubTipo controller in

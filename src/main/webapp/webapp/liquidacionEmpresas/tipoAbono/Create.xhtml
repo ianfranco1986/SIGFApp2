@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoAbonoCreateDlg" widgetVar="TipoAbonoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Definición | Tipo de Abono" closeOnEscape="true">
+
+            <h:form id="TipoAbonoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoAbonoController.selected != null}">
+                    <h:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="Nombre" for="tipoAbonoNombre" />
+                        <p:inputText id="tipoAbonoNombre" value="#{tipoAbonoController.selected.tipoAbonoNombre}" title="#{myBundle.CreateTipoAbonoTitle_tipoAbonoNombre}" required="true" requiredMessage="#{myBundle.CreateTipoAbonoRequiredMessage_tipoAbonoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Monto x Defecto" for="tipoAbonoMontoDefecto" />
+                        <p:inputNumber id="tipoAbonoMontoDefecto" minValue="0.0" decimalPlaces="0" value="#{tipoAbonoController.selected.tipoAbonoMontoDefecto}" title="#{myBundle.CreateTipoAbonoTitle_tipoAbonoMontoDefecto}" required="true" requiredMessage="#{myBundle.CreateTipoAbonoRequiredMessage_tipoAbonoMontoDefecto}"/>
+
+                    </h:panelGrid>
+                </h:panelGroup>
+                <p:spacer/>
+                <div class="p-text-right">
+                    <p:commandButton 
+                        actionListener="#{tipoAbonoController.saveNew}" 
+                        value="Guardar" 
+                        icon="pi pi-save" 
+                        update=":TipoAbonoListForm:datalist,:growl" 
+                        oncomplete="handleSubmit(xhr,status,args,PF('TipoAbonoCreateDialog'));"
+                        styleClass="p-mr-2 p-mb-2" 
+                        >
+                        <p:confirm 
+                            header="#{myBundle.ConfirmationHeader}" 
+                            message="#{myBundle.ConfirmCreateMessage}" 
+                            icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton 
+                        value="Cancelar" 
+                        icon="pi pi-ban" 
+                        class="ui-button-secondary"
+                        oncomplete="PF('TipoAbonoCreateDialog').hide()" 
+                        update="growl" 
+                        process="@this" 
+                        immediate="true" 
+                        resetValues="true"        
+                        styleClass="ui-button-danger p-mr-2"
+                        />
+                </div>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+
+</html>

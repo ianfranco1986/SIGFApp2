@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IRecaudacionExtraDaoImpl;
-import com.areatecnica.sigf.dao.impl.ITipoRecaudacionExtraDaoImpl;
+import com.areatecnica.sigf.dao.impl.CajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.RecaudacionExtraDaoImpl;
+import com.areatecnica.sigf.dao.impl.TipoRecaudacionExtraDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Recaudacion;
 import com.areatecnica.sigf.entities.RecaudacionExtra;
@@ -52,13 +52,13 @@ public class RecaudacionExtraController implements Serializable {
     @PostConstruct
     public void init() {
         this.fecha = new Date();
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
-        this.tipoRecaudacionExtraItems = new ITipoRecaudacionExtraDaoImpl().findAll();
+        this.cajaRecaudacionItems = new CajaRecaudacionDaoImpl().findAllActive();
+        this.tipoRecaudacionExtraItems = new TipoRecaudacionExtraDaoImpl().findAll();
     }
 
     public void load() {
         if (this.cajaRecaudacion != null) {
-            this.items = new IRecaudacionExtraDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
+            this.items = new RecaudacionExtraDaoImpl().findByCajaDate(cajaRecaudacion, fecha);
             this.totalRecaudacion = 0;
             if (!this.items.isEmpty()) {
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
@@ -76,7 +76,7 @@ public class RecaudacionExtraController implements Serializable {
     
     public void delete() {
         if (this.selected != null) {
-            new IRecaudacionExtraDaoImpl().delete(this.selected);
+            new RecaudacionExtraDaoImpl().delete(this.selected);
 
             this.items.remove(this.selected);
 
@@ -93,7 +93,7 @@ public class RecaudacionExtraController implements Serializable {
         try {
             temp = (RecaudacionExtra) event.getObject();
 
-            new IRecaudacionExtraDaoImpl().update(temp);
+            new RecaudacionExtraDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado la Recaudación: " + temp.getRecaudacionExtraIdRecaudacion().getRecaudacionId());
 
         } catch (Exception e) {
@@ -122,7 +122,7 @@ public class RecaudacionExtraController implements Serializable {
 
                     for (RecaudacionExtra m : rr.getRecaudacionExtraList()) {
 
-                        new IRecaudacionExtraDaoImpl().delete(m);
+                        new RecaudacionExtraDaoImpl().delete(m);
 
                         this.items.remove(m);
 

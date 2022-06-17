@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.controller.reports;
 
 import com.areatecnica.sigf.dao.IBusDao;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.BusDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 
 import javax.faces.view.ViewScoped;
@@ -32,7 +32,7 @@ public class InformeBoletoVueltaController implements Serializable{
      * Creates a new instance of InformeBoletoVueltaController
      */
     public InformeBoletoVueltaController() {
-        this.dao = new IBusDaoImpl();
+        this.dao = new BusDaoImpl();
         this.items = this.dao.findAll();
         //Data access object 
         //POJO -> Plain Old Java Object 

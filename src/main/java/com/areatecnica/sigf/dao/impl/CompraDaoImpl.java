@@ -8,9 +8,12 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.ICompraDao;
 import com.areatecnica.sigf.entities.Compra;
 import com.areatecnica.sigf.entities.CuentaMayor;
+import com.areatecnica.sigf.entities.Proveedor;
+import com.areatecnica.sigf.entities.TipoDocumento;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -32,6 +35,18 @@ public class CompraDaoImpl extends GenericDAOImpl<Compra> implements ICompraDao<
         Query query = this.entityManager.createQuery("SELECT COUNT(c) FROM Compra c WHERE c.compraCuentaMayorId = :compraCuentaMayorId").setParameter("compraCuentaMayorId", c);
 
         return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public Compra findByFolioProveedorTipo(int folio, Proveedor proveedor, TipoDocumento tipo) {
+        try {
+            return (Compra) this.entityManager.createNamedQuery("Compra.findByFolioProveedorTipo")
+                    .setParameter("compraFolio", folio)
+                    .setParameter("compraProveedorId", proveedor)
+                    .setParameter("compraTipoDocumentoId", tipo).getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
     }
 
 }

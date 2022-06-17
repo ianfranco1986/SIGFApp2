@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.CajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 
 import javax.annotation.PostConstruct;
@@ -38,7 +38,7 @@ public class ReportControllerInventarioCaja implements Serializable {
 
     @PostConstruct
     private void init() {
-        this.items = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.items = new CajaRecaudacionDaoImpl().findAllActive();
         this.informe = "inf-inventario_caja";
     }
 

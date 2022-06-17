@@ -66,7 +66,7 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
         // Inform the Abstract parent controller of the concrete CompraPetroleo Entity
         super(CompraPetroleo.class);
         this.tipoCombustible = new TipoCombustibleDaoImpl().findTipoCombustibleDefecto();
-        this.cuentaBancariaItems = new ICuentaBancariaDaoImpl().findAll();
+        this.cuentaBancariaItems = new CuentaBancariaDaoImpl().findAll();
     }
 
     @PostConstruct
@@ -87,8 +87,8 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
 
         this.cuentaItems = new ArrayList<>();
         
-        CuentaBancaria itau = new ICuentaBancariaDaoImpl().findById(4);
-        CuentaBancaria scotiabank = new ICuentaBancariaDaoImpl().findById(6);
+        CuentaBancaria itau = new CuentaBancariaDaoImpl().findById(4);
+        CuentaBancaria scotiabank = new CuentaBancariaDaoImpl().findById(6);
         
         this.cuentaItems.add(itau);
         this.cuentaItems.add(scotiabank);
@@ -101,14 +101,14 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
         this.prepareCreate(null);
         this.proveedor = new Proveedor();
 
-        this.empresaNandu = new IEmpresaDaoImpl().findById(7);
+        this.empresaNandu = new EmpresaDaoImpl().findById(7);
     }
 
     public void load() {
         setFecha();
-        this.items = new ICompraPetroleoDaoImpl().findCompraBetweenDates(desde, hasta);
+        this.items = new CompraPetroleoDaoImpl().findCompraBetweenDates(desde, hasta);
 
-        this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
+        this.cuentaMayorItems = new CuentaMayorDaoImpl().findALL();
 
         if (this.items.isEmpty()) {
             JsfUtil.addWarningMessage("No se han encontrado registros");
@@ -123,7 +123,7 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
 
     public void handleCuentaChange() {
         if (this.cuentaBancaria != null) {
-            MovimientoMes movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            MovimientoMes movimientoDocumento = new MovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
             if (movimientoDocumento == null) {
                 movimientoDocumento = new MovimientoMes();
                 movimientoDocumento.setMovimientoMesNumeroDocumento(1);
@@ -167,7 +167,7 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
 
         try {
 
-            new ICompraPetroleoDaoImpl().update(temp);
+            new CompraPetroleoDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado el registro");
             //getTotals();
         } catch (Exception e) {
@@ -180,7 +180,7 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
         if (this.getSelected() != null) {
 
             this.items.remove(this.getSelected());
-            new ICompraPetroleoDaoImpl().delete(this.getSelected());
+            new CompraPetroleoDaoImpl().delete(this.getSelected());
             this.prepareCreate(event);
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar un movimiento");
@@ -234,7 +234,7 @@ public class CompraCombustibleController extends AbstractController<CompraPetrol
 
             this.getSelected().setCompraPetroleoMovtId(mov);
 
-            CompraPetroleo t = new ICompraPetroleoDaoImpl().create(this.getSelected());
+            CompraPetroleo t = new CompraPetroleoDaoImpl().create(this.getSelected());
 
             if (t != null) {
                 this.finalID = t.getCompraPetroleoId();

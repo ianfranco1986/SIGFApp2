@@ -4,8 +4,8 @@ import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IBusDao;
 import com.areatecnica.sigf.dao.IDescuentoExtraBusDao;
 import com.areatecnica.sigf.dao.IFlotaDao;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
-import com.areatecnica.sigf.dao.impl.IDescuentoExtraBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.BusDaoImpl;
+import com.areatecnica.sigf.dao.impl.DescuentoExtraBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.FlotaDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.facade.DescuentoExtraBusFacade;
@@ -54,7 +54,7 @@ public class DescuentoExtraBusController extends AbstractController<DescuentoExt
     private void init() {
         this.flotaDao = new FlotaDaoImpl();
         this.flotaItems = this.flotaDao.findByCuenta(this.getUserCount());
-        this.dao = new IDescuentoExtraBusDaoImpl();
+        this.dao = new DescuentoExtraBusDaoImpl();
         this.items = this.dao.findAll();
         this.model = new DescuentoExtraBusDataModel(items);
     }
@@ -88,7 +88,7 @@ public class DescuentoExtraBusController extends AbstractController<DescuentoExt
 
     public void handleFlotaChange() {
         if (this.flota != null) {
-            this.busDao = new IBusDaoImpl();
+            this.busDao = new BusDaoImpl();
             this.busItems = this.busDao.findAllByFlota(flota);
         }
     }

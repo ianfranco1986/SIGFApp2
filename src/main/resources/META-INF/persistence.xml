@@ -177,6 +177,18 @@
     <class>com.areatecnica.sigf.entities.TipoDctoVoucher</class>
     <class>com.areatecnica.sigf.entities.Voucher</class>
     <class>com.areatecnica.sigf.entities.DetalleCompraCuenta</class>
+    <class>com.areatecnica.sigf.entities.AuxiliarCompras</class>
+    <class>com.areatecnica.sigf.entities.AuxiliarFacturas</class>
+    <class>com.areatecnica.sigf.entities.AuxiliarHonorarios</class>
+    <class>com.areatecnica.sigf.entities.IvaNoRecuperable</class>
+    <class>com.areatecnica.sigf.entities.MovimientoBancario</class>
+    <class>com.areatecnica.sigf.entities.OtrosImpuestos</class>
+    <class>com.areatecnica.sigf.entities.TipoMovimientoBancario</class>
+    <class>com.areatecnica.sigf.entities.VoucherMovimiento</class>
+    <class>com.areatecnica.sigf.entities.AbonoLiquidacion</class>
+    <class>com.areatecnica.sigf.entities.CargoLiquidacion</class>
+    <class>com.areatecnica.sigf.entities.TipoAbono</class>
+    <class>com.areatecnica.sigf.entities.TipoCargo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.jdbc.native-sql" value="true"/>

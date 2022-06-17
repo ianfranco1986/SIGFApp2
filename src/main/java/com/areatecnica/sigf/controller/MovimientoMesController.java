@@ -1,10 +1,10 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
-import com.areatecnica.sigf.dao.impl.ITipoMovimientoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CuentaBancariaDaoImpl;
+import com.areatecnica.sigf.dao.impl.EmpresaDaoImpl;
+import com.areatecnica.sigf.dao.impl.MovimientoMesDaoImpl;
+import com.areatecnica.sigf.dao.impl.TipoMovimientoDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.MovimientoMesDataModel;
 import org.primefaces.event.RowEditEvent;
@@ -61,11 +61,11 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
     public void initParams() {
         super.initParams(); //To change body of generated methods, choose Tools | Templates.
 
-        this.empresaItems = new IEmpresaDaoImpl().findByCuenta(this.getUserCount());
+        this.empresaItems = new EmpresaDaoImpl().findByCuenta(this.getUserCount());
 
-        this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findALL();
+        this.tipoMovimientoItems = new TipoMovimientoDaoImpl().findALL();
         //this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
-        this.cuentaBancaria = new ICuentaBancariaDaoImpl().findById(8);
+        this.cuentaBancaria = new CuentaBancariaDaoImpl().findById(8);
 
         Calendar cal = Calendar.getInstance();
         this.mes = cal.get(Calendar.MONTH) + 1;
@@ -87,7 +87,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
 
     public void loadDocumento() {
         if (this.documento > 0) {
-            this.items = new IMovimientoMesDaoImpl().findByDocumento(documento);
+            this.items = new MovimientoMesDaoImpl().findByDocumento(documento);
             this.model = new MovimientoMesDataModel(items);
             if (this.items.isEmpty()) {
                 JsfUtil.addWarningMessage("No se ha encontrado un documento con el número: " + documento);
@@ -99,7 +99,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         setFecha();
         if (this.fecha != null) {
             if (this.tipo == 1) {
-                this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findByEgreso();
+                this.tipoMovimientoItems = new TipoMovimientoDaoImpl().findByEgreso();
 //                this.items = new IMovimientoMesDaoImpl().findByEgresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
                 this.model = new MovimientoMesDataModel(items);
                 if (this.items.isEmpty()) {
@@ -109,7 +109,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
 
                 }
             } else {
-                this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findByIngreso();
+                this.tipoMovimientoItems = new TipoMovimientoDaoImpl().findByIngreso();
 
 //                this.items = new IMovimientoMesDaoImpl().findByIngresosDates(fecha, this.dateTime.dayOfMonth().withMaximumValue().toDate());
                 this.model = new MovimientoMesDataModel(items);
@@ -127,7 +127,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         if (this.tipoMovimiento != null) {
             setFecha();
             if (this.desde != null && this.hasta != null) {
-                this.items = new IMovimientoMesDaoImpl().findByTipoAndDates(this.tipoMovimiento, desde, hasta);
+                this.items = new MovimientoMesDaoImpl().findByTipoAndDates(this.tipoMovimiento, desde, hasta);
                 this.model = new MovimientoMesDataModel(items);
                 getTotals();
                 if (this.items.isEmpty()) {
@@ -144,7 +144,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         if (this.empresa != null) {
 
             if (this.desde != null && this.hasta != null) {
-                this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, desde, hasta);
+                this.items = new MovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, desde, hasta);
                 this.model = new MovimientoMesDataModel(items);
                 getTotals();
                 if (this.items.isEmpty()) {
@@ -161,7 +161,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         if (this.cuentaBancaria != null) {
             setFecha();
             if (this.desde != null && this.hasta != null) {
-                this.items = new IMovimientoMesDaoImpl().findByCuentaAndDates(this.cuentaBancaria, desde, hasta);
+                this.items = new MovimientoMesDaoImpl().findByCuentaAndDates(this.cuentaBancaria, desde, hasta);
                 this.model = new MovimientoMesDataModel(items);
                 getTotals();
                 if (this.items.isEmpty()) {
@@ -200,7 +200,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
 
         try {
 
-            new IMovimientoMesDaoImpl().update(temp);
+            new MovimientoMesDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado el registro");
             getTotals();
         } catch (Exception e) {
@@ -216,7 +216,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
             this.getSelected().setMovimientoMesCuentaBancoId(cuentaBancaria);
             this.getSelected().setMovimientoMesNumeroDocumento(documento);
             this.getSelected().setMovimientoMesEmpresaId(empresa);
-            new IMovimientoMesDaoImpl().create(this.getSelected());
+            new MovimientoMesDaoImpl().create(this.getSelected());
 
             this.items.add(this.getSelected());
 
@@ -236,7 +236,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
         if (this.getSelected() != null) {
 
             this.items.remove(this.getSelected());
-            new IMovimientoMesDaoImpl().delete(this.getSelected());
+            new MovimientoMesDaoImpl().delete(this.getSelected());
             this.prepareCreate(event);
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar un movimiento");
@@ -252,7 +252,7 @@ public class MovimientoMesController extends AbstractController<MovimientoMes> {
 
     public void handleCuentaChange() {
         if (this.cuentaBancaria != null) {
-            this.movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            this.movimientoDocumento = new MovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
             if (this.movimientoDocumento == null) {
                 this.movimientoDocumento = new MovimientoMes();
                 this.movimientoDocumento.setMovimientoMesNumeroDocumento(1);

@@ -5,9 +5,9 @@
  */
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
-import com.areatecnica.sigf.dao.impl.ILiquidacionEmpresaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
+import com.areatecnica.sigf.dao.impl.EmpresaDaoImpl;
+import com.areatecnica.sigf.dao.impl.LiquidacionEmpresaDaoImpl;
+import com.areatecnica.sigf.dao.impl.MovimientoMesDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.RecaudacionLiquidacionLoteDataModel;
 
@@ -138,7 +138,7 @@ public class LiquidacionEmpresaLoteController implements Serializable {
     public void load() {
         this.items = new ArrayList<>();
         setFecha();
-        this.listEmpresa = new IEmpresaDaoImpl().findByNandu();
+        this.listEmpresa = new EmpresaDaoImpl().findByNandu();
         this.items = new ArrayList<LiquidacionHelper>();
 
         this.totalAdministracion = 0;
@@ -153,7 +153,7 @@ public class LiquidacionEmpresaLoteController implements Serializable {
         for (Empresa e : this.listEmpresa) {
             LiquidacionHelper h = new LiquidacionHelper(e, desde, hasta);
 
-            liquidacionEmpresa = new ILiquidacionEmpresaDaoImpl().findByEmpresaBetweenDate(empresa, desde, hasta);
+            liquidacionEmpresa = new LiquidacionEmpresaDaoImpl().findByEmpresaFechaLiquidacion(empresa, desde);
             h.setLiquidacionEmpresa(liquidacionEmpresa);
 
             this.totalAdministracion = this.totalAdministracion + h.getTotalAdministracion();
@@ -551,7 +551,7 @@ public class LiquidacionEmpresaLoteController implements Serializable {
 //
 //            }
 
-            this.movimientos = new IMovimientoMesDaoImpl().findByEmpresaAndDates(empresa, from, to);
+            this.movimientos = new MovimientoMesDaoImpl().findByEmpresaAndDates(empresa, from, to);
 
             if (!this.movimientos.isEmpty()) {
 //                for (MovimientoMes m : this.movimientos) {

@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.validators;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IClienteDaoImpl;
+import com.areatecnica.sigf.dao.impl.ClienteDaoImpl;
 import com.areatecnica.sigf.entities.Cliente;
 import com.areatecnica.sigf.entities.Usuario;
 
@@ -54,7 +54,7 @@ public class RutValidatorCliente implements Validator {
                     throw new ValidatorException(msg);
                 }
 
-                Cliente cliente = new IClienteDaoImpl().findByRut(rut);
+                Cliente cliente = new ClienteDaoImpl().findByRut(rut);
 
                 if (cliente != null) {
                     FacesMessage msg2 = new FacesMessage("Rut ya registrado", "Error de validación");

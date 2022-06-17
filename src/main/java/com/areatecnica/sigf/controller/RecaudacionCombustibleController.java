@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.CajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.PrivilegioDaoImpl;
 import com.areatecnica.sigf.dao.impl.RecaudacionCombustibleDaoImpl;
 import com.areatecnica.sigf.dao.impl.VentaCombustibleDaoImpl;
@@ -57,7 +57,7 @@ public class RecaudacionCombustibleController extends AbstractController<Recauda
     @PostConstruct
     private void init() {
         this.fecha = new Date();
-        this.cajasRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.cajasRecaudacionItems = new CajaRecaudacionDaoImpl().findAllActive();
         this.privilegio = new PrivilegioDaoImpl().findById(89);
     }
 

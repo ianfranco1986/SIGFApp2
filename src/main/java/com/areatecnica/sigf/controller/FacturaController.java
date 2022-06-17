@@ -73,10 +73,10 @@ public class FacturaController extends AbstractController<Factura> {
         this.folio = new FacturaDaoImpl().findLastFolio();
         this.getSelected().setFacturaFolio(folio + 1);
 
-        this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
-        this.cuentaMayorItems = new ICuentaMayorDaoImpl().findALL();
+        this.cuentaItems = new CuentaBancariaDaoImpl().findAll();
+        this.cuentaMayorItems = new CuentaMayorDaoImpl().findALL();
 
-        this.empresaNandu = new IEmpresaDaoImpl().findById(7);
+        this.empresaNandu = new EmpresaDaoImpl().findById(7);
         //load();
     }
 
@@ -140,7 +140,6 @@ public class FacturaController extends AbstractController<Factura> {
         if (this.getSelected() != null) {
 
             this.getSelected().setFacturaClienteId(cliente);
-            this.getSelected().setFacturaCuentaMayorId(cuentaMayor);
 
             MovimientoMes mov = new MovimientoMes();
 
@@ -156,7 +155,6 @@ public class FacturaController extends AbstractController<Factura> {
             mov.setMovimientoMesTipoDocumento(documento);
             mov.setMovimientoMesNumeroDocumento(this.documento);
 
-            this.getSelected().setFacturaMovimientoId(mov);
 
             Factura t = new FacturaDaoImpl().create(this.getSelected());
 
@@ -356,7 +354,7 @@ public class FacturaController extends AbstractController<Factura> {
 
     public void handleCuentaChange() {
         if (this.cuentaBancaria != null) {
-            MovimientoMes movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            MovimientoMes movimientoDocumento = new MovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
             if (movimientoDocumento == null) {
                 movimientoDocumento = new MovimientoMes();
                 movimientoDocumento.setMovimientoMesNumeroDocumento(1);

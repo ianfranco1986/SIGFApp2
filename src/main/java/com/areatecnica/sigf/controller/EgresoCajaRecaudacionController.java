@@ -3,8 +3,8 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IEgresoCajaRecaudacionDao;
 import com.areatecnica.sigf.dao.IEgresoDao;
-import com.areatecnica.sigf.dao.impl.IEgresoCajaRecaudacionDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
+import com.areatecnica.sigf.dao.impl.EgresoCajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.EgresoDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.EgresoCajaRecaudacion;
@@ -113,8 +113,8 @@ public class EgresoCajaRecaudacionController extends AbstractController<EgresoCa
 
     public void find(ActionEvent event) {
         if (this.cajaRecaudacion != null) {
-            this.egresoDao = new IEgresoDaoImpl();
-            this.egresoCajaRecaudacionDao = new IEgresoCajaRecaudacionDaoImpl();
+            this.egresoDao = new EgresoDaoImpl();
+            this.egresoCajaRecaudacionDao = new EgresoCajaRecaudacionDaoImpl();
             this.egresoFlotaIdEgresoController.setItems(this.egresoDao.findAllByCuenta(this.getUserCount()));
             this.selectedItems = this.egresoCajaRecaudacionDao.findAllByCajaRecaudacion(cajaRecaudacion);
             this.setModel(new EgresoCajaRecaudacionDataModel(selectedItems));

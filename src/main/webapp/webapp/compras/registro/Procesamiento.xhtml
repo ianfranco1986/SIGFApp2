@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Carga Masiva | Compras</ui:define>
+
+    <ui:define name="content">
+        <h:form id="Selector" >
+            <p:panel style="width: 100%;margin-bottom: 20px;" id="selector">
+                <h4>Carga Masiva | Compras</h4><h6>PASO N°2: Validación y Verificación</h6>
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="mes">Mes/Año</label>
+                        <p:datePicker id="month" view="month" value="#{proComprasController.date}"
+                                      pattern="MM/yyyy"
+                                      yearNavigator="true" yearRange="2022:2030" locale="es">
+                            <p:ajax update=":CargaMasivaForm:datalist, growl" listener="#{proComprasController.load}" event="valueChange"/>
+                        </p:datePicker>
+                    </div>                     
+                </div>
+            </p:panel>
+
+        </h:form>
+
+        <h:form id="CargaMasivaForm">
+            <div class="p-grid crud-demo">
+                <div class="p-col-12">
+
+                    <div class="card">                        
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+
+
+                                <p:commandButton id="delete-products-button" value="#{proComprasController.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{proComprasController.deleteSelectedGuias}"
+                                                 styleClass="ui-button-danger" disabled="#{!proComprasController.hasSelectedGuias()}" update=":CargaMasivaForm:datalist,:growl, delete-products-button" >
+                                    <p:confirm header="Confirmación" message="¿Cancelar?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                            </p:toolbarGroup>
+
+                            <p:toolbarGroup align="right">
+                                <p:commandButton action="Edicion.xhtml?faces-redirect=true" ajax="false" icon="pi pi-arrow-circle-right"  value="Edición Individual"  style="margin-right:20px;" styleClass="ui-button-success">
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                        <p:dataTable id="datalist"
+                                     widgetVar="datalistWidget"
+                                     value="#{proComprasController.items}"
+                                     lazy="false"
+                                     rowKey="#{item.nro}"
+                                     var="item"
+                                     rowSelectMode="add" 
+                                     reflow="true"
+                                     selection="#{proComprasController.selectedItems}"
+                                     emptyMessage="No se han encontrado registros"
+                                     rowIndexVar="rowIndex"
+                                     scrollable="true" scrollWidth="98%"
+
+                                     >
+                            <!--
+                                     To enable Lazy Loading, please copy/replace the following lines above,
+                                     and be sure to replace the word HASH with the # symbol:
+                            
+                                     value="HASH{proComprasController.lazyItems}"
+                                     lazy="true"
+                                     rowKey="HASH{item.compraId}"  <<< Remove this line
+                            -->
+
+                            <p:ajax event="rowSelect" update=":CargaMasivaForm:delete-products-button" />
+                            <p:ajax event="rowUnselect" update=":CargaMasivaForm:delete-products-button" />
+                            <p:ajax event="rowSelectCheckbox" update=":CargaMasivaForm:delete-products-button"/>
+                            <p:ajax event="rowUnselectCheckbox" update=":CargaMasivaForm:delete-products-button" />
+                            <p:ajax event="toggleSelect" update=":CargaMasivaForm:delete-products-button" />
+
+
+                            <f:facet name="header">
+                                <div class="products-table-header ">
+                                    <span class="filter-container ui-input-icon-left ">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+                            <p:column selectionMode="multiple" exportable="false" ></p:column>
+
+                            <p:column width="20">
+                                <f:facet name="header">
+                                    <h:outputText value="#"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nro}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.nombreTipoDocumento}" width="80" filterBy="#{item.nombreTipoDocumento}">
+                                <f:facet name="header">
+                                    <h:outputText value="T. Doc"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nombreTipoDocumento}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.tipoCompra}" width="80" filterBy="#{item.tipoCompra}" >
+                                <f:facet name="header">
+                                    <h:outputText value="Compra"/>
+                                </f:facet>
+                                <h:outputText value="#{item.tipoCompra}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.rutProveedor}" width="150" filterBy="#{item.rutProveedor}">
+                                <f:facet name="header">
+                                    <h:outputText value="Rut"/>
+                                </f:facet>
+                                <h:outputText value="#{item.rutProveedor}"/>
+                                <span class="pi pi-#{item.estadoProveedor}" style="width: 30px; height: 20px;color: #{item.colorProveedor};"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.razonSocial}" width="300" filterBy="#{item.razonSocial}">
+                                <f:facet name="header">
+                                    <h:outputText value="R.Social"/>
+                                </f:facet>
+                                <h:outputText value="#{item.razonSocial}"/>
+                            </p:column>
+
+                            <p:column headerText="Estado" sortBy="#{item.registrada}" width="120">
+                                <span class="compra compra-#{!item.registrada? 'noregistrada':'registrada'}">#{!item.registrada? 'Por Registrar':'REGISTRADA'}</span>
+                            </p:column>
+
+                            <p:column sortBy="#{item.folio}" width="60" filterBy="#{item.folio}">
+                                <f:facet name="header">
+                                    <h:outputText value="Folio"/>
+                                </f:facet>
+                                <h:outputText value="#{item.folio}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.fechaDocto}" width="75" filterBy="#{item.fechaDocto}">
+                                <f:facet name="header">
+                                    <h:outputText value="F.Docto"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fechaDocto}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.montoExento}" width="70">
+                                <f:facet name="header">
+                                    <h:outputText value="Exento"/>
+                                </f:facet>
+                                <h:outputText value="#{item.montoExento}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.montoNeto}" width="70">
+                                <f:facet name="header">
+                                    <h:outputText value="Neto"/>
+                                </f:facet>
+                                <h:outputText value="#{item.montoNeto}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.montoIVARecuperable}" width="90">
+                                <f:facet name="header">
+                                    <h:outputText value="IVA Rec."/>
+                                </f:facet>
+                                <h:outputText value="#{item.montoIVARecuperable}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.montoIvaNoRecuperable}" width="100">
+                                <f:facet name="header">
+                                    <h:outputText value="IVA NoRec."/>
+                                </f:facet>
+                                <h:outputText value="#{item.montoIvaNoRecuperable}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.codigoIVANoRec}" width="120">
+                                <f:facet name="header">
+                                    <h:outputText value="Cod.Iva.NRec."/>
+                                </f:facet>
+                                <h:outputText value="#{item.codigoIVANoRec}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.montoTotal}" width="70">
+                                <f:facet name="header">
+                                    <h:outputText value="Total"/>
+                                </f:facet>
+                                <h:outputText value="#{item.montoTotal}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.codigoOtroImpuesto}" width="120">
+                                <f:facet name="header">
+                                    <h:outputText value="Cód.O.Imptos."/>
+                                </f:facet>
+                                <h:outputText value="#{item.codigoOtroImpuesto}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="#{item.valorOtroImpuesto}" width="130">
+                                <f:facet name="header">
+                                    <h:outputText value="Valor O.Imptos"/>
+                                </f:facet>
+                                <h:outputText value="#{item.valorOtroImpuesto}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.tasaOtroImpuesto}" width="120">
+                                <f:facet name="header">
+                                    <h:outputText value="Tasa O.Imptos"/>
+                                </f:facet>
+                                <h:outputText value="#{item.tasaOtroImpuesto}">
+                                    <f:convertNumber/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column exportable="false" width="50">
+
+                                <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" update="datalist" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{proComprasController.selected}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="¿Eliminar el Bus? " header="Confirmación" severity="warn">
+                            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{proComprasController.delete}" process="@this" oncomplete="PF('deleteProductDialog').hide()" update="datalist, growl"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
+                    <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

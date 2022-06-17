@@ -1,7 +1,7 @@
 package com.areatecnica.sigf.controller;
 
-import com.areatecnica.sigf.dao.impl.IBoletoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
+import com.areatecnica.sigf.dao.impl.BoletoDaoImpl;
+import com.areatecnica.sigf.dao.impl.InventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.InventarioInterno;
 
@@ -29,8 +29,8 @@ public class InventarioInternoController extends AbstractController<InventarioIn
     public InventarioInternoController() {
         // Inform the Abstract parent controller of the concrete InventarioInterno Entity
         super(InventarioInterno.class);
-        this.itemsBoletos = new IBoletoDaoImpl().findByCuenta(this.getUserCount());
-        this.items2 = new IInventarioInternoDaoImpl().findByEstado(false, this.getUserCount());
+        this.itemsBoletos = new BoletoDaoImpl().findByCuenta(this.getUserCount());
+        this.items2 = new InventarioInternoDaoImpl().findByEstado(false, this.getUserCount());
     }
 
     public List<InventarioInterno> getItems2() {

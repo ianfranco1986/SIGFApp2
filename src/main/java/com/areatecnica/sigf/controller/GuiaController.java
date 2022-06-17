@@ -1,9 +1,9 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.BusDaoImpl;
 import com.areatecnica.sigf.dao.impl.GuiaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IProcesoRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.ProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.TrabajadorDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Guia;
@@ -90,7 +90,7 @@ public class GuiaController extends AbstractController<Guia> {
         this.date = LocalDate.now();
         this.dc = new LocalDateConverter(this.date);
 
-        this.itemsBus = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
+        this.itemsBus = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
         this.trabajadorItems = new TrabajadorDaoImpl().findNanduOrderByCode();
     }
 

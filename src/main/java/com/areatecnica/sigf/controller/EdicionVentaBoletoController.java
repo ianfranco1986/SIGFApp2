@@ -50,10 +50,10 @@ public class EdicionVentaBoletoController implements Serializable {
     @PostConstruct
     public void init() {
         this.fecha = new Date();
-        this.busItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
-        this.boletoItems = new IBoletoDaoImpl().findAll();
+        this.busItems = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
+        this.boletoItems = new BoletoDaoImpl().findAll();
 
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.cajaRecaudacionItems = new CajaRecaudacionDaoImpl().findAllActive();
 
     }
 
@@ -77,7 +77,7 @@ public class EdicionVentaBoletoController implements Serializable {
     public void save() {
         if (this.inventario != null) {
             this.inventario.setInventarioCajaEstado(Boolean.TRUE);
-            InventarioCaja ic = new IInventarioCajaDaoImpl().update(inventario);
+            InventarioCaja ic = new InventarioCajaDaoImpl().update(inventario);
             this.ventaBoleto.setVentaBoletoIdInventarioCaja(inventario);
             VentaBoleto aux = new VentaBoletoDaoImpl().update(ventaBoleto);
 
@@ -95,7 +95,7 @@ public class EdicionVentaBoletoController implements Serializable {
 
     public void findInventario() {
         if (this.newBoleto != null && this.cajaRecaudacion != null) {
-            this.inventarioCajaItems = new IInventarioCajaDaoImpl().findByBoletoEstado(cajaRecaudacion, newBoleto, Boolean.FALSE);
+            this.inventarioCajaItems = new InventarioCajaDaoImpl().findByBoletoEstado(cajaRecaudacion, newBoleto, Boolean.FALSE);
         } 
     }
 

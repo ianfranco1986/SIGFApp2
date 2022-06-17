@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.CajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.util.LocalDateConverter;
 
@@ -45,7 +45,7 @@ public class ReportDetalleIngresosExtrasController implements Serializable {
     @PostConstruct
     private void init() {
         this.date = LocalDate.now();
-        this.items = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.items = new CajaRecaudacionDaoImpl().findAllActive();
         this.items.add(0, new CajaRecaudacion(0, "Todas", true, true));
 
         this.informe = "inf-resumen_ingreso_extra";

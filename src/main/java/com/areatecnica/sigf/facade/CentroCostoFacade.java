@@ -44,9 +44,6 @@ public class CentroCostoFacade extends AbstractFacade<CentroCosto> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public Cuenta findCentroCostoIdCuenta(CentroCosto entity) {
-        return this.getMergedEntity(entity).getCentroCostoIdCuenta();
-    }
 
     public boolean isTrabajadorListEmpty(CentroCosto entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -56,11 +53,5 @@ public class CentroCostoFacade extends AbstractFacade<CentroCosto> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public List<Trabajador> findTrabajadorList(CentroCosto entity) {
-        CentroCosto mergedEntity = this.getMergedEntity(entity);
-        List<Trabajador> trabajadorList = mergedEntity.getTrabajadorList();
-        trabajadorList.size();
-        return trabajadorList;
-    }
     
 }

@@ -1,32 +1,41 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
- * @author ianfr
+ * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "factura")
 @EntityListeners(AuditListener.class)
-@XmlRootElement
+@Table(name = "factura", catalog = "sigfdb", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
     @NamedQuery(name = "Factura.findByFacturaId", query = "SELECT f FROM Factura f WHERE f.facturaId = :facturaId"),
     @NamedQuery(name = "Factura.findByFacturaFolio", query = "SELECT f FROM Factura f WHERE f.facturaFolio = :facturaFolio"),
-    @NamedQuery(name = "Factura.findBetweenDates", query = "SELECT f FROM Factura f WHERE f.facturaFecha BETWEEN :from AND :to ORDER BY f.facturaFecha ASC"),
     @NamedQuery(name = "Factura.findByFacturaFecha", query = "SELECT f FROM Factura f WHERE f.facturaFecha = :facturaFecha"),
     @NamedQuery(name = "Factura.findByFacturaDetalle", query = "SELECT f FROM Factura f WHERE f.facturaDetalle = :facturaDetalle"),
     @NamedQuery(name = "Factura.findByFacturaNeto", query = "SELECT f FROM Factura f WHERE f.facturaNeto = :facturaNeto"),
@@ -41,43 +50,32 @@ public class Factura extends BaseEntity implements Serializable {
     @Column(name = "factura_id")
     private Integer facturaId;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "factura_folio")
     private int facturaFolio;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "factura_fecha")
     @Temporal(TemporalType.DATE)
     private Date facturaFecha;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "factura_detalle")
     private String facturaDetalle;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "factura_neto")
     private int facturaNeto;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "factura_iva")
     private int facturaIva;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "factura_total")
     private int facturaTotal;
     @JoinColumn(name = "factura_cliente_id", referencedColumnName = "cliente_id")
     @ManyToOne(optional = false)
     private Cliente facturaClienteId;
-    @JoinColumn(name = "factura_cuenta_mayor_id", referencedColumnName = "cuenta_mayor_id")
-    @ManyToOne(optional = false)
-    private CuentaMayor facturaCuentaMayorId;
-    @JoinColumn(name = "factura_movimiento_id", referencedColumnName = "movimiento_mes_id")
-    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
-    private MovimientoMes facturaMovimientoId;
     @JoinColumn(name = "factura_tipo_documento_id", referencedColumnName = "tipo_documento_id")
     @ManyToOne(optional = false)
     private TipoDocumento facturaTipoDocumentoId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarFacturasFacturaId")
+    private List<AuxiliarFacturas> auxiliarFacturasList;
 
     public Factura() {
     }
@@ -160,28 +158,20 @@ public class Factura extends BaseEntity implements Serializable {
         this.facturaClienteId = facturaClienteId;
     }
 
-    public CuentaMayor getFacturaCuentaMayorId() {
-        return facturaCuentaMayorId;
-    }
-
-    public void setFacturaCuentaMayorId(CuentaMayor facturaCuentaMayorId) {
-        this.facturaCuentaMayorId = facturaCuentaMayorId;
-    }
-
-    public MovimientoMes getFacturaMovimientoId() {
-        return facturaMovimientoId;
-    }
-
-    public void setFacturaMovimientoId(MovimientoMes facturaMovimientoId) {
-        this.facturaMovimientoId = facturaMovimientoId;
-    }
-
     public TipoDocumento getFacturaTipoDocumentoId() {
         return facturaTipoDocumentoId;
     }
 
     public void setFacturaTipoDocumentoId(TipoDocumento facturaTipoDocumentoId) {
         this.facturaTipoDocumentoId = facturaTipoDocumentoId;
+    }
+
+    public List<AuxiliarFacturas> getAuxiliarFacturasList() {
+        return auxiliarFacturasList;
+    }
+
+    public void setAuxiliarFacturasList(List<AuxiliarFacturas> auxiliarFacturasList) {
+        this.auxiliarFacturasList = auxiliarFacturasList;
     }
 
     @Override
@@ -198,7 +188,10 @@ public class Factura extends BaseEntity implements Serializable {
             return false;
         }
         Factura other = (Factura) object;
-        return (this.facturaId != null || other.facturaId == null) && (this.facturaId == null || this.facturaId.equals(other.facturaId));
+        if ((this.facturaId == null && other.facturaId != null) || (this.facturaId != null && !this.facturaId.equals(other.facturaId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -33,10 +33,6 @@ public class CompraFacade extends AbstractFacade<Compra> {
         super(Compra.class);
     }
 
-    public CuentaMayor findCompraCuentaId(Compra entity) {
-        return this.getMergedEntity(entity).getCompraCuentaMayorId();
-    }
-
     public Proveedor findCompraProveedorId(Compra entity) {
         return this.getMergedEntity(entity).getCompraProveedorId();
     }

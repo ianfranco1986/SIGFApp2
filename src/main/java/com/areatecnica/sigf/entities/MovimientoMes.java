@@ -71,8 +71,6 @@ public class MovimientoMes extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "movimiento_mes_numero_documento")
     private int movimientoMesNumeroDocumento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraMovimientoId")
-    private List<Compra> compraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anticipoMovimientoId")
     private List<Anticipo> anticipoList;
     @JoinColumn(name = "movimiento_mes_cuenta_banco_id", referencedColumnName = "cuenta_bancaria_id")
@@ -84,13 +82,7 @@ public class MovimientoMes extends BaseEntity implements Serializable {
     @JoinColumn(name = "movimiento_mes_tipo_movimiento_id", referencedColumnName = "tipo_movimiento_id")
     @ManyToOne(optional = false)
     private TipoMovimiento movimientoMesTipoMvtoId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaMovimientoId")
-    private List<Factura> facturaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "honorarioMovimientoId")
-    private List<Honorario> honorarioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraPetroleoMovtId")
-    private List<CompraPetroleo> compraPetroleoList;
-
+    
     public MovimientoMes() {
     }
 
@@ -173,15 +165,6 @@ public class MovimientoMes extends BaseEntity implements Serializable {
     }
 
     @XmlTransient
-    public List<Compra> getCompraList() {
-        return compraList;
-    }
-
-    public void setCompraList(List<Compra> compraList) {
-        this.compraList = compraList;
-    }
-
-    @XmlTransient
     public List<Anticipo> getAnticipoList() {
         return anticipoList;
     }
@@ -204,33 +187,6 @@ public class MovimientoMes extends BaseEntity implements Serializable {
 
     public void setMovimientoMesEmpresaId(Empresa movimientoMesEmpresaId) {
         this.movimientoMesEmpresaId = movimientoMesEmpresaId;
-    }
-
-    @XmlTransient
-    public List<Factura> getFacturaList() {
-        return facturaList;
-    }
-
-    public void setFacturaList(List<Factura> facturaList) {
-        this.facturaList = facturaList;
-    }
-
-    @XmlTransient
-    public List<Honorario> getHonorarioList() {
-        return honorarioList;
-    }
-
-    public void setHonorarioList(List<Honorario> honorarioList) {
-        this.honorarioList = honorarioList;
-    }
-
-    @XmlTransient
-    public List<CompraPetroleo> getCompraPetroleoList() {
-        return compraPetroleoList;
-    }
-
-    public void setCompraPetroleoList(List<CompraPetroleo> compraPetroleoList) {
-        this.compraPetroleoList = compraPetroleoList;
     }
 
     @Override

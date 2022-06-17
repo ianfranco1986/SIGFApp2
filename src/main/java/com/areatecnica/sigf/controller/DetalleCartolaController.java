@@ -5,9 +5,9 @@ import com.areatecnica.sigf.dao.ICartolaBancoDao;
 import com.areatecnica.sigf.dao.ICuentaBancariaDao;
 import com.areatecnica.sigf.dao.IDetalleCartolaDao;
 import com.areatecnica.sigf.dao.IEmpresaDao;
-import com.areatecnica.sigf.dao.impl.ICartolaBancoDaoImpl;
-import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IDetalleCartolaDaoImpl;
+import com.areatecnica.sigf.dao.impl.CartolaBancoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CuentaBancariaDaoImpl;
+import com.areatecnica.sigf.dao.impl.DetalleCartolaDaoImpl;
 import com.areatecnica.sigf.entities.CartolaBanco;
 import com.areatecnica.sigf.entities.CuentaBancaria;
 import com.areatecnica.sigf.entities.DetalleCartola;
@@ -60,7 +60,7 @@ public class DetalleCartolaController extends AbstractController<DetalleCartola>
     public void initParams() {
         super.initParams(); //To change body of generated methods, choose Tools | Templates.
         this.fecha = new Date();
-        this.cuentaBancariaDao = new ICuentaBancariaDaoImpl();
+        this.cuentaBancariaDao = new CuentaBancariaDaoImpl();
         this.cuentaItems = this.cuentaBancariaDao.findByCuenta(this.getUserCount());
 
         this.empresaItems = new ArrayList<Empresa>();
@@ -72,8 +72,8 @@ public class DetalleCartolaController extends AbstractController<DetalleCartola>
 
         /*this.empresaDao = new IEmpresaDaoImpl();
         this.empresaItems = this.empresaDao.findByCuenta(this.getUserCount());*/
-        this.cartolaBancoDao = new ICartolaBancoDaoImpl();
-        this.dao = new IDetalleCartolaDaoImpl();
+        this.cartolaBancoDao = new CartolaBancoDaoImpl();
+        this.dao = new DetalleCartolaDaoImpl();
         //this.cartolaBanco = new CartolaBanco()
     }
 

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Tipos de Cargos</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="selectProcesoForm">
+
+            <p:panel  style="margin-bottom: 10px;">
+                <h3 style="text-align: center;">Liquidación x Empresa</h3>
+                <p:focus for="idEmpresa"/>  
+
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="mes">Empresa</label>
+                        <p:selectOneMenu id="idEmpresa" value="#{registroLiquidacionEmpresaController.empresa}" required="true" requiredMessage="Debe seleccionar una empresa}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empresaController.items}"
+                                           var="busIdEmpresaItem"
+                                           itemValue="#{busIdEmpresaItem}"
+                                           itemLabel="#{busIdEmpresaItem.empresaNombre}"
+                                           />
+                            <p:ajax event="valueChange" update="resultado, :GuiaListForm:tabla, growl" listener="#{registroLiquidacionEmpresaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="mes">Mes/Año</label>
+                        <p:datePicker id="month" view="month" value="#{registroLiquidacionEmpresaController.date}"
+                                      pattern="MM/yyyy"
+                                      yearNavigator="true" yearRange="2022:2030" locale="es">
+                            <p:ajax update="resultado,:GuiaListForm:datalist, growl" listener="#{registroLiquidacionEmpresaController.load}" event="valueChange" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:datePicker>
+                    </div>                     
+                </div>
+
+                
+
+            </p:panel>
+        </h:form>
+
+        <p:panel id="resultado" header="Resultado:" style="margin-top: 10px;" >
+            <p:panelGrid columns="2" style="width: 100%">
+
+                <p:outputLabel value="(+) Administración:"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalAdministracion)}"/>
+
+                <p:outputLabel value="(+) Cuota Extra:"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalCuotaExtra)}"/>
+
+                <p:outputLabel value="(+) Imposiciones:"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalImposiciones)}"/>
+
+                <p:outputLabel value="(+) Ahorro Boletos:"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalBoletos)}"/>
+
+                <p:outputLabel value="Total Guías:" style="text-align: right"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalRecaudacion)}"/>
+
+
+
+                <p:outputLabel value="(+) Minutos:"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalMinutos)}"/>
+
+
+                <p:outputLabel value="(+) Abonos:"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalAbonos)}"/>
+
+                <p:outputLabel value="(-) Cargos:"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalCargos)}"/>
+
+                <p:outputLabel value="Saldo:"/>
+                <p:outputLabel value="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.saldo)}"/>
+
+
+            </p:panelGrid>
+        </p:panel>
+
+        <p:separator/>
+
+
+        <h:panelGrid columns="1"  columnClasses="alignTop" style="width: 100%;margin-top: 10px;">
+            <h:form id="GuiaListForm">        
+
+                <p:panel id="tabla">
+                    <h3 style="text-align: center;">Recaudación Total: $ #{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalRecaudacion)}
+                    </h3>
+                    <p:dataTable id="datalist"
+                                 scrollHeight="500" 
+                                 scrollable="false"                         
+                                 value="#{registroLiquidacionEmpresaController.model}"
+                                 widgetVar="datalist"
+                                 selectionMode="single"
+                                 var="item"
+                                 rowKey="#{item.id}"
+                                 rowIndexVar="rowIndex"
+                                 emptyMessage="No se han encontrado registros"                         
+                                 rowStyleClass="#{item.total eq 0 ? 'old' : null}">
+
+                        <f:facet name="header">
+                            Recaudación de Guías :
+                        </f:facet>
+
+                        <p:column style="text-align: center; ">
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.administracion}"  style="text-align: center; " footerText="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalAdministracion)}" >
+                            <f:facet name="header">
+                                <h:outputText value="Administración"/>
+                            </f:facet>
+                            <h:outputText value="#{item.administracion}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.cuotaExtra}" style="text-align: center; " footerText="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalCuotaExtra)}">
+                            <f:facet name="header">
+                                <h:outputText value="C.Extra"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cuotaExtra}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.boletos}"  style="text-align: center; " footerText="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalBoletos)}">
+                            <f:facet name="header">
+                                <h:outputText value="Boletos"/>
+                            </f:facet>
+                            <h:outputText value="#{item.boletos}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.imposiciones}" style="text-align: center; " footerText="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalImposiciones)}">
+                            <f:facet name="header">
+                                <h:outputText value="Imposiciones"/>
+                            </f:facet>
+                            <h:outputText value="#{item.imposiciones}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.total}"  style="text-align: center; " footerText="#{registroLiquidacionEmpresaController.getFormatValue(registroLiquidacionEmpresaController.totalRecaudacion)}">
+                            <f:facet name="header">
+                                <h:outputText value="Total"/>
+                            </f:facet>
+                            <h:outputText value="#{item.total}">
+                                <f:convertNumber />
+                            </h:outputText>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panel>
+            </h:form>
+
+
+        </h:panelGrid>
+
+
+
+
+    </ui:define>
+</ui:composition>

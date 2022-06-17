@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="CargaMasivaDialog" widgetVar="CargaMasivaDialog" header="Carga Masiva | Compras" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" width="100%">
+            <h:form id="CargaMasivaForm">
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label/>
+                        <p:staticMessage severity="info" summary="INFORMACIÓN" detail="La carga masiva de COMPRAS permite ingresar automáticamente las compras registradas en SII a través de un archivo plano (.CSV) con formato estándar de 27 columnas." style="width: 100%"/>
+                    </div>
+                    <div class="p-field">
+                        <label/>
+                        <p:staticMessage severity="info" summary="INFORMACIÓN" detail="Se actualizarán automáticamente las cuentas únicas PROVEEDORES y IVA CF" style="width: 100%"/>
+                    </div>
+                    <div class="p-field">
+                        <p:fileUpload mode="simple" skinSimple="true" label="Seleccionar el archivo" chooseIcon="pi pi-upload" listener="#{fileDemoView.handleFileUpload}" update="growl" sizeLimit="100000" allowTypes="/(\.|\/)(csv)$/"/>
+                    </div>
+                </div>
+                <p:spacer/>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
+

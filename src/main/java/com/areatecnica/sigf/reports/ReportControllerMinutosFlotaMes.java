@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.dao.IFlotaDao;
-import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
+import com.areatecnica.sigf.dao.impl.EmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.UnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Empresa;
@@ -50,7 +50,7 @@ public class ReportControllerMinutosFlotaMes implements Serializable {
         this.busItems = new UnidadNegocioDaoImpl().findById(2).getBusList();
         this.items = new ArrayList<>();
 
-        this.itemsEmpresa = new IEmpresaDaoImpl().findByNandu();
+        this.itemsEmpresa = new EmpresaDaoImpl().findByNandu();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());

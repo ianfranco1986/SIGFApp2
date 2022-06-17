@@ -36,13 +36,6 @@ public class CuentaMayorFacade extends AbstractFacade<CuentaMayor> {
         super(CuentaMayor.class);
     }
 
-    public List<Compra> findCompraList(CuentaMayor entity) {
-        CuentaMayor mergedEntity = this.getMergedEntity(entity);
-        List<Compra> compraList = mergedEntity.getCompraList();
-        compraList.size();
-        return compraList;
-    }
-
     public boolean isCuentaMayorSubTipoIdEmpty(CuentaMayor entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -51,8 +44,4 @@ public class CuentaMayorFacade extends AbstractFacade<CuentaMayor> {
         return em.createQuery(cq).getResultList().isEmpty();
     }
 
-    public PlanCuentaSubTipo findCuentaMayorSubTipoId(CuentaMayor entity) {
-        return this.getMergedEntity(entity).getCuentaMayorSubTipoId();
-    }
-    
 }

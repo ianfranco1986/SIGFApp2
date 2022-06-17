@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TipoCargoEditDlg" widgetVar="TipoCargoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="Edición | Tipo de Cargo" closeOnEscape="true">
+
+            <h:form id="TipoCargoEditForm">
+
+                <h:panelGroup id="display">
+                    <h:panelGrid  columns="2" columnClasses="column" rendered="#{tipoCargoController.selected != null}">
+
+
+                        <h:outputLabel value="#" for="tipoCargoId" />
+                        <h:outputText id="tipoCargoId" value="#{tipoCargoController.selected.tipoCargoId}" />
+
+                        <p:outputLabel value="Nombre" for="tipoCargoNombre" />
+                        <p:inputText id="tipoCargoNombre" value="#{tipoCargoController.selected.tipoCargoNombre}" title="#{myBundle.EditTipoCargoTitle_tipoCargoNombre}" required="true" requiredMessage="#{myBundle.EditTipoCargoRequiredMessage_tipoCargoNombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Monto x Defecto" for="tipoCargoMontoDefecto" />
+                        <p:inputText id="tipoCargoMontoDefecto" value="#{tipoCargoController.selected.tipoCargoMontoDefecto}" title="#{myBundle.EditTipoCargoTitle_tipoCargoMontoDefecto}"/>
+
+                    </h:panelGrid>
+                </h:panelGroup>
+                <p:spacer/>
+                <div class="p-text-right">
+                    <p:commandButton 
+                        actionListener="#{tipoCargoController.save}" 
+                        value="Guardar" 
+                        icon="pi pi-save" 
+                        update=":TipoCargoListForm:datalist,:growl"                     
+                        oncomplete="handleSubmit(xhr,status,args,PF('TipoCargoEditDialog'));"
+                        styleClass="p-mr-2 p-mb-2" 
+                        >
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton 
+                        value="Cancelar" 
+                        icon="pi pi-ban" 
+                        class="ui-button-secondary"
+                        oncomplete="PF('TipoCargoEditDialog').hide()" 
+                        update="growl" 
+                        process="@this" 
+                        immediate="true" 
+                        resetValues="true"
+                        styleClass="ui-button-danger p-mr-2"
+                        />
+                </div>
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

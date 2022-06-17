@@ -1,36 +1,50 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.areatecnica.sigf.entities;
 
 import com.areatecnica.sigf.audit.AuditListener;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
- * @author ianfr
+ * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "cuenta_mayor")
 @EntityListeners(AuditListener.class)
-@XmlRootElement
+@Cacheable(false)
+@Table(name = "cuenta_mayor")
 @NamedQueries({
-    @NamedQuery(name = "CuentaMayor.findAll", query = "SELECT c FROM CuentaMayor c ORDER BY c.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId"),
-    @NamedQuery(name = "CuentaMayor.findBySubTipo", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorSubTipoId = :cuentaMayorSubTipoId ORDER BY c.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId"),
-    @NamedQuery(name = "CuentaMayor.findByCuentaMayorId", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorId = :cuentaMayorId"),
+    @NamedQuery(name = "CuentaMayor.findAll", query = "SELECT c FROM CuentaMayor c ORDER BY c.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId, c.cuentaMayorSubTipoId.planCuentaSubTipoCodigo"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorSubTipoId", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorSubTipoId = :cuentaMayorSubTipoId"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorNombre", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorNombre = :cuentaMayorNombre"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorDescripcion", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorDescripcion = :cuentaMayorDescripcion"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorCc", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorCc = :cuentaMayorCc"),
+    @NamedQuery(name = "CuentaMayor.findByCuentaMayorCodigo", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorCodigo = :cuentaMayorCodigo"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorCompras", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorCompras = true"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorHonorarios", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorHonorarios = true"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorRemuneraciones", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorRemuneraciones = true"),
+    @NamedQuery(name = "CuentaMayor.findBySubTipo", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorSubTipoId = :cuentaMayorSubTipoId ORDER BY c.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorTesoreria", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorTesoreria = true"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorPresupuesto", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorPresupuesto = true"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorVentas", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorVentas = true"),
@@ -45,19 +59,15 @@ public class CuentaMayor extends BaseEntity implements Serializable {
     @Column(name = "cuenta_mayor_id")
     private Integer cuentaMayorId;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "cuenta_mayor_nombre")
     private String cuentaMayorNombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "cuenta_mayor_codigo")
-    private String cuentaMayorCodigo;
     @Column(name = "cuenta_mayor_descripcion")
     private String cuentaMayorDescripcion;
-    @Column(name = "cuenta_mayor_codigo_analisis")
-    private Boolean cuentaMayorCodigoAnalisis;
+    @Column(name = "cuenta_mayor_cc")
+    private Boolean cuentaMayorCc;
+    @Basic(optional = false)
+    @Column(name = "cuenta_mayor_codigo")
+    private String cuentaMayorCodigo;
     @Column(name = "cuenta_mayor_compras")
     private Boolean cuentaMayorCompras;
     @Column(name = "cuenta_mayor_honorarios")
@@ -74,22 +84,15 @@ public class CuentaMayor extends BaseEntity implements Serializable {
     private Boolean cuentaMayorBanco;
     @Column(name = "cuenta_mayor_activos_fijos")
     private Boolean cuentaMayorActivosFijos;
-    @JoinColumn(name = "cuenta_mayor_unica_id", referencedColumnName = "cuenta_unica_id", nullable = false)
-    @OneToOne(optional = false)
-    private CuentaUnica cuentaMayorUnicaId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraCuentaMayorId")
-    private List<Compra> compraList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anticipoCuentaMayorId")
-    private List<Anticipo> anticipoList;
     @JoinColumn(name = "cuenta_mayor_sub_tipo_id", referencedColumnName = "plan_cuenta_sub_tipo_id")
     @ManyToOne(optional = false)
     private PlanCuentaSubTipo cuentaMayorSubTipoId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaCuentaMayorId")
-    private List<Factura> facturaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "honorarioCuentaMayorId")
-    private List<Honorario> honorarioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraPetroleoCuentaMayorId")
-    private List<CompraPetroleo> compraPetroleoList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "voucherMovimientoCuentaId")
+    private List<VoucherMovimiento> voucherMovimientoList;
+    @JoinColumn(name = "cuenta_mayor_unica_id", referencedColumnName = "cuenta_unica_id")
+    @ManyToOne(optional = false)
+    private CuentaUnica cuentaMayorUnicaId;
 
     public CuentaMayor() {
     }
@@ -98,11 +101,10 @@ public class CuentaMayor extends BaseEntity implements Serializable {
         this.cuentaMayorId = cuentaMayorId;
     }
 
-    public CuentaMayor(Integer cuentaMayorId, String cuentaMayorNombre, String cuentaMayorCodigo, String cuentaMayorDescripcion) {
+    public CuentaMayor(Integer cuentaMayorId, String cuentaMayorNombre, String cuentaMayorCodigo) {
         this.cuentaMayorId = cuentaMayorId;
         this.cuentaMayorNombre = cuentaMayorNombre;
         this.cuentaMayorCodigo = cuentaMayorCodigo;
-        this.cuentaMayorDescripcion = cuentaMayorDescripcion;
     }
 
     public Integer getCuentaMayorId() {
@@ -113,20 +115,20 @@ public class CuentaMayor extends BaseEntity implements Serializable {
         this.cuentaMayorId = cuentaMayorId;
     }
 
+    public PlanCuentaSubTipo getCuentaMayorSubTipoId() {
+        return cuentaMayorSubTipoId;
+    }
+
+    public void setCuentaMayorSubTipoId(PlanCuentaSubTipo cuentaMayorSubTipoId) {
+        this.cuentaMayorSubTipoId = cuentaMayorSubTipoId;
+    }
+
     public String getCuentaMayorNombre() {
         return cuentaMayorNombre;
     }
 
     public void setCuentaMayorNombre(String cuentaMayorNombre) {
         this.cuentaMayorNombre = cuentaMayorNombre;
-    }
-
-    public String getCuentaMayorCodigo() {
-        return cuentaMayorCodigo;
-    }
-
-    public void setCuentaMayorCodigo(String cuentaMayorCodigo) {
-        this.cuentaMayorCodigo = cuentaMayorCodigo;
     }
 
     public String getCuentaMayorDescripcion() {
@@ -137,12 +139,20 @@ public class CuentaMayor extends BaseEntity implements Serializable {
         this.cuentaMayorDescripcion = cuentaMayorDescripcion;
     }
 
-    public Boolean getCuentaMayorCodigoAnalisis() {
-        return cuentaMayorCodigoAnalisis;
+    public Boolean getCuentaMayorCc() {
+        return cuentaMayorCc;
     }
 
-    public void setCuentaMayorCodigoAnalisis(Boolean cuentaMayorCodigoAnalisis) {
-        this.cuentaMayorCodigoAnalisis = cuentaMayorCodigoAnalisis;
+    public void setCuentaMayorCc(Boolean cuentaMayorCc) {
+        this.cuentaMayorCc = cuentaMayorCc;
+    }
+
+    public String getCuentaMayorCodigo() {
+        return cuentaMayorCodigo;
+    }
+
+    public void setCuentaMayorCodigo(String cuentaMayorCodigo) {
+        this.cuentaMayorCodigo = cuentaMayorCodigo;
     }
 
     public Boolean getCuentaMayorCompras() {
@@ -209,70 +219,20 @@ public class CuentaMayor extends BaseEntity implements Serializable {
         this.cuentaMayorActivosFijos = cuentaMayorActivosFijos;
     }
 
+    public List<VoucherMovimiento> getVoucherMovimientoList() {
+        return voucherMovimientoList;
+    }
+
+    public void setVoucherMovimientoList(List<VoucherMovimiento> voucherMovimientoList) {
+        this.voucherMovimientoList = voucherMovimientoList;
+    }
+
     public CuentaUnica getCuentaMayorUnicaId() {
         return cuentaMayorUnicaId;
     }
 
     public void setCuentaMayorUnicaId(CuentaUnica cuentaMayorUnicaId) {
         this.cuentaMayorUnicaId = cuentaMayorUnicaId;
-    }
-
-    @XmlTransient
-    public List<Compra> getCompraList() {
-        return compraList;
-    }
-
-    public void setCompraList(List<Compra> compraList) {
-        this.compraList = compraList;
-    }
-
-    @XmlTransient
-    public List<Anticipo> getAnticipoList() {
-        return anticipoList;
-    }
-
-    public void setAnticipoList(List<Anticipo> anticipoList) {
-        this.anticipoList = anticipoList;
-    }
-
-    public PlanCuentaSubTipo getCuentaMayorSubTipoId() {
-        return cuentaMayorSubTipoId;
-    }
-
-    public void setCuentaMayorSubTipoId(PlanCuentaSubTipo cuentaMayorSubTipoId) {
-        this.cuentaMayorSubTipoId = cuentaMayorSubTipoId;
-    }
-
-    @XmlTransient
-    public List<Factura> getFacturaList() {
-        return facturaList;
-    }
-
-    public void setFacturaList(List<Factura> facturaList) {
-        this.facturaList = facturaList;
-    }
-
-    @XmlTransient
-    public List<Honorario> getHonorarioList() {
-        return honorarioList;
-    }
-
-    public void setHonorarioList(List<Honorario> honorarioList) {
-        this.honorarioList = honorarioList;
-    }
-
-    @XmlTransient
-    public List<CompraPetroleo> getCompraPetroleoList() {
-        return compraPetroleoList;
-    }
-
-    public void setCompraPetroleoList(List<CompraPetroleo> compraPetroleoList) {
-        this.compraPetroleoList = compraPetroleoList;
-    }
-    
-    @XmlTransient
-    public boolean getCuentaMayorAuxiliar(){
-        return (this.cuentaMayorRemuneraciones || this.cuentaMayorHonorarios || this.cuentaMayorCompras || this.cuentaMayorVentas || this.cuentaMayorBanco || this.cuentaMayorActivosFijos); 
     }
 
     @Override
@@ -289,7 +249,10 @@ public class CuentaMayor extends BaseEntity implements Serializable {
             return false;
         }
         CuentaMayor other = (CuentaMayor) object;
-        return (this.cuentaMayorId != null || other.cuentaMayorId == null) && (this.cuentaMayorId == null || this.cuentaMayorId.equals(other.cuentaMayorId));
+        if ((this.cuentaMayorId == null && other.cuentaMayorId != null) || (this.cuentaMayorId != null && !this.cuentaMayorId.equals(other.cuentaMayorId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override

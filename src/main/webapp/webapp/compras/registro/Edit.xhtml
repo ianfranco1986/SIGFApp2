@@ -40,24 +40,13 @@
                         <p:inputText id="compraExento" value="#{compraController.selected.compraExento}" title="#{myBundle.EditCompraTitle_compraExento}"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraLabel_compraIva}" for="compraIva" />
-                        <p:inputText id="compraIva" value="#{compraController.selected.compraIva}" title="#{myBundle.EditCompraTitle_compraIva}"/>
+                        <p:inputText id="compraIva" value="#{compraController.selected.compraIvaRecuperable}" title="#{myBundle.EditCompraTitle_compraIva}"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraLabel_compraOtrosImpuestos}" for="compraOtrosImpuestos" />
                         <p:inputText id="compraOtrosImpuestos" value="#{compraController.selected.compraOtrosImpuestos}" title="#{myBundle.EditCompraTitle_compraOtrosImpuestos}"/>
 
                         <p:outputLabel value="#{myBundle.EditCompraLabel_compraTotal}" for="compraTotal" />
                         <p:inputText id="compraTotal" value="#{compraController.selected.compraTotal}" title="#{myBundle.EditCompraTitle_compraTotal}"/>
-
-                        <p:outputLabel value="#{myBundle.EditCompraLabel_compraCuentaId}" for="compraCuentaId" />
-                        <p:selectOneMenu id="compraCuentaId" value="#{compraController.selected.compraCuentaMayorId}" required="true" requiredMessage="#{myBundle.EditCompraRequiredMessage_compraCuentaId}" converter="omnifaces.SelectItemsConverter">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cuentaMayorController.items}"
-                                           var="compraCuentaIdItem"
-                                           itemValue="#{compraCuentaIdItem}"
-                                           itemLabel="#{compraCuentaIdItem.cuentaMayorId.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.EditCompraLabel_compraProveedorId}" for="compraProveedorId" />
                         <p:selectOneMenu id="compraProveedorId" value="#{compraController.selected.compraProveedorId}" required="true" requiredMessage="#{myBundle.EditCompraRequiredMessage_compraProveedorId}" converter="omnifaces.SelectItemsConverter">

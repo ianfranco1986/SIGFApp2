@@ -1,10 +1,10 @@
 package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.ICuentaBancariaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEmpresaDaoImpl;
-import com.areatecnica.sigf.dao.impl.IMovimientoMesDaoImpl;
-import com.areatecnica.sigf.dao.impl.ITipoMovimientoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CuentaBancariaDaoImpl;
+import com.areatecnica.sigf.dao.impl.EmpresaDaoImpl;
+import com.areatecnica.sigf.dao.impl.MovimientoMesDaoImpl;
+import com.areatecnica.sigf.dao.impl.TipoMovimientoDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.MovimientoMesDataModel;
 import org.primefaces.event.RowEditEvent;
@@ -63,9 +63,9 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
     public void initParams() {
         super.initParams(); //To change body of generated methods, choose Tools | Templates.
 
-        this.empresaItems = new IEmpresaDaoImpl().findByCuenta(this.getUserCount());
-        this.tipoMovimientoItems = new ITipoMovimientoDaoImpl().findAll();
-        this.cuentaItems = new ICuentaBancariaDaoImpl().findAll();
+        this.empresaItems = new EmpresaDaoImpl().findByCuenta(this.getUserCount());
+        this.tipoMovimientoItems = new TipoMovimientoDaoImpl().findAll();
+        this.cuentaItems = new CuentaBancariaDaoImpl().findAll();
 
         Calendar cal = Calendar.getInstance();
         this.mes = cal.get(Calendar.MONTH) + 1;
@@ -87,7 +87,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
 
     public void loadDocumento() {
         if (this.documento > 0) {
-            this.items = new IMovimientoMesDaoImpl().findByDocumento(documento);
+            this.items = new MovimientoMesDaoImpl().findByDocumento(documento);
             this.model = new MovimientoMesDataModel(items);
             if (this.items.isEmpty()) {
                 JsfUtil.addWarningMessage("No se ha encontrado un documento con el número: " + documento);
@@ -113,7 +113,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
         if (this.tipoMovimiento != null) {
             setFecha();
             if (this.desde != null && this.hasta != null) {
-                this.items = new IMovimientoMesDaoImpl().findByTipoAndDates(this.tipoMovimiento, desde, hasta);
+                this.items = new MovimientoMesDaoImpl().findByTipoAndDates(this.tipoMovimiento, desde, hasta);
                 this.model = new MovimientoMesDataModel(items);
 
                 if (this.items.isEmpty()) {
@@ -130,7 +130,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
         if (this.empresa != null) {
             setFecha();
             if (this.desde != null && this.hasta != null) {
-                this.items = new IMovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, desde, hasta);
+                this.items = new MovimientoMesDaoImpl().findByEmpresaAndDates(this.empresa, desde, hasta);
                 this.model = new MovimientoMesDataModel(items);
 
                 if (this.items.isEmpty()) {
@@ -147,7 +147,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
         if (this.cuentaBancaria != null) {
             setFecha();
             if (this.desde != null && this.hasta != null) {
-                this.items = new IMovimientoMesDaoImpl().findByCuentaAndDates(this.cuentaBancaria, desde, hasta);
+                this.items = new MovimientoMesDaoImpl().findByCuentaAndDates(this.cuentaBancaria, desde, hasta);
 
                 this.model = new MovimientoMesDataModel(items);
 
@@ -220,7 +220,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
 
         try {
 
-            new IMovimientoMesDaoImpl().update(temp);
+            new MovimientoMesDaoImpl().update(temp);
             JsfUtil.addSuccessMessage("Se ha actualizado el registro");
             getTotals();
         } catch (Exception e) {
@@ -262,7 +262,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
 
     public void handleCuentaChange() {
         if (this.cuentaBancaria != null) {
-            this.movimientoDocumento = new IMovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
+            this.movimientoDocumento = new MovimientoMesDaoImpl().findLastByCuenta(this.cuentaBancaria);
             if (this.movimientoDocumento == null) {
                 this.movimientoDocumento = new MovimientoMes();
                 this.movimientoDocumento.setMovimientoMesNumeroDocumento(1);
@@ -518,7 +518,7 @@ public class MovimientoMesViewController extends AbstractController<MovimientoMe
         if (this.getSelected() != null) {
 
             this.items.remove(this.getSelected());
-            new IMovimientoMesDaoImpl().delete(this.getSelected());
+            new MovimientoMesDaoImpl().delete(this.getSelected());
             this.prepareCreate(event);
         } else {
             JsfUtil.addErrorMessage("Debe seleccionar un movimiento");

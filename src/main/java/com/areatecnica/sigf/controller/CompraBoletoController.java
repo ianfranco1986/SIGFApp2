@@ -2,8 +2,8 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.ICompraBoletoDao;
-import com.areatecnica.sigf.dao.impl.ICompraBoletoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IInventarioInternoDaoImpl;
+import com.areatecnica.sigf.dao.impl.CompraBoletoDaoImpl;
+import com.areatecnica.sigf.dao.impl.InventarioInternoDaoImpl;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
 import com.areatecnica.sigf.entities.InventarioInterno;
@@ -120,7 +120,7 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     }
 
     public void findFolio() {
-        this.compraBoletoDao = new ICompraBoletoDaoImpl();
+        this.compraBoletoDao = new CompraBoletoDaoImpl();
         CompraBoleto compraBoleto = this.compraBoletoDao.findByFolioFactura(this.selected.getCompraBoletoFolioFactura());
         if (compraBoleto != null) {
             JsfUtil.addErrorMessage("La factura N° " + this.selected.getCompraBoletoFolioFactura() + " ya se encuentra ingresada");
@@ -136,7 +136,7 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     @Override
     public void saveNew(ActionEvent event) {
         //super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
-        new ICompraBoletoDaoImpl().update(this.selected);
+        new CompraBoletoDaoImpl().update(this.selected);
 //                            this.getSelected().setCompraBoletoTotal(this.getSelected().getCompraBoletoTotal() + total);
         int totalCompra = 0;
         System.err.println("Guardando....");
@@ -157,7 +157,7 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
                 ii.setInventarioInternoSerie(serieInicial);
                 serieInicial += 1000;
 
-                new IInventarioInternoDaoImpl().update(ii);
+                new InventarioInternoDaoImpl().update(ii);
                 System.err.println("Llega al update");
                 inventarioInterno.add(ii);
             }

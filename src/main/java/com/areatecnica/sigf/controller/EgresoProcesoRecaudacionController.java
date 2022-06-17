@@ -4,8 +4,8 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IEgresoDao;
 import com.areatecnica.sigf.dao.IEgresoProcesoRecaudacionDao;
-import com.areatecnica.sigf.dao.impl.IEgresoDaoImpl;
-import com.areatecnica.sigf.dao.impl.IEgresoProcesoRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.EgresoDaoImpl;
+import com.areatecnica.sigf.dao.impl.EgresoProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.entities.Egreso;
 import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
@@ -108,8 +108,8 @@ public class EgresoProcesoRecaudacionController extends AbstractController<Egres
 
     public void find(ActionEvent event) {
         if (this.procesoRecaudacion != null) {
-            this.egresoDao = new IEgresoDaoImpl();
-            this.egresoFlotaDao = new IEgresoProcesoRecaudacionDaoImpl();
+            this.egresoDao = new EgresoDaoImpl();
+            this.egresoFlotaDao = new EgresoProcesoRecaudacionDaoImpl();
             this.egresoFlotaIdEgresoController.setItems(this.egresoDao.findAllByCuenta(this.getUserCount()));
             this.selectedItems = this.egresoFlotaDao.findAllByProceso(procesoRecaudacion);
             this.setModel(new EgresoProcesoRecaudacionDataModel(selectedItems));

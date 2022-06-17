@@ -3,7 +3,7 @@ package com.areatecnica.sigf.controllers.login;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.ILoginDao;
 import com.areatecnica.sigf.dao.IUsuarioSessionDao;
-import com.areatecnica.sigf.dao.impl.ILoginDaoImpl;
+import com.areatecnica.sigf.dao.impl.LoginDaoImpl;
 import com.areatecnica.sigf.entities.Usuario;
 import com.areatecnica.sigf.entities.UsuarioSession;
 import com.areatecnica.sigf.facade.UsuarioSessionFacade;
@@ -60,7 +60,7 @@ public class LoginController implements java.io.Serializable {
      */
     @PostConstruct
     public void init() {
-        dao = new ILoginDaoImpl();
+        dao = new LoginDaoImpl();
     }
 
     /**

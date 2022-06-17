@@ -6,7 +6,7 @@
 package com.areatecnica.sigf.reports;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.BusDaoImpl;
 import com.areatecnica.sigf.dao.impl.UnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Empresa;
@@ -290,15 +290,15 @@ public class ReportControllerLiquidacionEmpresa implements Serializable {
         this.selectedItems = new ArrayList<>();
         if (this.empresa != null) {
             if (this.unidadNegocio != null) {
-                this.items = new IBusDaoImpl().findByEmpresaUnidad(empresa, unidadNegocio);
+                this.items = new BusDaoImpl().findByEmpresaUnidad(empresa, unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findByEmpresa(empresa);
+                this.items = new BusDaoImpl().findByEmpresa(empresa);
             }
         } else {
             if (this.unidadNegocio != null) {
-                this.items = new IBusDaoImpl().findByUnidad(unidadNegocio);
+                this.items = new BusDaoImpl().findByUnidad(unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findAll();
+                this.items = new BusDaoImpl().findAll();
             }
         }
     }
@@ -307,14 +307,14 @@ public class ReportControllerLiquidacionEmpresa implements Serializable {
         this.selectedItems = new ArrayList<>();
         if (this.unidadNegocio != null) {
             if (this.empresa != null) {
-                this.items = new IBusDaoImpl().findByEmpresaUnidad(empresa, unidadNegocio);
+                this.items = new BusDaoImpl().findByEmpresaUnidad(empresa, unidadNegocio);
             } else {
-                this.items = new IBusDaoImpl().findByUnidad(unidadNegocio);
+                this.items = new BusDaoImpl().findByUnidad(unidadNegocio);
             }
         } else if (this.empresa != null) {
-            this.items = new IBusDaoImpl().findByEmpresa(empresa);
+            this.items = new BusDaoImpl().findByEmpresa(empresa);
         } else {
-            this.items = new IBusDaoImpl().findAll();
+            this.items = new BusDaoImpl().findAll();
         }
     }
 

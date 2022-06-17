@@ -55,9 +55,9 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
     public void init() {
         this.date = LocalDate.now();
         this.dc = new LocalDateConverter(date);
-        this.cajaRecaudacionItems = new ICajaRecaudacionDaoImpl().findAllActive();
+        this.cajaRecaudacionItems = new CajaRecaudacionDaoImpl().findAllActive();
         this.items = new ArrayList<>();
-        this.boleto = new IEgresoDaoImpl().getBoleto();
+        this.boleto = new EgresoDaoImpl().getBoleto();
     }
 
     public void find() {
@@ -86,7 +86,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
             this.totalImposiciones = 0;
             this.totalRecaudacion = 0;
 
-            this.busItems = new IBusDaoImpl().findByProceso(new IProcesoRecaudacionDaoImpl().findById(2));
+            this.busItems = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
             this.trabajadorItems = new TrabajadorDaoImpl().findNandu();
 
             
@@ -187,13 +187,13 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
 
             int recaudacion_id = this.selectedItem.getVentaBoletoFolioRecaudacion();
 
-            RecaudacionGuia r = new IRecaudacionGuiaDaoImpl().findByRecaudacionEgreso(recaudacion_id, this.boleto);
+            RecaudacionGuia r = new RecaudacionGuiaDaoImpl().findByRecaudacionEgreso(recaudacion_id, this.boleto);
             int valorBoleto = r.getRecaudacionGuiaMonto();
 
             if (valorBoleto > 0) {
                 r.setRecaudacionGuiaMonto(valorBoleto - 5000);
 
-                RecaudacionGuia rg = new IRecaudacionGuiaDaoImpl().update(r);
+                RecaudacionGuia rg = new RecaudacionGuiaDaoImpl().update(r);
                 new VentaBoletoDaoImpl().delete(selectedItem);
 
                 this.selectedItem = null;
