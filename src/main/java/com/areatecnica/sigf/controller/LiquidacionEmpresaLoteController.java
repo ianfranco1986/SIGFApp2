@@ -10,6 +10,7 @@ import com.areatecnica.sigf.dao.impl.LiquidacionEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.MovimientoMesDaoImpl;
 import com.areatecnica.sigf.entities.*;
 import com.areatecnica.sigf.models.RecaudacionLiquidacionLoteDataModel;
+import com.areatecnica.sigf.util.LocalDateConverter;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -17,6 +18,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -39,12 +41,10 @@ public class LiquidacionEmpresaLoteController implements Serializable {
 
     private String informe = "inf-liquidacion_empresa_grupal";
 
-    private Date desde;
-    private Date hasta;
-    private Date fecha;
+    private LocalDate date;
+    private LocalDateConverter dc;
+
 //    private DateTime dateTime;
-    private int mes;
-    private int anio;
     private int totalAdministracion = 0;
     private int totalCuotaExtra = 0;
     private int totalBoletos = 0;
@@ -68,20 +68,10 @@ public class LiquidacionEmpresaLoteController implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.fecha = new Date();
-//        this.dateTime = new DateTime(fecha);
-//        DateTime _maxDate = this.dateTime.dayOfMonth().withMaximumValue();
-
-        Calendar calendar = Calendar.getInstance();
-
-        this.anio = calendar.get(Calendar.YEAR);
-        this.mes = calendar.get(Calendar.MONTH) + 1;
-
+        this.setDate(LocalDate.now());
         this.informe = "inf-liquidacion_empresa_grupal";
-        setFecha();
-        System.err.println("primera fecha: " + this.fecha);
-        this.desde = this.fecha;
-//        this.hasta = _maxDate.toDate();
+        
+        this.items = new ArrayList<>();
     }
 
     public Map<String, Object> getMap() {
@@ -111,10 +101,9 @@ public class LiquidacionEmpresaLoteController implements Serializable {
             }
         }
 
-
-        map.put("fechaCompleta", getFechaCompleta());
-        map.put("desde", desde);
-        map.put("hasta", hasta);
+        map.put("fechaCompleta", this.dc.getCurrentDateName());
+        map.put("desde", this.dc.getFirstDateOfMonth());
+        map.put("hasta", this.dc.getLastDayOfMonth());
         map.put("list", list.toString());
 
         return map;
@@ -127,9 +116,9 @@ public class LiquidacionEmpresaLoteController implements Serializable {
 
         list = String.valueOf(empresa.getEmpresaId());
 
-        map.put("fechaCompleta", getFechaCompleta());
-        map.put("desde", desde);
-        map.put("hasta", hasta);
+        map.put("fechaCompleta", this.dc.getCurrentDateName());
+        map.put("desde", this.dc.getFirstDateOfMonth());
+        map.put("hasta", this.dc.getLastDayOfMonth());
         map.put("list", list);
 
         return map;
@@ -151,9 +140,9 @@ public class LiquidacionEmpresaLoteController implements Serializable {
         this.totalCargos = 0;
 
         for (Empresa e : this.listEmpresa) {
-            LiquidacionHelper h = new LiquidacionHelper(e, desde, hasta);
+            LiquidacionHelper h = new LiquidacionHelper(e, this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
 
-            liquidacionEmpresa = new LiquidacionEmpresaDaoImpl().findByEmpresaFechaLiquidacion(empresa, desde);
+            liquidacionEmpresa = new LiquidacionEmpresaDaoImpl().findByEmpresaFechaLiquidacion(empresa, this.dc.getFirstDateOfMonth());
             h.setLiquidacionEmpresa(liquidacionEmpresa);
 
             this.totalAdministracion = this.totalAdministracion + h.getTotalAdministracion();
@@ -169,51 +158,6 @@ public class LiquidacionEmpresaLoteController implements Serializable {
         }
 
         this.model = new RecaudacionLiquidacionLoteDataModel(items);
-    }
-
-    private String getFechaCompleta() {
-        String fechaCompleta = "";
-        switch (mes) {
-            case 1:
-                fechaCompleta = "Enero ";
-                break;
-            case 2:
-                fechaCompleta = "Febrero ";
-                break;
-            case 3:
-                fechaCompleta = "Marzo ";
-                break;
-            case 4:
-                fechaCompleta = "Abril ";
-                break;
-            case 5:
-                fechaCompleta = "Mayo ";
-                break;
-            case 6:
-                fechaCompleta = "Junio ";
-                break;
-            case 7:
-                fechaCompleta = "Julio ";
-                break;
-            case 8:
-                fechaCompleta = "Agosto ";
-                break;
-            case 9:
-                fechaCompleta = "Septiembre ";
-                break;
-            case 10:
-                fechaCompleta = "Octubre ";
-                break;
-            case 11:
-                fechaCompleta = "Noviembre ";
-                break;
-            case 12:
-                fechaCompleta = "Diciembre ";
-                break;
-
-        }
-
-        return fechaCompleta + " " + anio;
     }
 
     public void save() {
@@ -275,44 +219,17 @@ public class LiquidacionEmpresaLoteController implements Serializable {
         return generarLiquidacionNoMovimiento;
     }
 
-    public Date getDesde() {
-        return desde;
+    public void setDate(LocalDate date) {
+        this.date = date;
+        this.dc = new LocalDateConverter(date);
     }
 
-    public void setDesde(Date desde) {
-        this.desde = desde;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public Date getHasta() {
-        return hasta;
-    }
-
-    public void setHasta(Date hasta) {
-        this.hasta = hasta;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
+    public String getFormatValue(int val) {
+        return nf.format(val);
     }
 
     public int getTotalAdministracion() {
@@ -408,11 +325,6 @@ public class LiquidacionEmpresaLoteController implements Serializable {
 //        } catch (ParseException ex) {
 //
 //        }
-    }
-
-    public String getFormatValue(int val) {
-        return nf.format(val);
-
     }
 
     public static class LiquidacionHelper {
@@ -600,7 +512,6 @@ public class LiquidacionEmpresaLoteController implements Serializable {
 //        public void setAbonoBusItems(List<AbonoBus> abonoBusItems) {
 //            this.abonoBusItems = abonoBusItems;
 //        }
-
         public LinkedHashMap getHashMap() {
             return hashMap;
         }

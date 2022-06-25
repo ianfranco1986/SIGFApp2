@@ -77,9 +77,7 @@
                         <p:menuitem id="om_edicionguias" value="Edición de Guías " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/edicionGuia.xhtml" />
                         <p:menuitem id="om_edicionboletos" value="Edición de Boletos " icon="pi pi-fw pi-pencil" outcome="/webapp/recaudacion/edicionBoleto.xhtml" />
                         <p:menuitem id="om_busqueda_boleto" value="Búsqueda de Boletos" icon="pi pi-fw pi-search" outcome="/webapp/recaudacion/busqueda.xhtml" />
-                    </p:submenu>
-                    <p:submenu label="Reportes" icon="pi pi-fw pi-print">
-                        <p:submenu label="Cajas" icon="pi pi-fw pi-print">
+                        <p:submenu label="Reportes" icon="pi pi-fw pi-print">
                             <p:menuitem id="om_aio" value="General x Caja" outcome="/webapp/reportes/informesRecaudacion/recaudacionaio.xhtml" />
                             <p:menuitem id="om_deudas" value="Deudas Vigentes" outcome="/webapp/reportes/informesRecaudacion/deudas.xhtml" />
                             <p:menuitem id="om_resumen_inventario_caja" value="Resumen Inventario" outcome="/webapp/reportes/informesRecaudacion/resumeninventariocaja.xhtml" />
@@ -87,36 +85,26 @@
                             <p:menuitem id="om_recaudacion_minuto_caja" value="Resumen R. de Minutos " outcome="/webapp/reportes/informesRecaudacion/registrominutobusresumen.xhtml" />
                             <p:menuitem id="om_resumen_extras" value="Resumen Aportes Varios" outcome="/webapp/reportes/informesRecaudacion/recaudacionmensualextras.xhtml" />
                         </p:submenu>
-                        <p:submenu id="om_conductores" label="Conductores" icon="pi pi-fw pi-print">
+                    </p:submenu>
+                    <p:submenu label="General" >
+                        <p:submenu id="om_rec" label="Conductores" icon="pi pi-fw pi-users"> 
+                            <p:submenu id="om_conductores" label="Reportes" icon="pi pi-fw pi-print">
                             <p:menuitem id="om_detalle_imposiciones" value="Detalle de Imposiciones" outcome="/webapp/reportes/conductores/detalleconductor.xhtml" />
                             <p:menuitem id="om_detalle_pagos" value="Detalle de Pagos" outcome="/webapp/reportes/conductores/detallepagosconductor.xhtml" />
                             <p:menuitem id="om_resumen_imposiciones" value="Resumen de Imposiciones" outcome="/webapp/reportes/conductores/resumenconductor.xhtml" />
                         </p:submenu>
-                        <p:submenu label="Minutos" icon="pi pi-fw pi-print">
-                            <p:menuitem id="om_registro_minutos" value="R. Minutos x Fecha" outcome="/webapp/reportes/minutos/registrominutofecha.xhtml" />
                         </p:submenu>
-                        <p:submenu label="V.de Combustible" icon="pi pi-fw pi-print">
-                            <p:menuitem id="om_venta_bus" value="Detalle x Bus" outcome="/webapp/reportes/ventacombustible/ventaxbus.xhtml" />
-                            <p:menuitem id="om_venta_bus_resumen" value="Resumen x Bus" outcome="/webapp/reportes/ventacombustible/ventaxbusresumen.xhtml" />
-                            <p:menuitem id="om_venta_libro" value="Libro de Ventas" outcome="/webapp/reportes/ventacombustible/libroventas.xhtml" />
-                            <p:menuitem id="om_venta_particulares" value="Ventas x Particulares" outcome="/webapp/reportes/ventacombustible/ventaparticular.xhtml" />
-                            <p:menuitem id="om_venta_empresa" value="Ventas x Empresa" outcome="/webapp/reportes/ventacombustible/ventaempresa.xhtml" />
-                        </p:submenu>
-                        <p:submenu label="Liq. Empresas" icon="pi pi-fw pi-print">
-                            <p:menuitem id="om_general_mensual" value="General Mensual" outcome="/webapp/reportes/liquidacionempresa/recaudaciongeneral.xhtml" />
-                            <p:menuitem id="om_detalle_ingresos_bus" value="Detalle x Bus" outcome="/webapp/reportes/liquidacionempresa/detalleingresosbus.xhtml" />
-                            <p:menuitem id="om_resumen_ingresos_bus" value="Resumen x Bus" outcome="/webapp/reportes/liquidacionempresa/resumeningresosbus.xhtml" />
-                            <p:menuitem id="om_pago_minutos_bus" value="Cobro Minutos x Bus" outcome="/webapp/reportes/liquidacionempresa/detallecobrominutosbus.xhtml" />
-                            <p:menuitem id="om_cobro_minutos_bus" value="Pago Minutos x Bus" outcome="/webapp/reportes/liquidacionempresa/detallepagominutosbus.xhtml" />
-                        </p:submenu>
-                    </p:submenu>
-                    <p:submenu label="General" >
                         <p:submenu id="om_boletos" label="Inv. de Boletos" icon="pi pi-fw pi-ticket" expanded="false">
                             <p:menuitem id="om_boletos_adquiridos" value="Boletos Adquiridos" outcome="/webapp/inventarioBoletos/boletosAdquiridos.xhtml" />
                             <p:menuitem id="om_detalle_boletos_adquiridos" value="Detalle B. Adquiridos" outcome="/webapp/inventarioBoletos/detalleCompra.xhtml" />
                             <p:menuitem id="om_boletos_inventario_interno" value="Inventario Interno" outcome="/webapp/inventarioBoletos/inventarioInterno.xhtml" />
                             <p:menuitem id="om_boletos_inventario_caja" value="Inventario Cajas" outcome="/webapp/inventarioBoletos/inventarioCajas.xhtml" />
                             <p:menuitem id="om_boletos_traspaso_caja" value="Traspaso Cajas" outcome="/webapp/inventarioBoletos/traspasoCajas.xhtml" />
+                        </p:submenu>
+                        <p:submenu id="om_min" label="Minutos" icon="pi pi-fw pi-clock">
+                            <p:submenu label="Minutos" icon="pi pi-fw pi-print">
+                            <p:menuitem id="om_registro_minutos" value="R. Minutos x Fecha" outcome="/webapp/reportes/minutos/registrominutofecha.xhtml" />
+                        </p:submenu>
                         </p:submenu>
                         <p:submenu id="om_datos" label="Admin. de Datos" icon="pi pi-fw pi-database" expanded="false">
                             <p:menuitem id="om_buses" value="Buses" icon="pi pi-fw pi-car" outcome="/webapp/datos/bus/List.xhtml" />
@@ -127,11 +115,27 @@
                         <p:submenu id="om_adm_combustible" label="Bomba" icon="pi pi-car" expanded="false">
                             <p:menuitem id="om_venta_combustible" value="Ventas" icon="pi pi-fw pi-car" outcome="/webapp/bomba/ventaCombustible/List.xhtml" />
                             <p:menuitem id="om_venta_combustible_precio" value="Precio" icon="pi pi-fw pi-dollar" outcome="/webapp/bomba/precioCombustible/List.xhtml" />
+                            <p:submenu label="Reportes" icon="pi pi-fw pi-print">
+                                <p:menuitem id="om_venta_bus" value="Detalle x Bus" outcome="/webapp/reportes/ventacombustible/ventaxbus.xhtml" />
+                                <p:menuitem id="om_venta_bus_resumen" value="Resumen x Bus" outcome="/webapp/reportes/ventacombustible/ventaxbusresumen.xhtml" />
+                                <p:menuitem id="om_venta_libro" value="Libro de Ventas" outcome="/webapp/reportes/ventacombustible/libroventas.xhtml" />
+                                <p:menuitem id="om_venta_particulares" value="Ventas x Particulares" outcome="/webapp/reportes/ventacombustible/ventaparticular.xhtml" />
+                                <p:menuitem id="om_venta_empresa" value="Ventas x Empresa" outcome="/webapp/reportes/ventacombustible/ventaempresa.xhtml" />
+                            </p:submenu>
+
                         </p:submenu>
-                        <p:submenu id="om_adm_liquidacion" label="Liq.Empresas" icon="pi pi-car" expanded="false">
-                            <p:menuitem id="om_liquidacion" value="Liquidación" icon="pi pi-fw pi-car" outcome="/webapp/liquidacionEmpresas/registro.xhtml" />
-                            <p:menuitem id="om_liquidacion_m" value="Movimientos" icon="pi pi-fw pi-car" outcome="/webapp/liquidacionEmpresas/movimientos/movimientoMes/registroEmpresa.xhtml" />
-                            <p:menuitem id="om_centralizacion" value="Centralización" icon="pi pi-fw pi-dollar" outcome="/webapp/liquidacionEmpresas/tipoCargo/List.xhtml" />
+                        <p:submenu id="om_adm_liquidacion" label="Liq.Empresas" icon="pi pi-money-bill" expanded="false">
+                            <p:menuitem id="om_liquidacion" value="Liquidación" icon="pi pi-fw pi-briefcase" outcome="/webapp/liquidacionEmpresas/registro.xhtml" />
+                            <p:menuitem id="om_impresion" value="Impresión" icon="pi pi-fw pi-print" outcome="/webapp/liquidacionEmpresas/impresion.xhtml" />
+                            <p:menuitem id="om_liquidacion_m" value="Registro Movtos." icon="pi pi-fw pi-database" outcome="/webapp/liquidacionEmpresas/registroMovimientos.xhtml" />
+                            <p:menuitem id="om_liquidacion_cc" value="C/C Empresas" icon="pi pi-fw pi-database" outcome="/webapp/liquidacionEmpresas/movimientos/movimientoMes/registroEmpresa.xhtml" />
+                            <p:submenu label="Reportes" icon="pi pi-fw pi-print">
+                                <p:menuitem id="om_general_mensual"  value="General Mensual" outcome="/webapp/reportes/liquidacionempresa/recaudaciongeneral.xhtml" />
+                                <p:menuitem id="om_detalle_ingresos_bus" value="Detalle x Bus" outcome="/webapp/reportes/liquidacionempresa/detalleingresosbus.xhtml" />
+                                <p:menuitem id="om_resumen_ingresos_bus" value="Resumen x Bus" outcome="/webapp/reportes/liquidacionempresa/resumeningresosbus.xhtml" />
+                                <p:menuitem id="om_pago_minutos_bus" value="Cobro Minutos x Bus" outcome="/webapp/reportes/liquidacionempresa/detallecobrominutosbus.xhtml" />
+                                <p:menuitem id="om_cobro_minutos_bus" value="Pago Minutos x Bus" outcome="/webapp/reportes/liquidacionempresa/detallepagominutosbus.xhtml" />
+                            </p:submenu>
                             <p:submenu id="liq_avanzado" label="Avanzado" icon="pi pi-fw pi-cog" expanded="false">
                                 <p:menuitem id="om_tipo_abono" value="Def. de Abonos" icon="pi pi-fw pi-bars" outcome="/webapp/liquidacionEmpresas/tipoAbono/List.xhtml" />
                                 <p:menuitem id="om_tipo_cargo" value="Def. de Cargos" icon="pi pi-fw pi-bars" outcome="/webapp/liquidacionEmpresas/tipoCargo/List.xhtml" />

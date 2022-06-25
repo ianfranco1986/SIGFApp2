@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="20" uuid="c9e9601b-a518-4a0a-9cc9-7efd1a40f7f1">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="284"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="711"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT 
+    b.bus_numero AS numeroPaga,
+    b.bus_patente AS patentePaga,
+    c.bus_numero AS numeroRecibe,
+    c.bus_patente AS patenteRecibe,
+   minutos_pagados_bus($P{desde}, $P{hasta}, c.bus_id) AS monto, 
+minutos_cobrados_bus($P{desde}, $P{hasta}, c.bus_id) AS cobrado, 
+
+(minutos_cobrados_bus($P{desde}, $P{hasta}, c.bus_id)-minutos_pagados_bus($P{desde}, $P{hasta}, c.bus_id) ) AS saldo
+FROM
+	recaudacion_minuto rm
+		LEFT JOIN 
+    recaudacion rr ON rm.recaudacion_minuto_id_recaudacion = rr.recaudacion_id 
+		LEFT JOIN 
+    registro_minuto r ON rm.recaudacion_minuto_id_registro_minuto = r.registro_minuto_id
+        LEFT JOIN
+    bus b ON r.registro_minuto_desde_id_bus = b.bus_id
+        LEFT JOIN
+    bus c ON r.registro_minuto_hasta_id_bus = c.bus_id
+WHERE
+    rr.recaudacion_fecha BETWEEN  $P{desde} AND $P{hasta}  AND  c.bus_id_empresa =   $P{codigo}  GROUP BY c.bus_numero ORDER BY c.bus_numero ASC]]>
+	</queryString>
+	<field name="numeroPaga" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="bus_numero"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroPaga"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="patentePaga" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bus_patente"/>
+		<property name="com.jaspersoft.studio.field.label" value="patentePaga"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="numeroRecibe" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="bus_numero"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroRecibe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="patenteRecibe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bus_patente"/>
+		<property name="com.jaspersoft.studio.field.label" value="patenteRecibe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="monto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="monto"/>
+		<property name="com.jaspersoft.studio.field.label" value="monto"/>
+	</field>
+	<field name="cobrado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cobrado"/>
+		<property name="com.jaspersoft.studio.field.label" value="cobrado"/>
+	</field>
+	<field name="saldo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="saldo"/>
+		<property name="com.jaspersoft.studio.field.label" value="saldo"/>
+	</field>
+	<variable name="monto_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
+	</variable>
+	<variable name="cobrado_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cobrado}]]></variableExpression>
+	</variable>
+	<variable name="saldo_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="17" width="350" height="15" uuid="4e5b4929-7a4f-4d0e-b843-58c6bafa56d8"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen Pago/Recibido Minutos x Bus]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="15" uuid="25c920b0-dd5d-4da3-9bc5-a2d41790cdac"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Bus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="100" height="15" uuid="27953466-ca28-4228-afb5-690de704e97c"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pagado ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="100" height="15" uuid="d4e0146b-ebf0-4e51-91ea-94e993ec9c63"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Recibido ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="100" height="15" uuid="67bebbd7-b7dd-433f-9fe3-e323919e840a"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo ($)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="15" uuid="62b9d3f0-5727-418e-bec4-ee63233fbcc6"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="50" y="0" width="100" height="15" uuid="3218ce63-c419-48c0-910b-0f4d9e7b0a35"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="150" y="0" width="100" height="15" uuid="583d917a-b1e7-4973-a82b-97c5a08547a0"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cobrado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="250" y="0" width="100" height="15" uuid="5551f2a6-4364-43c3-9fba-96f1d7cc0e46"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="50" y="0" width="100" height="15" uuid="9a69bc9c-5443-41b1-9b7e-5f3ab866bc20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{monto_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="150" y="0" width="100" height="15" uuid="b8b9cf93-f147-4bd0-aed0-61b1a1597869"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{cobrado_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="250" y="0" width="100" height="15" uuid="7d04532a-3110-43ea-82ca-e3163110b83a"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldo_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

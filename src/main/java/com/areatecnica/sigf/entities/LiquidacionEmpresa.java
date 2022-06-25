@@ -5,12 +5,14 @@
 package com.areatecnica.sigf.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -71,9 +73,9 @@ public class LiquidacionEmpresa implements Serializable {
     @Column(name = "ultima_modificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ultimaModificacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoLiquidacionLiquidacionEmpresaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoLiquidacionLiquidacionEmpresaId", fetch = FetchType.LAZY)
     private List<CargoLiquidacion> cargoLiquidacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abonoLiquidacionLiquidacionEmpresaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abonoLiquidacionLiquidacionEmpresaId", fetch = FetchType.LAZY)
     private List<AbonoLiquidacion> abonoLiquidacionList;
     @JoinColumn(name = "liquidacion_empresa_id_empresa", referencedColumnName = "empresa_id")
     @ManyToOne(optional = false)
@@ -83,6 +85,8 @@ public class LiquidacionEmpresa implements Serializable {
         this.liquidacionEmpresaSaldo = 0; 
         this.liquidacionEmpresaTotalAbonos = 0; 
         this.liquidacionEmpresaTotalCargos = 0; 
+        this.abonoLiquidacionList = new ArrayList<>();
+        this.cargoLiquidacionList = new ArrayList<>();
     }
 
     public LiquidacionEmpresa(Integer liquidacionEmpresaId) {

@@ -9,6 +9,7 @@ import com.areatecnica.sigf.dao.ICargoLiquidacionDao;
 import com.areatecnica.sigf.entities.CargoLiquidacion;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.LiquidacionEmpresa;
+import com.areatecnica.sigf.entities.TipoCargo;
 import java.util.Date;
 import java.util.List;
 
@@ -44,4 +45,18 @@ public class CargoLiquidacionDaoImpl extends GenericDAOImpl<CargoLiquidacion> im
                 .getResultList();
     }
 
+    @Override
+    public CargoLiquidacion findByEmpresaTipoBetweenDates(Empresa empresa, TipoCargo cargo, Date desde, Date hasta) {
+        try {
+            return (CargoLiquidacion) this.entityManager.createNamedQuery("CargoLiquidacion.findByEmpresaTipoCargoBetweenDates")
+                    .setParameter("empresaId", empresa)
+                    .setParameter("cargoLiquidacionCargoId", cargo)
+                    .setParameter("from", desde)
+                    .setParameter("to", hasta)
+                    .getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+    
 }

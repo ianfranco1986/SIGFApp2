@@ -26,6 +26,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "CargoLiquidacion.findAll", query = "SELECT c FROM CargoLiquidacion c"),
     @NamedQuery(name = "CargoLiquidacion.findByEmpresaBetweenDates", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaIdEmpresa = :empresaId AND c.cargoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to"),
+    @NamedQuery(name = "CargoLiquidacion.findByEmpresaTipoCargoBetweenDates", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaIdEmpresa = :empresaId AND c.cargoLiquidacionCargoId = :cargoLiquidacionCargoId AND c.cargoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to"),
     @NamedQuery(name = "CargoLiquidacion.findByCargoLiquidacionId", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionId = :cargoLiquidacionId"),
     @NamedQuery(name = "CargoLiquidacion.findByCargoLiquidacionMonto", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionMonto = :cargoLiquidacionMonto"),
     @NamedQuery(name = "CargoLiquidacion.findByCargoLiquidacionDescripcion", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionDescripcion = :cargoLiquidacionDescripcion")})

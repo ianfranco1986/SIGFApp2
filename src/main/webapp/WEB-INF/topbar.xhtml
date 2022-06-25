@@ -16,12 +16,14 @@
             </a>
 
             <a id="topbar-menu-button" href="#">
+                
                 <i class="pi pi-bars"/>
             </a>
 
             <h:form id="topbar-items-form">
                 <ul class="topbar-items fadeInDown animated">
                     <ui:fragment rendered="#{guestPreferences.profileMode == 'overlay'||guestPreferences.menuLayout == 'menu-layout-static menu-layout-horizontal'}">
+
                         <li class="profile-item">
                             <a href="#">                            
                                 <p:avatar icon="pi pi-user" shape="circle" styleClass="profile-image" style="border: 0 none"/>

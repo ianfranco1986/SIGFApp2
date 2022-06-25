@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="221"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="771"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    r.registro_minuto_id, 
+    rr.recaudacion_id, 
+    rr.recaudacion_hora, 
+    rr.recaudacion_fecha, 
+    b.bus_numero AS numeroPaga,
+    b.bus_patente AS patentePaga,
+    f1.flota_nombre AS flotaPaga, 
+    c.bus_numero AS numeroRecibe,
+    c.bus_patente AS patenteRecibe,
+    f2.flota_nombre AS flotaRecibe, 
+    r.registro_minuto_monto, 
+    caja_recaudacion.caja_recaudacion_nombre, r.registro_minuto_fecha_minuto, minutos_cobrados_bus($P{desde}, $P{hasta}, b.bus_id) AS cobrado, 
+empresa.empresa_nombre
+FROM
+	recaudacion_minuto rm
+		LEFT JOIN 
+    recaudacion rr ON rm.recaudacion_minuto_id_recaudacion = rr.recaudacion_id 
+		LEFT JOIN 
+    registro_minuto r ON rm.recaudacion_minuto_id_registro_minuto = r.registro_minuto_id
+        LEFT JOIN
+    bus b ON r.registro_minuto_desde_id_bus = b.bus_id
+        LEFT JOIN
+    bus c ON r.registro_minuto_hasta_id_bus = c.bus_id
+		LEFT JOIN 
+	flota f1 ON b.bus_id_flota = f1.flota_id 
+		LEFT JOIN 
+	flota f2 ON c.bus_id_flota = f2.flota_id 
+		LEFT JOIN 
+	caja_recaudacion ON rr.recaudacion_id_caja = caja_recaudacion.caja_recaudacion_id 
+LEFT JOIN empresa ON b.bus_id_empresa = empresa.empresa_id 
+WHERE
+    rr.recaudacion_fecha BETWEEN  $P{desde} AND $P{hasta}  AND   b.bus_id_empresa =  $P{codigo}    ORDER BY b.bus_numero ASC, rr.recaudacion_fecha ASC]]>
+	</queryString>
+	<field name="registro_minuto_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="registro_minuto_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="registro_minuto_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registro_minuto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_hora" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_hora"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_hora"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroPaga" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="bus_numero"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroPaga"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="patentePaga" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bus_patente"/>
+		<property name="com.jaspersoft.studio.field.label" value="patentePaga"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="flotaPaga" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="flota_nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="flotaPaga"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="flota"/>
+	</field>
+	<field name="numeroRecibe" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="bus_numero"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroRecibe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="patenteRecibe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bus_patente"/>
+		<property name="com.jaspersoft.studio.field.label" value="patenteRecibe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+	</field>
+	<field name="flotaRecibe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="flota_nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="flotaRecibe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="flota"/>
+	</field>
+	<field name="registro_minuto_monto" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="registro_minuto_monto"/>
+		<property name="com.jaspersoft.studio.field.label" value="registro_minuto_monto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registro_minuto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="caja_recaudacion_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="caja_recaudacion_nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="caja_recaudacion_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caja_recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="registro_minuto_fecha_minuto" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="registro_minuto_fecha_minuto"/>
+		<property name="com.jaspersoft.studio.field.label" value="registro_minuto_fecha_minuto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registro_minuto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cobrado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cobrado"/>
+		<property name="com.jaspersoft.studio.field.label" value="cobrado"/>
+	</field>
+	<field name="empresa_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="empresa_nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="empresa_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="registro_minuto_monto_1" class="java.lang.Long" resetType="Group" resetGroup="bus" calculation="Sum">
+		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.Integer" resetType="Group" resetGroup="bus">
+		<variableExpression><![CDATA[$V{registro_minuto_monto_1}.intValue()-$F{cobrado}.intValue()]]></variableExpression>
+	</variable>
+	<variable name="registro_minuto_monto_2" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{registro_minuto_monto}]]></variableExpression>
+	</variable>
+	<group name="bus">
+		<groupExpression><![CDATA[$F{numeroPaga}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<staticText>
+					<reportElement x="0" y="14" width="52" height="14" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Folio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="14" width="51" height="14" uuid="48d30d82-7ec7-4e84-bdc5-d6b627d40e7d"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° Bus ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="52" y="14" width="48" height="14" uuid="4f86a175-db04-46d5-8cd5-c362fb49780f"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="28" width="550" height="1" uuid="560e7689-b761-4c2a-a388-2459f3223b49"/>
+				</line>
+				<staticText>
+					<reportElement x="0" y="0" width="52" height="14" uuid="9f9a8f0b-5447-4c01-81c7-a3d97399e963"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° Bus:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="51" y="0" width="29" height="14" uuid="f5efa0cd-44a9-4ede-9817-dad743d8dfde"/>
+					<textFieldExpression><![CDATA[$F{numeroPaga}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="437" y="0" width="113" height="14" uuid="b3964336-0f52-4039-8ae7-d7f6f85c77fa"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Detalle Total Pagado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="160" y="14" width="46" height="14" uuid="b8639122-d873-4c03-ad41-9ddc5bfa10b1"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Monto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="80" y="0" width="52" height="14" uuid="15cba3ec-5b2f-4b79-9240-c65a41ee7e63"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Empresa: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="132" y="0" width="305" height="14" uuid="f63b1bba-997a-4f26-b3f0-0bae411c7a3f"/>
+					<textFieldExpression><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<staticText>
+					<reportElement x="52" y="4" width="106" height="12" uuid="7a8562a6-bc31-40c0-9bfa-0f8022f3d407"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Pagado:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="100" y="2" width="450" height="1" uuid="ed7ac183-a58f-4280-90e0-e3aa924f1050"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<textField pattern="#,##0">
+					<reportElement x="160" y="4" width="46" height="12" uuid="b785eab1-6cd2-44d2-978b-0b5b4621a783"/>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{registro_minuto_monto_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="288" y="4" width="48" height="12" uuid="7f43aa81-5947-4cb7-b965-d5740197a464"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cobrado}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="398" y="4" width="39" height="12" uuid="8ad108b7-1914-4485-9b66-0e4fb69e8d6d"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cobrado}.intValue()-$V{registro_minuto_monto_1}.intValue()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="206" y="4" width="82" height="12" uuid="99646579-62ec-45a4-a646-7cdc4f39723f"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Recibido :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="350" y="4" width="48" height="12" uuid="17c492b1-86d5-4c92-a8ec-f158bf87c7d8"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Saldo :]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="0" width="328" height="34" uuid="09f63724-548c-4a46-8844-a59ea8b995d4"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cartola Pago Minutos x Bus]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="100" y="19" width="46" height="15" uuid="75a61d61-c983-4e8b-8ca2-c24a4741f2c6"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="19" width="100" height="15" uuid="3968ab50-2c92-4faa-9e03-c50f5c041771"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="167" y="19" width="60" height="15" uuid="3b0b3fd0-2726-4dca-8e51-8ba85b8297a4"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="151" y="19" width="16" height="15" uuid="e76fbe4d-3fb5-4a73-bcce-264fa9407cff"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="52" height="12" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{registro_minuto_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="51" height="12" uuid="72640ce8-0ee5-4c8b-a34d-b58f6067cf2d"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroRecibe}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="52" y="0" width="48" height="12" uuid="a5626c1d-e404-4621-a643-fe0277985330"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion_fecha}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="160" y="0" width="46" height="12" uuid="93080771-2441-4a31-8caa-59f96a18a90f"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{registro_minuto_monto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="61" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="572" height="61" uuid="641abb74-6d00-499d-bf67-67ae23e4015a"/>
+				<subreportParameter name="desde">
+					<subreportParameterExpression><![CDATA[$P{desde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hasta">
+					<subreportParameterExpression><![CDATA[$P{hasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="list">
+					<subreportParameterExpression><![CDATA[$P{list}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fecha">
+					<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codigo">
+					<subreportParameterExpression><![CDATA[$P{codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["inf-resumen_minutos_bus_empresa.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+	<noData>
+		<band/>
+	</noData>
+</jasperReport>

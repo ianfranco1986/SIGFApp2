@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="20" bottomMargin="20" uuid="02f87f61-1dfb-4353-8bd3-63d023733f93">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="02f87f61-1dfb-4353-8bd3-63d023733f93">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="295"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="698"/>
 	<parameter name="list" class="java.lang.String"/>
 	<parameter name="desde" class="java.util.Date"/>
 	<parameter name="hasta" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
+	<parameter name="empresa" class="java.lang.String"/>
+	<parameter name="codigo" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[call liquidacion_empresa_grupal($P{desde}  ,   $P{hasta} )]]>
+		<![CDATA[call liquidacion_empresa(  $P{empresa},  $P{codigo} ,  $P{desde}  ,   $P{hasta} )]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text"/>
 	</field>
 	<field name="descripcion" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
 		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text"/>
 	</field>
 	<field name="cargos" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="cargos"/>
 		<property name="com.jaspersoft.studio.field.label" value="cargos"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text"/>
 	</field>
 	<field name="abonos" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="abonos"/>
 		<property name="com.jaspersoft.studio.field.label" value="abonos"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text"/>
 	</field>
 	<field name="empresa" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="empresa"/>
 		<property name="com.jaspersoft.studio.field.label" value="empresa"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text"/>
 	</field>
 	<field name="codigo_empresa" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="codigo_empresa"/>
 		<property name="com.jaspersoft.studio.field.label" value="codigo_empresa"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text"/>
 	</field>
 	<variable name="abonos1" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Sum">
 		<variableExpression><![CDATA[$F{abonos}]]></variableExpression>
@@ -51,7 +51,7 @@
 	<variable name="cargos1" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Sum">
 		<variableExpression><![CDATA[$F{cargos}]]></variableExpression>
 	</variable>
-	<group name="Group1" isStartNewPage="true" keepTogether="true">
+	<group name="Group1" isStartNewPage="true" isResetPageNumber="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{empresa}]]></groupExpression>
 		<groupHeader>
 			<band height="143">
@@ -76,7 +76,7 @@
 					<textElement>
 						<font size="11" isBold="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="126" y="50" width="265" height="15" uuid="66817ebd-2a6b-4513-b702-ef05159a4ffe"/>
@@ -280,37 +280,8 @@
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="22" splitType="Stretch">
-			<textField>
-				<reportElement x="314" y="7" width="152" height="15" uuid="3cbb7220-d836-490b-9fb6-b3e2c9d53af6"/>
-				<textElement textAlignment="Right">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="466" y="7" width="34" height="15" uuid="3a9cd077-f931-464f-90cf-5ffdcfe4c190"/>
-				<textElement textAlignment="Left">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yy h:mm a">
-				<reportElement x="64" y="7" width="165" height="15" uuid="b4c1f431-ccb8-479f-8d6b-d750d8dbf0a5"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="-17" y="7" width="80" height="15" uuid="07d8c523-e4ce-47b1-ad8c-259d346268ec">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f7584ce-7b30-40fe-a686-170c7af2b99e"/>
-				</reportElement>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[Villa Alemana a ]]></text>
-			</staticText>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 		</band>
 	</pageFooter>
 	<summary>

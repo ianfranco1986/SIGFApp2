@@ -6,7 +6,6 @@ package com.areatecnica.sigf.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +27,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "AbonoLiquidacion.findAll", query = "SELECT a FROM AbonoLiquidacion a"),
     @NamedQuery(name = "AbonoLiquidacion.findByAbonoLiquidacionId", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionId = :abonoLiquidacionId"),
     @NamedQuery(name = "AbonoLiquidacion.findByEmpresaBetweenDates", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaIdEmpresa = :empresaId AND a.abonoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to"),
+    @NamedQuery(name = "AbonoLiquidacion.findByEmpresaTipoAbonoBetweenDates", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaIdEmpresa = :empresaId AND a.abonoLiquidacionTipoId =:abonoLiquidacionTipoId AND a.abonoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to"),
     @NamedQuery(name = "AbonoLiquidacion.findByAbonoLiquidacionMonto", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionMonto = :abonoLiquidacionMonto"),
     @NamedQuery(name = "AbonoLiquidacion.findByAbonoLiquidacionDescripcion", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionDescripcion = :abonoLiquidacionDescripcion")})
 public class AbonoLiquidacion implements Serializable {
@@ -45,7 +45,7 @@ public class AbonoLiquidacion implements Serializable {
     @Column(name = "abono_liquidacion_descripcion")
     private String abonoLiquidacionDescripcion;
     @JoinColumn(name = "abono_liquidacion_liquidacion_empresa_id", referencedColumnName = "liquidacion_empresa_id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private LiquidacionEmpresa abonoLiquidacionLiquidacionEmpresaId;
     @JoinColumn(name = "abono_liquidacion_tipo_id", referencedColumnName = "tipo_abono_id")
     @ManyToOne(optional = false)

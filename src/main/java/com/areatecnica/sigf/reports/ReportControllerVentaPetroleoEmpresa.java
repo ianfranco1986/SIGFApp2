@@ -211,8 +211,13 @@ public class ReportControllerVentaPetroleoEmpresa implements Serializable {
         this.tipoInforme = tipoInforme;
     }
 
-    public Boolean getTipoInforme() {
-        return tipoInforme;
+    public String getInforme() {
+        if (this.tipoInforme) {
+            this.informe = "inf-venta_petroleo_bus_deudas";
+        } else {
+            this.informe = "inf-venta_petroleo_bus";
+        }
+        return informe;
     }
 
     public void setFecha(Date fecha) {
@@ -245,10 +250,6 @@ public class ReportControllerVentaPetroleoEmpresa implements Serializable {
 
     public void setInforme(String informe) {
         this.informe = informe;
-    }
-
-    public String getInforme() {
-        return informe;
     }
 
     public void falta() {

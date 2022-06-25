@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Registro de Movimientos</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="RegistroMinutoListForm">
+            <p:panel>
+                <h3>Registro de Movimientos</h3>
+                <p:staticMessage severity="info" summary="INFORMACIÓN" detail="Si el valor es igual 0, no se registrará el movimiento. Si el movimiento existe y cambia su valor a 0, este se eliminará" style="width: 100%"/>
+                <p:spacer/>
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label for="desde">Liquidación</label>
+                        <p:datePicker id="month" view="month" value="#{registroAbonoController.date}"
+                                      pattern="MM/yyyy"
+                                      yearNavigator="true" yearRange="2022:2030" locale="es">
+                            <p:ajax event="valueChange" update=":ListAbonoForm, growl" listener="#{registroAbonoController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:datePicker>                    
+                    </div>
+                    <div class="p-field">
+                        <label for="tipo">Movimiento</label>
+                        <p:selectOneMenu id="tipo" value="#{registroAbonoController.tipoMovimiento}" >
+                            <f:selectItem itemLabel="Egreso" itemValue="0"/>
+                            <f:selectItem itemLabel="Ingreso" itemValue="1"/>
+                            <p:ajax event="valueChange" listener="#{registroAbonoController.loadMovimientos}" update=":ListAbonoForm, tipoMovimientos" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-field">
+                        <label for="tipoMovimientos">Tipo</label>
+                        <p:selectOneMenu id="tipoMovimientos" value="#{registroAbonoController.tipoMovimientoHelper}" converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="Todas"/>
+                            <f:selectItems value="#{registroAbonoController.tiposItems}"
+                                           var="tipos"
+                                           itemValue="#{tipos}"
+                                           itemLabel="#{tipos.tipoNombre}"
+
+                                           />
+                            <p:ajax event="valueChange" listener="#{registroAbonoController.load}" update=":ListAbonoForm" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="p-field">
+                        <label>Descripción</label>
+                        <p:inputText value="#{registroAbonoController.descripcionAbono}">
+                            <p:ajax event="blur" update="ListAbonoForm" listener="#{registroAbonoController.setValorDescripcion}"/>
+                        </p:inputText>
+                    </div>
+                    <div class="p-field">
+                        <label>Monto</label>
+                        <p:inputNumber value="#{registroAbonoController.montoAbono}" minValue="0" >
+                            <p:ajax event="blur" update="ListAbonoForm" listener="#{registroAbonoController.setValorMonto}"/>
+                        </p:inputNumber>
+                    </div>
+
+
+                </div>
+
+
+            </p:panel>
+        </h:form>
+        <p:spacer/>
+        <div class="p-grid financial-overview">
+            <div class="p-col-12 p-md-12 p-lg-12">
+                <div class="card">
+
+                    <h:form id="ListAbonoForm">
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Guardar" disabled="#{empty registroAbonoController.items}" icon="pi pi-save"  actionListener="#{registroAbonoController.save}" update="cellAbonos, growl" 
+                                                 styleClass="ui-button-info" style="margin-right: .5rem" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" resetValues="true">
+
+                                    <p:confirm header="Confirmación" message="¿Registrar los cambios?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+
+
+
+                            </p:toolbarGroup>
+
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Exportar" disabled="#{empty registroAbonoController.items}" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="xlsxstream" target="datalist" fileName="Movimientos"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <div class="panel-inner">
+                            <p:dataTable 
+                                id="cellAbonos" 
+                                var="abono" 
+                                value="#{registroAbonoController.items}" 
+                                selection="#{registroAbonoController.selected}"
+                                editable="true"
+                                editMode="cell" 
+                                widgetVar="cellAbonos"
+                                lazy="false"
+                                rowIndexVar="rowIndex">
+
+                                <p:ajax event="cellEdit" listener="#{registroAbonoController.onCellEdit}" update=":growl"/>
+
+                                <p:column headerText="#" width="20">
+                                    <h:outputText value="#{rowIndex+1}"/>
+                                </p:column>
+
+                                <p:column headerText="Empresa" width="400">
+                                    <h:outputText value="#{abono.empresa.empresaNombre}"/>
+                                </p:column>
+
+                                <p:column headerText="Descripción" width="250">
+                                    <h:outputText value="#{abono.descripcion}"/>
+                                </p:column>
+
+                                <p:column headerText="Monto">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{abono.monto}">
+                                                <f:convertNumber type="currency" currencySymbol="$ "/>
+                                            </h:outputText>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputNumber value="#{abono.monto}" minValue="0" style="width:50%" label="Monto" symbol="$" />
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Estado" width="120">
+                                    <span class="compra compra-#{empty abono.id? 'noregistrada':'registrada'}">#{empty abono.id? 'Por Registrar':'REGISTRADA'}</span>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+</ui:composition>

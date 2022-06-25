@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="262"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="732"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
+	<parameter name="fecha" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="caja" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT 
+    @rownum:=@rownum+1 AS numero, 
+    recaudacion.recaudacion_id,
+    recaudacion.recaudacion_identificador,
+    recaudacion.recaudacion_id_caja,
+    recaudacion.recaudacion_fecha,
+    recaudacion.recaudacion_hora, 
+    recaudacion.recaudacion_total,
+    caja_recaudacion.caja_recaudacion_nombre,
+    bus.bus_numero,
+    bus.bus_patente,
+    empresa.empresa_nombre, 
+    CONCAT(IF(trabajador.trabajador_codigo<10, '000', IF(trabajador.trabajador_codigo<100,'00', IF(trabajador.trabajador_codigo<1000,'0', '' ) )),trabajador.trabajador_codigo) AS trabajador_codigo, 
+    guia_folio, 
+    flota.flota_nombre, 
+    IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 1 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS administracion, 
+    IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 2 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS cuotaextra, 
+    IFNULL((SELECT recaudacion_guia.recaudacion_guia_monto FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 3 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS imposiciones, 
+    IFNULL((SELECT IFNULL(IF((recaudacion_guia.recaudacion_guia_monto)>0, ((recaudacion_guia.recaudacion_guia_monto)-((recaudacion_guia.recaudacion_guia_monto)/5000*(IF(recaudacion.recaudacion_fecha < '2022-04-01', 750,800)))), 0), 0) FROM recaudacion_guia WHERE recaudacion_guia_id_egreso = 4 AND recaudacion_guia_id_recaudacion = recaudacion.recaudacion_id), 0) AS boletos 
+FROM
+    recaudacion
+        LEFT JOIN
+    recaudacion_guia ON recaudacion.recaudacion_id = recaudacion_guia.recaudacion_guia_id_recaudacion
+        LEFT JOIN
+    guia ON recaudacion_guia.recaudacion_guia_id_guia = guia.guia_id
+        LEFT JOIN
+    bus ON guia.guia_id_bus = bus.bus_id
+    	LEFT JOIN 
+    empresa ON bus.bus_id_empresa = empresa.empresa_id
+        LEFT JOIN
+    trabajador ON guia.guia_id_trabajador = trabajador.trabajador_id
+        LEFT JOIN 
+    caja_recaudacion ON recaudacion.recaudacion_id_caja = caja_recaudacion.caja_recaudacion_id
+        LEFT JOIN
+    flota ON bus.bus_id_flota = flota.flota_id, (SELECT @rownum:=0) e
+    	
+WHERE
+    recaudacion.recaudacion_fecha BETWEEN $P{desde} AND $P{hasta} AND  bus.bus_id_empresa =  $P{codigo} 
+GROUP BY recaudacion.recaudacion_id, bus.bus_numero, bus.bus_patente, guia.guia_folio, flota.flota_nombre, trabajador.trabajador_codigo 
+HAVING (administracion+cuotaextra+imposiciones+boletos)>0
+ORDER BY bus.bus_numero, recaudacion.recaudacion_fecha]]>
+	</queryString>
+	<field name="numero" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="numero"/>
+		<property name="com.jaspersoft.studio.field.label" value="numero"/>
+	</field>
+	<field name="recaudacion_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_identificador" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_identificador"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_identificador"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_id_caja" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_id_caja"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_id_caja"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_hora" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_hora"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_hora"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recaudacion_total" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="recaudacion_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="recaudacion_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="caja_recaudacion_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="caja_recaudacion_nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="caja_recaudacion_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caja_recaudacion"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bus_numero" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="bus_numero"/>
+		<property name="com.jaspersoft.studio.field.label" value="bus_numero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bus_patente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bus_patente"/>
+		<property name="com.jaspersoft.studio.field.label" value="bus_patente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bus"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empresa_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="empresa_nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="empresa_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
+	<field name="trabajador_codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="trabajador_codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="trabajador_codigo"/>
+	</field>
+	<field name="guia_folio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="guia_folio"/>
+		<property name="com.jaspersoft.studio.field.label" value="guia_folio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="guia"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="flota_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="flota_nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="flota_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="flota"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="administracion" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="administracion"/>
+		<property name="com.jaspersoft.studio.field.label" value="administracion"/>
+	</field>
+	<field name="cuotaextra" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="cuotaextra"/>
+		<property name="com.jaspersoft.studio.field.label" value="cuotaextra"/>
+	</field>
+	<field name="imposiciones" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="imposiciones"/>
+		<property name="com.jaspersoft.studio.field.label" value="imposiciones"/>
+	</field>
+	<field name="boletos" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="boletos"/>
+		<property name="com.jaspersoft.studio.field.label" value="boletos"/>
+	</field>
+	<variable name="recaudacion_total_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$V{total}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{administracion}.intValue()+$F{cuotaextra}.intValue()+$F{imposiciones}.intValue()+$F{boletos}.intValue()]]></variableExpression>
+	</variable>
+	<variable name="administracion_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{administracion}]]></variableExpression>
+	</variable>
+	<variable name="cuotaextra_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{cuotaextra}]]></variableExpression>
+	</variable>
+	<variable name="imposiciones_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{imposiciones}]]></variableExpression>
+	</variable>
+	<variable name="boletos_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{boletos}]]></variableExpression>
+	</variable>
+	<variable name="administracion_2" class="java.lang.Long" resetType="Group" resetGroup="bus" calculation="Sum">
+		<variableExpression><![CDATA[$F{administracion}]]></variableExpression>
+	</variable>
+	<variable name="cuotaextra_2" class="java.lang.Long" resetType="Group" resetGroup="bus" calculation="Sum">
+		<variableExpression><![CDATA[$F{cuotaextra}]]></variableExpression>
+	</variable>
+	<variable name="imposiciones_2" class="java.lang.Long" resetType="Group" resetGroup="bus" calculation="Sum">
+		<variableExpression><![CDATA[$F{imposiciones}]]></variableExpression>
+	</variable>
+	<variable name="boletos_2" class="java.lang.Long" resetType="Group" resetGroup="bus" calculation="Sum">
+		<variableExpression><![CDATA[$F{boletos}]]></variableExpression>
+	</variable>
+	<variable name="total_1" class="java.lang.Integer" resetType="Group" resetGroup="bus" calculation="Sum">
+		<variableExpression><![CDATA[$V{total}]]></variableExpression>
+	</variable>
+	<variable name="total_1_1" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{total_1}]]></variableExpression>
+	</variable>
+	<group name="bus">
+		<groupExpression><![CDATA[$F{bus_numero}]]></groupExpression>
+		<groupHeader>
+			<band height="41">
+				<staticText>
+					<reportElement x="0" y="25" width="52" height="14" uuid="f493e398-afd7-4318-8c3d-66ee9b3857ae"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Folio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="151" y="25" width="62" height="14" uuid="98b9d738-a9e9-4ba8-b17b-57795cbd97a3"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Admin. ($)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="219" y="25" width="54" height="14" uuid="7cd9e24b-1df9-4c23-be74-a815a2fc1b21"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[C.Extra ($)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="278" y="25" width="66" height="14" uuid="048f827c-5999-477d-8ca3-6db440ee295f"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Impos. ($)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="350" y="25" width="56" height="14" uuid="d0c5353a-4958-4cef-981f-4a76a68aba32">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Boletos ($)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="495" y="25" width="60" height="14" uuid="a7cab6f6-2844-407a-a8fa-bf0a1177c313">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[G.Sol y Mar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="413" y="25" width="75" height="14" uuid="1f03e831-85f3-4e0c-8ed0-2be7e90bc4fc">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fdd663f5-ad02-4f9e-a11f-3eba5e870473"/>
+					</reportElement>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total ($)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="15" width="46" height="24" uuid="48d30d82-7ec7-4e84-bdc5-d6b627d40e7d"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° Bus / Con]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="52" y="25" width="48" height="14" uuid="4f86a175-db04-46d5-8cd5-c362fb49780f"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="40" width="550" height="1" uuid="560e7689-b761-4c2a-a388-2459f3223b49"/>
+				</line>
+				<staticText>
+					<reportElement x="0" y="0" width="42" height="14" uuid="22f7fd3a-1637-4e80-8116-2b89845d9467"/>
+					<textElement>
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Empresa:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="42" y="0" width="418" height="14" uuid="989ccebd-dab6-421d-8ec1-99a84beeefef"/>
+					<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="0"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="#,##0">
+					<reportElement x="151" y="4" width="62" height="12" uuid="7d67038c-f219-49d9-9e37-337b5fdbafbe"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{administracion_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="219" y="4" width="54" height="12" uuid="c648b7f3-ee80-4bbc-b37c-9b0d010ceea4"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cuotaextra_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="278" y="4" width="66" height="12" uuid="14ffcf5f-d6aa-4af6-a976-b430afc6fcba"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{imposiciones_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="350" y="4" width="56" height="12" uuid="67e53598-699b-4dd8-a207-b01da3d7ff18"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{boletos_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="413" y="4" width="75" height="12" uuid="4c1f49bc-3318-435f-b9b0-fc74b915d79b"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="52" y="4" width="94" height="12" uuid="7a8562a6-bc31-40c0-9bfa-0f8022f3d407"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Bus:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="100" y="2" width="450" height="1" uuid="ed7ac183-a58f-4280-90e0-e3aa924f1050"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="0" width="328" height="34" uuid="09f63724-548c-4a46-8844-a59ea8b995d4"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle Ingresos x Bus]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="100" y="19" width="51" height="15" uuid="75a61d61-c983-4e8b-8ca2-c24a4741f2c6"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="19" width="100" height="15" uuid="3968ab50-2c92-4faa-9e03-c50f5c041771"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="167" y="19" width="60" height="15" uuid="3b0b3fd0-2726-4dca-8e51-8ba85b8297a4"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="151" y="19" width="16" height="15" uuid="e76fbe4d-3fb5-4a73-bcce-264fa9407cff"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="52" height="12" uuid="1702c21d-3ee8-40af-b37f-02585d84e1b7"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="158" y="0" width="55" height="12" uuid="c11c13c1-6103-422a-82aa-3ab156ef6eed"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{administracion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="219" y="0" width="54" height="12" uuid="21636e15-e673-4bc2-aea0-715105e5d3c3"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuotaextra}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="278" y="0" width="66" height="12" uuid="6d1f6105-1480-4660-a9c6-ab5f59672c02"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{imposiciones}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="350" y="0" width="56" height="12" uuid="fa049b89-ed88-4f0e-ac95-2efd388740c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abc008f-8604-432d-a9e4-bb36664ecfb4"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{boletos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="413" y="0" width="75" height="12" uuid="c063a3c3-2072-46a5-9338-1a4d419f9ac3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fdd663f5-ad02-4f9e-a11f-3eba5e870473"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="495" y="0" width="55" height="12" uuid="7291747b-3850-45aa-aae9-313cc8b9dbea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2246c4ae-ea93-4bce-b01a-548df4d97224"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion_identificador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="58" height="12" uuid="72640ce8-0ee5-4c8b-a34d-b58f6067cf2d"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("+$F{bus_numero}+" / "+$F{trabajador_codigo}+")"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="52" y="0" width="48" height="12" uuid="a5626c1d-e404-4621-a643-fe0277985330"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudacion_fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="50" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="572" height="50" uuid="80f45356-5a0a-42cd-9e6a-e3500ab13843"/>
+				<subreportParameter name="fecha">
+					<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="caja">
+					<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="desde">
+					<subreportParameterExpression><![CDATA[$P{desde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hasta">
+					<subreportParameterExpression><![CDATA[$P{hasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="list">
+					<subreportParameterExpression><![CDATA[$P{list}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codigo">
+					<subreportParameterExpression><![CDATA[$P{codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["inf-sub_resumen_ingresos_empresa.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+	<noData>
+		<band/>
+	</noData>
+</jasperReport>
