@@ -66,6 +66,16 @@
 
             <p:separator/>
             <p:card>
+                <p:toolbar styleClass="p-mb-4">
+                    <p:toolbarGroup>
+
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Exportar" icon="pi pi-file-excel" styleClass="ui-button-info" ajax="false">
+                            <p:dataExporter type="xlsxstream" target="datalist" fileName="Recaudacion-boletos"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
                 <div class="p-grid crud-demo">
                     <p:dataTable id="datalist"
                                  scrollHeight="500" 

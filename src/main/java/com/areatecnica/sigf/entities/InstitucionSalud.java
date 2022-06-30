@@ -38,9 +38,9 @@ public class InstitucionSalud extends BaseEntity implements Serializable {
     @Column(name = "institucion_salud_nombre", nullable = false, length = 255)
     private String institucionSaludNombre;
     @JoinColumn(name = "institucion_salud_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta institucionSaludIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdInstitucionSalud")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdInstitucionSalud", fetch = FetchType.LAZY)
     private List<Trabajador> trabajadorList;
 
     public InstitucionSalud() {

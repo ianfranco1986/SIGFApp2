@@ -7,9 +7,11 @@ package com.areatecnica.sigf.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +27,8 @@ import javax.persistence.Table;
  * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "tipo_abono", catalog = "sigfdb", schema = "")
+@Table(name = "tipo_abono")
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "TipoAbono.findAll", query = "SELECT t FROM TipoAbono t"),
     @NamedQuery(name = "TipoAbono.findByTipoAbonoId", query = "SELECT t FROM TipoAbono t WHERE t.tipoAbonoId = :tipoAbonoId"),
@@ -46,9 +49,9 @@ public class TipoAbono implements Serializable {
     @Column(name = "tipo_abono_monto_defecto")
     private int tipoAbonoMontoDefecto;
     @JoinColumn(name = "tipo_abono_id_cuenta", referencedColumnName = "cuenta_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta tipoAbonoIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abonoLiquidacionTipoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abonoLiquidacionTipoId", fetch = FetchType.LAZY)
     private List<AbonoLiquidacion> abonoLiquidacionList;
 
     public TipoAbono() {

@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -100,18 +101,18 @@ public class Compra extends BaseEntity implements Serializable {
     @Column(name = "compra_inr")
     private boolean compraInr; //IVA no recuperable
     @JoinColumn(name = "compra_codigo_iva_nr", referencedColumnName = "iva_no_recuperable_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private IvaNoRecuperable compraCodigoIvaNr;
     @JoinColumn(name = "compra_otros_imp_id", referencedColumnName = "otros_impuestos_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private OtrosImpuestos compraOtrosImpId;
     @JoinColumn(name = "compra_proveedor_id", referencedColumnName = "proveedor_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Proveedor compraProveedorId;
     @JoinColumn(name = "compra_tipo_documento_id", referencedColumnName = "tipo_documento_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoDocumento compraTipoDocumentoId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarComprasCompraId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarComprasCompraId", fetch = FetchType.LAZY)
     private List<AuxiliarCompras> auxiliarComprasList;
 
     public Compra() {

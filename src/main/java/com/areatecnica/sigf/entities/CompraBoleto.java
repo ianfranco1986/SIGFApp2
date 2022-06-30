@@ -50,10 +50,10 @@ public class CompraBoleto extends BaseEntity implements Serializable {
     @Column(name = "compra_boleto_fecha", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date compraBoletoFecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleCompraBoletoIdCompraBoleto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleCompraBoletoIdCompraBoleto", fetch = FetchType.LAZY)
     private List<DetalleCompraBoleto> detalleCompraBoletoList;
     @JoinColumn(name = "compra_boleto_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta compraBoletoIdCuenta;
 
     public CompraBoleto() {

@@ -68,8 +68,8 @@
                         </p:commandButton>
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
-                        <p:commandButton value="Exportar" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
-                            <p:dataExporter type="xlsxstream" target="datalist" fileName="recaudacion-guias"/>
+                        <p:commandButton value="Exportar" icon="pi pi-file-excel" styleClass="ui-button-info" ajax="false">
+                            <p:dataExporter type="xlsxstream" target="datalist" fileName="Detalle-boletos-adquiridos"/>
                         </p:commandButton>
                     </p:toolbarGroup>
                 </p:toolbar>
@@ -146,8 +146,8 @@
                                 <h:outputText value="Total"/>
                             </f:facet>
                             <h:outputText value="#{item.boletoTotal}">
-                                    <f:convertNumber/>
-                                </h:outputText>
+                                <f:convertNumber/>
+                            </h:outputText>
                         </p:column>
 
 
@@ -170,37 +170,37 @@
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
                     </p:confirmDialog>
                 </div>
-                
+
 
             </p:card>
-            
-            <p:separator/>
-                <div class="p-text-right">
-                    <p:commandButton 
-                        actionListener="#{boletosAdquiridos.saveNew}" 
-                        value="Guardar" 
-                        icon="pi pi-save" 
-                        update=":GuiaListForm:dashboard, :DataForm:datalist,:growl" 
-                        styleClass="p-mr-2 p-mb-2" 
-                        >
-                        <p:confirm 
-                            header="#{myBundle.ConfirmationHeader}" 
-                            message="#{myBundle.ConfirmCreateMessage}" 
-                            icon="ui-icon-alert"/>
-                    </p:commandButton>
 
-                    <p:commandButton 
-                        value="Cancelar" 
-                        icon="pi pi-ban" 
-                        class="ui-button-secondary"
-                        update="growl" 
-                        process="@this" 
-                        immediate="true" 
-                        resetValues="true"        
-                        styleClass="ui-button-danger p-mr-2"
-                        />
-                </div>
-            
+            <p:separator/>
+            <div class="p-text-right">
+                <p:commandButton 
+                    actionListener="#{boletosAdquiridos.saveNew}" 
+                    value="Guardar" 
+                    icon="pi pi-save" 
+                    update=":GuiaListForm:dashboard, :DataForm:datalist,:growl" 
+                    styleClass="p-mr-2 p-mb-2" 
+                    >
+                    <p:confirm 
+                        header="#{myBundle.ConfirmationHeader}" 
+                        message="#{myBundle.ConfirmCreateMessage}" 
+                        icon="ui-icon-alert"/>
+                </p:commandButton>
+
+                <p:commandButton 
+                    value="Cancelar" 
+                    icon="pi pi-ban" 
+                    class="ui-button-secondary"
+                    update="growl" 
+                    process="@this" 
+                    immediate="true" 
+                    resetValues="true"        
+                    styleClass="ui-button-danger p-mr-2"
+                    />
+            </div>
+
             <p:separator/>
 
             <p:card>
@@ -210,9 +210,9 @@
                 </p:overlayPanel>
             </p:card>
             <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
-            
-            
-            
+
+
+
         </h:form>
     </ui:define>
 </ui:composition>

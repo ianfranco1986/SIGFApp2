@@ -43,7 +43,7 @@ public class TipoDocumento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tipo_documento_nombre")
     private String tipoDocumentoNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraTipoDocumentoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraTipoDocumentoId", fetch = FetchType.LAZY)
     private List<Compra> compraList;
 
     public TipoDocumento() {

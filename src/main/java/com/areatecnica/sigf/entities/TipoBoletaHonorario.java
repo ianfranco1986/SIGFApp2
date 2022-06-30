@@ -40,7 +40,7 @@ public class TipoBoletaHonorario extends BaseEntity implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tipo_boleta_honorario_nombre")
     private String tipoBoletaHonorarioNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "honorarioTipoBoletaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "honorarioTipoBoletaId", fetch = FetchType.LAZY)
     private List<Honorario> honorarioList;
 
     public TipoBoletaHonorario() {

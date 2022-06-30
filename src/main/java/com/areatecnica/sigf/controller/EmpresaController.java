@@ -1,5 +1,6 @@
 package com.areatecnica.sigf.controller;
 
+import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.IEmpresaDao;
 import com.areatecnica.sigf.dao.impl.EmpresaDaoImpl;
 import com.areatecnica.sigf.entities.Empresa;
@@ -20,10 +21,9 @@ public class EmpresaController extends AbstractController<Empresa> {
     private CuentaController empresaIdCuentaController;
     @Inject
     private MutualController empresaIdMutualController;
-    
-    private List<Empresa> items; 
-    
-    
+
+    private List<Empresa> items;
+
     private final IEmpresaDao dao;
 
     public EmpresaController() {
@@ -50,6 +50,22 @@ public class EmpresaController extends AbstractController<Empresa> {
         this.items = items;
     }
 
-    
-    
+    @Override
+    public void saveNew(ActionEvent event) {
+        super.saveNew(event); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    @Override
+    public void save(ActionEvent event) {
+        if (this.getSelected() != null) {
+            Empresa e = new EmpresaDaoImpl().update(this.getSelected());
+
+            if (e != null) {
+                JsfUtil.addSuccessMessage("Se han registrado los cambios ");
+            } else {
+                JsfUtil.addErrorMessage("Error al guardar los cambios");
+            }
+        }
+    }
+
 }

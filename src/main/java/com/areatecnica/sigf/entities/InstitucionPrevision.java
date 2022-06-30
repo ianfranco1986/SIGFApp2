@@ -46,10 +46,10 @@ public class InstitucionPrevision extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "institucion_prevision_porcentaje_descuento", nullable = false)
     private float institucionPrevisionPorcentajeDescuento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdInstitucionPrevision")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdInstitucionPrevision", fetch = FetchType.LAZY)
     private List<Trabajador> trabajadorList;
     @JoinColumn(name = "institucion_prevision_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta institucionPrevisionIdCuenta;
 
     public InstitucionPrevision() {

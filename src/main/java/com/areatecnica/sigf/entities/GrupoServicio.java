@@ -43,17 +43,17 @@ public class GrupoServicio extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "grupo_servicio_acceso_inspector", nullable = false)
     private boolean grupoServicioAccesoInspector;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdGrupoServicio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdGrupoServicio", fetch = FetchType.LAZY)
     private List<Bus> busList;
     @JoinColumn(name = "grupo_servicio_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta grupoServicioIdCuenta;
     @JoinColumn(name = "grupo_servicio_id_terminal", referencedColumnName = "terminal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Terminal grupoServicioIdTerminal;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdGrupoServicio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdGrupoServicio", fetch = FetchType.LAZY)
     private List<Servicio> servicioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tarifaGrupoServicioIdGrupo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tarifaGrupoServicioIdGrupo", fetch = FetchType.LAZY)
     private List<TarifaGrupoServicio> tarifaGrupoServicioList;
 
     public GrupoServicio() {

@@ -48,9 +48,9 @@ public class Mutual extends BaseEntity implements Serializable {
     @Column(name = "mutual_porcentaje_descuento", nullable = false)
     private float mutualPorcentajeDescuento;
     @JoinColumn(name = "mutual_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta mutualIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdMutual")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdMutual", fetch = FetchType.LAZY)
     private List<Empresa> empresaList;
 
     public Mutual() {

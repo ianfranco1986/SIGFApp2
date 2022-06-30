@@ -11,6 +11,7 @@ import com.areatecnica.sigf.entities.CuentaMayor;
 import com.areatecnica.sigf.entities.PlanCuentaSubTipo;
 
 import java.util.List;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -22,55 +23,64 @@ public class CuentaMayorDaoImpl extends GenericDAOImpl<CuentaMayor> implements I
         super(CuentaMayor.class);
     }
 
+    public CuentaMayor findById(int id) {
+        try {
+            return (CuentaMayor) this.entityManager.createNamedQuery("CuentaMayor.findById").setParameter("cuentaMayorId", id).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     @Override
     public List<CuentaMayor> findALL() {
         return this.entityManager.createNamedQuery("CuentaMayor.findAll").getResultList();
     }
 
     @Override
-    public List<CuentaMayor> findBySubTipo(PlanCuentaSubTipo cuentaSubTipo) {
+    public List<CuentaMayor> findBySubTipo(PlanCuentaSubTipo cuentaSubTipo
+    ) {
         return this.entityManager.createNamedQuery("CuentaMayor.findBySubTipo").setParameter("cuentaMayorSubTipoId", cuentaSubTipo).getResultList();
     }
 
-    public List<CuentaMayor> findByCompras(){
+    public List<CuentaMayor> findByCompras() {
         return this.entityManager.createNamedQuery("CuentaMayor.findByCuentaMayorCompras").getResultList();
     }
-    
-    public List<CuentaMayor> findByHonorarios(){
+
+    public List<CuentaMayor> findByHonorarios() {
         return this.entityManager.createNamedQuery("CuentaMayor.findByCuentaMayorHonorarios").getResultList();
     }
-    
-    public List<CuentaMayor> findByActivosFijos(){
+
+    public List<CuentaMayor> findByActivosFijos() {
         return this.entityManager.createNamedQuery("CuentaMayor.findByCuentaMayorActivosFijos").getResultList();
     }
-    
-    public List<CuentaMayor> findByBanco(){
+
+    public List<CuentaMayor> findByBanco() {
         return this.entityManager.createNamedQuery("CuentaMayor.findByCuentaMayorBanco").getResultList();
     }
-    
-    public List<CuentaMayor> findByPresupuesto(){
+
+    public List<CuentaMayor> findByPresupuesto() {
         return this.entityManager.createNamedQuery("CuentaMayor.findByCuentaMayorPresupuesto").getResultList();
     }
-    
-    public List<CuentaMayor> findByRemuneraciones(){
+
+    public List<CuentaMayor> findByRemuneraciones() {
         return this.entityManager.createNamedQuery("CuentaMayor.findByCuentaMayorRemuneraciones").getResultList();
     }
-    
-    public List<CuentaMayor> findByVentas(){
+
+    public List<CuentaMayor> findByVentas() {
         return this.entityManager.createNamedQuery("CuentaMayor.findByCuentaMayorVentas").getResultList();
     }
-    
-    public List<CuentaMayor> findByTesoreria(){
+
+    public List<CuentaMayor> findByTesoreria() {
         return this.entityManager.createNamedQuery("CuentaMayor.findByCuentaMayorTesoreria").getResultList();
     }
-    
+
     public boolean remove(CuentaMayor c) {
         if (c != null) {
 
             long compras = new CompraDaoImpl().countByCuentaMayor(c);
 
             if (compras > 0) {
-                JsfUtil.addErrorMessage("ATENCIÓN: No se puede eliminar la Cuenta, ya que posee movimientos (compras: "+compras+")");
+                JsfUtil.addErrorMessage("ATENCIÓN: No se puede eliminar la Cuenta, ya que posee movimientos (compras: " + compras + ")");
                 return false;
             }
 

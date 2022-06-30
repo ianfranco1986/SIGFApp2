@@ -41,13 +41,13 @@ public class RecaudacionGuia extends BaseEntity implements Serializable {
     @Column(name = "recaudacion_guia_monto", nullable = false)
     private int recaudacionGuiaMonto;
     @JoinColumn(name = "recaudacion_guia_id_egreso", referencedColumnName = "egreso_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Egreso recaudacionGuiaIdEgreso;
     @JoinColumn(name = "recaudacion_guia_id_guia", referencedColumnName = "guia_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Guia recaudacionGuiaIdGuia;
     @JoinColumn(name = "recaudacion_guia_id_recaudacion", referencedColumnName = "recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Recaudacion recaudacionGuiaIdRecaudacion;
 
     public RecaudacionGuia() {

@@ -7,9 +7,11 @@ package com.areatecnica.sigf.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tipo_cargo", catalog = "sigfdb", schema = "")
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "TipoCargo.findAll", query = "SELECT t FROM TipoCargo t"),
     @NamedQuery(name = "TipoCargo.findByTipoCargoId", query = "SELECT t FROM TipoCargo t WHERE t.tipoCargoId = :tipoCargoId"),
@@ -44,10 +47,10 @@ public class TipoCargo implements Serializable {
     private String tipoCargoNombre;
     @Column(name = "tipo_cargo_monto_defecto")
     private Integer tipoCargoMontoDefecto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoLiquidacionCargoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoLiquidacionCargoId", fetch = FetchType.LAZY)
     private List<CargoLiquidacion> cargoLiquidacionList;
     @JoinColumn(name = "tipo_cargo_id_cuenta", referencedColumnName = "cuenta_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta tipoCargoIdCuenta;
 
     public TipoCargo() {

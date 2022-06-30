@@ -198,7 +198,6 @@
                                 <p:ajax event="toggleSelect" update=":CargaMasivaForm:delete-products-button" />
 
 
-                                <p:column selectionMode="multiple" exportable="false" ></p:column>
 
                                 <p:column width="20">
                                     <f:facet name="header">
@@ -209,13 +208,20 @@
 
                                 <p:column sortBy="#{item.voucherMovimientoCuentaId.cuentaMayorNombre}" width="80">
                                     <p:cellEditor>
-                                        <f:facet name="header">
+                                        <f:facet name="output">
                                             <h:outputText value="Cuenta"/>
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:autoComplete id="cuenta" value="#{item.voucherMovimientoCuentaId}" dropdown="true" 
-                                                            completeMethod="#{edicionComprasController.completeText}" var="country" itemLabel="#{country.cuentaMayorNombre}" itemValue="#{country}"
-                                                            converter="omnifaces.SelectItemsConverter" forceSelection="true" scrollHeight="250"> 
+                                            <p:autoComplete id="cuenta" 
+                                                            value="#{item.voucherMovimientoCuentaId}" 
+                                                            completeMethod="#{edicionComprasController.completeText}" 
+                                                            var="country" 
+                                                            itemLabel="#{country.cuentaMayorNombre}" 
+                                                            itemValue="#{country}"
+                                                            converter="cuentaMayorConverter" 
+                                                            forceSelection="true" 
+                                                            scrollHeight="250"> 
+                                                <p:ajax event="itemSelect" listener="#{edicionComprasController.onItemSelect}" update="growl"/>
                                             </p:autoComplete>
                                         </f:facet>
                                     </p:cellEditor>

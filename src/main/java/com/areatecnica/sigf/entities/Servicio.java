@@ -71,27 +71,27 @@ public class Servicio extends BaseEntity implements Serializable {
     private String servicioFolio;
     @Column(name = "servicio_tiene_buses_compartidos")
     private Boolean servicioTieneBusesCompartidos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calleServicioIdServicio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calleServicioIdServicio", fetch = FetchType.LAZY)
     private List<CalleServicio> calleServicioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdServicio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdServicio", fetch = FetchType.LAZY)
     private List<Despacho> despachoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "frecuenciaServicioIdServicio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "frecuenciaServicioIdServicio", fetch = FetchType.LAZY)
     private List<FrecuenciaServicio> frecuenciaServicioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlServicioIdServicio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlServicioIdServicio", fetch = FetchType.LAZY)
     private List<ControlServicio> controlServicioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horarioServicioIdServicio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horarioServicioIdServicio", fetch = FetchType.LAZY)
     private List<HorarioServicio> horarioServicioList;
     @JoinColumn(name = "servicio_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta servicioIdCuenta;
     @JoinColumn(name = "servicio_id_grupo_servicio", referencedColumnName = "grupo_servicio_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private GrupoServicio servicioIdGrupoServicio;
     @JoinColumn(name = "servicio_id_terminal", referencedColumnName = "terminal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Terminal servicioIdTerminal;
     @JoinColumn(name = "servicio_id_unidad", referencedColumnName = "unidad_negocio_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UnidadNegocio servicioIdUnidad;
     
 

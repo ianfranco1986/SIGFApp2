@@ -45,7 +45,7 @@ public class CuentaUnica extends BaseEntity implements Serializable {
     private String cuentaUnicaNombre;
     @Column(name = "cuenta_unica_activo")
     private boolean cuentaUnicaActivo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaMayorUnicaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaMayorUnicaId", fetch = FetchType.LAZY)
     private List<CuentaMayor> cuentaMayorList;
     
     public CuentaUnica() {

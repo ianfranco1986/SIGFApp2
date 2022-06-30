@@ -57,15 +57,15 @@ public class Boleto extends BaseEntity implements Serializable {
     @Column(name = "boleto_activo", nullable = false)
     private boolean boletoActivo;
     @JoinColumn(name = "boleto_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta boletoIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventarioInternoIdBoleto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventarioInternoIdBoleto", fetch = FetchType.LAZY)
     private List<InventarioInterno> inventarioInternoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleCompraBoletoIdBoleto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleCompraBoletoIdBoleto", fetch = FetchType.LAZY)
     private List<DetalleCompraBoleto> detalleCompraBoletoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "registroBoletoIdBoleto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "registroBoletoIdBoleto", fetch = FetchType.LAZY)
     private List<RegistroBoleto> registroBoletoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tarifaGrupoServicioIdBoleto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tarifaGrupoServicioIdBoleto", fetch = FetchType.LAZY)
     private List<TarifaGrupoServicio> tarifaGrupoServicioList;
 
     public Boleto() {

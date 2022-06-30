@@ -39,10 +39,10 @@ public class RecaudacionCombustible extends BaseEntity implements Serializable {
     @Column(name = "recaudacion_combustible_monto", nullable = false)
     private int recaudacionCombustibleMonto;
     @JoinColumn(name = "recaudacion_combustible_id_recaudacion", referencedColumnName = "recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Recaudacion recaudacionCombustibleIdRecaudacion;
     @JoinColumn(name = "recaudacion_combustible_id_venta_combustible", referencedColumnName = "venta_combustible_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private VentaCombustible recaudacionCombustibleIdVentaCombustible;
 
     public RecaudacionCombustible() {

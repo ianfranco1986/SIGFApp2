@@ -61,13 +61,13 @@ public class RegistroMinuto extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "registro_minuto_recaudado", nullable = false)
     private boolean registroMinutoRecaudado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionMinutoIdRegistroMinuto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionMinutoIdRegistroMinuto", fetch = FetchType.LAZY)
     private List<RecaudacionMinuto> recaudacionMinutoList;
     @JoinColumn(name = "registro_minuto_desde_id_bus", referencedColumnName = "bus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Bus registroMinutoDesdeIdBus;
     @JoinColumn(name = "registro_minuto_hasta_id_bus", referencedColumnName = "bus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Bus registroMinutoHastaIdBus;
 
     public RegistroMinuto() {

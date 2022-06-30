@@ -40,10 +40,10 @@ public class RecaudacionMinuto extends BaseEntity implements Serializable {
     @Column(name = "recaudacion_minuto_monto", nullable = false)
     private int recaudacionMinutoMonto;
     @JoinColumn(name = "recaudacion_minuto_id_recaudacion", referencedColumnName = "recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Recaudacion recaudacionMinutoIdRecaudacion;
     @JoinColumn(name = "recaudacion_minuto_id_registro_minuto", referencedColumnName = "registro_minuto_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private RegistroMinuto recaudacionMinutoIdRegistroMinuto;
 
     public RecaudacionMinuto() {

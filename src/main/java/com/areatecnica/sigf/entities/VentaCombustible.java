@@ -76,13 +76,13 @@ public class VentaCombustible extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "venta_combustible_recaudado", nullable = false)
     private boolean ventaCombustibleRecaudado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionCombustibleIdVentaCombustible")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionCombustibleIdVentaCombustible", fetch = FetchType.LAZY)
     private List<RecaudacionCombustible> recaudacionCombustibleList;
     @JoinColumn(name = "venta_combustible_id_bus", referencedColumnName = "bus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Bus ventaCombustibleIdBus;
     @JoinColumn(name = "venta_combustible_id_surtidor", referencedColumnName = "surtidor_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Surtidor ventaCombustibleIdSurtidor;
 
     public VentaCombustible() {

@@ -30,9 +30,9 @@ public class PlanCuenta extends BaseEntity implements Serializable {
     @Column(name = "plan_cuenta_id")
     private Integer planCuentaId;
     @JoinColumn(name = "plan_cuenta_empresa_id", referencedColumnName = "empresa_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa planCuentaEmpresaId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaSubTipoIdPlan")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaSubTipoIdPlan", fetch = FetchType.LAZY)
     private List<PlanCuentaSubTipo> planCuentaSubTipoList;
 
     public PlanCuenta() {

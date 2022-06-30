@@ -43,10 +43,10 @@ public class ReconocimientoDeuda extends BaseEntity implements Serializable {
     @Column(name = "reconocimiento_deuda_descripcion", length = 255)
     private String reconocimientoDeudaDescripcion;
     @JoinColumn(name = "reconocimiento_deuda_id_empresa", referencedColumnName = "empresa_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa reconocimientoDeudaIdEmpresa;
     @JoinColumn(name = "reconocimiento_deuda_id_trabajador", referencedColumnName = "trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Trabajador reconocimientoDeudaIdTrabajador;
 
     public ReconocimientoDeuda() {

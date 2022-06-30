@@ -51,15 +51,15 @@ public class Guia extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "guia_total_ingreso", nullable = false)
     private int guiaTotalIngreso;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionGuiaIdGuia")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionGuiaIdGuia", fetch = FetchType.LAZY)
     private List<RecaudacionGuia> recaudacionGuiaList;
     @JoinColumn(name = "guia_id_bus", referencedColumnName = "bus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Bus guiaIdBus;
     @JoinColumn(name = "guia_id_trabajador", referencedColumnName = "trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Trabajador guiaIdTrabajador;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vueltaGuiaIdGuia")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vueltaGuiaIdGuia", fetch = FetchType.LAZY)
     private List<VueltaGuia> vueltaGuiaList;
 
     public Guia() {

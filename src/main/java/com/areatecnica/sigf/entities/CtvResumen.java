@@ -23,12 +23,12 @@ import java.util.Date;
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CtvResumen.findAll", query = "SELECT c FROM CtvResumen c")
-    , @NamedQuery(name = "CtvResumen.findByCtvResumenId", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenId = :ctvResumenId")
-    , @NamedQuery(name = "CtvResumen.findByCtvResumenNumero", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenNumero = :ctvResumenNumero")
-    , @NamedQuery(name = "CtvResumen.findByCtvResumenCantidadBolsas", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenCantidadBolsas = :ctvResumenCantidadBolsas")
-    , @NamedQuery(name = "CtvResumen.findByCtvResumenTotalTransportado", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenTotalTransportado = :ctvResumenTotalTransportado")
-    , @NamedQuery(name = "CtvResumen.findByCtvResumenFechaHoraRetiro", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenFechaHoraRetiro = :ctvResumenFechaHoraRetiro")})
+    @NamedQuery(name = "CtvResumen.findAll", query = "SELECT c FROM CtvResumen c"),
+    @NamedQuery(name = "CtvResumen.findByCtvResumenId", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenId = :ctvResumenId"),
+    @NamedQuery(name = "CtvResumen.findByCtvResumenNumero", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenNumero = :ctvResumenNumero"),
+    @NamedQuery(name = "CtvResumen.findByCtvResumenCantidadBolsas", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenCantidadBolsas = :ctvResumenCantidadBolsas"),
+    @NamedQuery(name = "CtvResumen.findByCtvResumenTotalTransportado", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenTotalTransportado = :ctvResumenTotalTransportado"),
+    @NamedQuery(name = "CtvResumen.findByCtvResumenFechaHoraRetiro", query = "SELECT c FROM CtvResumen c WHERE c.ctvResumenFechaHoraRetiro = :ctvResumenFechaHoraRetiro")})
 public class CtvResumen extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,7 +55,7 @@ public class CtvResumen extends BaseEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ctvResumenFechaHoraRetiro;
     @JoinColumn(name = "ctv_resumen_id_resumen_recaudacion", referencedColumnName = "resumen_recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ResumenRecaudacion ctvResumenIdResumenRecaudacion;
 
     public CtvResumen() {
@@ -142,5 +142,5 @@ public class CtvResumen extends BaseEntity implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.CtvResumen[ ctvResumenId=" + ctvResumenId + " ]";
     }
-    
+
 }

@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -69,9 +70,9 @@ public class Voucher implements Serializable {
     @Column(name = "voucher_persona")
     private String voucherPersona;
     @JoinColumn(name = "voucher_tipo_comp_id", referencedColumnName = "tipo_comp_voucher_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoComprobanteVoucher voucherTipoCompId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleVoucherVoucherId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleVoucherVoucherId", fetch = FetchType.LAZY)
     private List<DetalleVoucher> detalleVoucherList;
 
     public Voucher() {

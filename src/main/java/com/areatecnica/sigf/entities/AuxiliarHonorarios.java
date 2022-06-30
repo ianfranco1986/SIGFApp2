@@ -8,6 +8,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,10 +36,10 @@ public class AuxiliarHonorarios implements Serializable {
     @Column(name = "auxiliar_honorario_id")
     private Integer auxiliarHonorarioId;
     @JoinColumn(name = "auxiliar_honorario_honorario_id", referencedColumnName = "honorario_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Honorario auxiliarHonorarioHonorarioId;
     @JoinColumn(name = "auxiliar_honorario_v_mov_id", referencedColumnName = "voucher_movimiento_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private VoucherMovimiento auxiliarHonorarioVMovId;
 
     public AuxiliarHonorarios() {

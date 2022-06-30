@@ -4,10 +4,14 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +26,9 @@ import javax.persistence.Table;
  * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "cargo_liquidacion", catalog = "sigfdb", schema = "")
+@Table(name = "cargo_liquidacion")
+@EntityListeners(AuditListener.class)
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "CargoLiquidacion.findAll", query = "SELECT c FROM CargoLiquidacion c"),
     @NamedQuery(name = "CargoLiquidacion.findByEmpresaBetweenDates", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaIdEmpresa = :empresaId AND c.cargoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to"),
@@ -30,7 +36,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "CargoLiquidacion.findByCargoLiquidacionId", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionId = :cargoLiquidacionId"),
     @NamedQuery(name = "CargoLiquidacion.findByCargoLiquidacionMonto", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionMonto = :cargoLiquidacionMonto"),
     @NamedQuery(name = "CargoLiquidacion.findByCargoLiquidacionDescripcion", query = "SELECT c FROM CargoLiquidacion c WHERE c.cargoLiquidacionDescripcion = :cargoLiquidacionDescripcion")})
-public class CargoLiquidacion implements Serializable {
+public class CargoLiquidacion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,10 +51,10 @@ public class CargoLiquidacion implements Serializable {
     @Column(name = "cargo_liquidacion_descripcion")
     private String cargoLiquidacionDescripcion;
     @JoinColumn(name = "cargo_liquidacion_liquidacion_empresa_id", referencedColumnName = "liquidacion_empresa_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private LiquidacionEmpresa cargoLiquidacionLiquidacionEmpresaId;
     @JoinColumn(name = "cargo_liquidacion_cargo_id", referencedColumnName = "tipo_cargo_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoCargo cargoLiquidacionCargoId;
 
     public CargoLiquidacion() {

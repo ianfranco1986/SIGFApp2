@@ -153,79 +153,79 @@ public class Trabajador extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "trabajador_posee_cuenta_banco", nullable = false)
     private boolean trabajadorPoseeCuentaBanco;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "haberTrabajadorIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "haberTrabajadorIdTrabajador", fetch = FetchType.LAZY)
     private List<HaberTrabajador> haberTrabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargaTrabajadorIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargaTrabajadorIdTrabajador", fetch = FetchType.LAZY)
     private List<CargaTrabajador> cargaTrabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorAdicionalSaludIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorAdicionalSaludIdTrabajador", fetch = FetchType.LAZY)
     private List<TrabajadorAdicionalSalud> trabajadorAdicionalSaludList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdTrabajador", fetch = FetchType.LAZY)
     private List<Despacho> despachoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdTrabajador", fetch = FetchType.LAZY)
     private List<VentaBoleto> ventaBoletoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "liquidacionSueldoIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "liquidacionSueldoIdTrabajador", fetch = FetchType.LAZY)
     private List<LiquidacionSueldo> liquidacionSueldoList;
     @JoinColumn(name = "trabajador_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta trabajadorIdCuenta;
     @JoinColumn(name = "trabajador_id_institucion_apv", referencedColumnName = "institucion_apv_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private InstitucionApv trabajadorIdInstitucionApv;
     @JoinColumn(name = "trabajador_id_asignacion_familiar", referencedColumnName = "asignacion_familiar_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AsignacionFamiliar trabajadorIdAsignacionFamiliar;
     @JoinColumn(name = "trabajador_id_centro_costo", referencedColumnName = "centro_costo_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CentroCosto trabajadorIdCentroCosto;
     @JoinColumn(name = "trabajador_id_comuna", referencedColumnName = "comuna_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Comuna trabajadorIdComuna;
     @JoinColumn(name = "trabajador_id_tipo_cotizacion_trabajador", referencedColumnName = "tipo_cotizacion_trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoCotizacionTrabajador trabajadorIdTipoCotizacionTrabajador;
     @JoinColumn(name = "trabajador_id_estado_civil", referencedColumnName = "estado_civil_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EstadoCivil trabajadorIdEstadoCivil;
     @JoinColumn(name = "trabajador_id_forma_pago", referencedColumnName = "forma_pago_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private FormaPago trabajadorIdFormaPago;
     @JoinColumn(name = "trabajador_id_institucion_prevision", referencedColumnName = "institucion_prevision_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private InstitucionPrevision trabajadorIdInstitucionPrevision;
     @JoinColumn(name = "trabajador_id_terminal", referencedColumnName = "terminal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Terminal trabajadorIdTerminal;
     @JoinColumn(name = "trabajador_id_institucion_salud", referencedColumnName = "institucion_salud_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private InstitucionSalud trabajadorIdInstitucionSalud;
     @JoinColumn(name = "trabajador_id_sindicato", referencedColumnName = "sindicato_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Sindicato trabajadorIdSindicato;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reconocimientoDeudaIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reconocimientoDeudaIdTrabajador", fetch = FetchType.LAZY)
     private List<ReconocimientoDeuda> reconocimientoDeudaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdTrabajador", fetch = FetchType.LAZY)
     private List<RelacionLaboral> relacionLaboralList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargaRetroactivaIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargaRetroactivaIdTrabajador", fetch = FetchType.LAZY)
     private List<CargaRetroactiva> cargaRetroactivaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoTrabajadorTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoTrabajadorTrabajador", fetch = FetchType.LAZY)
     private List<CuentaBancoTrabajador> cuentaBancoTrabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "licenciaMedicaIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "licenciaMedicaIdTrabajador", fetch = FetchType.LAZY)
     private List<LicenciaMedica> licenciaMedicaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horaExtraTrabajadorIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horaExtraTrabajadorIdTrabajador", fetch = FetchType.LAZY)
     private List<HoraExtraTrabajador> horaExtraTrabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "descuentoTrabajadorIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "descuentoTrabajadorIdTrabajador", fetch = FetchType.LAZY)
     private List<DescuentoTrabajador> descuentoTrabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guiaIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guiaIdTrabajador", fetch = FetchType.LAZY)
     private List<Guia> guiaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "feriadoLegalIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "feriadoLegalIdTrabajador", fetch = FetchType.LAZY)
     private List<FeriadoLegal> feriadoLegalList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "jornadaTrabajadorIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "jornadaTrabajadorIdTrabajador", fetch = FetchType.LAZY)
     private List<JornadaTrabajador> jornadaTrabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlAsistenciaIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlAsistenciaIdTrabajador", fetch = FetchType.LAZY)
     private List<ControlAsistencia> controlAsistenciaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "observacionTrabajadorIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "observacionTrabajadorIdTrabajador", fetch = FetchType.LAZY)
     private List<ObservacionTrabajador> observacionTrabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programacionTrabajadorIdTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programacionTrabajadorIdTrabajador", fetch = FetchType.LAZY)
     private List<ProgramacionTrabajador> programacionTrabajadorList;
 
     public Trabajador() {

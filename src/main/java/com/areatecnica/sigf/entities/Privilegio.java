@@ -69,7 +69,7 @@ public class Privilegio extends BaseEntity implements Serializable {
     @Column(name = "privilegio_tipo_menu", nullable = false)
     private int privilegioTipoMenu;
     @JoinColumn(name = "privilegio_id_menu", referencedColumnName = "menu_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Menu privilegioIdMenu;
     
     public Privilegio() {

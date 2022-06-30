@@ -4,10 +4,13 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +25,9 @@ import javax.persistence.Table;
  * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "abono_liquidacion", catalog = "sigfdb", schema = "")
+@Table(name = "abono_liquidacion")
+@EntityListeners(AuditListener.class)
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "AbonoLiquidacion.findAll", query = "SELECT a FROM AbonoLiquidacion a"),
     @NamedQuery(name = "AbonoLiquidacion.findByAbonoLiquidacionId", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionId = :abonoLiquidacionId"),
@@ -30,7 +35,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "AbonoLiquidacion.findByEmpresaTipoAbonoBetweenDates", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaIdEmpresa = :empresaId AND a.abonoLiquidacionTipoId =:abonoLiquidacionTipoId AND a.abonoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to"),
     @NamedQuery(name = "AbonoLiquidacion.findByAbonoLiquidacionMonto", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionMonto = :abonoLiquidacionMonto"),
     @NamedQuery(name = "AbonoLiquidacion.findByAbonoLiquidacionDescripcion", query = "SELECT a FROM AbonoLiquidacion a WHERE a.abonoLiquidacionDescripcion = :abonoLiquidacionDescripcion")})
-public class AbonoLiquidacion implements Serializable {
+public class AbonoLiquidacion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

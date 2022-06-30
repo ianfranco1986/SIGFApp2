@@ -50,18 +50,18 @@ public class ProcesoRecaudacion extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "proceso_recaudacion_activo", nullable = false)
     private boolean procesoRecaudacionActivo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoProcesoIdProceso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoProcesoIdProceso", fetch = FetchType.LAZY)
     private List<CuentaBancoProceso> cuentaBancoProcesoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdProcesoRecaudacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdProcesoRecaudacion", fetch = FetchType.LAZY)
     private List<Bus> busList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoProcesoRecaudacionIdProceso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoProcesoRecaudacionIdProceso", fetch = FetchType.LAZY)
     private List<EgresoProcesoRecaudacion> egresoProcesoRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaProcesoIdProceso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaProcesoIdProceso", fetch = FetchType.LAZY)
     private List<CajaProceso> cajaProcesoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenRecaudacionIdProceso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenRecaudacionIdProceso", fetch = FetchType.LAZY)
     private List<ResumenRecaudacion> resumenRecaudacionList;
     @JoinColumn(name = "proceso_recaudacion_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta procesoRecaudacionIdCuenta;
 
     public ProcesoRecaudacion() {

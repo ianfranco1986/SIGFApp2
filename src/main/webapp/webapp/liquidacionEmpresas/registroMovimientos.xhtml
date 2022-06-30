@@ -36,7 +36,7 @@
                     <div class="p-field">
                         <label for="tipoMovimientos">Tipo</label>
                         <p:selectOneMenu id="tipoMovimientos" value="#{registroAbonoController.tipoMovimientoHelper}" converter="omnifaces.SelectItemsConverter" >
-                            <f:selectItem itemLabel="Todas"/>
+                            <f:selectItem itemLabel="Seleccionar"/>
                             <f:selectItems value="#{registroAbonoController.tiposItems}"
                                            var="tipos"
                                            itemValue="#{tipos}"
@@ -85,7 +85,7 @@
                             </p:toolbarGroup>
 
                             <p:toolbarGroup align="right">
-                                <p:commandButton value="Exportar" disabled="#{empty registroAbonoController.items}" icon="pi pi-download" styleClass="ui-button-help" ajax="false">
+                                <p:commandButton value="Exportar" disabled="#{empty registroAbonoController.items}" icon="pi pi-download" styleClass="ui-button-info" ajax="false">
                                     <p:dataExporter type="xlsxstream" target="datalist" fileName="Movimientos"/>
                                 </p:commandButton>
                             </p:toolbarGroup>

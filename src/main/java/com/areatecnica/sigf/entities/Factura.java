@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -69,12 +70,12 @@ public class Factura extends BaseEntity implements Serializable {
     @Column(name = "factura_total")
     private int facturaTotal;
     @JoinColumn(name = "factura_cliente_id", referencedColumnName = "cliente_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente facturaClienteId;
     @JoinColumn(name = "factura_tipo_documento_id", referencedColumnName = "tipo_documento_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoDocumento facturaTipoDocumentoId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarFacturasFacturaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarFacturasFacturaId", fetch = FetchType.LAZY)
     private List<AuxiliarFacturas> auxiliarFacturasList;
 
     public Factura() {

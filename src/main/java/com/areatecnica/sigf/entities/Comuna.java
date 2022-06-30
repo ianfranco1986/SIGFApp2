@@ -37,14 +37,14 @@ public class Comuna implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "comuna_nombre", nullable = false, length = 45)
     private String comunaNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calleIdComuna")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calleIdComuna", fetch = FetchType.LAZY)
     private List<Calle> calleList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdComuna")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdComuna", fetch = FetchType.LAZY)
     private List<Trabajador> trabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "terminalIdComuna")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "terminalIdComuna", fetch = FetchType.LAZY)
     private List<Terminal> terminalList;
     @JoinColumn(name = "comuna_id_ciudad", referencedColumnName = "ciudad_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Ciudad comunaIdCiudad;
 
     public Comuna() {

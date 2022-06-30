@@ -38,7 +38,7 @@ public class MarcaBus extends BaseEntity implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "marca_bus_nombre", nullable = false, length = 45)
     private String marcaBusNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloMarcaBusIdMarca")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloMarcaBusIdMarca", fetch = FetchType.LAZY)
     private List<ModeloMarcaBus> modeloMarcaBusList;
 
     public MarcaBus() {

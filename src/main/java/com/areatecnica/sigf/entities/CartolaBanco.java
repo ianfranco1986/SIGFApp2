@@ -66,10 +66,10 @@ public class CartolaBanco extends BaseEntity implements Serializable {
     @Column(name = "cartola_banco_saldo_final")
     private int cartolaBancoSaldoFinal;
     @JoinColumn(name = "cartola_banco_id_cuenta_bancaria", referencedColumnName = "cuenta_bancaria_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CuentaBancaria cartolaBancoIdCuentaBancaria;
     @OrderBy("detalleCartolaFechaMovimiento ASC")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleCartolaCartolaBancoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleCartolaCartolaBancoId", fetch = FetchType.LAZY)
     private List<DetalleCartola> detalleCartolaList;
 
     public CartolaBanco() {

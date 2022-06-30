@@ -36,11 +36,11 @@ public class Administrador implements Serializable {
     @Column(name = "administrador_activo", nullable = false)
     private boolean administradorActivo;
     @JoinColumn(name = "administrador_id_usuario", referencedColumnName = "usuario_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario administradorIdUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorFlotaIdAdmin")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorFlotaIdAdmin", fetch = FetchType.LAZY)
     private List<AdministradorFlota> administradorFlotaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorBusIdAdmin")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorBusIdAdmin", fetch = FetchType.LAZY)
     private List<AdministradorBus> administradorBusList;
 
     public Administrador() {

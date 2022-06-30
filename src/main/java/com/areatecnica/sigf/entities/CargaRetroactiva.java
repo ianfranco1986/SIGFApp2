@@ -44,10 +44,10 @@ public class CargaRetroactiva extends BaseEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date cargaRetroactivaFecha;
     @JoinColumn(name = "carga_retroactiva_id_carga_trabajador", referencedColumnName = "carga_trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CargaTrabajador cargaRetroactivaIdCargaTrabajador;
     @JoinColumn(name = "carga_retroactiva_id_trabajador", referencedColumnName = "trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Trabajador cargaRetroactivaIdTrabajador;
 
     public CargaRetroactiva() {

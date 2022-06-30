@@ -66,29 +66,29 @@ public class Terminal extends BaseEntity implements Serializable {
     private Double terminalUbicacionLongitud;
     @Column(name = "terminal_ubicacion_latitud", precision = 10, scale = 6)
     private Double terminalUbicacionLatitud;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surtidorIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surtidorIdTerminal", fetch = FetchType.LAZY)
     private List<Surtidor> surtidorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioIdTerminal", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "liquidacionSueldoIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "liquidacionSueldoIdTerminal", fetch = FetchType.LAZY)
     private List<LiquidacionSueldo> liquidacionSueldoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdTerminal", fetch = FetchType.LAZY)
     private List<Trabajador> trabajadorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdTerminal", fetch = FetchType.LAZY)
     private List<Bus> busList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdTerminal", fetch = FetchType.LAZY)
     private List<RelacionLaboral> relacionLaboralList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupoServicioIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupoServicioIdTerminal", fetch = FetchType.LAZY)
     private List<GrupoServicio> grupoServicioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaRecaudacionIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaRecaudacionIdTerminal", fetch = FetchType.LAZY)
     private List<CajaRecaudacion> cajaRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdTerminal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdTerminal", fetch = FetchType.LAZY)
     private List<Servicio> servicioList;
     @JoinColumn(name = "terminal_id_comuna", referencedColumnName = "comuna_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Comuna terminalIdComuna;
     @JoinColumn(name = "terminal_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta terminalIdCuenta;
 
     public Terminal() {

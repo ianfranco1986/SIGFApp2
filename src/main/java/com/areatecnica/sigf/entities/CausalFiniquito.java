@@ -46,7 +46,7 @@ public class CausalFiniquito extends BaseEntity implements Serializable {
     @Size(min = 1, max = 250)
     @Column(name = "causal_finiquito_descripcion", nullable = false, length = 250)
     private String causalFiniquitoDescripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "finiquitoRelacionLaboralIdCausalFiniquito")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "finiquitoRelacionLaboralIdCausalFiniquito", fetch = FetchType.LAZY)
     private List<FiniquitoRelacionLaboral> finiquitoRelacionLaboralList;
 
     public CausalFiniquito() {

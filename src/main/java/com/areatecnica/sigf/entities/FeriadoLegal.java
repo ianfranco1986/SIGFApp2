@@ -65,7 +65,7 @@ public class FeriadoLegal extends BaseEntity implements Serializable {
     @Column(name = "feriado_legal_valor_feriado", nullable = false)
     private int feriadoLegalValorFeriado;
     @JoinColumn(name = "feriado_legal_id_trabajador", referencedColumnName = "trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Trabajador feriadoLegalIdTrabajador;
 
     public FeriadoLegal() {

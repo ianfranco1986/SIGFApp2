@@ -101,8 +101,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
             this.totalRecaudacion = 0;
             this.cantidadBoletos = 0;
             this.guiasAnuladas = 0;
-            this.trabajadorItems = new TrabajadorDaoImpl().findNandu();
-            this.busItems = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
+
             this.items = new RecaudacionDaoImpl().findByCajaFechaRecaudacion(cajaRecaudacion, fecha);
             this.itemsRecaudacion = new ArrayList<RecaudacionGuiaDTO>();
             if (!this.items.isEmpty()) {
@@ -125,23 +124,23 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                         this.totalFam = this.totalFam + h.getFam();
                         this.totalVarios = this.totalVarios + h.getVarios();
 
-                        if (!g.getRecaudacionBoletoList().isEmpty()) {
-                            for (RecaudacionBoleto rb : g.getRecaudacionBoletoList()) {
-                                this.cantidadBoletos++;
-
-                                String nombreBoleto = rb.getRecaudacionBoletoIdVentaBoleto().getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoSigla();
-                                if (this.boletos.containsKey(nombreBoleto)) {
-                                    this.boletos.put(nombreBoleto, this.boletos.get(nombreBoleto) + 1);
-                                } else {
-                                    this.boletos.put(nombreBoleto, 1);
-                                }
-                            }
-                        }
+//                        if (!g.getRecaudacionBoletoList().isEmpty()) {
+//                            for (RecaudacionBoleto rb : g.getRecaudacionBoletoList()) {
+//                                this.cantidadBoletos++;
+//
+//                                String nombreBoleto = rb.getRecaudacionBoletoIdVentaBoleto().getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoSigla();
+//                                if (this.boletos.containsKey(nombreBoleto)) {
+//                                    this.boletos.put(nombreBoleto, this.boletos.get(nombreBoleto) + 1);
+//                                } else {
+//                                    this.boletos.put(nombreBoleto, 1);
+//                                }
+//                            }
+//                        }
 
                     }
                 }
 
-                boletos.forEach((k, v) -> this.cadenaBoletos = this.cadenaBoletos + k + ":" + v + " ");
+//                boletos.forEach((k, v) -> this.cadenaBoletos = this.cadenaBoletos + k + ":" + v + " ");
 
                 this.model = new RecaudacionDataModel(this.itemsRecaudacion);
 
@@ -161,6 +160,13 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
         }
         //this.g = this.items.stream().filter(distinctByKey)
 
+    }
+
+    public void prepareToEdit() {
+        if (this.selectedItem != null) {
+//            this.trabajadorItems = new TrabajadorDaoImpl().findNandu();
+//            this.busItems = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
+        }
     }
 
     public List<RecaudacionGuiaDTO> getSelectedItems() {
@@ -583,6 +589,6 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
     public void handleBusChange() {
 
-    }       
+    }
 
 }

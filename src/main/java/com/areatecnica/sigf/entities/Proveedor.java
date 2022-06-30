@@ -60,7 +60,7 @@ public class Proveedor extends BaseEntity implements Serializable {
     @Size(max = 45)
     @Column(name = "proveedor_giro")
     private String proveedorGiro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraProveedorId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraProveedorId", fetch = FetchType.LAZY)
     private List<Compra> compraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "compraPetroleoProveedorId", fetch = FetchType.LAZY)
     private List<CompraPetroleo> compraPetroleoList;

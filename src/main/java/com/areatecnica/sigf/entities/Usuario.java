@@ -67,24 +67,24 @@ public class Usuario extends BaseEntity implements Serializable {
     private String usuarioEmail;
     @Column(name = "usuario_activo")
     private Boolean usuarioActivo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioSessionIdUsuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioSessionIdUsuario", fetch = FetchType.LAZY)
     private List<UsuarioSession> usuarioSessionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdInspector")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdInspector", fetch = FetchType.LAZY)
     private List<Despacho> despachoList;
     @JoinColumn(name = "usuario_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta usuarioIdCuenta;
     @JoinColumn(name = "usuario_id_rol", referencedColumnName = "rol_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Rol usuarioIdRol;
     @JoinColumn(name = "usuario_id_terminal", referencedColumnName = "terminal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Terminal usuarioIdTerminal;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaRecaudacionIdUsuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaRecaudacionIdUsuario", fetch = FetchType.LAZY)
     private List<CajaRecaudacion> cajaRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorIdUsuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorIdUsuario", fetch = FetchType.LAZY)
     private List<Administrador> administradorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketIdUsuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketIdUsuario", fetch = FetchType.LAZY)
     private List<Ticket> ticketList;
 
     public Usuario() {

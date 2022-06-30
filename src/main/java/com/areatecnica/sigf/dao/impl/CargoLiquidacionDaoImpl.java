@@ -10,10 +10,12 @@ import com.areatecnica.sigf.entities.CargoLiquidacion;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.LiquidacionEmpresa;
 import com.areatecnica.sigf.entities.TipoCargo;
+import com.areatecnica.sigf.entities.TipoCargo;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -58,5 +60,16 @@ public class CargoLiquidacionDaoImpl extends GenericDAOImpl<CargoLiquidacion> im
             return null;
         }
     }
+    
+    public long countByTipoCargo(TipoCargo cargo, Date desde, Date hasta) {
+        Query query = this.entityManager
+                .createQuery("SELECT COUNT(c) FROM CargoLiquidacion c WHERE c.cargoLiquidacionCargoId = :cargoLiquidacionCargoId AND c.cargoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to")
+                .setParameter("cargoLiquidacionCargoId", cargo)
+                .setParameter("from", desde)
+                .setParameter("to", hasta);
+
+        return (Long) query.getSingleResult();
+    }
+
     
 }

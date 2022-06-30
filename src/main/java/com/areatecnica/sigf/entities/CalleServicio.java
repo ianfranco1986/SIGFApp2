@@ -37,10 +37,10 @@ public class CalleServicio implements Serializable {
     @Column(name = "calle_servicio_sentido")
     private Boolean calleServicioSentido;
     @JoinColumn(name = "calle_servicio_id_calle", referencedColumnName = "calle_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Calle calleServicioIdCalle;
     @JoinColumn(name = "calle_servicio_id_servicio", referencedColumnName = "servicio_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Servicio calleServicioIdServicio;
 
     public CalleServicio() {

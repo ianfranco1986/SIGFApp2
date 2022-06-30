@@ -37,13 +37,13 @@ public class InstitucionApv extends BaseEntity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "institucion_apv_nombre", nullable = false, length = 100)
     private String institucionApvNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdInstitucionApv")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdInstitucionApv", fetch = FetchType.LAZY)
     private List<Trabajador> trabajadorList;
     @JoinColumn(name = "institucion_apv_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta institucionApvIdCuenta;
     @JoinColumn(name = "institucion_apv_id_tipo", referencedColumnName = "tipo_institucion_apv_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoInstitucionApv institucionApvIdTipo;
 
     public InstitucionApv() {

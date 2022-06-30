@@ -46,13 +46,13 @@ public class Flota extends BaseEntity implements Serializable {
     @Column(name = "flota_tiene_egresos")
     private Boolean flotaTieneEgresos;
     @JoinColumn(name = "flota_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta flotaIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdFlota")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdFlota", fetch = FetchType.LAZY)
     private List<Bus> busList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoFlotaIdFlota")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoFlotaIdFlota", fetch = FetchType.LAZY)
     private List<EgresoFlota> egresoFlotaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorFlotaIdFlota")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "administradorFlotaIdFlota", fetch = FetchType.LAZY)
     private List<AdministradorFlota> administradorFlotaList;
 
     public Flota() {

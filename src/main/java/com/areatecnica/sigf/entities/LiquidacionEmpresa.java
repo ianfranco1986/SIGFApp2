@@ -4,14 +4,17 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +33,9 @@ import javax.persistence.TemporalType;
  * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "liquidacion_empresa", catalog = "sigfdb", schema = "")
+@Table(name = "liquidacion_empresa")
+@EntityListeners(AuditListener.class)
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "LiquidacionEmpresa.findAll", query = "SELECT l FROM LiquidacionEmpresa l"),
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaId", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaId = :liquidacionEmpresaId"),
@@ -42,7 +47,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "LiquidacionEmpresa.findByLiquidacionEmpresaSaldo", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.liquidacionEmpresaSaldo = :liquidacionEmpresaSaldo"),
     @NamedQuery(name = "LiquidacionEmpresa.findByFechaCreacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.fechaCreacion = :fechaCreacion"),
     @NamedQuery(name = "LiquidacionEmpresa.findByUltimaModificacion", query = "SELECT l FROM LiquidacionEmpresa l WHERE l.ultimaModificacion = :ultimaModificacion")})
-public class LiquidacionEmpresa implements Serializable {
+public class LiquidacionEmpresa extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -82,9 +87,9 @@ public class LiquidacionEmpresa implements Serializable {
     private Empresa liquidacionEmpresaIdEmpresa;
 
     public LiquidacionEmpresa() {
-        this.liquidacionEmpresaSaldo = 0; 
-        this.liquidacionEmpresaTotalAbonos = 0; 
-        this.liquidacionEmpresaTotalCargos = 0; 
+        this.liquidacionEmpresaSaldo = 0;
+        this.liquidacionEmpresaTotalAbonos = 0;
+        this.liquidacionEmpresaTotalCargos = 0;
         this.abonoLiquidacionList = new ArrayList<>();
         this.cargoLiquidacionList = new ArrayList<>();
     }
@@ -214,5 +219,5 @@ public class LiquidacionEmpresa implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.LiquidacionEmpresa[ liquidacionEmpresaId=" + liquidacionEmpresaId + " ]";
     }
-    
+
 }

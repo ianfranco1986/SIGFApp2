@@ -46,13 +46,13 @@ public class PlanCuentaSubTipo extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "plan_cuenta_sub_tipo_codigo", nullable = false)
     private String planCuentaSubTipoCodigo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaMayorSubTipoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaMayorSubTipoId", fetch = FetchType.LAZY)
     private List<CuentaMayor> cuentaMayorList;
     @JoinColumn(name = "plan_cuenta_sub_tipo_id_plan", referencedColumnName = "plan_cuenta_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PlanCuenta planCuentaSubTipoIdPlan;
     @JoinColumn(name = "plan_cuenta_sub_tipo_id_tipo_plan", referencedColumnName = "tipo_plan_cuenta_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoPlanCuenta planCuentaSubTipoIdTipoPlan;
 
     public PlanCuentaSubTipo() {

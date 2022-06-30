@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,6 +37,7 @@ import javax.persistence.TemporalType;
 @Table(name = "cuenta_mayor")
 @NamedQueries({
     @NamedQuery(name = "CuentaMayor.findAll", query = "SELECT c FROM CuentaMayor c ORDER BY c.cuentaMayorSubTipoId.planCuentaSubTipoIdTipoPlan.tipoPlanCuentaId, c.cuentaMayorSubTipoId.planCuentaSubTipoCodigo"),
+    @NamedQuery(name = "CuentaMayor.findById", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorId =:cuentaMayorId ORDER BY c.cuentaMayorId"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorSubTipoId", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorSubTipoId = :cuentaMayorSubTipoId"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorNombre", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorNombre = :cuentaMayorNombre"),
     @NamedQuery(name = "CuentaMayor.findByCuentaMayorDescripcion", query = "SELECT c FROM CuentaMayor c WHERE c.cuentaMayorDescripcion = :cuentaMayorDescripcion"),
@@ -85,13 +87,13 @@ public class CuentaMayor extends BaseEntity implements Serializable {
     @Column(name = "cuenta_mayor_activos_fijos")
     private Boolean cuentaMayorActivosFijos;
     @JoinColumn(name = "cuenta_mayor_sub_tipo_id", referencedColumnName = "plan_cuenta_sub_tipo_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PlanCuentaSubTipo cuentaMayorSubTipoId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "voucherMovimientoCuentaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "voucherMovimientoCuentaId", fetch = FetchType.LAZY)
     private List<VoucherMovimiento> voucherMovimientoList;
     @JoinColumn(name = "cuenta_mayor_unica_id", referencedColumnName = "cuenta_unica_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CuentaUnica cuentaMayorUnicaId;
 
     public CuentaMayor() {

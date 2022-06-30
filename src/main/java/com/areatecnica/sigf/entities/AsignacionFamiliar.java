@@ -62,9 +62,9 @@ public class AsignacionFamiliar extends BaseEntity implements Serializable {
     @Column(name = "asignacion_familiar_hasta", nullable = false)
     private int asignacionFamiliarHasta;
     @JoinColumn(name = "asignacion_familiar_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta asignacionFamiliarIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdAsignacionFamiliar")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajadorIdAsignacionFamiliar", fetch = FetchType.LAZY)
     private List<Trabajador> trabajadorList;
 
     public AsignacionFamiliar() {

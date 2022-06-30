@@ -109,8 +109,7 @@ public class DynamicRecaudacionController implements Serializable {
 
     public void createDynamicsRow() {
         //Inicio de array de listas ordenadas que contendrá c/u de las recaudaciones
-        this.listOfMaps = new  ArrayList<LinkedHashMap>();
-        HashMap header = new HashMap();
+        this.listOfMaps = new  ArrayList<>();
         this.folios = new HashMap<Integer, Integer>();
         this.totales = new LinkedHashMap();
         setResultTotals();
@@ -175,6 +174,7 @@ public class DynamicRecaudacionController implements Serializable {
             System.err.println("TAMAÑO DE headers;" + this.resultsHeader.size());
             System.err.println("TAMAÑO DE TOTALES:" + this.totales.size());
             System.err.println("CONTENIDO DE RESULTTOTALS: " + this.resultsTotals);
+            
         } else {
             for (Egreso e : egresoList) {
                 resultsTotals.add("");

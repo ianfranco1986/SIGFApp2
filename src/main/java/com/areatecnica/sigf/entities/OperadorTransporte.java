@@ -65,11 +65,11 @@ public class OperadorTransporte extends BaseEntity implements Serializable {
     @Column(name = "operador_transporte_recauda_minuto", nullable = false)
     private boolean operadorTransporteRecaudaMinuto;
     @JoinColumn(name = "operador_transporte_id_representante", referencedColumnName = "representante_legal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private RepresentanteLegal operadorTransporteIdRepresentante;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdOperador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdOperador", fetch = FetchType.LAZY)
     private List<RelacionLaboral> relacionLaboralList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidadNegocioIdOperadorTransporte")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidadNegocioIdOperadorTransporte", fetch = FetchType.LAZY)
     private List<UnidadNegocio> unidadNegocioList;
 
     public OperadorTransporte() {

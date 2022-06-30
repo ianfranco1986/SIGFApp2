@@ -63,15 +63,15 @@ public class CargaTrabajador extends BaseEntity implements Serializable {
     @Column(name = "carga_trabajador_activa", nullable = false)
     private boolean cargaTrabajadorActiva;
     @JoinColumn(name = "carga_trabajador_id_parentesco", referencedColumnName = "parentesco_carga_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ParentescoCarga cargaTrabajadorIdParentesco;
     @JoinColumn(name = "carga_trabajador_id_tipo", referencedColumnName = "tipo_carga_familiar_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoCargaFamiliar cargaTrabajadorIdTipo;
     @JoinColumn(name = "carga_trabajador_id_trabajador", referencedColumnName = "trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Trabajador cargaTrabajadorIdTrabajador;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargaRetroactivaIdCargaTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargaRetroactivaIdCargaTrabajador", fetch = FetchType.LAZY)
     private List<CargaRetroactiva> cargaRetroactivaList;
 
     public CargaTrabajador() {

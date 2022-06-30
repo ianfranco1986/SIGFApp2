@@ -130,19 +130,19 @@ public class CuentaBancariaController extends AbstractController<CuentaBancaria>
 
     public List<CuentaBancaria> getItems() {
 
-        List<Empresa> empresas = this.getUserCount().getEmpresaList();
-
-        if (!empresas.isEmpty()) {
-            List<CuentaBancaria> cuentas = new ArrayList<>();
-//  corregir
-//            for (Empresa e : empresas) {
-//                cuentas.addAll(e.getCuentaBancariaList());
-//            }
-
-            this.setItems(cuentas);
-        }else{
-            this.setItems(new ArrayList());
-        }
+//        List<Empresa> empresas = this.getUserCount().getEmpresaList();
+//
+//        if (!empresas.isEmpty()) {
+//            List<CuentaBancaria> cuentas = new ArrayList<>();
+////  corregir
+////            for (Empresa e : empresas) {
+////                cuentas.addAll(e.getCuentaBancariaList());
+////            }
+//
+//            this.setItems(cuentas);
+//        }else{
+//            this.setItems(new ArrayList());
+//        }
 
         return this.items;
     }

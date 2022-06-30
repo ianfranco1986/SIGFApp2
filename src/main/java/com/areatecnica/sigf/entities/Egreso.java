@@ -65,17 +65,17 @@ public class Egreso extends BaseEntity implements Serializable {
     @Column(name = "egreso_activo", nullable = false)
     private boolean egresoActivo;
     @JoinColumn(name = "egreso_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta egresoIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoCajaRecaudacionIdEgreso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoCajaRecaudacionIdEgreso", fetch = FetchType.LAZY)
     private List<EgresoCajaRecaudacion> egresoCajaRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoProcesoRecaudacionIdEgreso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoProcesoRecaudacionIdEgreso", fetch = FetchType.LAZY)
     private List<EgresoProcesoRecaudacion> egresoProcesoRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionGuiaIdEgreso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionGuiaIdEgreso", fetch = FetchType.LAZY)
     private List<RecaudacionGuia> recaudacionGuiaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoBusIdEgreso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoBusIdEgreso", fetch = FetchType.LAZY)
     private List<EgresoBus> egresoBusList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoFlotaIdEgreso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoFlotaIdEgreso", fetch = FetchType.LAZY)
     private List<EgresoFlota> egresoFlotaList;
 
     public Egreso() {

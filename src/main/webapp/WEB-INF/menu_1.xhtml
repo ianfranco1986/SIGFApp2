@@ -89,10 +89,10 @@
                     <p:submenu label="General" >
                         <p:submenu id="om_rec" label="Conductores" icon="pi pi-fw pi-users"> 
                             <p:submenu id="om_conductores" label="Reportes" icon="pi pi-fw pi-print">
-                                <p:menuitem id="om_detalle_imposiciones" value="Detalle de Imposiciones" outcome="/webapp/reportes/conductores/detalleconductor.xhtml" />
-                                <p:menuitem id="om_detalle_pagos" value="Detalle de Pagos" outcome="/webapp/reportes/conductores/detallepagosconductor.xhtml" />
-                                <p:menuitem id="om_resumen_imposiciones" value="Resumen de Imposiciones" outcome="/webapp/reportes/conductores/resumenconductor.xhtml" />
-                            </p:submenu>
+                            <p:menuitem id="om_detalle_imposiciones" value="Detalle de Imposiciones" outcome="/webapp/reportes/conductores/detalleconductor.xhtml" />
+                            <p:menuitem id="om_detalle_pagos" value="Detalle de Pagos" outcome="/webapp/reportes/conductores/detallepagosconductor.xhtml" />
+                            <p:menuitem id="om_resumen_imposiciones" value="Resumen de Imposiciones" outcome="/webapp/reportes/conductores/resumenconductor.xhtml" />
+                        </p:submenu>
                         </p:submenu>
                         <p:submenu id="om_boletos" label="Inv. de Boletos" icon="pi pi-fw pi-ticket" expanded="false">
                             <p:menuitem id="om_boletos_adquiridos" value="Boletos Adquiridos" outcome="/webapp/inventarioBoletos/boletosAdquiridos.xhtml" />
@@ -103,8 +103,8 @@
                         </p:submenu>
                         <p:submenu id="om_min" label="Minutos" icon="pi pi-fw pi-clock">
                             <p:submenu label="Minutos" icon="pi pi-fw pi-print">
-                                <p:menuitem id="om_registro_minutos" value="R. Minutos x Fecha" outcome="/webapp/reportes/minutos/registrominutofecha.xhtml" />
-                            </p:submenu>
+                            <p:menuitem id="om_registro_minutos" value="R. Minutos x Fecha" outcome="/webapp/reportes/minutos/registrominutofecha.xhtml" />
+                        </p:submenu>
                         </p:submenu>
                         <p:submenu id="om_datos" label="Admin. de Datos" icon="pi pi-fw pi-database" expanded="false">
                             <p:menuitem id="om_buses" value="Buses" icon="pi pi-fw pi-car" outcome="/webapp/datos/bus/List.xhtml" />
@@ -128,8 +128,7 @@
                             <p:menuitem id="om_liquidacion" value="Liquidación" icon="pi pi-fw pi-briefcase" outcome="/webapp/liquidacionEmpresas/registro.xhtml" />
                             <p:menuitem id="om_impresion" value="Impresión" icon="pi pi-fw pi-print" outcome="/webapp/liquidacionEmpresas/impresion.xhtml" />
                             <p:menuitem id="om_liquidacion_m" value="Registro Movtos." icon="pi pi-fw pi-database" outcome="/webapp/liquidacionEmpresas/registroMovimientos.xhtml" />
-                            <p:menuitem id="om_liquidacion_cc" value="CC. Empresas" icon="pi pi-fw pi-file-excel" outcome="/webapp/liquidacionEmpresas/ccempresas.xhtml" />
-  
+                            <p:menuitem id="om_liquidacion_cc" value="C/C Empresas" icon="pi pi-fw pi-database" outcome="/webapp/liquidacionEmpresas/movimientos/movimientoMes/registroEmpresa.xhtml" />
                             <p:submenu label="Reportes" icon="pi pi-fw pi-print">
                                 <p:menuitem id="om_general_mensual"  value="General Mensual" outcome="/webapp/reportes/liquidacionempresa/recaudaciongeneral.xhtml" />
                                 <p:menuitem id="om_detalle_ingresos_bus" value="Detalle x Bus" outcome="/webapp/reportes/liquidacionempresa/detalleingresosbus.xhtml" />
@@ -142,8 +141,9 @@
                                 <p:menuitem id="om_tipo_cargo" value="Def. de Cargos" icon="pi pi-fw pi-bars" outcome="/webapp/liquidacionEmpresas/tipoCargo/List.xhtml" />
                             </p:submenu>
                         </p:submenu>
+
                     </p:submenu>>
-                    <!--<p:submenu label="Contabilidad" >
+                    <p:submenu label="Contabilidad" >
                         <p:submenu id="om_adm_compras" label="Compras" icon="pi pi-fw pi-shopping-cart" expanded="false">
                             <p:menuitem id="om_compra_combustible" value="Compras de Comb." icon="pi pi-fw pi-car" outcome="/webapp/bomba/ventaCombustible/List.xhtml" />
                             <p:menuitem id="om_compras" value="Registro" icon="pi pi-shopping-cart" outcome="/webapp/compras/registro/List.xhtml" />
@@ -162,7 +162,7 @@
                             <p:menuitem id="om_plan_cuentas" value="Plan Contable" icon="pi pi-fw pi-bars" outcome="/webapp/contabilidad/avanzado/cuentas/planCuentas.xhtml" />
                         </p:submenu>
                     </p:submenu>
-                    -->
+
 
                 </pu:menu>
 

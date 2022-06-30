@@ -78,13 +78,13 @@ public class Empresa extends BaseEntity implements Serializable {
     @Column(name = "empresa_activa")
     private Boolean empresaActiva;
     @JoinColumn(name = "empresa_id_caja_compensacion", referencedColumnName = "caja_compensacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CajaCompensacion empresaIdCajaCompensacion;
     @JoinColumn(name = "empresa_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta empresaIdCuenta;
     @JoinColumn(name = "empresa_id_mutual", referencedColumnName = "mutual_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Mutual empresaIdMutual;
 
     public Empresa() {

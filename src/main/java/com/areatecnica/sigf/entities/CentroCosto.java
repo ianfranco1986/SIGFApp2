@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class CentroCosto extends BaseEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "centro_costo_nombre")
     private String centroCostoNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "voucherMovimientoCentroCostoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "voucherMovimientoCentroCostoId", fetch = FetchType.LAZY)
     private List<VoucherMovimiento> voucherMovimientoList;
 
     public CentroCosto() {

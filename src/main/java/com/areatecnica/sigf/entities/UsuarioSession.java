@@ -42,7 +42,7 @@ public class UsuarioSession implements Serializable {
     @Column(name = "usuario_session_ip_address", nullable = false, length = 50)
     private String usuarioSessionIpAddress;
     @JoinColumn(name = "usuario_session_id_usuario", referencedColumnName = "usuario_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario usuarioSessionIdUsuario;
 
     public UsuarioSession() {

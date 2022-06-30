@@ -59,21 +59,20 @@ public class Recaudacion extends BaseEntity implements Serializable {
     @Column(name = "recaudacion_hora", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date recaudacionHora;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionBoletoIdRecaudacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionBoletoIdRecaudacion", fetch = FetchType.LAZY)
     private List<RecaudacionBoleto> recaudacionBoletoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionMinutoIdRecaudacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionMinutoIdRecaudacion", fetch = FetchType.LAZY)
     private List<RecaudacionMinuto> recaudacionMinutoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionCombustibleIdRecaudacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionCombustibleIdRecaudacion", fetch = FetchType.LAZY)
     private List<RecaudacionCombustible> recaudacionCombustibleList;
     @JoinColumn(name = "recaudacion_id_caja", referencedColumnName = "caja_recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CajaRecaudacion recaudacionIdCaja;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionDescuentoExtraIdRecaudacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionDescuentoExtraIdRecaudacion", fetch = FetchType.LAZY)
     private List<RecaudacionDescuentoExtra> recaudacionDescuentoExtraList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionGuiaIdRecaudacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionGuiaIdRecaudacion", fetch = FetchType.LAZY)
     private List<RecaudacionGuia> recaudacionGuiaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionExtraIdRecaudacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionExtraIdRecaudacion", fetch = FetchType.LAZY)
     private List<RecaudacionExtra> recaudacionExtraList;
 
     @Transient

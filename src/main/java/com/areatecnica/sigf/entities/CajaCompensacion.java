@@ -40,10 +40,10 @@ public class CajaCompensacion extends BaseEntity implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "caja_compensacion_nombre", nullable = false, length = 255)
     private String cajaCompensacionNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdCajaCompensacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdCajaCompensacion", fetch = FetchType.LAZY)
     private List<Empresa> empresaList;
     @JoinColumn(name = "caja_compensacion_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta cajaCompensacionIdCuenta;
 
     public CajaCompensacion() {

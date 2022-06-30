@@ -97,28 +97,28 @@ public class Bus extends BaseEntity implements Serializable {
     @Column(name = "bus_activo")
     private Boolean busActivo;    
     @JoinColumn(name = "bus_id_empresa", referencedColumnName = "empresa_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa busIdEmpresa;
     @JoinColumn(name = "bus_id_estado_bus", referencedColumnName = "estado_bus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EstadoBus busIdEstadoBus;
     @JoinColumn(name = "bus_id_flota", referencedColumnName = "flota_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Flota busIdFlota;
     @JoinColumn(name = "bus_id_grupo_servicio", referencedColumnName = "grupo_servicio_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private GrupoServicio busIdGrupoServicio;
     @JoinColumn(name = "bus_id_modelo", referencedColumnName = "modelo_marca_bus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ModeloMarcaBus busIdModelo;
     @JoinColumn(name = "bus_id_proceso_recaudacion", referencedColumnName = "proceso_recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ProcesoRecaudacion busIdProcesoRecaudacion;
     @JoinColumn(name = "bus_id_terminal", referencedColumnName = "terminal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Terminal busIdTerminal;
     @JoinColumn(name = "bus_id_unidad_negocio", referencedColumnName = "unidad_negocio_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UnidadNegocio busIdUnidadNegocio;
     
 

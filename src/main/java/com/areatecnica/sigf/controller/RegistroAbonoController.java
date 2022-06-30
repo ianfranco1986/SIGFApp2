@@ -137,11 +137,16 @@ public class RegistroAbonoController implements Serializable {
                     AbonoLiquidacion al = new AbonoLiquidacionDaoImpl().findByEmpresaTipoBetweenDates(e, tipoMovimientoHelper.tipoAbono, this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
 
                     if (al == null) {
-                        LiquidacionEmpresa l = new LiquidacionEmpresa();
-                        l.setLiquidacionEmpresaFechaLiquidacion(this.dc.getFirstDateOfMonth());
-                        l.setLiquidacionEmpresaFechaPago(this.dc.getLastDayOfMonth());
-                        l.setLiquidacionEmpresaIdEmpresa(e);
 
+                        LiquidacionEmpresa l = new LiquidacionEmpresaDaoImpl().findByEmpresaFechaLiquidacion(e, this.dc.getFirstDateOfMonth());
+
+                        if (l == null) {
+                            l = new LiquidacionEmpresa();
+                            l.setLiquidacionEmpresaFechaLiquidacion(this.dc.getFirstDateOfMonth());
+                            l.setLiquidacionEmpresaFechaPago(this.dc.getLastDayOfMonth());
+                            l.setLiquidacionEmpresaIdEmpresa(e);
+                        }
+                        
                         al = new AbonoLiquidacion(l);
                         al.setAbonoLiquidacionTipoId(tipoMovimientoHelper.tipoAbono);
                         al.setAbonoLiquidacionMonto(tipoMovimientoHelper.tipoAbono.getTipoAbonoMontoDefecto());

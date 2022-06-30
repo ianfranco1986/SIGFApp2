@@ -62,10 +62,10 @@ public class Cliente extends BaseEntity implements Serializable {
     @Size(max = 45)
     @Column(name = "cliente_giro")
     private String clienteGiro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaClienteId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturaClienteId", fetch = FetchType.LAZY)
     private List<Factura> facturaList;
     @JoinColumn(name = "cliente_comuna_id", referencedColumnName = "comuna_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Comuna clienteComunaId;
 
     public Cliente() {

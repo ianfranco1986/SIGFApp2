@@ -59,11 +59,11 @@ public class RepresentanteLegal extends BaseEntity implements Serializable {
     @Column(name = "representante_legal_email", length = 45)
     private String representanteLegalEmail;
     @JoinColumn(name = "representante_legal_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta representanteLegalIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "representanteEmpresaIdRepresentanteLegal")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "representanteEmpresaIdRepresentanteLegal", fetch = FetchType.LAZY)
     private List<RepresentanteEmpresa> representanteEmpresaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "operadorTransporteIdRepresentante")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "operadorTransporteIdRepresentante", fetch = FetchType.LAZY)
     private List<OperadorTransporte> operadorTransporteList;
 
     public RepresentanteLegal() {

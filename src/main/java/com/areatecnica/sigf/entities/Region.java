@@ -45,9 +45,9 @@ public class Region implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "region_nombre", nullable = false, length = 45)
     private String regionNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudadIdRegion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudadIdRegion", fetch = FetchType.LAZY)
     private List<Ciudad> ciudadList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidadNegocioIdRegion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidadNegocioIdRegion", fetch = FetchType.LAZY)
     private List<UnidadNegocio> unidadNegocioList;
 
     public Region() {

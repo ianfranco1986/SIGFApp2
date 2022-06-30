@@ -52,13 +52,13 @@ public class InventarioCaja extends BaseEntity implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "inventario_caja_identificador", nullable = false, length = 10)
     private String inventarioCajaIdentificador;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdInventarioCaja")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdInventarioCaja", fetch = FetchType.LAZY)
     private List<VentaBoleto> ventaBoletoList;
     @JoinColumn(name = "inventario_caja_id_inventario_interno", referencedColumnName = "inventario_interno_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private InventarioInterno inventarioCajaIdInventarioInterno;
     @JoinColumn(name = "inventario_caja_id_caja", referencedColumnName = "caja_recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CajaRecaudacion inventarioCajaIdCaja;
 
     public InventarioCaja() {

@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,22 +49,22 @@ public class VoucherMovimiento implements Serializable {
     private int voucherMovimientoMonto;
     @Column(name = "voucher_movimiento_descripcion")
     private String voucherMovimientoDescripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarComprasVMovId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarComprasVMovId", fetch = FetchType.LAZY)
     private List<AuxiliarCompras> auxiliarComprasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimientoBancarioVmovId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimientoBancarioVmovId", fetch = FetchType.LAZY)
     private List<MovimientoBancario> movimientoBancarioList;
     @JoinColumn(name = "voucher_movimiento_centro_costo_id", referencedColumnName = "centro_costo_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CentroCosto voucherMovimientoCentroCostoId;
     @JoinColumn(name = "voucher_movimiento_cuenta_id", referencedColumnName = "cuenta_mayor_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CuentaMayor voucherMovimientoCuentaId;
     @JoinColumn(name = "voucher_movimiento_vid", referencedColumnName = "voucher_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Voucher voucherMovimientoVid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarFacturasVMovId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarFacturasVMovId", fetch = FetchType.LAZY)
     private List<AuxiliarFacturas> auxiliarFacturasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarHonorarioVMovId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auxiliarHonorarioVMovId", fetch = FetchType.LAZY)
     private List<AuxiliarHonorarios> auxiliarHonorariosList;
 
     public VoucherMovimiento() {

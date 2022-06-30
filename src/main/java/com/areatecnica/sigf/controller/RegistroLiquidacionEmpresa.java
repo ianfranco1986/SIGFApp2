@@ -28,8 +28,9 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.CellEditEvent;
@@ -68,7 +69,7 @@ public class RegistroLiquidacionEmpresa implements Serializable {
 
     private LocalDate date;
     private LocalDateConverter dc;
-    private String informe;
+    private static final String informe = "inf-liquidacion_empresa_general";
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     private NumberFormat nf = NumberFormat.getInstance();
@@ -83,6 +84,11 @@ public class RegistroLiquidacionEmpresa implements Serializable {
     private AbonoLiquidacion selectedAbono;
     private CargoLiquidacion selectedCargo;
 
+    private boolean caratula = Boolean.TRUE;
+    private boolean ingresosbus = Boolean.TRUE;
+    private boolean minutos = Boolean.TRUE;
+    private boolean boletos = Boolean.TRUE;
+
     /**
      * Creates a new instance of RegistroLiquidacionEmpresa
      */
@@ -91,11 +97,7 @@ public class RegistroLiquidacionEmpresa implements Serializable {
 
     @PostConstruct
     public void init() {
-
-        this.informe = "inf-detalle_ingresos_bus_empty";
-
         this.setDate(LocalDate.now());
-
     }
 
     public void load() {
@@ -109,8 +111,9 @@ public class RegistroLiquidacionEmpresa implements Serializable {
                 this.liquidacionEmpresa.setLiquidacionEmpresaFechaPago(this.dc.getLastDayOfMonth());
                 this.liquidacionEmpresa.setAbonoLiquidacionList(new ArrayList<>());
                 this.liquidacionEmpresa.setCargoLiquidacionList(new ArrayList<>());
+                JsfUtil.addWarningMessage("Se inicia la Liquidación para la empresa " + this.liquidacionEmpresa.getLiquidacionEmpresaIdEmpresa().getEmpresaNombre());
             } else {
-                JsfUtil.addSuccessMessage("Empresa: " + this.liquidacionEmpresa.getLiquidacionEmpresaIdEmpresa().getEmpresaNombre());
+                JsfUtil.addSuccessMessage("Existe Liquidación para la empresa " + this.liquidacionEmpresa.getLiquidacionEmpresaIdEmpresa().getEmpresaNombre());
             }
 
             this.abonoLiquidacion = new AbonoLiquidacion(liquidacionEmpresa);
@@ -170,6 +173,29 @@ public class RegistroLiquidacionEmpresa implements Serializable {
         }
     }
 
+    public Map<String, Object> getSingleMap() {
+        Map<String, Object> map = new HashMap();
+
+        if (this.empresa != null) {
+
+            map.put("fechaCompleta", this.dc.getMonthYearString());
+
+            map.put("desde", this.dc.getFirstDateOfMonth());//
+            map.put("hasta", this.dc.getLastDayOfMonth());//
+            map.put("empresa", this.empresa.getEmpresaNombre());
+            map.put("codigo", this.empresa.getEmpresaId());
+
+            map.put("caratula", caratula);
+            map.put("boletos", boletos);
+            map.put("minutos", minutos);
+            map.put("ingresosbus", ingresosbus);
+
+            return map;
+        }
+
+        return null;
+    }
+
     public void onCellEditAbono(CellEditEvent event) {
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
@@ -226,13 +252,22 @@ public class RegistroLiquidacionEmpresa implements Serializable {
                     if (a != null) {
                         JsfUtil.addSuccessMessage("Se ha registrado el abono");
                         this.totalAbonos += this.abonoLiquidacion.getAbonoLiquidacionMonto();
-                        this.abonoLiquidacion = new AbonoLiquidacion(this.liquidacionEmpresa);
+                        
                         setSaldo();
 
                         this.montoAbono = 0;
                         this.descripcionAbono = "";
                         this.tipoAbonoItems.remove(this.tipoAbono);
-                        this.tipoAbono = null; 
+                        this.tipoAbono = null;
+
+                        this.liquidacionEmpresa = new LiquidacionEmpresaDaoImpl().findByEmpresaFechaLiquidacion(empresa, dc.getFirstDateOfMonth());
+
+                        if (this.liquidacionEmpresa != null) {
+                            JsfUtil.addSuccessMessage("Liquidación actualizada");
+                            this.cargoLiquidacion = new CargoLiquidacion(this.liquidacionEmpresa);
+                            this.abonoLiquidacion = new AbonoLiquidacion(this.liquidacionEmpresa);
+                        }
+
                     } else {
                         JsfUtil.addErrorMessage("Error al guardar el abono");
                     }
@@ -260,13 +295,22 @@ public class RegistroLiquidacionEmpresa implements Serializable {
                     if (a != null) {
                         JsfUtil.addSuccessMessage("Se ha registrado el cargo");
                         this.totalCargos += this.cargoLiquidacion.getCargoLiquidacionMonto();
-                        this.cargoLiquidacion = new CargoLiquidacion(this.liquidacionEmpresa);
+
                         setSaldo();
 
                         this.montoCargo = 0;
                         this.descripcionCargo = "";
                         this.tipoCargoItems.remove(this.tipoCargo);
-                        this.tipoCargo = null; 
+                        this.tipoCargo = null;
+
+                        this.liquidacionEmpresa = new LiquidacionEmpresaDaoImpl().findByEmpresaFechaLiquidacion(empresa, dc.getFirstDateOfMonth());
+
+                        if (this.liquidacionEmpresa != null) {
+                            JsfUtil.addSuccessMessage("Liquidación actualizada");
+                            this.cargoLiquidacion = new CargoLiquidacion(this.liquidacionEmpresa);
+                            this.abonoLiquidacion = new AbonoLiquidacion(this.liquidacionEmpresa);
+                        }
+
                     } else {
                         JsfUtil.addErrorMessage("Error al guardar el cargo");
                     }
@@ -482,10 +526,6 @@ public class RegistroLiquidacionEmpresa implements Serializable {
         return informe;
     }
 
-    public void setInforme(String informe) {
-        this.informe = informe;
-    }
-
     public void setDate(LocalDate date) {
         this.date = date;
         this.dc = new LocalDateConverter(date);
@@ -529,6 +569,38 @@ public class RegistroLiquidacionEmpresa implements Serializable {
 
     public int getMontoAbono() {
         return montoAbono;
+    }
+
+    public boolean getIngresosbus() {
+        return ingresosbus;
+    }
+
+    public void setIngresosbus(boolean ingresosbus) {
+        this.ingresosbus = ingresosbus;
+    }
+
+    public boolean getMinutos() {
+        return minutos;
+    }
+
+    public void setMinutos(boolean minutos) {
+        this.minutos = minutos;
+    }
+
+    public boolean getBoletos() {
+        return boletos;
+    }
+
+    public void setBoletos(boolean boletos) {
+        this.boletos = boletos;
+    }
+
+    public boolean getCaratula() {
+        return caratula;
+    }
+
+    public void setCaratula(boolean caratula) {
+        this.caratula = caratula;
     }
 
 }

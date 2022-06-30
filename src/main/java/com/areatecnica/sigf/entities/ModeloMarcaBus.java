@@ -39,9 +39,9 @@ public class ModeloMarcaBus extends BaseEntity implements Serializable {
     @Column(name = "modelo_marca_bus_nombre", nullable = false, length = 45)
     private String modeloMarcaBusNombre;
     @JoinColumn(name = "modelo_marca_bus_id_marca", referencedColumnName = "marca_bus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MarcaBus modeloMarcaBusIdMarca;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdModelo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdModelo", fetch = FetchType.LAZY)
     private List<Bus> busList;
 
     public ModeloMarcaBus() {

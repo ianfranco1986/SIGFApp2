@@ -231,7 +231,7 @@
                                                        itemValue="#{tipoCargo}"
                                                        itemLabel="#{tipoCargo.tipoCargoNombre}"
                                                        />
-                                        <p:ajax event="valueChange" update=":growl, :CreateCargoForm:montoCargo" listener="#{registroLiquidacionEmpresaController.handleTipoCargoChange}" oncomplete="PF('descripcionCargo').getJQ().focus();"/>
+                                        <p:ajax event="valueChange" update=":CreateCargoForm:montoCargo" listener="#{registroLiquidacionEmpresaController.handleTipoCargoChange}" oncomplete="PF('descripcionCargo').getJQ().focus();"/>
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="p-field">
@@ -346,19 +346,19 @@
                     <div class="ui-fluid">
                         <div class="p-grid">
                             <div class="p-col-3">
-                                <p:selectBooleanCheckbox value="#{impresionLiquidacionEmpresaController.caratula}" itemLabel="Carátula"/>
+                                <p:selectBooleanCheckbox value="#{registroLiquidacionEmpresaController.caratula}" itemLabel="Carátula"/>
 
                             </div>
                             <div class="p-col-3">
-                                <p:selectBooleanCheckbox value="#{impresionLiquidacionEmpresaController.ingresosbus}" itemLabel="Detalle Ingresos Bus"/>
+                                <p:selectBooleanCheckbox value="#{registroLiquidacionEmpresaController.ingresosbus}" itemLabel="Detalle Ingresos Bus"/>
 
                             </div>
                             <div class="p-col-3">
-                                <p:selectBooleanCheckbox value="#{impresionLiquidacionEmpresaController.minutos}" itemLabel="Cobro/Pago Minutos"/>
+                                <p:selectBooleanCheckbox value="#{registroLiquidacionEmpresaController.minutos}" itemLabel="Cobro/Pago Minutos"/>
 
                             </div>
                             <div class="p-col-3">
-                                <p:selectBooleanCheckbox value="#{impresionLiquidacionEmpresaController.boletos}" itemLabel="Boletos"/>
+                                <p:selectBooleanCheckbox value="#{registroLiquidacionEmpresaController.boletos}" itemLabel="Boletos"/>
 
                             </div>
                         </div>
@@ -368,7 +368,7 @@
                             <label>
                             </label>
                             <h:commandLink value="Imprimir" 
-                                           actionListener="#{reportController.downloadFile(impresionLiquidacionEmpresaController.informe, impresionLiquidacionEmpresaController.singleMap)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
+                                           actionListener="#{reportController.downloadFile(registroLiquidacionEmpresaController.informe, registroLiquidacionEmpresaController.singleMap)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
                         </div>
                     </div>
                 </p:panel>

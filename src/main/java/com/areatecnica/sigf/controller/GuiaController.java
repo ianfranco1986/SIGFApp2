@@ -29,7 +29,7 @@ public class GuiaController extends AbstractController<Guia> {
     private List<Bus> itemsBus;
     private Guia selectedGuia;
     private Bus bus;
- 
+
     private GuiaDataModel model;
 
     public GuiaController() {
@@ -89,7 +89,6 @@ public class GuiaController extends AbstractController<Guia> {
     public void init() {
         this.date = LocalDate.now();
         this.dc = new LocalDateConverter(this.date);
-
         this.itemsBus = new BusDaoImpl().findByProceso(new ProcesoRecaudacionDaoImpl().findById(2));
         this.trabajadorItems = new TrabajadorDaoImpl().findNanduOrderByCode();
     }
@@ -97,7 +96,7 @@ public class GuiaController extends AbstractController<Guia> {
     public void load() {
         if (this.date != null && this.bus != null) {
             this.items = new GuiaDaoImpl().findByBusBetweenFecha(bus, this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
-            System.err.println("FECHAs:"+this.dc.getDate()+"/"+this.dc.getLastDayOfMonth());
+            System.err.println("FECHAs:" + this.dc.getDate() + "/" + this.dc.getLastDayOfMonth());
             if (!this.items.isEmpty()) {
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " guías del bus n° " + this.bus.getBusNumero() + " para el periodo " + this.dc.getMonthYearString());
 
@@ -118,10 +117,10 @@ public class GuiaController extends AbstractController<Guia> {
     }
 
     public void onRowEdit(RowEditEvent event) {
-
         Guia aux = null;
 
         try {
+
             aux = (Guia) event.getObject();
             new GuiaDaoImpl().update(aux);
             JsfUtil.addSuccessMessage("Se ha actualizado la guía ");
@@ -147,6 +146,5 @@ public class GuiaController extends AbstractController<Guia> {
     public void setDc(LocalDateConverter dc) {
         this.dc = dc;
     }
-    
-    
+
 }

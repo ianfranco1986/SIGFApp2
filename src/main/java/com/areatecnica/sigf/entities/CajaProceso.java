@@ -34,10 +34,10 @@ public class CajaProceso extends BaseEntity implements Serializable {
     @Column(name = "caja_proceso_activo")
     private Boolean cajaProcesoActivo;
     @JoinColumn(name = "caja_proceso_id_caja", referencedColumnName = "caja_recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CajaRecaudacion cajaProcesoIdCaja;
     @JoinColumn(name = "caja_proceso_id_proceso", referencedColumnName = "proceso_recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ProcesoRecaudacion cajaProcesoIdProceso;
 
     public CajaProceso() {

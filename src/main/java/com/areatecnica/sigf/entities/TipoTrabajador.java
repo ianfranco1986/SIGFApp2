@@ -37,10 +37,10 @@ public class TipoTrabajador implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tipo_trabajador_nombre", nullable = false, length = 45)
     private String tipoTrabajadorNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdTipoTrabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "relacionLaboralIdTipoTrabajador", fetch = FetchType.LAZY)
     private List<RelacionLaboral> relacionLaboralList;
     @JoinColumn(name = "tipo_trabajador_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta tipoTrabajadorIdCuenta;
 
     public TipoTrabajador() {

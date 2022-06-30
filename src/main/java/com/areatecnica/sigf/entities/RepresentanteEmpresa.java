@@ -31,10 +31,10 @@ public class RepresentanteEmpresa extends BaseEntity implements Serializable {
     @Column(name = "representante_empresa_id", nullable = false)
     private Integer representanteEmpresaId;
     @JoinColumn(name = "representante_empresa_id_empresa", referencedColumnName = "empresa_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa representanteEmpresaIdEmpresa;
     @JoinColumn(name = "representante_empresa_id_representante_legal", referencedColumnName = "representante_legal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private RepresentanteLegal representanteEmpresaIdRepresentanteLegal;
 
     public RepresentanteEmpresa() {

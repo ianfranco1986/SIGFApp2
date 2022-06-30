@@ -53,24 +53,24 @@ public class CajaRecaudacion extends BaseEntity implements Serializable {
     @NotNull
     @Column(name = "caja_recaudacion_activa", nullable = false)
     private boolean cajaRecaudacionActiva;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoCajaRecaudacionIdCaja")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoCajaRecaudacionIdCaja", fetch = FetchType.LAZY)
     private List<EgresoCajaRecaudacion> egresoCajaRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionIdCaja")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionIdCaja", fetch = FetchType.LAZY)
     private List<Recaudacion> recaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaProcesoIdCaja")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaProcesoIdCaja", fetch = FetchType.LAZY)
     private List<CajaProceso> cajaProcesoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenRecaudacionIdCaja")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenRecaudacionIdCaja", fetch = FetchType.LAZY)
     private List<ResumenRecaudacion> resumenRecaudacionList;
     @JoinColumn(name = "caja_recaudacion_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta cajaRecaudacionIdCuenta;
     @JoinColumn(name = "caja_recaudacion_id_terminal", referencedColumnName = "terminal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Terminal cajaRecaudacionIdTerminal;
     @JoinColumn(name = "caja_recaudacion_id_usuario", referencedColumnName = "usuario_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario cajaRecaudacionIdUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventarioCajaIdCaja")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventarioCajaIdCaja", fetch = FetchType.LAZY)
     private List<InventarioCaja> inventarioCajaList;
 
     public CajaRecaudacion() {

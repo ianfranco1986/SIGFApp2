@@ -20,7 +20,10 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.SelectEvent;
 
 @Named(value = "edicionComprasController")
 @ViewScoped
@@ -61,10 +64,9 @@ public class EdicionComprasController implements Serializable {
     private String title = defaultTitle;
 
     private boolean contabilizar;
-    
-    
-    private CentroCosto ccDefecto = new CentroCostoDaoImpl().findById(1); 
-    private CuentaMayor cmDefecto; 
+
+    private CentroCosto ccDefecto = new CentroCostoDaoImpl().findById(1);
+    private CuentaMayor cmDefecto;
 
     private int folio;
 
@@ -95,7 +97,6 @@ public class EdicionComprasController implements Serializable {
 //        this.tipoMoviento = new ITipoMovimientoDaoImpl().findById(1);
 
 //        this.proveedor = new Proveedor();
-
         this.cuentaItems = new CuentaBancariaDaoImpl().findAll();
         this.empresaNandu = new EmpresaDaoImpl().findById(7);
 
@@ -196,18 +197,18 @@ public class EdicionComprasController implements Serializable {
 //            JsfUtil.addErrorMessage("Debe seleccionar la compra");
 //        }
 //    }
-    public void onRowEdit(RowEditEvent event) {
-        Compra temp = (Compra) event.getObject();
-
-        try {
-
-            new CompraDaoImpl().update(temp);
-            JsfUtil.addSuccessMessage("Se ha actualizado el registro");
-            //getTotals();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage("Ha ocurrido un error al guardar los cambios");
-        }
-    }
+//    public void onRowEdit(RowEditEvent event) {
+//        Compra temp = (Compra) event.getObject();
+//
+//        try {
+//
+//            new CompraDaoImpl().update(temp);
+//            JsfUtil.addSuccessMessage("Se ha actualizado el registro");
+//            //getTotals();
+//        } catch (Exception e) {
+//            JsfUtil.addErrorMessage("Ha ocurrido un error al guardar los cambios");
+//        }
+//    }
 
 //    public void delete(ActionEvent event) {
 //        if (this.getSelected() != null) {
@@ -307,7 +308,7 @@ public class EdicionComprasController implements Serializable {
 
         }
     }
-    
+
     public void onCellEdit(CellEditEvent event) {
 //        try {
 //
@@ -327,17 +328,20 @@ public class EdicionComprasController implements Serializable {
 //        }
 
     }
-    
-    public List<CuentaMayor> completeText(String query) {
-        String queryLowerCase = query.toLowerCase();
-//        List<String> cuentaList = new ArrayList<>();
-//        for (CuentaMayor c : this.cuentaMayorItems) {
-//            cuentaList.add(c.getCuentaMayorNombre());
-//        }
 
-        return cuentaMayorItems.stream().filter(t -> t.getCuentaMayorNombre().toLowerCase().contains(queryLowerCase)).collect(Collectors.toList());
+    public void onItemSelect(SelectEvent<CuentaMayor> event) {
+        CuentaMayor c = event.getObject();
+        System.err.println("CUENTA SELECCIONADA:"+c.getCuentaMayorNombre());
+        JsfUtil.addSuccessMessage("Cuenta :"+c.getCuentaMayorNombre());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cuenta Selected", c.getCuentaMayorNombre()));
     }
 
+    public List<CuentaMayor> completeText(String query) {
+        String queryLowerCase = query.toLowerCase();
+        List<CuentaMayor> cuentaList = new CuentaMayorDaoImpl().findALL();
+        System.err.println("TAMAÑO DE CUENTA LIST: " + cuentaList.size() + " LLEGA POR AQUÍ ... ");
+        return cuentaList.stream().filter(t -> t.getCuentaMayorNombre().toLowerCase().contains(queryLowerCase)).collect(Collectors.toList());
+    }
 
     public void setDocumento(int documento) {
         this.documento = documento;

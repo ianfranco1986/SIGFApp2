@@ -32,10 +32,10 @@ public class RecaudacionDescuentoExtra extends BaseEntity implements Serializabl
     @Column(name = "recaudacion_descuento_extra_id", nullable = false)
     private Integer recaudacionDescuentoExtraId;
     @JoinColumn(name = "recaudacion_descuento_extra_id_dcto", referencedColumnName = "descuento_extra_bus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DescuentoExtraBus recaudacionDescuentoExtraIdDcto;
     @JoinColumn(name = "recaudacion_descuento_extra_id_recaudacion", referencedColumnName = "recaudacion_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Recaudacion recaudacionDescuentoExtraIdRecaudacion;
 
     public RecaudacionDescuentoExtra() {

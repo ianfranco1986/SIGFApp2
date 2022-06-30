@@ -33,15 +33,7 @@ public class ImpresionLiquidacionEmpresaController implements Serializable {
     private final String grupal = "inf-liquidacion_empresa_grupal";
 
     private String informe;
-    private final String X1000 = "inf-liquidacion_empresa";             //Sólo caratula
-    private final String X1100 = "inf-liquidacion_empresa_general";     //Carátula + Ingresos
-    private final String X1110 = "inf-liquidacion_empresa_general";     //Cáratula + Ingresos + Minutos
-    private final String X1111 = "inf-liquidacion_empresa_general";     //Carátula + Ingresos + Minutos + Boletos
-    private final String X1011 = "inf-liquidacion_empresa_general";     //Carátula + Minutos + Boletos
-    private final String X1001 = "inf-liquidacion_empresa_general";     //Carátula + Boletos
-    private final String X1101 = "inf-liquidacion_empresa_general";     //Carátula + Ingresos + Boletos
-    private final String X1010 = "inf-liquidacion_empresa_general";     //Carátula + Minutos 
-
+    
     private LocalDate date;
     private LocalDateConverter dc;
 

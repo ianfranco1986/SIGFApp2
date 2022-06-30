@@ -87,14 +87,14 @@ public class ResumenRecaudacion extends BaseEntity implements Serializable {
     @Column(name = "resumen_recaudacion_cheques")
     private Integer resumenRecaudacionCheques;
     @JoinColumn(name = "resumen_recaudacion_id_caja", referencedColumnName = "caja_recaudacion_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CajaRecaudacion resumenRecaudacionIdCaja;
     @JoinColumn(name = "resumen_recaudacion_id_proceso", referencedColumnName = "proceso_recaudacion_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ProcesoRecaudacion resumenRecaudacionIdProceso;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleDepositoRecaudacionIdResumen")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleDepositoRecaudacionIdResumen", fetch = FetchType.LAZY)
     private List<DetalleDepositoRecaudacion> detalleDepositoRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ctvResumenIdResumenRecaudacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ctvResumenIdResumenRecaudacion", fetch = FetchType.LAZY)
     private List<CtvResumen> ctvResumenList;
 
     public ResumenRecaudacion() {

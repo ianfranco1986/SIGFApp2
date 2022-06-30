@@ -41,11 +41,11 @@ public class Banco extends BaseEntity implements Serializable {
     @Column(name = "banco_nombre", nullable = false, length = 45)
     private String bancoNombre;
     @JoinColumn(name = "banco_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta bancoIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancariaIdBanco")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancariaIdBanco", fetch = FetchType.LAZY)
     private List<CuentaBancaria> cuentaBancariaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleResumenChequeIdBanco")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleResumenChequeIdBanco", fetch = FetchType.LAZY)
     private List<DetalleResumenCheque> detalleResumenChequeList;
 
     public Banco() {

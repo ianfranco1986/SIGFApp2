@@ -220,10 +220,10 @@ public final class CountPage implements java.io.Serializable {
             this.servicioCount = this.usuario.getUsuarioIdTerminal().getServicioList().size();
             this.trabajadorCount = this.usuario.getUsuarioIdTerminal().getTrabajadorList().size();
             this.usuarioCount = this.usuario.getUsuarioIdTerminal().getUsuarioList().size();
-            this.cajaRecaudacionCount = this.usuario.getUsuarioIdCuenta().getCajaRecaudacionList().size();
-            this.terminalCount = this.usuario.getUsuarioIdCuenta().getTerminalList().size();
-            this.empresaCount = this.usuario.getUsuarioIdCuenta().getEmpresaList().size();
-            this.flotaCount = this.usuario.getUsuarioIdCuenta().getFlotaList().size();
+//            this.cajaRecaudacionCount = this.usuario.getUsuarioIdCuenta().getCajaRecaudacionList().size();
+//            this.terminalCount = this.usuario.getUsuarioIdCuenta().getTerminalList().size();
+//            this.empresaCount = this.usuario.getUsuarioIdCuenta().getEmpresaList().size();
+//            this.flotaCount = this.usuario.getUsuarioIdCuenta().getFlotaList().size();
         } else {
             ventaCombustibleCount = 0;
             Administrador admin = this.usuario.getAdministradorList().get(0);

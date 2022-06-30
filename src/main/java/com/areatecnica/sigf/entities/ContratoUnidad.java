@@ -59,7 +59,7 @@ public class ContratoUnidad implements Serializable {
     @Column(name = "contrato_unidad_descripcion", length = 400)
     private String contratoUnidadDescripcion;
     @JoinColumn(name = "contrato_unidad_id_unidad_negocio", referencedColumnName = "unidad_negocio_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UnidadNegocio contratoUnidadIdUnidadNegocio;
 
     public ContratoUnidad() {

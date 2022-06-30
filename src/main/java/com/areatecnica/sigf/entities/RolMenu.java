@@ -30,10 +30,10 @@ public class RolMenu implements Serializable {
     @Column(name = "rol_menu_id", nullable = false)
     private Integer rolMenuId;
     @JoinColumn(name = "rol_menu_id_menu", referencedColumnName = "menu_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Menu rolMenuIdMenu;
     @JoinColumn(name = "rol_menu_id_rol", referencedColumnName = "rol_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Rol rolMenuIdRol;
 
     public RolMenu() {

@@ -61,24 +61,24 @@ public class CuentaBancaria extends BaseEntity implements Serializable {
     @Size(max = 45)
     @Column(name = "cuenta_bancaria_descripcion")
     private String cuentaBancariaDescripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoProcesoIdBanco")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoProcesoIdBanco", fetch = FetchType.LAZY)
     private List<CuentaBancoProceso> cuentaBancoProcesoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartolaBancoIdCuentaBancaria")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartolaBancoIdCuentaBancaria", fetch = FetchType.LAZY)
     private List<CartolaBanco> cartolaBancoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimientoMesCuentaBancoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimientoMesCuentaBancoId", fetch = FetchType.LAZY)
     private List<MovimientoMes> movimientoMesList;
     @JoinColumn(name = "cuenta_bancaria_id_banco", referencedColumnName = "banco_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Banco cuentaBancariaIdBanco;
     @JoinColumn(name = "cuenta_bancaria_id_empresa", referencedColumnName = "empresa_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa cuentaBancariaIdEmpresa;
     @JoinColumn(name = "cuenta_bancaria_id_tipo_cuenta", referencedColumnName = "tipo_cuenta_banco_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoCuentaBanco cuentaBancariaIdTipoCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleDepositoRecaudacionIdCuenta")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleDepositoRecaudacionIdCuenta", fetch = FetchType.LAZY)
     private List<DetalleDepositoRecaudacion> detalleDepositoRecaudacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoTrabajadorCuenta")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaBancoTrabajadorCuenta", fetch = FetchType.LAZY)
     private List<CuentaBancoTrabajador> cuentaBancoTrabajadorList;
 
     public CuentaBancaria() {

@@ -95,7 +95,7 @@ public class CompraPetroleo extends BaseEntity implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoDocumento compraPetroleoTipoDocumentoId;
     @JoinColumn(name = "compra_petroleo_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta compraPetroleoIdCuenta;
 
     public CompraPetroleo() {

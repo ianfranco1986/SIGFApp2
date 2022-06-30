@@ -45,23 +45,23 @@ public class UnidadNegocio extends BaseEntity implements Serializable {
     @Size(max = 45)
     @Column(name = "unidad_negocio_folio", length = 45)
     private String unidadNegocioFolio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoUnidadIdUnidadNegocio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoUnidadIdUnidadNegocio", fetch = FetchType.LAZY)
     private List<ContratoUnidad> contratoUnidadList;
     @OrderBy("busNumero")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdUnidadNegocio")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdUnidadNegocio", fetch = FetchType.LAZY)
     private List<Bus> busList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "valorRolloUnidadIdUnidad")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "valorRolloUnidadIdUnidad", fetch = FetchType.LAZY)
     private List<ValorRolloUnidad> valorRolloUnidadList;
     @JoinColumn(name = "unidad_negocio_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta unidadNegocioIdCuenta;
     @JoinColumn(name = "unidad_negocio_id_operador_transporte", referencedColumnName = "operador_transporte_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private OperadorTransporte unidadNegocioIdOperadorTransporte;
     @JoinColumn(name = "unidad_negocio_id_region", referencedColumnName = "region_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Region unidadNegocioIdRegion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdUnidad")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdUnidad", fetch = FetchType.LAZY)
     private List<Servicio> servicioList;
 
     public UnidadNegocio() {

@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -56,6 +57,16 @@ public class AbonoLiquidacionDaoImpl extends GenericDAOImpl<AbonoLiquidacion> im
         } catch (NoResultException ne) {
             return null;
         }
+    }
+
+    public long countByTipoAbono(TipoAbono abono, Date desde, Date hasta) {
+        Query query = this.entityManager
+                .createQuery("SELECT COUNT(a) FROM AbonoLiquidacion a WHERE a.abonoLiquidacionTipoId = :abonoLiquidacionTipoId AND a.abonoLiquidacionLiquidacionEmpresaId.liquidacionEmpresaFechaLiquidacion BETWEEN :from AND :to")
+                .setParameter("abonoLiquidacionTipoId", abono)
+                .setParameter("from", desde)
+                .setParameter("to", hasta);
+
+        return (Long) query.getSingleResult();
     }
 
 }

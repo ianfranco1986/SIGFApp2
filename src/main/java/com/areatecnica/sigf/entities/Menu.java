@@ -38,10 +38,10 @@ public class Menu implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "menu_nombre", nullable = false, length = 45)
     private String menuNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolMenuIdMenu")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolMenuIdMenu", fetch = FetchType.LAZY)
     private List<RolMenu> rolMenuList;
     @OrderBy("privilegioNumeroOrden ASC")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "privilegioIdMenu")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "privilegioIdMenu", fetch = FetchType.LAZY)
     private List<Privilegio> privilegioList;
 
     public Menu() {

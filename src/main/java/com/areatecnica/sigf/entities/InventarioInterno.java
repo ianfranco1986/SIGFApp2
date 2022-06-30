@@ -53,9 +53,9 @@ public class InventarioInterno extends BaseEntity implements Serializable {
     @Column(name = "inventario_interno_estado", nullable = false)
     private boolean inventarioInternoEstado;
     @JoinColumn(name = "inventario_interno_id_boleto", referencedColumnName = "boleto_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Boleto inventarioInternoIdBoleto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventarioCajaIdInventarioInterno")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventarioCajaIdInventarioInterno", fetch = FetchType.LAZY)
     private List<InventarioCaja> inventarioCajaList;
 
     public InventarioInterno() {

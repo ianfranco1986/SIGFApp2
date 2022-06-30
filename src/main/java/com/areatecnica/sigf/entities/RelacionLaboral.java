@@ -58,24 +58,24 @@ public class RelacionLaboral extends BaseEntity implements Serializable {
     @Column(name = "relacion_laboral_activo", nullable = false)
     private boolean relacionLaboralActivo;
     @JoinColumn(name = "relacion_laboral_id_tipo_contrato", referencedColumnName = "tipo_contrato_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoContrato relacionLaboralIdTipoContrato;
     @JoinColumn(name = "relacion_laboral_id_empresa", referencedColumnName = "empresa_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa relacionLaboralIdEmpresa;
     @JoinColumn(name = "relacion_laboral_id_operador", referencedColumnName = "operador_transporte_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private OperadorTransporte relacionLaboralIdOperador;
     @JoinColumn(name = "relacion_laboral_id_terminal", referencedColumnName = "terminal_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Terminal relacionLaboralIdTerminal;
     @JoinColumn(name = "relacion_laboral_id_trabajador", referencedColumnName = "trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Trabajador relacionLaboralIdTrabajador;
     @JoinColumn(name = "relacion_laboral_id_tipo_trabajador", referencedColumnName = "tipo_trabajador_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoTrabajador relacionLaboralIdTipoTrabajador;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "finiquitoRelacionLaboralIdRelacionLaboral")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "finiquitoRelacionLaboralIdRelacionLaboral", fetch = FetchType.LAZY)
     private List<FiniquitoRelacionLaboral> finiquitoRelacionLaboralList;
 
     public RelacionLaboral() {

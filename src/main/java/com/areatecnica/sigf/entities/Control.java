@@ -57,10 +57,10 @@ public class Control implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlHorarioServicioIdControl")
     private List<ControlHorarioServicio> controlHorarioServicioList;
     @JoinColumn(name = "control_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta controlIdCuenta;
     @JoinColumn(name = "control_id_tipo", referencedColumnName = "tipo_control_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoControl controlIdTipo;
 
     public Control() {

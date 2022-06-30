@@ -36,12 +36,12 @@ public class TipoPlanCuenta implements Serializable {
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "tipo_plan_cuenta_nombre")
-        private String tipoPlanCuentaNombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaSubTipoIdTipoPlan")
+    private String tipoPlanCuentaNombre;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planCuentaSubTipoIdTipoPlan", fetch = FetchType.LAZY)
     private List<PlanCuentaSubTipo> planCuentaSubTipoList;
 
     public TipoPlanCuenta() {
-        this.tipoPlanCuentaId = 0; 
+        this.tipoPlanCuentaId = 0;
     }
 
     public TipoPlanCuenta(Integer tipoPlanCuentaId) {
@@ -99,5 +99,5 @@ public class TipoPlanCuenta implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.TipoPlanCuenta[ tipoPlanCuentaId=" + tipoPlanCuentaId + " ]";
     }
-    
+
 }

@@ -42,10 +42,10 @@ public class PrecioCombustible extends BaseEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date precioCombustibleFechaPrecioCombustible;
     @JoinColumn(name = "precio_combustible_id_cuenta", referencedColumnName = "cuenta_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta precioCombustibleIdCuenta;
     @JoinColumn(name = "precio_combustible_id_tipo_combustible", referencedColumnName = "tipo_combustible_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoCombustible precioCombustibleIdTipoCombustible;
 
     public PrecioCombustible() {

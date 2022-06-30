@@ -71,7 +71,6 @@ public class ReportControllerVentaPetroleoEmpresa implements Serializable {
 //                this.empresaItems.add(ee);
 //            }
 //        }
-
         empresaItems.sort(Comparator.comparing(Empresa::getEmpresaNombre));
 
         this.items = this.unidadNegocio.getBusList();
@@ -209,6 +208,10 @@ public class ReportControllerVentaPetroleoEmpresa implements Serializable {
 
     public void setTipoInforme(Boolean tipoInforme) {
         this.tipoInforme = tipoInforme;
+    }
+
+    public Boolean getTipoInforme() {
+        return tipoInforme;
     }
 
     public String getInforme() {

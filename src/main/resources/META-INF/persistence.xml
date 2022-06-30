@@ -2,7 +2,7 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.areatecnica_SIGFapp_war_1PU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <jta-data-source>java:/MySqlDSNandu</jta-data-source>
+    <jta-data-source>java:/MySqlDSNandu</jta-data-source> 
     <class>com.areatecnica.sigf.entities.AsignacionFamiliar</class>
     <class>com.areatecnica.sigf.entities.Banco</class>
     <class>com.areatecnica.sigf.entities.Boleto</class>
@@ -191,8 +191,10 @@
     <class>com.areatecnica.sigf.entities.TipoCargo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-      <property name="eclipselink.jdbc.native-sql" value="true"/>
-      <property name="eclipselink.logging.logger" value="JavaLogger"/>
+      <property name="eclipselink.weaving" value="true"/>
+      <property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
+      <property name="eclipselink.logging.thread" value="true"/>
+      <property name="eclipselink.jdbc.bind-parameters" value="true"/>
     </properties>
   </persistence-unit>
 </persistence>
