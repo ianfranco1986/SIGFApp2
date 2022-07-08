@@ -23,6 +23,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
+import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -74,12 +77,12 @@ public class JasperReportUtil {
 
         JasperPrint jp = JasperFillManager.fillReport(pathJasper, map, connection);
 
-        JRXlsExporter exporterXLS = new JRXlsExporter();
+        JRXlsxExporter exporterXLS = new JRXlsxExporter();
 
         exporterXLS.setExporterInput(new SimpleExporterInput(jp));
         exporterXLS.setExporterOutput(new SimpleOutputStreamExporterOutput(os));
 
-        SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+        SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
         configuration.setOnePagePerSheet(true);
         configuration.setDetectCellType(true);
         configuration.setCollapseRowSpan(false);
@@ -97,7 +100,7 @@ public class JasperReportUtil {
     public static StreamedContent getStreamContentFromOutputStream(ByteArrayOutputStream os, String contentType, String nameFile) throws Exception {
         StreamedContent file = null;
         InputStream is = new ByteArrayInputStream(os.toByteArray());
-//        file = new DefaultStreamedContent(is, contentType, nameFile);
+        file = new DefaultStreamedContent();
         return file;
     }
 

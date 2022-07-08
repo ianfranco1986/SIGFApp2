@@ -18,6 +18,8 @@ import java.util.List;
 public interface IProcesoRecaudacionDao<T> extends IGenericDAO<T> {
     
     List<ProcesoRecaudacion> findAllByCuenta(Cuenta cuenta);
+
+    List<ProcesoRecaudacion> findByNandu();
     
     ProcesoRecaudacion findById(int id);
     

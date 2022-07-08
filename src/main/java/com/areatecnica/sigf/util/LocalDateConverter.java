@@ -18,7 +18,7 @@ public class LocalDateConverter {
 
     private final ZoneId defaultZoneId = ZoneId.systemDefault();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM", new Locale("es", "PE"));
-    private final DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MMMM'/'yyyy", new Locale("es", "PE"));
+    private final DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MMMM' / 'yyyy", new Locale("es", "PE"));
 
     private final LocalDate date;
     private final Date toDate;

@@ -15,55 +15,143 @@
             <p:panel>
                 <h3>Registro de Movimientos</h3>
                 <p:staticMessage severity="info" summary="INFORMACIÓN" detail="Si el valor es igual 0, no se registrará el movimiento. Si el movimiento existe y cambia su valor a 0, este se eliminará" style="width: 100%"/>
-                <p:spacer/>
-                <div class="ui-fluid">
-                    <div class="p-field">
-                        <label for="desde">Liquidación</label>
-                        <p:datePicker id="month" view="month" value="#{registroAbonoController.date}"
-                                      pattern="MM/yyyy"
-                                      yearNavigator="true" yearRange="2022:2030" locale="es">
-                            <p:ajax event="valueChange" update=":ListAbonoForm, growl" listener="#{registroAbonoController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                        </p:datePicker>                    
-                    </div>
-                    <div class="p-field">
-                        <label for="tipo">Movimiento</label>
-                        <p:selectOneMenu id="tipo" value="#{registroAbonoController.tipoMovimiento}" >
-                            <f:selectItem itemLabel="Egreso" itemValue="0"/>
-                            <f:selectItem itemLabel="Ingreso" itemValue="1"/>
-                            <p:ajax event="valueChange" listener="#{registroAbonoController.loadMovimientos}" update=":ListAbonoForm, tipoMovimientos" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                        </p:selectOneMenu>
-                    </div>
-                    <div class="p-field">
-                        <label for="tipoMovimientos">Tipo</label>
-                        <p:selectOneMenu id="tipoMovimientos" value="#{registroAbonoController.tipoMovimientoHelper}" converter="omnifaces.SelectItemsConverter" >
-                            <f:selectItem itemLabel="Seleccionar"/>
-                            <f:selectItems value="#{registroAbonoController.tiposItems}"
-                                           var="tipos"
-                                           itemValue="#{tipos}"
-                                           itemLabel="#{tipos.tipoNombre}"
+                <div class="card ui-fluid">
+                    <div class="p-formgrid p-grid">
+                        <div class="p-field p-col-6">
+                            <label for="month">Liquidación</label>
+                            <p:datePicker id="month" view="month" value="#{registroAbonoController.date}"
+                                          pattern="MM/yyyy"
+                                          yearNavigator="true" yearRange="2022:2030" locale="es">
+                                <p:ajax event="valueChange" update=":ListAbonoForm, growl" listener="#{registroAbonoController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                            </p:datePicker>                    
+                        </div>
+                        <div class="p-field p-col-6">
+                            <label for="tipo">Movimiento</label>
+                            <p:selectOneMenu id="tipo" value="#{registroAbonoController.tipoMovimiento}" >
+                                <f:selectItem itemLabel="Egreso" itemValue="0"/>
+                                <f:selectItem itemLabel="Ingreso" itemValue="1"/>
+                                <p:ajax event="valueChange" listener="#{registroAbonoController.loadMovimientos}" update=":ListAbonoForm, tipoMovimientos" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field p-col-3">
+                            <label for="tipoMovimientos">Tipo</label>
+                            <p:selectOneMenu id="tipoMovimientos" value="#{registroAbonoController.tipoMovimientoHelper}" converter="omnifaces.SelectItemsConverter" >
+                                <f:selectItem itemLabel="Seleccionar"/>
+                                <f:selectItems value="#{registroAbonoController.tiposItems}"
+                                               var="tipos"
+                                               itemValue="#{tipos}"
+                                               itemLabel="#{tipos.tipoNombre}"
 
-                                           />
-                            <p:ajax event="valueChange" listener="#{registroAbonoController.load}" update=":ListAbonoForm" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                        </p:selectOneMenu>
-                    </div>
+                                               />
+                                <p:ajax event="valueChange" listener="#{registroAbonoController.handleTipoChange}" update="montoMovimiento, filtroUnidad, filtroTipo, filtroBus, filtroEmpresa"/>
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field p-col-3">
+                            <label>Descripción</label>
+                            <p:inputText value="#{registroAbonoController.descripcionAbono}">
+                            </p:inputText>
+                        </div>
+                        <div class="p-field p-col-3">
+                            <label>Monto</label>
+                            <p:inputNumber id="montoMovimiento" value="#{registroAbonoController.montoAbono}" minValue="0" >
+                                <p:ajax event="blur" update="ListAbonoForm" listener="#{registroAbonoController.setValorMonto}"/>
+                            </p:inputNumber>
+                        </div>
+                        <div class="p-field p-col-3">
+                            <label>Movimiento por Bus? </label>
+                            <p:selectBooleanButton onLabel="Si" offLabel="No"
+                                                   onIcon="pi pi-check" offIcon="pi pi-times" styleClass="ui-button-info"  value="#{registroAbonoController.movimientoxBus}">
+                            </p:selectBooleanButton>
+                        </div>
+                        <div class="p-field p-col-3">
+                            <label for="tipo">Filtrar por Unidad</label>
+                            <p:selectOneMenu id="filtroUnidad" 
+                                             value="#{registroAbonoController.selectedUnidadItems}" 
+                                             converter="omnifaces.SelectItemsConverter"
+                                             disabled="#{empty registroAbonoController.tipoMovimientoHelper}"
+                                             >
+                                <f:selectItem itemLabel="Unidad" noSelectionOption="true"/>
+                                <f:selectItems value="#{registroAbonoController.unidadItemsFilter}"
+                                               var="unidad"
+                                               itemValue="#{unidad}"
+                                               itemLabel="#{unidad.unidadNegocioFolio} #{unidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
+                                               />
+                                <p:ajax event="valueChange" listener="#{registroAbonoController.loadFiltroUnidad}" update="filtroTipo,filtroEmpresa, filtroBus, :growl" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field p-col-3">
+                            <label for="tipo">Filtrar por Tipo</label>
+                            <p:selectCheckboxMenu id="filtroTipo" 
+                                                  label="No" 
+                                                  value="#{registroAbonoController.selectedProcesoRecaudacionItems}" 
+                                                  disabled="#{empty registroAbonoController.tipoMovimientoHelper}"
+                                                  multiple="true" 
+                                                  converter="omnifaces.SelectItemsConverter" 
+                                                  filter="true" 
+                                                  filterMatchMode="contains" >
+                                <f:selectItems value="#{registroAbonoController.procesoRecaudacionItemsFilter}"
+                                               var="proceso"
+                                               itemValue="#{proceso}"
+                                               itemLabel="#{proceso.procesoRecaudacionNombre}"
+                                               />
+                                <p:ajax event="change" listener="#{registroAbonoController.loadFiltroProceso}" update=":ListAbonoForm, tipoMovimientos, :growl, filtroBus, filtroEmpresa" />
+                                <p:ajax event="itemUnselect" listener="#{registroAbonoController.loadFiltroProceso}" update=":growl, filtroBus, filtroEmpresa" />
+                            </p:selectCheckboxMenu>
+                        </div>
+                        <div class="p-field p-col-3">
+                            <label for="tipo">Filtrar por Empresa</label>
+                            <p:selectCheckboxMenu id="filtroEmpresa" 
+                                                  label="No" 
+                                                  value="#{registroAbonoController.selectedEmpresaItems}" 
+                                                  disabled="#{empty registroAbonoController.tipoMovimientoHelper}"
+                                                  multiple="true" 
+                                                  converter="omnifaces.SelectItemsConverter" 
+                                                  filter="true" 
+                                                  filterMatchMode="contains" 
+                                                  >
+                                <f:selectItems value="#{registroAbonoController.empresaItemsFilter}"
+                                               var="empresa"
+                                               itemValue="#{empresa}"
+                                               itemLabel="#{empresa.empresaNombre}"
+                                               />
+                                <p:ajax event="itemUnselect" listener="#{registroAbonoController.loadFiltroEmpresas}" update=":ListAbonoForm, tipoMovimientos, filtroBus" />
+                                <p:ajax event="change" listener="#{registroAbonoController.loadFiltroEmpresas}" update=":ListAbonoForm, tipoMovimientos, filtroBus" />
+                            </p:selectCheckboxMenu>
+                        </div>
+                        <div class="p-field p-col-3">
+                            <label for="tipo">Filtrar por Bus</label>
+                            <p:selectCheckboxMenu id="filtroBus" 
+                                                  label="No" 
+                                                  emptyLabel="No"
+                                                  value="#{registroAbonoController.selectedBusItems}" 
+                                                  disabled="#{empty registroAbonoController.tipoMovimientoHelper}"
+                                                  multiple="true" 
+                                                  converter="omnifaces.SelectItemsConverter" 
+                                                  filter="true" 
+                                                  filterMatchMode="contains" 
+                                                  >
+                                <f:selectItems value="#{registroAbonoController.busItemsFilter}"
+                                               var="bus"
+                                               itemValue="#{bus}"
+                                               itemLabel="#{bus.busNumero} - #{bus.busIdUnidadNegocio.unidadNegocioNumero}"
+                                               />
+                                <p:ajax event="itemUnselect" listener="#{registroAbonoController.loadMovimientos}" update=":ListAbonoForm, tipoMovimientos" />
+                                <p:ajax event="change" listener="#{registroAbonoController.loadMovimientos}" update=":ListAbonoForm, tipoMovimientos, growl" />
+                            </p:selectCheckboxMenu>
+                        </div>
+                        <p:commandButton value="Buscar/Generar Movimientos" icon="pi pi-search"  actionListener="#{registroAbonoController.load}" update=":ListAbonoForm, RegistroMinutoListForm, :growl" 
+                                         styleClass="ui-button" style="margin-right: .5rem" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" resetValues="true">
+                        </p:commandButton>
+                        <p:spacer height="10"/>
+                        <p:commandButton value="Reiniciar" icon="pi pi-raised"  actionListener="#{registroAbonoController.init}" update=":ListAbonoForm:cellAbonos, RegistroMinutoListForm, :growl" 
+                                         styleClass="ui-button-danger" style="margin-right: .5rem" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" resetValues="true">
+                        </p:commandButton>
+                        <div class="p-field">
+                            <label></label>
 
-                    <div class="p-field">
-                        <label>Descripción</label>
-                        <p:inputText value="#{registroAbonoController.descripcionAbono}">
-                            <p:ajax event="blur" update="ListAbonoForm" listener="#{registroAbonoController.setValorDescripcion}"/>
-                        </p:inputText>
+                        </div>
                     </div>
-                    <div class="p-field">
-                        <label>Monto</label>
-                        <p:inputNumber value="#{registroAbonoController.montoAbono}" minValue="0" >
-                            <p:ajax event="blur" update="ListAbonoForm" listener="#{registroAbonoController.setValorMonto}"/>
-                        </p:inputNumber>
-                    </div>
-
-
                 </div>
-
-
             </p:panel>
         </h:form>
         <p:spacer/>
@@ -72,22 +160,23 @@
                 <div class="card">
 
                     <h:form id="ListAbonoForm">
-                        <p:toolbar styleClass="p-mb-4">
+                        <p:toolbar id="toolbar" styleClass="p-mb-4">
                             <p:toolbarGroup>
-                                <p:commandButton value="Guardar" disabled="#{empty registroAbonoController.items}" icon="pi pi-save"  actionListener="#{registroAbonoController.save}" update="cellAbonos, growl" 
-                                                 styleClass="ui-button-info" style="margin-right: .5rem" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" resetValues="true">
+                                <p:commandButton value="Guardar" disabled="#{empty registroAbonoController.items}" icon="pi pi-save"  actionListener="#{registroAbonoController.save}" update="ListAbonoForm:toolbar, cellAbonos, growl" 
+                                                 styleClass="ui-button-danger" style="margin-right: .5rem" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" resetValues="true">
 
                                     <p:confirm header="Confirmación" message="¿Registrar los cambios?" icon="pi pi-exclamation-triangle" />
                                 </p:commandButton>
-
-
-
                             </p:toolbarGroup>
 
+                            <p:toolbarGroup id="total" align="center">
+                                <h2>Total: $ #{registroAbonoController.getFormatValue(registroAbonoController.totalItems)}</h2>
+                            </p:toolbarGroup>
+                            
                             <p:toolbarGroup align="right">
-                                <p:commandButton value="Exportar" disabled="#{empty registroAbonoController.items}" icon="pi pi-download" styleClass="ui-button-info" ajax="false">
-                                    <p:dataExporter type="xlsxstream" target="datalist" fileName="Movimientos"/>
-                                </p:commandButton>
+                                <!--<p:commandButton value="Exportar" disabled="#{empty registroAbonoController.items}" icon="pi pi-download" styleClass="ui-button-info" ajax="false">
+                                    <p:dataExporter type="xlsxstream" target="cellAbonos" fileName="Movimientos"/>
+                                </p:commandButton>-->
                             </p:toolbarGroup>
                         </p:toolbar>
                         <div class="panel-inner">
@@ -102,14 +191,26 @@
                                 lazy="false"
                                 rowIndexVar="rowIndex">
 
-                                <p:ajax event="cellEdit" listener="#{registroAbonoController.onCellEdit}" update=":growl"/>
+                                <p:ajax event="cellEdit" listener="#{registroAbonoController.onCellEdit}" update=":growl, ListAbonoForm:toolbar"/>
 
                                 <p:column headerText="#" width="20">
                                     <h:outputText value="#{rowIndex+1}"/>
                                 </p:column>
 
-                                <p:column headerText="Empresa" width="400">
+                                <p:column headerText="Empresa" width="380">
                                     <h:outputText value="#{abono.empresa.empresaNombre}"/>
+                                </p:column>
+
+                                <p:column headerText="SM" width="30">
+                                    <h:outputText value="#{abono.busProcesos.values().toArray()[0] eq null? '0':abono.busProcesos.values().toArray()[0]}"/>
+                                </p:column>
+
+                                <p:column headerText="FN" width="30">
+                                    <h:outputText value="#{abono.busProcesos.values().toArray()[1] eq null? '0':abono.busProcesos.values().toArray()[1]}"/>
+                                </p:column>
+
+                                <p:column headerText="PT" width="30">
+                                    <h:outputText value="#{abono.busProcesos.values().toArray()[2] eq null? '0':abono.busProcesos.values().toArray()[2]}"/>
                                 </p:column>
 
                                 <p:column headerText="Descripción" width="250">
@@ -124,7 +225,8 @@
                                             </h:outputText>
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:inputNumber value="#{abono.monto}" minValue="0" style="width:50%" label="Monto" symbol="$" />
+                                            <p:inputNumber value="#{abono.monto}" minValue="0" style="width:50%" label="Monto" symbol="$" >
+                                            </p:inputNumber>
                                         </f:facet>
                                     </p:cellEditor>
                                 </p:column>
@@ -132,6 +234,19 @@
                                 <p:column headerText="Estado" width="120">
                                     <span class="compra compra-#{empty abono.id? 'noregistrada':'registrada'}">#{empty abono.id? 'Por Registrar':'REGISTRADA'}</span>
                                 </p:column>
+
+                                <p:columns 
+                                    value="#{abono.busProcesos.keySet().toArray()}" 
+                                    var="key" 
+                                    columnIndexVar="col" 
+                                    style="text-align: center"
+                                    headerText="#{registroAbonoController.resultsHeader.get(col)}"
+                                    >
+                                    <p:outputLabel value="#{abono.busProcesos.get(key)}">                            
+                                    </p:outputLabel>
+                                </p:columns>
+
+
                             </p:dataTable>
                         </div>
                         <ui:include src="/WEB-INF/include/confirmation.xhtml"/>

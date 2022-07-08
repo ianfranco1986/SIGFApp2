@@ -6,24 +6,35 @@ package com.areatecnica.sigf.controller;
 
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.AbonoLiquidacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.BusDaoImpl;
 import com.areatecnica.sigf.dao.impl.CargoLiquidacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.EmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.LiquidacionEmpresaDaoImpl;
+import com.areatecnica.sigf.dao.impl.ProcesoRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.TipoAbonoDaoImpl;
 import com.areatecnica.sigf.dao.impl.TipoCargoDaoImpl;
+import com.areatecnica.sigf.dao.impl.UnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.AbonoLiquidacion;
+import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CargoLiquidacion;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.LiquidacionEmpresa;
+import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.entities.TipoAbono;
 import com.areatecnica.sigf.entities.TipoCargo;
+import com.areatecnica.sigf.entities.UnidadNegocio;
 import com.areatecnica.sigf.util.LocalDateConverter;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.primefaces.event.CellEditEvent;
 
@@ -52,8 +63,26 @@ public class RegistroAbonoController implements Serializable {
     private int numeroCuota;
     private int totalCuotas;
     private boolean cuotas;
+    private int totalItems = 0;
+
+    private List<String> resultsHeader;
+
+    private boolean movimientoxBus = Boolean.FALSE;
+
+    //Filtros
+    private List<UnidadNegocio> unidadItemsFilter;
+    private List<ProcesoRecaudacion> procesoRecaudacionItemsFilter;
+    private List<Empresa> empresaItemsFilter;
+    private List<Bus> busItemsFilter;
+    private UnidadNegocio selectedUnidadItems;
+    private List<ProcesoRecaudacion> selectedProcesoRecaudacionItems;
+    private List<Empresa> selectedEmpresaItems;
+    private List<Bus> selectedBusItems;
+    private Map<Empresa, Map<ProcesoRecaudacion, Integer>> busesFilter;
+    private int[] b;
 
     private String tipoMovimiento;
+    private NumberFormat nf = NumberFormat.getInstance();
 
     /**
      * Creates a new instance of RegistroAbonoController
@@ -65,8 +94,7 @@ public class RegistroAbonoController implements Serializable {
     @PostConstruct
     public void init() {
         this.setDate(LocalDate.now());
-        this.empresaItems = new EmpresaDaoImpl().findByNandu();
-
+        this.busesFilter = new HashMap<>();
         this.items = new ArrayList<>();
         this.tiposItems = new ArrayList<>();
 
@@ -81,6 +109,26 @@ public class RegistroAbonoController implements Serializable {
         this.descripcionAbono = "";
         this.montoAbono = 0;
         this.cuotas = Boolean.FALSE;
+
+        resetFilters();
+
+        this.resultsHeader = new ArrayList<>();
+
+        for (ProcesoRecaudacion p : this.procesoRecaudacionItemsFilter) {
+            this.resultsHeader.add(p.getProcesoRecaudacionNombre());
+        }
+    }
+
+    public void resetFilters() {
+        this.empresaItems = new EmpresaDaoImpl().findByNandu();
+        this.unidadItemsFilter = new UnidadNegocioDaoImpl().findNandu();
+        this.empresaItemsFilter = new ArrayList<>(empresaItems);
+        this.procesoRecaudacionItemsFilter = new ProcesoRecaudacionDaoImpl().findByNandu();
+        this.busItemsFilter = new BusDaoImpl().findAll();
+        this.selectedUnidadItems = null;
+        this.selectedBusItems = new ArrayList<>();
+        this.selectedProcesoRecaudacionItems = new ArrayList<>();
+        this.selectedEmpresaItems = new ArrayList<>();
     }
 
     public void loadMovimientos() {
@@ -103,9 +151,17 @@ public class RegistroAbonoController implements Serializable {
 
     }
 
-    public void load() {
+    public void handleTipoChange() {
+        if (this.tipoMovimiento.equals("0")) {
+            this.montoAbono = this.tipoMovimientoHelper.getTipoCargo().getTipoCargoMontoDefecto();
+        } else {
+            this.montoAbono = this.tipoMovimientoHelper.getTipoAbono().getTipoAbonoMontoDefecto();
+        }
+    }
 
+    public void load() {
         if (this.tipoMovimientoHelper != null) {
+            this.totalItems = 0;
             if (this.tipoMovimiento.equals("0")) {
                 this.items = new ArrayList<>();
                 for (Empresa e : this.empresaItems) {
@@ -126,11 +182,19 @@ public class RegistroAbonoController implements Serializable {
                         al.setCargoLiquidacionMonto(tipoMovimientoHelper.tipoCargo.getTipoCargoMontoDefecto());
                     }
 
-                    this.items.add(new MovimientosHelper(al));
+                    MovimientosHelper mv = new MovimientosHelper(al);
+                    mv.setBusProcesos(getBusesProcesos(e));
+
+                    if (this.movimientoxBus) {
+                        mv.monto = this.montoAbono * mv.totalBuses;
+                    } else {
+                        mv.monto = this.montoAbono;
+                    }
+                    totalItems += mv.monto;
+                    this.items.add(mv);
                 }
 
-                this.montoAbono = this.tipoMovimientoHelper.getTipoCargo().getTipoCargoMontoDefecto();
-
+//                this.montoAbono = this.tipoMovimientoHelper.getTipoCargo().getTipoCargoMontoDefecto();
             } else {
                 this.items = new ArrayList<>();
                 for (Empresa e : this.empresaItems) {
@@ -146,19 +210,36 @@ public class RegistroAbonoController implements Serializable {
                             l.setLiquidacionEmpresaFechaPago(this.dc.getLastDayOfMonth());
                             l.setLiquidacionEmpresaIdEmpresa(e);
                         }
-                        
+
                         al = new AbonoLiquidacion(l);
                         al.setAbonoLiquidacionTipoId(tipoMovimientoHelper.tipoAbono);
                         al.setAbonoLiquidacionMonto(tipoMovimientoHelper.tipoAbono.getTipoAbonoMontoDefecto());
                     }
 
-                    this.items.add(new MovimientosHelper(al));
+                    MovimientosHelper mv = new MovimientosHelper(al);
+                    mv.setBusProcesos(getBusesProcesos(e));
+
+                    if (this.movimientoxBus) {
+                        mv.monto = this.montoAbono * mv.totalBuses;
+                    } else {
+                        mv.monto = this.montoAbono;
+                    }
+
+                    totalItems += mv.monto;
+                    this.items.add(mv);
                 }
 
-                this.montoAbono = this.tipoMovimientoHelper.getTipoAbono().getTipoAbonoMontoDefecto();
+//                this.montoAbono = this.tipoMovimientoHelper.getTipoAbono().getTipoAbonoMontoDefecto();
             }
         }
+    }
 
+    public LinkedHashMap getBusesProcesos(Empresa empresa) {
+        LinkedHashMap<ProcesoRecaudacion, Long> l = new LinkedHashMap();
+        for (ProcesoRecaudacion p : this.procesoRecaudacionItemsFilter) {
+            l.put(p, new BusDaoImpl().getBusesByEmpresaProceso(empresa, p));
+        }
+        return l;
     }
 
     public void onCellEdit(CellEditEvent event) {
@@ -173,15 +254,14 @@ public class RegistroAbonoController implements Serializable {
                 this.items.get(event.getRowIndex()).getAbono().setAbonoLiquidacionMonto(aux);
             }
 
-//            this.abonoLiquidacion = this.items.get(event.getRowIndex());
-//            AbonoLiquidacion c = new AbonoLiquidacionDaoImpl().update(this.selectedAbono);
-//
-//            if (c != null) {
-//                JsfUtil.addSuccessMessage("Se editó el valor del abono #" + c.getAbonoLiquidacionId());
-//                this.totalAbonos = this.totalAbonos - (Integer) oldValue;
-//                this.totalAbonos += c.getAbonoLiquidacionMonto();
-//                setSaldo();
-//            }
+            System.err.println("inicio TOTAL: " + this.totalItems);
+
+            this.totalItems = this.totalItems - (int) oldValue;
+            System.err.println("actualizado TOTAL: " + this.totalItems);
+
+            this.totalItems = this.totalItems + (int) newValue;
+
+            System.err.println("NUEVO TOTAL: " + this.totalItems);
         }
     }
 
@@ -203,9 +283,9 @@ public class RegistroAbonoController implements Serializable {
                 }
 
                 this.items = new ArrayList<>();
-                this.montoAbono = 0;
-                this.descripcionAbono = "";
-                this.tipoMovimientoHelper = new TipoMovimientosHelper();
+//                this.montoAbono = 0;
+//                this.descripcionAbono = "";
+//                this.tipoMovimientoHelper = new TipoMovimientosHelper();
                 JsfUtil.addSuccessMessage("Se han registrado los cambios");
 
             } else {//abonos
@@ -223,13 +303,15 @@ public class RegistroAbonoController implements Serializable {
                 }
 
                 this.items = new ArrayList<>();
-                this.montoAbono = 0;
-                this.descripcionAbono = "";
-                this.tipoMovimientoHelper = new TipoMovimientosHelper();
+//                this.montoAbono = 0;
+//                this.descripcionAbono = "";
+//                this.tipoMovimientoHelper = new TipoMovimientosHelper();
                 JsfUtil.addSuccessMessage("Se han registrado los cambios");
 
             }
         }
+        
+        this.totalItems = 0; 
     }
 
     public void emptyDescripcion() {
@@ -278,6 +360,160 @@ public class RegistroAbonoController implements Serializable {
         }
     }
 
+    public void movimientoxBus() {
+        if (!this.items.isEmpty()) {
+            if (this.movimientoxBus) {
+                for (MovimientosHelper m : this.items) {
+                    m.setMonto(m.totalBuses * this.montoAbono);
+                }
+            } else {
+                for (MovimientosHelper m : this.items) {
+                    m.setMonto(this.montoAbono);
+                }
+            }
+        }
+    }
+
+    public void loadFiltroUnidad() {
+        if (this.selectedUnidadItems != null) {
+            this.selectedEmpresaItems = new ArrayList<>();
+            this.selectedProcesoRecaudacionItems = new ArrayList<>();
+            this.selectedBusItems = new ArrayList<>();
+            this.busItemsFilter = getBuses(selectedUnidadItems);
+            this.procesoRecaudacionItemsFilter = getProcesos(busItemsFilter);
+            this.empresaItemsFilter = getEmpresas(busItemsFilter);
+            this.empresaItems = this.empresaItemsFilter;
+        } else {
+            resetFilters();
+        }
+
+    }
+
+    public void loadFiltroProceso() {
+        if (!this.selectedProcesoRecaudacionItems.isEmpty()) {
+            this.selectedEmpresaItems = new ArrayList<>();
+            this.selectedBusItems = new ArrayList<>();
+            this.busItemsFilter = new ArrayList<>();
+            for (ProcesoRecaudacion p : this.selectedProcesoRecaudacionItems) {
+
+                this.busItemsFilter.addAll(new BusDaoImpl().findByProceso(p));
+            }
+            this.empresaItemsFilter = getEmpresas(busItemsFilter);
+            this.empresaItems = this.empresaItemsFilter;
+
+        } else {
+            loadFiltroUnidad();
+        }
+    }
+
+    public void loadFiltroEmpresas() {
+        if (!this.selectedEmpresaItems.isEmpty()) {
+            this.selectedBusItems = new ArrayList<>();
+            this.busItemsFilter = new ArrayList<>();
+            this.empresaItems = this.selectedEmpresaItems;
+            for (Empresa e : this.selectedEmpresaItems) {
+                if (this.selectedProcesoRecaudacionItems.isEmpty()) {
+                    this.busItemsFilter.addAll(new BusDaoImpl().findByEmpresa(e));
+                } else {
+                    for (ProcesoRecaudacion p : this.selectedProcesoRecaudacionItems) {
+                        this.busItemsFilter.addAll(new BusDaoImpl().findByEmpresaProceso(e, p));
+                    }
+                }
+            }
+        } else {
+            if (!this.selectedProcesoRecaudacionItems.isEmpty()) {
+                loadFiltroProceso();
+            } else {
+                loadFiltroUnidad();
+            }
+        }
+    }
+
+    public List<Bus> getBuses(UnidadNegocio unidad) {
+        return new BusDaoImpl().findByUnidad(unidad);
+    }
+
+    public List<Bus> getBuses(ProcesoRecaudacion proceso) {
+        return new BusDaoImpl().findByProceso(proceso);
+    }
+
+    public List<ProcesoRecaudacion> getProcesos(List<Bus> buses) {
+        Map<Integer, ProcesoRecaudacion> p = new HashMap();
+        for (Bus b : buses) {
+            if (b.getBusIdEmpresa().getEmpresaId() > 1) {
+                p.put(b.getBusIdProcesoRecaudacion().getProcesoRecaudacionId(), b.getBusIdProcesoRecaudacion());
+            }
+        }
+        return new ArrayList<>(p.values());
+    }
+
+    public List<Empresa> getEmpresas(List<Bus> buses) {
+        Map<Integer, Empresa> e = new HashMap();
+        for (Bus b : buses) {
+            e.put(b.getBusIdEmpresa().getEmpresaId(), b.getBusIdEmpresa());
+        }
+
+        e.remove(1);
+
+        List<Empresa> aux = new ArrayList<>(e.values());
+        aux.sort(Comparator.comparing(Empresa::getEmpresaNombre));
+        return aux;
+    }
+
+//    public void loadFiltroUnidad() {
+//        if (this.selectedUnidadItems != null) {
+//
+//            this.items = new ArrayList<>();
+//            this.empresaItems = new ArrayList<>();
+//
+//            Map empresas = new HashMap();
+//
+//            this.busItemsFilter = new BusDaoImpl().findByUnidad(selectedUnidadItems);
+//
+//            for (Bus b : this.busItemsFilter) {
+//                if (b.getBusIdEmpresa().getEmpresaActiva() && b.getBusActivo()) {
+//                    empresas.put(b.getBusIdEmpresa().getEmpresaId(), b.getBusIdEmpresa());
+//                }
+//            }
+//
+//            this.empresaItems = new ArrayList<>(empresas.values());
+//
+//            empresaItems.sort(Comparator.comparing(Empresa::getEmpresaNombre));
+//            this.empresaItemsFilter = empresaItems;
+//            load();
+//
+//        } else {
+//            JsfUtil.addErrorMessage("Sin filtro de Unidad");
+//            init();
+//        }
+//    }
+//    public void loadFiltroProceso() {
+//        if (!this.selectedProcesoRecaudacionItems.isEmpty()) {
+//            List<Bus> aux = new ArrayList<>();
+//            for (ProcesoRecaudacion p : this.selectedProcesoRecaudacionItems) {
+//                JsfUtil.addErrorMessage("Seleccionado algún proceso: " + this.selectedProcesoRecaudacionItems);
+//                aux.addAll(p.getBusList());
+//            }
+//
+//            Map empresas = new HashMap();
+//
+//            this.busItemsFilter = aux;
+//
+//            for (Bus b : this.busItemsFilter) {
+//                if (b.getBusIdEmpresa().getEmpresaActiva() && b.getBusActivo()) {
+//                    empresas.put(b.getBusIdEmpresa().getEmpresaId(), b.getBusIdEmpresa());
+//                }
+//            }
+//
+//            this.empresaItems = new ArrayList<>(empresas.values());
+//
+//            empresaItems.sort(Comparator.comparing(Empresa::getEmpresaNombre));
+//            this.empresaItemsFilter = empresaItems;
+//            load();
+//        } else {
+//            init();
+//        }
+//    }
     public MovimientosHelper getSelected() {
         return selected;
     }
@@ -293,6 +529,22 @@ public class RegistroAbonoController implements Serializable {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public List<String> getResultsHeader() {
+        return resultsHeader;
+    }
+
+    public void setResultsHeader(List<String> resultsHeader) {
+        this.resultsHeader = resultsHeader;
+    }
+
+    public boolean isMovimientoxBus() {
+        return movimientoxBus;
+    }
+
+    public void setMovimientoxBus(boolean movimientoxBus) {
+        this.movimientoxBus = movimientoxBus;
     }
 
     public LiquidacionEmpresa getLiquidacion() {
@@ -333,6 +585,86 @@ public class RegistroAbonoController implements Serializable {
 
     public void setItems(List<MovimientosHelper> items) {
         this.items = items;
+    }
+
+    public List<TipoAbono> getTipoAbonoItems() {
+        return tipoAbonoItems;
+    }
+
+    public void setTipoAbonoItems(List<TipoAbono> tipoAbonoItems) {
+        this.tipoAbonoItems = tipoAbonoItems;
+    }
+
+    public List<TipoCargo> getTipoCargoItems() {
+        return tipoCargoItems;
+    }
+
+    public void setTipoCargoItems(List<TipoCargo> tipoCargoItems) {
+        this.tipoCargoItems = tipoCargoItems;
+    }
+
+    public List<UnidadNegocio> getUnidadItemsFilter() {
+        return unidadItemsFilter;
+    }
+
+    public void setUnidadItemsFilter(List<UnidadNegocio> unidadItemsFilter) {
+        this.unidadItemsFilter = unidadItemsFilter;
+    }
+
+    public List<ProcesoRecaudacion> getProcesoRecaudacionItemsFilter() {
+        return procesoRecaudacionItemsFilter;
+    }
+
+    public void setProcesoRecaudacionItemsFilter(List<ProcesoRecaudacion> procesoRecaudacionItemsFilter) {
+        this.procesoRecaudacionItemsFilter = procesoRecaudacionItemsFilter;
+    }
+
+    public List<Empresa> getEmpresaItemsFilter() {
+        return empresaItemsFilter;
+    }
+
+    public void setEmpresaItemsFilter(List<Empresa> empresaItemsFilter) {
+        this.empresaItemsFilter = empresaItemsFilter;
+    }
+
+    public List<Bus> getBusItemsFilter() {
+        return busItemsFilter;
+    }
+
+    public void setBusItemsFilter(List<Bus> busItemsFilter) {
+        this.busItemsFilter = busItemsFilter;
+    }
+
+    public UnidadNegocio getSelectedUnidadItems() {
+        return selectedUnidadItems;
+    }
+
+    public void setSelectedUnidadItems(UnidadNegocio selectedUnidadItems) {
+        this.selectedUnidadItems = selectedUnidadItems;
+    }
+
+    public List<ProcesoRecaudacion> getSelectedProcesoRecaudacionItems() {
+        return selectedProcesoRecaudacionItems;
+    }
+
+    public void setSelectedProcesoRecaudacionItems(List<ProcesoRecaudacion> selectedProcesoRecaudacionItems) {
+        this.selectedProcesoRecaudacionItems = selectedProcesoRecaudacionItems;
+    }
+
+    public List<Empresa> getSelectedEmpresaItems() {
+        return selectedEmpresaItems;
+    }
+
+    public void setSelectedEmpresaItems(List<Empresa> selectedEmpresaItems) {
+        this.selectedEmpresaItems = selectedEmpresaItems;
+    }
+
+    public List<Bus> getSelectedBusItems() {
+        return selectedBusItems;
+    }
+
+    public void setSelectedBusItems(List<Bus> selectedBusItems) {
+        this.selectedBusItems = selectedBusItems;
     }
 
     public List<Empresa> getEmpresaItems() {
@@ -399,6 +731,18 @@ public class RegistroAbonoController implements Serializable {
         return tipoMovimiento;
     }
 
+    public int getTotalItems() {
+        return totalItems;
+    }
+
+    public void setTotalItems(int totalItems) {
+        this.totalItems = totalItems;
+    }
+
+    public String getFormatValue(int val) {
+        return nf.format(val);
+    }
+
     public class MovimientosHelper {
 
         private Integer id;
@@ -409,6 +753,10 @@ public class RegistroAbonoController implements Serializable {
         private boolean tipo;
         private String nombre;
         private String descripcion;
+        private boolean solymar;
+        private boolean fenur;
+        private LinkedHashMap<ProcesoRecaudacion, Long> busProcesos;
+        private int totalBuses = 0;
 
         public MovimientosHelper() {
         }
@@ -427,6 +775,7 @@ public class RegistroAbonoController implements Serializable {
             this.nombre = abono.getAbonoLiquidacionTipoId().getTipoAbonoNombre();
             this.descripcion = abono.getAbonoLiquidacionDescripcion();
             this.monto = abono.getAbonoLiquidacionMonto();
+
         }
 
         public MovimientosHelper(CargoLiquidacion cargo) {
@@ -437,6 +786,9 @@ public class RegistroAbonoController implements Serializable {
             this.nombre = cargo.getCargoLiquidacionCargoId().getTipoCargoNombre();
             this.descripcion = cargo.getCargoLiquidacionDescripcion();
             this.monto = cargo.getCargoLiquidacionMonto();
+        }
+
+        public void load() {
         }
 
         public Integer getId() {
@@ -503,6 +855,26 @@ public class RegistroAbonoController implements Serializable {
             return empresa;
         }
 
+        public void setTotalBuses(int totalBuses) {
+            this.totalBuses = totalBuses;
+        }
+
+        public int getTotalBuses() {
+            return totalBuses;
+        }
+
+        public void setBusProcesos(LinkedHashMap<ProcesoRecaudacion, Long> busProcesos) {
+            this.busProcesos = busProcesos;
+
+            for (Long i : busProcesos.values()) {
+                this.totalBuses += i;
+            }
+        }
+
+        public LinkedHashMap getBusProcesos() {
+            return busProcesos;
+        }
+
     }
 
     public class TipoMovimientosHelper {
@@ -511,6 +883,7 @@ public class RegistroAbonoController implements Serializable {
         private TipoAbono tipoAbono;
         private TipoCargo tipoCargo;
         private String tipoNombre;
+
         private boolean tipo;
 
         public TipoMovimientosHelper(int id, TipoAbono tipoAbono, TipoCargo tipoCargo, String tipoNombre, boolean tipo) {

@@ -32,7 +32,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @EntityListeners(AuditListener.class)
-@Table(name = "compra", catalog = "sigfdb", schema = "")
+@Table(name = "compra")
 @NamedQueries({
     @NamedQuery(name = "Compra.findAll", query = "SELECT c FROM Compra c"),
     @NamedQuery(name = "Compra.findByCompraId", query = "SELECT c FROM Compra c WHERE c.compraId = :compraId"),

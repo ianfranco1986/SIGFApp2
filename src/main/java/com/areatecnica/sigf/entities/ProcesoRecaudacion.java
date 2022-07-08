@@ -24,6 +24,7 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = "ProcesoRecaudacion.findAll", query = "SELECT p FROM ProcesoRecaudacion p"),
     @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionId", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionId = :procesoRecaudacionId"),
+    @NamedQuery(name = "ProcesoRecaudacion.findByNandu", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionId IN (2, 3, 7) "),
     @NamedQuery(name = "ProcesoRecaudacion.findByCuenta", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionIdCuenta = :idCuenta"),
     @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionNombre", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionNombre = :procesoRecaudacionNombre"),
     @NamedQuery(name = "ProcesoRecaudacion.findByProcesoRecaudacionTieneCuenta", query = "SELECT p FROM ProcesoRecaudacion p WHERE p.procesoRecaudacionTieneCuenta = :procesoRecaudacionTieneCuenta"),

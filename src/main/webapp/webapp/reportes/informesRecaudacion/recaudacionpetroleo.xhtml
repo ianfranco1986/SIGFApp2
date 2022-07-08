@@ -27,6 +27,8 @@
                 <p:outputLabel value=""/>
                 <h:commandLink value="Generar Reporte" 
                                actionListener="#{reportController.downloadFile(reportControllerPetroleoCajaFecha.informe, reportControllerPetroleoCajaFecha.map)}" target="blank"  styleClass="btn btn-primary" />
+                <h:commandLink value="Descargar *.XLS" 
+                               actionListener="#{reportController.downloadFileXls(reportControllerPetroleoCajaFecha.informe, reportControllerPetroleoCajaFecha.map)}" target="blank"  styleClass="btn btn-primary" />
 
             </p:panelGrid>
             <div class="column-center">

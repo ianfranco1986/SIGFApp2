@@ -37,6 +37,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
     private List<String> resultsTotals;
     private int totalRecaudacion;
     private RecaudacionGuiaDTO selectedItem;
+    private RecaudacionBoleto selectedRecaudacionBoleto;
 
     private List<Bus> busItems;
     private List<Trabajador> trabajadorItems;
@@ -119,6 +120,12 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                             this.guiasAnuladas++;
                         }
 
+                        if (!g.getRecaudacionBoletoList().isEmpty()) {
+                            for (RecaudacionBoleto rr : g.getRecaudacionBoletoList()) {
+                                System.err.println("VALOR DEL BOLETo:" + rr.getRecaudacionBoletoIdVentaBoleto().getVentaBoletoFolioRecaudacion());
+                            }
+                        }
+
                         this.totalCovid = this.totalCovid + h.getCovid();
                         this.totalImposiciones = this.totalImposiciones + h.getImposiciones();
                         this.totalFam = this.totalFam + h.getFam();
@@ -136,12 +143,10 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 //                                }
 //                            }
 //                        }
-
                     }
                 }
 
 //                boletos.forEach((k, v) -> this.cadenaBoletos = this.cadenaBoletos + k + ":" + v + " ");
-
                 this.model = new RecaudacionDataModel(this.itemsRecaudacion);
 
                 JsfUtil.addSuccessMessage("Se han encontrado " + this.itemsRecaudacion.size() + " guías");
@@ -169,12 +174,33 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
         }
     }
 
+    public void removerBoleto() {
+        if (this.selectedRecaudacionBoleto != null) {
+            if (this.selectedItem.getRecaudacion().getRecaudacionBoletoList().contains(this.selectedRecaudacionBoleto)) {
+                boolean flag = this.selectedItem.getRecaudacion().getRecaudacionBoletoList().remove(this.selectedRecaudacionBoleto);
+                if (flag) {
+                    this.selectedItem.setBoletos(this.selectedItem.getBoletos() - this.selectedRecaudacionBoleto.getRecaudacionBoletoMonto());
+                }
+            } else {
+                JsfUtil.addErrorMessage("Ha ocurrido un error al remover el boleto");
+            }
+        }
+    }
+
     public List<RecaudacionGuiaDTO> getSelectedItems() {
         return selectedItems;
     }
 
     public void setSelectedItems(List<RecaudacionGuiaDTO> selectedItems) {
         this.selectedItems = selectedItems;
+    }
+
+    public RecaudacionBoleto getSelectedRecaudacionBoleto() {
+        return selectedRecaudacionBoleto;
+    }
+
+    public void setSelectedRecaudacionBoleto(RecaudacionBoleto selectedRecaudacionBoleto) {
+        this.selectedRecaudacionBoleto = selectedRecaudacionBoleto;
     }
 
     public void setBoletos(Map boletos) {
@@ -290,11 +316,16 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
             }
 
             this.totalAdministracion = this.totalAdministracion - selectedItem.getAdministracion();
-            this.totalBoletos = this.totalBoletos - selectedItem.getBoletos();
+
             this.totalImposiciones = this.totalImposiciones - selectedItem.getImposiciones();
             this.totalFam = this.totalFam - selectedItem.getFam();
             this.totalVarios = this.totalVarios - selectedItem.getVarios();
             this.totalCovid = this.totalCovid - selectedItem.getCovid();
+
+            for (RecaudacionBoleto rb : selectedItem.getRecaudacion().getRecaudacionBoletoList()) {
+                this.totalBoletos = this.totalBoletos - selectedItem.getBoletos();
+                rb.getRecaudacionBoletoIdRecaudacion().getRecaudacionBoletoList().remove(rb);
+            }
 
             selectedItem.setAdministracion(0);
             selectedItem.setBoletos(0);
@@ -306,8 +337,8 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
             selectedItem.setTotal(0);
 
-            Recaudacion rr = new RecaudacionDaoImpl().update(g);
-            g.setRecaudacionTotal(0);
+            Recaudacion rr = new RecaudacionDaoImpl().update(selectedItem.getRecaudacion());
+
             if (rr != null) {
                 JsfUtil.addSuccessMessage("Se ha cancelado la recaudacion #" + rr.getRecaudacionId());
             } else {
@@ -436,11 +467,16 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                     }
 
                     this.totalAdministracion = this.totalAdministracion - r.getAdministracion();
-                    this.totalBoletos = this.totalBoletos - r.getBoletos();
+
                     this.totalImposiciones = this.totalImposiciones - r.getImposiciones();
                     this.totalFam = this.totalFam - r.getFam();
                     this.totalVarios = this.totalVarios - r.getVarios();
                     this.totalCovid = this.totalCovid - r.getCovid();
+
+                    for (RecaudacionBoleto rb : r.getRecaudacion().getRecaudacionBoletoList()) {
+                        this.totalBoletos = this.totalBoletos - r.getBoletos();
+                        rb.getRecaudacionBoletoIdRecaudacion().getRecaudacionBoletoList().remove(rb);
+                    }
 
                     r.setAdministracion(0);
                     r.setBoletos(0);
@@ -453,7 +489,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                     r.setTotal(0);
 
                     Recaudacion rr = new RecaudacionDaoImpl().update(r.getRecaudacion());
-                    r.setTotal(0);
+
                     JsfUtil.addSuccessMessage("Se ha cancelado la recaudacion #" + rr.getRecaudacionId());
                 } else {
                     JsfUtil.addWarningMessage("La recaudacion # " + r.getRecaudacion().getRecaudacionId() + " ya se encuentra anulada");
@@ -461,6 +497,32 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
             }
             this.selectedItems = new ArrayList<>();
         }
+    }
+
+    private Recaudacion del(RecaudacionGuiaDTO r) {
+        this.totalAdministracion = this.totalAdministracion - r.getAdministracion();
+
+        this.totalImposiciones = this.totalImposiciones - r.getImposiciones();
+        this.totalFam = this.totalFam - r.getFam();
+        this.totalVarios = this.totalVarios - r.getVarios();
+        this.totalCovid = this.totalCovid - r.getCovid();
+
+        for (RecaudacionBoleto rb : r.getRecaudacion().getRecaudacionBoletoList()) {
+            this.totalBoletos = this.totalBoletos - r.getBoletos();
+            rb.getRecaudacionBoletoIdRecaudacion().getRecaudacionBoletoList().remove(rb);
+        }
+
+        r.setAdministracion(0);
+        r.setBoletos(0);
+        r.setImposiciones(0);
+        r.setCovid(0);
+        r.setFam(0);
+        r.setVarios(0);
+        this.totalRecaudacion = this.totalRecaudacion - r.getTotal();
+
+        r.setTotal(0);
+
+        return r.getRecaudacion();
     }
 
     /**

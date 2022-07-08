@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -10,7 +11,7 @@
         <p:dialog id="RecaudacionEditDialog" widgetVar="RecaudacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Edición Recaudación" closeOnEscape="true">
 
             <h:form id="RecaudacionEditForm" onkeypress="return event.keyCode != 13">
-                <div class="p-grid nested-grid" style="width: 30vw;">
+                <div class="p-grid nested-grid" style="width: 35vw;">
                     <div class="p-col-4" >
                         <div class="p-text-center"><h3>Folio</h3></div>
                         <div class="p-text-center"><h1>#{recaudacionGuiaController.selectedItem.recaudacion.recaudacionId}</h1></div>
@@ -40,7 +41,7 @@
                     <p:separator/>
                     <div class="card" style="width: 100%;">
                         <p:separator/>
-                        <p:tabView>
+                        <p:tabView id="tab">
                             <p:tab title="Detalle Recaudación">
                                 <div class="ui-fluid">
                                     <div class="p-field p-grid">
@@ -55,18 +56,80 @@
                                         <label for="imposiciones" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Impos.</label>
                                         <div class="p-col-12 p-md-10"><p:inputNumber id="imposiciones" type="text" value="#{recaudacionGuiaController.selectedItem.imposiciones}" minValue="0" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" /></div>
                                     </div>
-                                    <div class="p-field p-grid">
-                                        <label for="boletos" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Boletos</label>
-                                        <div class="p-col-12 p-md-10"><p:inputNumber id="boletos" type="text" value="#{recaudacionGuiaController.selectedItem.boletos}" minValue="0" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" /></div>
-                                    </div>
                                 </div>
                             </p:tab>
-                            <p:tab title="Compras de Boletos" disabled="#{empty recaudacionGuiaController.selected.recaudacionGuiaIdRecaudacion.recaudacionBoletoList}">
+
+
+                            <p:tab title="Compras de Boletos (#{recaudacionGuiaController.selectedItem.recaudacion.recaudacionBoletoList.size()})"  disabled="#{empty recaudacionGuiaController.selectedItem.recaudacion.recaudacionBoletoList}">
                                 <p class="p-m-0">
-                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                                    illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                                    odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                                    <p:dataTable id="datalist"
+                                                 scrollHeight="500" 
+                                                 scrollable="false"                         
+                                                 value="#{recaudacionGuiaController.selectedItem.recaudacion.recaudacionBoletoList}"
+                                                 selection="#{recaudacionGuiaController.selectedRecaudacionBoleto}"
+                                                 widgetVar="datalist"
+                                                 selectionMode="single"
+                                                 rowKey="#{item.recaudacionBoletoId}"
+                                                 var="item"
+                                                 lazy="true" 
+                                                 rowIndexVar="rowIndex"
+                                                 emptyMessage="No se han encontrado registros"  
+                                                 >
+
+                                        <p:ajax event="rowSelect" update=":RecaudacionEditForm:tab:deleteBoleto"/>
+
+                                        <p:column  width="30">
+                                            <f:facet name="header">
+                                                <h:outputText value="#"/>
+                                            </f:facet>
+                                            <h:outputText value="#{rowIndex+1}"/>
+                                        </p:column>
+
+
+                                        <p:column sortBy="#{item.recaudacionBoletoIdVentaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" width="100">
+                                            <f:facet name="header">
+                                                <h:outputText value="Tipo"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.recaudacionBoletoIdVentaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" >
+                                                <f:convertNumber />
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column sortBy="#{item.recaudacionBoletoIdVentaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" width="100">
+                                            <f:facet name="header">
+                                                <h:outputText value="Serie"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.recaudacionBoletoIdVentaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaSerie}">
+                                                <f:convertNumber />
+                                            </h:outputText>
+
+                                        </p:column>
+
+
+                                        <p:column sortBy="#{item.recaudacionBoletoIdVentaBoleto.ventaBoletoValor}" footerText="#{ventaBoletoController.getFormatValue(ventaBoletoController.totalBoletos)}" width="70">
+                                            <f:facet name="header">
+                                                <h:outputText value="Monto"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.recaudacionBoletoIdVentaBoleto.ventaBoletoValor}">
+                                                <f:convertNumber />
+                                            </h:outputText>
+                                        </p:column>
+
+                                    </p:dataTable>
+
                                 </p>
+                                <div class="p-text-left">
+                                    <p:commandButton 
+                                        id="deleteBoleto"
+                                        disabled="#{empty recaudacionGuiaController.selectedRecaudacionBoleto}"
+                                        actionListener="#{recaudacionGuiaController.removerBoleto}" 
+                                        class="ui-button-danger rounded-button"
+                                        icon="pi pi-trash" 
+                                        update="datalist,:growl"                     
+                                        >
+
+                                    </p:commandButton>
+                                </div>
                             </p:tab>
 
                         </p:tabView>

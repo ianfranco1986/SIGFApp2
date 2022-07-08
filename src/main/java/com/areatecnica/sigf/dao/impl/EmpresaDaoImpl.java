@@ -8,9 +8,11 @@ package com.areatecnica.sigf.dao.impl;
 import com.areatecnica.sigf.dao.IEmpresaDao;
 import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.Empresa;
+import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 
 import javax.persistence.NoResultException;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -48,5 +50,7 @@ public class EmpresaDaoImpl extends GenericDAOImpl<Empresa> implements IEmpresaD
             return null;
         }
     }
+
+    
 
 }

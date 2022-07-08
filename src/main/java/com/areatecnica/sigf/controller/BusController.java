@@ -49,6 +49,13 @@ public class BusController extends AbstractController<Bus> {
         return this.selected;
     }
 
+    public Bus prepareCreate(ActionEvent event) {
+        
+        this.selected = new Bus();
+        
+        return this.selected;
+    }
+
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
@@ -104,6 +111,7 @@ public class BusController extends AbstractController<Bus> {
             Bus bus = new BusDaoImpl().create(this.selected);
             if (bus != null) {
                 JsfUtil.addSuccessMessage("Se ha registrado el bus");
+                this.items.add(bus);
             } else {
                 JsfUtil.addErrorMessage("Error al registrar los cambios");
             }

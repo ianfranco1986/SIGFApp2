@@ -47,7 +47,6 @@ public class CargoLiquidacion extends BaseEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "cargo_liquidacion_monto")
     private int cargoLiquidacionMonto;
-    @Basic(optional = false)
     @Column(name = "cargo_liquidacion_descripcion")
     private String cargoLiquidacionDescripcion;
     @JoinColumn(name = "cargo_liquidacion_liquidacion_empresa_id", referencedColumnName = "liquidacion_empresa_id")

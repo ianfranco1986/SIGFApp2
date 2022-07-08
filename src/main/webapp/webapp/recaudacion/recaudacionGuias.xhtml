@@ -88,7 +88,6 @@
 
                     <p:dataTable id="datalist"                   
                                  value="#{recaudacionGuiaController.itemsRecaudacion}"
-                                 lazy="false"
                                  rowKey="#{item.id}"
                                  var="item"
                                  selection="#{recaudacionGuiaController.selectedItems}"
@@ -155,7 +154,7 @@
                             <h:outputText value="#{item.guia.guiaIdTrabajador.trabajadorCodigo}"/>
                         </p:column>
 
-                        <p:column sortBy="#{item.administracion}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalAdministracion)}" >
+                        <p:column sortBy="#{item.administracion}" style="font-weight: 700; text-align: center;" footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalAdministracion)}" >
                             <f:facet name="header">
                                 <h:outputText value="Admin."/>
                             </f:facet>
@@ -171,7 +170,7 @@
 
                         </p:column>
 
-                        <p:column sortBy="#{item.covid}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalCovid)}">
+                        <p:column sortBy="#{item.covid}"  style="font-weight: 700; text-align: center;"  footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalCovid)}">
                             <f:facet name="header">
                                 <h:outputText value="C.Extra"/>
                             </f:facet>
@@ -187,7 +186,7 @@
                         </p:column>
 
 
-                        <p:column sortBy="#{item.imposiciones}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalImposiciones)}">
+                        <p:column sortBy="#{item.imposiciones}"  style="font-weight: 700; text-align: center;"  footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalImposiciones)}">
                             <f:facet name="header">
                                 <h:outputText value="Impos."/>
                             </f:facet>
@@ -201,7 +200,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column sortBy="#{item.boletos}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalBoletos)}">
+                        <p:column sortBy="#{item.boletos}"  style="font-weight: 700; text-align: center;"  footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalBoletos)}">
                             <f:facet name="header">
                                 <h:outputText value="Boletos"/>
                             </f:facet>
@@ -210,7 +209,7 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:column sortBy="#{item.total}" style="text-align: center; " footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalRecaudacion)}">
+                        <p:column sortBy="#{item.total}"  style="font-weight: 700; text-align: center;"  footerText="#{recaudacionGuiaController.getFormatValue(recaudacionGuiaController.totalRecaudacion)}">
                             <f:facet name="header">
                                 <h:outputText value="Total"/>
                             </f:facet>

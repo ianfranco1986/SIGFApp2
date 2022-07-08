@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -86,6 +87,8 @@ public class Empresa extends BaseEntity implements Serializable {
     @JoinColumn(name = "empresa_id_mutual", referencedColumnName = "mutual_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Mutual empresaIdMutual;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busIdEmpresa", fetch = FetchType.LAZY)
+    private List<Bus> busList;
 
     public Empresa() {
     }
@@ -204,6 +207,14 @@ public class Empresa extends BaseEntity implements Serializable {
 
     public void setEmpresaIdMutual(Mutual empresaIdMutual) {
         this.empresaIdMutual = empresaIdMutual;
+    }
+
+    public void setBusList(List<Bus> busList) {
+        this.busList = busList;
+    }
+
+    public List<Bus> getBusList() {
+        return busList;
     }
 
     @Override

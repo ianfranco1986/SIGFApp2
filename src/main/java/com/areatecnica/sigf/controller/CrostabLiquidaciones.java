@@ -74,6 +74,9 @@ public class CrostabLiquidaciones implements Serializable {
     int totalCargos = 0;
     int saldo = 0;
 
+    int totalFilaAbonos = 0;
+    int totalFilaCargos = 0;
+
     /**
      * Creates a new instance of CrostabLiquidaciones
      */
@@ -149,24 +152,22 @@ public class CrostabLiquidaciones implements Serializable {
         resultsHeader.add("Total Rec.");//6
         defaultTotal.put("Total Rec.", 0);
 
+    }
+
+    public void setHeadersAbonos() {
         for (TipoAbono a : (this.selectedTipoAbonoItems.isEmpty() ? this.tipoAbonoItems : this.selectedTipoAbonoItems)) {
             resultsHeader.add(a.getTipoAbonoNombre());
             defaultTotal.put(a.getTipoAbonoNombre(), 0);
         }
+//        resultsHeader.add("Total Abonos");
+//        defaultTotal.put("Total Abonos", 0);
+    }
 
-        resultsHeader.add("Total Abonos");//6
-        defaultTotal.put("Total Abonos", 0);
-
-        //minutos + diferencia admin. + saldos aportes 
-        //    7              8                9
-//
+    public void setHeadersCargos() {
         for (TipoCargo c : (this.selectedTipoCargoItems.isEmpty() ? this.tipoCargoItems : this.selectedTipoCargoItems)) {
             resultsHeader.add(c.getTipoCargoNombre());
             defaultTotal.put(c.getTipoCargoNombre(), 0);
         }
-
-        resultsHeader.add("Total Cargos");//6
-        defaultTotal.put("Total Cargos", 0);
 
     }
 
@@ -184,8 +185,8 @@ public class CrostabLiquidaciones implements Serializable {
 
     public void createDynamicsRow() {
         //Inicio de array de listas ordenadas que contendrá c/u de las filas 
-        this.listOfMaps = new ArrayList<LinkedHashMap>();
-        HashMap header = new HashMap();
+        this.listOfMaps = new ArrayList<>();
+//        HashMap header = new HashMap();
         this.totales = new LinkedHashMap();
         this.totales2 = new LinkedHashMap();
         setResultTotals();
@@ -226,105 +227,28 @@ public class CrostabLiquidaciones implements Serializable {
 
             LiquidacionEmpresa le = new LiquidacionEmpresaDaoImpl().findByEmpresaFechaLiquidacion(e, this.dc.getFirstDateOfMonth());
 
-            int totalColumna = 0;
+            this.totalFilaAbonos = 0;
+            this.totalFilaCargos = 0;
 
             if (le != null) {
-                if (!le.getAbonoLiquidacionList().isEmpty()) {
-                    for (AbonoLiquidacion l : le.getAbonoLiquidacionList()) {
-                        String name = l.getAbonoLiquidacionTipoId().getTipoAbonoNombre();
-                        int key = l.getAbonoLiquidacionTipoId().getTipoAbonoId();
 
-                        if (!this.selectedTipoAbonoItems.isEmpty()) {
-                            if (this.selectedTipoAbonoItems.contains(l.getAbonoLiquidacionTipoId())) {
-
-                                hashMap.put(name, l.getAbonoLiquidacionMonto());
-
-                                if (totales.containsKey(name)) {
-                                    int aux = totales.get(name);
-                                    aux += l.getAbonoLiquidacionMonto();
-                                    totales.put(name, aux);
-                                } else {
-                                    totales.put(name, l.getAbonoLiquidacionMonto());
-                                }
-
-                                totalColumna += l.getAbonoLiquidacionMonto();
-                                hashMap.put("Total Abonos", totalColumna);
-                                this.totalAbonos += totalColumna;
-                            }
-                        } else {
-                            hashMap.put(name, l.getAbonoLiquidacionMonto());
-
-                            if (totales.containsKey(name)) {
-                                int aux = totales.get(name);
-                                aux += l.getAbonoLiquidacionMonto();
-                                totales.put(name, aux);
-                            } else {
-                                totales.put(name, l.getAbonoLiquidacionMonto());
-                            }
-
-                            totalColumna += l.getAbonoLiquidacionMonto();
-                            hashMap.put("Total Abonos", totalColumna);
-                            this.totalAbonos += totalColumna;
-                        }
-                    }
-                } else {
-                    for (TipoAbono a : (this.selectedTipoAbonoItems.isEmpty() ? this.tipoAbonoItems : this.selectedTipoAbonoItems)) {
-                        hashMap.put(a.getTipoAbonoNombre(), 0);
-                        totales.put(a.getTipoAbonoNombre(), 0);
-                    }
-                    hashMap.put("Total Abonos", 0);
-                }
-
-                totalColumna = 0;
-
-                if (!le.getCargoLiquidacionList().isEmpty()) {
-                    for (CargoLiquidacion l : le.getCargoLiquidacionList()) {
-                        String name = l.getCargoLiquidacionCargoId().getTipoCargoNombre();
-                        int key = l.getCargoLiquidacionCargoId().getTipoCargoId();
-
-                        if (!this.selectedTipoCargoItems.isEmpty()) {
-                            if (this.selectedTipoCargoItems.contains(l.getCargoLiquidacionCargoId())) {
-
-                                hashMap.put(name, l.getCargoLiquidacionMonto());
-
-                                if (totales2.containsKey(name)) {
-                                    int aux = totales2.get(name);
-                                    aux += l.getCargoLiquidacionMonto();
-                                    totales2.put(name, aux);
-                                } else {
-                                    totales2.put(name, l.getCargoLiquidacionMonto());
-                                }
-
-                                totalColumna += l.getCargoLiquidacionMonto();
-                                hashMap.put("Total Cargos", totalColumna);
-                                this.totalCargos += totalColumna;
-                            }
-                        } else {
-                            hashMap.put(name, l.getCargoLiquidacionMonto());
-
-                            if (totales2.containsKey(name)) {
-                                int aux = totales2.get(name);
-                                aux += l.getCargoLiquidacionMonto();
-                                totales2.put(name, aux);
-                            } else {
-                                totales2.put(name, l.getCargoLiquidacionMonto());
-                            }
-
-                            totalColumna += l.getCargoLiquidacionMonto();
-                            hashMap.put("Total Cargos", totalColumna);
-                            this.totalCargos += totalColumna;
-
-                        }
-
-                    }
-                } else {
-                    for (TipoCargo a : (this.selectedTipoCargoItems.isEmpty() ? this.tipoCargoItems : this.selectedTipoCargoItems)) {
-                        hashMap.put(a.getTipoCargoNombre(), 0);
-                        totales2.put(a.getTipoCargoNombre(), 0);
-                    }
-                    hashMap.put("Total Cargos", 0);
-                }
+                hashMap.putAll(getAbonos(le.getAbonoLiquidacionList()));
+                
+                hashMap.putAll(getCargos(le.getCargoLiquidacionList()));
+                resultsHeader.add("Total Cargos");
+                defaultTotal.put("Total Cargos", 0);
+            } else {
+                System.err.println("LA EMPRESA " + e.getEmpresaNombre() + " NO POSEE LIQUIDACIÓN");
             }
+
+            int saldoFila = (recaudacion + totalFilaAbonos) - totalFilaCargos;
+
+            resultsHeader.add("Saldo");
+
+            hashMap.put("Saldo", saldoFila);
+            saldo += saldoFila;
+
+            defaultTotal.put("Saldo", (saldo));
 
             listOfMaps.add(hashMap);
         }
@@ -355,6 +279,114 @@ public class CrostabLiquidaciones implements Serializable {
 
         this.resultsTotals = new ArrayList<>(defaultTotal.values());
 
+    }
+
+    public Map getAbonos(List<AbonoLiquidacion> list) {
+        Map hashMap = new HashMap();
+        this.totalFilaAbonos = 0;
+
+        if (!list.isEmpty()) {
+            setHeadersAbonos();
+            for (AbonoLiquidacion l : list) {
+                String name = l.getAbonoLiquidacionTipoId().getTipoAbonoNombre();
+                int key = l.getAbonoLiquidacionTipoId().getTipoAbonoId();
+
+                if (!this.selectedTipoAbonoItems.isEmpty()) {
+                    if (this.selectedTipoAbonoItems.contains(l.getAbonoLiquidacionTipoId())) {
+
+                        hashMap.put(name, l.getAbonoLiquidacionMonto());
+
+                        if (totales.containsKey(name)) {
+                            int aux = totales.get(name);
+                            aux += l.getAbonoLiquidacionMonto();
+                            totales.put(name, aux);
+                        } else {
+                            totales.put(name, l.getAbonoLiquidacionMonto());
+                        }
+
+                        totalFilaAbonos += l.getAbonoLiquidacionMonto();
+
+                    }
+                } else {
+                    hashMap.put(name, l.getAbonoLiquidacionMonto());
+
+                    if (totales.containsKey(name)) {
+                        int aux = totales.get(name);
+                        aux += l.getAbonoLiquidacionMonto();
+                        totales.put(name, aux);
+                    } else {
+                        totales.put(name, l.getAbonoLiquidacionMonto());
+                    }
+
+                    totalFilaAbonos += l.getAbonoLiquidacionMonto();
+                }
+            }
+            hashMap.put("Total Abonos", totalFilaAbonos);
+            this.totalAbonos += totalFilaAbonos;
+        } else {
+            for (TipoAbono a : (this.selectedTipoAbonoItems.isEmpty() ? this.tipoAbonoItems : this.selectedTipoAbonoItems)) {
+                hashMap.put(a.getTipoAbonoNombre(), 0);
+                totales.put(a.getTipoAbonoNombre(), 0);
+            }
+            //hashMap.put("Total Abonos", 0);     
+        }
+
+        System.err.println("VALOR DEL HASH: " + hashMap);
+        return hashMap;
+    }
+
+    public Map getCargos(List<CargoLiquidacion> list) {
+        Map hashMap = new HashMap();
+        int totalColumnaCargos = 0;
+
+        if (!list.isEmpty()) {
+            setHeadersCargos();
+            for (CargoLiquidacion l : list) {
+                String name = l.getCargoLiquidacionCargoId().getTipoCargoNombre();
+                int key = l.getCargoLiquidacionCargoId().getTipoCargoId();
+
+                if (!this.selectedTipoCargoItems.isEmpty()) {
+                    if (this.selectedTipoCargoItems.contains(l.getCargoLiquidacionCargoId())) {
+
+                        hashMap.put(name, l.getCargoLiquidacionMonto());
+
+                        if (totales2.containsKey(name)) {
+                            int aux = totales2.get(name);
+                            aux += l.getCargoLiquidacionMonto();
+                            totales2.put(name, aux);
+                        } else {
+                            totales2.put(name, l.getCargoLiquidacionMonto());
+                        }
+
+                        totalColumnaCargos += l.getCargoLiquidacionMonto();
+
+                    }
+                } else {
+                    hashMap.put(name, l.getCargoLiquidacionMonto());
+
+                    if (totales2.containsKey(name)) {
+                        int aux = totales2.get(name);
+                        aux += l.getCargoLiquidacionMonto();
+                        totales2.put(name, aux);
+                    } else {
+                        totales2.put(name, l.getCargoLiquidacionMonto());
+                    }
+
+                    totalColumnaCargos += l.getCargoLiquidacionMonto();
+
+                }
+
+            }
+            hashMap.put("Total Cargos", totalColumnaCargos);
+            this.totalCargos += totalColumnaCargos;
+        } else {
+            for (TipoCargo a : (this.selectedTipoCargoItems.isEmpty() ? this.tipoCargoItems : this.selectedTipoCargoItems)) {
+                hashMap.put(a.getTipoCargoNombre(), 0);
+                totales2.put(a.getTipoCargoNombre(), 0);
+            }
+
+        }
+        return hashMap;
     }
 
     public List<Empresa> getEmpresaItems() {

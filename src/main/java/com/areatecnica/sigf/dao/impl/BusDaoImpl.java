@@ -10,6 +10,7 @@ import com.areatecnica.sigf.entities.*;
 
 import javax.persistence.NoResultException;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -92,6 +93,18 @@ public class BusDaoImpl extends GenericDAOImpl<Bus> implements IBusDao<Bus> {
             return null;
         }
     }
+    
+    public List<Bus> findByEmpresaProceso(Empresa empresa, ProcesoRecaudacion procesoRecaudacion) {
+        try {
+            return this.entityManager
+                    .createNamedQuery("Bus.findByEmpresaProcesoRecaudacion")
+                    .setParameter("busIdProcesoRecaudacion", procesoRecaudacion)
+                    .setParameter("busIdEmpresa", empresa)
+                    .getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 
     @Override
     public List<Bus> findByGrupoServicio(GrupoServicio grupoServicio) {
@@ -106,6 +119,14 @@ public class BusDaoImpl extends GenericDAOImpl<Bus> implements IBusDao<Bus> {
     public List<Bus> findAllByTerminal(Terminal terminal) {
         try {
             return this.entityManager.createNamedQuery("Bus.findByTerminal").setParameter("busIdTerminal", terminal).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    public List<Bus> findAllByCuenta(Cuenta cuenta) {
+        try {
+            return this.entityManager.createNamedQuery("Bus.findByCuenta").setParameter("idCuenta", cuenta).getResultList();
         } catch (NoResultException ne) {
             return null;
         }
@@ -131,5 +152,17 @@ public class BusDaoImpl extends GenericDAOImpl<Bus> implements IBusDao<Bus> {
         } catch (NoResultException ne) {
             return null;
         }
+    }
+
+    public long getBusesByEmpresaProceso(Empresa empresa, ProcesoRecaudacion proceso) {
+        Query query = this.entityManager.createQuery(""
+                + "SELECT COUNT(b) "
+                + "FROM Bus b "
+                + "WHERE b.busIdEmpresa = :busIdEmpresa "
+                + "AND b.busIdProcesoRecaudacion = :busIdProcesoRecaudacion AND b.busActivo = true AND b.busIdEmpresa.empresaId>1")
+                .setParameter("busIdEmpresa", empresa)
+                .setParameter("busIdProcesoRecaudacion", proceso);
+
+        return (Long) query.getSingleResult();
     }
 }

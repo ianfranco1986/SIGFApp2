@@ -11,7 +11,6 @@ import com.areatecnica.sigf.dao.impl.UnidadNegocioDaoImpl;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.UnidadNegocio;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;

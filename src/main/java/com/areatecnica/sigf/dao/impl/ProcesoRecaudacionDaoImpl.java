@@ -26,6 +26,15 @@ public class ProcesoRecaudacionDaoImpl extends GenericDAOImpl<ProcesoRecaudacion
             return null;
         }
     }
+    
+    @Override
+    public List<ProcesoRecaudacion> findByNandu() {
+        try {
+            return this.entityManager.createNamedQuery("ProcesoRecaudacion.findByNandu").getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 
     @Override
     public ProcesoRecaudacion findById(int id) {

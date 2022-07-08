@@ -12,17 +12,17 @@
 
             <h:form id="TipoCargoCreateForm">
 
-                <h:panelGroup id="display" rendered="#{tipoCargoController.selected != null}">
-                    <h:panelGrid columns="2" columnClasses="column">
-
-                        <p:outputLabel value="Nombre" for="tipoCargoNombre" />
-                        <p:inputText id="tipoCargoNombre" value="#{tipoCargoController.selected.tipoCargoNombre}" title="#{myBundle.CreateTipoCargoTitle_tipoCargoNombre}" required="true" requiredMessage="#{myBundle.CreateTipoCargoRequiredMessage_tipoCargoNombre}" size="45" maxlength="45"/>
-
-                        <p:outputLabel value="Monto x Defecto" for="tipoCargoMontoDefecto" />
+                <div class="ui-fluid">
+                    <div class="p-field">
+                        <label>Nombre</label>
+                        <p:inputText id="tipoCargoNombre" value="#{tipoCargoController.selected.tipoCargoNombre}" title="#{myBundle.CreateTipoCargoTitle_tipoCargoNombre}" required="true" requiredMessage="#{myBundle.CreateTipoCargoRequiredMessage_tipoCargoNombre}" maxlength="45"/>
+                    </div>
+                    <div class="p-field">
+                        <label>Monto x Defecto</label>
                         <p:inputNumber id="tipoCargoMontoDefecto" minValue="0.0" decimalPlaces="0" value="#{tipoCargoController.selected.tipoCargoMontoDefecto}" title="#{myBundle.CreateTipoCargoTitle_tipoCargoMontoDefecto}"/>
+                    </div>
+                </div>
 
-                    </h:panelGrid>
-                </h:panelGroup>
                 <p:spacer/>
                 <div class="p-text-right">
                     <p:commandButton 

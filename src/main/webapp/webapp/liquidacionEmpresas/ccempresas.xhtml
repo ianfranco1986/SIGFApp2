@@ -20,116 +20,23 @@
                 <div class="ui-fluid">
                     <div class="p-field">
                         <label for="mes">Mes/Año</label>
-                        <p:datePicker id="month" view="month" value="#{crostabLiquidaciones.date}"
+                        <p:datePicker id="month" view="month" value="#{reportControllerCrosstabLiquidacion.date}"
                                       pattern="MM/yyyy"
                                       yearNavigator="true" yearRange="2022:2030" locale="es">
-                            <p:ajax event="valueChange" update="ccabonos, cccargos" listener="#{crostabLiquidaciones.loadMovimientos}"/>
                         </p:datePicker>
                     </div>
 
                     <div class="p-field">
-
-                        <label for="desde">Abonos</label>
-                        <p:selectCheckboxMenu id="ccabonos" 
-                                              value="#{crostabLiquidaciones.selectedTipoAbonoItems}" 
-                                              converter="omnifaces.SelectItemsConverter" 
-                                              multiple="true"
-                                              filter="true" 
-                                              filterMatchMode="contains" 
-                                              immediate="true" >
-                            <f:selectItems value="#{crostabLiquidaciones.tipoAbonoItems}" 
-                                           var="tipoAbono"
-                                           itemValue="#{tipoAbono}"
-                                           itemLabel="#{tipoAbono.tipoAbonoNombre} (#{crostabLiquidaciones.mapsAbonos.get(tipoAbono.tipoAbonoId)}) "/>
-                        </p:selectCheckboxMenu>
-
-
-                    </div>
-
-                    <div class="p-field">
-                        <label for="desde">Cargos</label>
-                        <p:selectCheckboxMenu id="cccargos" 
-                                              value="#{crostabLiquidaciones.selectedTipoCargoItems}" 
-                                              converter="omnifaces.SelectItemsConverter" 
-                                              filter="true" 
-                                              multiple="true"
-                                              filterMatchMode="contains" 
-                                              immediate="true" >
-                            <f:selectItems value="#{crostabLiquidaciones.tipoCargoItems}" 
-                                           var="tipoCargo"
-                                           itemValue="#{tipoCargo}"
-                                           itemLabel="#{tipoCargo.tipoCargoNombre} (#{crostabLiquidaciones.mapsCargos.get(tipoCargo.tipoCargoId)}) "/>
-                        </p:selectCheckboxMenu>
-                    </div>
-                    
-                    <p:spacer/>
-
-                    <div class="p-field">
                         <label>
                         </label>
-                        <p:commandButton styleClass="ui-button" icon="pi pi-search" actionListener="#{crostabLiquidaciones.load}" value="Generar" update=":DataListForm:datalist,:growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        </p:commandButton>
+                       <h:commandLink value="Descargar" 
+                               actionListener="#{reportController.downloadFileXls(reportControllerCrosstabLiquidacion.informe, reportControllerCrosstabLiquidacion.map)}" target="self" style="padding: .5em 1em;"  styleClass="ui-button" />
+
                     </div>
                 </div>
             </p:panel>
         </h:form>
         <p:spacer/>
-        <h:form id="DataListForm">
-            <div class="card">
-                <p:toolbar styleClass="p-mb-4">
-                    <p:toolbarGroup>
 
-                    </p:toolbarGroup>
-                    <p:toolbarGroup align="right">
-                        <p:commandButton value="Exportar" icon="pi pi-file-excel" styleClass="ui-button-success" ajax="false">
-                            <p:dataExporter type="xlsxstream" target="datalist" fileName="CC Empresas" />
-                        </p:commandButton>
-                    </p:toolbarGroup>
-                </p:toolbar>
-                <div class="p-grid crud-demo">
-
-
-                    <p:dataTable id="datalist"                   
-                                 value="#{crostabLiquidaciones.listOfMaps}"
-                                 lazy="false"
-                                 rowKey="#{item}"
-                                 var="item"
-                                 rowSelectMode="add"
-                                 reflow="true"
-                                 rowIndexVar="rowIndex"
-                                 widgetVar="datalistWidget"
-                                 scrollable="true" 
-                                 scrollWidth="100%"
-                                 scrollHeight="600px"
-
-                                 >
-
-                        <p:column selectionMode="multiple" exportable="false"></p:column>
-
-                        <p:column width="25">
-                            <f:facet name="header">
-                                <h:outputText value="#"/>
-                            </f:facet>
-                            <h:outputText value="#{rowIndex+1}"/>
-                        </p:column>
-
-                        <p:columns 
-                            value="#{crostabLiquidaciones.listOfMaps.get(0).keySet().toArray()}" 
-                            var="key" 
-                            headerText="#{crostabLiquidaciones.resultsHeader.get(col)}" 
-                            footerText="#{col gt 0 ? crostabLiquidaciones.getFormatValue(crostabLiquidaciones.resultsTotals.get(col)): null}" 
-                            columnIndexVar="col" 
-                            width="130"
-                            >
-                            <p:outputLabel value="#{item[key]}">
-                                <f:convertNumber type="currency" maxFractionDigits="0" integerOnly="true"/>
-                            </p:outputLabel>
-                        </p:columns>
-
-
-                    </p:dataTable>
-                </div>
-            </div>
-        </h:form>
     </ui:define>
 </ui:composition>

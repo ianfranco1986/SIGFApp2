@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inf-crosstab_liquidacion_empresa" pageWidth="3670" pageHeight="800" orientation="Landscape" columnWidth="3630" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9d042d63-1b18-415f-8a3a-c5dc0ef03570">
 	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Crosstab_CH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -89,14 +92,19 @@
 				<textElement>
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[Liquidación Empresarios ]]></text>
+				<text><![CDATA[Ctas. Ctes. Empresas]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="50" width="100" height="20" uuid="4fe1ea9d-b476-43ef-957a-efa0dca43e4a"/>
+				<reportElement x="0" y="50" width="208" height="20" uuid="4fe1ea9d-b476-43ef-957a-efa0dca43e4a"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="3360" y="0" width="270" height="30" uuid="ae7efeaa-2cd9-4528-bebe-ba5d7a949ff4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -135,14 +143,17 @@
 					<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab_CT"/>
 					<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab_CD"/>
 				</reportElement>
-				<rowGroup name="empresa" width="150" totalPosition="End">
+				<crosstabDataset>
+					<dataset resetType="Report"/>
+				</crosstabDataset>
+				<rowGroup name="empresa" width="350" totalPosition="End">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{empresa}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
 						<cellContents mode="Opaque" style="Crosstab_CH">
 							<textField>
-								<reportElement x="0" y="0" width="150" height="20" uuid="6d60b391-ba73-43e4-9076-2d786250d6d7"/>
+								<reportElement x="0" y="0" width="350" height="20" uuid="6d60b391-ba73-43e4-9076-2d786250d6d7"/>
 								<box leftPadding="5"/>
 								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$V{empresa}]]></textFieldExpression>
@@ -152,7 +163,7 @@
 					<crosstabTotalRowHeader>
 						<cellContents mode="Opaque" style="Crosstab_CT">
 							<staticText>
-								<reportElement x="0" y="0" width="150" height="20" forecolor="#FFFFFF" uuid="c9afda6b-cc18-4047-b206-ade82912199b"/>
+								<reportElement x="0" y="0" width="350" height="20" forecolor="#FFFFFF" uuid="c9afda6b-cc18-4047-b206-ade82912199b"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle"/>
 								<text><![CDATA[Total ]]></text>
 							</staticText>
@@ -173,7 +184,9 @@
 						</cellContents>
 					</crosstabColumnHeader>
 					<crosstabTotalColumnHeader>
-						<cellContents mode="Opaque" style="Crosstab_CT"/>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</cellContents>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
 				<measure name="monto_MEASURE" class="java.lang.Integer" calculation="Sum">
@@ -181,26 +194,26 @@
 				</measure>
 				<crosstabCell width="110" height="20">
 					<cellContents mode="Opaque" style="Crosstab_CD">
-						<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+						<textField textAdjust="StretchHeight" pattern="#,###" isBlankWhenNull="true">
 							<reportElement x="0" y="0" width="110" height="20" uuid="96b1a9f1-6548-4705-9d73-8ca7ff2f150f"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{monto_MEASURE}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" columnTotalGroup="descripcion">
+				<crosstabCell width="0" height="20" columnTotalGroup="descripcion">
 					<cellContents mode="Opaque" style="Crosstab_CT"/>
 				</crosstabCell>
 				<crosstabCell width="110" height="20" rowTotalGroup="empresa">
 					<cellContents mode="Opaque" style="Crosstab_CT">
-						<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+						<textField textAdjust="StretchHeight" pattern="#,###" isBlankWhenNull="true">
 							<reportElement x="0" y="0" width="110" height="20" forecolor="#FFFFFF" uuid="da0a69db-7ee9-4f5b-92fb-4777e6488256"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{monto_MEASURE}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="60" height="20" rowTotalGroup="empresa" columnTotalGroup="descripcion">
+				<crosstabCell width="0" height="20" rowTotalGroup="empresa" columnTotalGroup="descripcion">
 					<cellContents mode="Opaque" style="Crosstab_CT"/>
 				</crosstabCell>
 			</crosstab>

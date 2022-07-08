@@ -13,7 +13,18 @@
             <h:form id="VentaCombustibleCreateForm">
 
                 <h:panelGroup id="display" rendered="#{ventaCombustibleController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+                    <h:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="Comprador" for="comprador" />
+                        <p:selectOneMenu id="comprador" value="#{ventaCombustibleController.selected.ventaCombustibleIdBus}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleIdBus}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{busController.items}"
+                                           var="ventaCombustibleIdBusItem"
+                                           itemValue="#{ventaCombustibleIdBusItem}"
+                                           itemLabel="#{ventaCombustibleIdBusItem.busId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreateVentaCombustibleLabel_ventaCombustibleFecha}" for="ventaCombustibleFecha" />
                         <p:calendar id="ventaCombustibleFecha" pattern="MM/dd/yyyy" value="#{ventaCombustibleController.selected.ventaCombustibleFecha}" title="#{myBundle.CreateVentaCombustibleTitle_ventaCombustibleFecha}" required="true" requiredMessage="#{myBundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleFecha}" showOn="button"/>
@@ -57,7 +68,7 @@
                                            />
 
                         </p:selectOneMenu>
-                    </p:panelGrid>
+                    </h:panelGrid>
                     <p:commandButton actionListener="#{ventaCombustibleController.saveNew}" value="#{myBundle.Save}" update="display,:VentaCombustibleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaCombustibleCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>

@@ -19,12 +19,9 @@
                 <div class="ui-fluid">
                     <div class="p-field">
                         <label for="desde">Fecha</label>
-                        <p:calendar value="#{ventaCombustibleController.fecha}" pattern="dd/MM/yy" required="true" requiredMessage="Debe seleccionar la fecha"/>
-                    </div>
-                    <div class="p-field">
-                        <label for="desde"></label>
-                        <p:commandButton styleClass="ui-button" icon="pi pi-search" actionListener="#{ventaCombustibleController.load()}" value="Buscar" update=":VentaCombustibleListForm:datalist,:growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        </p:commandButton>
+                        <p:datePicker value="#{ventaCombustibleController.date}" pattern="dd/MM/yy" required="true" requiredMessage="Debe seleccionar la fecha">
+                            <p:ajax event="valueChange" listener="#{ventaCombustibleController.load()}" update=":VentaCombustibleListForm:datalist,:growl" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                        </p:datePicker>
                     </div>
                 </div>
             </p:card>
@@ -32,6 +29,9 @@
             <p:card>
                 <p:toolbar styleClass="p-mb-4">
                     <p:toolbarGroup>
+                        <!--<p:commandButton value="Nuevo" icon="pi pi-plus"  actionListener="" update=":VentaCombustibleCreateForm" oncomplete="PF('VentaCombustibleCreateDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" />-->
+
                         <h:commandLink value="Imprimir" 
                                        actionListener="#{reportController.downloadFile(ventaCombustibleController.informe, ventaCombustibleController.map)}" 
                                        target="blank"  
@@ -46,119 +46,121 @@
                         </p:commandButton>
                     </p:toolbarGroup>
                 </p:toolbar>
-                <p:dataTable id="datalist"
-                             value="#{ventaCombustibleController.items}"
-                             lazy="false"
-                             rowKey="#{item.ventaCombustibleId}"
-                             var="item"
-                             selectionMode="single"
-                             selection="#{ventaCombustibleController.selected}"
-                             filteredValue="#{ventaCombustibleController.filteredItems}"
-                             widgetVar="datalistWidget"
-                             reflow="true"
-                             emptyMessage="No se han encontrado registros"
-                             rowIndexVar="rowIndex" style="padding-top: 10px;">
-                    <!--
-                             To enable Lazy Loading, please copy/replace the following lines above,
-                             and be sure to replace the word HASH with the # symbol:
-                    
-                             value="HASH{ventaCombustibleController.lazyItems}"
-                             lazy="true"
-                             rowKey="HASH{item.ventaCombustibleId}"  <<< Remove this line
-                    -->
+                
+                <div class="p-grid crud-demo">
+                    <p:dataTable id="datalist"
+                                 value="#{ventaCombustibleController.items}"
+                                 lazy="false"
+                                 rowKey="#{item.ventaCombustibleId}"
+                                 var="item"
+                                 selectionMode="single"
+                                 selection="#{ventaCombustibleController.selected}"
+                                 filteredValue="#{ventaCombustibleController.filteredItems}"
+                                 widgetVar="datalistWidget"
+                                 reflow="true"
+                                 emptyMessage="No se han encontrado registros"
+                                 rowIndexVar="rowIndex" style="padding-top: 10px;">
+                        <!--
+                                 To enable Lazy Loading, please copy/replace the following lines above,
+                                 and be sure to replace the word HASH with the # symbol:
+                        
+                                 value="HASH{ventaCombustibleController.lazyItems}"
+                                 lazy="true"
+                                 rowKey="HASH{item.ventaCombustibleId}"  <<< Remove this line
+                        -->
 
 
-                    <f:facet name="header">
-                        <h3 id="total" style="text-align: center;">Total: #{ventaCombustibleController.totalCombustible()} / Precio: #{ventaCombustibleController.precio}</h3>
-
-                        <div class="products-table-header">
-                            <span class="filter-container ui-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
-                            </span>
-                        </div>
-                    </f:facet>
-
-                    <p:column>
                         <f:facet name="header">
-                            <h:outputText value="#"/>
+                            <h3 id="total" style="text-align: center;">Total: #{ventaCombustibleController.totalCombustible()} / Precio: #{ventaCombustibleController.precio}</h3>
+
+                            <div class="products-table-header">
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
                         </f:facet>
-                        <h:outputText value="#{rowIndex+1}"/>
-                    </p:column>
 
-
-                    <p:column sortBy="#{item.ventaCombustibleNumeroBoleta}" filterBy="#{item.ventaCombustibleNumeroBoleta}">
-                        <f:facet name="header">
-                            <h:outputText value="N° Boleta"/>
-                        </f:facet>
-                        <h:outputText value="#{item.ventaCombustibleNumeroBoleta}"/>
-                    </p:column>
-
-                    <p:column sortBy="#{item.ventaCombustibleIdBus.busNumero}" filterBy="#{item.ventaCombustibleIdBus.busNumero}">
-                        <f:facet name="header">
-                            <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleIdBus}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.ventaCombustibleIdBus.busNumero}"/>
-                    </p:column>
-
-
-                    <p:column sortBy="#{item.ventaCombustibleIdBus.busPatente}" filterBy="#{item.ventaCombustibleIdBus.busPatente}">
-                        <f:facet name="header">
-                            <h:outputText value="Patente"/>
-                        </f:facet>
-                        <h:outputText value="#{item.ventaCombustibleIdBus.busPatente}"/>
-                    </p:column>
-
-                    <p:column sortBy="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}" filterBy="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}">
-                        <f:facet name="header">
-                            <h:outputText value="Proceso"/>
-                        </f:facet>
-                        <h:outputText value="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}"/>
-                    </p:column>
-
-                    <p:column sortBy="#{item.ventaCombustibleHora}" filterBy="#{item.ventaCombustibleHora}">
-                        <f:facet name="header">
-                            <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleHora}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.ventaCombustibleHora}">
-                            <f:convertDateTime pattern="HH:mm:ss" />
-                        </h:outputText>
-                    </p:column>
-
-                    <p:column sortBy="#{item.ventaCombustibleCantidad}" filterBy="#{item.ventaCombustibleCantidad}">
-                        <f:facet name="header">
-                            <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleCantidad}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.ventaCombustibleCantidad}"/>
-                    </p:column>
-
-
-                    <p:column sortBy="#{item.ventaCombustibleTotal}" filterBy="#{item.ventaCombustibleTotal}">
-                        <f:facet name="header">
-                            <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleTotal}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.ventaCombustibleTotal}">
-                            <f:convertNumber currencyCode="$" currencySymbol="$"/>
-                        </h:outputText>
-                    </p:column>
-
-                    <p:column sortBy="#{item.ventaCombustibleRecaudado}" filterBy="#{item.ventaCombustibleRecaudado}">
-                        <f:facet name="header">
-                            <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleRecaudado}"/>
-                        </f:facet>
-                        <h:selectBooleanCheckbox id="ventaCombustibleRecaudado" value="#{item.ventaCombustibleRecaudado}" title="#{myBundle.EditVentaCombustibleTitle_ventaCombustibleRecaudado}" required="true" requiredMessage="#{myBundle.EditVentaCombustibleRequiredMessage_ventaCombustibleRecaudado}" disabled="true"/>
-                    </p:column>
-
-                    <ui:remove>
-                        <p:column sortBy="#{item.ventaCombustibleIdSurtidor.surtidorId}" filterBy="#{item.ventaCombustibleIdSurtidor.surtidorId}">
+                        <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleIdSurtidor}"/>
+                                <h:outputText value="#"/>
                             </f:facet>
-                            <h:outputText value="#{item.ventaCombustibleIdSurtidor.surtidorId}"/>
+                            <h:outputText value="#{rowIndex+1}"/>
                         </p:column>
-                    </ui:remove>
 
-                </p:dataTable>
+
+                        <p:column sortBy="#{item.ventaCombustibleNumeroBoleta}" filterBy="#{item.ventaCombustibleNumeroBoleta}">
+                            <f:facet name="header">
+                                <h:outputText value="N° Boleta"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaCombustibleNumeroBoleta}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaCombustibleIdBus.busNumero}" filterBy="#{item.ventaCombustibleIdBus.busNumero}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleIdBus}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaCombustibleIdBus.busNumero eq 0 ? '' : item.ventaCombustibleIdBus.busNumero}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.ventaCombustibleIdBus.busPatente}" filterBy="#{item.ventaCombustibleIdBus.busPatente}">
+                            <f:facet name="header">
+                                <h:outputText value="Patente"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaCombustibleIdBus.busPatente eq 'AAAA00'? '':item.ventaCombustibleIdBus.busPatente}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}" filterBy="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}">
+                            <f:facet name="header">
+                                <h:outputText value="Proceso"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaCombustibleIdBus.busIdProcesoRecaudacion.procesoRecaudacionNombre}"/>
+                        </p:column>
+
+
+
+                        <p:column sortBy="#{item.ventaCombustibleCantidad}" filterBy="#{item.ventaCombustibleCantidad}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleCantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaCombustibleCantidad}"/>
+                        </p:column>
+
+
+                        <p:column sortBy="#{item.ventaCombustibleTotal}" filterBy="#{item.ventaCombustibleTotal}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleTotal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaCombustibleTotal}" style="font-weight: 700">
+                                <f:convertNumber currencySymbol="$" type="currency"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{item.ventaCombustibleHora}" filterBy="#{item.ventaCombustibleHora}">
+                            <f:facet name="header">
+                                <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleHora}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ventaCombustibleHora}">
+                                <f:convertDateTime pattern="HH:mm:ss" locale="es_CL" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Estado" sortBy="#{item.ventaCombustibleRecaudado}" width="120">
+                            <span class="compra compra-#{!item.ventaCombustibleRecaudado? 'noregistrada':'registrada'}">#{!item.ventaCombustibleRecaudado? 'Sin Recaudar':'Recaudada'}</span>
+                        </p:column>
+
+                        <ui:remove>
+                            <p:column sortBy="#{item.ventaCombustibleIdSurtidor.surtidorId}" filterBy="#{item.ventaCombustibleIdSurtidor.surtidorId}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{myBundle.ListVentaCombustibleTitle_ventaCombustibleIdSurtidor}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.ventaCombustibleIdSurtidor.surtidorId}"/>
+                            </p:column>
+                        </ui:remove>
+
+                    </p:dataTable>
+                </div>
             </p:card>
 
 

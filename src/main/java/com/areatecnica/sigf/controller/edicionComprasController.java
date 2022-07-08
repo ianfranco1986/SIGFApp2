@@ -209,7 +209,6 @@ public class EdicionComprasController implements Serializable {
 //            JsfUtil.addErrorMessage("Ha ocurrido un error al guardar los cambios");
 //        }
 //    }
-
 //    public void delete(ActionEvent event) {
 //        if (this.getSelected() != null) {
 //
@@ -310,6 +309,30 @@ public class EdicionComprasController implements Serializable {
     }
 
     public void onCellEdit(CellEditEvent event) {
+
+        JsfUtil.addSuccessMessage("Columna: " + event.getColumn());
+
+        CuentaMayor oldValue = (CuentaMayor) event.getOldValue();
+        CuentaMayor newValue = (CuentaMayor) event.getNewValue();
+
+        System.err.println("INDICE: " + event.getRowIndex());
+
+        this.movimientoItems.get(event.getRowIndex()).setVoucherMovimientoCuentaId(newValue);
+
+        for (VoucherMovimiento v : this.movimientoItems) {
+            JsfUtil.addSuccessMessage("CUENTA: " + v.getVoucherMovimientoCuentaId().getCuentaMayorNombre());
+        }
+
+//        if (newValue != null && !newValue.equals(oldValue)) {
+//            System.err.println("INDICE: "+event.getRowIndex());
+//            System.err.println("tamaño de movimientosItems:"+this.movimientoItems.size());
+//            this.movimientoItems.get(event.getRowIndex()).setVoucherMovimientoCuentaId(newValue);
+//            JsfUtil.addErrorMessage("Valor actualizado");
+//        }else{
+//            JsfUtil.addWarningMessage("CTMMM");
+//            System.err.println("VIEJO:"+oldValue.getCuentaMayorNombre());
+//            System.err.println("NUEVO:"+newValue.getCuentaMayorNombre());
+//        }
 //        try {
 //
 //            selected = actividadesimpuestosList.get(event.getRowIndex());
@@ -326,20 +349,17 @@ public class EdicionComprasController implements Serializable {
 //        } catch (Exception e) {
 //            JSFUtil.addErrorMessage("onCellEdit()" + e.getLocalizedMessage());
 //        }
-
     }
 
     public void onItemSelect(SelectEvent<CuentaMayor> event) {
         CuentaMayor c = event.getObject();
-        System.err.println("CUENTA SELECCIONADA:"+c.getCuentaMayorNombre());
-        JsfUtil.addSuccessMessage("Cuenta :"+c.getCuentaMayorNombre());
+        JsfUtil.addSuccessMessage("Cuenta :" + c.getCuentaMayorNombre());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cuenta Selected", c.getCuentaMayorNombre()));
     }
 
     public List<CuentaMayor> completeText(String query) {
         String queryLowerCase = query.toLowerCase();
         List<CuentaMayor> cuentaList = new CuentaMayorDaoImpl().findALL();
-        System.err.println("TAMAÑO DE CUENTA LIST: " + cuentaList.size() + " LLEGA POR AQUÍ ... ");
         return cuentaList.stream().filter(t -> t.getCuentaMayorNombre().toLowerCase().contains(queryLowerCase)).collect(Collectors.toList());
     }
 

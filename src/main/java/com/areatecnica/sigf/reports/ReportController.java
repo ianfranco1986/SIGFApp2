@@ -70,7 +70,7 @@ public class ReportController implements Serializable {
     }
 
     public String getNameFileXls() {
-        return path + ".xls";
+        return path + ".xlsx";
     }
 
 
@@ -107,7 +107,7 @@ public class ReportController implements Serializable {
 
             HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
             response.reset();
-            response.setContentType("application/pdf");
+            response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-disposition", "attachment; filename=" + getNameFileXls());
 
             OutputStream output = response.getOutputStream();

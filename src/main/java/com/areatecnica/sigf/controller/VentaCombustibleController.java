@@ -7,6 +7,7 @@ import com.areatecnica.sigf.entities.RecaudacionCombustible;
 import com.areatecnica.sigf.entities.VentaCombustible;
 import com.areatecnica.sigf.facade.VentaCombustibleFacade;
 import com.areatecnica.sigf.util.CurrentDate;
+import com.areatecnica.sigf.util.LocalDateConverter;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -14,30 +15,25 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @Named(value = "ventaCombustibleController")
 @ViewScoped
 public class VentaCombustibleController extends AbstractController<VentaCombustible> {
 
-    // Flags to indicate if child collections are empty
-    private boolean isRecaudacionCombustibleListEmpty;
-
-    private Date fecha;
-    private int mes;
-    private int anio;
-    private CurrentDate currentDate;
-    private float precio;
-    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    private final SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-    private static final String pattern = "###,###";
-    private static final DecimalFormat decimalFormat = new DecimalFormat(pattern);
     private List<VentaCombustible> items;
-    private IVentaCombustibleDao dao;
+    private VentaCombustible selected; 
+    
+    private LocalDate date;
+    private LocalDateConverter dc;
 
-    private String informe = "inf-venta_petroleo";
-
+    private float precio;
     private int total = 0;
+    
+    
+    private String informe = "inf-venta_petroleo";
+    private static final DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
     public VentaCombustibleController() {
         // Inform the Abstract parent controller of the concrete VentaCombustible Entity
@@ -47,40 +43,37 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
     @PostConstruct
     @Override
     public void initParams() {
-        //super.initParams(); //To change body of generated methods, choose Tools | Templates.
-
-        Calendar calendar = GregorianCalendar.getInstance();
-        this.mes = calendar.get(Calendar.MONTH) + 1;
-        this.anio = calendar.get(Calendar.YEAR);
-
-        this.fecha = new Date();
-        this.currentDate = new CurrentDate();
-        this.currentDate.setDate(fecha);
+        this.setDate(LocalDate.now());
     }
 
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap();
 
-        map.put("fecha", fecha);
+        map.put("fecha", this.dc.getDate());
 
         return map;
     }
 
-    public boolean getIsRecaudacionCombustibleListEmpty() {
-        return this.isRecaudacionCombustibleListEmpty;
+    public void load() {
+        if (this.date != null) {
+            this.total = 0;
+            this.items = new VentaCombustibleDaoImpl().findByDate(this.dc.getDate());
+
+            if (!this.items.isEmpty()) {
+                for (VentaCombustible v : this.items) {
+                    this.total = this.total + v.getVentaCombustibleTotal();
+
+                }
+                this.precio = this.items.get(0).getVentaCombustiblePrecio();
+            }
+
+        } else {
+            JsfUtil.addErrorMessage("Debe seleccionar la fecha");
+        }
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    @Override
-    public Collection<VentaCombustible> getItems() {
-        return items; //To change body of generated methods, choose Tools | Templates.
+    public List<VentaCombustible> getItems() {
+        return items; 
     }
 
     public void setItems(List<VentaCombustible> items) {
@@ -99,28 +92,6 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         return "$ " + decimalFormat.format(this.total);
     }
 
-    public void load() {
-        if (this.fecha != null) {
-            this.currentDate = new CurrentDate();
-            this.currentDate.setDate(fecha);
-
-            this.dao = new VentaCombustibleDaoImpl();
-            this.total = 0;
-            this.items = this.dao.findByDate(fecha);
-
-            if (!this.items.isEmpty()) {
-                for (VentaCombustible v : this.items) {
-                    this.total = this.total + v.getVentaCombustibleTotal();
-
-                }
-                this.precio = this.items.get(0).getVentaCombustiblePrecio();
-            }
-
-        } else {
-            JsfUtil.addErrorMessage("Debe seleccionar la fecha");
-        }
-    }
-
     public void setInforme(String informe) {
         this.informe = informe;
     }
@@ -137,28 +108,21 @@ public class VentaCombustibleController extends AbstractController<VentaCombusti
         return precio;
     }
 
-    /**
-     * Sets the "items" attribute with a collection of RecaudacionCombustible
-     * entities that are retrieved from VentaCombustible and returns the
-     * navigation outcome.
-     *
-     * @return navigation outcome for RecaudacionCombustible page
-     */
-    public String navigateRecaudacionCombustibleList() {
-        VentaCombustible selected = this.getSelected();
-        if (selected != null) {
-            VentaCombustibleFacade ejbFacade = (VentaCombustibleFacade) this.getFacade();
-            List<RecaudacionCombustible> selectedRecaudacionCombustibleList = ejbFacade.findRecaudacionCombustibleList(selected);
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("RecaudacionCombustible_items", selectedRecaudacionCombustibleList);
-        }
-        return "/app/recaudacionCombustible/index";
+    public LocalDateConverter getDc() {
+        return dc;
     }
 
-//    public void setFecha() {
-//        try {
-//            this.fecha = this.sdf.parse("01/" + this.mes + "/" + this.anio);
-//            this.currentDate = new CurrentDate(1, mes, anio);
-//        } catch (ParseException ex) {
-//        }
-//    }
+    public void setDc(LocalDateConverter dc) {
+        this.dc = dc;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+        this.dc = new LocalDateConverter(date);
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
 }

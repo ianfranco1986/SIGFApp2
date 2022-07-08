@@ -24,32 +24,33 @@ import java.util.Date;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "Bus.findAll", query = "SELECT b FROM Bus b WHERE b.busNumero>1 ORDER BY b.busIdUnidadNegocio.unidadNegocioNumero DESC, b.busNumero ASC")
-    , @NamedQuery(name = "Bus.findByBusUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio AND b.busIdFlota = :busIdFlota ORDER BY b.busIdUnidadNegocio.unidadNegocioNumero DESC, b.busNumero ASC")
-    , @NamedQuery(name = "Bus.findByProcesoRecaudacion", query = "SELECT b FROM Bus b WHERE b.busIdProcesoRecaudacion = :busIdProcesoRecaudacion ORDER BY b.busNumero ASC")
-    , @NamedQuery(name = "Bus.findByFlota", query = "SELECT b FROM Bus b WHERE b.busIdFlota = :busIdFlota ORDER BY b.busNumero")
-    , @NamedQuery(name = "Bus.findByEmpresa", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa AND b.busActivo = true ORDER BY b.busNumero")
-    , @NamedQuery(name = "Bus.findByEmpresaUnidad", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa and b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero")
-    , @NamedQuery(name = "Bus.findByBusIdUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero ASC")
-    , @NamedQuery(name = "Bus.findAllByCuenta", query = "SELECT b FROM Bus b WHERE b.busIdTerminal.terminalIdCuenta = :idCuenta ORDER BY b.busNumero ASC")
-        , @NamedQuery(name = "Bus.findDefaultBus", query = "SELECT b FROM Bus b WHERE b.busIdEstadoBus = :busIdEstadoBus")
-        , @NamedQuery(name = "Bus.findByGrupoServicio", query = "SELECT b FROM Bus b WHERE b.busIdGrupoServicio = :busIdGrupoServicio AND b.busActivo = true ORDER BY b.busNumero")
-        , @NamedQuery(name = "Bus.findByTerminal", query = "SELECT b FROM Bus b WHERE b.busIdTerminal = :busIdTerminal AND b.busActivo = true ORDER BY b.busNumero")
-        , @NamedQuery(name = "Bus.findByBusId", query = "SELECT b FROM Bus b WHERE b.busId = :busId")
-    , @NamedQuery(name = "Bus.findByBusNumero", query = "SELECT b FROM Bus b WHERE b.busNumero = :busNumero")
-    , @NamedQuery(name = "Bus.findByBusPatente", query = "SELECT b FROM Bus b WHERE b.busPatente = :busPatente")
-    , @NamedQuery(name = "Bus.findMaxNumeroUnidad", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero DESC")
-    , @NamedQuery(name = "Bus.findByBusTieneAdministrador", query = "SELECT b FROM Bus b WHERE b.busTieneAdministrador = :busTieneAdministrador")
-    , @NamedQuery(name = "Bus.findByBusAdministrador", query = "SELECT b FROM Bus b WHERE b.busAdministrador = :busAdministrador")
-    , @NamedQuery(name = "Bus.findByBusAnio", query = "SELECT b FROM Bus b WHERE b.busAnio = :busAnio")
-    , @NamedQuery(name = "Bus.findByBusFechaRevisionTecnica", query = "SELECT b FROM Bus b WHERE b.busFechaRevisionTecnica = :busFechaRevisionTecnica")
-    , @NamedQuery(name = "Bus.findByBusNumeroMotor", query = "SELECT b FROM Bus b WHERE b.busNumeroMotor = :busNumeroMotor")
-    , @NamedQuery(name = "Bus.findByBusNumeroChasis", query = "SELECT b FROM Bus b WHERE b.busNumeroChasis = :busNumeroChasis")
-    , @NamedQuery(name = "Bus.findByBusCarroceria", query = "SELECT b FROM Bus b WHERE b.busCarroceria = :busCarroceria")
-    , @NamedQuery(name = "Bus.findByBusTieneEgresoIndividual", query = "SELECT b FROM Bus b WHERE b.busTieneEgresoIndividual = :busTieneEgresoIndividual")
-    , @NamedQuery(name = "Bus.findByBusTieneEgresoFlota", query = "SELECT b FROM Bus b WHERE b.busTieneEgresoFlota = :busTieneEgresoFlota")
-    , @NamedQuery(name = "Bus.findByBusComparteServicio", query = "SELECT b FROM Bus b WHERE b.busComparteServicio = :busComparteServicio")
-    , @NamedQuery(name = "Bus.findByBusActivo", query = "SELECT b FROM Bus b WHERE b.busActivo = :busActivo")})
+    @NamedQuery(name = "Bus.findAll", query = "SELECT b FROM Bus b WHERE b.busNumero>1 AND b.busActivo = true AND b.busIdEmpresa.empresaId > 1 ORDER BY b.busIdUnidadNegocio.unidadNegocioNumero DESC, b.busNumero ASC"),
+    @NamedQuery(name = "Bus.findByBusUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio AND b.busIdFlota = :busIdFlota ORDER BY b.busIdUnidadNegocio.unidadNegocioNumero DESC, b.busNumero ASC"),
+    @NamedQuery(name = "Bus.findByProcesoRecaudacion", query = "SELECT b FROM Bus b WHERE b.busIdProcesoRecaudacion = :busIdProcesoRecaudacion AND b.busActivo = true AND b.busIdEmpresa.empresaId > 1 ORDER BY b.busNumero ASC"),
+    @NamedQuery(name = "Bus.findByEmpresaProcesoRecaudacion", query = "SELECT b FROM Bus b WHERE b.busIdProcesoRecaudacion = :busIdProcesoRecaudacion AND b.busActivo = true AND b.busIdEmpresa = :busIdEmpresa ORDER BY b.busNumero ASC"),
+    @NamedQuery(name = "Bus.findByFlota", query = "SELECT b FROM Bus b WHERE b.busIdFlota = :busIdFlota ORDER BY b.busNumero"),
+    @NamedQuery(name = "Bus.findByEmpresa", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa AND b.busActivo = true ORDER BY b.busNumero"),
+    @NamedQuery(name = "Bus.findByEmpresaUnidad", query = "SELECT b FROM Bus b WHERE b.busIdEmpresa = :busIdEmpresa and b.busIdUnidadNegocio = :busIdUnidadNegocio AND b.busActivo = true AND b.busIdEmpresa.empresaId>1 ORDER BY b.busNumero"),
+    @NamedQuery(name = "Bus.findByBusIdUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero ASC"),
+    @NamedQuery(name = "Bus.findByCuenta", query = "SELECT b FROM Bus b WHERE b.busIdTerminal.terminalIdCuenta = :idCuenta ORDER BY b.busNumero ASC"),
+    @NamedQuery(name = "Bus.findDefaultBus", query = "SELECT b FROM Bus b WHERE b.busIdEstadoBus = :busIdEstadoBus"),
+    @NamedQuery(name = "Bus.findByGrupoServicio", query = "SELECT b FROM Bus b WHERE b.busIdGrupoServicio = :busIdGrupoServicio AND b.busActivo = true ORDER BY b.busNumero"),
+    @NamedQuery(name = "Bus.findByTerminal", query = "SELECT b FROM Bus b WHERE b.busIdTerminal = :busIdTerminal AND b.busActivo = true ORDER BY b.busNumero"),
+    @NamedQuery(name = "Bus.findByBusId", query = "SELECT b FROM Bus b WHERE b.busId = :busId"),
+    @NamedQuery(name = "Bus.findByBusNumero", query = "SELECT b FROM Bus b WHERE b.busNumero = :busNumero"),
+    @NamedQuery(name = "Bus.findByBusPatente", query = "SELECT b FROM Bus b WHERE b.busPatente = :busPatente"),
+    @NamedQuery(name = "Bus.findMaxNumeroUnidad", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero DESC"),
+    @NamedQuery(name = "Bus.findByBusTieneAdministrador", query = "SELECT b FROM Bus b WHERE b.busTieneAdministrador = :busTieneAdministrador"),
+    @NamedQuery(name = "Bus.findByBusAdministrador", query = "SELECT b FROM Bus b WHERE b.busAdministrador = :busAdministrador"),
+    @NamedQuery(name = "Bus.findByBusAnio", query = "SELECT b FROM Bus b WHERE b.busAnio = :busAnio"),
+    @NamedQuery(name = "Bus.findByBusFechaRevisionTecnica", query = "SELECT b FROM Bus b WHERE b.busFechaRevisionTecnica = :busFechaRevisionTecnica"),
+    @NamedQuery(name = "Bus.findByBusNumeroMotor", query = "SELECT b FROM Bus b WHERE b.busNumeroMotor = :busNumeroMotor"),
+    @NamedQuery(name = "Bus.findByBusNumeroChasis", query = "SELECT b FROM Bus b WHERE b.busNumeroChasis = :busNumeroChasis"),
+    @NamedQuery(name = "Bus.findByBusCarroceria", query = "SELECT b FROM Bus b WHERE b.busCarroceria = :busCarroceria"),
+    @NamedQuery(name = "Bus.findByBusTieneEgresoIndividual", query = "SELECT b FROM Bus b WHERE b.busTieneEgresoIndividual = :busTieneEgresoIndividual"),
+    @NamedQuery(name = "Bus.findByBusTieneEgresoFlota", query = "SELECT b FROM Bus b WHERE b.busTieneEgresoFlota = :busTieneEgresoFlota"),
+    @NamedQuery(name = "Bus.findByBusComparteServicio", query = "SELECT b FROM Bus b WHERE b.busComparteServicio = :busComparteServicio"),
+    @NamedQuery(name = "Bus.findByBusActivo", query = "SELECT b FROM Bus b WHERE b.busActivo = :busActivo")})
 public class Bus extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -95,7 +96,7 @@ public class Bus extends BaseEntity implements Serializable {
     @Column(name = "bus_comparte_servicio")
     private Boolean busComparteServicio;
     @Column(name = "bus_activo")
-    private Boolean busActivo;    
+    private Boolean busActivo;
     @JoinColumn(name = "bus_id_empresa", referencedColumnName = "empresa_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empresa busIdEmpresa;
@@ -120,7 +121,6 @@ public class Bus extends BaseEntity implements Serializable {
     @JoinColumn(name = "bus_id_unidad_negocio", referencedColumnName = "unidad_negocio_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UnidadNegocio busIdUnidadNegocio;
-    
 
     public Bus() {
     }

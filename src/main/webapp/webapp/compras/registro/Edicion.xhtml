@@ -174,8 +174,6 @@
                                          lazy="false"
                                          rowKey="#{item.voucherMovimientoId}"
                                          var="item"
-                                         rowSelectMode="add" 
-                                         reflow="true"
                                          emptyMessage="No se han encontrado registros"
                                          rowIndexVar="rowIndex"
                                          scrollable="true" scrollWidth="98%"
@@ -197,6 +195,7 @@
                                 <p:ajax event="rowUnselectCheckbox" update=":CargaMasivaForm:delete-products-button" />
                                 <p:ajax event="toggleSelect" update=":CargaMasivaForm:delete-products-button" />
 
+                                <p:ajax event="cellEdit" listener="#{edicionComprasController.onCellEdit}" update=":growl"/>
 
 
                                 <p:column width="20">
@@ -221,7 +220,7 @@
                                                             converter="cuentaMayorConverter" 
                                                             forceSelection="true" 
                                                             scrollHeight="250"> 
-                                                <p:ajax event="itemSelect" listener="#{edicionComprasController.onItemSelect}" update="growl"/>
+                                                <p:ajax event="itemSelect" listener="#{edicionComprasController.onItemSelect}" update="datalist, growl"/>
                                             </p:autoComplete>
                                         </f:facet>
                                     </p:cellEditor>
