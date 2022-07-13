@@ -310,6 +310,24 @@ public class EdicionComprasController implements Serializable {
 
     public void onCellEdit(CellEditEvent event) {
 
+//        try {
+//
+//            selected = actividadesimpuestosList.get(event.getRowIndex());
+//            Object oldValue = event.getOldValue();
+//            Object newValue = event.getNewValue();
+//            if (addnew) {
+//                actividadesimpuestosList.get(event.getRowIndex()).setValor(selected.getIdnivel6().getValor());
+//            }
+//            if (!validarValores(selected)) {
+//                actividadesimpuestosList.get(event.getRowIndex()).setValor(selected.getIdnivel6().getValor());
+//            }
+//            addnew = false;
+//
+//        } catch (Exception e) {
+//            JSFUtil.addErrorMessage("onCellEdit()" + e.getLocalizedMessage());
+//        }
+
+        
         JsfUtil.addSuccessMessage("Columna: " + event.getColumn());
 
         CuentaMayor oldValue = (CuentaMayor) event.getOldValue();
@@ -355,6 +373,7 @@ public class EdicionComprasController implements Serializable {
         CuentaMayor c = event.getObject();
         JsfUtil.addSuccessMessage("Cuenta :" + c.getCuentaMayorNombre());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cuenta Selected", c.getCuentaMayorNombre()));
+        this.movimientoItems.get(0).setVoucherMovimientoCuentaId(c);
     }
 
     public List<CuentaMayor> completeText(String query) {

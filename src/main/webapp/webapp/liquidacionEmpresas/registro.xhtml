@@ -142,8 +142,7 @@
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="p-field">
-                                    <p:inputText id="descripcionAbono" widgetVar="descripcionAbono" placeholder="Descripción" value="#{registroLiquidacionEmpresaController.descripcionAbono}" autocomplete="off" required="true" requiredMessage="Debe ingresar una descripción" 
-                                                 >
+                                    <p:inputText id="descripcionAbono" widgetVar="descripcionAbono" placeholder="Descripción" value="#{registroLiquidacionEmpresaController.descripcionAbono}" autocomplete="off" >
                                         <p:ajax event="keydown" update="montoAbono" oncomplete="PF('montoAbono').getJQ().focus();"/>
                                     </p:inputText>
 
@@ -235,7 +234,7 @@
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="p-field">
-                                    <p:inputText id="descripcionCargo" placeholder="Descripción" widgetVar="descripcionCargo" value="#{registroLiquidacionEmpresaController.descripcionCargo}" autocomplete="off" required="true" requiredMessage="Debe ingresar una descripción" onkeypress="if (event.keyCode == 13) {
+                                    <p:inputText id="descripcionCargo" placeholder="Descripción" widgetVar="descripcionCargo" value="#{registroLiquidacionEmpresaController.descripcionCargo}" autocomplete="off" onkeypress="if (event.keyCode == 13) {
                                                 PF('montoCargo').getJQ().focus();
                                             }"/>
                                 </div>

@@ -176,7 +176,8 @@
                                          var="item"
                                          emptyMessage="No se han encontrado registros"
                                          rowIndexVar="rowIndex"
-                                         scrollable="true" scrollWidth="98%"
+                                         scrollable="true" 
+                                         scrollWidth="98%"
                                          editable="true"
                                          editMode="cell"
                                          >
@@ -219,7 +220,8 @@
                                                             itemValue="#{country}"
                                                             converter="cuentaMayorConverter" 
                                                             forceSelection="true" 
-                                                            scrollHeight="250"> 
+                                                            scrollHeight="250"
+                                                            dropdown="true"> 
                                                 <p:ajax event="itemSelect" listener="#{edicionComprasController.onItemSelect}" update="datalist, growl"/>
                                             </p:autoComplete>
                                         </f:facet>
