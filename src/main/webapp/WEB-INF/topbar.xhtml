@@ -1,9 +1,9 @@
 <ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui"
->
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    >
 
     <div class="topbar clearfix">
         <div class="topbar-left">            
@@ -16,7 +16,7 @@
             </a>
 
             <a id="topbar-menu-button" href="#">
-                
+
                 <i class="pi pi-bars"/>
             </a>
 
@@ -52,10 +52,10 @@
                                     </a>
                                 </li>
                                 <li role="menuitem">
-                                    <a href="#">
-                                        <i class="pi pi-fw pi-sign-out"/>
-                                        <span>Salir</span>
-                                    </a>
+                                    <p:commandLink action="#{loginController.logout()}">
+                                    <i class="pi pi-fw pi-sign-out"/>
+                                    <span>Salir</span>
+                                    </p:commandLink>
                                 </li>
                             </ul>
                         </li>

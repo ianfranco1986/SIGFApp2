@@ -65,7 +65,7 @@ public class VentaBoleto extends BaseEntity implements Serializable {
     private int ventaBoletoFolioSolyMar;
     @Column(name = "venta_boleto_utilizado")
     private Boolean ventaBoletoUtilizado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionBoletoIdVentaBoleto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,  mappedBy = "recaudacionBoletoIdVentaBoleto", fetch = FetchType.LAZY)
     private List<RecaudacionBoleto> recaudacionBoletoList;
     @JoinColumn(name = "venta_boleto_id_bus", referencedColumnName = "bus_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

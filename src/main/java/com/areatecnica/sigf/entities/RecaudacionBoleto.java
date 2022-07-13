@@ -40,7 +40,7 @@ public class RecaudacionBoleto extends BaseEntity implements Serializable {
     @JoinColumn(name = "recaudacion_boleto_id_recaudacion", referencedColumnName = "recaudacion_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Recaudacion recaudacionBoletoIdRecaudacion;
-    @JoinColumn(name = "recaudacion_boleto_id_venta_boleto", referencedColumnName = "venta_boleto_id", nullable = false)
+    @JoinColumn(name = "recaudacion_boleto_id_venta_boleto",referencedColumnName = "venta_boleto_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private VentaBoleto recaudacionBoletoIdVentaBoleto;
 

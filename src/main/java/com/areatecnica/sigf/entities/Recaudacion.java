@@ -59,7 +59,7 @@ public class Recaudacion extends BaseEntity implements Serializable {
     @Column(name = "recaudacion_hora", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date recaudacionHora;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionBoletoIdRecaudacion", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionBoletoIdRecaudacion", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RecaudacionBoleto> recaudacionBoletoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recaudacionMinutoIdRecaudacion", fetch = FetchType.LAZY)
     private List<RecaudacionMinuto> recaudacionMinutoList;

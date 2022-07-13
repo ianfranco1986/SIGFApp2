@@ -176,7 +176,10 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
 
     public void removerBoleto() {
         if (this.selectedRecaudacionBoleto != null) {
+            this.selectedRecaudacionBoleto.setRecaudacionBoletoIdVentaBoleto(null);
             if (this.selectedItem.getRecaudacion().getRecaudacionBoletoList().contains(this.selectedRecaudacionBoleto)) {
+                System.err.println("SI CONTIENE EL BOLETO");
+                //this.selectedItem.getRecaudacion().getRecaudacionBoletoList().get(this.selectedRecaudacionBoleto).
                 boolean flag = this.selectedItem.getRecaudacion().getRecaudacionBoletoList().remove(this.selectedRecaudacionBoleto);
                 if (flag) {
                     this.selectedItem.setBoletos(this.selectedItem.getBoletos() - this.selectedRecaudacionBoleto.getRecaudacionBoletoMonto());
@@ -428,6 +431,7 @@ public class RecaudacionGuiaController extends AbstractController<RecaudacionGui
                     }
                     total += g.getRecaudacionGuiaMonto();
                 }
+                System.err.println("TAMAÑO TOTAL DE BOLETOS:"+this.selectedItem.getRecaudacion().getRecaudacionBoletoList().size());
                 this.setTotal();
                 this.selectedItem.setTotal(total);
                 new RecaudacionDaoImpl().update(selectedItem.getRecaudacion());
