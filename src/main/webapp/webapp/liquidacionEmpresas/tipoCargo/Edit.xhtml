@@ -22,7 +22,7 @@
                         <p:inputText id="tipoCargoNombre" value="#{tipoCargoController.selected.tipoCargoNombre}" title="#{myBundle.EditTipoCargoTitle_tipoCargoNombre}" required="true" requiredMessage="#{myBundle.EditTipoCargoRequiredMessage_tipoCargoNombre}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="Monto x Defecto" for="tipoCargoMontoDefecto" />
-                        <p:inputText id="tipoCargoMontoDefecto" value="#{tipoCargoController.selected.tipoCargoMontoDefecto}" title="#{myBundle.EditTipoCargoTitle_tipoCargoMontoDefecto}"/>
+                        <p:inputText id="tipoCargoMontoDefecto" value="#{tipoCargoController.selected.tipoCargoMontoDefecto}" title="#{myBundle.EditTipoCargoTitle_tipoCargoMontoDefecto}"  required="true" requiredMessage="Debe ingresar un valor mayor o igual a 0"/>
 
                     </h:panelGrid>
                 </h:panelGroup>

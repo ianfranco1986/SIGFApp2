@@ -44,7 +44,7 @@ public class GuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia> 
     @Override
     public Guia findByCuentaFolio(Cuenta cuenta, int folio) {
         try {
-            return (Guia) this.entityManager.createNamedQuery("Guia.findByCuentaFolio").setParameter("guiaIdCuenta", cuenta).setParameter("guiaFolio", folio).getSingleResult();
+            return (Guia) this.entityManager.createNamedQuery("Guia.findByGuiaFolio").setParameter("guiaFolio", folio).getSingleResult();
         } catch (NoResultException ne) {
             return null;
         }

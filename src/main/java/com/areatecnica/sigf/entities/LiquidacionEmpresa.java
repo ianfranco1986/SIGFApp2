@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -78,7 +79,7 @@ public class LiquidacionEmpresa extends BaseEntity implements Serializable {
     @Column(name = "ultima_modificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ultimaModificacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoLiquidacionLiquidacionEmpresaId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargoLiquidacionLiquidacionEmpresaId", fetch = FetchType.LAZY )
     private List<CargoLiquidacion> cargoLiquidacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "abonoLiquidacionLiquidacionEmpresaId", fetch = FetchType.LAZY)
     private List<AbonoLiquidacion> abonoLiquidacionList;

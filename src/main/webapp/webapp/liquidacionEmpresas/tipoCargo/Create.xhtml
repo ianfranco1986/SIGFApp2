@@ -19,7 +19,7 @@
                     </div>
                     <div class="p-field">
                         <label>Monto x Defecto</label>
-                        <p:inputNumber id="tipoCargoMontoDefecto" minValue="0.0" decimalPlaces="0" value="#{tipoCargoController.selected.tipoCargoMontoDefecto}" title="#{myBundle.CreateTipoCargoTitle_tipoCargoMontoDefecto}"/>
+                        <p:inputNumber id="tipoCargoMontoDefecto" minValue="0.0" decimalPlaces="0" value="#{tipoCargoController.selected.tipoCargoMontoDefecto}" title="#{myBundle.CreateTipoCargoTitle_tipoCargoMontoDefecto}" required="true" requiredMessage="Debe ingresar un valor mayor o igual a 0"/>
                     </div>
                 </div>
 

@@ -106,25 +106,25 @@ public class CargaMasivaController implements Serializable {
 
         setTitle(defaultTitle);
 
-        System.err.println("fileUpload rergioj:" + this.fileUpload);
+        if (this.file != null) {
+            RegistroCompraService service = new RegistroCompraService(this.file);
 
-        RegistroCompraService service = new RegistroCompraService(this.file);
+            this.cuentaMayorItems = new CuentaMayorDaoImpl().findByCompras();
 
-        this.cuentaMayorItems = new CuentaMayorDaoImpl().findByCompras();
+            this.cuentaMayorItemsContabilidad = new CuentaMayorDaoImpl().findByBanco();
 
-        this.cuentaMayorItemsContabilidad = new CuentaMayorDaoImpl().findByBanco();
+            this.tipoDocumentoItems = new TipoDocumentoDaoImpl().findAll();
 
-        this.tipoDocumentoItems = new TipoDocumentoDaoImpl().findAll();
+            this.items = service.getList();
 
-        this.items = service.getList();
+            if (this.items.isEmpty()) {
+                JsfUtil.addWarningMessage("No se han encontrado registros");
+            } else {
+                JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
 
-        if (this.items.isEmpty()) {
-            JsfUtil.addWarningMessage("No se han encontrado registros");
-        } else {
-            JsfUtil.addSuccessMessage("Se han encontrado " + this.items.size() + " registros");
-
+            }
+            prepareCreate(null);
         }
-        prepareCreate(null);
     }
 
     public void prepareCreate(ActionEvent event) {

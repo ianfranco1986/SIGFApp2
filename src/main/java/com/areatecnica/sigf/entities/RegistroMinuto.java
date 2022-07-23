@@ -25,14 +25,15 @@ import java.util.List;
 @XmlRootElement
 @Cacheable(false)
 @NamedQueries({
-    @NamedQuery(name = "RegistroMinuto.findAll", query = "SELECT r FROM RegistroMinuto r")
-    , @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoDesdeIdBus", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoDesdeIdBus = :registroMinutoDesdeIdBus AND r.registroMinutoFechaMinuto BETWEEN :from AND :to ORDER BY r.registroMinutoFechaMinuto ASC")
-    , @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoId", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoId = :registroMinutoId")
-    , @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoFechaMinuto", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoFechaMinuto = :registroMinutoFechaMinuto")
-    , @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoCantidad", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoCantidad = :registroMinutoCantidad")
-    , @NamedQuery(name = "Re0gistroMinuto.findByRegistroMinutoMonto", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoMonto = :registroMinutoMonto")
-    , @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoFechaIngreso", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoFechaIngreso = :registroMinutoFechaIngreso")
-    , @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoRecaudado", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoRecaudado = :registroMinutoRecaudado")})
+    @NamedQuery(name = "RegistroMinuto.findAll", query = "SELECT r FROM RegistroMinuto r"),
+    @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoDesdeIdBus", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoDesdeIdBus = :registroMinutoDesdeIdBus AND r.registroMinutoFechaMinuto BETWEEN :from AND :to ORDER BY r.registroMinutoFechaMinuto ASC"),
+    @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoId", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoId = :registroMinutoId"),
+    @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoFechaMinuto", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoFechaMinuto = :registroMinutoFechaMinuto"),
+    @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoDesdeSinRecaudar", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoDesdeIdBus = :registroMinutoDesdeIdBus AND r.registroMinutoRecaudado = false ORDER BY r.registroMinutoFechaMinuto ASC"),
+    @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoCantidad", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoCantidad = :registroMinutoCantidad"),
+    @NamedQuery(name = "Re0gistroMinuto.findByRegistroMinutoMonto", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoMonto = :registroMinutoMonto"),
+    @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoFechaIngreso", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoFechaIngreso = :registroMinutoFechaIngreso"),
+    @NamedQuery(name = "RegistroMinuto.findByRegistroMinutoRecaudado", query = "SELECT r FROM RegistroMinuto r WHERE r.registroMinutoRecaudado = :registroMinutoRecaudado")})
 public class RegistroMinuto extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

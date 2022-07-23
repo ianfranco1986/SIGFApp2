@@ -25,19 +25,20 @@ import java.util.List;
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "VentaCombustible.findAll", query = "SELECT v FROM VentaCombustible v")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleId", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleId = :ventaCombustibleId")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleTerminalSinRecaudar", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleIdSurtidor.surtidorIdTerminal = :surtidorIdTerminal AND v.ventaCombustibleRecaudado = false ORDER BY v.ventaCombustibleNumeroBoleta ASC")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleFecha", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha = :ventaCombustibleFecha ORDER BY v.ventaCombustibleNumeroBoleta DESC")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleFechaBus", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha = :ventaCombustibleFecha AND v.ventaCombustibleIdBus = :ventaCombustibleIdBus")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleBetweenDates", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha BETWEEN :from AND :to ORDER BY v.ventaCombustibleFecha ASC")        
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleBusBetweenDates", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha BETWEEN :from AND :to AND v.ventaCombustibleIdBus = :ventaCombustibleIdBus")        
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleHora", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleHora = :ventaCombustibleHora")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustiblePrecio", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustiblePrecio = :ventaCombustiblePrecio")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleCantidad", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleCantidad = :ventaCombustibleCantidad")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleTotal", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleTotal = :ventaCombustibleTotal")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleNumeroBoleta", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleNumeroBoleta = :ventaCombustibleNumeroBoleta")
-    , @NamedQuery(name = "VentaCombustible.findByVentaCombustibleRecaudado", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleRecaudado = :ventaCombustibleRecaudado")})
+    @NamedQuery(name = "VentaCombustible.findAll", query = "SELECT v FROM VentaCombustible v"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleId", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleId = :ventaCombustibleId"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleTerminalSinRecaudar", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleIdSurtidor.surtidorIdTerminal = :surtidorIdTerminal AND v.ventaCombustibleRecaudado = false ORDER BY v.ventaCombustibleNumeroBoleta ASC"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleFecha", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha = :ventaCombustibleFecha ORDER BY v.ventaCombustibleNumeroBoleta DESC"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleFechaBus", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha = :ventaCombustibleFecha AND v.ventaCombustibleIdBus = :ventaCombustibleIdBus"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleBetweenDates", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha BETWEEN :from AND :to ORDER BY v.ventaCombustibleFecha ASC"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleBusBetweenDates", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleFecha BETWEEN :from AND :to AND v.ventaCombustibleIdBus = :ventaCombustibleIdBus"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleBusRecaudado", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleIdBus = :ventaCombustibleIdBus AND v.ventaCombustibleRecaudado = :ventaCombustibleRecaudado ORDER BY v.ventaCombustibleFecha ASC"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleHora", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleHora = :ventaCombustibleHora"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustiblePrecio", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustiblePrecio = :ventaCombustiblePrecio"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleCantidad", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleCantidad = :ventaCombustibleCantidad"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleTotal", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleTotal = :ventaCombustibleTotal"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleNumeroBoleta", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleNumeroBoleta = :ventaCombustibleNumeroBoleta"),
+    @NamedQuery(name = "VentaCombustible.findByVentaCombustibleRecaudado", query = "SELECT v FROM VentaCombustible v WHERE v.ventaCombustibleRecaudado = :ventaCombustibleRecaudado")})
 public class VentaCombustible extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -213,5 +214,5 @@ public class VentaCombustible extends BaseEntity implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.VentaCombustible[ ventaCombustibleId=" + ventaCombustibleId + " ]";
     }
-    
+
 }

@@ -36,7 +36,7 @@
                             <h:panelGroup>
                                 <label class="login-label">Rut</label>
                                 <div class="login-input">
-                                    <p:inputText value="#{loginController.username}"/>
+                                    <p:inputText value="#{loginController.username}" required="true" requiredMessage="Debe ingresar el rut"/>
                                 </div>
                             </h:panelGroup>
                         </div>
@@ -44,7 +44,7 @@
                             <h:panelGroup>
                                 <label class="login-label">Password</label>
                                 <div class="login-input">
-                                    <p:password value="#{loginController.password}"/>
+                                    <p:password value="#{loginController.password}" required="true" requiredMessage="Debe ingresar la password"/>
                                 </div>
                             </h:panelGroup>
                         </div>

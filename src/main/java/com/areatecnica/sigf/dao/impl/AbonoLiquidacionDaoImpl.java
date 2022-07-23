@@ -7,9 +7,12 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IAbonoLiquidacionDao;
 import com.areatecnica.sigf.entities.AbonoLiquidacion;
+import com.areatecnica.sigf.entities.AbonoLiquidacion;
 import com.areatecnica.sigf.entities.Empresa;
 import com.areatecnica.sigf.entities.LiquidacionEmpresa;
 import com.areatecnica.sigf.entities.TipoAbono;
+import com.areatecnica.sigf.entities.TipoAbono;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,6 +61,19 @@ public class AbonoLiquidacionDaoImpl extends GenericDAOImpl<AbonoLiquidacion> im
             return null;
         }
     }
+    
+    public List<AbonoLiquidacion> findByTipoBetweenDates(TipoAbono cargo, Date desde, Date hasta) {
+        try {
+            return this.entityManager.createNamedQuery("AbonoLiquidacion.findByTipoAbonoBetweenDates")
+                    .setParameter("abonoLiquidacionTipoId", cargo)
+                    .setParameter("from", desde)
+                    .setParameter("to", hasta)
+                    .getResultList();
+        } catch (NoResultException ne) {
+            return new ArrayList<>();
+        }
+    }
+    
 
     public long countByTipoAbono(TipoAbono abono, Date desde, Date hasta) {
         Query query = this.entityManager

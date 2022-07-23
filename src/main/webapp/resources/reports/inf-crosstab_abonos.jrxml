@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07dcffba-b50f-477a-bba4-bcf6162c9fc6">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="223"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="770"/>
+	<style name="Crosstab_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<leftPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="0.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="Crosstab_CG" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<leftPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="0.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="Crosstab_CT" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<leftPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="0.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="Crosstab_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<leftPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="0.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<parameter name="tipoAbono" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[call aportes_empresa_grupal_crosstab('', '2022-06-01', '2022-06-30')]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="monto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="monto"/>
+		<property name="com.jaspersoft.studio.field.label" value="monto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="empresa"/>
+		<property name="com.jaspersoft.studio.field.label" value="empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="codigo_empresa" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigo_empresa"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo_empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="orden" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="orden"/>
+		<property name="com.jaspersoft.studio.field.label" value="orden"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="0" width="170" height="19" uuid="98de8dd7-f82d-41be-bf0c-d4ade979d2f5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="0" width="249" height="34" uuid="12b2e43a-c6d7-4140-8be8-e2262975641d"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle Registro de Abonos ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="19" width="16" height="15" uuid="f3b5828b-ad48-4404-9378-58e4be416a9b"/>
+				<text><![CDATA[al ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="19" width="100" height="15" uuid="e331d817-0c97-44fe-9142-5587cb267eea"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango de Fechas:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="118" y="19" width="50" height="15" uuid="5f4d5381-1037-43db-ac68-4061eb0c5f21"/>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="185" y="19" width="60" height="15" uuid="ef12ab48-83a1-4d06-962a-69701590a908"/>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="190" splitType="Stretch">
+			<crosstab>
+				<reportElement x="10" y="10" width="550" height="180" uuid="ecca24c9-a525-477a-a423-15ea599c057b">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab_CH"/>
+					<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab_CG"/>
+					<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab_CT"/>
+					<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab_CD"/>
+				</reportElement>
+				<crosstabDataset>
+					<dataset resetType="Report"/>
+				</crosstabDataset>
+				<rowGroup name="empresa" width="120" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{empresa}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField textAdjust="ScaleFont">
+								<reportElement x="0" y="0" width="120" height="20" uuid="693e3b97-14b5-4e28-ac38-7eda603a2be0"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{empresa}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement x="0" y="0" width="120" height="20" uuid="acfc8292-f415-42dc-8590-0d18c5826310"/>
+								<textElement textAlignment="Right">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Total empresa]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="descripcion" height="20" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{descripcion}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField>
+								<reportElement x="0" y="0" width="60" height="20" uuid="dc5b1d4b-5c0a-4128-8a38-c2e0bb0323ab"/>
+								<textElement textAlignment="Right">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{descripcion}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="20" uuid="70575ddd-1c64-41e1-8367-91726ac67cc5"/>
+								<textElement textAlignment="Right">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total Aportes]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="monto_MEASURE" class="java.lang.Integer">
+					<measureExpression><![CDATA[$F{monto}]]></measureExpression>
+				</measure>
+				<crosstabCell width="60" height="20">
+					<cellContents mode="Opaque" style="Crosstab_CD">
+						<textField pattern="#,###.###;#,###.###-" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="60" height="20" uuid="17e3111a-2bdf-4353-85da-81efea33bff2"/>
+							<textElement textAlignment="Right">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{monto_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="descripcion">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,###.###;#,###.###-">
+							<reportElement x="0" y="0" width="60" height="20" uuid="4b2f659c-9630-4d53-86af-24f5bf44850c"/>
+							<textElement textAlignment="Right">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{monto_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="empresa">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,###.###;#,###.###-" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="60" height="20" uuid="cc8badca-46a8-4aa6-b036-fc2a01599570"/>
+							<textElement textAlignment="Right">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{monto_MEASURE_descripcion_ALL}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="empresa" columnTotalGroup="descripcion">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,###.###;#,###.###-" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="60" height="20" uuid="ef319e1d-d7f2-40ce-98ae-f1748cc7c8b1"/>
+							<textElement textAlignment="Right">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{monto_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+	<noData>
+		<band>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</noData>
+</jasperReport>

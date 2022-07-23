@@ -131,6 +131,7 @@
                             <p:menuitem id="om_liquidacion" value="Liquidación" icon="pi pi-fw pi-briefcase" outcome="/webapp/liquidacionEmpresas/registro.xhtml" />
                             <p:menuitem id="om_impresion" value="Impresión" icon="pi pi-fw pi-print" outcome="/webapp/liquidacionEmpresas/impresion.xhtml" />
                             <p:menuitem id="om_liquidacion_m" value="Registro Movtos." icon="pi pi-fw pi-database" outcome="/webapp/liquidacionEmpresas/registroMovimientos.xhtml" />
+                            <p:menuitem id="om_visor_m" value="Visor Movtos." icon="pi pi-fw pi-search" outcome="/webapp/liquidacionEmpresas/movimientos.xhtml" />
                             <p:menuitem id="om_liquidacion_cc" value="CC. Empresas" icon="pi pi-fw pi-file-excel" outcome="/webapp/liquidacionEmpresas/ccempresas.xhtml" />
 
                             <p:submenu label="Reportes" icon="pi pi-fw pi-print">
@@ -139,13 +140,14 @@
                                 <p:menuitem id="om_resumen_ingresos_bus" value="Resumen x Bus" outcome="/webapp/reportes/liquidacionempresa/resumeningresosbus.xhtml" />
                                 <p:menuitem id="om_pago_minutos_bus" value="Cobro Minutos x Bus" outcome="/webapp/reportes/liquidacionempresa/detallecobrominutosbus.xhtml" />
                                 <p:menuitem id="om_cobro_minutos_bus" value="Pago Minutos x Bus" outcome="/webapp/reportes/liquidacionempresa/detallepagominutosbus.xhtml" />
+                                <p:menuitem id="om_proceso_empresarios" value="Proceso Emp." outcome="/webapp/liquidacionEmpresas/procesoempresas.xhtml" />
                             </p:submenu>
                             <p:submenu id="liq_avanzado" label="Avanzado" icon="pi pi-fw pi-cog" expanded="false">
                                 <p:menuitem id="om_tipo_abono" value="Def. de Abonos" icon="pi pi-fw pi-bars" outcome="/webapp/liquidacionEmpresas/tipoAbono/List.xhtml" />
                                 <p:menuitem id="om_tipo_cargo" value="Def. de Cargos" icon="pi pi-fw pi-bars" outcome="/webapp/liquidacionEmpresas/tipoCargo/List.xhtml" />
                             </p:submenu>
                         </p:submenu>
-                    </p:submenu>>
+                    </p:submenu>
                     <!--<p:submenu label="Contabilidad" >
                         <p:submenu id="om_adm_compras" label="Compras" icon="pi pi-fw pi-shopping-cart" expanded="false">
                             <p:menuitem id="om_compra_combustible" value="Compras de Comb." icon="pi pi-fw pi-car" outcome="/webapp/bomba/ventaCombustible/List.xhtml" />

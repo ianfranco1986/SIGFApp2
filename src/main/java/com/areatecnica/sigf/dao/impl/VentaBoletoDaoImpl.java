@@ -76,6 +76,19 @@ public class VentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements I
         }
     }
 
+    public VentaBoleto findByBusGroupByBoleto(Bus bus, Boleto boleto) {
+        try {
+            return (VentaBoleto) this.entityManager.createNamedQuery("VentaBoleto.findByBusGroupByBoleto").
+                    setParameter("ventaBoletoIdBus", bus).
+                    setParameter("boleto", boleto).
+                    setMaxResults(1).
+                    getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+    
+    
     @Override
     public VentaBoleto findBySerie(int serie) {
         try {

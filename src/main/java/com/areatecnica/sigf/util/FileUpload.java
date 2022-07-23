@@ -53,10 +53,8 @@ public class FileUpload implements java.io.Serializable {
 
     public void upload() {
         if (file != null) {
-            FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded." + this.file);
+            FacesMessage message = new FacesMessage("El archivo ", file.getFileName() + " fue cargado." + this.file);
             FacesContext.getCurrentInstance().addMessage(null, message);
-
-            System.err.println("CONTENIDO:" + this.file);
         }
 
     }

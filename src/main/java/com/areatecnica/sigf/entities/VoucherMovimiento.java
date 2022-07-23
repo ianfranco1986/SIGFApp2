@@ -26,7 +26,7 @@ import javax.persistence.Table;
  * @author ianfrancoconcha
  */
 @Entity
-@Table(name = "voucher_movimiento", catalog = "sigfdb", schema = "")
+@Table(name = "voucher_movimiento")
 @NamedQueries({
     @NamedQuery(name = "VoucherMovimiento.findAll", query = "SELECT v FROM VoucherMovimiento v"),
     @NamedQuery(name = "VoucherMovimiento.findByVoucherMovimientoId", query = "SELECT v FROM VoucherMovimiento v WHERE v.voucherMovimientoId = :voucherMovimientoId"),
@@ -37,7 +37,7 @@ public class VoucherMovimiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Basic(optional = false)
     @Column(name = "voucher_movimiento_id")
     private Integer voucherMovimientoId;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0636735f-73b4-4c7b-9ec2-5cdf0835af58">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" printOrder="Horizontal" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0636735f-73b4-4c7b-9ec2-5cdf0835af58">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="193"/>
@@ -17,10 +17,12 @@
 	</parameter>
 	<parameter name="codigo" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="fechaCompleta" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="caratula" class="java.lang.Boolean" isForPrompting="false"/>
-	<parameter name="ingresosbus" class="java.lang.Boolean" isForPrompting="false"/>
-	<parameter name="minutos" class="java.lang.Boolean" isForPrompting="false"/>
-	<parameter name="boletos" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="resumenFinal" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="resumenIngresos" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="resumenEgresos" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="saldo" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="fecha" class="java.util.Date" isForPrompting="false"/>
+	<parameter name="cuentas" class="java.lang.Boolean" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT 1 AS hoja1, 
 2 AS hoja2, 
@@ -34,14 +36,15 @@
 	<field name="hoja4" class="java.lang.Long"/>
 	<field name="hoja5" class="java.lang.Long"/>
 	<field name="hoja6" class="java.lang.Long"/>
-	<group name="hoja1" isStartNewPage="true" footerPosition="ForceAtBottom" keepTogether="true" preventOrphanFooter="true">
+	<group name="hoja1" isStartNewPage="true" isResetPageNumber="true" isReprintHeaderOnEachPage="true" footerPosition="ForceAtBottom" keepTogether="true" preventOrphanFooter="true">
 		<groupExpression><![CDATA[$F{hoja1}]]></groupExpression>
 		<groupHeader>
-			<band height="82">
-				<printWhenExpression><![CDATA[$P{caratula}]]></printWhenExpression>
+			<band height="182">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<printWhenExpression><![CDATA[$P{resumenIngresos}]]></printWhenExpression>
 				<subreport>
-					<reportElement x="2" y="0" width="610" height="78" isPrintInFirstWholeBand="true" uuid="80f8fcf7-f208-472d-b3fb-d3dd75d1ab97">
-						<printWhenExpression><![CDATA[$P{caratula}]]></printWhenExpression>
+					<reportElement x="0" y="60" width="610" height="108" isPrintInFirstWholeBand="true" uuid="80f8fcf7-f208-472d-b3fb-d3dd75d1ab97">
+						<printWhenExpression><![CDATA[$P{resumenFinal}]]></printWhenExpression>
 					</reportElement>
 					<subreportParameter name="desde">
 						<subreportParameterExpression><![CDATA[$P{desde}]]></subreportParameterExpression>
@@ -65,20 +68,56 @@
 						<subreportParameterExpression><![CDATA[$P{nombreUsuario}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="caratula">
-						<subreportParameterExpression><![CDATA[$P{caratula}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{resumenFinal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="ingresosbus">
-						<subreportParameterExpression><![CDATA[$P{ingresosbus}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{resumenIngresos}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="minutos">
-						<subreportParameterExpression><![CDATA[$P{minutos}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{resumenEgresos}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="boletos">
-						<subreportParameterExpression><![CDATA[$P{boletos}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{saldo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="fecha">
+						<subreportParameterExpression><![CDATA[$P{fecha}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["inf-liquidacion_empresa.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["inf-crosstab_abonos.jasper"]]></subreportExpression>
 				</subreport>
+				<staticText>
+					<reportElement x="18" y="0" width="170" height="19" uuid="2b1b7c4c-b5e0-4db9-a1b3-b8702efe5a8f"/>
+					<textElement>
+						<font fontName="SansSerif" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ñandu Tur S.A.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="323" y="0" width="249" height="34" uuid="4bbb4e7e-b63b-4fe1-97c9-2bb5da219154"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Detalle Registro de Abonos ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="169" y="19" width="16" height="15" uuid="d1b33fd7-c76c-47f2-98dd-41648417e1d6"/>
+					<text><![CDATA[al ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="18" y="19" width="100" height="15" uuid="1a0e7aad-fecb-4a2b-8b55-c3dfccdb7e68"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Rango de Fechas:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="118" y="19" width="50" height="15" uuid="46814977-ec54-4827-951a-ec8b82d10c37"/>
+					<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="185" y="19" width="60" height="15" uuid="9fce3a7c-9524-4f9c-a94d-83e26dbebbef"/>
+					<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 	</group>
@@ -86,13 +125,13 @@
 		<groupExpression><![CDATA[$F{hoja2}]]></groupExpression>
 		<groupHeader>
 			<band height="137">
-				<printWhenExpression><![CDATA[$P{ingresosbus}]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$P{resumenIngresos}]]></printWhenExpression>
 				<break>
 					<reportElement x="0" y="20" width="100" height="1" uuid="70b316ff-f10b-47eb-a61c-42cd87443d72"/>
 				</break>
 				<subreport>
 					<reportElement x="2" y="37" width="610" height="100" isRemoveLineWhenBlank="true" uuid="ed0530dd-3cd4-4578-a362-3f17a9c96618">
-						<printWhenExpression><![CDATA[$P{ingresosbus}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{resumenIngresos}]]></printWhenExpression>
 					</reportElement>
 					<subreportParameter name="desde">
 						<subreportParameterExpression><![CDATA[$P{desde}]]></subreportParameterExpression>
@@ -125,10 +164,10 @@
 		<groupExpression><![CDATA[$F{hoja3}]]></groupExpression>
 		<groupHeader>
 			<band height="122">
-				<printWhenExpression><![CDATA[$P{minutos}]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$P{resumenEgresos}]]></printWhenExpression>
 				<subreport>
 					<reportElement x="2" y="22" width="610" height="100" isRemoveLineWhenBlank="true" uuid="87926248-4542-4591-8650-151bbaf73a98">
-						<printWhenExpression><![CDATA[$P{minutos}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{resumenEgresos}]]></printWhenExpression>
 					</reportElement>
 					<subreportParameter name="desde">
 						<subreportParameterExpression><![CDATA[$P{desde}]]></subreportParameterExpression>
@@ -164,10 +203,10 @@
 		<groupExpression><![CDATA[$F{hoja5}]]></groupExpression>
 		<groupHeader>
 			<band height="105">
-				<printWhenExpression><![CDATA[$P{minutos}]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$P{resumenEgresos}]]></printWhenExpression>
 				<subreport>
 					<reportElement x="2" y="19" width="610" height="86" isRemoveLineWhenBlank="true" uuid="90fce2fa-52e4-4890-9547-379c6ce3cb4a">
-						<printWhenExpression><![CDATA[$P{minutos}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{resumenEgresos}]]></printWhenExpression>
 					</reportElement>
 					<subreportParameter name="desde">
 						<subreportParameterExpression><![CDATA[$P{desde}]]></subreportParameterExpression>
@@ -268,7 +307,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="321" y="19" width="100" height="30" uuid="be09c08e-483e-4ab0-b1e8-68a4fbdc878b"/>
-				<textFieldExpression><![CDATA[$P{minutos}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{resumenEgresos}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

@@ -9,102 +9,193 @@
 
     <ui:define name="content">
         <div class="dashboard p-grid">
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <div class="widget-overview overview-box-1">
-                    <div class="overview-box-title">
-                        <i class="pi pi-dollar"/>
-                        <span>Total Caja</span>
-                    </div>
-                    <div class="overview-box-count">0</div>
-                    <div class="overview-box-stats"> </div>
-                </div>
+            <div class="p-col-12">
+                <h4>Recaudación</h4>
+                <p:card id="guias2">
+                    <h:form>
+                        <div class="ui-fluid p-formgrid p-grid">
+                            <div class="p-field p-col">
+                                <label class="p-text-bold">Folio</label>
+                                <p:inputNumber id="float-folio" value="#{drController.folio}" decimalPlaces="0" modifyValueOnWheel="false" tabindex="1" required="true" requiredMessage="Debe ingresar un número" onfocus="this.setSelectionRange(0, this.value.length)">
+                                    <p:ajax event="blur" listener="#{drController.handleFolioChange}" update="growl, selectBus, selectConductor, minutos,:FormBoletos:boletos2, :VCForm:ventaCombustible"/>
+                                </p:inputNumber>
+
+                            </div>
+                            <div class="p-field p-col">
+                                <label class="p-text-bold">N° Bus</label>
+                                <p:selectOneMenu id="selectBus" value="#{drController.selectedBus}" autoWidth="false" filter="true" disabled="#{drController.flag}" converter="omnifaces.SelectItemsConverter" tabindex="2" required="true" requiredMessage="Debe seleccionar un Bus">
+                                    <f:selectItems value="#{drController.busItems}"
+                                                   var="bus"
+                                                   itemValue="#{bus}"
+                                                   itemLabel="#{bus.busNumero}"
+                                                   />
+                                </p:selectOneMenu>
+
+                            </div>
+                            <div class="p-field p-col">
+                                <label class="p-text-bold">Conductor</label>
+                                <p:selectOneMenu id="selectConductor" value="#{drController.selectedTrabajador}" autoWidth="false" filter="true" filterMatchMode="contains" disabled="#{drController.flag}" converter="omnifaces.SelectItemsConverter" tabindex="3" required="true" requiredMessage="Debe seleccionar un Conductor">
+                                    <f:selectItems value="#{drController.trabajadorItems}"
+                                                   var="trabajador"
+                                                   itemValue="#{trabajador}"
+                                                   itemLabel="#{trabajador}"
+                                                   />
+                                </p:selectOneMenu>
+                            </div>
+
+                        </div>
+                    </h:form>
+                </p:card>
             </div>
-            <div class="p-col-12 p-md-6 p-lg-2">
-                <div class="widget-overview overview-box-2">
-                    <div class="overview-box-title">
-                        <i class="pi pi-dollar"/>
-                        <span>Guías</span>
+
+            <div class="ui-fluid p-col-12 p-md-6 p-lg-4">
+                <p:card id="guias" style="height: 300px">
+                    <h5>Guías</h5>
+                    <div class="p-field p-grid">
+                        <label class="p-col-fixed p-text-bold" style="width:100px; color: #3984b8">Admin.</label>
+                        <div class="p-col">
+                            <p:inputNumber id="float-admin1" value="#{drController.administracion}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                        </div>
                     </div>
-                    <div class="overview-box-count">0</div>
-                    <div class="overview-box-stats"></div>
-                </div>
-            </div>
-            <div class="p-col-12 p-md-6 p-lg-2">
-                <div class="widget-overview overview-box-3">
-                    <div class="overview-box-title">
-                        <i class="pi pi-dollar"/>
-                        <span>Combustible</span>
+                    <div class="p-field p-grid">
+                        <label class="p-col-fixed p-text-bold" style="width:100px; color: #3984b8">Cuota Extra</label>
+                        <div class="p-col">
+                            <p:inputNumber id="float-cuota" value="#{drController.cuotaExtra}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                        </div>
                     </div>
-                    <div class="overview-box-count">0</div>
-                    <div class="overview-box-stats"></div>
-                </div>
-            </div>
-            <div class="p-col-12 p-md-6 p-lg-2">
-                <div class="widget-overview overview-box-4">
-                    <div class="overview-box-title">
-                        <i class="pi pi-dollar"/>
-                        <span>Minutos</span>
+                    <div class="p-field p-grid">
+                        <label class="p-col-fixed p-text-bold" style="width:100px; color: #3984b8">Imposiciones</label>
+                        <div class="p-col">
+                            <p:inputNumber id="float-impos" value="#{drController.imposiciones}" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                        </div>
                     </div>
-                    <div class="overview-box-count">0</div>
-                    <div class="overview-box-stats"></div>
-                </div>
+                    <p:button value="Recaudar" icon="pi pi-check" disabled="#{empty drController.selectedGuia}" styleClass="ui-button-success"/>
+                </p:card>
             </div>
-            <div class="p-col-12 p-md-6 p-lg-2">
-                <div class="widget-overview overview-box-4">
-                    <div class="overview-box-title">
-                        <i class="pi pi-dollar"/>
-                        <span>Extras</span>
+
+            <div class="ui-fluid p-col-12 p-md-6 p-lg-4">
+                <p:card id="minutos" style="height: 300px">
+                    <h5>Minutos</h5>
+                    <h4 style="color: #3984b8">$ #{drController.getFormatValue(drController.deudaMinutos)}</h4>
+                    <div class="p-field">
+                        <p:button value="Agregar" icon="pi pi-plus" disabled="#{drController.deudaMinutos eq 0}"/>
                     </div>
-                    <div class="overview-box-count">0</div>
-                    <div class="overview-box-stats"></div>
-                </div>
+
+                    <div class="p-field">
+                        <p:button value="Ver deudas" icon="pi pi-search" disabled="#{drController.deudaMinutos eq 0}" styleClass="ui-button-warning"/>
+                    </div>
+
+                </p:card>
             </div>
+
+            <div class="ui-fluid p-col-12 p-md-6 p-lg-4">
+                <h:form id="VCForm">
+                    <p:card id="ventaCombustible" style="height: 300px">
+                        <h5>Bomba</h5>
+                        <h4 style="color: #3984b8">Total: $ #{drController.getFormatValue(drController.deudaCombustible)}</h4>
+                        <p:scrollPanel style="height:100px">
+                            <p:repeat value="#{drController.ventasCombustibleItems}" var="venta">
+                                <div class="p-field">
+                                    <p:commandLink update="growl" ajax="true" action="#{drController.addVentaCombustible(venta)}" style="padding: .5em 1em;" styleClass="ui-button">
+                                        <h:outputText value="$ #{drController.getFormatValue(venta.ventaCombustibleTotal)} - #{venta.ventaCombustibleNumeroBoleta}" style="color: white"/>
+                                    </p:commandLink>
+                                </div>
+                            </p:repeat>
+                        </p:scrollPanel>
+                        <p:spacer/>
+                        <div class="p-field">
+                            <p:commandButton value="Detalle de Deudas" icon="pi pi-search" disabled="#{drController.deudaCombustible eq 0}" ajax="true" styleClass="ui-button-warning"/>
+                        </div>
+
+
+                    </p:card>
+                </h:form>
+            </div>
+
+            <div class="ui-fluid p-col-12 p-md-6 p-lg-4">
+                <p:card id="totalRecaudacion" >
+                    <h5>Total Guías:</h5>
+                    <h2 class="text-right">$ 0</h2>
+                    <h5>Total Minutos:</h5>
+                    <h2 class="text-right">$ 0</h2>
+                    <h5>Total Bomba:</h5>
+                    <h2 class="text-right">$ 0</h2>
+
+                    <p:button value="Recaudar" icon="pi pi-check" disabled="#{empty drController.selectedGuia}" styleClass="ui-button-success"/>
+                </p:card>
+            </div>
+
+            <div  class="ui-fluid p-col-8">
+                <h:form id="FormBoletos">
+                    <p:card id="boletos2" >
+
+                        <h5>Boletos</h5>
+                        <p:dataTable var="boleto" value="#{drController.ventasBoletosItems}">
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{boleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" />
+                            </p:column>
+
+                            <p:column headerText="Serie">
+                                <h:outputText value="#{boleto.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#{boleto.ventaBoletoFecha}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:card>
+                </h:form>
+            </div>
+
+
+
             <div class="p-col-12 p-lg-6">
                 <div class="card widget-sale-table">
                     <h5>Últimas Recaudaciones</h5>
                     <table>
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>Total Sales</th>
-                            <th>Change</th>
-                        </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>Total Sales</th>
+                                <th>Change</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><p:graphicImage name="images/dashboard/flag-brazil.png" library="avalon-layout"
-                                                width="45"/></td>
-                            <td>BRAZIL</td>
-                            <td>4234</td>
-                            <td>+35%</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><p:graphicImage name="images/dashboard/flag-china.png" library="avalon-layout"
-                                                width="45"/></td>
-                            <td>CHINA</td>
-                            <td>3214</td>
-                            <td>-25%</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><p:graphicImage name="images/dashboard/flag-belgium.png" library="avalon-layout"
-                                                width="45"/></td>
-                            <td>BELGIUM</td>
-                            <td>2842</td>
-                            <td>+28%</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><p:graphicImage name="images/dashboard/flag-france.png" library="avalon-layout"
-                                                width="45"/></td>
-                            <td>FRANCE</td>
-                            <td>1942</td>
-                            <td>+15%</td>
-                        </tr>
+                            <tr>
+                                <td>1</td>
+                                <td><p:graphicImage name="images/dashboard/flag-brazil.png" library="avalon-layout"
+                                                    width="45"/></td>
+                                <td>BRAZIL</td>
+                                <td>4234</td>
+                                <td>+35%</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><p:graphicImage name="images/dashboard/flag-china.png" library="avalon-layout"
+                                                    width="45"/></td>
+                                <td>CHINA</td>
+                                <td>3214</td>
+                                <td>-25%</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><p:graphicImage name="images/dashboard/flag-belgium.png" library="avalon-layout"
+                                                    width="45"/></td>
+                                <td>BELGIUM</td>
+                                <td>2842</td>
+                                <td>+28%</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><p:graphicImage name="images/dashboard/flag-france.png" library="avalon-layout"
+                                                    width="45"/></td>
+                                <td>FRANCE</td>
+                                <td>1942</td>
+                                <td>+15%</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -115,58 +206,58 @@
                     <h5>Product Statistics</h5>
                     <table>
                         <tbody>
-                        <tr>
-                            <td class="col-overview col-wait">
-                                <div>W</div>
-                            </td>
-                            <td class="col-status">
-                                <span class="status-time">Last Update: 12m ago</span>
-                                <span class="status-text">Currently Waiting</span>
-                            </td>
-                            <td class="col-numbers">
-                                <div>253 <span>Shipments</span></div>
-                                <div>584 <span>Orders</span></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-overview col-success">
-                                <div>S</div>
-                            </td>
-                            <td class="col-status">
-                                <span class="status-time">Last Update: 12m ago</span>
-                                <span class="status-text">Successfully Completed</span>
-                            </td>
-                            <td class="col-numbers">
-                                <div>312 <span>Shipments</span></div>
-                                <div>409 <span>Orders</span></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-overview col-delay">
-                                <div>D</div>
-                            </td>
-                            <td class="col-status">
-                                <span class="status-time">Last Update: 6m ago</span>
-                                <span class="status-text">Delayed</span>
-                            </td>
-                            <td class="col-numbers">
-                                <div>122 <span>Shipments</span></div>
-                                <div>341 <span>Orders</span></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-overview col-preorder">
-                                <div>P</div>
-                            </td>
-                            <td class="col-status">
-                                <span class="status-time">Last Update: 15m ago</span>
-                                <span class="status-text">Preordered</span>
-                            </td>
-                            <td class="col-numbers">
-                                <div>221 <span>Shipments</span></div>
-                                <div>332 <span>Orders</span></div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td class="col-overview col-wait">
+                                    <div>W</div>
+                                </td>
+                                <td class="col-status">
+                                    <span class="status-time">Last Update: 12m ago</span>
+                                    <span class="status-text">Currently Waiting</span>
+                                </td>
+                                <td class="col-numbers">
+                                    <div>253 <span>Shipments</span></div>
+                                    <div>584 <span>Orders</span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-overview col-success">
+                                    <div>S</div>
+                                </td>
+                                <td class="col-status">
+                                    <span class="status-time">Last Update: 12m ago</span>
+                                    <span class="status-text">Successfully Completed</span>
+                                </td>
+                                <td class="col-numbers">
+                                    <div>312 <span>Shipments</span></div>
+                                    <div>409 <span>Orders</span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-overview col-delay">
+                                    <div>D</div>
+                                </td>
+                                <td class="col-status">
+                                    <span class="status-time">Last Update: 6m ago</span>
+                                    <span class="status-text">Delayed</span>
+                                </td>
+                                <td class="col-numbers">
+                                    <div>122 <span>Shipments</span></div>
+                                    <div>341 <span>Orders</span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-overview col-preorder">
+                                    <div>P</div>
+                                </td>
+                                <td class="col-status">
+                                    <span class="status-time">Last Update: 15m ago</span>
+                                    <span class="status-text">Preordered</span>
+                                </td>
+                                <td class="col-numbers">
+                                    <div>221 <span>Shipments</span></div>
+                                    <div>332 <span>Orders</span></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -215,152 +306,7 @@
                 </div>
             </div>
 
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <div class="card widget-task-list">
-                    <h5>Tasks</h5>
-                    <ul>
-                        <li>
-                            <p:selectBooleanCheckbox/>
-                            <span class="task-name">Sales Reports</span>
-                            <i class="pi pi-briefcase"/>
-                        </li>
-                        <li>
-                            <p:selectBooleanCheckbox/>
-                            <span class="task-name">Pay Invoices</span>
-                            <i class="pi pi-money-bill"/>
-                        </li>
-                        <li>
-                            <p:selectBooleanCheckbox/>
-                            <span class="task-name">Dinner with Tony</span>
-                            <i class="pi pi-comments"/>
-                        </li>
-                        <li>
-                            <p:selectBooleanCheckbox/>
-                            <span class="task-name">Client Meeting</span>
-                            <i class="pi pi-user"/>
-                        </li>
-                        <li>
-                            <p:selectBooleanCheckbox/>
-                            <span class="task-name">New Theme</span>
-                            <i class="pi pi-palette"/>
-                        </li>
-                        <li>
-                            <p:selectBooleanCheckbox/>
-                            <span class="task-name">Flight Ticket</span>
-                            <i class="pi pi-ticket"/>
-                        </li>
-                        <li>
-                            <p:selectBooleanCheckbox/>
-                            <span class="task-name">Generate Charts</span>
-                            <i class="pi pi-chart-bar"/>
-                        </li>
-                        <li>
-                            <p:selectBooleanCheckbox/>
-                            <span class="task-name">Call Client</span>
-                            <i class="pi pi-mobile"/>
-                        </li>
-                    </ul>
-                </div>
-            </div>
 
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <div class="card ui-fluid widget-contact-form">
-                    <h5>Contact Us</h5>
-                    <div class="p-col-12">
-                        <p:selectOneMenu id="selectCity" autoWidth="false">
-                            <f:selectItem itemLabel="Select City" itemValue=""/>
-                            <f:selectItem itemLabel="New York" itemValue="New York"/>
-                            <f:selectItem itemLabel="Rome" itemValue="Rome"/>
-                            <f:selectItem itemLabel="London" itemValue="London"/>
-                            <f:selectItem itemLabel="Istanbul" itemValue="Istanbul"/>
-                            <f:selectItem itemLabel="Paris" itemValue="Paris"/>
-                        </p:selectOneMenu>
-                    </div>
-                    <div class="p-col-12">
-                        <p:inputText placeholder="Name"/>
-                    </div>
-                    <div class="p-col-12">
-                        <p:inputText placeholder="Email"/>
-                    </div>
-                    <div class="p-col-12">
-                        <p:inputText placeholder="Location"/>
-                    </div>
-                    <div class="p-col-12">
-                        <p:inputTextarea placeholder="Message" rows="1" autoResize="false"/>
-                    </div>
-                    <div class="p-col-12">
-                        <p:button value="Send" icon="pi pi-check"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-col-12 p-lg-4">
-                <div class="card widget-contacts">
-                    <h5>Team</h5>
-                    <ul>
-                        <li class="clearfix">
-                            <p:graphicImage name="images/avatar.png" library="avalon-layout" width="45"/>
-                            <div class="contact-info">
-                                <span class="name">Madison Hughes (me)</span>
-                                <span class="location">jane@pn-manhattan.com</span>
-                            </div>
-                            <div class="contact-actions">
-                                <span class="connection-status online">online</span>
-                                <i class="pi pi-fw pi-comment"/>
-                                <i class="pi pi-fw pi-reply"/>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <p:graphicImage name="images/avatar1.png" library="avalon-layout" width="45"/>
-                            <div class="contact-info">
-                                <span class="name">Joshua Williams</span>
-                                <span class="location">josh@pn-manhattan.com</span>
-                            </div>
-                            <div class="contact-actions">
-                                <span class="connection-status online">online</span>
-                                <i class="pi pi-fw pi-comment"/>
-                                <i class="pi pi-fw pi-reply"/>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <p:graphicImage name="images/avatar2.png" library="avalon-layout" width="45"/>
-                            <div class="contact-info">
-                                <span class="name">Emily Clark</span>
-                                <span class="location">emily@pn-manhattan.com</span>
-                            </div>
-                            <div class="contact-actions">
-                                <span class="connection-status offline">offline</span>
-                                <i class="pi pi-fw pi-comment"/>
-                                <i class="pi pi-fw pi-reply"/>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <p:graphicImage name="images/avatar3.png" library="avalon-layout" width="45"/>
-                            <div class="contact-info">
-                                <span class="name">Tim Johnson</span>
-                                <span class="location">tim@pn-manhattan.com</span>
-                            </div>
-                            <div class="contact-actions">
-                                <span class="connection-status online">online</span>
-                                <i class="pi pi-fw pi-comment"/>
-                                <i class="pi pi-fw pi-reply"/>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <p:graphicImage name="images/avatar4.png" library="avalon-layout" width="45"/>
-                            <div class="contact-info">
-                                <span class="name">David Stark</span>
-                                <span class="location">kelly@pn-manhattan.com</span>
-                            </div>
-                            <div class="contact-actions">
-                                <span class="connection-status offline">offline</span>
-                                <i class="pi pi-fw pi-comment"/>
-                                <i class="pi pi-fw pi-reply"/>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
 
             <div class="p-col-12 p-lg-8">
                 <div class="card widget-chat">
@@ -501,8 +447,7 @@
 
             <div class="p-col-12">
                 <div class="card">
-                    <h5>Calendar</h5>
-                    <p:schedule value="#{calendarDemoView.eventModel}" leftHeaderTemplate="prev,next"/>
+
                 </div>
             </div>
         </div>

@@ -24,16 +24,17 @@ import java.util.List;
 @EntityListeners(AuditListener.class)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "VentaBoleto.findAll", query = "SELECT v FROM VentaBoleto v")
-    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoId", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoId = :ventaBoletoId")
-    , @NamedQuery(name = "VentaBoleto.findBySerie", query = "SELECT v FROM VentaBoleto v WHERE :inventarioCajaSerie BETWEEN v.ventaBoletoIdInventarioCaja.inventarioCajaSerie AND (v.ventaBoletoIdInventarioCaja.inventarioCajaSerie+1000) ")
-    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuiaBusBoleto", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus = :ventaBoletoIdBus AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto = :inventarioInternoIdBoleto ORDER BY v.ventaBoletoId DESC")
-    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoFecha", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoFecha = :ventaBoletoFecha")
-    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoFecha = :ventaBoletoFecha AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja ORDER BY v.ventaBoletoNumeroBoleta ASC")
-    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoNumeroBoleta", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoNumeroBoleta = :ventaBoletoNumeroBoleta")
-    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoValor", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoValor = :ventaBoletoValor")
-    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoRecaudado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoRecaudado = :ventaBoletoRecaudado")
-    , @NamedQuery(name = "VentaBoleto.findByVentaBoletoUtilizado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoUtilizado = :ventaBoletoUtilizado")})
+    @NamedQuery(name = "VentaBoleto.findAll", query = "SELECT v FROM VentaBoleto v"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoId", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoId = :ventaBoletoId"),
+    @NamedQuery(name = "VentaBoleto.findBySerie", query = "SELECT v FROM VentaBoleto v WHERE :inventarioCajaSerie BETWEEN v.ventaBoletoIdInventarioCaja.inventarioCajaSerie AND (v.ventaBoletoIdInventarioCaja.inventarioCajaSerie+1000) "),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuiaBusBoleto", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus = :ventaBoletoIdBus AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto = :inventarioInternoIdBoleto ORDER BY v.ventaBoletoId DESC"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoFecha", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoFecha = :ventaBoletoFecha"),
+    @NamedQuery(name = "VentaBoleto.findByBusGroupByBoleto", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus = :ventaBoletoIdBus AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto = :boleto ORDER BY v.ventaBoletoFecha DESC"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoFecha = :ventaBoletoFecha AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja ORDER BY v.ventaBoletoNumeroBoleta ASC"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoNumeroBoleta", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoNumeroBoleta = :ventaBoletoNumeroBoleta"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoValor", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoValor = :ventaBoletoValor"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoRecaudado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoRecaudado = :ventaBoletoRecaudado"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoUtilizado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoUtilizado = :ventaBoletoUtilizado")})
 public class VentaBoleto extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,7 +66,7 @@ public class VentaBoleto extends BaseEntity implements Serializable {
     private int ventaBoletoFolioSolyMar;
     @Column(name = "venta_boleto_utilizado")
     private Boolean ventaBoletoUtilizado;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,  mappedBy = "recaudacionBoletoIdVentaBoleto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "recaudacionBoletoIdVentaBoleto", fetch = FetchType.LAZY)
     private List<RecaudacionBoleto> recaudacionBoletoList;
     @JoinColumn(name = "venta_boleto_id_bus", referencedColumnName = "bus_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -77,9 +78,8 @@ public class VentaBoleto extends BaseEntity implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Trabajador ventaBoletoIdTrabajador;
     @Transient
-    private Guia guia; 
-    
-    
+    private Guia guia;
+
     public VentaBoleto() {
     }
 
@@ -98,10 +98,10 @@ public class VentaBoleto extends BaseEntity implements Serializable {
     }
 
     @PostUpdate
-    public void postUpdated(){
-        
+    public void postUpdated() {
+
     }
-    
+
     public Integer getVentaBoletoId() {
         return ventaBoletoId;
     }

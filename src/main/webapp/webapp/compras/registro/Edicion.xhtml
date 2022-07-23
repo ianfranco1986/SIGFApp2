@@ -171,6 +171,8 @@
                             <p:dataTable id="datalist"
                                          widgetVar="datalistWidget"
                                          value="#{edicionComprasController.movimientoItems}"
+                                         selection="#{edicionComprasController.movimiento}"
+                                         selectionMode="single"
                                          lazy="false"
                                          rowKey="#{item.voucherMovimientoId}"
                                          var="item"
@@ -214,15 +216,16 @@
                                         <f:facet name="input">
                                             <p:autoComplete id="cuenta" 
                                                             value="#{item.voucherMovimientoCuentaId}" 
+                                                            converter="cuentaMayorConverter" 
                                                             completeMethod="#{edicionComprasController.completeText}" 
                                                             var="country" 
                                                             itemLabel="#{country.cuentaMayorNombre}" 
                                                             itemValue="#{country}"
-                                                            converter="cuentaMayorConverter" 
+                                                            required="true"
                                                             forceSelection="true" 
                                                             scrollHeight="250"
-                                                            dropdown="true"> 
-                                                <p:ajax event="itemSelect" listener="#{edicionComprasController.onItemSelect}" update="datalist, growl"/>
+                                                            dropdown="true"
+                                                            > 
                                             </p:autoComplete>
                                         </f:facet>
                                     </p:cellEditor>

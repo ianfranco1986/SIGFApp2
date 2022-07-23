@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inf-crosstab_liquidacion_empresa" pageWidth="612" pageHeight="792" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="9d042d63-1b18-415f-8a3a-c5dc0ef03570">
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="list" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.util.Date"/>
+	<queryString language="SQL">
+		<![CDATA[call aportes_empresa_grupal_crosstab( 1 ,  $P{desde} ,  $P{desde} )]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="monto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="monto"/>
+		<property name="com.jaspersoft.studio.field.label" value="monto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="empresa"/>
+		<property name="com.jaspersoft.studio.field.label" value="empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="codigo_empresa" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigo_empresa"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo_empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<field name="orden" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="orden"/>
+		<property name="com.jaspersoft.studio.field.label" value="orden"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_text_2"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="159" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="114" height="19" uuid="be6aeaa8-df0a-45ef-a855-ad887da7d117"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="19" width="208" height="21" uuid="2ed517ea-8b00-405c-b85c-c0a6a40d76a7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Resumen Ingresos]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="50" width="208" height="20" uuid="4fe1ea9d-b476-43ef-957a-efa0dca43e4a"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Periodo"+$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="160" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -17,9 +17,15 @@
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-col-12 p-md-6">
                     <label for="mes">Empresa</label>
-                    <p:selectOneMenu id="idEmpresa" value="#{registroLiquidacionEmpresaController.empresa}" required="true" requiredMessage="Debe seleccionar una empresa}" converter="omnifaces.SelectItemsConverter">
+                    <p:selectOneMenu id="idEmpresa" 
+                                     value="#{registroLiquidacionEmpresaController.empresa}" 
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     required="true" 
+                                     requiredMessage="Debe seleccionar una empresa}" 
+                                     converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="Seleccionar"/>
-                        <f:selectItems value="#{empresaController.items}"
+                        <f:selectItems value="#{registroLiquidacionEmpresaController.empresaItems}"
                                        var="busIdEmpresaItem"
                                        itemValue="#{busIdEmpresaItem}"
                                        itemLabel="#{busIdEmpresaItem.empresaNombre}"

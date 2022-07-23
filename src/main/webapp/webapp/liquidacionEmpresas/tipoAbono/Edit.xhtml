@@ -17,7 +17,7 @@
                         <p:inputText id="tipoAbonoNombre" value="#{tipoAbonoController.selected.tipoAbonoNombre}" title="#{myBundle.CreateTipoAbonoTitle_tipoAbonoNombre}" required="true" requiredMessage="#{myBundle.CreateTipoAbonoRequiredMessage_tipoAbonoNombre}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="Monto x Defecto" for="tipoAbonoMontoDefecto" />
-                        <p:inputNumber id="tipoAbonoMontoDefecto" value="#{tipoAbonoController.selected.tipoAbonoMontoDefecto}" title="#{myBundle.CreateTipoAbonoTitle_tipoAbonoMontoDefecto}" required="true" requiredMessage="#{myBundle.CreateTipoAbonoRequiredMessage_tipoAbonoMontoDefecto}"/>
+                        <p:inputNumber id="tipoAbonoMontoDefecto" value="#{tipoAbonoController.selected.tipoAbonoMontoDefecto}" title="#{myBundle.CreateTipoAbonoTitle_tipoAbonoMontoDefecto}"  required="true" requiredMessage="Debe ingresar un valor mayor o igual a 0"/>
 
                     </h:panelGrid>
                 </h:panelGroup>

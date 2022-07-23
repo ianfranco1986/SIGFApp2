@@ -335,8 +335,8 @@ public class EdicionComprasController implements Serializable {
 
         System.err.println("INDICE: " + event.getRowIndex());
 
-        this.movimientoItems.get(event.getRowIndex()).setVoucherMovimientoCuentaId(newValue);
-
+        this.movimiento.setVoucherMovimientoCuentaId(newValue);
+        
         for (VoucherMovimiento v : this.movimientoItems) {
             JsfUtil.addSuccessMessage("CUENTA: " + v.getVoucherMovimientoCuentaId().getCuentaMayorNombre());
         }

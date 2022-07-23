@@ -41,7 +41,7 @@ public class RegistroMinutoDaoImpl extends GenericDAOImpl<RegistroMinuto> implem
 
     @Override
     public List<RegistroMinuto> findByBusSinRecaudar(Bus bus) {
-        return this.entityManager.createNamedQuery("RegistroMinuto.findByRegistroMinutoDesdeSinRecaudar").setParameter("registroMinutoDesdeIdBus", bus).setParameter("registroMinutoRecaudado", Boolean.FALSE).getResultList();
+        return this.entityManager.createNamedQuery("RegistroMinuto.findByRegistroMinutoDesdeSinRecaudar").setParameter("registroMinutoDesdeIdBus", bus).getResultList();
     }
 
     @Override

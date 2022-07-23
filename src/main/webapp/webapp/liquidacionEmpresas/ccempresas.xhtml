@@ -15,7 +15,6 @@
 
             <p:panel>
                 <h3>Ctas. Ctes. Empresas</h3>
-                <p:staticMessage severity="info" summary="INFORMACIÓN" detail="Por defecto, se mostrará la información de los abonos/cargos con movimientos > 0" style="width: 100%"/>
                 <p:spacer/>
                 <div class="ui-fluid">
                     <div class="p-field">
@@ -29,9 +28,15 @@
                     <div class="p-field">
                         <label>
                         </label>
-                       <h:commandLink value="Descargar" 
+                       <h:commandLink value="Descargar XLS" 
                                actionListener="#{reportController.downloadFileXls(reportControllerCrosstabLiquidacion.informe, reportControllerCrosstabLiquidacion.map)}" target="self" style="padding: .5em 1em;"  styleClass="ui-button" />
 
+                    </div>
+                    <div class="p-field">
+                        <label>
+                        </label>
+                        <h:commandLink value="Ver PDF" 
+                                       actionListener="#{reportController.downloadFile(reportControllerCrosstabLiquidacion.informe, reportControllerCrosstabLiquidacion.map)}" target="blank" style="padding: .5em 1em;" styleClass="ui-button"/>
                     </div>
                 </div>
             </p:panel>

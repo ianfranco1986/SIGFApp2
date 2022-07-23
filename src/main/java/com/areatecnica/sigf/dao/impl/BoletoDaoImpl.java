@@ -26,4 +26,5 @@ public class BoletoDaoImpl extends GenericDAOImpl<Boleto> implements IBoletoDao<
         return this.entityManager.createNamedQuery("Boleto.findByCuenta").setParameter("boletoIdCuenta", cuenta).getResultList();
     }
 
+    
 }

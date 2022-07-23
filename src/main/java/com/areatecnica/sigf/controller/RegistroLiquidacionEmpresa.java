@@ -8,6 +8,7 @@ package com.areatecnica.sigf.controller;
 import com.areatecnica.sigf.controller.util.JsfUtil;
 import com.areatecnica.sigf.dao.impl.AbonoLiquidacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.CargoLiquidacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.EmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.LiquidacionEmpresaDaoImpl;
 import com.areatecnica.sigf.dao.impl.RecaudacionGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.RecaudacionMinutoDaoImpl;
@@ -28,6 +29,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +78,8 @@ public class RegistroLiquidacionEmpresa implements Serializable {
 
 //    private List<CargoLiquidacion> cargoLiquidacionItems;
 //    private List<AbonoLiquidacion> abonoLiquidacionItems;
+    private List<Empresa> empresaItems; 
+    
     private List<TipoCargo> tipoCargoItems;
     private List<TipoAbono> tipoAbonoItems;
     private TipoCargo tipoCargo;
@@ -97,6 +101,7 @@ public class RegistroLiquidacionEmpresa implements Serializable {
 
     @PostConstruct
     public void init() {
+        this.empresaItems = new EmpresaDaoImpl().findByNandu();
         this.setDate(LocalDate.now());
     }
 
@@ -147,7 +152,7 @@ public class RegistroLiquidacionEmpresa implements Serializable {
                 if (this.tipoCargoItems.contains(c.getCargoLiquidacionCargoId())) {
                     this.tipoCargoItems.remove(c.getCargoLiquidacionCargoId());
                 }
-            }
+            }            
 
 //            this.abonoLiquidacionItems = new AbonoLiquidacionDaoImpl().findByEmpresaBetweenDates(this.empresa, this.dc.getFirstDateOfMonth(), this.dc.getLastDayOfMonth());
             for (AbonoLiquidacion c : this.liquidacionEmpresa.getAbonoLiquidacionList()) {
@@ -182,7 +187,7 @@ public class RegistroLiquidacionEmpresa implements Serializable {
 
             map.put("desde", this.dc.getFirstDateOfMonth());//
             map.put("hasta", this.dc.getLastDayOfMonth());//
-            map.put("empresa", this.empresa.getEmpresaNombre());
+            map.put("empresa", this.empresa.getEmpresaNombre().toUpperCase());
             map.put("codigo", this.empresa.getEmpresaId());
 
             map.put("caratula", caratula);
@@ -601,6 +606,14 @@ public class RegistroLiquidacionEmpresa implements Serializable {
 
     public void setCaratula(boolean caratula) {
         this.caratula = caratula;
+    }
+
+    public void setEmpresaItems(List<Empresa> empresaItems) {
+        this.empresaItems = empresaItems;
+    }
+
+    public List<Empresa> getEmpresaItems() {
+        return empresaItems;
     }
 
 }
