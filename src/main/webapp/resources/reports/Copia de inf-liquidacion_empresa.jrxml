@@ -4,7 +4,7 @@
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Areatecnica"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Local"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="list" class="java.lang.String"/>
 	<parameter name="desde" class="java.util.Date"/>
@@ -152,16 +152,16 @@
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="10" y="136" width="517" height="1" uuid="ad28146d-8b4a-45c4-942f-d7a6fbaad99c">
+					<reportElement x="10" y="135" width="517" height="1" uuid="ad28146d-8b4a-45c4-942f-d7a6fbaad99c">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					</reportElement>
 				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="158">
+			<band height="160">
 				<textField pattern="#,###.###">
-					<reportElement x="355" y="19" width="130" height="20" uuid="7e11b676-a579-4ca1-afb7-bcdfe416bdc1">
+					<reportElement x="355" y="24" width="130" height="20" uuid="7e11b676-a579-4ca1-afb7-bcdfe416bdc1">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -170,7 +170,7 @@
 					<textFieldExpression><![CDATA[$V{abonos1}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###.###">
-					<reportElement x="255" y="19" width="100" height="20" uuid="e7509e82-fa84-49bf-8a91-b9929a65b342">
+					<reportElement x="255" y="24" width="100" height="20" uuid="e7509e82-fa84-49bf-8a91-b9929a65b342">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -179,21 +179,21 @@
 					<textFieldExpression><![CDATA[$V{cargos1}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="10" y="19" width="206" height="20" uuid="ab28aa7a-185e-41a5-a9d8-fb6735777fae"/>
+					<reportElement x="10" y="24" width="206" height="20" uuid="ab28aa7a-185e-41a5-a9d8-fb6735777fae"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Totales ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="10" y="39" width="206" height="20" uuid="bf66d7cf-fde8-4fc0-a17c-1ca66b3227f1"/>
+					<reportElement x="10" y="44" width="206" height="20" uuid="bf66d7cf-fde8-4fc0-a17c-1ca66b3227f1"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[SALDO ]]></text>
 				</staticText>
 				<textField pattern="#,###.###">
-					<reportElement x="255" y="39" width="100" height="20" uuid="1de6a660-917f-4dde-822c-c8e37e040380">
+					<reportElement x="255" y="44" width="100" height="20" uuid="1de6a660-917f-4dde-822c-c8e37e040380">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -202,12 +202,12 @@
 					<textFieldExpression><![CDATA[$V{abonos1}-$V{cargos1}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="10" y="6" width="517" height="1" uuid="1682365a-f004-4ac2-bde6-11a0272568df">
+					<reportElement x="10" y="11" width="517" height="1" uuid="1682365a-f004-4ac2-bde6-11a0272568df">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement x="11" y="143" width="154" height="15" uuid="eb25192c-0b81-4ca0-9286-e0523ffdad6c">
+					<reportElement x="11" y="145" width="154" height="15" uuid="eb25192c-0b81-4ca0-9286-e0523ffdad6c">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
@@ -219,7 +219,7 @@
 					<text><![CDATA[Director de Finanzas]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="331" y="143" width="154" height="15" uuid="1af76d23-aa7e-42ce-bf4f-16010084f98c"/>
+					<reportElement x="331" y="145" width="154" height="15" uuid="1af76d23-aa7e-42ce-bf4f-16010084f98c"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 					</box>
